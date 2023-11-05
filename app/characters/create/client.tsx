@@ -89,7 +89,7 @@ export function ClientComponent({ races }) {
 
       {selectedRace && selectedRace.options && (
         <>
-          <h2>Choisissez une option</h2>
+          <h3>Choisissez une option</h3>
 
           <Row xs={1} md={2} className="g-4">
             {!selectedOption &&
@@ -103,6 +103,21 @@ export function ClientComponent({ races }) {
                 <Button onClick={(e) => updateSelectedOption(null)}>Changer</Button>
               </OptionCard>
             )}
+          </Row>
+        </>
+      )}
+
+      {selectedRace && selectedRace.traits && (
+        <>
+          <h2>Traits</h2>
+
+          <Row xs={1} md={2} className="g-4">
+            {selectedRace.traits.map((trait, index) => (
+              <Col key={index}>
+                <h3>{trait.name}</h3>
+                <p>{trait.description}</p>
+              </Col>
+            ))}
           </Row>
         </>
       )}

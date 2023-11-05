@@ -27,6 +27,28 @@ async function getRaces() {
           modifiers: { for: 2, con: 2, cha: -2 },
         },
       ],
+      traits: [
+        {
+          name: "Fabriqué",
+          description:
+            "Pour les effets qui ciblent des créatures par type, les androïdes sont considérés aussi bien comme des humanoïdes que comme des créatures artificielles (si un pouvoir affecte seulement un des deux types, appliquez ce pouvoir; si un pouvoir affecte les deux types, l’appliquer de la manière la moins avantageuse). Ils bénéficient d’un bonus racial de +2 aux jets de sauvegarde contre les maladies, les effets mentaux, le poison et le sommeil sauf si ces effets affectent spécifiquement des créatures artificielles. De plus, les androïdes ne respirent pas et ne subissent pas les effets environnementaux liés au fait de se trouver dans le vide.",
+        },
+        {
+          name: "Vision exceptionnelle",
+          description:
+            "Les androïdes bénéficient d’une vision nocturne et de la vision dans le noir. En conséquence, ils peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive et dans un rayon de 18 mètres sans la moindre source de lumière mais uniquement en noir et blanc.",
+        },
+        {
+          name: "Emotions contrôlées",
+          description:
+            "Les androïdes trouvent les émotions déstabilisantes et les tiennent donc en respect. Ils subissent un malus de -2 aux tests de Psychologie mais le DD des tests de Psychologie effectués contre eux est augmenté de 2 points.",
+        },
+        {
+          name: "Emplacement d'amélioration",
+          description:
+            "Les androïdes disposent d’un seul emplacement d’amélioration d’armure pour leur corps. Qu’ils portent ou non une armure physique, ils peuvent utiliser cet emplacement pour installer une amélioration d’armure de n’importe quel type qui peut être installée sur une armure légère.",
+        },
+      ],
     },
     {
       id: "51e8977b-8c8d-4229-9ed1-a7d7e712f7c8",
