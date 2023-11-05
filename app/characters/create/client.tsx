@@ -64,7 +64,7 @@ export function ClientComponent({ races }) {
 
   return (
     <>
-      <h2>Choisissez une race</h2>
+      <h2>Race</h2>
 
       <Row xs={1} md={2} className="g-4">
         {!selectedRace &&
@@ -89,8 +89,6 @@ export function ClientComponent({ races }) {
 
       {selectedRace && selectedRace.options && (
         <>
-          <h3>Choisissez une option</h3>
-
           <Row xs={1} md={2} className="g-4">
             {!selectedOption &&
               selectedRace.options.map((option, index) => (
