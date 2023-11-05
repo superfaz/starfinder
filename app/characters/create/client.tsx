@@ -1,15 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  Col,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, CardBody, CardText, CardTitle, Col, Row } from "react-bootstrap";
 
 function RaceCard({ race, children }) {
   return (
@@ -32,6 +24,40 @@ function RaceCard({ race, children }) {
   );
 }
 
+interface ModifiersProps {
+  modifiers: Record<string, number>;
+}
+
+function Modifiers({ modifiers }: ModifiersProps) {
+  return (
+    <div className="modifiers position-absolute top-0 end-0">
+      {Object.entries(modifiers).map(([key, value]) => (
+        <span key={key} className="badge bg-secondary me-1">
+          {key} {value > 0 ? "+" : ""}
+          {value}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function OptionCard({ option, children }) {
+  return (
+    <Col>
+      <Card className="h-100">
+        <CardBody>
+          <CardTitle>{option.name}</CardTitle>
+          <CardText>
+            <Modifiers modifiers={option.modifiers} />
+            {option.description}
+          </CardText>
+          {children}
+        </CardBody>
+      </Card>
+    </Col>
+  );
+}
+
 export function ClientComponent({ races }) {
   const [selectedRace, updateSelectedRace] = useState(null);
   const [selectedOption, updateSelectedOption] = useState(null);
@@ -49,10 +75,37 @@ export function ClientComponent({ races }) {
           ))}
         {selectedRace && (
           <RaceCard race={selectedRace}>
-            <Button onClick={(e) => updateSelectedRace(null)}>Changer</Button>
+            <Button
+              onClick={(e) => {
+                updateSelectedOption(null);
+                updateSelectedRace(null);
+              }}
+            >
+              Changer
+            </Button>
           </RaceCard>
         )}
       </Row>
+
+      {selectedRace && selectedRace.options && (
+        <>
+          <h2>Choisissez une option</h2>
+
+          <Row xs={1} md={2} className="g-4">
+            {!selectedOption &&
+              selectedRace.options.map((option, index) => (
+                <OptionCard key={index} option={option}>
+                  <Button onClick={(e) => updateSelectedOption(option)}>Choisir</Button>
+                </OptionCard>
+              ))}
+            {selectedOption && (
+              <OptionCard option={selectedOption}>
+                <Button onClick={(e) => updateSelectedOption(null)}>Changer</Button>
+              </OptionCard>
+            )}
+          </Row>
+        </>
+      )}
     </>
   );
 }

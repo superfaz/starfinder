@@ -19,6 +19,16 @@ h6 {
   font-family: "Orbitron", sans-serif;
 }
 
-h1 {
+h1,
+.h1 {
   padding-top: 1em;
+}
+
+h2,
+.h2 {
+  padding-top: 0.5em;
+}
+
+.modifiers span {
+  text-transform: uppercase;
 }
