@@ -2690,9 +2690,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"starfinders@workspace:.":
+"starfinder@workspace:.":
   version: 0.0.0-use.local
-  resolution: "starfinders@workspace:."
+  resolution: "starfinder@workspace:."
   dependencies:
     "@types/bootstrap": "npm:^5"
     "@types/eslint": "npm:^8"
