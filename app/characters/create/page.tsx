@@ -1,7 +1,8 @@
+import { Race } from "../../types";
 import { ClientComponent } from "./client";
 import Races from "./data.json";
 
-async function getRaces() {
+async function getRaces(): Promise<Race[]> {
   return Races;
 }
 
@@ -10,7 +11,7 @@ export default async function Page() {
 
   return (
     <>
-      <h1>Créer un personnage</h1>
+      <h1>Création de personnage</h1>
 
       <ClientComponent races={races} />
     </>

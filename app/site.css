@@ -2,6 +2,7 @@
 
 :root {
   --bs-font-sans-serif: "Comfortaa", sans-serif;
+  --fz-font-title: "Orbitron", sans-serif;
 }
 
 .h1,
@@ -16,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--fz-font-title);
 }
 
 h1,
@@ -31,6 +32,38 @@ h3,
   padding-top: 0.5em;
 }
 
-.modifiers span {
+.form-label {
+  font-family: var(--fz-font-title);
+}
+
+.stats span::before {
+  transform: skew(-20deg);
+  background-color: #cc381b;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  z-index: -1000;
+  transform-origin: 100% 0;
+}
+
+.stats span.down::before {
+  background-color: #245883;
+}
+
+.stats {
+  text-align: right;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+}
+
+.stats span {
+  position: relative;
   text-transform: uppercase;
+  font-weight: bold;
+  padding-left: 0.5em;
+  padding-right: 1em;
+  margin-right: 0.5em;
 }

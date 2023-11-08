@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card, CardBody, CardText, CardTitle, Col, Row } from "react-bootstrap";
+import { Card, Col, Form, Row } from "react-bootstrap";
+import { Race } from "../../types";
 
 function RaceCard({ race, children }) {
   return (
@@ -9,14 +10,14 @@ function RaceCard({ race, children }) {
       <Card className="h-100">
         <Row>
           <Col xs={4}>
-            <Card.Img src={"/" + race.id + ".png"} />
+            <Card.Img src={"/" + race.id + "-mini.png"} />
           </Col>
           <Col xs={8}>
-            <CardBody>
-              <CardTitle>{race.name}</CardTitle>
-              <CardText>{race.description}</CardText>
+            <Card.Body>
+              <Card.Title>{race.name}</Card.Title>
+              <Card.Text>{race.description}</Card.Text>
               {children}
-            </CardBody>
+            </Card.Body>
           </Col>
         </Row>
       </Card>
@@ -45,80 +46,98 @@ function OptionCard({ option, children }) {
   return (
     <Col>
       <Card className="h-100">
-        <CardBody>
-          <CardTitle>{option.name}</CardTitle>
-          <CardText>
+        <Card.Body>
+          <Card.Title>{option.name}</Card.Title>
+          <Card.Text>
             <Modifiers modifiers={option.modifiers} />
             {option.description}
-          </CardText>
+          </Card.Text>
           {children}
-        </CardBody>
+        </Card.Body>
       </Card>
     </Col>
   );
 }
 
-export function ClientComponent({ races }) {
-  const [selectedRace, updateSelectedRace] = useState(null);
-  const [selectedOption, updateSelectedOption] = useState(null);
+interface ClientComponentProps {
+  races: Race[];
+}
+
+export function ClientComponent({ races }: ClientComponentProps) {
+  const [selectedRace, updateSelectedRace] = useState(races[0]);
+  const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
+
+  function onRaceChange(e) {
+    let id = e.target.value;
+    let race = races.find((r) => r.id === id);
+    updateSelectedRace(race);
+    updateSelectedOption(race.options[0]);
+  }
+
+  function onOptionChange(e) {
+    let id = e.target.value;
+    let option = selectedRace.options.find((o) => o.id === id);
+    updateSelectedOption(option);
+  }
 
   return (
-    <>
-      <h2>Race</h2>
+    <Row>
+      <Col>
+        <h2>Profil</h2>
+        <Form.Group className="mb-3" controlId="race">
+          <Form.Label>Race</Form.Label>
+          <Form.Select defaultValue={races[0].id} onChange={onRaceChange}>
+            {races.map((race) => (
+              <option key={race.id} value={race.id}>
+                {race.name}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        <div className="stats">
+          <span>PV +{selectedRace.hitPoints}</span>
+        </div>
+        <p className="text-muted">{races.find((r) => r.id === selectedRace.id).description}</p>
 
-      <Row xs={1} md={2} className="g-4">
-        {!selectedRace &&
-          races.map((race) => (
-            <RaceCard key={race.id} race={race}>
-              <Button onClick={(e) => updateSelectedRace(race)}>Choisir</Button>
-            </RaceCard>
-          ))}
-        {selectedRace && (
-          <RaceCard race={selectedRace}>
-            <Button
-              onClick={(e) => {
-                updateSelectedOption(null);
-                updateSelectedRace(null);
-              }}
-            >
-              Changer
-            </Button>
-          </RaceCard>
-        )}
-      </Row>
-
-      {selectedRace && selectedRace.options && (
-        <>
-          <Row xs={1} md={2} className="g-4">
-            {!selectedOption &&
-              selectedRace.options.map((option, index) => (
-                <OptionCard key={index} option={option}>
-                  <Button onClick={(e) => updateSelectedOption(option)}>Choisir</Button>
-                </OptionCard>
+        {selectedRace && selectedRace.options && (
+          <>
+            <Form.Group className="mb-3" controlId="option">
+              <Form.Label>Variante</Form.Label>
+              <Form.Select value={selectedOption.id} onChange={onOptionChange}>
+                {selectedRace.options.map((option, index) => (
+                  <option key={index} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <div className="stats">
+              {Object.entries(selectedOption.abilities).map(([key, value]) => (
+                <span key={key} className={value > 0 ? null : "down"}>
+                  {key} {value > 0 ? "+" : ""}
+                  {value}
+                </span>
               ))}
-            {selectedOption && (
-              <OptionCard option={selectedOption}>
-                <Button onClick={(e) => updateSelectedOption(null)}>Changer</Button>
-              </OptionCard>
-            )}
-          </Row>
-        </>
-      )}
-
-      {selectedRace && selectedRace.traits && (
-        <>
-          <h2>Traits</h2>
-
-          <Row xs={1} md={2} className="g-4">
+            </div>
+            <p className="text-muted">{selectedOption.description}</p>
+          </>
+        )}
+        {selectedRace && selectedRace.traits && (
+          <>
+            <h2>Traits</h2>
             {selectedRace.traits.map((trait, index) => (
-              <Col key={index}>
+              <div key={trait.id}>
                 <h3>{trait.name}</h3>
                 <p>{trait.description}</p>
-              </Col>
+              </div>
             ))}
-          </Row>
-        </>
-      )}
-    </>
+          </>
+        )}
+      </Col>
+      <Col>
+        <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
+      </Col>
+      <Col></Col>
+    </Row>
   );
 }
