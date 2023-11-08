@@ -103,6 +103,18 @@
         "description": "Les humains nés dans la Diaspora, les stations spatiales, les vaisseaux générationnels ou dans d’autres environnements à faible gravité ou à gravité zéro peuvent parfois se développer de manière différente. Ces humains peuvent être plus grands avec des membres plus longs que la moyenne et une masse musculaire inférieure.",
         "abilities": { "dex": 4, "for": -2 }
       }
+    ],
+    "traits": [
+      {
+        "id": "da2c4adf-edb8-4f4c-8d8f-f25fced341ed",
+        "name": "Don supplémentaire",
+        "description": "Les humains choisissent un don supplémentaire au niveau 1."
+      },
+      {
+        "id": "ceb2713a-636e-4a17-87c2-af82ee5a4a38",
+        "name": "Compétent",
+        "description": "Les Humains gagnent un rang de compétences supplémentaire au niveau 1 et un rang supplémentaire à chaque niveau suivant."
+      }
     ]
   },
   {
@@ -136,6 +148,28 @@
         "description": "De nombreux kasathas ont quitté Kasath en utilisant d’autres moyens de transport que l’Idari. Ces nomades ont survécu grâce à leur intelligence et à leur charme. Avec le temps, ils sont devenus moins respectueux de leurs traditions.",
         "abilities": { "int": 2, "cha": 2, "sag": -2 }
       }
+    ],
+    "traits": [
+      {
+        "id": "9dd99dd2-9a57-41e6-9de0-e23b8ea215ca",
+        "name": "Foulée du désert",
+        "description": "Les kasathas peuvent se déplacer à leur vitesse normale sur un terrain non magique difficile dans les déserts, les collines et les montagnes."
+      },
+      {
+        "id": "d131ddc2-fcff-4e0a-9f2b-b055644c28c5",
+        "name": "Quatre bras",
+        "description": "Les kasathas ont quatre bras ce qui leur permet de bénéficier de quatre mains pour s’équiper et pour manier des armes et des équipements. Bien que leurs bras multiples leur permettent d’augmenter le nombre d’objets qu’ils peuvent avoir prêts à l’emploi, cela n’augmente pas le nombre d’attaques qu’ils peuvent effectuer en combat."
+      },
+      {
+        "id": "1114ee16-c64f-4992-84de-cc31a3a62058",
+        "name": "Historien",
+        "description": "En raison de leur enseignement approfondi de l’Histoire et du très large éventail de connaissances académiques qu’ils possèdent, les kasathas bénéficient d’un bonus racial de +2 aux tests de Culture."
+      },
+      {
+        "id": "4baba625-1838-41e9-95e0-fa0bb2cae087",
+        "name": "Grâce naturelle",
+        "description": "Les kasathas bénéficient d’un bonus racial de +2 à leurs tests d’Acrobaties et d’Athlétisme."
+      }
     ]
   },
   {
@@ -154,8 +188,8 @@
       {
         "id": "bd93cabe-6f6e-432d-beb1-2576215fa734",
         "name": "Damayas",
-        "description": "Les lashuntas damayas sont généralement très intelligents et éloquents (+2 en Intelligence à la création du personnage), mais quelque peu délicats.",
-        "abilities": { "cha": 2, "for": 2, "sag": -2 }
+        "description": "Les lashuntas damayas sont généralement très intelligents et éloquents, mais quelque peu délicats.",
+        "abilities": { "cha": 2, "int": 2, "con": -2 }
       },
       {
         "id": "dd753b40-be7f-467f-924d-778b4f40a11e",
@@ -180,6 +214,23 @@
         "name": "Damayas - Esprit focalisé",
         "description": "Certains lashuntas ont un organisme favorisant les capacités mentales. Appelés les «esprits focalisés», ces individus ne possèdent pas les modificateurs physiques communs aux autres lashuntas.",
         "abilities": { "int": 2, "sag": 2, "cha": 2, "con": -4 }
+      }
+    ],
+    "traits": [
+      {
+        "id": "46a9cb91-a33b-4b46-97d5-2ac959b4a3a1",
+        "name": "Magie des lashuntas",
+        "description": "Les lashuntas bénéficient des pouvoirs magiques suivants : À volonté : hébétement, main psychocinétique 1/jour : détection des pensées Voir Les pouvoirs magiques page 262. Le niveau de lanceur de sorts pour ces effets est égal au niveau du lashunta."
+      },
+      {
+        "id": "6488006c-92b6-44e3-9d31-1d726381b3b9",
+        "name": "Télépathie limitée",
+        "description": "Les lashuntas peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun. Dialoguer mentalement avec plusieurs créatures en même temps est tout aussi difficile que de tenter d’écouter plusieurs personnes parler en même temps."
+      },
+      {
+        "id": "f3b13f96-aab9-4f63-822b-d3075515ccd6",
+        "name": "Etudiant",
+        "description": "Les lashuntas aiment apprendre et ils bénéficient d’un bonus racial de +2 pour deux compétences de leur choix."
       }
     ]
   },
@@ -214,6 +265,28 @@
         "description": "Biofabriqués pour travailler, aussi puissants qu’agiles et considérés comme sacrifiables par leurs créateurs de l’Essaim, les ouvriers shirrens sont dotés d’une grande force physique peu commune chez les autres membres de cette espèce. Comme ils étaient sacrifiables, ils sont moins intuitifs et résistants que les autres shirrens.",
         "abilities": { "for": 2, "dex": 2, "cha": -2 }
       }
+    ],
+    "traits": [
+      {
+        "id": "47133266-e09f-42ef-a8ed-df8541aff715",
+        "name": "Perception aveugle",
+        "description": "Les antennes sensibles des shirrens leur octroient le pouvoir de perception aveugle (vibration) qui leur permet de percevoir les vibrations dans l’air dans un rayon de 9 mètres. Quand il tente un test de Perception opposé au test de Discrétion d’une créature, le shirren ignore les bonus de Discrétion accordés par n’importe quel camouflage visuel, par l’invisibilité et par des effets similaires. Même en cas de test de Perception réussi, un adversaire qui ne peut être vu bénéficie tout de même d’un camouflage total (50 % de chances de rater) contre un shirren et ce dernier a toujours les mêmes probabilités de rater quand il attaque des adversaires bénéficiant d’un camouflage. Un shirren est tout de même pris par surprise face à des attaques effectuées par des créatures qu’il ne peut pas voir."
+      },
+      {
+        "id": "1441c348-c5de-4e2a-ac9e-0ab02ff91892",
+        "name": "Communautarisme",
+        "description": "Les shirrens sont habitués à travailler en équipes. Une fois par jour, tant qu’un allié est situé à 3 mètres ou moins, un shirren peut effectuer deux fois un seul jet d’attaque ou test de compétence et choisir le meilleur résultat."
+      },
+      {
+        "id": "dde699b9-3055-4a38-b113-96c5958c1b1a",
+        "name": "Fascination culturelle",
+        "description": "Les shirrens sont passionnés par les nouvelles cultures et les nouvelles sociétés. Ils bénéficient d’un bonus racial de +2 à leurs tests de Culture et de Diplomatie."
+      },
+      {
+        "id": "295c7545-40b5-4c77-bf7c-720015d54b3e",
+        "name": "Téléphathie limitée",
+        "description": "Les shirrens peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun. Dialoguer mentalement avec plusieurs créatures en même temps est tout aussi difficile que de tenter d’écouter plusieurs personnes parler en même temps."
+      }
     ]
   },
   {
@@ -247,6 +320,28 @@
         "description": "Les lignées de certains vesks sont réputées pour avoir engendré des guerriers féroces. Dans la plupart des cas, cela est dû à une altération génétique qui leur confère des muscles plus puissants, des pointes osseuses plus longues et une crête d’épines tout le long de leur colonne vertébrale. Ils sont aussi plus agressifs, et comme ils ont tendance à tout voir sous le prisme du conflit, ceux qui les côtoient ont souvent du mal à leur faire confiance.",
         "abilities": { "for": 2, "dex": 2, "cha": -2 }
       }
+    ],
+    "traits": [
+      {
+        "id": "2aea0fee-90b5-4950-a478-a80f968db158",
+        "name": "Expert en armure",
+        "description": "Les vesks utilisent les armures de manière à compléter leur robuste physiologie. Quand ils portent une armure, ils bénéficient d’un bonus racial de +1 à leur CA. Quand ils sont équipés d’une armure lourde, leur malus d’armure aux tests est réduit de 1 point."
+      },
+      {
+        "id": "0c3faf4d-73dd-454d-980e-028aff761272",
+        "name": "Intrépide",
+        "description": "Les vesks bénéficient d’un bonus racial de +2 aux jets de sauvegarde contre les effets de terreu"
+      },
+      {
+        "id": "be1f9450-8d42-4251-9e5f-6ff784f4814f",
+        "name": "Vision nocturne",
+        "description": "Les vesks peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive. Pour plus de détails, voir page 265."
+      },
+      {
+        "id": "5181e460-0ddb-425d-a28c-714ff599db01",
+        "name": "Armes naturelles",
+        "description": "Les vesks sont toujours considérés comme armés. Ils peuvent infliger 1d3 points de dégâts létaux en combat à mains nues et l’attaque n’est pas considérée comme archaïque. Au niveau 3, ils bénéficient d’une Spécialisation martiale propre à leurs armes naturelles ce qui leur permet d’ajouter à leurs dés de dégâts un bonus de 1,5 × le niveau du personnage avec ces armes (au lieu de juste ajouter leur seul niveau comme d’habitude)."
+      }
     ]
   },
   {
@@ -279,6 +374,28 @@
         "name": "Survivant",
         "description": "Bien que certains estiment que les ysokis sont faibles, ce sont des récupérateurs et des survivants, et dans bon nombre de leurs cultures, ces traits sont plus appréciés que le bricolage ou des activités similaires. Un exemple célèbre d’ysokis survivants sont ceux que l’on trouve sur la Station Absalom et qui auraient pour origine le monde perdu de Golarion.",
         "abilities": { "con": 2 }
+      }
+    ],
+    "traits": [
+      {
+        "id": "36564346-5d94-462a-8b72-0581c646b5e1",
+        "name": "Abajoues",
+        "description": "Les ysokis peuvent stocker dans leurs abajoues jusqu’à 30 cm cubes d’objets pour un volume transportable total de 1. De plus, avec une action rapide ils peuvent transférer un seul objet entre une de leurs mains et leurs abajoues. Un ysoki peut régurgiter par terre, dans sa case, tout le contenu de ses abajoues avec une action de déplacement qui ne provoque pas d’attaques d’opportunité."
+      },
+      {
+        "id": "0b6f463b-701d-47c4-9246-a0c2896f1b3e",
+        "name": "Vision dans le noir",
+        "description": "Les ysokis peuvent voir sur une distance de 18 mètres dans le noir. Voir page 264 pour plus d’informations."
+      },
+      {
+        "id": "52e9b33a-c7a8-4dba-bb40-ed3c916ddb5d",
+        "name": "Dynamique",
+        "description": "Les ysokis sont combatifs et agiles même quand les probabilités sont contre eux. Un ysoki peut se redresser alors qu’il est à terre en une action rapide. De plus, quand il est en apesanteur (voir pages 275), un ysoki ne subit pas les pénalités normales pour attaquer et il n’est pas considéré comme pris au dépourvu. Quand il tente un test d’Acrobaties pour traverser l’espace d’un adversaire d’au moins une catégorie de taille supérieure à la sienne, un ysoki bénéficie d’un bonus racial de +5 au test."
+      },
+      {
+        "id": "bb77e446-8197-4ccd-ae28-31763675e931",
+        "name": "Débrouillard",
+        "description": "Les ysokis bénéficient d’un bonus racial de +2 pour les tests d’Ingénierie, de Discrétion et de Survi "
       }
     ]
   }
