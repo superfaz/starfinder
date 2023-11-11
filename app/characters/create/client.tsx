@@ -68,14 +68,14 @@ export function ClientComponent({ races }: ClientComponentProps) {
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
   const [name, updateName] = useState("");
 
-  function onRaceChange(e) {
+  function handleRaceChange(e) {
     let id = e.target.value;
     let race = races.find((r) => r.id === id);
     updateSelectedRace(race);
     updateSelectedOption(race.options[0]);
   }
 
-  function onOptionChange(e) {
+  function handleOptionChange(e) {
     let id = e.target.value;
     let option = selectedRace.options.find((o) => o.id === id);
     updateSelectedOption(option);
@@ -96,7 +96,7 @@ export function ClientComponent({ races }: ClientComponentProps) {
         <h2>Profil</h2>
         <Form.Group className="mb-3" controlId="race">
           <Form.Label>Race</Form.Label>
-          <Form.Select defaultValue={races[0].id} onChange={onRaceChange}>
+          <Form.Select defaultValue={races[0].id} onChange={handleRaceChange}>
             {races.map((race) => (
               <option key={race.id} value={race.id}>
                 {race.name}
@@ -113,7 +113,7 @@ export function ClientComponent({ races }: ClientComponentProps) {
           <>
             <Form.Group className="mb-3" controlId="option">
               <Form.Label>Variante</Form.Label>
-              <Form.Select value={selectedOption.id} onChange={onOptionChange}>
+              <Form.Select value={selectedOption.id} onChange={handleOptionChange}>
                 {selectedRace.options.map((option, index) => (
                   <option key={index} value={option.id}>
                     {option.name}
