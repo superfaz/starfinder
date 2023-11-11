@@ -18,5 +18,6 @@ export interface Race {
   refs: string[];
   hitPoints: number;
   options: Option[];
+  names: string[];
   traits: Trait[];
 }

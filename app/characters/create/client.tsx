@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, Col, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Race } from "../../types";
 
 function RaceCard({ race, children }) {
@@ -66,6 +66,7 @@ interface ClientComponentProps {
 export function ClientComponent({ races }: ClientComponentProps) {
   const [selectedRace, updateSelectedRace] = useState(races[0]);
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
+  const [name, updateName] = useState("");
 
   function onRaceChange(e) {
     let id = e.target.value;
@@ -78,6 +79,15 @@ export function ClientComponent({ races }: ClientComponentProps) {
     let id = e.target.value;
     let option = selectedRace.options.find((o) => o.id === id);
     updateSelectedOption(option);
+  }
+
+  function handleNameChange(e) {
+    updateName(e.target.value);
+  }
+
+  function handleRandomizeName() {
+    let index = Math.floor(Math.random() * selectedRace.names.length);
+    updateName(selectedRace.names[index]);
   }
 
   return (
@@ -122,6 +132,15 @@ export function ClientComponent({ races }: ClientComponentProps) {
             <p className="text-muted">{selectedOption.description}</p>
           </>
         )}
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>Nom du personnage</Form.Label>
+          <InputGroup className="mb-3">
+            <Form.Control type="text" placeholder="Nom du personnage" value={name} onChange={handleNameChange} />
+            <Button variant="outline-secondary" onClick={handleRandomizeName}>
+              <i className="bi-shuffle"></i>
+            </Button>
+          </InputGroup>
+        </Form.Group>
         {selectedRace && selectedRace.traits && (
           <>
             <h2>Traits</h2>

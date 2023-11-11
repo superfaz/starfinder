@@ -25,6 +25,20 @@
         "abilities": { "for": 2, "con": 2, "cha": -2 }
       }
     ],
+    "names": [
+      "Asha",
+      "Bleu-17",
+      "Emene-3",
+      "Pichenette",
+      "Garro",
+      "Iseph",
+      "Mélodie",
+      "Naga",
+      "Olas",
+      "Poutre",
+      "Vingt",
+      "Yose"
+    ],
     "traits": [
       {
         "id": "62551516-da4e-4adb-9d4e-af52ade0d7fa",
@@ -104,6 +118,31 @@
         "abilities": { "dex": 4, "for": -2 }
       }
     ],
+    "names": [
+      "Akif",
+      "Alezandaru",
+      "Amaré",
+      "Baolo",
+      "Bélor",
+      "Darilian",
+      "Hadzi",
+      "Haï Minh",
+      "Hiriko",
+      "Iolana",
+      "Jokug",
+      "Korva",
+      "Morvius",
+      "Navasi",
+      "Pao",
+      "Pasara",
+      "Raziya",
+      "Revhi",
+      "Sahba",
+      "Séphia",
+      "Signe",
+      "Valki",
+      "Yon"
+    ],
     "traits": [
       {
         "id": "da2c4adf-edb8-4f4c-8d8f-f25fced341ed",
@@ -148,6 +187,23 @@
         "description": "De nombreux kasathas ont quitté Kasath en utilisant d’autres moyens de transport que l’Idari. Ces nomades ont survécu grâce à leur intelligence et à leur charme. Avec le temps, ils sont devenus moins respectueux de leurs traditions.",
         "abilities": { "int": 2, "cha": 2, "sag": -2 }
       }
+    ],
+    "names": [
+      "Altronus",
+      "Ésar",
+      "Gorsen",
+      "Hadif",
+      "Jehir",
+      "Kala",
+      "Maédar",
+      "Metweska",
+      "Ninura",
+      "Rému",
+      "Sénesel",
+      "Tolar",
+      "Umana",
+      "Volotéo",
+      "Zye"
     ],
     "traits": [
       {
@@ -216,6 +272,20 @@
         "abilities": { "int": 2, "sag": 2, "cha": 2, "con": -4 }
       }
     ],
+    "names": [
+      "Domash",
+      "Hésori",
+      "Kima",
+      "Kopalo",
+      "Maénala",
+      "Nomaé",
+      "Oraéus",
+      "Raïa",
+      "Shess",
+      "Soryn",
+      "Taéon",
+      "Varikuara"
+    ],
     "traits": [
       {
         "id": "46a9cb91-a33b-4b46-97d5-2ac959b4a3a1",
@@ -265,6 +335,20 @@
         "description": "Biofabriqués pour travailler, aussi puissants qu’agiles et considérés comme sacrifiables par leurs créateurs de l’Essaim, les ouvriers shirrens sont dotés d’une grande force physique peu commune chez les autres membres de cette espèce. Comme ils étaient sacrifiables, ils sont moins intuitifs et résistants que les autres shirrens.",
         "abilities": { "for": 2, "dex": 2, "cha": -2 }
       }
+    ],
+    "names": [
+      "Cesca",
+      "Halicon",
+      "Jchk",
+      "Keskodaï",
+      "Korskal",
+      "Noskaru",
+      "Schect",
+      "Thast",
+      "T’sen",
+      "Vishkesh",
+      "Xylit",
+      "Zenka"
     ],
     "traits": [
       {
@@ -321,6 +405,19 @@
         "abilities": { "for": 2, "dex": 2, "cha": -2 }
       }
     ],
+    "names": [
+      "Dmotralan",
+      "Evdokayo",
+      "Goromitali",
+      "Julakesh",
+      "Katara",
+      "Obozaya",
+      "Radokama",
+      "Sarangari",
+      "Sobok",
+      "Terikoraz",
+      "Ymeros-Ahandi"
+    ],
     "traits": [
       {
         "id": "2aea0fee-90b5-4950-a478-a80f968db158",
@@ -376,6 +473,7 @@
         "abilities": { "con": 2 }
       }
     ],
+    "names": ["Béna", "Coponisa", "Cors", "Goba", "Ketch", "Kib", "Lolo", "Niknik", "Quig", "Resk", "Sim", "Twik"],
     "traits": [
       {
         "id": "36564346-5d94-462a-8b72-0581c646b5e1",
