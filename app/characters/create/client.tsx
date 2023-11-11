@@ -141,22 +141,26 @@ export function ClientComponent({ races }: ClientComponentProps) {
             </Button>
           </InputGroup>
         </Form.Group>
+      </Col>
+      <Col>
+        <picture>
+          <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
+        </picture>
+      </Col>
+      <Col>
         {selectedRace && selectedRace.traits && (
           <>
-            <h2>Traits</h2>
-            {selectedRace.traits.map((trait, index) => (
+            <h3>Traits</h3>
+            {selectedRace.traits.map((trait) => (
               <div key={trait.id}>
-                <h3>{trait.name}</h3>
-                <p>{trait.description}</p>
+                <h5>{trait.name}</h5>
+                <p className="text-muted">{trait.description}</p>
+                {trait.abilities && trait.abilities.map((ability) => <p key={ability.id}>{ability.description}</p>)}
               </div>
             ))}
           </>
         )}
       </Col>
-      <Col>
-        <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
-      </Col>
-      <Col></Col>
     </Row>
   );
 }

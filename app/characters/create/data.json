@@ -43,12 +43,32 @@
       {
         "id": "62551516-da4e-4adb-9d4e-af52ade0d7fa",
         "name": "Fabriqué",
-        "description": "Pour les effets qui ciblent des créatures par type, les androïdes sont considérés aussi bien comme des humanoïdes que comme des créatures artificielles (si un pouvoir affecte seulement un des deux types, appliquez ce pouvoir; si un pouvoir affecte les deux types, l’appliquer de la manière la moins avantageuse). Ils bénéficient d’un bonus racial de +2 aux jets de sauvegarde contre les maladies, les effets mentaux, le poison et le sommeil sauf si ces effets affectent spécifiquement des créatures artificielles. De plus, les androïdes ne respirent pas et ne subissent pas les effets environnementaux liés au fait de se trouver dans le vide."
+        "abilities": [
+          {
+            "id": "988bc5e9-688c-4f3a-87d0-246cc92c4b56",
+            "description": "Pour les effets qui ciblent des créatures par type, les androïdes sont considérés aussi bien comme des humanoïdes que comme des créatures artificielles (si un pouvoir affecte les deux types, l’appliquer de la manière la moins avantageuse)."
+          },
+          {
+            "id": "cb513c06-d9ea-44fe-9cbd-9a96ed64223d",
+            "description": "+2 aux jets de sauvegarde contre les maladies, les effets mentaux, le poison et le sommeil sauf si ces effets affectent spécifiquement des créatures artificielles."
+          },
+          {
+            "id": "66b7e04e-9413-47f2-868d-f50e0d9d9a2b",
+            "description": "Les androïdes ne respirent pas et ne subissent pas les effets environnementaux liés au fait de se trouver dans le vide."
+          }
+        ]
       },
       {
         "id": "1653ddac-b66e-4da0-9a97-35dfcd5a71e3",
         "name": "Vision exceptionnelle",
-        "description": "Les androïdes bénéficient d’une vision nocturne et de la vision dans le noir. En conséquence, ils peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive et dans un rayon de 18 mètres sans la moindre source de lumière mais uniquement en noir et blanc."
+        "description": "Les androïdes bénéficient d’une vision nocturne et de la vision dans le noir. En conséquence, ils peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive et dans un rayon de 18 mètres sans la moindre source de lumière mais uniquement en noir et blanc.",
+        "abilities": [
+          {
+            "id": "",
+            "description": "Vision nocture. voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive"
+          },
+          { "id": "", "description": "" }
+        ]
       },
       {
         "id": "07b883eb-4568-4e24-bec4-293ced40adc2",

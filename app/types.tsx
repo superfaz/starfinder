@@ -5,10 +5,16 @@ export interface Option {
   abilities: Record<string, number>;
 }
 
+export interface Ability {
+  id: string;
+  description: string;
+}
+
 export interface Trait {
   id: string;
   name: string;
   description: string;
+  abilities: Ability[];
 }
 
 export interface Race {
