@@ -5,8 +5,10 @@ export interface Option {
   abilities: Record<string, number>;
 }
 
-export interface Ability {
+export interface Component {
   id: string;
+  type: "ability" | "savingThrow";
+  title: string;
   description: string;
 }
 
@@ -14,7 +16,7 @@ export interface Trait {
   id: string;
   name: string;
   description: string;
-  abilities: Ability[];
+  components: Component[];
 }
 
 export interface Race {

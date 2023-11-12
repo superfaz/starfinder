@@ -36,6 +36,7 @@ h3,
   font-family: var(--fz-font-title);
 }
 
+.type::before,
 .stats span::before {
   transform: skew(-20deg);
   background-color: #cc381b;
@@ -46,7 +47,16 @@ h3,
   right: 0;
   top: 0;
   z-index: -1000;
-  transform-origin: 100% 0;
+}
+
+.type,
+.stats span {
+  position: relative;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-left: 0.5em;
+  padding-right: 0.75em;
+  margin-right: 0.5em;
 }
 
 .stats span.down::before {
@@ -57,13 +67,4 @@ h3,
   text-align: right;
   margin-left: 1em;
   margin-bottom: 0.5em;
-}
-
-.stats span {
-  position: relative;
-  text-transform: uppercase;
-  font-weight: bold;
-  padding-left: 0.5em;
-  padding-right: 1em;
-  margin-right: 0.5em;
 }

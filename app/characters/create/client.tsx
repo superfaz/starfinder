@@ -59,6 +59,37 @@ function OptionCard({ option, children }) {
   );
 }
 
+function Component({ component }) {
+  switch (component.type) {
+    case "ability":
+      return (
+        <p>
+          <span className="type small">Pouvoir</span>
+          {component.title && <strong className="me-1">{component.title}.</strong>}
+          <span className="text-muted">{component.description}</span>
+        </p>
+      );
+    case "savingThrow":
+      return (
+        <p>
+          <span className="type small">Jets de sauvegarde</span>
+          <span className="text-muted">{component.description}</span>
+        </p>
+      );
+    case "skill":
+      return (
+        <p>
+          <span className="type small">Compétence</span>
+          <strong>
+            {component.target} {component.value}
+          </strong>
+        </p>
+      );
+    default:
+      return null;
+  }
+}
+
 interface ClientComponentProps {
   races: Race[];
 }
@@ -155,7 +186,8 @@ export function ClientComponent({ races }: ClientComponentProps) {
               <div key={trait.id}>
                 <h5>{trait.name}</h5>
                 <p className="text-muted">{trait.description}</p>
-                {trait.abilities && trait.abilities.map((ability) => <p key={ability.id}>{ability.description}</p>)}
+                {trait.components &&
+                  trait.components.map((component) => <Component key={component.id} component={component} />)}
               </div>
             ))}
           </>

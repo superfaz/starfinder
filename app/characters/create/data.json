@@ -2,7 +2,7 @@
   {
     "id": "6a62cb06-21f0-4534-8aaf-15e91fd7d1ed",
     "name": "Androïdes",
-    "description": "personnes artificielles composées d’éléments mécaniques, autrefois construites pour en faire des serviteurs mais à présent reconnues comme citoyens à part entière.",
+    "description": "Personnes artificielles composées d’éléments mécaniques, autrefois construites pour en faire des serviteurs mais à présent reconnues comme citoyens à part entière.",
     "refs": ["base-42"],
     "hitPoints": 4,
     "options": [
@@ -43,17 +43,22 @@
       {
         "id": "62551516-da4e-4adb-9d4e-af52ade0d7fa",
         "name": "Fabriqué",
-        "abilities": [
+        "components": [
           {
             "id": "988bc5e9-688c-4f3a-87d0-246cc92c4b56",
+            "type": "ability",
+            "title": "Fabriqué",
             "description": "Pour les effets qui ciblent des créatures par type, les androïdes sont considérés aussi bien comme des humanoïdes que comme des créatures artificielles (si un pouvoir affecte les deux types, l’appliquer de la manière la moins avantageuse)."
           },
           {
             "id": "cb513c06-d9ea-44fe-9cbd-9a96ed64223d",
+            "type": "savingThrow",
             "description": "+2 aux jets de sauvegarde contre les maladies, les effets mentaux, le poison et le sommeil sauf si ces effets affectent spécifiquement des créatures artificielles."
           },
           {
             "id": "66b7e04e-9413-47f2-868d-f50e0d9d9a2b",
+            "type": "ability",
+            "title": "Fabriqué",
             "description": "Les androïdes ne respirent pas et ne subissent pas les effets environnementaux liés au fait de se trouver dans le vide."
           }
         ]
@@ -61,19 +66,39 @@
       {
         "id": "1653ddac-b66e-4da0-9a97-35dfcd5a71e3",
         "name": "Vision exceptionnelle",
-        "description": "Les androïdes bénéficient d’une vision nocturne et de la vision dans le noir. En conséquence, ils peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive et dans un rayon de 18 mètres sans la moindre source de lumière mais uniquement en noir et blanc.",
-        "abilities": [
+        "components": [
           {
-            "id": "",
-            "description": "Vision nocture. voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive"
+            "id": "04537386-ce38-429f-a732-dd71d767aa63",
+            "type": "ability",
+            "title": "Vision nocturne",
+            "description": "Voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive"
           },
-          { "id": "", "description": "" }
+          {
+            "id": "5a3bfacf-10fe-408e-90c3-81e097b1ceeb",
+            "type": "ability",
+            "title": "Vision dans le noir",
+            "description": "Voir sur une distance de 18 mètres dans le noir."
+          }
         ]
       },
       {
         "id": "07b883eb-4568-4e24-bec4-293ced40adc2",
         "name": "Emotions contrôlées",
-        "description": "Les androïdes trouvent les émotions déstabilisantes et les tiennent donc en respect. Ils subissent un malus de -2 aux tests de Psychologie mais le DD des tests de Psychologie effectués contre eux est augmenté de 2 points."
+        "description": "Les androïdes trouvent les émotions déstabilisantes et les tiennent donc en respect.",
+        "components": [
+          {
+            "id": "382ab54c-a61c-49ee-b55e-3de37c91085a",
+            "type": "skill",
+            "target": "Psychologie",
+            "value": -2
+          },
+          {
+            "id": "7b822402-a8c7-4a06-928b-cc872e1f6f34",
+            "type": "ability",
+            "title": "Emotions contrôlées",
+            "description": "Le DD des tests de Psychologie effectués contre eux est augmenté de 2 points."
+          }
+        ]
       },
       {
         "id": "470b64bd-f308-4192-99fd-17656e9bc386",
@@ -85,7 +110,7 @@
   {
     "id": "51e8977b-8c8d-4229-9ed1-a7d7e712f7c8",
     "name": "Humains",
-    "description": "race extrêmement polyvalente et capable de s’adapter dont les membres n’ont de cesse d’explorer et de se répandre.",
+    "description": "Race extrêmement polyvalente et capable de s’adapter dont les membres n’ont de cesse d’explorer et de se répandre.",
     "refs": ["base-44"],
     "hitPoints": 4,
     "options": [
@@ -179,7 +204,7 @@
   {
     "id": "84a294e4-18ef-4082-b277-95ef76d689d9",
     "name": "Kasathas",
-    "description": "race dotée d’une culture très traditionnelle dont les membres à quatre bras sont originaires d’un monde désertique lointain.",
+    "description": "Race dotée d’une culture très traditionnelle dont les membres à quatre bras sont originaires d’un monde désertique lointain.",
     "refs": ["base-46"],
     "hitPoints": 4,
     "options": [
@@ -251,7 +276,7 @@
   {
     "id": "b8086c81-31ba-486b-ada0-d1fb2f867c25",
     "name": "Lashuntas",
-    "description": "race d’érudits charismatiques aux pouvoirs télépathiques composée de deux sous-espèces : les membres de la première sont grands et élancés, les autres sont petits et musculeux.",
+    "description": "Race d’érudits charismatiques aux pouvoirs télépathiques composée de deux sous-espèces : les membres de la première sont grands et élancés, les autres sont petits et musculeux.",
     "refs": ["base-48"],
     "hitPoints": 4,
     "options": [
@@ -327,7 +352,7 @@
   {
     "id": "5cb35c2a-1a4f-4a68-b60f-ade5b38979aa",
     "name": "Shirrens",
-    "description": "race insectoïde semblable aux locustes dont les membres ont quitté leur ruche. Ils ont normalement l’esprit communautaire mais apprécient les choix individuels au point d’y être accro.",
+    "description": "Race insectoïde semblable aux locustes dont les membres ont quitté leur ruche. Ils ont normalement l’esprit communautaire mais apprécient les choix individuels au point d’y être accro.",
     "refs": ["base-50"],
     "hitPoints": 6,
     "options": [
@@ -396,7 +421,7 @@
   {
     "id": "0642b12f-7b6e-4e13-b27b-e595375be9eb",
     "name": "Vesks",
-    "description": "race de reptiliens belliqueux qui ont récemment déclaré une trêve avec les autres races – pour le moment.",
+    "description": "Race de reptiliens belliqueux qui ont récemment déclaré une trêve avec les autres races – pour le moment.",
     "refs": ["base-52"],
     "hitPoints": 6,
     "options": [
@@ -464,7 +489,7 @@
   {
     "id": "d65139e8-39ce-4b4c-85f8-0338e8782477",
     "name": "Ysokis",
-    "description": "également appelés « hommes-rats », ces petits récupérateurs recouverts de fourrure compensent leur petite taille par une personnalité affirmée.",
+    "description": "Egalement appelés « hommes-rats », ces petits récupérateurs recouverts de fourrure compensent leur petite taille par une personnalité affirmée.",
     "refs": ["base-54"],
     "hitPoints": 2,
     "options": [
