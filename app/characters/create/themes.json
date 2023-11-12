@@ -1,0 +1,71 @@
+[
+  {
+    "id": "caa91400-c6ef-4c16-bb00-3b09792dda92",
+    "name": "Chasseur de primes",
+    "description": "Rien ou presque ne peut vous empêcher de traquer vos proies et de les ramener mortes ou vives.",
+    "refs": ["base-29"],
+    "abilities": { "con": 1 }
+  },
+  {
+    "id": "74e471d9-db80-4fae-9610-44ea8eeedcb3",
+    "name": "Erudit",
+    "description": "En tant qu’universitaire, vous avez assimilé une solide base de connaissances diverses et vous êtes toujours avide d’en savoir plus.",
+    "refs": ["base-30"],
+    "abilities": { "int": 1 }
+  },
+  {
+    "id": "aa401a3f-5c53-40d5-8157-9276b130735d",
+    "name": "Explorateur stellaire",
+    "description": "Vous vivez au milieu des étoiles à la recherche de mondes nouveaux à explorer et êtes toujours prêt pour l’aventure.",
+    "refs": ["base-31"],
+    "abilities": { "con": 1 }
+  },
+  {
+    "id": "24f59f28-6863-4f37-98ff-c07baa27a4fd",
+    "name": "Hors-la-loi",
+    "description": "Vous vivez au milieu des étoiles à la recherche de mondes nouveaux à explorer et êtes toujours prêt pour l’aventure.",
+    "refs": ["base-32"],
+    "abilities": { "dex": 1 }
+  },
+  {
+    "id": "4e801a43-482e-4781-a863-ecd694937bd9",
+    "name": "Icône",
+    "description": "Vous êtes une célébrité populaire et respectée au sein de l’espace colonisé.",
+    "refs": ["base-33"],
+    "abilities": { "cha": 1 }
+  },
+  {
+    "id": "1c3cffe9-dfa0-4d0a-bb22-33fe056de788",
+    "name": "Mercenaire",
+    "description": "Vous êtes une célébrité populaire et respectée au sein de l’espace colonisé",
+    "refs": ["base-34"],
+    "abilities": { "for": 1 }
+  },
+  {
+    "id": "985a6dbb-4677-4c7e-87af-e505bb503da1",
+    "name": "Pilote de chasse",
+    "description": "Grâce à vos mains toujours fermes et vos nerfs d’acier, vous êtes devenu un pilote compétent de vaisseaux spatiaux et d’autres véhicules.",
+    "refs": ["base-35"],
+    "abilities": { "dex": 1 }
+  },
+  {
+    "id": "1f72df04-6717-42b5-986d-db5ed8822d9b",
+    "name": "Prêtre",
+    "description": "Votre inébranlable dévotion à une philosophie ou une religion compose l’essentiel de votre personnalité.",
+    "refs": ["base-36"],
+    "abilities": { "sag": 1 }
+  },
+  {
+    "id": "e1a9a6ad-0c95-4f31-a692-3327c77bb53f",
+    "name": "Sans thème",
+    "description": "Aucune des catégories décrites ci-dessus ne vous convient vraiment ou vous vous voyez comme une page blanche.",
+    "refs": ["base-28"]
+  },
+  {
+    "id": "06af112c-7f86-4c5b-bae6-3ae469b646b1",
+    "name": "Xéno-chercheur",
+    "description": "En voyageant au-delà des frontières de l’espace des Mondes du Pacte, vous vous efforcez d’établir des contacts avec des formes de vie extraterrestres.",
+    "refs": ["base-37"],
+    "abilities": { "cha": 1 }
+  }
+]

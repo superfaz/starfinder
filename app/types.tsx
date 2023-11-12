@@ -7,7 +7,7 @@ export interface Option {
 
 export interface Component {
   id: string;
-  type: "ability" | "savingThrow";
+  type: "ability" | "savingThrow" | "skill";
   title: string;
   description: string;
 }
@@ -15,8 +15,8 @@ export interface Component {
 export interface Trait {
   id: string;
   name: string;
-  description: string;
-  components: Component[];
+  description?: string;
+  components?: Component[];
 }
 
 export interface Race {
@@ -28,4 +28,12 @@ export interface Race {
   options: Option[];
   names: string[];
   traits: Trait[];
+}
+
+export interface Theme {
+  id: string;
+  name: string;
+  description: string;
+  refs: string[];
+  abilities?: Record<string, number>;
 }

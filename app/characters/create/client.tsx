@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { Race } from "../../types";
+import { Race, Theme } from "../../types";
 
 function RaceCard({ race, children }) {
   return (
@@ -92,12 +92,14 @@ function Component({ component }) {
 
 interface ClientComponentProps {
   races: Race[];
+  themes: Theme[];
 }
 
-export function ClientComponent({ races }: ClientComponentProps) {
+export function ClientComponent({ races, themes }: ClientComponentProps) {
   const [selectedRace, updateSelectedRace] = useState(races[0]);
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
   const [name, updateName] = useState("");
+  const [selectedTheme, updateSelectedTheme] = useState(themes[0]);
 
   function handleRaceChange(e) {
     let id = e.target.value;
@@ -119,6 +121,12 @@ export function ClientComponent({ races }: ClientComponentProps) {
   function handleRandomizeName() {
     let index = Math.floor(Math.random() * selectedRace.names.length);
     updateName(selectedRace.names[index]);
+  }
+
+  function handleThemeChange(e) {
+    let id = e.target.value;
+    let theme = themes.find((t) => t.id === id);
+    updateSelectedTheme(theme);
   }
 
   return (
@@ -172,6 +180,26 @@ export function ClientComponent({ races }: ClientComponentProps) {
             </Button>
           </InputGroup>
         </Form.Group>
+
+        <Form.Group className="mb-3" controlId="theme">
+          <Form.Label>Thème</Form.Label>
+          <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
+            {themes.map((theme) => (
+              <option key={theme.id} value={theme.id}>
+                {theme.name}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        <div className="stats">
+          {selectedTheme.abilities && Object.entries(selectedTheme.abilities).map(([key, value]) => (
+            <span key={key} className={value > 0 ? null : "down"}>
+              {key} {value > 0 ? "+" : ""}
+              {value}
+            </span>
+          ))}
+        </div>
+        <p className="text-muted">{selectedTheme.description}</p>
       </Col>
       <Col>
         <picture>
