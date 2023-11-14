@@ -161,7 +161,7 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
               </Form.Select>
             </Form.Group>
             <div className="stats">
-              {Object.entries(selectedOption.abilities).map(([key, value]) => (
+              {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
                 <span key={key} className={value > 0 ? null : "down"}>
                   {key} {value > 0 ? "+" : ""}
                   {value}
@@ -192,7 +192,7 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
           </Form.Select>
         </Form.Group>
         <div className="stats">
-          {selectedTheme.abilities && Object.entries(selectedTheme.abilities).map(([key, value]) => (
+          {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
             <span key={key} className={value > 0 ? null : "down"}>
               {key} {value > 0 ? "+" : ""}
               {value}

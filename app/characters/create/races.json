@@ -10,19 +10,19 @@
         "id": "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
         "name": "Aucune",
         "description": "",
-        "abilities": { "dex": 2, "int": 2, "cha": -2 }
+        "abilityScores": { "dex": 2, "int": 2, "cha": -2 }
       },
       {
         "id": "6b9b4479-d1e5-44d2-8b60-2bf07aa82960",
         "name": "Compagnon",
         "description": "Une niche lucrative avant l’émancipation des androïdes était la construction de compagnons, généralement au sein d’un foyer familial. Ces androïdes ont une personnalité plus évoluée et peuvent avoir un aspect moins artificiel.",
-        "abilities": { "cha": 2 }
+        "abilityScores": { "cha": 2 }
       },
       {
         "id": "7c2a3122-ae8d-4acc-9b11-35f33cfd2b04",
         "name": "Ouvrier",
         "description": "Les androïdes ouvriers ont été créés pour effectuer des tâches ingrates et pour résister aux contraintes spatiales. Dans de nombreuses régions, ils ont été considérés comme la propriété des sociétés pendant beaucoup plus longtemps que les autres androïdes.",
-        "abilities": { "for": 2, "con": 2, "cha": -2 }
+        "abilityScores": { "for": 2, "con": 2, "cha": -2 }
       }
     ],
     "names": [
@@ -116,51 +116,21 @@
     "options": [
       {
         "id": "f3a2f0ee-97b8-4b76-9a22-6dcb7b6e8f10",
-        "name": "Standard (Force)",
+        "name": "Standard",
         "description": "",
-        "abilities": { "for": 2 }
-      },
-      {
-        "id": "b4a3d3c2-7c4e-4e3a-8d3b-2c4a5b6c7d5b",
-        "name": "Standard (Dextérité)",
-        "description": "",
-        "abilities": { "dex": 2 }
-      },
-      {
-        "id": "c5b4d4c3-8d5f-5f4b-9e4c-3d5b6d7c8e6d",
-        "name": "Standard (Constitution)",
-        "description": "",
-        "abilities": { "con": 2 }
-      },
-      {
-        "id": "d6c5e5d4-9e6g-6g5c-af5d-4e6c7d8e9f7e",
-        "name": "Standard (Intelligence)",
-        "description": "",
-        "abilities": { "int": 2 }
-      },
-      {
-        "id": "e7d6f6e5-af7h-7h6d-bg6e-5f7d8e9fag8f",
-        "name": "Standard (Sagesse)",
-        "description": "",
-        "abilities": { "sag": 2 }
-      },
-      {
-        "id": "f8e7g7f6-bg8i-8i7e-ch7f-6g8e9fagbh9g",
-        "name": "Standard (Charisme)",
-        "description": "",
-        "abilities": { "cha": 2 }
+        "abilityScores": { "any": 2 }
       },
       {
         "id": "g9f8h8g7-ch9j-9j8f-di8g-7h9fagbhci0h",
         "name": "Graviteur",
         "description": "Les humains qui se sont adaptés à une forte gravité développent une importante musculature et sont plus trapus. Ils passent plus de temps à lutter contre des conditions difficiles qu’à interagir avec les autres.",
-        "abilities": { "for": 2, "dex": 2, "cha": -2 }
+        "abilityScores": { "for": 2, "dex": 2, "cha": -2 }
       },
       {
         "id": "h0g9i9h8-di0k-0k9g-ej9h-8i0gbhcidj1i",
         "name": "Léger comme une plume",
         "description": "Les humains nés dans la Diaspora, les stations spatiales, les vaisseaux générationnels ou dans d’autres environnements à faible gravité ou à gravité zéro peuvent parfois se développer de manière différente. Ces humains peuvent être plus grands avec des membres plus longs que la moyenne et une masse musculaire inférieure.",
-        "abilities": { "dex": 4, "for": -2 }
+        "abilityScores": { "dex": 4, "for": -2 }
       }
     ],
     "names": [
@@ -212,25 +182,25 @@
         "id": "811c251b-fbee-4736-b1db-11c319d4ee71",
         "name": "Aucune",
         "description": "",
-        "abilities": { "for": 2, "sag": 2, "int": -2 }
+        "abilityScores": { "for": 2, "sag": 2, "int": -2 }
       },
       {
         "id": "2c43f4cd-4ed0-4ad9-a873-8dbb7fbcb45f",
         "name": "Colon akitonien",
         "description": "À l’origine, les kasathas sont venus dans les Mondes du Pacte pour coloniser Akiton, et certains l’ont fait. Soumis à une gravité moins forte, les colons ont développé une grâce naturelle tout en devenant moins robustes.",
-        "abilities": { "dex": 2, "sag": 2, "con": -2 }
+        "abilityScores": { "dex": 2, "sag": 2, "con": -2 }
       },
       {
         "id": "c2eb9de1-6276-49c4-8a26-602f86208bb4",
         "name": "Natif de Kasath",
         "description": "Certains kasathas qui ont choisi de ne pas quitter Kasath ont survécu pendant des générations dans des conditions difficiles, mais, en privilégiant la survie, leur société a régressé.",
-        "abilities": { "dex": 2, "con": 2, "cha": -2 }
+        "abilityScores": { "dex": 2, "con": 2, "cha": -2 }
       },
       {
         "id": "65cd5901-bec4-4a02-8bd8-87757a06c2c6",
         "name": "Nomade",
         "description": "De nombreux kasathas ont quitté Kasath en utilisant d’autres moyens de transport que l’Idari. Ces nomades ont survécu grâce à leur intelligence et à leur charme. Avec le temps, ils sont devenus moins respectueux de leurs traditions.",
-        "abilities": { "int": 2, "cha": 2, "sag": -2 }
+        "abilityScores": { "int": 2, "cha": 2, "sag": -2 }
       }
     ],
     "names": [
@@ -284,37 +254,37 @@
         "id": "53b2b108-83eb-4dda-9685-dd852f4b99aa",
         "name": "Korashas",
         "description": "Les lashuntas korashas ont une puissante musculature, mais ils sont souvent impétueux et peu observateurs.",
-        "abilities": { "cha": 2, "for": 2, "sag": -2 }
+        "abilityScores": { "cha": 2, "for": 2, "sag": -2 }
       },
       {
         "id": "bd93cabe-6f6e-432d-beb1-2576215fa734",
         "name": "Damayas",
         "description": "Les lashuntas damayas sont généralement très intelligents et éloquents, mais quelque peu délicats.",
-        "abilities": { "cha": 2, "int": 2, "con": -2 }
+        "abilityScores": { "cha": 2, "int": 2, "con": -2 }
       },
       {
         "id": "dd753b40-be7f-467f-924d-778b4f40a11e",
         "name": "Korashas - Héritage du chasseur",
         "description": "Les lignées de l’héritage du chasseur remontent aux légendaires chasseurs lashuntas ayant vécu des siècles avant la Faille. Les lashuntas bénéficiant de cet héritage ont une stature plus robuste et plus fine.",
-        "abilities": { "for": 2, "dex": 2, "int": -2 }
+        "abilityScores": { "for": 2, "dex": 2, "int": -2 }
       },
       {
         "id": "616cb379-882c-4bd6-8314-c9adc7991933",
         "name": "Damayas - Héritage du chasseur",
         "description": "Les lignées de l’héritage du chasseur remontent aux légendaires chasseurs lashuntas ayant vécu des siècles avant la Faille. Les lashuntas bénéficiant de cet héritage ont une stature plus robuste et plus fine.",
-        "abilities": { "dex": 2, "cha": 2, "for": -2 }
+        "abilityScores": { "dex": 2, "cha": 2, "for": -2 }
       },
       {
         "id": "5043f3dd-0389-4dce-a07a-4179dfe25080",
         "name": "Korashas - Esprit focalisé",
         "description": "Certains lashuntas ont un organisme favorisant les capacités mentales. Appelés les «esprits focalisés», ces individus ne possèdent pas les modificateurs physiques communs aux autres lashuntas.",
-        "abilities": { "int": 2, "cha": 2, "con": -2 }
+        "abilityScores": { "int": 2, "cha": 2, "con": -2 }
       },
       {
         "id": "efc0e64f-7974-4692-8c9a-17e15a36d395",
         "name": "Damayas - Esprit focalisé",
         "description": "Certains lashuntas ont un organisme favorisant les capacités mentales. Appelés les «esprits focalisés», ces individus ne possèdent pas les modificateurs physiques communs aux autres lashuntas.",
-        "abilities": { "int": 2, "sag": 2, "cha": 2, "con": -4 }
+        "abilityScores": { "int": 2, "sag": 2, "cha": 2, "con": -4 }
       }
     ],
     "names": [
@@ -360,25 +330,25 @@
         "id": "e6dcd16d-2d8a-4235-8764-8121ee3629ec",
         "name": "Aucune",
         "description": "",
-        "abilities": { "con": 2, "sag": 2, "cha": -2 }
+        "abilityScores": { "con": 2, "sag": 2, "cha": -2 }
       },
       {
         "id": "c25bde78-d771-4d80-befe-ebe1bcb87711",
         "name": "Auxiliaire",
         "description": "Quand les shirrens servaient l’Essaim, les auxiliaires étaient chargés de s’occuper des chefs de colonie, transmettant les ordres d’un dirigeant et agissant en tant qu’intermédiaires avec les autres entités de l’Essaim. Leur fonction leur épargnait le labeur physique, délégué aux sous-espèces ouvrières. Les auxiliaires shirrens ont une vive intelligence et une compréhension instinctive des dynamiques de pouvoir personnel.",
-        "abilities": { "int": 2, "cha": 2, "for": -2 }
+        "abilityScores": { "int": 2, "cha": 2, "for": -2 }
       },
       {
         "id": "5430238a-788e-4a44-925a-e9a3258f5677",
         "name": "Éclaireur",
         "description": "Créés à l’origine pour espionner les mondes ciblés par l’Essaim, les éclaireurs shirrens sont aussi rapides pour se déplacer que pour définir des plans et les mettre en application. Ces shirrens ont une stature assez frêle, ce qui les rend moins résistants que les autres membres de leur espèce.",
-        "abilities": { "dex": 2, "int": 2, "con": -2 }
+        "abilityScores": { "dex": 2, "int": 2, "con": -2 }
       },
       {
         "id": "862f440d-0edd-4379-b5db-33d24416807a",
         "name": "Ouvrier",
         "description": "Biofabriqués pour travailler, aussi puissants qu’agiles et considérés comme sacrifiables par leurs créateurs de l’Essaim, les ouvriers shirrens sont dotés d’une grande force physique peu commune chez les autres membres de cette espèce. Comme ils étaient sacrifiables, ils sont moins intuitifs et résistants que les autres shirrens.",
-        "abilities": { "for": 2, "dex": 2, "cha": -2 }
+        "abilityScores": { "for": 2, "dex": 2, "cha": -2 }
       }
     ],
     "names": [
@@ -429,25 +399,25 @@
         "id": "0b891647-dcdd-4322-9d4f-dad3ac14c4d6",
         "name": "Aucune",
         "description": "",
-        "abilities": { "for": 2, "con": 2, "int": -2 }
+        "abilityScores": { "for": 2, "con": 2, "int": -2 }
       },
       {
         "id": "8982fbcc-de24-4003-ac78-f3abf6e17ab6",
         "name": "Faible gravité",
         "description": "Au fil des générations, plusieurs groupes de vesks se sont adaptés aux environnements à faible gravité. Les mouvements précis, rapides et calculés sont naturels pour eux, même s’ils ne possèdent pas la puissance physique commune aux autres membres de leur espèce.",
-        "abilities": { "dex": 2, "int": 2, "for": -2 }
+        "abilityScores": { "dex": 2, "int": 2, "for": -2 }
       },
       {
         "id": "53980227-898b-47fd-8e8c-6079bd20d3fa",
         "name": "Psychovenimeux",
         "description": "En de rares occasions, les vesks peuvent donner naissance à un enfant psychique. Selon la légende, un peuple de serpents vivant dans les cavernes de Vesk Prime a modifié des vesks au cours de rituels surnaturels, permettant à ceux qui ont hérité de ces gènes altérés d’attaquer avec leurs «pensées venimeuses». Plus frêles que des vesks normaux, les psychovenimeux ont une personnalité forte et une puissante volonté.",
-        "abilities": { "sag": 2, "cha": 2, "con": -2 }
+        "abilityScores": { "sag": 2, "cha": 2, "con": -2 }
       },
       {
         "id": "dc2d70a6-5662-4a3d-aa57-6febbb120551",
         "name": "Sang de guerre",
         "description": "Les lignées de certains vesks sont réputées pour avoir engendré des guerriers féroces. Dans la plupart des cas, cela est dû à une altération génétique qui leur confère des muscles plus puissants, des pointes osseuses plus longues et une crête d’épines tout le long de leur colonne vertébrale. Ils sont aussi plus agressifs, et comme ils ont tendance à tout voir sous le prisme du conflit, ceux qui les côtoient ont souvent du mal à leur faire confiance.",
-        "abilities": { "for": 2, "dex": 2, "cha": -2 }
+        "abilityScores": { "for": 2, "dex": 2, "cha": -2 }
       }
     ],
     "names": [
@@ -497,25 +467,25 @@
         "id": "7b669134-6f91-41e5-ac48-df6a126c6c29",
         "name": "Aucune",
         "description": "",
-        "abilities": { "dex": 2, "int": 2, "for": -2 }
+        "abilityScores": { "dex": 2, "int": 2, "for": -2 }
       },
       {
         "id": "1b5b84bb-c1e1-409d-b441-55a2204d9590",
         "name": "Anthropomorphique",
         "description": "La plupart des ysokis ont des traits d’animaux, tels que des pattes digitigrades et des membres de même taille. Certains, cependant, ont une anatomie plus proche de celle des humains, avec des pieds plantigrades et des jambes plus longues que les bras. Ces ysokis ont probablement des ancêtres venant d’au-delà des Mondes du Pacte, mais il n’existe aucun consensus scientifique sur cette question.",
-        "abilities": { "int": 2, "cha": 2, "for": -2 }
+        "abilityScores": { "int": 2, "cha": 2, "for": -2 }
       },
       {
         "id": "d58f85df-d6e7-45e1-9b27-0412a0aa7550",
         "name": "0-grav",
         "description": "Les ysokis qui vivent dans un environnement à faible gravité ont des corps plus longs et plus maigres. Connus collectivement sous le nom d’ysokis 0-grav, ces individus sont capables d’incroyables exploits d’agilité, mais leurs os sont notoirement fragiles.",
-        "abilities": { "dex": 4, "con": -2 }
+        "abilityScores": { "dex": 4, "con": -2 }
       },
       {
         "id": "8d3be414-708f-4d46-b3b5-717b30a763cb",
         "name": "Survivant",
         "description": "Bien que certains estiment que les ysokis sont faibles, ce sont des récupérateurs et des survivants, et dans bon nombre de leurs cultures, ces traits sont plus appréciés que le bricolage ou des activités similaires. Un exemple célèbre d’ysokis survivants sont ceux que l’on trouve sur la Station Absalom et qui auraient pour origine le monde perdu de Golarion.",
-        "abilities": { "con": 2 }
+        "abilityScores": { "con": 2 }
       }
     ],
     "names": ["Béna", "Coponisa", "Cors", "Goba", "Ketch", "Kib", "Lolo", "Niknik", "Quig", "Resk", "Sim", "Twik"],

@@ -2,14 +2,16 @@ export interface Option {
   id: string;
   name: string;
   description: string;
-  abilities: Record<string, number>;
+  abilityScores: Record<string, number>;
 }
 
 export interface Component {
   id: string;
   type: "ability" | "savingThrow" | "skill";
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  target?: string;
+  value?: number;
 }
 
 export interface Trait {
@@ -35,5 +37,5 @@ export interface Theme {
   name: string;
   description: string;
   refs: string[];
-  abilities?: Record<string, number>;
+  abilityScores: Record<string, number>;
 }
