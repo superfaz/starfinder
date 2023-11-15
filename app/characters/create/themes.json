@@ -5,21 +5,22 @@
     "description": "Rien ou presque ne peut vous empêcher de traquer vos proies et de les ramener mortes ou vives.",
     "refs": ["base-29"],
     "abilityScores": { "con": 1 },
-    "abilities": [
+    "advantages": [
       {
+        "id": "9eda60ce-2a5d-4af6-b988-0bef73555cc8",
         "level": 1,
         "name": "Savoir thématique",
         "components": [
           {
-            "id": "",
-            "type": "ability",
-            "title": "Savoir thématique",
-            "description": "Réduisez de 5 le DD des tests de Culture ou Profession (chasseur de primes) effectués pour vous rappeler quelque chose sur votre cible, ainsi que sur les agents du maintien de l’ordre et leurs pratiques."
-          },
-          {
-            "id": "",
+            "id": "d3da2cb0-3475-4ef1-8c43-83a438cfd669",
             "type": "classSkill",
             "target": "Survie"
+          },
+          {
+            "id": "74329167-bfbf-4f52-bb52-82cb0046302e",
+            "type": "ability",
+            "title": "Chasseur de primes",
+            "description": "Réduisez de 5 le DD des tests de Culture ou Profession (chasseur de primes) effectués pour vous rappeler quelque chose sur votre cible, ainsi que sur les agents du maintien de l’ordre et leurs pratiques."
           }
         ]
       }
@@ -30,7 +31,27 @@
     "name": "Erudit",
     "description": "En tant qu’universitaire, vous avez assimilé une solide base de connaissances diverses et vous êtes toujours avide d’en savoir plus.",
     "refs": ["base-30"],
-    "abilityScores": { "int": 1 }
+    "abilityScores": { "int": 1 },
+    "advantages": [
+      {
+        "id": "e70f9997-41b9-4062-a1eb-7d9a04c71ce2",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "aafb7874-5436-4bd4-b69d-6fdd0b61cf8f",
+            "type": "classSkill",
+            "target": "<Erudit>"
+          },
+          {
+            "id": "d98484ba-0d4a-4f73-af84-c4d14ede8e58",
+            "type": "ability",
+            "title": "Erudit",
+            "description": "Réduisez de 5 le DD des tests de compétence effectués pour vous rappeler quelque chose concernant votre spécialité."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "aa401a3f-5c53-40d5-8157-9276b130735d",

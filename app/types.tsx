@@ -7,7 +7,7 @@ export interface Option {
 
 export interface Component {
   id: string;
-  type: "ability" | "savingThrow" | "skill";
+  type: "ability" | "savingThrow" | "skill" | "classSkill";
   title?: string;
   description?: string;
   target?: string;
@@ -32,10 +32,19 @@ export interface Race {
   traits: Trait[];
 }
 
+export interface Advantage {
+  id: string;
+  name: string;
+  level: number;
+  description?: string;
+  components?: Component[];
+}
+
 export interface Theme {
   id: string;
   name: string;
   description: string;
   refs: string[];
   abilityScores: Record<string, number>;
+  advantages: Advantage[];
 }

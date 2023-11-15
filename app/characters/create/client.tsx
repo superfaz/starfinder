@@ -85,6 +85,13 @@ function Component({ component }) {
           </strong>
         </p>
       );
+    case "classSkill":
+      return (
+        <p>
+          <span className="type small">Compétence de classe</span>
+          <strong>{component.target}</strong>
+        </p>
+      );
     default:
       return null;
   }
@@ -133,8 +140,7 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
     <Row>
       <Col>
         <h2>Profil</h2>
-        <Form.Group className="mb-3" controlId="race">
-          <Form.Label>Race</Form.Label>
+        <Form.FloatingLabel className="mb-3" controlId="race" label="Race">
           <Form.Select defaultValue={races[0].id} onChange={handleRaceChange}>
             {races.map((race) => (
               <option key={race.id} value={race.id}>
@@ -142,7 +148,7 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
               </option>
             ))}
           </Form.Select>
-        </Form.Group>
+        </Form.FloatingLabel>
         <div className="stats">
           <span>PV +{selectedRace.hitPoints}</span>
         </div>
@@ -150,8 +156,7 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
 
         {selectedRace && selectedRace.options && (
           <>
-            <Form.Group className="mb-3" controlId="option">
-              <Form.Label>Variante</Form.Label>
+            <Form.FloatingLabel className="mb-3" controlId="option" label="Variante">
               <Form.Select value={selectedOption.id} onChange={handleOptionChange}>
                 {selectedRace.options.map((option, index) => (
                   <option key={index} value={option.id}>
@@ -159,7 +164,7 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
                   </option>
                 ))}
               </Form.Select>
-            </Form.Group>
+            </Form.FloatingLabel>
             <div className="stats">
               {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
                 <span key={key} className={value > 0 ? null : "down"}>
@@ -171,18 +176,17 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
             <p className="text-muted">{selectedOption.description}</p>
           </>
         )}
-        <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Nom du personnage</Form.Label>
-          <InputGroup className="mb-3">
-            <Form.Control type="text" placeholder="Nom du personnage" value={name} onChange={handleNameChange} />
-            <Button variant="outline-secondary" onClick={handleRandomizeName}>
-              <i className="bi-shuffle"></i>
-            </Button>
-          </InputGroup>
-        </Form.Group>
 
-        <Form.Group className="mb-3" controlId="theme">
-          <Form.Label>Thème</Form.Label>
+        <InputGroup>
+          <Form.FloatingLabel className="mb-3" controlId="name" label="Nom du personnage">
+            <Form.Control type="text" value={name} onChange={handleNameChange} />
+          </Form.FloatingLabel>
+          <Button variant="outline-secondary" onClick={handleRandomizeName}>
+            <i className="bi-shuffle"></i>
+          </Button>
+        </InputGroup>
+
+        <Form.FloatingLabel className="mb-3" controlId="theme" label="Thème">
           <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
             {themes.map((theme) => (
               <option key={theme.id} value={theme.id}>
@@ -190,7 +194,7 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
               </option>
             ))}
           </Form.Select>
-        </Form.Group>
+        </Form.FloatingLabel>
         <div className="stats">
           {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
             <span key={key} className={value > 0 ? null : "down"}>
@@ -200,6 +204,16 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
           ))}
         </div>
         <p className="text-muted">{selectedTheme.description}</p>
+        {selectedTheme.advantages
+          .filter((a) => a.level === 1)
+          .map((advantage) => (
+            <div key={advantage.id}>
+              <h5>{advantage.name}</h5>
+              <p className="text-muted">{advantage.description}</p>
+              {advantage.components &&
+                advantage.components.map((component) => <Component key={component.id} component={component} />)}
+            </div>
+          ))}
       </Col>
       <Col>
         <picture>
