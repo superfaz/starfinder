@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa&family=Orbitron&display=block");
 
+/**
+  * Add support to button attached to a form-floating element.
+  */
+.form-floating + .btn {
+  height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+  min-height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+  line-height: 1.25;
+}
+
+/**
+ * Override default fonts.
+ */
 :root {
   --bs-font-sans-serif: "Comfortaa", sans-serif;
   --fz-font-title: "Orbitron", sans-serif;
@@ -20,6 +32,13 @@ h6 {
   font-family: var(--fz-font-title);
 }
 
+.form-label {
+  font-family: var(--fz-font-title);
+}
+
+/**
+ * Customize text positioning.
+ */
 h1,
 .h1 {
   padding-top: 1em;
@@ -32,10 +51,9 @@ h3,
   padding-top: 0.5em;
 }
 
-.form-label {
-  font-family: var(--fz-font-title);
-}
-
+/**
+ * Custom styles for .type and .stats
+ */
 .type::before,
 .stats span::before {
   transform: skew(-20deg);
