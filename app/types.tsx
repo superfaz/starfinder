@@ -48,3 +48,14 @@ export interface Theme {
   abilityScores: Record<string, number>;
   advantages: Advantage[];
 }
+
+export interface Class {
+  id: string;
+  name: string;
+  description: string;
+  refs: string[];
+  hitPoints: number;
+  staminaPoints: number;
+  keyAbilityScore: string | string[];
+  SecondaryAbilityScore: string[];
+}

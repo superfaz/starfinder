@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { Race, Theme } from "../../types";
+import { Class, Race, Theme } from "../../types";
 
 function RaceCard({ race, children }) {
   return (
@@ -100,13 +100,15 @@ function Component({ component }) {
 interface ClientComponentProps {
   races: Race[];
   themes: Theme[];
+  classes: Class[];
 }
 
-export function ClientComponent({ races, themes }: ClientComponentProps) {
+export function ClientComponent({ races, themes, classes }: ClientComponentProps) {
   const [selectedRace, updateSelectedRace] = useState(races[0]);
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
   const [name, updateName] = useState("");
   const [selectedTheme, updateSelectedTheme] = useState(themes[0]);
+  const [selectedClass, updateSelectedClass] = useState(classes[0]);
 
   function handleRaceChange(e) {
     let id = e.target.value;
@@ -134,6 +136,12 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
     let id = e.target.value;
     let theme = themes.find((t) => t.id === id);
     updateSelectedTheme(theme);
+  }
+
+  function handleClassChange(e) {
+    let id = e.target.value;
+    let classType = classes.find((c) => c.id === id);
+    updateSelectedClass(classType);
   }
 
   return (
@@ -204,6 +212,38 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
           ))}
         </div>
         <p className="text-muted">{selectedTheme.description}</p>
+
+        <Form.FloatingLabel className="mb-3" controlId="class" label="Classe">
+          <Form.Select value={selectedClass.id} onChange={handleClassChange}>
+            {classes.map((classType) => (
+              <option key={classType.id} value={classType.id}>
+                {classType.name}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.FloatingLabel>
+        <div className="stats">
+          <span>{selectedClass.keyAbilityScore}</span>
+          <span>EN +{selectedClass.staminaPoints}</span>
+          <span>PV +{selectedClass.hitPoints}</span>
+        </div>
+        <p className="text-muted">{selectedClass.description}</p>
+      </Col>
+      <Col>
+        <picture>
+          <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
+        </picture>
+      </Col>
+      <Col>
+        <h3>Traits</h3>
+        {selectedRace.traits.map((trait) => (
+          <div key={trait.id}>
+            <h5>{trait.name}</h5>
+            <p className="text-muted">{trait.description}</p>
+            {trait.components &&
+              trait.components.map((component) => <Component key={component.id} component={component} />)}
+          </div>
+        ))}
         {selectedTheme.advantages
           .filter((a) => a.level === 1)
           .map((advantage) => (
@@ -214,26 +254,6 @@ export function ClientComponent({ races, themes }: ClientComponentProps) {
                 advantage.components.map((component) => <Component key={component.id} component={component} />)}
             </div>
           ))}
-      </Col>
-      <Col>
-        <picture>
-          <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
-        </picture>
-      </Col>
-      <Col>
-        {selectedRace && selectedRace.traits && (
-          <>
-            <h3>Traits</h3>
-            {selectedRace.traits.map((trait) => (
-              <div key={trait.id}>
-                <h5>{trait.name}</h5>
-                <p className="text-muted">{trait.description}</p>
-                {trait.components &&
-                  trait.components.map((component) => <Component key={component.id} component={component} />)}
-              </div>
-            ))}
-          </>
-        )}
       </Col>
     </Row>
   );

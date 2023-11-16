@@ -1,0 +1,72 @@
+[
+  {
+    "id": "c248e633-94f1-4d4f-a1ea-ac9b83fde93d",
+    "name": "Agent",
+    "description": "L’agent possède les compétences pour accomplir presque n’importe quelle mission exigeant de la discrétion et de la ruse, qu’il s’agisse d’une opération d’espionnage ou d’élimination.",
+    "refs": ["base-60"],
+    "hitPoints": 6,
+    "staminaPoints": 6,
+    "keyAbilityScore": "dex",
+    "secondaryAbilityScore": ["int", "cha"]
+  },
+  {
+    "id": "8a850480-0b1b-4bb3-8788-2f28fddbdf81",
+    "name": "Emissaire",
+    "description": "Un émissaire use de son intelligence et de son magnétisme personnel pour aider ses alliés et tromper ses ennemis, souvent dans le cadre de négociations ou de démarches politiques.",
+    "refs": ["base-68"],
+    "hitPoints": 6,
+    "staminaPoints": 6,
+    "keyAbilityScore": "cha",
+    "secondaryAbilityScore": ["dex", "int"]
+  },
+  {
+    "id": "2d24dd35-8dc9-4f73-87d6-811eb35dcdc2",
+    "name": "Mécano",
+    "description": "Maîtrisant l’art de la construction et de la modification des appareils, le mécano a pour compagnon soit une intelligence artificielle évoluée, soit un drone robot dernier cri.",
+    "refs": ["base-76"],
+    "hitPoints": 6,
+    "staminaPoints": 6,
+    "keyAbilityScore": "int",
+    "secondaryAbilityScore": ["dex"]
+  },
+  {
+    "id": "52df8d51-6317-4f78-a9fa-af91b23b9ab6",
+    "name": "Mystique",
+    "description": "Le mystique canalise par magie l’énergie qui relie toutes choses souvent grâce à un lien divin ou la compréhension instinctive des systèmes biologiques.",
+    "refs": ["base-90"],
+    "hitPoints": 6,
+    "staminaPoints": 6,
+    "keyAbilityScore": "sag",
+    "secondaryAbilityScore": ["cha"]
+  },
+  {
+    "id": "6094e6a5-031f-4e08-abdc-84f643bd596b",
+    "name": "Solarien",
+    "description": "Le solarien étudie et tire sa puissance du cycle de vie des étoiles. Ses techniques lui permettent de créer une arme ou une armure à partir d’un fragment d’énergie stellaire.",
+    "refs": ["base-100"],
+    "hitPoints": 7,
+    "staminaPoints": 7,
+    "keyAbilityScore": "cha",
+    "secondaryAbilityScore": ["for"]
+  },
+  {
+    "id": "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab",
+    "name": "Soldat",
+    "description": "Maîtrisant parfaitement les armes de la guerre, le soldat est prêt à semer le chaos quand il est nécessaire d’avoir recours à la force. Il se spécialise généralement dans une forme de combat.",
+    "refs": ["base-110"],
+    "hitPoints": 7,
+    "staminaPoints": 7,
+    "keyAbilityScore": ["for", "dex"],
+    "secondaryAbilityScore": ["con"]
+  },
+  {
+    "id": "38e548f3-7df9-44ab-a32e-4cddd0be4a21",
+    "name": "Technomancien",
+    "description": "Le technomancien comprend le lien entre la magie et la technologie et l’exploite en pliant la réalité à sa volonté, en fonction de ses besoins.",
+    "refs": ["base-118"],
+    "hitPoints": 5,
+    "staminaPoints": 5,
+    "keyAbilityScore": "int",
+    "secondaryAbilityScore": ["dex"]
+  }
+]
