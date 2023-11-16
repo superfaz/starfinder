@@ -58,55 +58,209 @@
     "name": "Explorateur stellaire",
     "description": "Vous vivez au milieu des étoiles à la recherche de mondes nouveaux à explorer et êtes toujours prêt pour l’aventure.",
     "refs": ["base-31"],
-    "abilityScores": { "con": 1 }
+    "abilityScores": { "con": 1 },
+    "advantages": [
+      {
+        "id": "3ca8af24-3c4b-42d3-baad-429bd9412eb6",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "1bc3a16f-69c3-4f5d-a996-0a2c75e93276",
+            "type": "classSkill",
+            "target": "Sciences physiques"
+          },
+          {
+            "id": "1245033c-f90c-464e-87ad-60132abc8462",
+            "type": "ability",
+            "title": "Explorateur stellaire",
+            "description": "Réduisez de 5 le DD des tests de Sciences physiques effectués pour vous rappeler quelque chose à propos de nouveaux mondes ou de phénomènes spatiaux étranges."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "24f59f28-6863-4f37-98ff-c07baa27a4fd",
     "name": "Hors-la-loi",
     "description": "Vous vivez au milieu des étoiles à la recherche de mondes nouveaux à explorer et êtes toujours prêt pour l’aventure.",
     "refs": ["base-32"],
-    "abilityScores": { "dex": 1 }
+    "abilityScores": { "dex": 1 },
+    "advantages": [
+      {
+        "id": "58e042b4-6c47-4c7b-9e00-eb681cbf8495",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "ae4bf7a7-a4c7-4297-87a3-e884c440a7db",
+            "type": "classSkill",
+            "target": "Escamotage"
+          },
+          {
+            "id": "3ae95b8a-61ed-4389-a2de-89c4ab8b6f13",
+            "type": "ability",
+            "title": "Hors-la-loi",
+            "description": "Réduisez de 5 le DD des tests de Culture effectués pour vous rappeler quelque chose à propos du milieu criminel de la pègre."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "4e801a43-482e-4781-a863-ecd694937bd9",
     "name": "Icône",
     "description": "Vous êtes une célébrité populaire et respectée au sein de l’espace colonisé.",
     "refs": ["base-33"],
-    "abilityScores": { "cha": 1 }
+    "abilityScores": { "cha": 1 },
+    "advantages": [
+      {
+        "id": "c0221359-1fc3-4db8-b429-151b4f770afe",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "51be81fa-1349-49f9-af55-3b49d712e894",
+            "type": "classSkill",
+            "target": "Culture"
+          },
+          {
+            "id": "d30e8b7b-b81a-4009-ad25-31835ff95836",
+            "type": "ability",
+            "title": "Icône",
+            "description": "Réduisez de 5 le DD des tests de Culture ou de Profession que vous effectuez pour vous rappeler quelque chose à propos d’autres icônes ou de détails sur les aspects culturels de votre profession."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "1c3cffe9-dfa0-4d0a-bb22-33fe056de788",
     "name": "Mercenaire",
     "description": "Vous êtes une célébrité populaire et respectée au sein de l’espace colonisé",
     "refs": ["base-34"],
-    "abilityScores": { "for": 1 }
+    "abilityScores": { "for": 1 },
+    "advantages": [
+      {
+        "id": "ef6b60d5-3e09-4406-825b-32d5534b9915",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "915556ec-b78b-4e4f-bd40-8075bb436172",
+            "type": "classSkill",
+            "target": "Athlétisme"
+          },
+          {
+            "id": "5255d792-922d-4ef8-8170-78c2e854e03e",
+            "type": "ability",
+            "title": "Mercenaire",
+            "description": "Réduisez de 5 le DD des tests de Culture et de Profession (mercenaire) effectués pour vous rappeler quelque chose à propos des hiérarchies, des usages, du personnel, etc. au sein de l’armée."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "985a6dbb-4677-4c7e-87af-e505bb503da1",
     "name": "Pilote de chasse",
     "description": "Grâce à vos mains toujours fermes et vos nerfs d’acier, vous êtes devenu un pilote compétent de vaisseaux spatiaux et d’autres véhicules.",
     "refs": ["base-35"],
-    "abilityScores": { "dex": 1 }
+    "abilityScores": { "dex": 1 },
+    "advantages": [
+      {
+        "id": "8598734b-acdc-4b28-9f20-a8c3f6b91d55",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "b3d23372-1ad1-46e7-8016-986d4e3f0e18",
+            "type": "classSkill",
+            "target": "Pilotage"
+          },
+          {
+            "id": "a3b3b54d-ab64-4af1-a316-82317c631ee1",
+            "type": "ability",
+            "title": "Pilote de chasse",
+            "description": "Réduisez de 5 le DD des tests de Culture effectués pour vous rappeler quelque chose sur les modèles et les pièces détachées de vaisseaux spatiaux ou de véhicules, ainsi que sur les pilotes célèbres."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "1f72df04-6717-42b5-986d-db5ed8822d9b",
     "name": "Prêtre",
     "description": "Votre inébranlable dévotion à une philosophie ou une religion compose l’essentiel de votre personnalité.",
     "refs": ["base-36"],
-    "abilityScores": { "sag": 1 }
+    "abilityScores": { "sag": 1 },
+    "advantages": [
+      {
+        "id": "f62bd964-1efd-4d9f-8536-d688bea81a9f",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "c5d4daab-30e9-48b2-93bc-004d30bbd164",
+            "type": "classSkill",
+            "target": "Mysticisme"
+          },
+          {
+            "id": "136ca2f7-956d-4992-894c-fdd7a5a4fa82",
+            "type": "ability",
+            "title": "Prêtre",
+            "description": "Réduisez de 5 le DD des tests de Culture et de Mysticisme effectués pour vous rappeler quelque chose à propos des traditions religieuses, des symboles religieux et des chefs religieux célèbres."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "e1a9a6ad-0c95-4f31-a692-3327c77bb53f",
     "name": "Sans thème",
     "description": "Aucune des catégories décrites ci-dessus ne vous convient vraiment ou vous vous voyez comme une page blanche.",
     "refs": ["base-28"],
-    "abilityScores": { "any": 1 }
+    "abilityScores": { "any": 1 },
+    "advantages": [
+      {
+        "id": "87153034-e406-4e75-babe-03b8a3a0ec05",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "8c7bdc0c-4e1d-4ca5-b378-c0d3ced44766",
+            "type": "classSkill",
+            "target": "any"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "06af112c-7f86-4c5b-bae6-3ae469b646b1",
     "name": "Xéno-chercheur",
     "description": "En voyageant au-delà des frontières de l’espace des Mondes du Pacte, vous vous efforcez d’établir des contacts avec des formes de vie extraterrestres.",
     "refs": ["base-37"],
-    "abilityScores": { "cha": 1 }
+    "abilityScores": { "cha": 1 },
+    "advantages": [
+      {
+        "id": "8db78891-c325-4190-9abe-7aba076fd80c",
+        "level": 1,
+        "name": "Savoir thématique",
+        "components": [
+          {
+            "id": "88ca3ab7-aca7-49f4-b0fa-b7b150a1f4df",
+            "type": "classSkill",
+            "target": "Sciences de la vie"
+          },
+          {
+            "id": "e758cdaf-7b0c-4d28-8dad-554b50b4557a",
+            "type": "ability",
+            "title": "Xéno-chercheur",
+            "description": "Réduisez de 5 le DD des tests de Sciences de la vie effectués pour identifier une créature rare."
+          }
+        ]
+      }
+    ]
   }
 ]
