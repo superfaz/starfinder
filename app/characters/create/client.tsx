@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { Class, Race, Theme } from "../../types";
+import { Class, Component, Race, Theme } from "../../types";
 
 function RaceCard({ race, children }) {
   return (
@@ -59,7 +59,7 @@ function OptionCard({ option, children }) {
   );
 }
 
-function Component({ component }) {
+function Component({ component }: { component: Component }) {
   switch (component.type) {
     case "ability":
       return (
@@ -90,6 +90,26 @@ function Component({ component }) {
         <p>
           <span className="type small">Compétence de classe</span>
           <strong>{component.target}</strong>
+        </p>
+      );
+    case "feat":
+      return (
+        <p>
+          <span className="type small">Don</span>
+          <strong>
+            {component.value > 0 ? "+" : ""}
+            {component.value}
+          </strong>
+        </p>
+      );
+    case "skillRank":
+      return (
+        <p>
+          <span className="type small">Rang de compétence</span>
+          <strong>
+            {component.value > 0 ? "+" : ""}
+            {component.value}
+          </strong>
         </p>
       );
     default:

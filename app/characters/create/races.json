@@ -103,7 +103,14 @@
       {
         "id": "470b64bd-f308-4192-99fd-17656e9bc386",
         "name": "Emplacement d'amélioration",
-        "description": "Les androïdes disposent d’un seul emplacement d’amélioration d’armure pour leur corps. Qu’ils portent ou non une armure physique, ils peuvent utiliser cet emplacement pour installer une amélioration d’armure de n’importe quel type qui peut être installée sur une armure légère."
+        "components": [
+          {
+            "id": "4adda420-bc94-4c18-9b91-99c0dc8a7c58",
+            "type": "ability",
+            "title": "Emplacement d'amélioration",
+            "description": "Les androïdes disposent d’un seul emplacement d’amélioration d’armure pour leur corps. Qu’ils portent ou non une armure physique, ils peuvent utiliser cet emplacement pour installer une amélioration d’armure de n’importe quel type qui peut être installée sur une armure légère."
+          }
+        ]
       }
     ]
   },
@@ -162,12 +169,12 @@
       {
         "id": "da2c4adf-edb8-4f4c-8d8f-f25fced341ed",
         "name": "Don supplémentaire",
-        "description": "Les humains choisissent un don supplémentaire au niveau 1."
+        "components": [{ "id": "63d2b8ec-3868-4fd8-b0c8-3baa3f933434", "type": "feat", "value": 1 }]
       },
       {
         "id": "ceb2713a-636e-4a17-87c2-af82ee5a4a38",
         "name": "Compétent",
-        "description": "Les Humains gagnent un rang de compétences supplémentaire au niveau 1 et un rang supplémentaire à chaque niveau suivant."
+        "components": [{ "id": "25a4565e-8ced-434d-8743-87aac1c0ced9", "type": "skillRank", "value": 1 }]
       }
     ]
   },

@@ -5,9 +5,18 @@ export interface Option {
   abilityScores: Record<string, number>;
 }
 
+export enum ComponentType {
+  ability = "ability",
+  savingThrow = "savingThrow",
+  skill = "skill",
+  classSkill = "classSkill",
+  feat = "feat",
+  skillRank = "skillRank",
+}
+
 export interface Component {
   id: string;
-  type: "ability" | "savingThrow" | "skill" | "classSkill";
+  type: ComponentType;
   title?: string;
   description?: string;
   target?: string;
@@ -57,5 +66,5 @@ export interface Class {
   hitPoints: number;
   staminaPoints: number;
   keyAbilityScore: string | string[];
-  SecondaryAbilityScore: string[];
+  secondaryAbilityScore: string[];
 }
