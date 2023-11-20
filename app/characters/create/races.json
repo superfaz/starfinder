@@ -53,7 +53,7 @@
           {
             "id": "cb513c06-d9ea-44fe-9cbd-9a96ed64223d",
             "type": "savingThrow",
-            "description": "+2 aux jets de sauvegarde contre les maladies, les effets mentaux, le poison et le sommeil sauf si ces effets affectent spécifiquement des créatures artificielles."
+            "description": "+2 contre les maladies, les effets mentaux, le poison et le sommeil sauf si ces effets affectent spécifiquement des créatures artificielles."
           },
           {
             "id": "66b7e04e-9413-47f2-868d-f50e0d9d9a2b",
@@ -71,13 +71,13 @@
             "id": "04537386-ce38-429f-a732-dd71d767aa63",
             "type": "ability",
             "title": "Vision nocturne",
-            "description": "Voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive"
+            "description": "Les androïdes peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive."
           },
           {
             "id": "5a3bfacf-10fe-408e-90c3-81e097b1ceeb",
             "type": "ability",
             "title": "Vision dans le noir",
-            "description": "Voir sur une distance de 18 mètres dans le noir."
+            "description": "Les androïdes peuvent voir sur une distance de 18 mètres dans le noir."
           }
         ]
       },
@@ -169,7 +169,7 @@
       {
         "id": "da2c4adf-edb8-4f4c-8d8f-f25fced341ed",
         "name": "Don supplémentaire",
-        "components": [{ "id": "63d2b8ec-3868-4fd8-b0c8-3baa3f933434", "type": "feat", "value": 1 }]
+        "components": [{ "id": "63d2b8ec-3868-4fd8-b0c8-3baa3f933434", "type": "featCount", "value": 1 }]
       },
       {
         "id": "ceb2713a-636e-4a17-87c2-af82ee5a4a38",
@@ -231,22 +231,56 @@
       {
         "id": "9dd99dd2-9a57-41e6-9de0-e23b8ea215ca",
         "name": "Foulée du désert",
-        "description": "Les kasathas peuvent se déplacer à leur vitesse normale sur un terrain non magique difficile dans les déserts, les collines et les montagnes."
+        "components": [
+          {
+            "id": "0985d4b1-5288-49b3-9c01-b13d438e2f08",
+            "type": "ability",
+            "title": "Foulée du désert",
+            "description": "Les kasathas peuvent se déplacer à leur vitesse normale sur un terrain non magique difficile dans les déserts, les collines et les montagnes."
+          }
+        ]
       },
       {
         "id": "d131ddc2-fcff-4e0a-9f2b-b055644c28c5",
         "name": "Quatre bras",
-        "description": "Les kasathas ont quatre bras ce qui leur permet de bénéficier de quatre mains pour s’équiper et pour manier des armes et des équipements. Bien que leurs bras multiples leur permettent d’augmenter le nombre d’objets qu’ils peuvent avoir prêts à l’emploi, cela n’augmente pas le nombre d’attaques qu’ils peuvent effectuer en combat."
+        "components": [
+          {
+            "id": "59492ac8-29e3-499c-967f-af4e261ea837",
+            "type": "ability",
+            "title": "Quatre bras",
+            "description": "Les kasathas ont quatre bras capables de manier des armes et des équipements. Leurs bras multiples n’augmentent pas le nombre d’attaques qu’ils peuvent effectuer en combat."
+          }
+        ]
       },
       {
         "id": "1114ee16-c64f-4992-84de-cc31a3a62058",
         "name": "Historien",
-        "description": "En raison de leur enseignement approfondi de l’Histoire et du très large éventail de connaissances académiques qu’ils possèdent, les kasathas bénéficient d’un bonus racial de +2 aux tests de Culture."
+        "components": [
+          {
+            "id": "9f674707-c3bc-4c74-8c8d-808933aa0728",
+            "type": "skill",
+            "target": "Culture",
+            "value": 2
+          }
+        ]
       },
       {
         "id": "4baba625-1838-41e9-95e0-fa0bb2cae087",
         "name": "Grâce naturelle",
-        "description": "Les kasathas bénéficient d’un bonus racial de +2 à leurs tests d’Acrobaties et d’Athlétisme."
+        "components": [
+          {
+            "id": "24c2b62d-6cf5-48aa-bd8a-b88cda06d196",
+            "type": "skill",
+            "target": "Acrobaties",
+            "value": 2
+          },
+          {
+            "id": "24c2b62d-6cf5-48aa-bd8a-b88cda06d196",
+            "type": "skill",
+            "target": "Athlétisme",
+            "value": 2
+          }
+        ]
       }
     ]
   },
@@ -312,17 +346,54 @@
       {
         "id": "46a9cb91-a33b-4b46-97d5-2ac959b4a3a1",
         "name": "Magie des lashuntas",
-        "description": "Les lashuntas bénéficient des pouvoirs magiques suivants : À volonté : hébétement, main psychocinétique 1/jour : détection des pensées Voir Les pouvoirs magiques page 262. Le niveau de lanceur de sorts pour ces effets est égal au niveau du lashunta."
+        "components": [
+          {
+            "id": "25386467-1737-4cc7-bd18-c33393aaf210",
+            "type": "spell",
+            "title": "Hébétement"
+          },
+          {
+            "id": "913749a7-b6e5-41f3-a946-5746d74cbff1",
+            "type": "spell",
+            "title": "Main psychocinétique"
+          },
+          {
+            "id": "1a3dd2c4-a98a-4695-90a5-d1b3d16ff410",
+            "type": "spell",
+            "title": "Détection des pensées",
+            "description": "1 fois par jour"
+          }
+        ]
       },
       {
         "id": "6488006c-92b6-44e3-9d31-1d726381b3b9",
         "name": "Télépathie limitée",
-        "description": "Les lashuntas peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun. Dialoguer mentalement avec plusieurs créatures en même temps est tout aussi difficile que de tenter d’écouter plusieurs personnes parler en même temps."
+        "components": [
+          {
+            "id": "d9490af8-e54e-4cf1-8bee-004a2f00399e",
+            "type": "ability",
+            "title": "Télépathie limitée",
+            "description": "Les lashuntas peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun."
+          }
+        ]
       },
       {
         "id": "f3b13f96-aab9-4f63-822b-d3075515ccd6",
         "name": "Etudiant",
-        "description": "Les lashuntas aiment apprendre et ils bénéficient d’un bonus racial de +2 pour deux compétences de leur choix."
+        "components": [
+          {
+            "id": "5562c539-6dad-491e-a62d-5f08f3f5ea5e",
+            "type": "skill",
+            "target": "Any",
+            "value": 2
+          },
+          {
+            "id": "04e34839-4742-4c1d-a65a-762572cd87f0",
+            "type": "skill",
+            "target": "Any",
+            "value": 2
+          }
+        ]
       }
     ]
   },
@@ -376,22 +447,46 @@
       {
         "id": "47133266-e09f-42ef-a8ed-df8541aff715",
         "name": "Perception aveugle",
-        "description": "Les antennes sensibles des shirrens leur octroient le pouvoir de perception aveugle (vibration) qui leur permet de percevoir les vibrations dans l’air dans un rayon de 9 mètres. Quand il tente un test de Perception opposé au test de Discrétion d’une créature, le shirren ignore les bonus de Discrétion accordés par n’importe quel camouflage visuel, par l’invisibilité et par des effets similaires. Même en cas de test de Perception réussi, un adversaire qui ne peut être vu bénéficie tout de même d’un camouflage total (50 % de chances de rater) contre un shirren et ce dernier a toujours les mêmes probabilités de rater quand il attaque des adversaires bénéficiant d’un camouflage. Un shirren est tout de même pris par surprise face à des attaques effectuées par des créatures qu’il ne peut pas voir."
+        "components": [
+          {
+            "id": "",
+            "type": "ability",
+            "title": "Perception aveugle (vibration - 9m)",
+            "description": "Les antennes sensibles des shirrens leur octroient le pouvoir de perception aveugle (vibration) qui leur permet de percevoir les vibrations dans l’air dans un rayon de 9 mètres. Quand il tente un test de Perception opposé au test de Discrétion d’une créature, le shirren ignore les bonus de Discrétion accordés par n’importe quel camouflage visuel, par l’invisibilité et par des effets similaires."
+          }
+        ]
       },
       {
         "id": "1441c348-c5de-4e2a-ac9e-0ab02ff91892",
         "name": "Communautarisme",
-        "description": "Les shirrens sont habitués à travailler en équipes. Une fois par jour, tant qu’un allié est situé à 3 mètres ou moins, un shirren peut effectuer deux fois un seul jet d’attaque ou test de compétence et choisir le meilleur résultat."
+        "components": [
+          {
+            "id": "7b838368-1259-49e3-b6f9-2eaf7b8f8cc4",
+            "type": "ability",
+            "title": "Communautarisme",
+            "description": "Une fois par jour, tant qu’un allié est situé à 3 mètres ou moins, un shirren peut effectuer deux fois un seul jet d’attaque ou test de compétence et choisir le meilleur résultat."
+          }
+        ]
       },
       {
         "id": "dde699b9-3055-4a38-b113-96c5958c1b1a",
         "name": "Fascination culturelle",
-        "description": "Les shirrens sont passionnés par les nouvelles cultures et les nouvelles sociétés. Ils bénéficient d’un bonus racial de +2 à leurs tests de Culture et de Diplomatie."
+        "components": [
+          { "id": "68a49a21-f50c-4dbe-93e9-5ef2f460d6d5", "type": "skill", "target": "Culture", "value": 2 },
+          { "id": "f7e8f80d-f83e-4643-8a1a-4884a0553639", "type": "skill", "target": "Diplomatie", "value": 2 }
+        ]
       },
       {
         "id": "295c7545-40b5-4c77-bf7c-720015d54b3e",
         "name": "Téléphathie limitée",
-        "description": "Les shirrens peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun. Dialoguer mentalement avec plusieurs créatures en même temps est tout aussi difficile que de tenter d’écouter plusieurs personnes parler en même temps."
+        "components": [
+          {
+            "id": "6d5d172f-c987-47d7-85cd-2b6b8686e55b",
+            "type": "ability",
+            "title": "Télépathie limitée",
+            "description": "Les shirrens peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun."
+          }
+        ]
       }
     ]
   },
@@ -444,22 +539,57 @@
       {
         "id": "2aea0fee-90b5-4950-a478-a80f968db158",
         "name": "Expert en armure",
-        "description": "Les vesks utilisent les armures de manière à compléter leur robuste physiologie. Quand ils portent une armure, ils bénéficient d’un bonus racial de +1 à leur CA. Quand ils sont équipés d’une armure lourde, leur malus d’armure aux tests est réduit de 1 point."
+        "components": [
+          {
+            "id": "91668a52-2700-4343-b0ea-741eedbde647",
+            "type": "ability",
+            "title": "Expert en armure",
+            "description": "Les vesks utilisent les armures de manière à compléter leur robuste physiologie. Quand ils portent une armure, ils bénéficient d’un bonus racial de +1 à leur CA. Quand ils sont équipés d’une armure lourde, leur malus d’armure aux tests est réduit de 1 point."
+          }
+        ]
       },
       {
         "id": "0c3faf4d-73dd-454d-980e-028aff761272",
         "name": "Intrépide",
-        "description": "Les vesks bénéficient d’un bonus racial de +2 aux jets de sauvegarde contre les effets de terreur."
+        "components": [
+          {
+            "id": "466de7a5-aa27-4047-862e-a26fabaa14a8",
+            "type": "savingThrow",
+            "title": "Intrépide",
+            "description": "+2 contre les effets de terreur."
+          }
+        ]
       },
       {
         "id": "be1f9450-8d42-4251-9e5f-6ff784f4814f",
         "name": "Vision nocturne",
-        "description": "Les vesks peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive. Pour plus de détails, voir page 265."
+        "components": [
+          {
+            "id": "9890d63d-f10c-4e6a-90b7-7d72f3681ca4",
+            "type": "ability",
+            "title": "Vision nocturne",
+            "description": "Les vesks peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive."
+          }
+        ]
       },
       {
         "id": "5181e460-0ddb-425d-a28c-714ff599db01",
         "name": "Armes naturelles",
-        "description": "Les vesks sont toujours considérés comme armés. Ils peuvent infliger 1d3 points de dégâts létaux en combat à mains nues et l’attaque n’est pas considérée comme archaïque. Au niveau 3, ils bénéficient d’une Spécialisation martiale propre à leurs armes naturelles ce qui leur permet d’ajouter à leurs dés de dégâts un bonus de 1,5 × le niveau du personnage avec ces armes (au lieu de juste ajouter leur seul niveau comme d’habitude)."
+        "components": [
+          {
+            "id": "3e964c5d-cb72-4cf0-9b15-feb393db1396",
+            "type": "ability",
+            "title": "Armes naturelles",
+            "description": "Les vesks sont toujours considérés comme armés. Ils peuvent infliger 1d3 points de dégâts létaux en combat à mains nues et l’attaque n’est pas considérée comme archaïque."
+          },
+          {
+            "id": "3e964c5d-cb72-4cf0-9b15-feb393db1396",
+            "type": "feat",
+            "level": 3,
+            "title": "Spécialisation martiale (Armes naturelles)",
+            "description": "Les vesks ajoutent un bonus de 1,5 × le niveau du personnage à leurs dés de dégâts pour leurs armes naturelles."
+          }
+        ]
       }
     ]
   },
@@ -500,22 +630,75 @@
       {
         "id": "36564346-5d94-462a-8b72-0581c646b5e1",
         "name": "Abajoues",
-        "description": "Les ysokis peuvent stocker dans leurs abajoues jusqu’à 30 cm cubes d’objets pour un volume transportable total de 1. De plus, avec une action rapide ils peuvent transférer un seul objet entre une de leurs mains et leurs abajoues. Un ysoki peut régurgiter par terre, dans sa case, tout le contenu de ses abajoues avec une action de déplacement qui ne provoque pas d’attaques d’opportunité."
+        "components": [
+          {
+            "id": "4f0cb555-d207-4f98-a7c2-1ef78bfe1cf8",
+            "type": "ability",
+            "title": "Ahajoues",
+            "description": "Les ysokis peuvent stocker dans leurs abajoues jusqu’à 30 cm cubes d’objets pour un volume transportable total de 1. De plus, avec une action rapide ils peuvent transférer un seul objet entre une de leurs mains et leurs abajoues. Un ysoki peut régurgiter par terre, dans sa case, tout le contenu de ses abajoues avec une action de déplacement qui ne provoque pas d’attaques d’opportunité."
+          }
+        ]
       },
       {
         "id": "0b6f463b-701d-47c4-9246-a0c2896f1b3e",
         "name": "Vision dans le noir",
-        "description": "Les ysokis peuvent voir sur une distance de 18 mètres dans le noir. Voir page 264 pour plus d’informations."
+        "components": [
+          {
+            "id": "f34d1543-7dca-4cd2-ad2b-2a8e4b8836a6",
+            "type": "ability",
+            "title": "Vision dans le noir",
+            "description": "Les ysokis peuvent voir sur une distance de 18 mètres dans le noir."
+          }
+        ]
       },
       {
         "id": "52e9b33a-c7a8-4dba-bb40-ed3c916ddb5d",
         "name": "Dynamique",
-        "description": "Les ysokis sont combatifs et agiles même quand les probabilités sont contre eux. Un ysoki peut se redresser alors qu’il est à terre en une action rapide. De plus, quand il est en apesanteur (voir pages 275), un ysoki ne subit pas les pénalités normales pour attaquer et il n’est pas considéré comme pris au dépourvu. Quand il tente un test d’Acrobaties pour traverser l’espace d’un adversaire d’au moins une catégorie de taille supérieure à la sienne, un ysoki bénéficie d’un bonus racial de +5 au test."
+        "description": "Les ysokis sont combatifs et agiles même quand les probabilités sont contre eux.",
+        "components": [
+          {
+            "id": "ef015eda-f62c-46b4-a691-91592693ff81",
+            "type": "ability",
+            "title": "A terre",
+            "description": "Un ysoki peut se redresser alors qu’il est à terre en une action rapide."
+          },
+          {
+            "id": "3ecf3c0c-fbe5-47fd-9344-0f2f3b301c43",
+            "type": "ability",
+            "title": "Apesanteur",
+            "description": "De plus, quand il est en apesanteur, un ysoki ne subit pas les pénalités normales pour attaquer et il n’est pas considéré comme pris au dépourvu."
+          },
+          {
+            "id": "7a368f3f-4926-46ad-935b-e2316d45012d",
+            "type": "ability",
+            "title": "Dynamique",
+            "description": "Quand il tente un test d’Acrobaties pour traverser l’espace d’un adversaire d’au moins une catégorie de taille supérieure à la sienne, un ysoki bénéficie d’un bonus racial de +5 au test."
+          }
+        ]
       },
       {
         "id": "bb77e446-8197-4ccd-ae28-31763675e931",
         "name": "Débrouillard",
-        "description": "Les ysokis bénéficient d’un bonus racial de +2 pour les tests d’Ingénierie, de Discrétion et de Survi "
+        "components": [
+          {
+            "id": "13d05654-81d4-4166-ad7e-540e9d0d59a7",
+            "type": "skill",
+            "target": "Ingénierie",
+            "value": 2
+          },
+          {
+            "id": "4bda69d1-57c4-4948-bd7a-a73d86ba3daa",
+            "type": "skill",
+            "target": "Discrétion",
+            "value": 2
+          },
+          {
+            "id": "b6e23758-ee2c-419f-8668-f090d2c5220a",
+            "type": "skill",
+            "target": "Survie",
+            "value": 2
+          }
+        ]
       }
     ]
   }

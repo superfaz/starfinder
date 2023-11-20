@@ -9,7 +9,9 @@ export enum ComponentType {
   ability = "ability",
   savingThrow = "savingThrow",
   skill = "skill",
+  spell = "spell",
   classSkill = "classSkill",
+  featCount = "featCount",
   feat = "feat",
   skillRank = "skillRank",
 }
@@ -17,6 +19,7 @@ export enum ComponentType {
 export interface Component {
   id: string;
   type: ComponentType;
+  level?: number;
   title?: string;
   description?: string;
   target?: string;

@@ -81,7 +81,8 @@ function Component({ component }: { component: Component }) {
         <p>
           <span className="type small">Compétence</span>
           <strong>
-            {component.target} {component.value}
+            {component.target} {component.value > 0 ? "+" : ""}
+            {component.value}
           </strong>
         </p>
       );
@@ -92,14 +93,23 @@ function Component({ component }: { component: Component }) {
           <strong>{component.target}</strong>
         </p>
       );
-    case "feat":
+    case "featCount":
       return (
         <p>
-          <span className="type small">Don</span>
+          <span className="type small">Nombre de Dons</span>
           <strong>
             {component.value > 0 ? "+" : ""}
             {component.value}
           </strong>
+        </p>
+      );
+    case "feat":
+      return (
+        <p>
+          <span className="type small">Don</span>
+          <span className="type small">Niveau 3</span>
+          <strong className="me-1">{component.title}.</strong>
+          <span className="text-muted">{component.description}</span>
         </p>
       );
     case "skillRank":
@@ -112,9 +122,37 @@ function Component({ component }: { component: Component }) {
           </strong>
         </p>
       );
+    case "spell":
+      return (
+        <p>
+          <span className="type small">Sort</span>
+          <strong>{component.title}</strong>
+          {component.description && <span className="ms-1 text-muted">{component.description}</span>}
+        </p>
+      );
     default:
       return null;
   }
+}
+function bookTitle(bookCode: string) {
+  switch (bookCode) {
+    case "base":
+      return "Livre de règles";
+    default:
+      return "Inconnu";
+  }
+}
+
+function Reference({ refs }: { refs: string[] }) {
+  return refs
+    .map((ref) => {
+      return { book: ref.split("-")[0], page: ref.split("-")[1] };
+    })
+    .map((ref, index) => (
+      <div className="ref" key={index}>
+        {bookTitle(ref.book)} - page {ref.page}
+      </div>
+    ));
 }
 
 interface ClientComponentProps {

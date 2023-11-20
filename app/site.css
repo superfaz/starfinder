@@ -55,6 +55,7 @@ h3,
  * Custom styles for .type and .stats
  */
 .type::before,
+.ref::before,
 .stats span::before {
   transform: skew(-20deg);
   background-color: #cc381b;
@@ -68,13 +69,18 @@ h3,
 }
 
 .type,
+.ref,
 .stats span {
   position: relative;
-  text-transform: uppercase;
-  font-weight: bold;
   padding-left: 0.5em;
   padding-right: 0.75em;
   margin-right: 0.5em;
+}
+
+.type,
+.stats span {
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .stats span.down::before {
@@ -85,4 +91,14 @@ h3,
   text-align: right;
   margin-left: 1em;
   margin-bottom: 0.5em;
+}
+
+.ref {
+  margin-top: 0.25em;
+  display: inline-block;
+}
+
+.ref::before {
+  border: 1px solid #eee;
+  background-color: transparent;
 }
