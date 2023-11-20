@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa&family=Orbitron&display=block");
+@use "bootstrap/scss/bootstrap.scss";
+
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
 /**
   * Add support to button attached to a form-floating element.
@@ -54,11 +56,14 @@ h3,
 /**
  * Custom styles for .type and .stats
  */
-.type::before,
-.ref::before,
-.stats span::before {
+.hstack {
+  :first-child {
+    margin-left: auto;
+  }
+}
+
+.badge::before {
   transform: skew(-20deg);
-  background-color: #cc381b;
   content: "";
   position: absolute;
   left: 0;
@@ -68,29 +73,31 @@ h3,
   z-index: -1000;
 }
 
-.type,
-.ref,
-.stats span {
+.badge {
+  --bs-badge-font-size: 0.875em;
   position: relative;
   padding-left: 0.5em;
   padding-right: 0.75em;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: var(--bs-line-height);
   margin-right: 0.5em;
-}
-
-.type,
-.stats span {
   text-transform: uppercase;
   font-weight: bold;
 }
 
-.stats span.down::before {
-  background-color: #245883;
+.badge.bg-primary {
+  --bs-bg-opacity: 0;
+  &::before {
+    background-color: #cc381b;
+  }
 }
 
-.stats {
-  text-align: right;
-  margin-left: 1em;
-  margin-bottom: 0.5em;
+.badge.bg-secondary {
+  --bs-bg-opacity: 0;
+  &::before {
+    background-color: #245883;
+  }
 }
 
 .ref {

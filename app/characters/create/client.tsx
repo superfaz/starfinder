@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Badge, Button, Card, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { Class, Component, Race, Theme } from "../../types";
 
 function RaceCard({ race, children }) {
@@ -64,7 +64,7 @@ function Component({ component }: { component: Component }) {
     case "ability":
       return (
         <p>
-          <span className="type small">Pouvoir</span>
+          <Badge bg="primary">Pouvoir</Badge>
           {component.title && <strong className="me-1">{component.title}.</strong>}
           <span className="text-muted">{component.description}</span>
         </p>
@@ -72,14 +72,14 @@ function Component({ component }: { component: Component }) {
     case "savingThrow":
       return (
         <p>
-          <span className="type small">Jets de sauvegarde</span>
+          <Badge bg="primary">Jets de sauvegarde</Badge>
           <span className="text-muted">{component.description}</span>
         </p>
       );
     case "skill":
       return (
         <p>
-          <span className="type small">Compétence</span>
+          <Badge bg="primary">Compétence</Badge>
           <strong>
             {component.target} {component.value > 0 ? "+" : ""}
             {component.value}
@@ -89,14 +89,14 @@ function Component({ component }: { component: Component }) {
     case "classSkill":
       return (
         <p>
-          <span className="type small">Compétence de classe</span>
+          <Badge bg="primary">Compétence de classe</Badge>
           <strong>{component.target}</strong>
         </p>
       );
     case "featCount":
       return (
         <p>
-          <span className="type small">Nombre de Dons</span>
+          <Badge bg="primary">Nombre de Dons</Badge>
           <strong>
             {component.value > 0 ? "+" : ""}
             {component.value}
@@ -106,8 +106,8 @@ function Component({ component }: { component: Component }) {
     case "feat":
       return (
         <p>
-          <span className="type small">Don</span>
-          <span className="type small">Niveau 3</span>
+          <Badge bg="primary">Don</Badge>
+          {component.level && component.level > 1 && <Badge bg="primary">Niveau {component.level}</Badge>}
           <strong className="me-1">{component.title}.</strong>
           <span className="text-muted">{component.description}</span>
         </p>
@@ -115,7 +115,7 @@ function Component({ component }: { component: Component }) {
     case "skillRank":
       return (
         <p>
-          <span className="type small">Rang de compétence</span>
+          <Badge bg="primary">Rang de compétence</Badge>
           <strong>
             {component.value > 0 ? "+" : ""}
             {component.value}
@@ -125,7 +125,7 @@ function Component({ component }: { component: Component }) {
     case "spell":
       return (
         <p>
-          <span className="type small">Sort</span>
+          <Badge bg="primary">Sort</Badge>
           <strong>{component.title}</strong>
           {component.description && <span className="ms-1 text-muted">{component.description}</span>}
         </p>
@@ -133,26 +133,6 @@ function Component({ component }: { component: Component }) {
     default:
       return null;
   }
-}
-function bookTitle(bookCode: string) {
-  switch (bookCode) {
-    case "base":
-      return "Livre de règles";
-    default:
-      return "Inconnu";
-  }
-}
-
-function Reference({ refs }: { refs: string[] }) {
-  return refs
-    .map((ref) => {
-      return { book: ref.split("-")[0], page: ref.split("-")[1] };
-    })
-    .map((ref, index) => (
-      <div className="ref" key={index}>
-        {bookTitle(ref.book)} - page {ref.page}
-      </div>
-    ));
 }
 
 interface ClientComponentProps {
@@ -206,7 +186,7 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
     <Row>
       <Col>
         <h2>Profil</h2>
-        <Form.FloatingLabel className="mb-3" controlId="race" label="Race">
+        <Form.FloatingLabel controlId="race" label="Race">
           <Form.Select defaultValue={races[0].id} onChange={handleRaceChange}>
             {races.map((race) => (
               <option key={race.id} value={race.id}>
@@ -215,14 +195,14 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
             ))}
           </Form.Select>
         </Form.FloatingLabel>
-        <div className="stats">
-          <span>PV +{selectedRace.hitPoints}</span>
-        </div>
-        <p className="text-muted">{races.find((r) => r.id === selectedRace.id).description}</p>
+        <Stack direction="horizontal" className="mt-2">
+          <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
+        </Stack>
+        <p className="text-muted mt-2">{races.find((r) => r.id === selectedRace.id).description}</p>
 
         {selectedRace && selectedRace.options && (
           <>
-            <Form.FloatingLabel className="mb-3" controlId="option" label="Variante">
+            <Form.FloatingLabel controlId="option" label="Variante">
               <Form.Select value={selectedOption.id} onChange={handleOptionChange}>
                 {selectedRace.options.map((option, index) => (
                   <option key={index} value={option.id}>
@@ -231,14 +211,14 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
                 ))}
               </Form.Select>
             </Form.FloatingLabel>
-            <div className="stats">
+            <Stack direction="horizontal" className="mt-2">
               {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
-                <span key={key} className={value > 0 ? null : "down"}>
+                <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
                   {key} {value > 0 ? "+" : ""}
                   {value}
-                </span>
+                </Badge>
               ))}
-            </div>
+            </Stack>
             <p className="text-muted">{selectedOption.description}</p>
           </>
         )}
@@ -252,7 +232,7 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
           </Button>
         </InputGroup>
 
-        <Form.FloatingLabel className="mb-3" controlId="theme" label="Thème">
+        <Form.FloatingLabel controlId="theme" label="Thème">
           <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
             {themes.map((theme) => (
               <option key={theme.id} value={theme.id}>
@@ -261,17 +241,17 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
             ))}
           </Form.Select>
         </Form.FloatingLabel>
-        <div className="stats">
+        <Stack direction="horizontal" className="mt-2">
           {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
-            <span key={key} className={value > 0 ? null : "down"}>
+            <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
               {key} {value > 0 ? "+" : ""}
               {value}
-            </span>
+            </Badge>
           ))}
-        </div>
+        </Stack>
         <p className="text-muted">{selectedTheme.description}</p>
 
-        <Form.FloatingLabel className="mb-3" controlId="class" label="Classe">
+        <Form.FloatingLabel controlId="class" label="Classe">
           <Form.Select value={selectedClass.id} onChange={handleClassChange}>
             {classes.map((classType) => (
               <option key={classType.id} value={classType.id}>
@@ -280,11 +260,11 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
             ))}
           </Form.Select>
         </Form.FloatingLabel>
-        <div className="stats">
-          <span>{selectedClass.keyAbilityScore}</span>
-          <span>EN +{selectedClass.staminaPoints}</span>
-          <span>PV +{selectedClass.hitPoints}</span>
-        </div>
+        <Stack direction="horizontal" className="mt-2">
+          <Badge bg="primary">{selectedClass.keyAbilityScore}</Badge>
+          <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
+          <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
+        </Stack>
         <p className="text-muted">{selectedClass.description}</p>
       </Col>
       <Col>
