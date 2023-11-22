@@ -7,7 +7,26 @@
     "hitPoints": 6,
     "staminaPoints": 6,
     "keyAbilityScore": "dex",
-    "secondaryAbilityScore": ["int", "cha"]
+    "secondaryAbilityScore": ["int", "cha"],
+    "skillRank": 8,
+    "classSkills": [
+      "acro",
+      "athl",
+      "bluf",
+      "cult",
+      "disg",
+      "stea",
+      "slei",
+      "comp",
+      "engi",
+      "inti",
+      "medi",
+      "perc",
+      "pilo",
+      "prof",
+      "sens",
+      "surv"
+    ]
   },
   {
     "id": "8a850480-0b1b-4bb3-8788-2f28fddbdf81",
@@ -17,7 +36,26 @@
     "hitPoints": 6,
     "staminaPoints": 6,
     "keyAbilityScore": "cha",
-    "secondaryAbilityScore": ["dex", "int"]
+    "secondaryAbilityScore": ["dex", "int"],
+    "skillRank": 8,
+    "classSkills": [
+      "acro",
+      "athl",
+      "bluf",
+      "cult",
+      "disg",
+      "dipl",
+      "stea",
+      "slei",
+      "comp",
+      "engi",
+      "inti",
+      "medi",
+      "perc",
+      "pilo",
+      "prof",
+      "sens"
+    ]
   },
   {
     "id": "2d24dd35-8dc9-4f73-87d6-811eb35dcdc2",
@@ -27,7 +65,18 @@
     "hitPoints": 6,
     "staminaPoints": 6,
     "keyAbilityScore": "int",
-    "secondaryAbilityScore": ["dex"]
+    "secondaryAbilityScore": ["dex"],
+    "skillRank": 4,
+    "classSkills": [
+      "athl",
+      "comp",
+      "engi",
+      "medi",
+      "perc",
+      "pilo",
+      "prof",
+      "phys"
+    ]
   },
   {
     "id": "52df8d51-6317-4f78-a9fa-af91b23b9ab6",
@@ -37,7 +86,21 @@
     "hitPoints": 6,
     "staminaPoints": 6,
     "keyAbilityScore": "sag",
-    "secondaryAbilityScore": ["cha"]
+    "secondaryAbilityScore": ["cha"],
+    "skillRank": 6,
+    "classSkills": [
+      "bluf",
+      "cult",
+      "disg",
+      "dipl",
+      "inti",
+      "medi",
+      "myst",
+      "perc",
+      "sens",
+      "life",
+      "surv"
+    ]
   },
   {
     "id": "6094e6a5-031f-4e08-abdc-84f643bd596b",
@@ -47,7 +110,19 @@
     "hitPoints": 7,
     "staminaPoints": 7,
     "keyAbilityScore": "cha",
-    "secondaryAbilityScore": ["for"]
+    "secondaryAbilityScore": ["for"],
+    "skillRank": 4,
+    "classSkills": [
+      "acro",
+      "athl",
+      "dipl",
+      "stea",
+      "inti",
+      "myst",
+      "prof",
+      "sens",
+      "phys"
+    ]
   },
   {
     "id": "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab",
@@ -57,7 +132,18 @@
     "hitPoints": 7,
     "staminaPoints": 7,
     "keyAbilityScore": ["for", "dex"],
-    "secondaryAbilityScore": ["con"]
+    "secondaryAbilityScore": ["con"],
+    "skillRank": 4,
+    "classSkills": [
+      "acro",
+      "athl",
+      "engi",
+      "inti",
+      "medi",
+      "pilo",
+      "prof",
+      "surv"
+    ]
   },
   {
     "id": "38e548f3-7df9-44ab-a32e-4cddd0be4a21",
@@ -67,6 +153,17 @@
     "hitPoints": 5,
     "staminaPoints": 5,
     "keyAbilityScore": "int",
-    "secondaryAbilityScore": ["dex"]
+    "secondaryAbilityScore": ["dex"],
+    "skillRank": 4,
+    "classSkills": [
+      "slei",
+      "comp",
+      "engi",
+      "myst",
+      "pilo",
+      "prof",
+      "life",
+      "phys"
+    ]
   }
 ]

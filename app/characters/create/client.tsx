@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
-import { Class, Component, Race, Theme } from "../../types";
+import { Class, Component, Race, Skill, Theme } from "../../types";
 
 function RaceCard({ race, children }) {
   return (
@@ -139,14 +139,15 @@ interface ClientComponentProps {
   races: Race[];
   themes: Theme[];
   classes: Class[];
+  skills: Skill[];
 }
 
-export function ClientComponent({ races, themes, classes }: ClientComponentProps) {
+export function ClientComponent({ races, themes, classes, skills }: ClientComponentProps) {
   const [selectedRace, updateSelectedRace] = useState(races[0]);
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
-  const [name, updateName] = useState("");
   const [selectedTheme, updateSelectedTheme] = useState(themes[0]);
   const [selectedClass, updateSelectedClass] = useState(classes[0]);
+  const [name, updateName] = useState("");
 
   function handleRaceChange(e) {
     let id = e.target.value;
@@ -219,7 +220,7 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
                 </Badge>
               ))}
             </Stack>
-            <p className="text-muted">{selectedOption.description}</p>
+            <p className="text-muted mt-2">{selectedOption.description}</p>
           </>
         )}
 
@@ -249,7 +250,7 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
             </Badge>
           ))}
         </Stack>
-        <p className="text-muted">{selectedTheme.description}</p>
+        <p className="text-muted mt-2">{selectedTheme.description}</p>
 
         <Form.FloatingLabel controlId="class" label="Classe">
           <Form.Select value={selectedClass.id} onChange={handleClassChange}>
@@ -265,7 +266,7 @@ export function ClientComponent({ races, themes, classes }: ClientComponentProps
           <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
           <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
         </Stack>
-        <p className="text-muted">{selectedClass.description}</p>
+        <p className="text-muted mt-2">{selectedClass.description}</p>
       </Col>
       <Col>
         <picture>

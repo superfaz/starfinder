@@ -71,3 +71,11 @@ export interface Class {
   keyAbilityScore: string | string[];
   secondaryAbilityScore: string[];
 }
+
+export interface Skill {
+  code: string;
+  name: string;
+  abilityScore: string;
+  trainedOnly: boolean;
+  armorCheckPenalty: boolean;
+}
