@@ -79,3 +79,9 @@ export interface Skill {
   trainedOnly: boolean;
   armorCheckPenalty: boolean;
 }
+
+export interface AbilityScore {
+  id: string;
+  code: string;
+  name: string;
+}

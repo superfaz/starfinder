@@ -1,6 +1,6 @@
 [
   {
-    "id": "6a62cb06-21f0-4534-8aaf-15e91fd7d1ed",
+    "id": "androids",
     "name": "Androïdes",
     "description": "Personnes artificielles composées d’éléments mécaniques, autrefois construites pour en faire des serviteurs mais à présent reconnues comme citoyens à part entière.",
     "refs": ["base-42"],
@@ -115,14 +115,14 @@
     ]
   },
   {
-    "id": "51e8977b-8c8d-4229-9ed1-a7d7e712f7c8",
+    "id": "humans",
     "name": "Humains",
     "description": "Race extrêmement polyvalente et capable de s’adapter dont les membres n’ont de cesse d’explorer et de se répandre.",
     "refs": ["base-44"],
     "hitPoints": 4,
     "options": [
       {
-        "id": "f3a2f0ee-97b8-4b76-9a22-6dcb7b6e8f10",
+        "id": "standard",
         "name": "Standard",
         "description": "",
         "abilityScores": { "any": 2 }
@@ -179,7 +179,7 @@
     ]
   },
   {
-    "id": "84a294e4-18ef-4082-b277-95ef76d689d9",
+    "id": "kasathas",
     "name": "Kasathas",
     "description": "Race dotée d’une culture très traditionnelle dont les membres à quatre bras sont originaires d’un monde désertique lointain.",
     "refs": ["base-46"],
@@ -285,7 +285,7 @@
     ]
   },
   {
-    "id": "b8086c81-31ba-486b-ada0-d1fb2f867c25",
+    "id": "lashuntas",
     "name": "Lashuntas",
     "description": "Race d’érudits charismatiques aux pouvoirs télépathiques composée de deux sous-espèces : les membres de la première sont grands et élancés, les autres sont petits et musculeux.",
     "refs": ["base-48"],
@@ -398,7 +398,7 @@
     ]
   },
   {
-    "id": "5cb35c2a-1a4f-4a68-b60f-ade5b38979aa",
+    "id": "shirrens",
     "name": "Shirrens",
     "description": "Race insectoïde semblable aux locustes dont les membres ont quitté leur ruche. Ils ont normalement l’esprit communautaire mais apprécient les choix individuels au point d’y être accro.",
     "refs": ["base-50"],
@@ -491,7 +491,7 @@
     ]
   },
   {
-    "id": "0642b12f-7b6e-4e13-b27b-e595375be9eb",
+    "id": "vesks",
     "name": "Vesks",
     "description": "Race de reptiliens belliqueux qui ont récemment déclaré une trêve avec les autres races – pour le moment.",
     "refs": ["base-52"],
@@ -594,7 +594,7 @@
     ]
   },
   {
-    "id": "d65139e8-39ce-4b4c-85f8-0338e8782477",
+    "id": "ysokis",
     "name": "Ysokis",
     "description": "Egalement appelés « hommes-rats », ces petits récupérateurs recouverts de fourrure compensent leur petite taille par une personnalité affirmée.",
     "refs": ["base-54"],

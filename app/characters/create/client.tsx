@@ -1,63 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Badge, Button, Card, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
-import { Class, Component, Race, Skill, Theme } from "../../types";
-
-function RaceCard({ race, children }) {
-  return (
-    <Col>
-      <Card className="h-100">
-        <Row>
-          <Col xs={4}>
-            <Card.Img src={"/" + race.id + "-mini.png"} />
-          </Col>
-          <Col xs={8}>
-            <Card.Body>
-              <Card.Title>{race.name}</Card.Title>
-              <Card.Text>{race.description}</Card.Text>
-              {children}
-            </Card.Body>
-          </Col>
-        </Row>
-      </Card>
-    </Col>
-  );
-}
-
-interface ModifiersProps {
-  modifiers: Record<string, number>;
-}
-
-function Modifiers({ modifiers }: ModifiersProps) {
-  return (
-    <div className="modifiers position-absolute top-0 end-0">
-      {Object.entries(modifiers).map(([key, value]) => (
-        <span key={key} className="badge bg-secondary me-1">
-          {key} {value > 0 ? "+" : ""}
-          {value}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function OptionCard({ option, children }) {
-  return (
-    <Col>
-      <Card className="h-100">
-        <Card.Body>
-          <Card.Title>{option.name}</Card.Title>
-          <Card.Text>
-            <Modifiers modifiers={option.modifiers} />
-            {option.description}
-          </Card.Text>
-          {children}
-        </Card.Body>
-      </Card>
-    </Col>
-  );
-}
+import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
+import { AbilityScore, Class, Component, Race, Skill, Theme } from "../../types";
 
 function Component({ component }: { component: Component }) {
   switch (component.type) {
@@ -140,9 +85,10 @@ interface ClientComponentProps {
   themes: Theme[];
   classes: Class[];
   skills: Skill[];
+  abilityScores: AbilityScore[];
 }
 
-export function ClientComponent({ races, themes, classes, skills }: ClientComponentProps) {
+export function ClientComponent({ races, themes, classes, skills, abilityScores }: ClientComponentProps) {
   const [selectedRace, updateSelectedRace] = useState(races[0]);
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
   const [selectedTheme, updateSelectedTheme] = useState(themes[0]);
@@ -196,12 +142,11 @@ export function ClientComponent({ races, themes, classes, skills }: ClientCompon
             ))}
           </Form.Select>
         </Form.FloatingLabel>
-        <Stack direction="horizontal" className="mt-2">
+        <Stack direction="horizontal" className="my-2">
           <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
         </Stack>
-        <p className="text-muted mt-2">{races.find((r) => r.id === selectedRace.id).description}</p>
-
-        {selectedRace && selectedRace.options && (
+        <p className="text-muted">{races.find((r) => r.id === selectedRace.id).description}</p>
+        {selectedRace.options && (
           <>
             <Form.FloatingLabel controlId="option" label="Variante">
               <Form.Select value={selectedOption.id} onChange={handleOptionChange}>
@@ -212,7 +157,7 @@ export function ClientComponent({ races, themes, classes, skills }: ClientCompon
                 ))}
               </Form.Select>
             </Form.FloatingLabel>
-            <Stack direction="horizontal" className="mt-2">
+            <Stack direction="horizontal" className="my-2">
               {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
                 <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
                   {key} {value > 0 ? "+" : ""}
@@ -220,18 +165,22 @@ export function ClientComponent({ races, themes, classes, skills }: ClientCompon
                 </Badge>
               ))}
             </Stack>
-            <p className="text-muted mt-2">{selectedOption.description}</p>
+            {selectedRace.id === "humans" && selectedOption.id === "standard" && (
+              <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
+                <Form.Select>
+                  {abilityScores.map((abilityScore) => (
+                    <option key={abilityScore.id} value={abilityScore.id}>
+                      {abilityScore.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.FloatingLabel>
+            )}
+            {selectedOption.description && <p className="text-muted">{selectedOption.description}</p>}
           </>
         )}
 
-        <InputGroup>
-          <Form.FloatingLabel className="mb-3" controlId="name" label="Nom du personnage">
-            <Form.Control type="text" value={name} onChange={handleNameChange} />
-          </Form.FloatingLabel>
-          <Button variant="outline-secondary" onClick={handleRandomizeName}>
-            <i className="bi-shuffle"></i>
-          </Button>
-        </InputGroup>
+        <hr />
 
         <Form.FloatingLabel controlId="theme" label="Thème">
           <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
@@ -252,6 +201,8 @@ export function ClientComponent({ races, themes, classes, skills }: ClientCompon
         </Stack>
         <p className="text-muted mt-2">{selectedTheme.description}</p>
 
+        <hr />
+
         <Form.FloatingLabel controlId="class" label="Classe">
           <Form.Select value={selectedClass.id} onChange={handleClassChange}>
             {classes.map((classType) => (
@@ -267,6 +218,15 @@ export function ClientComponent({ races, themes, classes, skills }: ClientCompon
           <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
         </Stack>
         <p className="text-muted mt-2">{selectedClass.description}</p>
+
+        <InputGroup>
+          <Form.FloatingLabel className="mb-3" controlId="name" label="Nom du personnage">
+            <Form.Control type="text" value={name} onChange={handleNameChange} />
+          </Form.FloatingLabel>
+          <Button variant="outline-secondary" onClick={handleRandomizeName}>
+            <i className="bi-shuffle"></i>
+          </Button>
+        </InputGroup>
       </Col>
       <Col>
         <picture>

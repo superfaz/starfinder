@@ -1,0 +1,32 @@
+[
+  {
+    "id": "str",
+    "code": "FOR",
+    "name": "Force"
+  },
+  {
+    "id": "dex",
+    "code": "DEX",
+    "name": "Dextérité"
+  },
+  {
+    "id": "con",
+    "code": "CON",
+    "name": "Constitution"
+  },
+  {
+    "id": "int",
+    "code": "INT",
+    "name": "Intelligence"
+  },
+  {
+    "id": "wis",
+    "code": "SAG",
+    "name": "Sagesse"
+  },
+  {
+    "id": "cha",
+    "code": "CHA",
+    "name": "Charisme"
+  }
+]
