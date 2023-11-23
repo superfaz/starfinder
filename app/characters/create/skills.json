@@ -1,139 +1,139 @@
 [
   {
-    "code": "acro",
+    "id": "acro",
     "name": "Acrobaties",
     "abilityScore": "dex",
     "trainedOnly": false,
     "armorCheckPenalty": true
   },
   {
-    "code": "athl",
+    "id": "athl",
     "name": "Athlétisme",
     "abilityScore": "str",
     "trainedOnly": false,
     "armorCheckPenalty": true
   },
   {
-    "code": "bluf",
+    "id": "bluf",
     "name": "Bluff",
     "abilityScore": "cha",
     "trainedOnly": false,
     "armorCheckPenalty": false
   },
   {
-    "code": "comp",
+    "id": "comp",
     "name": "Informatique",
     "abilityScore": "int",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "cult",
+    "id": "cult",
     "name": "Culture",
     "abilityScore": "int",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "dipl",
+    "id": "dipl",
     "name": "Diplomatie",
     "abilityScore": "cha",
     "trainedOnly": false,
     "armorCheckPenalty": false
   },
   {
-    "code": "disg",
+    "id": "disg",
     "name": "Déguisement",
     "abilityScore": "cha",
     "trainedOnly": false,
     "armorCheckPenalty": false
   },
   {
-    "code": "engi",
+    "id": "engi",
     "name": "Ingénierie",
     "abilityScore": "cha",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "inti",
+    "id": "inti",
     "name": "Intimidation",
     "abilityScore": "cha",
     "trainedOnly": false,
     "armorCheckPenalty": false
   },
   {
-    "code": "life",
+    "id": "life",
     "name": "Science de la vie",
     "abilityScore": "int",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "medi",
+    "id": "medi",
     "name": "Médecine",
     "abilityScore": "int",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "myst",
+    "id": "myst",
     "name": "Mysticisme",
     "abilityScore": "wis",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "pers",
+    "id": "pers",
     "name": "Perception",
     "abilityScore": "wis",
     "trainedOnly": false,
     "armorCheckPenalty": false
   },
   {
-    "code": "phys",
+    "id": "phys",
     "name": "Science physique",
     "abilityScore": "int",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "pilo",
+    "id": "pilo",
     "name": "Pilotage",
     "abilityScore": "dex",
     "trainedOnly": false,
     "armorCheckPenalty": false
   },
   {
-    "code": "prof",
+    "id": "prof",
     "name": "Profession",
     "abilityScore": "",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
   {
-    "code": "sens",
+    "id": "sens",
     "name": "Psychologie",
     "abilityScore": "wis",
     "trainedOnly": false,
     "armorCheckPenalty": false
   },
   {
-    "code": "slei",
+    "id": "slei",
     "name": "Escamotage",
     "abilityScore": "dex",
     "trainedOnly": true,
     "armorCheckPenalty": true
   },
   {
-    "code": "stea",
+    "id": "stea",
     "name": "Discrétion",
     "abilityScore": "dex",
     "trainedOnly": false,
     "armorCheckPenalty": true
   },
   {
-    "code": "surv",
+    "id": "surv",
     "name": "Survie",
     "abilityScore": "wis",
     "trainedOnly": false,

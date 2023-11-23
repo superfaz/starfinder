@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
-import { AbilityScore, Class, Component, Race, Skill, Theme } from "../../types";
+import { AbilityScore, Class, Component, Race, Skill, Special, Theme } from "../../types";
 
 function Component({ component }: { component: Component }) {
   switch (component.type) {
@@ -86,13 +86,15 @@ interface ClientComponentProps {
   classes: Class[];
   skills: Skill[];
   abilityScores: AbilityScore[];
+  specials: Record<string, Special>;
 }
 
-export function ClientComponent({ races, themes, classes, skills, abilityScores }: ClientComponentProps) {
+export function ClientComponent({ races, themes, classes, skills, abilityScores, specials }: ClientComponentProps) {
   const [selectedRace, updateSelectedRace] = useState(races[0]);
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
   const [selectedTheme, updateSelectedTheme] = useState(themes[0]);
   const [selectedClass, updateSelectedClass] = useState(classes[0]);
+  const [scholar, updateScholar] = useState({ skillId: "life", specialization: specials.scholar.life[0], label: "" });
   const [name, updateName] = useState("");
 
   function handleRaceChange(e) {
@@ -127,6 +129,21 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores 
     let id = e.target.value;
     let classType = classes.find((c) => c.id === id);
     updateSelectedClass(classType);
+  }
+
+  function handleScholarSkillChange(e) {
+    let id = e.target.value;
+    updateScholar({ ...scholar, skillId: id, specialization: specials.scholar[id][0], label: "" });
+  }
+
+  function handleScholarSpecializationChange(e) {
+    let specialization = e.target.value;
+    updateScholar({ ...scholar, specialization: specialization, label: "" });
+  }
+
+  function handleScholarLabelChange(e) {
+    let label = e.target.value;
+    updateScholar({ ...scholar, label: label });
   }
 
   return (
@@ -191,7 +208,7 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores 
             ))}
           </Form.Select>
         </Form.FloatingLabel>
-        <Stack direction="horizontal" className="mt-2">
+        <Stack direction="horizontal" className="my-2">
           {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
             <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
               {key} {value > 0 ? "+" : ""}
@@ -199,7 +216,39 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores 
             </Badge>
           ))}
         </Stack>
-        <p className="text-muted mt-2">{selectedTheme.description}</p>
+        {selectedTheme.id === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
+          <>
+            <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
+              <Form.Select value={scholar.skillId} onChange={handleScholarSkillChange}>
+                {skills
+                  .filter((s) => s.id === "life" || s.id === "phys")
+                  .map((skill) => (
+                    <option key={skill.id} value={skill.id}>
+                      {skill.name}
+                    </option>
+                  ))}
+              </Form.Select>
+            </Form.FloatingLabel>
+            <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
+              <Form.Select value={scholar.specialization} onChange={handleScholarSpecializationChange}>
+                {specials.scholar[scholar.skillId].map((d) => (
+                  <option key={d} value={d}>
+                    {d}
+                  </option>
+                ))}
+                <option value="">Autre domaine</option>
+              </Form.Select>
+            </Form.FloatingLabel>
+            <Form.FloatingLabel
+              controlId="scholarOther"
+              label="Domaine de spécialité"
+              hidden={scholar.specialization !== ""}
+            >
+              <Form.Control type="text" value={scholar.label} onChange={handleScholarLabelChange} />
+            </Form.FloatingLabel>
+          </>
+        )}
+        <p className="text-muted">{selectedTheme.description}</p>
 
         <hr />
 
@@ -212,12 +261,12 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores 
             ))}
           </Form.Select>
         </Form.FloatingLabel>
-        <Stack direction="horizontal" className="mt-2">
+        <Stack direction="horizontal" className="my-2">
           <Badge bg="primary">{selectedClass.keyAbilityScore}</Badge>
           <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
           <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
         </Stack>
-        <p className="text-muted mt-2">{selectedClass.description}</p>
+        <p className="text-muted">{selectedClass.description}</p>
 
         <InputGroup>
           <Form.FloatingLabel className="mb-3" controlId="name" label="Nom du personnage">
@@ -232,6 +281,7 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores 
         <picture>
           <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
         </picture>
+        <pre>{JSON.stringify(scholar, null, 2)}</pre>
       </Col>
       <Col>
         <h3>Traits</h3>

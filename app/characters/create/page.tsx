@@ -1,10 +1,11 @@
-import { AbilityScore, Class, Race, Skill, Theme } from "../../types";
+import { AbilityScore, Class, Race, Skill, Special, Theme } from "../../types";
 import { ClientComponent } from "./client";
 import Races from "./races.json";
 import Themes from "./themes.json";
 import Classes from "./classes.json";
 import Skills from "./skills.json";
 import AbilityScores from "./ability-scores.json";
+import Specials from "./specials.json";
 
 async function getRaces(): Promise<Race[]> {
   return Races;
@@ -26,18 +27,30 @@ async function getAbilityScores(): Promise<AbilityScore[]> {
   return AbilityScores;
 }
 
+async function getSpecials(): Promise<Record<string, Special>> {
+  return Specials;
+}
+
 export default async function Page() {
   const races = await getRaces();
   const themes = await getThemes();
   const classes = await getClasses();
   const skills = await getSkills();
   const abilityScores = await getAbilityScores();
+  const specials = await getSpecials();
 
   return (
     <>
       <h1>Création de personnage</h1>
 
-      <ClientComponent races={races} themes={themes} classes={classes} skills={skills} abilityScores={abilityScores} />
+      <ClientComponent
+        races={races}
+        themes={themes}
+        classes={classes}
+        skills={skills}
+        abilityScores={abilityScores}
+        specials={specials}
+      />
     </>
   );
 }

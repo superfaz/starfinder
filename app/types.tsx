@@ -73,7 +73,7 @@ export interface Class {
 }
 
 export interface Skill {
-  code: string;
+  id: string;
   name: string;
   abilityScore: string;
   trainedOnly: boolean;
@@ -85,3 +85,5 @@ export interface AbilityScore {
   code: string;
   name: string;
 }
+
+export type Special = Record<string, string[]>;
