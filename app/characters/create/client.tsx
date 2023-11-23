@@ -149,133 +149,135 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores,
   return (
     <Row>
       <Col>
-        <h2>Profil</h2>
-        <Form.FloatingLabel controlId="race" label="Race">
-          <Form.Select defaultValue={races[0].id} onChange={handleRaceChange}>
-            {races.map((race) => (
-              <option key={race.id} value={race.id}>
-                {race.name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.FloatingLabel>
-        <Stack direction="horizontal" className="my-2">
-          <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
-        </Stack>
-        <p className="text-muted">{races.find((r) => r.id === selectedRace.id).description}</p>
-        {selectedRace.options && (
-          <>
-            <Form.FloatingLabel controlId="option" label="Variante">
-              <Form.Select value={selectedOption.id} onChange={handleOptionChange}>
-                {selectedRace.options.map((option, index) => (
-                  <option key={index} value={option.id}>
-                    {option.name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.FloatingLabel>
-            <Stack direction="horizontal" className="my-2">
-              {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
-                <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                  {key} {value > 0 ? "+" : ""}
-                  {value}
-                </Badge>
+        <Stack direction="vertical" gap={2}>
+          <h2>Profil</h2>
+          <Form.FloatingLabel controlId="race" label="Race">
+            <Form.Select defaultValue={races[0].id} onChange={handleRaceChange}>
+              {races.map((race) => (
+                <option key={race.id} value={race.id}>
+                  {race.name}
+                </option>
               ))}
-            </Stack>
-            {selectedRace.id === "humans" && selectedOption.id === "standard" && (
-              <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-                <Form.Select>
-                  {abilityScores.map((abilityScore) => (
-                    <option key={abilityScore.id} value={abilityScore.id}>
-                      {abilityScore.name}
+            </Form.Select>
+          </Form.FloatingLabel>
+          <Stack direction="horizontal">
+            <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
+          </Stack>
+          <p className="text-muted">{races.find((r) => r.id === selectedRace.id).description}</p>
+          {selectedRace.options && (
+            <>
+              <Form.FloatingLabel controlId="option" label="Variante">
+                <Form.Select value={selectedOption.id} onChange={handleOptionChange}>
+                  {selectedRace.options.map((option, index) => (
+                    <option key={index} value={option.id}>
+                      {option.name}
                     </option>
                   ))}
                 </Form.Select>
               </Form.FloatingLabel>
-            )}
-            {selectedOption.description && <p className="text-muted">{selectedOption.description}</p>}
-          </>
-        )}
+              <Stack direction="horizontal">
+                {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
+                  <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                    {key} {value > 0 ? "+" : ""}
+                    {value}
+                  </Badge>
+                ))}
+              </Stack>
+              {selectedRace.id === "humans" && selectedOption.id === "standard" && (
+                <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
+                  <Form.Select>
+                    {abilityScores.map((abilityScore) => (
+                      <option key={abilityScore.id} value={abilityScore.id}>
+                        {abilityScore.name}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.FloatingLabel>
+              )}
+              {selectedOption.description && <p className="text-muted">{selectedOption.description}</p>}
+            </>
+          )}
 
-        <hr />
+          <hr />
 
-        <Form.FloatingLabel controlId="theme" label="Thème">
-          <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
-            {themes.map((theme) => (
-              <option key={theme.id} value={theme.id}>
-                {theme.name}
-              </option>
+          <Form.FloatingLabel controlId="theme" label="Thème">
+            <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
+              {themes.map((theme) => (
+                <option key={theme.id} value={theme.id}>
+                  {theme.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+          <Stack direction="horizontal">
+            {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
+              <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                {key} {value > 0 ? "+" : ""}
+                {value}
+              </Badge>
             ))}
-          </Form.Select>
-        </Form.FloatingLabel>
-        <Stack direction="horizontal" className="my-2">
-          {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
-            <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-              {key} {value > 0 ? "+" : ""}
-              {value}
-            </Badge>
-          ))}
-        </Stack>
-        {selectedTheme.id === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
-          <>
-            <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
-              <Form.Select value={scholar.skillId} onChange={handleScholarSkillChange}>
-                {skills
-                  .filter((s) => s.id === "life" || s.id === "phys")
-                  .map((skill) => (
-                    <option key={skill.id} value={skill.id}>
-                      {skill.name}
+          </Stack>
+          {selectedTheme.id === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
+            <>
+              <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
+                <Form.Select value={scholar.skillId} onChange={handleScholarSkillChange}>
+                  {skills
+                    .filter((s) => s.id === "life" || s.id === "phys")
+                    .map((skill) => (
+                      <option key={skill.id} value={skill.id}>
+                        {skill.name}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.FloatingLabel>
+              <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
+                <Form.Select value={scholar.specialization} onChange={handleScholarSpecializationChange}>
+                  {specials.scholar[scholar.skillId].map((d) => (
+                    <option key={d} value={d}>
+                      {d}
                     </option>
                   ))}
-              </Form.Select>
-            </Form.FloatingLabel>
-            <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
-              <Form.Select value={scholar.specialization} onChange={handleScholarSpecializationChange}>
-                {specials.scholar[scholar.skillId].map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-                <option value="">Autre domaine</option>
-              </Form.Select>
-            </Form.FloatingLabel>
-            <Form.FloatingLabel
-              controlId="scholarOther"
-              label="Domaine de spécialité"
-              hidden={scholar.specialization !== ""}
-            >
-              <Form.Control type="text" value={scholar.label} onChange={handleScholarLabelChange} />
-            </Form.FloatingLabel>
-          </>
-        )}
-        <p className="text-muted">{selectedTheme.description}</p>
+                  <option value="">Autre domaine</option>
+                </Form.Select>
+              </Form.FloatingLabel>
+              <Form.FloatingLabel
+                controlId="scholarOther"
+                label="Domaine de spécialité"
+                hidden={scholar.specialization !== ""}
+              >
+                <Form.Control type="text" value={scholar.label} onChange={handleScholarLabelChange} />
+              </Form.FloatingLabel>
+            </>
+          )}
+          <p className="text-muted">{selectedTheme.description}</p>
 
-        <hr />
+          <hr />
 
-        <Form.FloatingLabel controlId="class" label="Classe">
-          <Form.Select value={selectedClass.id} onChange={handleClassChange}>
-            {classes.map((classType) => (
-              <option key={classType.id} value={classType.id}>
-                {classType.name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.FloatingLabel>
-        <Stack direction="horizontal" className="my-2">
-          <Badge bg="primary">{selectedClass.keyAbilityScore}</Badge>
-          <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
-          <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
-        </Stack>
-        <p className="text-muted">{selectedClass.description}</p>
-
-        <InputGroup>
-          <Form.FloatingLabel className="mb-3" controlId="name" label="Nom du personnage">
-            <Form.Control type="text" value={name} onChange={handleNameChange} />
+          <Form.FloatingLabel controlId="class" label="Classe">
+            <Form.Select value={selectedClass.id} onChange={handleClassChange}>
+              {classes.map((classType) => (
+                <option key={classType.id} value={classType.id}>
+                  {classType.name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.FloatingLabel>
-          <Button variant="outline-secondary" onClick={handleRandomizeName}>
-            <i className="bi-shuffle"></i>
-          </Button>
-        </InputGroup>
+          <Stack direction="horizontal">
+            <Badge bg="primary">{selectedClass.keyAbilityScore}</Badge>
+            <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
+            <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
+          </Stack>
+          <p className="text-muted">{selectedClass.description}</p>
+
+          <InputGroup>
+            <Form.FloatingLabel controlId="name" label="Nom du personnage">
+              <Form.Control type="text" value={name} onChange={handleNameChange} />
+            </Form.FloatingLabel>
+            <Button variant="outline-secondary" onClick={handleRandomizeName}>
+              <i className="bi-shuffle"></i>
+            </Button>
+          </InputGroup>
+        </Stack>
       </Col>
       <Col>
         <picture>
