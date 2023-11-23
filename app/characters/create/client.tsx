@@ -283,7 +283,6 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores,
         <picture>
           <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
         </picture>
-        <pre>{JSON.stringify(scholar, null, 2)}</pre>
       </Col>
       <Col>
         <h3>Traits</h3>
