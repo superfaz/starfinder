@@ -275,7 +275,7 @@
             "value": 2
           },
           {
-            "id": "24c2b62d-6cf5-48aa-bd8a-b88cda06d196",
+            "id": "300a107f-ade4-437a-8efc-b60a878d1b4a",
             "type": "skill",
             "target": "Athlétisme",
             "value": 2
@@ -583,7 +583,7 @@
             "description": "Les vesks sont toujours considérés comme armés. Ils peuvent infliger 1d3 points de dégâts létaux en combat à mains nues et l’attaque n’est pas considérée comme archaïque."
           },
           {
-            "id": "3e964c5d-cb72-4cf0-9b15-feb393db1396",
+            "id": "a3c58d19-dd5a-4839-bf2d-a1bcf02d8820",
             "type": "feat",
             "level": 3,
             "title": "Spécialisation martiale (Armes naturelles)",
