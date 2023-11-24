@@ -2,6 +2,13 @@
 
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+html,
+body {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1600px;
+}
+
 /**
   * Add support to button attached to a form-floating element.
   */
