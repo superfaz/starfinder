@@ -1,0 +1,47 @@
+[
+  {
+    "id": "lg",
+    "code": "LB",
+    "name": "Loyal bon"
+  },
+  {
+    "id": "ng",
+    "code": "NB",
+    "name": "Neutre bon"
+  },
+  {
+    "id": "cg",
+    "code": "CB",
+    "name": "Chaotique bon"
+  },
+  {
+    "id": "ln",
+    "code": "LN",
+    "name": "Loyal neutre"
+  },
+  {
+    "id": "n",
+    "code": "N",
+    "name": "Neutre"
+  },
+  {
+    "id": "cn",
+    "code": "CN",
+    "name": "Chaotique neutre"
+  },
+  {
+    "id": "le",
+    "code": "LM",
+    "name": "Loyal mauvais"
+  },
+  {
+    "id": "ne",
+    "code": "NM",
+    "name": "Neutre mauvais"
+  },
+  {
+    "id": "ce",
+    "code": "CM",
+    "name": "Chaotique mauvais"
+  }
+]

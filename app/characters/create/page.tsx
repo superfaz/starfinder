@@ -1,4 +1,4 @@
-import { AbilityScore, Class, Race, Skill, Special, Theme } from "../../types";
+import { AbilityScore, Alignment, Class, Race, Skill, Special, Theme } from "../../types";
 import { ClientComponent } from "./client";
 import Races from "./races.json";
 import Themes from "./themes.json";
@@ -6,6 +6,7 @@ import Classes from "./classes.json";
 import Skills from "./skills.json";
 import AbilityScores from "./ability-scores.json";
 import Specials from "./specials.json";
+import Alignments from "./alignments.json";
 
 async function getRaces(): Promise<Race[]> {
   return Races;
@@ -31,6 +32,10 @@ async function getSpecials(): Promise<Record<string, Special>> {
   return Specials;
 }
 
+async function getAlignments(): Promise<Alignment[]> {
+  return Alignments;
+}
+
 export default async function Page() {
   const races = await getRaces();
   const themes = await getThemes();
@@ -38,6 +43,7 @@ export default async function Page() {
   const skills = await getSkills();
   const abilityScores = await getAbilityScores();
   const specials = await getSpecials();
+  const alignments = await getAlignments();
 
   return (
     <>
@@ -50,6 +56,7 @@ export default async function Page() {
         skills={skills}
         abilityScores={abilityScores}
         specials={specials}
+        alignments={alignments}
       />
     </>
   );

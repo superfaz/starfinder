@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
-import { AbilityScore, Class, Component, Race, Skill, Special, Theme } from "../../types";
+import { AbilityScore, Alignment, Class, Component, Race, Skill, Special, Theme } from "../../types";
 
 function Component({ component }: { component: Component }) {
   switch (component.type) {
@@ -87,14 +87,24 @@ interface ClientComponentProps {
   skills: Skill[];
   abilityScores: AbilityScore[];
   specials: Record<string, Special>;
+  alignments: Alignment[];
 }
 
-export function ClientComponent({ races, themes, classes, skills, abilityScores, specials }: ClientComponentProps) {
+export function ClientComponent({
+  races,
+  themes,
+  classes,
+  skills,
+  abilityScores,
+  specials,
+  alignments,
+}: ClientComponentProps) {
   const [selectedRace, updateSelectedRace] = useState(races[0]);
   const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
   const [selectedTheme, updateSelectedTheme] = useState(themes[0]);
   const [selectedClass, updateSelectedClass] = useState(classes[0]);
   const [scholar, updateScholar] = useState({ skillId: "life", specialization: specials.scholar.life[0], label: "" });
+  const [alignment, updateAlignment] = useState(alignments[0]);
   const [name, updateName] = useState("");
 
   function handleRaceChange(e) {
@@ -144,6 +154,12 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores,
   function handleScholarLabelChange(e) {
     let label = e.target.value;
     updateScholar({ ...scholar, label: label });
+  }
+
+  function handleAlignmentChange(e) {
+    let id = e.target.value;
+    let alignment = alignments.find((a) => a.id === id);
+    updateAlignment(alignment);
   }
 
   return (
@@ -269,6 +285,22 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores,
           </Stack>
           <p className="text-muted">{selectedClass.description}</p>
 
+          <hr />
+
+          <Form.FloatingLabel controlId="alignment" label="Alignement">
+            <Form.Select value={alignment.id} onChange={handleAlignmentChange}>
+              {alignments.map((alignment) => (
+                <option key={alignment.id} value={alignment.id}>
+                  {alignment.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+        </Stack>
+      </Col>
+      <Col>
+        <Stack direction="vertical" gap={2}>
+          <h2>Concept</h2>
           <InputGroup>
             <Form.FloatingLabel controlId="name" label="Nom du personnage">
               <Form.Control type="text" value={name} onChange={handleNameChange} />
@@ -277,14 +309,15 @@ export function ClientComponent({ races, themes, classes, skills, abilityScores,
               <i className="bi-shuffle"></i>
             </Button>
           </InputGroup>
+          <Form.FloatingLabel controlId="name" label="Sexe">
+            <Form.Control type="text" />
+          </Form.FloatingLabel>
+          <picture>
+            <img alt="" src={"/" + selectedRace.id + "-male.png"} width={"50%"} className="img-fluid" />
+          </picture>
         </Stack>
       </Col>
-      <Col>
-        <picture>
-          <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
-        </picture>
-      </Col>
-      <Col>
+      <Col lg={6}>
         <h3>Traits</h3>
         {selectedRace.traits.map((trait) => (
           <div key={trait.id}>

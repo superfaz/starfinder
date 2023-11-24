@@ -87,3 +87,9 @@ export interface AbilityScore {
 }
 
 export type Special = Record<string, string[]>;
+
+export interface Alignment {
+  id: string;
+  code: string;
+  name: string;
+}
