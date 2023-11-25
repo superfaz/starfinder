@@ -37,27 +37,20 @@ async function getAlignments(): Promise<Alignment[]> {
 }
 
 export default async function Page() {
-  const races = await getRaces();
-  const themes = await getThemes();
-  const classes = await getClasses();
-  const skills = await getSkills();
-  const abilityScores = await getAbilityScores();
-  const specials = await getSpecials();
-  const alignments = await getAlignments();
+  const data = {
+    races: await getRaces(),
+    themes: await getThemes(),
+    classes: await getClasses(),
+    skills: await getSkills(),
+    abilityScores: await getAbilityScores(),
+    specials: await getSpecials(),
+    alignments: await getAlignments(),
+  };
 
   return (
     <>
       <h1>Création de personnage</h1>
-
-      <ClientComponent
-        races={races}
-        themes={themes}
-        classes={classes}
-        skills={skills}
-        abilityScores={abilityScores}
-        specials={specials}
-        alignments={alignments}
-      />
+      <ClientComponent data={data} />
     </>
   );
 }

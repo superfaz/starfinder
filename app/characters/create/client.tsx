@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
+import { ChangeEvent, useState } from "react";
+import { Badge, Button, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
 import { AbilityScore, Alignment, Class, Component, Race, Skill, Special, Theme } from "../../types";
+import { ClientComponentData } from "./types";
 
 function Component({ component }: { component: Component }) {
   switch (component.type) {
@@ -80,41 +81,27 @@ function Component({ component }: { component: Component }) {
   }
 }
 
-interface ClientComponentProps {
-  races: Race[];
-  themes: Theme[];
-  classes: Class[];
-  skills: Skill[];
-  abilityScores: AbilityScore[];
-  specials: Record<string, Special>;
-  alignments: Alignment[];
-}
-
-export function ClientComponent({
-  races,
-  themes,
-  classes,
-  skills,
-  abilityScores,
-  specials,
-  alignments,
-}: ClientComponentProps) {
-  const [selectedRace, updateSelectedRace] = useState(races[0]);
-  const [selectedOption, updateSelectedOption] = useState(races[0].options[0]);
-  const [selectedTheme, updateSelectedTheme] = useState(themes[0]);
-  const [selectedClass, updateSelectedClass] = useState(classes[0]);
-  const [scholar, updateScholar] = useState({ skillId: "life", specialization: specials.scholar.life[0], label: "" });
-  const [alignment, updateAlignment] = useState(alignments[0]);
+export function ClientComponent({ data }: { data: ClientComponentData }) {
+  const [selectedRace, updateSelectedRace] = useState(data.races[0]);
+  const [selectedOption, updateSelectedOption] = useState(data.races[0].options[0]);
+  const [selectedTheme, updateSelectedTheme] = useState(data.themes[0]);
+  const [selectedClass, updateSelectedClass] = useState(data.classes[0]);
+  const [scholar, updateScholar] = useState({
+    skillId: "life",
+    specialization: data.specials.scholar.life[0],
+    label: "",
+  });
+  const [alignment, updateAlignment] = useState(data.alignments[0]);
   const [name, updateName] = useState("");
 
-  function handleRaceChange(e) {
+  function handleRaceChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let race = races.find((r) => r.id === id);
+    let race = data.races.find((r) => r.id === id);
     updateSelectedRace(race);
     updateSelectedOption(race.options[0]);
   }
 
-  function handleOptionChange(e) {
+  function handleOptionChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     let option = selectedRace.options.find((o) => o.id === id);
     updateSelectedOption(option);
@@ -129,24 +116,24 @@ export function ClientComponent({
     updateName(selectedRace.names[index]);
   }
 
-  function handleThemeChange(e) {
+  function handleThemeChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let theme = themes.find((t) => t.id === id);
+    let theme = data.themes.find((t) => t.id === id);
     updateSelectedTheme(theme);
   }
 
-  function handleClassChange(e) {
+  function handleClassChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let classType = classes.find((c) => c.id === id);
+    let classType = data.classes.find((c) => c.id === id);
     updateSelectedClass(classType);
   }
 
-  function handleScholarSkillChange(e) {
+  function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    updateScholar({ ...scholar, skillId: id, specialization: specials.scholar[id][0], label: "" });
+    updateScholar({ ...scholar, skillId: id, specialization: data.specials.scholar[id][0], label: "" });
   }
 
-  function handleScholarSpecializationChange(e) {
+  function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>) {
     let specialization = e.target.value;
     updateScholar({ ...scholar, specialization: specialization, label: "" });
   }
@@ -156,20 +143,45 @@ export function ClientComponent({
     updateScholar({ ...scholar, label: label });
   }
 
-  function handleAlignmentChange(e) {
+  function handleAlignmentChange(e: React.ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let alignment = alignments.find((a) => a.id === id);
+    let alignment = data.alignments.find((a) => a.id === id);
     updateAlignment(alignment);
   }
 
   return (
     <Row>
+      <Col lg={12}>
+        <Nav variant="underline" defaultActiveKey="profil">
+          <Nav.Item>
+            <Nav.Link eventKey="profil">Profil</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>Traits</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>Caractéristiques</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>Compétences</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>Équipement</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>Sorts</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>Don</Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </Col>
       <Col>
         <Stack direction="vertical" gap={2}>
           <h2>Profil</h2>
           <Form.FloatingLabel controlId="race" label="Race">
-            <Form.Select defaultValue={races[0].id} onChange={handleRaceChange}>
-              {races.map((race) => (
+            <Form.Select value={selectedRace.id} onChange={handleRaceChange}>
+              {data.races.map((race) => (
                 <option key={race.id} value={race.id}>
                   {race.name}
                 </option>
@@ -179,7 +191,7 @@ export function ClientComponent({
           <Stack direction="horizontal">
             <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
           </Stack>
-          <p className="text-muted">{races.find((r) => r.id === selectedRace.id).description}</p>
+          <p className="text-muted">{data.races.find((r) => r.id === selectedRace.id).description}</p>
           {selectedRace.options && (
             <>
               <Form.FloatingLabel controlId="option" label="Variante">
@@ -202,7 +214,7 @@ export function ClientComponent({
               {selectedRace.id === "humans" && selectedOption.id === "standard" && (
                 <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
                   <Form.Select>
-                    {abilityScores.map((abilityScore) => (
+                    {data.abilityScores.map((abilityScore) => (
                       <option key={abilityScore.id} value={abilityScore.id}>
                         {abilityScore.name}
                       </option>
@@ -218,7 +230,7 @@ export function ClientComponent({
 
           <Form.FloatingLabel controlId="theme" label="Thème">
             <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
-              {themes.map((theme) => (
+              {data.themes.map((theme) => (
                 <option key={theme.id} value={theme.id}>
                   {theme.name}
                 </option>
@@ -237,7 +249,7 @@ export function ClientComponent({
             <>
               <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
                 <Form.Select value={scholar.skillId} onChange={handleScholarSkillChange}>
-                  {skills
+                  {data.skills
                     .filter((s) => s.id === "life" || s.id === "phys")
                     .map((skill) => (
                       <option key={skill.id} value={skill.id}>
@@ -248,7 +260,7 @@ export function ClientComponent({
               </Form.FloatingLabel>
               <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
                 <Form.Select value={scholar.specialization} onChange={handleScholarSpecializationChange}>
-                  {specials.scholar[scholar.skillId].map((d) => (
+                  {data.specials.scholar[scholar.skillId].map((d) => (
                     <option key={d} value={d}>
                       {d}
                     </option>
@@ -271,7 +283,7 @@ export function ClientComponent({
 
           <Form.FloatingLabel controlId="class" label="Classe">
             <Form.Select value={selectedClass.id} onChange={handleClassChange}>
-              {classes.map((classType) => (
+              {data.classes.map((classType) => (
                 <option key={classType.id} value={classType.id}>
                   {classType.name}
                 </option>
@@ -289,7 +301,7 @@ export function ClientComponent({
 
           <Form.FloatingLabel controlId="alignment" label="Alignement">
             <Form.Select value={alignment.id} onChange={handleAlignmentChange}>
-              {alignments.map((alignment) => (
+              {data.alignments.map((alignment) => (
                 <option key={alignment.id} value={alignment.id}>
                   {alignment.name}
                 </option>
@@ -319,7 +331,7 @@ export function ClientComponent({
       </Col>
       <Col lg={6}>
         <Stack direction="vertical" gap={2}>
-          <h3>Traits</h3>
+          <h2>Traits</h2>
           {selectedRace.traits.map((trait) => (
             <div key={trait.id}>
               <h5>{trait.name}</h5>
