@@ -318,25 +318,30 @@ export function ClientComponent({
         </Stack>
       </Col>
       <Col lg={6}>
-        <h3>Traits</h3>
-        {selectedRace.traits.map((trait) => (
-          <div key={trait.id}>
-            <h5>{trait.name}</h5>
-            <p className="text-muted">{trait.description}</p>
-            {trait.components &&
-              trait.components.map((component) => <Component key={component.id} component={component} />)}
-          </div>
-        ))}
-        {selectedTheme.advantages
-          .filter((a) => a.level === 1)
-          .map((advantage) => (
-            <div key={advantage.id}>
-              <h5>{advantage.name}</h5>
-              <p className="text-muted">{advantage.description}</p>
-              {advantage.components &&
-                advantage.components.map((component) => <Component key={component.id} component={component} />)}
+        <Stack direction="vertical" gap={2}>
+          <h3>Traits</h3>
+          {selectedRace.traits.map((trait) => (
+            <div key={trait.id}>
+              <h5>{trait.name}</h5>
+              <div className="text-muted">{trait.description}</div>
+              {trait.components &&
+                trait.components.map((component) => <Component key={component.id} component={component} />)}
             </div>
           ))}
+
+          <hr />
+
+          {selectedTheme.advantages
+            .filter((a) => a.level === 1)
+            .map((advantage) => (
+              <div key={advantage.id}>
+                <h5>{advantage.name}</h5>
+                <div className="text-muted">{advantage.description}</div>
+                {advantage.components &&
+                  advantage.components.map((component) => <Component key={component.id} component={component} />)}
+              </div>
+            ))}
+        </Stack>
       </Col>
     </Row>
   );
