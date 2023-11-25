@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 import { Badge, Button, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { AbilityScore, Alignment, Class, Component, Race, Skill, Special, Theme } from "../../types";
+import { Component } from "../../types";
 import { ClientComponentData } from "./types";
 
 function Component({ component }: { component: Component }) {
@@ -86,6 +86,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [selectedOption, updateSelectedOption] = useState(data.races[0].options[0]);
   const [selectedTheme, updateSelectedTheme] = useState(data.themes[0]);
   const [selectedClass, updateSelectedClass] = useState(data.classes[0]);
+  const [selectedHumanBonus, updateSelectedHumanBonus] = useState(data.abilityScores[0]);
   const [scholar, updateScholar] = useState({
     skillId: "life",
     specialization: data.specials.scholar.life[0],
@@ -101,13 +102,19 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     updateSelectedOption(race.options[0]);
   }
 
+  function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>) {
+    let id = e.target.value;
+    let abilityScore = data.abilityScores.find((a) => a.id === id);
+    updateSelectedHumanBonus(abilityScore);
+  }
+
   function handleOptionChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     let option = selectedRace.options.find((o) => o.id === id);
     updateSelectedOption(option);
   }
 
-  function handleNameChange(e) {
+  function handleNameChange(e: ChangeEvent<HTMLInputElement>) {
     updateName(e.target.value);
   }
 
@@ -138,7 +145,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     updateScholar({ ...scholar, specialization: specialization, label: "" });
   }
 
-  function handleScholarLabelChange(e) {
+  function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>) {
     let label = e.target.value;
     updateScholar({ ...scholar, label: label });
   }
@@ -203,24 +210,31 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                   ))}
                 </Form.Select>
               </Form.FloatingLabel>
-              <Stack direction="horizontal">
-                {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
-                  <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                    {key} {value > 0 ? "+" : ""}
-                    {value}
-                  </Badge>
-                ))}
-              </Stack>
+              {(selectedRace.id !== "humans" || selectedOption.id !== "standard") && (
+                <Stack direction="horizontal">
+                  {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
+                    <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                      {key} {value > 0 ? "+" : ""}
+                      {value}
+                    </Badge>
+                  ))}
+                </Stack>
+              )}
               {selectedRace.id === "humans" && selectedOption.id === "standard" && (
-                <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-                  <Form.Select>
-                    {data.abilityScores.map((abilityScore) => (
-                      <option key={abilityScore.id} value={abilityScore.id}>
-                        {abilityScore.name}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.FloatingLabel>
+                <>
+                  <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
+                    <Form.Select value={selectedHumanBonus.id} onChange={handleHumanBonusChange}>
+                      {data.abilityScores.map((abilityScore) => (
+                        <option key={abilityScore.id} value={abilityScore.id}>
+                          {abilityScore.name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.FloatingLabel>
+                  <Stack direction="horizontal">
+                    <Badge bg="primary">{selectedHumanBonus.code} +2</Badge>
+                  </Stack>
+                </>
               )}
               {selectedOption.description && <p className="text-muted">{selectedOption.description}</p>}
             </>
