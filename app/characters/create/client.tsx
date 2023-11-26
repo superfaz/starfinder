@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Badge, Button, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
+import { Badge, Button, Card, Col, Form, FormLabel, InputGroup, Nav, Row, Stack } from "react-bootstrap";
 import { Component } from "../../types";
 import { ClientComponentData } from "./types";
 
@@ -76,12 +76,23 @@ function Component({ component }: { component: Component }) {
           {component.description && <span className="ms-1 text-muted">{component.description}</span>}
         </p>
       );
+    case "languageCount":
+      return (
+        <p>
+          <Badge bg="primary">Nombre de langue</Badge>
+          <strong>
+            {component.value > 0 ? "+" : ""}
+            {component.value}
+          </strong>
+        </p>
+      );
     default:
       return null;
   }
 }
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
+  const [navigation, updateNavigation] = useState("profil");
   const [selectedRace, updateSelectedRace] = useState(data.races[0]);
   const [selectedOption, updateSelectedOption] = useState(data.races[0].options[0]);
   const [selectedTheme, updateSelectedTheme] = useState(data.themes[0]);
@@ -94,6 +105,10 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   });
   const [alignment, updateAlignment] = useState(data.alignments[0]);
   const [name, updateName] = useState("");
+
+  function handleNavigation(key: string) {
+    updateNavigation(key);
+  }
 
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
@@ -159,31 +174,31 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   return (
     <Row>
       <Col lg={12}>
-        <Nav variant="underline" defaultActiveKey="profil">
+        <Nav variant="underline" activeKey={navigation} onSelect={handleNavigation}>
           <Nav.Item>
             <Nav.Link eventKey="profil">Profil</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link>Traits</Nav.Link>
+            <Nav.Link eventKey="traits">Traits</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link>Caractéristiques</Nav.Link>
+            <Nav.Link eventKey="abilityScores">Caractéristiques</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link>Compétences</Nav.Link>
+            <Nav.Link eventKey="skills">Compétences</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link>Équipement</Nav.Link>
+            <Nav.Link eventKey="equipment">Équipement</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link>Sorts</Nav.Link>
+            <Nav.Link eventKey="spells">Sorts</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link>Don</Nav.Link>
+            <Nav.Link eventKey="feats">Don</Nav.Link>
           </Nav.Item>
         </Nav>
       </Col>
-      <Col>
+      <Col hidden={navigation !== "profil"}>
         <Stack direction="vertical" gap={2}>
           <h2>Profil</h2>
           <Form.FloatingLabel controlId="race" label="Race">
@@ -310,21 +325,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
           </Stack>
           <p className="text-muted">{selectedClass.description}</p>
-
-          <hr />
-
-          <Form.FloatingLabel controlId="alignment" label="Alignement">
-            <Form.Select value={alignment.id} onChange={handleAlignmentChange}>
-              {data.alignments.map((alignment) => (
-                <option key={alignment.id} value={alignment.id}>
-                  {alignment.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.FloatingLabel>
         </Stack>
       </Col>
-      <Col>
+      <Col hidden={navigation !== "profil"}>
         <Stack direction="vertical" gap={2}>
           <h2>Concept</h2>
           <InputGroup>
@@ -338,18 +341,29 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           <Form.FloatingLabel controlId="name" label="Sexe">
             <Form.Control type="text" />
           </Form.FloatingLabel>
-          <picture>
-            <img alt="" src={"/" + selectedRace.id + "-male.png"} width={"50%"} className="img-fluid" />
-          </picture>
+          <Card>
+            <picture>
+              <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
+            </picture>
+          </Card>
+          <Form.FloatingLabel controlId="alignment" label="Alignement">
+            <Form.Select value={alignment.id} onChange={handleAlignmentChange}>
+              {data.alignments.map((alignment) => (
+                <option key={alignment.id} value={alignment.id}>
+                  {alignment.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
         </Stack>
       </Col>
-      <Col lg={6}>
+      <Col lg={6} hidden={navigation !== "profil" && navigation !== "traits"}>
         <Stack direction="vertical" gap={2}>
           <h2>Traits</h2>
           {selectedRace.traits.map((trait) => (
             <div key={trait.id}>
               <h5>{trait.name}</h5>
-              <div className="text-muted">{trait.description}</div>
+              <p className="text-muted">{trait.description}</p>
               {trait.components &&
                 trait.components.map((component) => <Component key={component.id} component={component} />)}
             </div>
@@ -362,9 +376,23 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             .map((advantage) => (
               <div key={advantage.id}>
                 <h5>{advantage.name}</h5>
-                <div className="text-muted">{advantage.description}</div>
+                <p className="text-muted">{advantage.description}</p>
                 {advantage.components &&
                   advantage.components.map((component) => <Component key={component.id} component={component} />)}
+              </div>
+            ))}
+        </Stack>
+      </Col>
+      <Col lg={6} hidden={navigation !== "traits"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Traits secondaires</h2>
+          {selectedRace.secondaryTraits &&
+            selectedRace.secondaryTraits.map((trait) => (
+              <div key={trait.id}>
+                <h5>{trait.name}</h5>
+                <p className="text-muted">{trait.description}</p>
+                {trait.components &&
+                  trait.components.map((component) => <Component key={component.id} component={component} />)}
               </div>
             ))}
         </Stack>

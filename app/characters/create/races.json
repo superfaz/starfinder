@@ -112,6 +112,73 @@
           }
         ]
       }
+    ],
+    "secondaryTraits": [
+      {
+        "id": "048c9e5c-f590-4e27-8f89-eafa88c351fd",
+        "name": "Androïde xénométrique",
+        "description": "Bien que la plupart des androïdes soient fabriqués pour ressembler aux humains, il en existe qui ont l’aspect d’autres espèces. Ces androïdes xénométriques possèdent des capacités qui imitent celles des autres races et, parfois, ont même recours à des technologies hybrides pour dupliquer des pouvoirs magiques.",
+        "replace": ["470b64bd-f308-4192-99fd-17656e9bc386", "1653ddac-b66e-4da0-9a97-35dfcd5a71e3"]
+      },
+      {
+        "id": "382dc7bb-b245-4e28-81bb-4a3d852ae2d5",
+        "name": "Augmentations facilitées",
+        "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
+        "components": [
+          {
+            "id": "67021513-d774-4129-bd41-6ec122589227",
+            "type": "ability",
+            "title": "Augmentations facilitées",
+            "description": "En tant que créatures artificielles, les androïdes sont compatibles avec un large éventail d’augmentations cybernétiques. Les androïdes qui ont ce trait racial peuvent installer une augmentation cybernétique de plus sur un système qui a déjà une augmentation."
+          }
+        ]
+      },
+      {
+        "id": "2937ca64-e195-4531-a8bf-6706c05be83e",
+        "name": "Intégration à l’infosphère",
+        "replace": ["1653ddac-b66e-4da0-9a97-35dfcd5a71e3"],
+        "components": [
+          {
+            "id": "a0158446-5b59-4e48-b856-6f66acc348fe",
+            "type": "ability",
+            "title": "Intégration à l’infosphère",
+            "description": "Une fois par jour, quand l’androïde prend un repos de 10 min pour regagner des points d’endurance, il peut choisir une compétence basée sur l’Intelligence, la Sagesse ou le Charisme. La compétence choisie devient une compétence de classe et il gagne Talent en tant que don bonus avec cette compétence. Ce choix dure jusqu’à la prochaine fois que l’androïde utilise ce trait."
+          }
+        ]
+      },
+      {
+        "id": "de088f8b-dea2-4440-8691-c5c7ec67ae6e",
+        "name": "Matrice d’imitation",
+        "replace": ["cb513c06-d9ea-44fe-9cbd-9a96ed64223d"],
+        "components": [
+          {
+            "id": "ce9b40fc-aaae-47a0-bd9a-550d884436cb",
+            "type": "ability",
+            "title": "Matrice d’imitation",
+            "description": "Pas de malus à leurs tests de Déguisement pour modifier leur apparence afin de ressembler à leur race de référence."
+          }
+        ]
+      },
+      {
+        "id": "19218a1a-73f2-4504-9f29-16a1fd9c5790",
+        "name": "Nano-amélioration",
+        "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
+        "components": [{ "id": "4a9370f2-489c-4d12-abcd-43ca5d6709a1", "type": "feat", "title": "Nano-intégration" }]
+      },
+      {
+        "id": "01ad5e2a-125e-4c06-a7ca-8cf49efb586f",
+        "name": "Polyglotte",
+        "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
+        "components": [
+          { "id": "452259d3-d474-4cf8-b48c-8b13536cfbcc", "type": "languageCount", "value": 4 },
+          {
+            "id": "3e635dd8-3326-4bf6-8836-5deb485ff08b",
+            "type": "ability",
+            "title": "Polyglotte",
+            "description": "A chaque fois qu’un tel androïde investit un rang de compétence en Culture, il apprend deux nouvelles langues au lieu d’une seule."
+          }
+        ]
+      }
     ]
   },
   {

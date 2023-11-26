@@ -14,6 +14,7 @@ export enum ComponentType {
   featCount = "featCount",
   feat = "feat",
   skillRank = "skillRank",
+  languageCount = "languageCount",
 }
 
 export interface Component {
@@ -33,6 +34,10 @@ export interface Trait {
   components?: Component[];
 }
 
+export interface SecondaryTrait extends Trait {
+  replace: string[];
+}
+
 export interface Race {
   id: string;
   name: string;
@@ -42,6 +47,7 @@ export interface Race {
   options: Option[];
   names: string[];
   traits: Trait[];
+  secondaryTraits: SecondaryTrait[];
 }
 
 export interface Advantage {
