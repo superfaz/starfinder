@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 import { Badge, Button, Card, Col, Form, FormLabel, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { Component } from "../../types";
+import { Component, Trait } from "../../types";
 import { ClientComponentData } from "./types";
 
 function Component({ component }: { component: Component }) {
@@ -11,7 +11,7 @@ function Component({ component }: { component: Component }) {
       return (
         <p>
           <Badge bg="primary">Pouvoir</Badge>
-          {component.title && <strong className="me-1">{component.title}.</strong>}
+          {component.name && <strong className="me-1">{component.name}.</strong>}
           <span className="text-muted">{component.description}</span>
         </p>
       );
@@ -19,6 +19,7 @@ function Component({ component }: { component: Component }) {
       return (
         <p>
           <Badge bg="primary">Jets de sauvegarde</Badge>
+          {component.name && <strong className="me-1">{component.name}.</strong>}
           <span className="text-muted">{component.description}</span>
         </p>
       );
@@ -54,7 +55,7 @@ function Component({ component }: { component: Component }) {
         <p>
           <Badge bg="primary">Don</Badge>
           {component.level && component.level > 1 && <Badge bg="primary">Niveau {component.level}</Badge>}
-          <strong className="me-1">{component.title}.</strong>
+          <strong className="me-1">{component.name}.</strong>
           <span className="text-muted">{component.description}</span>
         </p>
       );
@@ -72,7 +73,7 @@ function Component({ component }: { component: Component }) {
       return (
         <p>
           <Badge bg="primary">Sort</Badge>
-          <strong>{component.title}</strong>
+          <strong>{component.name}</strong>
           {component.description && <span className="ms-1 text-muted">{component.description}</span>}
         </p>
       );
@@ -169,6 +170,23 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     let id = e.target.value;
     let alignment = data.alignments.find((a) => a.id === id);
     updateAlignment(alignment);
+  }
+
+  function findReplacedTrait(id: string): Trait | Component {
+    let trait = selectedRace.traits.find((t) => t.id === id);
+    if (trait) {
+      return trait;
+    }
+
+    let component = selectedRace.traits
+      .map((t) => t.components)
+      .flat()
+      .find((c) => c.id === id);
+    if (component) {
+      return component;
+    }
+
+    return null;
   }
 
   return (
@@ -390,6 +408,10 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             selectedRace.secondaryTraits.map((trait) => (
               <div key={trait.id}>
                 <h5>{trait.name}</h5>
+                <div>
+                  <span>Remplace : </span>
+                  {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
+                </div>
                 <p className="text-muted">{trait.description}</p>
                 {trait.components &&
                   trait.components.map((component) => <Component key={component.id} component={component} />)}

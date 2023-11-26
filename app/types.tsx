@@ -21,7 +21,7 @@ export interface Component {
   id: string;
   type: ComponentType;
   level?: number;
-  title?: string;
+  name?: string;
   description?: string;
   target?: string;
   value?: number;

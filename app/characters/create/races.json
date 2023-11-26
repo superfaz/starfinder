@@ -47,18 +47,19 @@
           {
             "id": "988bc5e9-688c-4f3a-87d0-246cc92c4b56",
             "type": "ability",
-            "title": "Androïde",
+            "name": "Androïde",
             "description": "Pour les effets qui ciblent des créatures par type, les androïdes sont considérés aussi bien comme des humanoïdes que comme des créatures artificielles (si un pouvoir affecte les deux types, l’appliquer de la manière la moins avantageuse)."
           },
           {
             "id": "cb513c06-d9ea-44fe-9cbd-9a96ed64223d",
             "type": "savingThrow",
+            "name": "Résistant",
             "description": "+2 contre les maladies, les effets mentaux, le poison et le sommeil sauf si ces effets affectent spécifiquement des créatures artificielles."
           },
           {
             "id": "66b7e04e-9413-47f2-868d-f50e0d9d9a2b",
             "type": "ability",
-            "title": "Fabriqué",
+            "name": "Fabriqué",
             "description": "Les androïdes ne respirent pas et ne subissent pas les effets environnementaux liés au fait de se trouver dans le vide."
           }
         ]
@@ -70,13 +71,13 @@
           {
             "id": "04537386-ce38-429f-a732-dd71d767aa63",
             "type": "ability",
-            "title": "Vision nocturne",
+            "name": "Vision nocturne",
             "description": "Les androïdes peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive."
           },
           {
             "id": "5a3bfacf-10fe-408e-90c3-81e097b1ceeb",
             "type": "ability",
-            "title": "Vision dans le noir",
+            "name": "Vision dans le noir",
             "description": "Les androïdes peuvent voir sur une distance de 18 mètres dans le noir."
           }
         ]
@@ -95,7 +96,7 @@
           {
             "id": "7b822402-a8c7-4a06-928b-cc872e1f6f34",
             "type": "ability",
-            "title": "Emotions contrôlées",
+            "name": "Emotions contrôlées",
             "description": "Le DD des tests de Psychologie effectués contre eux est augmenté de 2 points."
           }
         ]
@@ -107,7 +108,7 @@
           {
             "id": "4adda420-bc94-4c18-9b91-99c0dc8a7c58",
             "type": "ability",
-            "title": "Emplacement d'amélioration",
+            "name": "Emplacement d'amélioration",
             "description": "Les androïdes disposent d’un seul emplacement d’amélioration d’armure pour leur corps. Qu’ils portent ou non une armure physique, ils peuvent utiliser cet emplacement pour installer une amélioration d’armure de n’importe quel type qui peut être installée sur une armure légère."
           }
         ]
@@ -128,7 +129,7 @@
           {
             "id": "67021513-d774-4129-bd41-6ec122589227",
             "type": "ability",
-            "title": "Augmentations facilitées",
+            "name": "Augmentations facilitées",
             "description": "En tant que créatures artificielles, les androïdes sont compatibles avec un large éventail d’augmentations cybernétiques. Les androïdes qui ont ce trait racial peuvent installer une augmentation cybernétique de plus sur un système qui a déjà une augmentation."
           }
         ]
@@ -141,7 +142,7 @@
           {
             "id": "a0158446-5b59-4e48-b856-6f66acc348fe",
             "type": "ability",
-            "title": "Intégration à l’infosphère",
+            "name": "Intégration à l’infosphère",
             "description": "Une fois par jour, quand l’androïde prend un repos de 10 min pour regagner des points d’endurance, il peut choisir une compétence basée sur l’Intelligence, la Sagesse ou le Charisme. La compétence choisie devient une compétence de classe et il gagne Talent en tant que don bonus avec cette compétence. Ce choix dure jusqu’à la prochaine fois que l’androïde utilise ce trait."
           }
         ]
@@ -154,7 +155,7 @@
           {
             "id": "ce9b40fc-aaae-47a0-bd9a-550d884436cb",
             "type": "ability",
-            "title": "Matrice d’imitation",
+            "name": "Matrice d’imitation",
             "description": "Pas de malus à leurs tests de Déguisement pour modifier leur apparence afin de ressembler à leur race de référence."
           }
         ]
@@ -163,7 +164,7 @@
         "id": "19218a1a-73f2-4504-9f29-16a1fd9c5790",
         "name": "Nano-amélioration",
         "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
-        "components": [{ "id": "4a9370f2-489c-4d12-abcd-43ca5d6709a1", "type": "feat", "title": "Nano-intégration" }]
+        "components": [{ "id": "4a9370f2-489c-4d12-abcd-43ca5d6709a1", "type": "feat", "name": "Nano-intégration" }]
       },
       {
         "id": "01ad5e2a-125e-4c06-a7ca-8cf49efb586f",
@@ -174,7 +175,7 @@
           {
             "id": "3e635dd8-3326-4bf6-8836-5deb485ff08b",
             "type": "ability",
-            "title": "Polyglotte",
+            "name": "Polyglotte",
             "description": "A chaque fois qu’un tel androïde investit un rang de compétence en Culture, il apprend deux nouvelles langues au lieu d’une seule."
           }
         ]
@@ -302,7 +303,7 @@
           {
             "id": "0985d4b1-5288-49b3-9c01-b13d438e2f08",
             "type": "ability",
-            "title": "Foulée du désert",
+            "name": "Foulée du désert",
             "description": "Les kasathas peuvent se déplacer à leur vitesse normale sur un terrain non magique difficile dans les déserts, les collines et les montagnes."
           }
         ]
@@ -314,7 +315,7 @@
           {
             "id": "59492ac8-29e3-499c-967f-af4e261ea837",
             "type": "ability",
-            "title": "Quatre bras",
+            "name": "Quatre bras",
             "description": "Les kasathas ont quatre bras capables de manier des armes et des équipements. Leurs bras multiples n’augmentent pas le nombre d’attaques qu’ils peuvent effectuer en combat."
           }
         ]
@@ -417,17 +418,17 @@
           {
             "id": "25386467-1737-4cc7-bd18-c33393aaf210",
             "type": "spell",
-            "title": "Hébétement"
+            "name": "Hébétement"
           },
           {
             "id": "913749a7-b6e5-41f3-a946-5746d74cbff1",
             "type": "spell",
-            "title": "Main psychocinétique"
+            "name": "Main psychocinétique"
           },
           {
             "id": "1a3dd2c4-a98a-4695-90a5-d1b3d16ff410",
             "type": "spell",
-            "title": "Détection des pensées",
+            "name": "Détection des pensées",
             "description": "1 fois par jour"
           }
         ]
@@ -439,7 +440,7 @@
           {
             "id": "d9490af8-e54e-4cf1-8bee-004a2f00399e",
             "type": "ability",
-            "title": "Télépathie limitée",
+            "name": "Télépathie limitée",
             "description": "Les lashuntas peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun."
           }
         ]
@@ -518,7 +519,7 @@
           {
             "id": "",
             "type": "ability",
-            "title": "Perception aveugle (vibration - 9m)",
+            "name": "Perception aveugle (vibration - 9m)",
             "description": "Les antennes sensibles des shirrens leur octroient le pouvoir de perception aveugle (vibration) qui leur permet de percevoir les vibrations dans l’air dans un rayon de 9 mètres. Quand il tente un test de Perception opposé au test de Discrétion d’une créature, le shirren ignore les bonus de Discrétion accordés par n’importe quel camouflage visuel, par l’invisibilité et par des effets similaires."
           }
         ]
@@ -530,7 +531,7 @@
           {
             "id": "7b838368-1259-49e3-b6f9-2eaf7b8f8cc4",
             "type": "ability",
-            "title": "Communautarisme",
+            "name": "Communautarisme",
             "description": "Une fois par jour, tant qu’un allié est situé à 3 mètres ou moins, un shirren peut effectuer deux fois un seul jet d’attaque ou test de compétence et choisir le meilleur résultat."
           }
         ]
@@ -550,7 +551,7 @@
           {
             "id": "6d5d172f-c987-47d7-85cd-2b6b8686e55b",
             "type": "ability",
-            "title": "Télépathie limitée",
+            "name": "Télépathie limitée",
             "description": "Les shirrens peuvent communiquer mentalement dans un rayon de 9 mètres avec n’importe quelle créature avec laquelle ils ont un langage commun."
           }
         ]
@@ -610,7 +611,7 @@
           {
             "id": "91668a52-2700-4343-b0ea-741eedbde647",
             "type": "ability",
-            "title": "Expert en armure",
+            "name": "Expert en armure",
             "description": "Les vesks utilisent les armures de manière à compléter leur robuste physiologie. Quand ils portent une armure, ils bénéficient d’un bonus racial de +1 à leur CA. Quand ils sont équipés d’une armure lourde, leur malus d’armure aux tests est réduit de 1 point."
           }
         ]
@@ -622,7 +623,7 @@
           {
             "id": "466de7a5-aa27-4047-862e-a26fabaa14a8",
             "type": "savingThrow",
-            "title": "Intrépide",
+            "name": "Intrépide",
             "description": "+2 contre les effets de terreur."
           }
         ]
@@ -634,7 +635,7 @@
           {
             "id": "9890d63d-f10c-4e6a-90b7-7d72f3681ca4",
             "type": "ability",
-            "title": "Vision nocturne",
+            "name": "Vision nocturne",
             "description": "Les vesks peuvent voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive."
           }
         ]
@@ -646,14 +647,14 @@
           {
             "id": "3e964c5d-cb72-4cf0-9b15-feb393db1396",
             "type": "ability",
-            "title": "Armes naturelles",
+            "name": "Armes naturelles",
             "description": "Les vesks sont toujours considérés comme armés. Ils peuvent infliger 1d3 points de dégâts létaux en combat à mains nues et l’attaque n’est pas considérée comme archaïque."
           },
           {
             "id": "a3c58d19-dd5a-4839-bf2d-a1bcf02d8820",
             "type": "feat",
             "level": 3,
-            "title": "Spécialisation martiale (Armes naturelles)",
+            "name": "Spécialisation martiale (Armes naturelles)",
             "description": "Les vesks ajoutent un bonus de 1,5 × le niveau du personnage à leurs dés de dégâts pour leurs armes naturelles."
           }
         ]
@@ -701,7 +702,7 @@
           {
             "id": "4f0cb555-d207-4f98-a7c2-1ef78bfe1cf8",
             "type": "ability",
-            "title": "Ahajoues",
+            "name": "Ahajoues",
             "description": "Les ysokis peuvent stocker dans leurs abajoues jusqu’à 30 cm cubes d’objets pour un volume transportable total de 1. De plus, avec une action rapide ils peuvent transférer un seul objet entre une de leurs mains et leurs abajoues. Un ysoki peut régurgiter par terre, dans sa case, tout le contenu de ses abajoues avec une action de déplacement qui ne provoque pas d’attaques d’opportunité."
           }
         ]
@@ -713,7 +714,7 @@
           {
             "id": "f34d1543-7dca-4cd2-ad2b-2a8e4b8836a6",
             "type": "ability",
-            "title": "Vision dans le noir",
+            "name": "Vision dans le noir",
             "description": "Les ysokis peuvent voir sur une distance de 18 mètres dans le noir."
           }
         ]
@@ -726,19 +727,19 @@
           {
             "id": "ef015eda-f62c-46b4-a691-91592693ff81",
             "type": "ability",
-            "title": "A terre",
+            "name": "A terre",
             "description": "Un ysoki peut se redresser alors qu’il est à terre en une action rapide."
           },
           {
             "id": "3ecf3c0c-fbe5-47fd-9344-0f2f3b301c43",
             "type": "ability",
-            "title": "Apesanteur",
+            "name": "Apesanteur",
             "description": "De plus, quand il est en apesanteur, un ysoki ne subit pas les pénalités normales pour attaquer et il n’est pas considéré comme pris au dépourvu."
           },
           {
             "id": "7a368f3f-4926-46ad-935b-e2316d45012d",
             "type": "ability",
-            "title": "Dynamique",
+            "name": "Dynamique",
             "description": "Quand il tente un test d’Acrobaties pour traverser l’espace d’un adversaire d’au moins une catégorie de taille supérieure à la sienne, un ysoki bénéficie d’un bonus racial de +5 au test."
           }
         ]
