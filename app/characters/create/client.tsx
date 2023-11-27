@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { Component, Option, Race, Trait } from "../../types";
+import { Component, Variant, Race, Trait } from "../../types";
 import { Character, ClientComponentData } from "./types";
 
 function Component({ component }: { component: Component }) {
@@ -96,7 +96,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [navigation, updateNavigation] = useState("profil");
   const [character, updateCharacter] = useState<Character>({ race: null, raceVariant: null });
   const [selectedRace, updateSelectedRace] = useState<Race>(null);
-  const [selectedOption, updateSelectedOption] = useState<Option>(null);
+  const [selectedOption, updateSelectedOption] = useState<Variant>(null);
   const [selectedTheme, updateSelectedTheme] = useState(data.themes[0]);
   const [selectedClass, updateSelectedClass] = useState(data.classes[0]);
   const [selectedHumanBonus, updateSelectedHumanBonus] = useState(data.abilityScores[0]);
@@ -116,8 +116,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     let id = e.target.value;
     let race = data.races.find((r) => r.id === id);
     updateSelectedRace(race);
-    updateSelectedOption(race.options[0]);
-    updateCharacter({ ...character, race: id, raceVariant: race.options[0].id });
+    updateSelectedOption(race.variants[0]);
+    updateCharacter({ ...character, race: id, raceVariant: race.variants[0].id });
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -128,8 +128,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   function handleOptionChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let option = selectedRace.options.find((o) => o.id === id);
-    updateSelectedOption(option);
+    let variant = selectedRace.variants.find((o) => o.id === id);
+    updateSelectedOption(variant);
     updateCharacter({ ...character, raceVariant: id });
   }
 
@@ -253,13 +253,13 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
               </Stack>
               <p className="text-muted">{selectedRace.description}</p>
-              {selectedRace.options && (
+              {selectedRace.variants && (
                 <>
-                  <Form.FloatingLabel controlId="option" label="Variante">
+                  <Form.FloatingLabel controlId="variant" label="Variante">
                     <Form.Select value={character.raceVariant} onChange={handleOptionChange}>
-                      {selectedRace.options.map((option, index) => (
-                        <option key={index} value={option.id}>
-                          {option.name}
+                      {selectedRace.variants.map((variant, index) => (
+                        <option key={index} value={variant.id}>
+                          {variant.name}
                         </option>
                       ))}
                     </Form.Select>

@@ -1,4 +1,4 @@
-export interface Option {
+export interface Variant {
   id: string;
   name: string;
   description: string;
@@ -44,7 +44,7 @@ export interface Race {
   description: string;
   refs: string[];
   hitPoints: number;
-  options: Option[];
+  variants: Variant[];
   names: string[];
   traits: Trait[];
   secondaryTraits: SecondaryTrait[];

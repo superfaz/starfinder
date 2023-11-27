@@ -5,7 +5,7 @@
     "description": "Personnes artificielles composées d’éléments mécaniques, autrefois construites pour en faire des serviteurs mais à présent reconnues comme citoyens à part entière.",
     "refs": ["base-42"],
     "hitPoints": 4,
-    "options": [
+    "variants": [
       {
         "id": "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
         "name": "Aucune",
@@ -188,7 +188,7 @@
     "description": "Race extrêmement polyvalente et capable de s’adapter dont les membres n’ont de cesse d’explorer et de se répandre.",
     "refs": ["base-44"],
     "hitPoints": 4,
-    "options": [
+    "variants": [
       {
         "id": "standard",
         "name": "Standard",
@@ -252,7 +252,7 @@
     "description": "Race dotée d’une culture très traditionnelle dont les membres à quatre bras sont originaires d’un monde désertique lointain.",
     "refs": ["base-46"],
     "hitPoints": 4,
-    "options": [
+    "variants": [
       {
         "id": "811c251b-fbee-4736-b1db-11c319d4ee71",
         "name": "Aucune",
@@ -358,7 +358,7 @@
     "description": "Race d’érudits charismatiques aux pouvoirs télépathiques composée de deux sous-espèces : les membres de la première sont grands et élancés, les autres sont petits et musculeux.",
     "refs": ["base-48"],
     "hitPoints": 4,
-    "options": [
+    "variants": [
       {
         "id": "53b2b108-83eb-4dda-9685-dd852f4b99aa",
         "name": "Korashas",
@@ -471,7 +471,7 @@
     "description": "Race insectoïde semblable aux locustes dont les membres ont quitté leur ruche. Ils ont normalement l’esprit communautaire mais apprécient les choix individuels au point d’y être accro.",
     "refs": ["base-50"],
     "hitPoints": 6,
-    "options": [
+    "variants": [
       {
         "id": "e6dcd16d-2d8a-4235-8764-8121ee3629ec",
         "name": "Aucune",
@@ -564,7 +564,7 @@
     "description": "Race de reptiliens belliqueux qui ont récemment déclaré une trêve avec les autres races – pour le moment.",
     "refs": ["base-52"],
     "hitPoints": 6,
-    "options": [
+    "variants": [
       {
         "id": "0b891647-dcdd-4322-9d4f-dad3ac14c4d6",
         "name": "Aucune",
