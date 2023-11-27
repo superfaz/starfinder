@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { Component, Variant, Race, Trait } from "../../types";
+import { Component, Variant, Race, Trait, SecondaryTrait } from "../../types";
 import { Character, ClientComponentData } from "./types";
 
 function Component({ component }: { component: Component }) {
@@ -239,6 +239,15 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     return null;
   }
 
+  function handleTraitEnabled(trait: SecondaryTrait, e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      let updatedTraits = character.traits.filter((t) => trait.replace.findIndex((r) => r === t) === -1);
+      updateCharacter({ ...character, traits: [...updatedTraits, trait.id] });
+    } else {
+      updateCharacter({ ...character, traits: character.traits.filter((t) => t !== trait.id).concat(trait.replace) });
+    }
+  }
+
   return (
     <Row>
       <Col lg={12}>
@@ -470,7 +479,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           </Form.FloatingLabel>
         </Stack>
       </Col>
-      <Col lg={6} hidden={navigation !== "profil" && navigation !== "traits"}>
+      <Col lg={6} hidden={navigation !== "profil"}>
         <Stack direction="vertical" gap={2}>
           <h2>Traits du personnage</h2>
           {!selectedRace && (
@@ -509,30 +518,59 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               ))}
         </Stack>
       </Col>
+
       <Col lg={6} hidden={navigation !== "traits"}>
-        <Stack direction="vertical" gap={2}>
-          {selectedRace && (
-            <>
-              <h2>Traits secondaires</h2>
-              {selectedRace.secondaryTraits &&
-                selectedRace.secondaryTraits.map((trait) => (
-                  <div key={trait.id}>
-                    <h5>
-                      <Form.Switch label={trait.name} />
-                    </h5>
-                    <div>
-                      <span>Remplace : </span>
-                      {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
-                    </div>
-                    <p className="text-muted">{trait.description}</p>
-                    {trait.components &&
-                      trait.components.map((component) => <Component key={component.id} component={component} />)}
-                  </div>
-                ))}
-            </>
-          )}
-        </Stack>
+        {selectedRace && (
+          <Stack direction="vertical" gap={2}>
+            <h2>Traits de race</h2>
+            {selectedRace.traits.map((trait) => (
+              <div
+                key={trait.id}
+                className={
+                  character.traits.find((t) => t === trait.id) !== undefined ? "" : "text-decoration-line-through"
+                }
+              >
+                <h5>{trait.name}</h5>
+                <p className="text-muted">{trait.description}</p>
+                {trait.components &&
+                  trait.components.map((component) => <Component key={component.id} component={component} />)}
+              </div>
+            ))}
+          </Stack>
+        )}
       </Col>
+
+      <Col lg={6} hidden={navigation !== "traits"}>
+        {selectedRace && (
+          <Stack direction="vertical" gap={2}>
+            <h2>Traits secondaires</h2>
+            {selectedRace.secondaryTraits &&
+              selectedRace.secondaryTraits.map((trait) => (
+                <div key={trait.id}>
+                  <h5>
+                    <Form.Switch
+                      label={trait.name}
+                      checked={character.traits.find((t) => t === trait.id) !== undefined}
+                      onChange={(e) => handleTraitEnabled(trait, e)}
+                      disabled={
+                        character.traits.find((t) => t === trait.id) === undefined &&
+                        trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
+                      }
+                    />
+                  </h5>
+                  <div>
+                    <span>Remplace : </span>
+                    {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
+                  </div>
+                  <p className="text-muted">{trait.description}</p>
+                  {trait.components &&
+                    trait.components.map((component) => <Component key={component.id} component={component} />)}
+                </div>
+              ))}
+          </Stack>
+        )}
+      </Col>
+
       <Col lg={12} hidden={navigation !== "debug"}>
         <pre>{JSON.stringify(character, null, 2)}</pre>
       </Col>
