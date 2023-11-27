@@ -94,7 +94,13 @@ function Component({ component }: { component: Component }) {
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [navigation, updateNavigation] = useState("profil");
-  const [character, updateCharacter] = useState<Character>({ race: null, raceVariant: null, theme: null, class: null });
+  const [character, updateCharacter] = useState<Character>({
+    race: null,
+    raceVariant: null,
+    theme: null,
+    class: null,
+    traits: [],
+  });
 
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
   const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
@@ -117,9 +123,16 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         race: id,
         raceVariant: race.variants[0].id,
         raceOptions: { humanBonus: data.abilityScores[0].id },
+        traits: race.traits.map((t) => t.id),
       });
     } else {
-      updateCharacter({ ...character, race: id, raceVariant: race.variants[0].id, raceOptions: null });
+      updateCharacter({
+        ...character,
+        race: id,
+        raceVariant: race.variants[0].id,
+        raceOptions: null,
+        traits: race.traits.map((t) => t.id),
+      });
     }
   }
 
@@ -459,17 +472,25 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       </Col>
       <Col lg={6} hidden={navigation !== "profil" && navigation !== "traits"}>
         <Stack direction="vertical" gap={2}>
+          <h2>Traits du personnage</h2>
+          {!selectedRace && (
+            <p>
+              <em>Sélectionner une race</em>
+            </p>
+          )}
           {selectedRace && (
             <>
-              <h2>Traits</h2>
-              {selectedRace.traits.map((trait) => (
-                <div key={trait.id}>
-                  <h5>{trait.name}</h5>
-                  <p className="text-muted">{trait.description}</p>
-                  {trait.components &&
-                    trait.components.map((component) => <Component key={component.id} component={component} />)}
-                </div>
-              ))}
+              {selectedRace.traits
+                .concat(selectedRace.secondaryTraits)
+                .filter((trait) => character.traits.findIndex((v) => v === trait.id) !== -1)
+                .map((trait) => (
+                  <div key={trait.id}>
+                    <h5>{trait.name}</h5>
+                    <p className="text-muted">{trait.description}</p>
+                    {trait.components &&
+                      trait.components.map((component) => <Component key={component.id} component={component} />)}
+                  </div>
+                ))}
             </>
           )}
 

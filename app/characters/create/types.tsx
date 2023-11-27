@@ -17,4 +17,6 @@ export interface Character {
   theme: string;
   themeOptions?: Record<string, string>;
   class: string;
+  traits: string[];
+  traitsOptions?: Record<string, string>;
 }
