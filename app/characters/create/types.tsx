@@ -9,3 +9,8 @@ export interface ClientComponentData {
   specials: Record<string, Special>;
   alignments: Alignment[];
 }
+
+export interface Character {
+  race: string;
+  raceVariant: string;
+}

@@ -1,9 +1,9 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Badge, Button, Card, Col, Form, FormLabel, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { Component, Trait } from "../../types";
-import { ClientComponentData } from "./types";
+import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
+import { Component, Option, Race, Trait } from "../../types";
+import { Character, ClientComponentData } from "./types";
 
 function Component({ component }: { component: Component }) {
   switch (component.type) {
@@ -94,8 +94,9 @@ function Component({ component }: { component: Component }) {
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [navigation, updateNavigation] = useState("profil");
-  const [selectedRace, updateSelectedRace] = useState(data.races[0]);
-  const [selectedOption, updateSelectedOption] = useState(data.races[0].options[0]);
+  const [character, updateCharacter] = useState<Character>({ race: null, raceVariant: null });
+  const [selectedRace, updateSelectedRace] = useState<Race>(null);
+  const [selectedOption, updateSelectedOption] = useState<Option>(null);
   const [selectedTheme, updateSelectedTheme] = useState(data.themes[0]);
   const [selectedClass, updateSelectedClass] = useState(data.classes[0]);
   const [selectedHumanBonus, updateSelectedHumanBonus] = useState(data.abilityScores[0]);
@@ -116,6 +117,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     let race = data.races.find((r) => r.id === id);
     updateSelectedRace(race);
     updateSelectedOption(race.options[0]);
+    updateCharacter({ ...character, race: id, raceVariant: race.options[0].id });
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -128,6 +130,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     let id = e.target.value;
     let option = selectedRace.options.find((o) => o.id === id);
     updateSelectedOption(option);
+    updateCharacter({ ...character, raceVariant: id });
   }
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>) {
@@ -197,22 +200,37 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <Nav.Link eventKey="profil">Profil</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="traits">Traits</Nav.Link>
+            <Nav.Link eventKey="traits" disabled={selectedRace === null}>
+              Traits
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="abilityScores">Caractéristiques</Nav.Link>
+            <Nav.Link eventKey="abilityScores" disabled={selectedRace === null}>
+              Caractéristiques
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="skills">Compétences</Nav.Link>
+            <Nav.Link eventKey="skills" disabled={selectedRace === null}>
+              Compétences
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="equipment">Équipement</Nav.Link>
+            <Nav.Link eventKey="equipment" disabled={selectedRace === null}>
+              Équipement
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="spells">Sorts</Nav.Link>
+            <Nav.Link eventKey="spells" disabled={selectedRace === null}>
+              Sorts
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="feats">Don</Nav.Link>
+            <Nav.Link eventKey="feats" disabled={selectedRace === null}>
+              Don
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="debug">Debug</Nav.Link>
           </Nav.Item>
         </Nav>
       </Col>
@@ -220,7 +238,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         <Stack direction="vertical" gap={2}>
           <h2>Profil</h2>
           <Form.FloatingLabel controlId="race" label="Race">
-            <Form.Select value={selectedRace.id} onChange={handleRaceChange}>
+            <Form.Select value={character.race} onChange={handleRaceChange}>
+              {character.race === null && <option value=""></option>}
               {data.races.map((race) => (
                 <option key={race.id} value={race.id}>
                   {race.name}
@@ -228,48 +247,52 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               ))}
             </Form.Select>
           </Form.FloatingLabel>
-          <Stack direction="horizontal">
-            <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
-          </Stack>
-          <p className="text-muted">{data.races.find((r) => r.id === selectedRace.id).description}</p>
-          {selectedRace.options && (
+          {selectedRace && (
             <>
-              <Form.FloatingLabel controlId="option" label="Variante">
-                <Form.Select value={selectedOption.id} onChange={handleOptionChange}>
-                  {selectedRace.options.map((option, index) => (
-                    <option key={index} value={option.id}>
-                      {option.name}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.FloatingLabel>
-              {(selectedRace.id !== "humans" || selectedOption.id !== "standard") && (
-                <Stack direction="horizontal">
-                  {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
-                    <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                      {key} {value > 0 ? "+" : ""}
-                      {value}
-                    </Badge>
-                  ))}
-                </Stack>
-              )}
-              {selectedRace.id === "humans" && selectedOption.id === "standard" && (
+              <Stack direction="horizontal">
+                <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
+              </Stack>
+              <p className="text-muted">{selectedRace.description}</p>
+              {selectedRace.options && (
                 <>
-                  <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-                    <Form.Select value={selectedHumanBonus.id} onChange={handleHumanBonusChange}>
-                      {data.abilityScores.map((abilityScore) => (
-                        <option key={abilityScore.id} value={abilityScore.id}>
-                          {abilityScore.name}
+                  <Form.FloatingLabel controlId="option" label="Variante">
+                    <Form.Select value={character.raceVariant} onChange={handleOptionChange}>
+                      {selectedRace.options.map((option, index) => (
+                        <option key={index} value={option.id}>
+                          {option.name}
                         </option>
                       ))}
                     </Form.Select>
                   </Form.FloatingLabel>
-                  <Stack direction="horizontal">
-                    <Badge bg="primary">{selectedHumanBonus.code} +2</Badge>
-                  </Stack>
+                  {(selectedRace.id !== "humans" || selectedOption.id !== "standard") && (
+                    <Stack direction="horizontal">
+                      {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
+                        <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                          {key} {value > 0 ? "+" : ""}
+                          {value}
+                        </Badge>
+                      ))}
+                    </Stack>
+                  )}
+                  {selectedRace.id === "humans" && selectedOption.id === "standard" && (
+                    <>
+                      <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
+                        <Form.Select value={selectedHumanBonus.id} onChange={handleHumanBonusChange}>
+                          {data.abilityScores.map((abilityScore) => (
+                            <option key={abilityScore.id} value={abilityScore.id}>
+                              {abilityScore.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Form.FloatingLabel>
+                      <Stack direction="horizontal">
+                        <Badge bg="primary">{selectedHumanBonus.code} +2</Badge>
+                      </Stack>
+                    </>
+                  )}
+                  {selectedOption.description && <p className="text-muted">{selectedOption.description}</p>}
                 </>
               )}
-              {selectedOption.description && <p className="text-muted">{selectedOption.description}</p>}
             </>
           )}
 
@@ -359,11 +382,13 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           <Form.FloatingLabel controlId="name" label="Sexe">
             <Form.Control type="text" />
           </Form.FloatingLabel>
-          <Card>
-            <picture>
-              <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
-            </picture>
-          </Card>
+          {selectedRace && (
+            <Card>
+              <picture>
+                <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
+              </picture>
+            </Card>
+          )}
           <Form.FloatingLabel controlId="alignment" label="Alignement">
             <Form.Select value={alignment.id} onChange={handleAlignmentChange}>
               {data.alignments.map((alignment) => (
@@ -377,15 +402,19 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       </Col>
       <Col lg={6} hidden={navigation !== "profil" && navigation !== "traits"}>
         <Stack direction="vertical" gap={2}>
-          <h2>Traits</h2>
-          {selectedRace.traits.map((trait) => (
-            <div key={trait.id}>
-              <h5>{trait.name}</h5>
-              <p className="text-muted">{trait.description}</p>
-              {trait.components &&
-                trait.components.map((component) => <Component key={component.id} component={component} />)}
-            </div>
-          ))}
+          {selectedRace && (
+            <>
+              <h2>Traits</h2>
+              {selectedRace.traits.map((trait) => (
+                <div key={trait.id}>
+                  <h5>{trait.name}</h5>
+                  <p className="text-muted">{trait.description}</p>
+                  {trait.components &&
+                    trait.components.map((component) => <Component key={component.id} component={component} />)}
+                </div>
+              ))}
+            </>
+          )}
 
           <hr />
 
@@ -403,21 +432,30 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       </Col>
       <Col lg={6} hidden={navigation !== "traits"}>
         <Stack direction="vertical" gap={2}>
-          <h2>Traits secondaires</h2>
-          {selectedRace.secondaryTraits &&
-            selectedRace.secondaryTraits.map((trait) => (
-              <div key={trait.id}>
-                <h5>{trait.name}</h5>
-                <div>
-                  <span>Remplace : </span>
-                  {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
-                </div>
-                <p className="text-muted">{trait.description}</p>
-                {trait.components &&
-                  trait.components.map((component) => <Component key={component.id} component={component} />)}
-              </div>
-            ))}
+          {selectedRace && (
+            <>
+              <h2>Traits secondaires</h2>
+              {selectedRace.secondaryTraits &&
+                selectedRace.secondaryTraits.map((trait) => (
+                  <div key={trait.id}>
+                    <h5>
+                      <Form.Switch label={trait.name} />
+                    </h5>
+                    <div>
+                      <span>Remplace : </span>
+                      {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
+                    </div>
+                    <p className="text-muted">{trait.description}</p>
+                    {trait.components &&
+                      trait.components.map((component) => <Component key={component.id} component={component} />)}
+                  </div>
+                ))}
+            </>
+          )}
         </Stack>
+      </Col>
+      <Col lg={12} hidden={navigation !== "debug"}>
+        <pre>{JSON.stringify(character, null, 2)}</pre>
       </Col>
     </Row>
   );
