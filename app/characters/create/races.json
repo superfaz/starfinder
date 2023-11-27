@@ -245,7 +245,62 @@
         "components": [{ "id": "25a4565e-8ced-434d-8743-87aac1c0ced9", "type": "skillRank", "value": 1 }]
       }
     ],
-    "secondaryTraits": []
+    "secondaryTraits": [
+      {
+        "id": "b416c069-f77b-427d-9fce-de79297c9ca0",
+        "name": "Adopté",
+        "description": "De nombreux humains prospèrent dans différents secteurs métropolitains dominés par d’autres races, et certains d’entre eux sont adoptés par des membres d’une espèce différente.",
+        "replace": ["ceb2713a-636e-4a17-87c2-af82ee5a4a38"],
+        "components": [
+          {
+            "id": "92fa4a6c-84a4-4a56-b5a0-c2fd35aedf6a",
+            "type": "ability",
+            "name": "Adopté",
+            "description": "+2 aux tests de Culture pour se rappeler quelque chose au sujet des non-humains."
+          },
+          {
+            "id": "10475756-da0a-4504-abdb-13a10092ecf6",
+            "type": "ability",
+            "name": "Adopté",
+            "description": "+2 aux tests de Déguisement pour se faire passer pour un membre d’une autre race."
+          }
+        ]
+      },
+      {
+        "id": "f27e550f-819a-45e1-8f83-a400894435aa",
+        "name": "Fortifié",
+        "description": "De petites enclaves humaines survivent dans des environnements fatals aux autres membres de leur espèce et, au fil des générations, ils développent une immunité contre ces conditions.",
+        "replace": ["ceb2713a-636e-4a17-87c2-af82ee5a4a38"],
+        "components": [
+          {
+            "id": "ce780398-9d09-4eba-afac-feb0b7ae260a",
+            "type": "savingThrow",
+            "description": "+2 à leurs tests de Vigueur contre les effets des dangers de l’environnement et des radiations."
+          },
+          {
+            "id": "e8726b2c-1177-4751-a673-b912026ed575",
+            "type": "ability",
+            "name": "Fortifié",
+            "description": "La durée des états fiévreux et nauséeux de 1 round."
+          }
+        ]
+      },
+      {
+        "id": "417702b4-390e-4267-a45a-01ab5a14f63c",
+        "name": "Vision crépusculaire",
+        "description": "Les humains vivant dans des environnements qui sont peu exposés à la lumière naturelle, tels que les cités de l’hémisphère crépusculaire de Verces ou les complexes souterrains aballoniens, s’adaptent du mieux qu’ils peuvent.",
+        "replace": ["ceb2713a-636e-4a17-87c2-af82ee5a4a38"],
+        "components": [
+          {
+            "id": "de0244a3-e51e-4391-a539-e8c4964d5469",
+            "type": "ability",
+            "name": "Vision nocture",
+            "description": "Peut voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive."
+          },
+          { "id": "2e646e48-4c6f-438b-9da3-2383b514c3f7", "type": "skill", "target": "Perception", "value": 2 }
+        ]
+      }
+    ]
   },
   {
     "id": "kasathas",
@@ -352,7 +407,33 @@
         ]
       }
     ],
-    "secondaryTraits": []
+    "secondaryTraits": [
+      {
+        "id": "f877f934-3987-4b77-9df8-0c5fb4484e09",
+        "name": "Membre d’équipage",
+        "description": "Certaines familles kasathas servent en tant que membres d’équipage à bord de l’Idari depuis des générations.",
+        "replace": ["1114ee16-c64f-4992-84de-cc31a3a62058"],
+        "components": [
+          { "id": "5b16da83-094b-4745-9268-e42a7e55cb8a", "type": "skill", "target": "Informatique", "value": 2 },
+          { "id": "71fefae0-6dda-4f1b-87d5-2e7cecd36be7", "type": "skill", "target": "Ingénierie", "value": 2 },
+          { "id": "30bc2fc6-31cb-41f9-b9c6-21e9de6a57e4", "type": "skill", "target": "Pilotage", "value": 2 }
+        ]
+      },
+      {
+        "id": "711975a9-249b-4607-b860-87942b5fe1cb",
+        "name": "Traditions personnelles",
+        "description": "Les kasathas qui n’ont pas de liens solides avec leur société trouvent parfois leur force dans des traditions personnelles.",
+        "replace": ["4baba625-1838-41e9-95e0-fa0bb2cae087"],
+        "components": [
+          {
+            "id": "b7c7c1ee-aa03-40bd-a9c8-f84db0935941",
+            "type": "ability",
+            "name": "Traditions personnelles",
+            "description": "Une fois par jour, en réaction, un tel kasatha peut relancer un jet de sauvegarde raté."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "lashuntas",
@@ -466,7 +547,34 @@
         ]
       }
     ],
-    "secondaryTraits": []
+    "secondaryTraits": [
+      {
+        "id": "4334bdaa-1b4d-403c-a888-321dd8e2c23c",
+        "name": "Psychiquement résistant",
+        "description": "Les archives pré-Faille indiquent qu’il y a fort longtemps vivaient des lashuntas sans capacité télépathique, qui sont réapparus au paroxysme des guerres formiennes. Ces lashuntas psychiquement résistants émettent un faible signal psychique parasite qui pousse parfois les autres membres de leur société naturellement télépathique à les exclure. Cependant, ces lashuntas sont généralement plus compétents dans le domaine de l’expression verbale. Certains peuvent utiliser ce signal parasite pour perturber les communications télépathiques proches.",
+        "replace": ["46a9cb91-a33b-4b46-97d5-2ac959b4a3a1", "6488006c-92b6-44e3-9d31-1d726381b3b9"],
+        "components": [
+          {
+            "id": "42471b6d-03b4-4538-9034-b941eea889fa",
+            "type": "savingThrow",
+            "description": "+2 à leurs jets de Volonté contre les effets mentaux."
+          },
+          {
+            "id": "abc2b1e4-8327-4628-8d98-efe6efca89cf",
+            "type": "spell",
+            "name": "Silence mental",
+            "description": "une fois par jour"
+          }
+        ]
+      },
+      {
+        "id": "d1a485c0-d4c2-42b8-8e1d-4b20fb9611dd",
+        "name": "Rude",
+        "description": "Certains lashuntas expriment la soif d’apprendre de leur espèce en se focalisant sur les entraînements physiques plutôt que les apprentissages académiques.",
+        "replace": ["f3b13f96-aab9-4f63-822b-d3075515ccd6"],
+        "components": [{ "id": "899a1b99-bd80-4479-8839-69dfec53b572", "type": "feat", "name": "Robustesse" }]
+      }
+    ]
   },
   {
     "id": "shirrens",
@@ -520,7 +628,7 @@
         "name": "Perception aveugle",
         "components": [
           {
-            "id": "",
+            "id": "5149addf-2cd4-4879-804d-f4df8d842f9b",
             "type": "ability",
             "name": "Perception aveugle (vibration - 9m)",
             "description": "Les antennes sensibles des shirrens leur octroient le pouvoir de perception aveugle (vibration) qui leur permet de percevoir les vibrations dans l’air dans un rayon de 9 mètres. Quand il tente un test de Perception opposé au test de Discrétion d’une créature, le shirren ignore les bonus de Discrétion accordés par n’importe quel camouflage visuel, par l’invisibilité et par des effets similaires."
@@ -560,7 +668,68 @@
         ]
       }
     ],
-    "secondaryTraits": []
+    "secondaryTraits": [
+      {
+        "id": "7e562d2c-7159-4fae-9db1-1fc9e216d17b",
+        "name": "Assimilation culturelle",
+        "description": "De nombreux shirrens sont avides de nouvelles idées, ce qui leur permet de s’adapter plus facilement aux autres cultures.",
+        "replace": ["dde699b9-3055-4a38-b113-96c5958c1b1a"],
+        "components": [
+          { "id": "f1f71924-ff70-4fae-8de5-a90b17bcc818", "type": "skill", "target": "Culture", "value": 2 },
+          { "id": "85ea82d5-bd9e-4a2c-8b1c-72c5bb12b4a1", "type": "skill", "target": "Déguisement", "value": 2 }
+        ]
+      },
+      {
+        "id": "50ce413c-c55e-4b25-b975-89ef731e0789",
+        "name": "Défense de l’Essaim",
+        "description": "Les shirrens apprécient profondément leurs amis et font constamment attention à eux.",
+        "replace": ["1441c348-c5de-4e2a-ac9e-0ab02ff91892"],
+        "components": [
+          {
+            "id": "fe457f66-f9e3-4450-9639-50e598e55470",
+            "type": "ability",
+            "name": "Défense de l’Essaim",
+            "description": "Une fois par jour, quand un allié à moins de 3 m d’un shirren avec ce trait tente un jet de sauvegarde, en réaction, le shirren peut permettre à cet allié de le lancer deux fois et de choisir le meilleur résultat."
+          }
+        ]
+      },
+      {
+        "id": "f46aaa34-1e74-4e7b-81d8-6f63883bd94e",
+        "name": "Obsession individuelle",
+        "replace": ["1441c348-c5de-4e2a-ac9e-0ab02ff91892", "dde699b9-3055-4a38-b113-96c5958c1b1a"],
+        "components": [
+          { "id": "b5731606-cc62-4d2f-9332-b8bc26a9142a", "type": "classSkill", "target": "any" },
+          {
+            "id": "9cd5d591-ce30-4a88-9cc6-198f3f460971",
+            "type": "skill",
+            "target": "any",
+            "value": 2,
+            "description": "Compétence identique à la compétence de classe choisie."
+          },
+          {
+            "id": "77f8c524-9135-429e-803c-6866b3639ac6",
+            "type": "skillRank",
+            "value": "1",
+            "description": "Doit être utilisé pour la compétence choisie."
+          }
+        ]
+      },
+      {
+        "id": "d00b801f-e6a1-44ce-8633-04667dce34ab",
+        "name": "Acculturation linguistique",
+        "description": "Les shirrens s’adaptent rapidement aux nouvelles langues qu’ils découvrent car cela leur permet de communiquer leurs pensées à de nouvelles personnes et de bénéficier de leurs expériences en retour.",
+        "replace": ["dde699b9-3055-4a38-b113-96c5958c1b1a"],
+        "components": [
+          { "id": "4a141f0f-7825-4d4f-88a8-f3b074e7d9a6", "type": "skill", "target": "Culture", "value": 2 },
+          {
+            "id": "0768940d-f6e5-4a88-b2ce-90963e075566",
+            "type": "ability",
+            "name": "Acculturation linguistique",
+            "description": "Ils apprennent deux langues pour chaque rang de compétence en Culture."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "vesks",
@@ -664,7 +833,68 @@
         ]
       }
     ],
-    "secondaryTraits": []
+    "secondaryTraits": [
+      {
+        "id": "793c209f-1607-4259-ad74-bca41f0ed767",
+        "name": "Capacité pulmonaire accrue",
+        "description": "Certains vesks ont une capacité pulmonaire extraordinaire. Ces individus peuvent faire carrière en travaillant dans des installations ou des vaisseaux sous-marins ou spatiaux.",
+        "replace": ["2aea0fee-90b5-4950-a478-a80f968db158"],
+        "components": [
+          {
+            "id": "793c209f-1607-4259-ad74-bca41f0ed767",
+            "type": "ability",
+            "name": "Capacité pulmonaire accrue",
+            "description": "Les vesks avec ce trait racial peuvent retenir leur souffle dix fois plus longtemps"
+          }
+        ]
+      },
+      {
+        "id": "adcfdbf6-7ee4-4250-8611-5f9575d383f8",
+        "name": "Observateur",
+        "description": "Certains vesks apprennent à observer leur environnement et les créatures qui les entourent pour déceler le moindre signe de danger.",
+        "replace": ["0c3faf4d-73dd-454d-980e-028aff761272"],
+        "components": [
+          {
+            "id": "5f99502d-ab71-4d77-9da7-74880bf6e927",
+            "type": "skill",
+            "target": "Perception ou Psychologie",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "id": "5d1af77d-a0d5-4001-9b66-0bc4ab23ed6b",
+        "name": "Queue préhensile",
+        "description": "Parfois, un vesk peut naître avec une queue plus fine et plus souple que celle des autres membres de son espèce. Bien que moins communes, il existe d’anciennes techniques vesks qui permettent à un individu d’apprendre à utiliser sa queue au bout de plusieurs années de pratique.",
+        "replace": ["5181e460-0ddb-425d-a28c-714ff599db01"],
+        "components": [
+          {
+            "id": "c4572262-d2c1-41ca-889e-32a77ede78e2",
+            "type": "ability",
+            "name": "Queue préhensile",
+            "description": "Les vesks avec ce trait racial ont une queue aussi efficace qu’une main pour manipuler des objets, ce qui leur permet de manier et de tenir des armes et des équipements comme s’ils avaient trois mains."
+          }
+        ]
+      },
+      {
+        "id": "bd63cb16-1bfc-4caf-847f-249ee9bc989c",
+        "name": "Vesk venimeux",
+        "description": "Bien que la plupart des vesks ne soient pas venimeux, certains d’entre eux ont des poches de poison et des dents plus longues, héritées d’une sous-espèce disparue depuis longtemps, peut-être liée au peuple serpent de Vesk Prime.",
+        "replace": [
+          "2aea0fee-90b5-4950-a478-a80f968db158",
+          "0c3faf4d-73dd-454d-980e-028aff761272",
+          "5181e460-0ddb-425d-a28c-714ff599db01"
+        ],
+        "components": [
+          {
+            "id": "e52d764d-685c-48d0-b97d-debfa7cac72e",
+            "type": "ability",
+            "name": "Vesk venimeux",
+            "description": "Quand un vesk réussit une attaque à mains nues qui inflige des dégâts perforants, et que la cible subit des dégâts à cause de cette attaque, en réaction, il peut choisir de lui injecter son venin (voir page ci-contre). Une fois qu’il a utilisé son venin, le vesk ne peut recommencer qu’après s’être reposé dix minutes pour récupérer des points d’endurance."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "ysokis",
@@ -774,6 +1004,89 @@
         ]
       }
     ],
-    "secondaryTraits": []
+    "secondaryTraits": [
+      {
+        "id": "f4e94264-8531-4c73-a420-3ea14d2e6582",
+        "name": "Armes naturelles",
+        "description": "Les ysokis peuvent avoir de longues dents tranchantes.",
+        "replace": ["36564346-5d94-462a-8b72-0581c646b5e1"],
+        "components": [
+          {
+            "id": "1aca1113-7b38-4c90-8292-21c3415025c3",
+            "type": "ability",
+            "name": "Armes naturelles",
+            "description": "Un ysoki avec ce trait est toujours considéré comme armé. Il peut infliger 1d3 points de dégâts létaux perforants avec ses attaques à mains nues, qui ne sont pas considérées comme archaïques."
+          },
+          {
+            "id": "57a700b9-9663-407d-8138-aad1990051fa",
+            "type": "feat",
+            "level": 3,
+            "name": "Spécialisation martiale (Armes naturelles)",
+            "description": "Les ysokis ajoutent un bonus de 1,5 × le niveau du personnage à leurs dés de dégâts pour leurs armes naturelles."
+          }
+        ]
+      },
+      {
+        "id": "24aacda4-3fe4-4e30-9efd-ef2da6af65d6",
+        "name": "Compétent",
+        "replace": ["bb77e446-8197-4ccd-ae28-31763675e931"],
+        "components": [{ "id": "4b00cc2a-91db-4ea9-97c0-964be01d92d0", "type": "skillRank", "value": 1 }]
+      },
+      {
+        "id": "88e04bb5-2f96-43c8-aeb3-a974375859cc",
+        "name": "Perception aveugle",
+        "replace": ["0b6f463b-701d-47c4-9246-a0c2896f1b3e"],
+        "components": [
+          {
+            "id": "be41bad7-13f8-4a80-ba51-c3a80d6b165d",
+            "type": "ability",
+            "name": "Perception aveugle (odorat - 9m)"
+          }
+        ]
+      },
+      {
+        "id": "74341616-e818-4c3a-85bf-39d73e224cd3",
+        "name": "Pugnace",
+        "description": "De nombreux ysokis sont capables d’encaisser et d’infliger une quantité étonnante de dégâts.",
+        "replace": ["52e9b33a-c7a8-4dba-bb40-ed3c916ddb5d"],
+        "components": [
+          { "id": "46854379-e599-46c5-881e-bfc7a553b3c0", "type": "hitPoints", "value": 2 },
+          {
+            "id": "e5b8dbcf-7207-4400-a974-d7779f9c6d63",
+            "type": "ability",
+            "name": "Pugnace",
+            "description": "Quand un ysoki a 0 point d’endurance, il gagne un bonus d’intuition de +1 à ses jets d’attaque au corps à corps."
+          }
+        ]
+      },
+      {
+        "id": "6f32d6cf-0b4d-4ffa-9ca9-4b44ef31df8b",
+        "name": "Récupérateur",
+        "description": "Depuis l’effondrement économique d’Akiton, de nombreux ysokis sur la Planète Rouge ont été forcés de se débrouiller avec ce qu’ils pouvaient récupérer.",
+        "replace": ["bb77e446-8197-4ccd-ae28-31763675e931"],
+        "components": [
+          { "id": "203b1d8e-671a-40c0-8e2a-e0d57de39887", "type": "skill", "target": "Survie", "value": 2 },
+          {
+            "id": "04b81ddd-4e65-4ce1-a141-f89ad603979d",
+            "type": "savingThrow",
+            "description": "+2 à leurs jets de Vigueur contre la maladie, le poison et les effets qui provoquent les états nauséeux et fiévreux."
+          }
+        ]
+      },
+      {
+        "id": "982be75f-ffb0-4289-89c5-8c3063798292",
+        "name": "Voltigeur",
+        "description": "Les ysokis voltigeurs utilisent leur petite taille pour franchir les défenses ennemies afin de frapper les points faibles.",
+        "replace": ["52e9b33a-c7a8-4dba-bb40-ed3c916ddb5d", "bb77e446-8197-4ccd-ae28-31763675e931"],
+        "components": [
+          {
+            "id": "4c8f9c5e-3a04-4229-8b08-65cc21a43db4",
+            "type": "ability",
+            "name": "Voltigeur",
+            "description": "Un ysoki avec ce trait gagne les avantages d’une prise en tenaille contre un adversaire si au moins un autre allié menace cet adversaire, sans prendre en compte les positions. Les alliés menaçant le même ennemi gagnent aussi les avantages de la prise en tenaille."
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -7,6 +7,7 @@ export interface Variant {
 
 export enum ComponentType {
   ability = "ability",
+  hitPoints = "hitPoints",
   savingThrow = "savingThrow",
   skill = "skill",
   spell = "spell",

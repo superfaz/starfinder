@@ -15,6 +15,17 @@ function Component({ component }: { component: Component }) {
           <span className="text-muted">{component.description}</span>
         </p>
       );
+    case "hitPoints":
+      return (
+        <p>
+          <Badge bg="primary">Points de vie</Badge>
+          <strong>
+            {component.value > 0 ? "+" : ""}
+            {component.value}
+          </strong>
+          {component.description && <span className="ms-1 text-muted">{component.description}</span>}
+        </p>
+      );
     case "savingThrow":
       return (
         <p>
@@ -31,6 +42,7 @@ function Component({ component }: { component: Component }) {
             {component.target} {component.value > 0 ? "+" : ""}
             {component.value}
           </strong>
+          <span className="ms-1 text-muted">{component.description}</span>
         </p>
       );
     case "classSkill":
@@ -67,6 +79,7 @@ function Component({ component }: { component: Component }) {
             {component.value > 0 ? "+" : ""}
             {component.value}
           </strong>
+          <span className="ms-1 text-muted">{component.description}</span>
         </p>
       );
     case "spell":
@@ -522,7 +535,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       <Col lg={6} hidden={navigation !== "traits"}>
         {selectedRace && (
           <Stack direction="vertical" gap={2}>
-            <h2>Traits de race</h2>
+            <h2>Traits raciaux</h2>
             {selectedRace.traits.map((trait) => (
               <div
                 key={trait.id}
@@ -543,7 +556,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       <Col lg={6} hidden={navigation !== "traits"}>
         {selectedRace && (
           <Stack direction="vertical" gap={2}>
-            <h2>Traits secondaires</h2>
+            <h2>Traits alternatifs</h2>
             {selectedRace.secondaryTraits &&
               selectedRace.secondaryTraits.map((trait) => (
                 <div key={trait.id}>
