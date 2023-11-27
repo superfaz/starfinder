@@ -13,4 +13,8 @@ export interface ClientComponentData {
 export interface Character {
   race: string;
   raceVariant: string;
+  raceOptions?: Record<string, string>;
+  theme: string;
+  themeOptions?: Record<string, string>;
+  class: string;
 }

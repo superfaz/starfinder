@@ -667,7 +667,7 @@
     "description": "Egalement appelés « hommes-rats », ces petits récupérateurs recouverts de fourrure compensent leur petite taille par une personnalité affirmée.",
     "refs": ["base-54"],
     "hitPoints": 2,
-    "options": [
+    "variants": [
       {
         "id": "7b669134-6f91-41e5-ac48-df6a126c6c29",
         "name": "Aucune",

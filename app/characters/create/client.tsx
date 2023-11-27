@@ -94,17 +94,13 @@ function Component({ component }: { component: Component }) {
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [navigation, updateNavigation] = useState("profil");
-  const [character, updateCharacter] = useState<Character>({ race: null, raceVariant: null });
-  const [selectedRace, updateSelectedRace] = useState<Race>(null);
-  const [selectedOption, updateSelectedOption] = useState<Variant>(null);
-  const [selectedTheme, updateSelectedTheme] = useState(data.themes[0]);
-  const [selectedClass, updateSelectedClass] = useState(data.classes[0]);
-  const [selectedHumanBonus, updateSelectedHumanBonus] = useState(data.abilityScores[0]);
-  const [scholar, updateScholar] = useState({
-    skillId: "life",
-    specialization: data.specials.scholar.life[0],
-    label: "",
-  });
+  const [character, updateCharacter] = useState<Character>({ race: null, raceVariant: null, theme: null, class: null });
+
+  const selectedRace = data.races.find((r) => r.id === character.race) || null;
+  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
+  const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
+  const selectedClass = data.classes.find((c) => c.id === character.class) || null;
+
   const [alignment, updateAlignment] = useState(data.alignments[0]);
   const [name, updateName] = useState("");
 
@@ -115,22 +111,87 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     let race = data.races.find((r) => r.id === id);
-    updateSelectedRace(race);
-    updateSelectedOption(race.variants[0]);
-    updateCharacter({ ...character, race: id, raceVariant: race.variants[0].id });
+    if (id === "humans") {
+      updateCharacter({
+        ...character,
+        race: id,
+        raceVariant: race.variants[0].id,
+        raceOptions: { humanBonus: data.abilityScores[0].id },
+      });
+    } else {
+      updateCharacter({ ...character, race: id, raceVariant: race.variants[0].id, raceOptions: null });
+    }
+  }
+
+  function handleVariantChange(e: ChangeEvent<HTMLSelectElement>) {
+    let id = e.target.value;
+    let variant = selectedRace.variants.find((o) => o.id === id);
+
+    if (selectedRace.id === "humans" && variant.id === "standard") {
+      updateCharacter({ ...character, raceVariant: id, raceOptions: { humanBonus: data.abilityScores[0].id } });
+    } else {
+      updateCharacter({ ...character, raceVariant: id, raceOptions: null });
+    }
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let abilityScore = data.abilityScores.find((a) => a.id === id);
-    updateSelectedHumanBonus(abilityScore);
+    updateCharacter({ ...character, raceOptions: { humanBonus: id } });
   }
 
-  function handleOptionChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleThemeChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let variant = selectedRace.variants.find((o) => o.id === id);
-    updateSelectedOption(variant);
-    updateCharacter({ ...character, raceVariant: id });
+    if (id === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
+      // theme scholar
+      updateCharacter({
+        ...character,
+        theme: id,
+        themeOptions: { scholarSkill: "life", scholarSpecialization: data.specials.scholar.life[0], scholarLabel: "" },
+      });
+    } else {
+      updateCharacter({ ...character, theme: id, themeOptions: null });
+    }
+  }
+
+  function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>) {
+    let id = e.target.value;
+    updateCharacter({
+      ...character,
+      themeOptions: {
+        ...character.themeOptions,
+        scholarSkill: id,
+        scholarSpecialization: data.specials.scholar[id][0],
+        scholarLabel: "",
+      },
+    });
+  }
+
+  function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>) {
+    let specialization = e.target.value;
+    updateCharacter({
+      ...character,
+      themeOptions: {
+        ...character.themeOptions,
+        scholarSpecialization: specialization,
+        scholarLabel: "",
+      },
+    });
+  }
+
+  function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>) {
+    let label = e.target.value;
+    updateCharacter({
+      ...character,
+      themeOptions: {
+        ...character.themeOptions,
+        scholarLabel: label,
+      },
+    });
+  }
+
+  function handleClassChange(e: ChangeEvent<HTMLSelectElement>) {
+    let id = e.target.value;
+    updateCharacter({ ...character, class: id });
   }
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>) {
@@ -140,33 +201,6 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   function handleRandomizeName() {
     let index = Math.floor(Math.random() * selectedRace.names.length);
     updateName(selectedRace.names[index]);
-  }
-
-  function handleThemeChange(e: ChangeEvent<HTMLSelectElement>) {
-    let id = e.target.value;
-    let theme = data.themes.find((t) => t.id === id);
-    updateSelectedTheme(theme);
-  }
-
-  function handleClassChange(e: ChangeEvent<HTMLSelectElement>) {
-    let id = e.target.value;
-    let classType = data.classes.find((c) => c.id === id);
-    updateSelectedClass(classType);
-  }
-
-  function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>) {
-    let id = e.target.value;
-    updateScholar({ ...scholar, skillId: id, specialization: data.specials.scholar[id][0], label: "" });
-  }
-
-  function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>) {
-    let specialization = e.target.value;
-    updateScholar({ ...scholar, specialization: specialization, label: "" });
-  }
-
-  function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>) {
-    let label = e.target.value;
-    updateScholar({ ...scholar, label: label });
   }
 
   function handleAlignmentChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -205,12 +239,18 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="abilityScores" disabled={selectedRace === null}>
+            <Nav.Link
+              eventKey="abilityScores"
+              disabled={selectedRace === null || selectedTheme === null || selectedClass === null}
+            >
               Caractéristiques
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="skills" disabled={selectedRace === null}>
+            <Nav.Link
+              eventKey="skills"
+              disabled={selectedRace === null || selectedTheme === null || selectedClass === null}
+            >
               Compétences
             </Nav.Link>
           </Nav.Item>
@@ -256,7 +296,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               {selectedRace.variants && (
                 <>
                   <Form.FloatingLabel controlId="variant" label="Variante">
-                    <Form.Select value={character.raceVariant} onChange={handleOptionChange}>
+                    <Form.Select value={character.raceVariant} onChange={handleVariantChange}>
                       {selectedRace.variants.map((variant, index) => (
                         <option key={index} value={variant.id}>
                           {variant.name}
@@ -264,9 +304,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       ))}
                     </Form.Select>
                   </Form.FloatingLabel>
-                  {(selectedRace.id !== "humans" || selectedOption.id !== "standard") && (
+                  {(selectedRace.id !== "humans" || selectedVariant.id !== "standard") && (
                     <Stack direction="horizontal">
-                      {Object.entries(selectedOption.abilityScores).map(([key, value]) => (
+                      {Object.entries(selectedVariant.abilityScores).map(([key, value]) => (
                         <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
                           {key} {value > 0 ? "+" : ""}
                           {value}
@@ -274,10 +314,10 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       ))}
                     </Stack>
                   )}
-                  {selectedRace.id === "humans" && selectedOption.id === "standard" && (
+                  {selectedRace.id === "humans" && selectedVariant.id === "standard" && (
                     <>
                       <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-                        <Form.Select value={selectedHumanBonus.id} onChange={handleHumanBonusChange}>
+                        <Form.Select value={character.raceOptions.humanBonus} onChange={handleHumanBonusChange}>
                           {data.abilityScores.map((abilityScore) => (
                             <option key={abilityScore.id} value={abilityScore.id}>
                               {abilityScore.name}
@@ -286,11 +326,13 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                         </Form.Select>
                       </Form.FloatingLabel>
                       <Stack direction="horizontal">
-                        <Badge bg="primary">{selectedHumanBonus.code} +2</Badge>
+                        <Badge bg="primary">
+                          {data.abilityScores.find((a) => a.id === character.raceOptions.humanBonus).code} +2
+                        </Badge>
                       </Stack>
                     </>
                   )}
-                  {selectedOption.description && <p className="text-muted">{selectedOption.description}</p>}
+                  {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
                 </>
               )}
             </>
@@ -299,7 +341,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           <hr />
 
           <Form.FloatingLabel controlId="theme" label="Thème">
-            <Form.Select value={selectedTheme.id} onChange={handleThemeChange}>
+            <Form.Select value={character.theme} onChange={handleThemeChange}>
+              {character.theme === null && <option value=""></option>}
               {data.themes.map((theme) => (
                 <option key={theme.id} value={theme.id}>
                   {theme.name}
@@ -307,18 +350,20 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               ))}
             </Form.Select>
           </Form.FloatingLabel>
-          <Stack direction="horizontal">
-            {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
-              <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                {key} {value > 0 ? "+" : ""}
-                {value}
-              </Badge>
-            ))}
-          </Stack>
-          {selectedTheme.id === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
+          {selectedTheme && (
+            <Stack direction="horizontal">
+              {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
+                <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                  {key} {value > 0 ? "+" : ""}
+                  {value}
+                </Badge>
+              ))}
+            </Stack>
+          )}
+          {character.theme === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
             <>
               <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
-                <Form.Select value={scholar.skillId} onChange={handleScholarSkillChange}>
+                <Form.Select value={character.themeOptions.scholarSkill} onChange={handleScholarSkillChange}>
                   {data.skills
                     .filter((s) => s.id === "life" || s.id === "phys")
                     .map((skill) => (
@@ -329,8 +374,11 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 </Form.Select>
               </Form.FloatingLabel>
               <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
-                <Form.Select value={scholar.specialization} onChange={handleScholarSpecializationChange}>
-                  {data.specials.scholar[scholar.skillId].map((d) => (
+                <Form.Select
+                  value={character.themeOptions.scholarSpecialization}
+                  onChange={handleScholarSpecializationChange}
+                >
+                  {data.specials.scholar[character.themeOptions.scholarSkill].map((d) => (
                     <option key={d} value={d}>
                       {d}
                     </option>
@@ -339,20 +387,25 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 </Form.Select>
               </Form.FloatingLabel>
               <Form.FloatingLabel
-                controlId="scholarOther"
+                controlId="scholarLabel"
                 label="Domaine de spécialité"
-                hidden={scholar.specialization !== ""}
+                hidden={character.themeOptions.scholarSpecialization !== ""}
               >
-                <Form.Control type="text" value={scholar.label} onChange={handleScholarLabelChange} />
+                <Form.Control
+                  type="text"
+                  value={character.themeOptions.scholarLabel}
+                  onChange={handleScholarLabelChange}
+                />
               </Form.FloatingLabel>
             </>
           )}
-          <p className="text-muted">{selectedTheme.description}</p>
+          {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
 
           <hr />
 
           <Form.FloatingLabel controlId="class" label="Classe">
-            <Form.Select value={selectedClass.id} onChange={handleClassChange}>
+            <Form.Select value={character.class} onChange={handleClassChange}>
+              {character.class === null && <option value=""></option>}
               {data.classes.map((classType) => (
                 <option key={classType.id} value={classType.id}>
                   {classType.name}
@@ -360,12 +413,16 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               ))}
             </Form.Select>
           </Form.FloatingLabel>
-          <Stack direction="horizontal">
-            <Badge bg="primary">{selectedClass.keyAbilityScore}</Badge>
-            <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
-            <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
-          </Stack>
-          <p className="text-muted">{selectedClass.description}</p>
+          {selectedClass && (
+            <>
+              <Stack direction="horizontal">
+                <Badge bg="primary">{selectedClass.keyAbilityScore}</Badge>
+                <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
+                <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
+              </Stack>
+              <p className="text-muted">{selectedClass.description}</p>
+            </>
+          )}
         </Stack>
       </Col>
       <Col hidden={navigation !== "profil"}>
@@ -418,16 +475,17 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
           <hr />
 
-          {selectedTheme.advantages
-            .filter((a) => a.level === 1)
-            .map((advantage) => (
-              <div key={advantage.id}>
-                <h5>{advantage.name}</h5>
-                <p className="text-muted">{advantage.description}</p>
-                {advantage.components &&
-                  advantage.components.map((component) => <Component key={component.id} component={component} />)}
-              </div>
-            ))}
+          {selectedTheme &&
+            selectedTheme.advantages
+              .filter((a) => a.level === 1)
+              .map((advantage) => (
+                <div key={advantage.id}>
+                  <h5>{advantage.name}</h5>
+                  <p className="text-muted">{advantage.description}</p>
+                  {advantage.components &&
+                    advantage.components.map((component) => <Component key={component.id} component={component} />)}
+                </div>
+              ))}
         </Stack>
       </Col>
       <Col lg={6} hidden={navigation !== "traits"}>
