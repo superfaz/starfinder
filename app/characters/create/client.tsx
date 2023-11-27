@@ -95,10 +95,10 @@ function Component({ component }: { component: Component }) {
 export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [navigation, updateNavigation] = useState("profil");
   const [character, updateCharacter] = useState<Character>({
-    race: null,
-    raceVariant: null,
-    theme: null,
-    class: null,
+    race: "",
+    raceVariant: "",
+    theme: "",
+    class: "",
     traits: [],
   });
 
@@ -292,7 +292,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           <h2>Profil</h2>
           <Form.FloatingLabel controlId="race" label="Race">
             <Form.Select value={character.race} onChange={handleRaceChange}>
-              {character.race === null && <option value=""></option>}
+              {character.race === "" && <option value=""></option>}
               {data.races.map((race) => (
                 <option key={race.id} value={race.id}>
                   {race.name}
@@ -355,7 +355,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
           <Form.FloatingLabel controlId="theme" label="Thème">
             <Form.Select value={character.theme} onChange={handleThemeChange}>
-              {character.theme === null && <option value=""></option>}
+              {character.theme === "" && <option value=""></option>}
               {data.themes.map((theme) => (
                 <option key={theme.id} value={theme.id}>
                   {theme.name}
@@ -418,7 +418,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
           <Form.FloatingLabel controlId="class" label="Classe">
             <Form.Select value={character.class} onChange={handleClassChange}>
-              {character.class === null && <option value=""></option>}
+              {character.class === "" && <option value=""></option>}
               {data.classes.map((classType) => (
                 <option key={classType.id} value={classType.id}>
                   {classType.name}
