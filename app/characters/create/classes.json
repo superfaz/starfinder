@@ -85,7 +85,7 @@
     "refs": ["base-90"],
     "hitPoints": 6,
     "staminaPoints": 6,
-    "keyAbilityScore": "sag",
+    "keyAbilityScore": "wis",
     "secondaryAbilityScore": ["cha"],
     "skillRank": 6,
     "classSkills": [
@@ -110,7 +110,7 @@
     "hitPoints": 7,
     "staminaPoints": 7,
     "keyAbilityScore": "cha",
-    "secondaryAbilityScore": ["for"],
+    "secondaryAbilityScore": ["str"],
     "skillRank": 4,
     "classSkills": [
       "acro",
@@ -131,7 +131,7 @@
     "refs": ["base-110"],
     "hitPoints": 7,
     "staminaPoints": 7,
-    "keyAbilityScore": ["for", "dex"],
+    "keyAbilityScore": ["str", "dex"],
     "secondaryAbilityScore": ["con"],
     "skillRank": 4,
     "classSkills": [

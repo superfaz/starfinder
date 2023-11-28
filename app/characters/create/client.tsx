@@ -529,7 +529,11 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           {selectedClass && (
             <>
               <Stack direction="horizontal">
-                <Badge bg="primary">{selectedClass.keyAbilityScore}</Badge>
+                {!Array.isArray(selectedClass.keyAbilityScore) && (
+                  <Badge bg="primary">
+                    {data.abilityScores.find((a) => a.id === selectedClass.keyAbilityScore).code}
+                  </Badge>
+                )}
                 <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
                 <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
               </Stack>
@@ -537,15 +541,22 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </>
           )}
           {selectedClass && selectedClass.id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab" && (
-            <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe">
-              <Form.Select
-                value={character.classOptions.soldierAbilityScore}
-                onChange={handleSoldierAbilityScoreChange}
-              >
-                <option value="str">{data.abilityScores.find((a) => a.id === "str").name} </option>
-                <option value="dex">{data.abilityScores.find((a) => a.id === "dex").name} </option>
-              </Form.Select>
-            </Form.FloatingLabel>
+            <>
+              <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe">
+                <Form.Select
+                  value={character.classOptions.soldierAbilityScore}
+                  onChange={handleSoldierAbilityScoreChange}
+                >
+                  <option value="str">{data.abilityScores.find((a) => a.id === "str").name}</option>
+                  <option value="dex">{data.abilityScores.find((a) => a.id === "dex").name}</option>
+                </Form.Select>
+              </Form.FloatingLabel>
+              <Stack direction="horizontal">
+                <Badge bg="primary">
+                  {data.abilityScores.find((a) => a.id === character.classOptions.soldierAbilityScore).code}
+                </Badge>
+              </Stack>
+            </>
           )}
         </Stack>
       </Col>
