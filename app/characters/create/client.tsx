@@ -135,6 +135,21 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       score += selectedTheme.abilityScores[abilityScore.id] || 0;
     }
 
+    if (
+      selectedRace.id === "humans" &&
+      selectedVariant.id === "standard" &&
+      abilityScore.id === character.raceOptions.humanBonus
+    ) {
+      score += 2;
+    }
+
+    if (
+      selectedTheme.id === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" &&
+      abilityScore.id === character.themeOptions.noThemeAbility
+    ) {
+      score += 1;
+    }
+
     return score;
   }
 
@@ -189,9 +204,28 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         theme: id,
         themeOptions: { scholarSkill: "life", scholarSpecialization: data.specials.scholar.life[0], scholarLabel: "" },
       });
+    } else if (id === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
+      // Sans thème
+      updateCharacter({
+        ...character,
+        theme: id,
+        themeOptions: { noThemeAbility: "str" },
+      });
     } else {
+      // Autre thème
       updateCharacter({ ...character, theme: id, themeOptions: null });
     }
+  }
+
+  function handleNoThemeSkillChange(e: ChangeEvent<HTMLSelectElement>) {
+    let id = e.target.value;
+    updateCharacter({
+      ...character,
+      themeOptions: {
+        ...character.themeOptions,
+        noThemeAbility: id,
+      },
+    });
   }
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -377,7 +411,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       </Form.FloatingLabel>
                       <Stack direction="horizontal">
                         <Badge bg="primary">
-                          {data.abilityScores.find((a) => a.id === character.raceOptions.humanBonus).code} +2
+                          {data.abilityScores.find((a) => a.id === character.raceOptions.humanBonus).code}
+                          {" +2"}
                         </Badge>
                       </Stack>
                     </>
@@ -400,7 +435,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               ))}
             </Form.Select>
           </Form.FloatingLabel>
-          {selectedTheme && (
+          {selectedTheme && character.theme !== "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" && (
             <Stack direction="horizontal">
               {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
                 <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
@@ -409,6 +444,26 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 </Badge>
               ))}
             </Stack>
+          )}
+          {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
+          {selectedTheme && character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" && (
+            <>
+              <Form.FloatingLabel controlId="noThemeAbility" label="Choix de la charactérisque">
+                <Form.Select value={character.themeOptions.noThemeAbility} onChange={handleNoThemeSkillChange}>
+                  {data.abilityScores.map((abilityScore) => (
+                    <option key={abilityScore.id} value={abilityScore.id}>
+                      {abilityScore.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.FloatingLabel>
+              <Stack direction="horizontal">
+                <Badge bg={"primary"}>
+                  {data.abilityScores.find((a) => a.id === character.themeOptions.noThemeAbility).code}
+                  {" +1"}
+                </Badge>
+              </Stack>
+            </>
           )}
           {character.theme === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
             <>
@@ -449,7 +504,6 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               </Form.FloatingLabel>
             </>
           )}
-          {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
 
           <hr />
 
