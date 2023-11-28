@@ -10,7 +10,7 @@ export interface ClientComponentData {
   alignments: Alignment[];
 }
 
-export interface Character {
+export class Character {
   race: string;
   raceVariant: string;
   raceOptions?: Record<string, string>;
@@ -19,4 +19,5 @@ export interface Character {
   class: string;
   traits: string[];
   traitsOptions?: Record<string, string>;
+  abilityScores: Record<string, number>;
 }

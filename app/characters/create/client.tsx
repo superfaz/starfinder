@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { Component, Variant, Race, Trait, SecondaryTrait } from "../../types";
+import { Component, Trait, SecondaryTrait, AbilityScore } from "../../types";
 import { Character, ClientComponentData } from "./types";
 
 function Component({ component }: { component: Component }) {
@@ -113,6 +113,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     theme: "",
     class: "",
     traits: [],
+    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   });
 
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
@@ -122,6 +123,20 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   const [alignment, updateAlignment] = useState(data.alignments[0]);
   const [name, updateName] = useState("");
+
+  function getMinimalAbilityScoreFor(character: Character, abilityScore: AbilityScore): number {
+    let score = 10;
+
+    if (selectedVariant) {
+      score += selectedVariant.abilityScores[abilityScore.id] || 0;
+    }
+
+    if (selectedTheme) {
+      score += selectedTheme.abilityScores[abilityScore.id] || 0;
+    }
+
+    return score;
+  }
 
   function handleNavigation(key: string) {
     updateNavigation(key);
@@ -343,7 +358,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                     <Stack direction="horizontal">
                       {Object.entries(selectedVariant.abilityScores).map(([key, value]) => (
                         <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                          {key} {value > 0 ? "+" : ""}
+                          {data.abilityScores.find((a) => a.id === key).code} {value > 0 ? "+" : ""}
                           {value}
                         </Badge>
                       ))}
@@ -389,7 +404,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <Stack direction="horizontal">
               {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
                 <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                  {key} {value > 0 ? "+" : ""}
+                  {data.abilityScores.find((a) => a.id === key).code} {value > 0 ? "+" : ""}
                   {value}
                 </Badge>
               ))}
@@ -467,7 +482,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <Form.FloatingLabel controlId="name" label="Nom du personnage">
               <Form.Control type="text" value={name} onChange={handleNameChange} />
             </Form.FloatingLabel>
-            <Button variant="outline-secondary" onClick={handleRandomizeName}>
+            <Button variant="outline-secondary" onClick={handleRandomizeName} disabled={selectedRace === null}>
               <i className="bi-shuffle"></i>
             </Button>
           </InputGroup>
@@ -582,6 +597,59 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               ))}
           </Stack>
         )}
+      </Col>
+
+      <Col lg={4} hidden={navigation !== "abilityScores"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Caractéristiques</h2>
+          <Form.FloatingLabel controlId="abilityScoresMethod" label="Méthode de génération">
+            <Form.Select>
+              <option value="buy">Achat (méthode conseillée)</option>
+              <option value="quick" disabled>
+                Déterminaton rapide
+              </option>
+              <option value="random" disabled>
+                Déterminaton aléatoire
+              </option>
+            </Form.Select>
+          </Form.FloatingLabel>
+          {data.abilityScores.map((abilityScore) => {
+            let minimalScore = getMinimalAbilityScoreFor(character, abilityScore);
+            let delta = minimalScore - 10;
+            return (
+              <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
+                <Form.Label column>
+                  {abilityScore.name}
+                  {delta < 0 && <span className="badge ms-3 bg-secondary">{delta}</span>}
+                  {delta > 0 && <span className="badge ms-3 bg-primary">+{delta}</span>}
+                </Form.Label>
+                <Col lg={4}>
+                  <InputGroup>
+                    <Button
+                      variant="outline-secondary"
+                      disabled={character.abilityScores[abilityScore.id] <= minimalScore}
+                    >
+                      <i className="bi-dash-lg"></i>
+                    </Button>
+                    <Form.Control
+                      type="number"
+                      className="text-center"
+                      value={character.abilityScores[abilityScore.id] || minimalScore}
+                      min={minimalScore}
+                      max={4}
+                    />
+                    <Button variant="outline-secondary" disabled={character.abilityScores[abilityScore.id] >= 18}>
+                      <i className="bi-plus-lg"></i>
+                    </Button>
+                  </InputGroup>
+                </Col>
+                <Col lg={2}>
+                  <div className="border rounded h-100 border-primary text-center">+2</div>
+                </Col>
+              </Form.Group>
+            );
+          })}
+        </Stack>
       </Col>
 
       <Col lg={12} hidden={navigation !== "debug"}>

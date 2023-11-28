@@ -139,7 +139,7 @@
     "name": "Mercenaire",
     "description": "Vous êtes une célébrité populaire et respectée au sein de l’espace colonisé",
     "refs": ["base-34"],
-    "abilityScores": { "for": 1 },
+    "abilityScores": { "str": 1 },
     "advantages": [
       {
         "id": "ef6b60d5-3e09-4406-825b-32d5534b9915",
@@ -193,7 +193,7 @@
     "name": "Prêtre",
     "description": "Votre inébranlable dévotion à une philosophie ou une religion compose l’essentiel de votre personnalité.",
     "refs": ["base-36"],
-    "abilityScores": { "sag": 1 },
+    "abilityScores": { "wis": 1 },
     "advantages": [
       {
         "id": "f62bd964-1efd-4d9f-8536-d688bea81a9f",
