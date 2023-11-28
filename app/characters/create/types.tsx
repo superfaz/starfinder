@@ -17,6 +17,7 @@ export class Character {
   theme: string;
   themeOptions?: Record<string, string>;
   class: string;
+  classOptions?: Record<string, string>;
   traits: string[];
   traitsOptions?: Record<string, string>;
   abilityScores: Record<string, number>;

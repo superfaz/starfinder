@@ -136,15 +136,15 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     }
 
     if (
-      selectedRace.id === "humans" &&
-      selectedVariant.id === "standard" &&
+      character.race === "humans" &&
+      character.raceVariant === "standard" &&
       abilityScore.id === character.raceOptions.humanBonus
     ) {
       score += 2;
     }
 
     if (
-      selectedTheme.id === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" &&
+      character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" &&
       abilityScore.id === character.themeOptions.noThemeAbility
     ) {
       score += 1;
@@ -266,7 +266,16 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    updateCharacter({ ...character, class: id });
+    if (id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab") {
+      updateCharacter({ ...character, class: id, classOptions: { soldierAbilityScore: "str" } });
+    } else {
+      updateCharacter({ ...character, class: id, classOptions: null });
+    }
+  }
+
+  function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>) {
+    let id = e.target.value;
+    updateCharacter({ ...character, classOptions: { soldierAbilityScore: id } });
   }
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>) {
@@ -358,7 +367,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           </Nav.Item>
         </Nav>
       </Col>
-      <Col hidden={navigation !== "profil"}>
+      <Col lg={3} hidden={navigation !== "profil"}>
         <Stack direction="vertical" gap={2}>
           <h2>Profil</h2>
           <Form.FloatingLabel controlId="race" label="Race">
@@ -527,9 +536,20 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               <p className="text-muted">{selectedClass.description}</p>
             </>
           )}
+          {selectedClass && selectedClass.id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab" && (
+            <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe">
+              <Form.Select
+                value={character.classOptions.soldierAbilityScore}
+                onChange={handleSoldierAbilityScoreChange}
+              >
+                <option value="str">{data.abilityScores.find((a) => a.id === "str").name} </option>
+                <option value="dex">{data.abilityScores.find((a) => a.id === "dex").name} </option>
+              </Form.Select>
+            </Form.FloatingLabel>
+          )}
         </Stack>
       </Col>
-      <Col hidden={navigation !== "profil"}>
+      <Col lg={3} hidden={navigation !== "profil"}>
         <Stack direction="vertical" gap={2}>
           <h2>Concept</h2>
           <InputGroup>
