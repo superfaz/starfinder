@@ -10,6 +10,8 @@ Race : Shirrens / Traits secondaires : Obsession individuelle / Choix de la comp
 
 Race : Vesks / Traits secondaires : Observateur / Choix de la compétence
 
+Race : Ysokis / Taille
+
 Theme / Ajouter les thèmes du guide des options
 
 Theme : Erudit / Affichage de la compétence de classe et de la spécialité dans les Traits
