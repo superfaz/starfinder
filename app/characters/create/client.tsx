@@ -106,7 +106,7 @@ function Component({ component }: { component: Component }) {
 }
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
-  const [navigation, updateNavigation] = useState("introduction");
+  const [navigation, updateNavigation] = useState("intro");
   const [character, updateCharacter] = useState<Character>({
     race: "",
     raceVariant: "",
@@ -328,11 +328,16 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <Nav.Link eventKey="intro">Introduction</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="profil">Profil</Nav.Link>
+            <Nav.Link eventKey="race">Race</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="traits" disabled={selectedRace === null}>
-              Traits
+            <Nav.Link eventKey="theme" disabled={selectedRace === null}>
+              Thème
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="class" disabled={selectedTheme === null}>
+              Classe
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -340,15 +345,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               eventKey="abilityScores"
               disabled={selectedRace === null || selectedTheme === null || selectedClass === null}
             >
-              Caractéristiques
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              eventKey="skills"
-              disabled={selectedRace === null || selectedTheme === null || selectedClass === null}
-            >
-              Compétences
+              Caractéristiques & Compétences
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -385,9 +382,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           </p>
         </Stack>
       </Col>
-      <Col lg={3} hidden={navigation !== "profil"}>
+      <Col lg={3} hidden={navigation !== "race"}>
         <Stack direction="vertical" gap={2}>
-          <h2>Profil</h2>
+          <h2>Race</h2>
           <Form.FloatingLabel controlId="race" label="Race">
             <Form.Select value={character.race} onChange={handleRaceChange}>
               {character.race === "" && <option value=""></option>}
@@ -450,8 +447,139 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </>
           )}
 
+          {selectedRace && (
+            <>
+              <hr />
+              <Card>
+                <picture>
+                  <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
+                </picture>
+              </Card>
+            </>
+          )}
+        </Stack>
+      </Col>
+
+      <Col hidden={navigation !== "race"}>
+        {selectedRace && (
+          <Stack direction="vertical" gap={2}>
+            <h2>Traits raciaux</h2>
+            {selectedRace.traits.map((trait) => (
+              <div
+                key={trait.id}
+                className={
+                  character.traits.find((t) => t === trait.id) !== undefined ? "" : "text-decoration-line-through"
+                }
+              >
+                <h5>{trait.name}</h5>
+                <p className="text-muted">{trait.description}</p>
+                {trait.components &&
+                  trait.components.map((component) => <Component key={component.id} component={component} />)}
+              </div>
+            ))}
+          </Stack>
+        )}
+      </Col>
+
+      <Col hidden={navigation !== "race"}>
+        {selectedRace && (
+          <Stack direction="vertical" gap={2}>
+            <h2>Traits alternatifs</h2>
+            {selectedRace.secondaryTraits &&
+              selectedRace.secondaryTraits.map((trait) => (
+                <div key={trait.id}>
+                  <h5>
+                    <Form.Switch
+                      label={trait.name}
+                      checked={character.traits.find((t) => t === trait.id) !== undefined}
+                      onChange={(e) => handleTraitEnabled(trait, e)}
+                      disabled={
+                        character.traits.find((t) => t === trait.id) === undefined &&
+                        trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
+                      }
+                    />
+                  </h5>
+                  <div>
+                    <span>Remplace : </span>
+                    {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
+                  </div>
+                  <p className="text-muted">{trait.description}</p>
+                  {trait.components &&
+                    trait.components.map((component) => <Component key={component.id} component={component} />)}
+                </div>
+              ))}
+          </Stack>
+        )}
+      </Col>
+
+      <Col lg={3} hidden={navigation !== "profil"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Concept</h2>
+          <InputGroup>
+            <Form.FloatingLabel controlId="name" label="Nom du personnage">
+              <Form.Control type="text" value={name} onChange={handleNameChange} />
+            </Form.FloatingLabel>
+            <Button variant="outline-secondary" onClick={handleRandomizeName} disabled={selectedRace === null}>
+              <i className="bi-shuffle"></i>
+            </Button>
+          </InputGroup>
+          <Form.FloatingLabel controlId="name" label="Sexe">
+            <Form.Control type="text" />
+          </Form.FloatingLabel>
+          <Form.FloatingLabel controlId="alignment" label="Alignement">
+            <Form.Select value={alignment.id} onChange={handleAlignmentChange}>
+              {data.alignments.map((alignment) => (
+                <option key={alignment.id} value={alignment.id}>
+                  {alignment.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+        </Stack>
+      </Col>
+      <Col lg={6} hidden={navigation !== "profil"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Traits du personnage</h2>
+          {!selectedRace && (
+            <p>
+              <em>Sélectionner une race</em>
+            </p>
+          )}
+          {selectedRace && (
+            <>
+              {selectedRace.traits
+                .concat(selectedRace.secondaryTraits)
+                .filter((trait) => character.traits.findIndex((v) => v === trait.id) !== -1)
+                .map((trait) => (
+                  <div key={trait.id}>
+                    <h5>{trait.name}</h5>
+                    <p className="text-muted">{trait.description}</p>
+                    {trait.components &&
+                      trait.components.map((component) => <Component key={component.id} component={component} />)}
+                  </div>
+                ))}
+            </>
+          )}
+
           <hr />
 
+          {selectedTheme &&
+            selectedTheme.advantages
+              .filter((a) => a.level === 1)
+              .map((advantage) => (
+                <div key={advantage.id}>
+                  <h5>{advantage.name}</h5>
+                  <p className="text-muted">{advantage.description}</p>
+                  {advantage.components &&
+                    advantage.components.map((component) => <Component key={component.id} component={component} />)}
+                </div>
+              ))}
+        </Stack>
+      </Col>
+
+      <Col lg={3} hidden={navigation !== "theme"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Thème</h2>
           <Form.FloatingLabel controlId="theme" label="Thème">
             <Form.Select value={character.theme} onChange={handleThemeChange}>
               {character.theme === "" && <option value=""></option>}
@@ -531,9 +659,30 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               </Form.FloatingLabel>
             </>
           )}
+        </Stack>
+      </Col>
 
-          <hr />
+      <Col hidden={navigation !== "theme"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Traits thématiques</h2>
+          {selectedTheme &&
+            selectedTheme.advantages.map((advantage) => (
+              <div key={advantage.id}>
+                <h5>
+                  <span className="badge bg-secondary">niveau {advantage.level}</span>
+                  {advantage.name}
+                </h5>
+                <p className="text-muted">{advantage.description}</p>
+                {advantage.components &&
+                  advantage.components.map((component) => <Component key={component.id} component={component} />)}
+              </div>
+            ))}
+        </Stack>
+      </Col>
 
+      <Col lg={3} hidden={navigation !== "class"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Classe</h2>
           <Form.FloatingLabel controlId="class" label="Classe">
             <Form.Select value={character.class} onChange={handleClassChange}>
               {character.class === "" && <option value=""></option>}
@@ -577,129 +726,6 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </>
           )}
         </Stack>
-      </Col>
-      <Col lg={3} hidden={navigation !== "profil"}>
-        <Stack direction="vertical" gap={2}>
-          <h2>Concept</h2>
-          <InputGroup>
-            <Form.FloatingLabel controlId="name" label="Nom du personnage">
-              <Form.Control type="text" value={name} onChange={handleNameChange} />
-            </Form.FloatingLabel>
-            <Button variant="outline-secondary" onClick={handleRandomizeName} disabled={selectedRace === null}>
-              <i className="bi-shuffle"></i>
-            </Button>
-          </InputGroup>
-          <Form.FloatingLabel controlId="name" label="Sexe">
-            <Form.Control type="text" />
-          </Form.FloatingLabel>
-          {selectedRace && (
-            <Card>
-              <picture>
-                <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
-              </picture>
-            </Card>
-          )}
-          <Form.FloatingLabel controlId="alignment" label="Alignement">
-            <Form.Select value={alignment.id} onChange={handleAlignmentChange}>
-              {data.alignments.map((alignment) => (
-                <option key={alignment.id} value={alignment.id}>
-                  {alignment.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.FloatingLabel>
-        </Stack>
-      </Col>
-      <Col lg={6} hidden={navigation !== "profil"}>
-        <Stack direction="vertical" gap={2}>
-          <h2>Traits du personnage</h2>
-          {!selectedRace && (
-            <p>
-              <em>Sélectionner une race</em>
-            </p>
-          )}
-          {selectedRace && (
-            <>
-              {selectedRace.traits
-                .concat(selectedRace.secondaryTraits)
-                .filter((trait) => character.traits.findIndex((v) => v === trait.id) !== -1)
-                .map((trait) => (
-                  <div key={trait.id}>
-                    <h5>{trait.name}</h5>
-                    <p className="text-muted">{trait.description}</p>
-                    {trait.components &&
-                      trait.components.map((component) => <Component key={component.id} component={component} />)}
-                  </div>
-                ))}
-            </>
-          )}
-
-          <hr />
-
-          {selectedTheme &&
-            selectedTheme.advantages
-              .filter((a) => a.level === 1)
-              .map((advantage) => (
-                <div key={advantage.id}>
-                  <h5>{advantage.name}</h5>
-                  <p className="text-muted">{advantage.description}</p>
-                  {advantage.components &&
-                    advantage.components.map((component) => <Component key={component.id} component={component} />)}
-                </div>
-              ))}
-        </Stack>
-      </Col>
-
-      <Col lg={6} hidden={navigation !== "traits"}>
-        {selectedRace && (
-          <Stack direction="vertical" gap={2}>
-            <h2>Traits raciaux</h2>
-            {selectedRace.traits.map((trait) => (
-              <div
-                key={trait.id}
-                className={
-                  character.traits.find((t) => t === trait.id) !== undefined ? "" : "text-decoration-line-through"
-                }
-              >
-                <h5>{trait.name}</h5>
-                <p className="text-muted">{trait.description}</p>
-                {trait.components &&
-                  trait.components.map((component) => <Component key={component.id} component={component} />)}
-              </div>
-            ))}
-          </Stack>
-        )}
-      </Col>
-
-      <Col lg={6} hidden={navigation !== "traits"}>
-        {selectedRace && (
-          <Stack direction="vertical" gap={2}>
-            <h2>Traits alternatifs</h2>
-            {selectedRace.secondaryTraits &&
-              selectedRace.secondaryTraits.map((trait) => (
-                <div key={trait.id}>
-                  <h5>
-                    <Form.Switch
-                      label={trait.name}
-                      checked={character.traits.find((t) => t === trait.id) !== undefined}
-                      onChange={(e) => handleTraitEnabled(trait, e)}
-                      disabled={
-                        character.traits.find((t) => t === trait.id) === undefined &&
-                        trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
-                      }
-                    />
-                  </h5>
-                  <div>
-                    <span>Remplace : </span>
-                    {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
-                  </div>
-                  <p className="text-muted">{trait.description}</p>
-                  {trait.components &&
-                    trait.components.map((component) => <Component key={component.id} component={component} />)}
-                </div>
-              ))}
-          </Stack>
-        )}
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
