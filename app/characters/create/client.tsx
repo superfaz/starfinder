@@ -124,7 +124,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [alignment, updateAlignment] = useState(data.alignments[0]);
   const [name, updateName] = useState("");
 
-  function getMinimalAbilityScoreFor(character: Character, abilityScore: AbilityScore): number {
+  function getMinimalAbilityScoreFor(abilityScore: AbilityScore): number {
     let score = 10;
 
     if (selectedVariant) {
@@ -287,7 +287,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     updateName(selectedRace.names[index]);
   }
 
-  function handleAlignmentChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  function handleAlignmentChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     let alignment = data.alignments.find((a) => a.id === id);
     updateAlignment(alignment);
@@ -310,13 +310,20 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     return null;
   }
 
-  function handleTraitEnabled(trait: SecondaryTrait, e: React.ChangeEvent<HTMLInputElement>) {
+  function handleTraitEnabled(trait: SecondaryTrait, e: ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       let updatedTraits = character.traits.filter((t) => trait.replace.findIndex((r) => r === t) === -1);
       updateCharacter({ ...character, traits: [...updatedTraits, trait.id] });
     } else {
       updateCharacter({ ...character, traits: character.traits.filter((t) => t !== trait.id).concat(trait.replace) });
     }
+  }
+
+  function handleAbilityScoreClick(ablityScoreId: string, delta: number) {
+    updateCharacter({
+      ...character,
+      abilityScores: { ...character.abilityScores, [ablityScoreId]: character.abilityScores[ablityScoreId] + delta },
+    });
   }
 
   return (
@@ -699,7 +706,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </Form.Select>
           </Form.FloatingLabel>
           {data.abilityScores.map((abilityScore) => {
-            let minimalScore = getMinimalAbilityScoreFor(character, abilityScore);
+            let minimalScore = getMinimalAbilityScoreFor(abilityScore);
             let delta = minimalScore - 10;
             return (
               <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
@@ -713,6 +720,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                     <Button
                       variant="outline-secondary"
                       disabled={character.abilityScores[abilityScore.id] <= minimalScore}
+                      onClick={() => handleAbilityScoreClick(abilityScore.id, -1)}
                     >
                       <i className="bi-dash-lg"></i>
                     </Button>
@@ -720,10 +728,15 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       type="number"
                       className="text-center"
                       value={character.abilityScores[abilityScore.id] || minimalScore}
+                      onChange={() => {}}
                       min={minimalScore}
                       max={4}
                     />
-                    <Button variant="outline-secondary" disabled={character.abilityScores[abilityScore.id] >= 18}>
+                    <Button
+                      variant="outline-secondary"
+                      disabled={character.abilityScores[abilityScore.id] >= 18}
+                      onClick={() => handleAbilityScoreClick(abilityScore.id, 1)}
+                    >
                       <i className="bi-plus-lg"></i>
                     </Button>
                   </InputGroup>
