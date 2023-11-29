@@ -190,7 +190,7 @@
     "hitPoints": 4,
     "variants": [
       {
-        "id": "standard",
+        "id": "humans-standard",
         "name": "Standard",
         "description": "",
         "abilityScores": { "any": 2 }

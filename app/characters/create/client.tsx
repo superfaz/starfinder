@@ -135,11 +135,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       score += selectedTheme.abilityScores[abilityScore.id] || 0;
     }
 
-    if (
-      character.race === "humans" &&
-      character.raceVariant === "standard" &&
-      abilityScore.id === character.raceOptions.humanBonus
-    ) {
+    if (character.raceVariant === "humans-standard" && abilityScore.id === character.raceOptions.humanBonus) {
       score += 2;
     }
 
@@ -181,9 +177,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    let variant = selectedRace.variants.find((o) => o.id === id);
-
-    if (selectedRace.id === "humans" && variant.id === "standard") {
+    if (id === "humans-standard") {
       updateCharacter({ ...character, raceVariant: id, raceOptions: { humanBonus: data.abilityScores[0].id } });
     } else {
       updateCharacter({ ...character, raceVariant: id, raceOptions: null });
@@ -404,7 +398,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       ))}
                     </Form.Select>
                   </Form.FloatingLabel>
-                  {(selectedRace.id !== "humans" || selectedVariant.id !== "standard") && (
+                  {selectedVariant.id !== "humans-standard" && (
                     <Stack direction="horizontal">
                       {Object.entries(selectedVariant.abilityScores).map(([key, value]) => (
                         <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
@@ -414,7 +408,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       ))}
                     </Stack>
                   )}
-                  {selectedRace.id === "humans" && selectedVariant.id === "standard" && (
+                  {selectedVariant.id === "humans-standard" && (
                     <>
                       <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
                         <Form.Select value={character.raceOptions.humanBonus} onChange={handleHumanBonusChange}>
