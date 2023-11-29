@@ -10,6 +10,7 @@
         "id": "9eda60ce-2a5d-4af6-b988-0bef73555cc8",
         "level": 1,
         "name": "Savoir thématique",
+        "description": "Votre esprit fonctionne comme un piège mortel lorsqu’il s’agit de récupérer le moindre renseignement sur les créatures que vous pourchassez.",
         "components": [
           {
             "id": "d3da2cb0-3475-4ef1-8c43-83a438cfd669",
@@ -19,8 +20,74 @@
           {
             "id": "74329167-bfbf-4f52-bb52-82cb0046302e",
             "type": "ability",
-            "title": "Chasseur de primes",
+            "name": "Chasseur de primes",
             "description": "Réduisez de 5 le DD des tests de Culture ou Profession (chasseur de primes) effectués pour vous rappeler quelque chose sur votre cible, ainsi que sur les agents du maintien de l’ordre et leurs pratiques."
+          }
+        ]
+      },
+      {
+        "id": "453704cb-b546-4ee8-8e12-ff712ec53ed5",
+        "level": 6,
+        "name": "Chasseur réactif",
+        "description": "Vous savez précisément comment vous renseigner à la vavite sur vos cibles.",
+        "components": [
+          {
+            "id": "f987708d-dff6-481a-bd02-4ff913b6dc59",
+            "type": "ability",
+            "name": "Chasseur de primes",
+            "description": "Vous pouvez utiliser la compétence Diplomatie pour recueillir des informations à propos d’un individu en particulier en y consacrant la moitié du temps normalement nécessaire."
+          },
+          {
+            "id": "1da208f2-53fc-41ba-9132-5889835c937a",
+            "type": "ability",
+            "name": "Chasseur de primes",
+            "description": "Vous réduisez à 0 le malus lorsque vous utilisez la Survie pour suivre des traces en vous déplaçant à votre vitesse normale."
+          }
+        ]
+      },
+      {
+        "id": "b454a30d-faf9-44bb-9c6d-7442100dbcb5",
+        "level": 12,
+        "name": "Infatigable",
+        "description": "Vous ne semblez jamais fatigué, même quand vous travaillez plus longtemps et plus dur que tous ceux également à la poursuite de votre cible ; il arrive même que certaines de vos cibles parlent de vous comme d’un fantôme infatigable ou d’un chasseur omniscient.",
+        "components": [
+          {
+            "id": "9edceef0-2759-4067-a134-5faad6f14c3a",
+            "type": "ability",
+            "name": "Chasseur de primes",
+            "description": "Vous pouvez marcher ou rester actif pendant 12 heures au lieu des 8 heures avant d’effectuer des tests de Constitution lors d’une marche forcée."
+          },
+          {
+            "id": "73f7fc88-10df-4f74-8666-46af5494bcf6",
+            "type": "ability",
+            "name": "Chasseur de primes",
+            "description": "Vous pouvez trottiner pendant 2 heures par jour lors d’un déplacement longue distance au lieu d’une heure."
+          },
+          {
+            "id": "3b4066a1-b25e-40db-a075-ab8beaf0e230",
+            "type": "ability",
+            "name": "Chasseur de primes",
+            "description": "Réduisez à -10 le malus lorsque vous utilisez la Survie pour suivre des traces en vous déplaçant au double de votre vitesse normale."
+          }
+        ]
+      },
+      {
+        "id": "d09af890-a4dc-4f09-a57e-8868c80471e0",
+        "level": 18,
+        "name": "Chasseur émérite",
+        "description": "La traque incessante de votre cible renforce votre détermination et renouvèle vos forces.",
+        "components": [
+          {
+            "id": "7dcde656-c1fc-4fbd-8e99-6f9d3aad3bf3",
+            "type": "ability",
+            "name": "Chasseur de primes",
+            "description": "Une fois par jour lorsque vous poursuivez votre cible, vous pouvez vérifier les informations à son propos pendant 10 minutes pour récupérer 1 point de persévérance."
+          },
+          {
+            "id": "45d576a3-0ba0-434c-a71f-44e6211b2a23",
+            "type": "ability",
+            "name": "Chasseur de primes",
+            "description": "une fois par jour lorsque vous mettez votre cible en échec, vous récupérez 1 point de persévérance."
           }
         ]
       }
@@ -46,7 +113,7 @@
           {
             "id": "d98484ba-0d4a-4f73-af84-c4d14ede8e58",
             "type": "ability",
-            "title": "Erudit",
+            "name": "Erudit",
             "description": "Réduisez de 5 le DD des tests de compétence effectués pour vous rappeler quelque chose concernant votre spécialité."
           }
         ]
@@ -73,7 +140,7 @@
           {
             "id": "1245033c-f90c-464e-87ad-60132abc8462",
             "type": "ability",
-            "title": "Explorateur stellaire",
+            "name": "Explorateur stellaire",
             "description": "Réduisez de 5 le DD des tests de Sciences physiques effectués pour vous rappeler quelque chose à propos de nouveaux mondes ou de phénomènes spatiaux étranges."
           }
         ]
@@ -100,7 +167,7 @@
           {
             "id": "3ae95b8a-61ed-4389-a2de-89c4ab8b6f13",
             "type": "ability",
-            "title": "Hors-la-loi",
+            "name": "Hors-la-loi",
             "description": "Réduisez de 5 le DD des tests de Culture effectués pour vous rappeler quelque chose à propos du milieu criminel de la pègre."
           }
         ]
@@ -127,7 +194,7 @@
           {
             "id": "d30e8b7b-b81a-4009-ad25-31835ff95836",
             "type": "ability",
-            "title": "Icône",
+            "name": "Icône",
             "description": "Réduisez de 5 le DD des tests de Culture ou de Profession que vous effectuez pour vous rappeler quelque chose à propos d’autres icônes ou de détails sur les aspects culturels de votre profession."
           }
         ]
@@ -154,7 +221,7 @@
           {
             "id": "5255d792-922d-4ef8-8170-78c2e854e03e",
             "type": "ability",
-            "title": "Mercenaire",
+            "name": "Mercenaire",
             "description": "Réduisez de 5 le DD des tests de Culture et de Profession (mercenaire) effectués pour vous rappeler quelque chose à propos des hiérarchies, des usages, du personnel, etc. au sein de l’armée."
           }
         ]
@@ -181,7 +248,7 @@
           {
             "id": "a3b3b54d-ab64-4af1-a316-82317c631ee1",
             "type": "ability",
-            "title": "Pilote de chasse",
+            "name": "Pilote de chasse",
             "description": "Réduisez de 5 le DD des tests de Culture effectués pour vous rappeler quelque chose sur les modèles et les pièces détachées de vaisseaux spatiaux ou de véhicules, ainsi que sur les pilotes célèbres."
           }
         ]
@@ -208,7 +275,7 @@
           {
             "id": "136ca2f7-956d-4992-894c-fdd7a5a4fa82",
             "type": "ability",
-            "title": "Prêtre",
+            "name": "Prêtre",
             "description": "Réduisez de 5 le DD des tests de Culture et de Mysticisme effectués pour vous rappeler quelque chose à propos des traditions religieuses, des symboles religieux et des chefs religieux célèbres."
           }
         ]
@@ -256,7 +323,7 @@
           {
             "id": "e758cdaf-7b0c-4d28-8dad-554b50b4557a",
             "type": "ability",
-            "title": "Xéno-chercheur",
+            "name": "Xéno-chercheur",
             "description": "Réduisez de 5 le DD des tests de Sciences de la vie effectués pour identifier une créature rare."
           }
         ]
