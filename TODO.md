@@ -16,6 +16,10 @@ Theme / Ajouter les thèmes du guide des options
 
 Theme : Erudit / Affichage de la compétence de classe et de la spécialité dans les Traits
 
+Theme : Icône / Sélection de la compétence de Profession
+
+Theme : Prêtre / Sélection de la divinité ou de la philosophie
+
 Theme : Sans thème / Choix de la compétence de classe
 
 Classe / Ajouter les classes du guide des options

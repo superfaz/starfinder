@@ -104,6 +104,7 @@
         "id": "e70f9997-41b9-4062-a1eb-7d9a04c71ce2",
         "level": 1,
         "name": "Savoir thématique",
+        "description": "Vous êtes un expert dans un domaine de connaissances particulier, comme le prouve la passion dont vous faites preuve dès qu’on aborde ce sujet.",
         "components": [
           {
             "id": "aafb7874-5436-4bd4-b69d-6fdd0b61cf8f",
@@ -115,6 +116,48 @@
             "type": "ability",
             "name": "Erudit",
             "description": "Réduisez de 5 le DD des tests de compétence effectués pour vous rappeler quelque chose concernant votre spécialité."
+          }
+        ]
+      },
+      {
+        "id": "7e7f903c-1934-4a3e-8600-b66aa774cfbb",
+        "level": 6,
+        "name": "Sur le bout de la langue",
+        "description": "Parfois, après une pause pour rassembler vos esprits, vous réalisez que vous avez la réponse à une question particulièrement ardue.",
+        "components": [
+          {
+            "id": "9d4009e5-5c95-4585-8234-dd45364b57da",
+            "type": "ability",
+            "name": "Erudit",
+            "description": "Une fois par jour, vous pouvez refaire n’importe quel test de compétence effectué pour vous rappeler quelque chose."
+          }
+        ]
+      },
+      {
+        "id": "e759558a-c802-498d-81db-707320fa3bbb",
+        "level": 12,
+        "name": "Expert en recherches",
+        "description": "Vous pouvez effectuer des recherches bien plus rapidement que quiconque",
+        "components": [
+          {
+            "id": "5940e577-9bdc-40af-94e8-713798b5f64a",
+            "type": "ability",
+            "name": "Erudit",
+            "description": "vous pouvez généralement faire 20 pour vous rappeler quelque chose en 5 rounds."
+          }
+        ]
+      },
+      {
+        "id": "2062ff19-9fbe-4e3d-bd99-32ace8a82286",
+        "level": 18,
+        "name": "Erudit émérite",
+        "description": "Pour vous, apprendre et assimiler des connaissances liées à votre domaine d’expertise est aussi rafraichissant que boire l’eau d’une source froide sur une planète désertique.",
+        "components": [
+          {
+            "id": "309c3e5c-d455-4bab-94e0-9f9af4184078",
+            "type": "ability",
+            "name": "Erudit",
+            "description": "Jusqu’à deux fois par jour, quand vous vous trouvez dans une situation où des informations concernant votre domaine d’expertise pourraient s’avérer utiles (à l’appréciation du MJ), vous pouvez consacrer 10 minutes en profonde contemplation et en étude de votre domaine d’expertise, ce qui vous permet de récupérer 1 point de persévérance. Lors de ces 10 minutes, vous pouvez également utiliser l’action se rappeler quelque chose pour vous rappeler l’information recherchée."
           }
         ]
       }
@@ -131,6 +174,7 @@
         "id": "3ca8af24-3c4b-42d3-baad-429bd9412eb6",
         "level": 1,
         "name": "Savoir thématique",
+        "description": "Les mondes lointains sont pour vous une véritable obsession et vous êtes toujours en train de cataloguer dans votre esprit tout ce que vous apprenez sur les endroits nouveaux et étranges afin de vous en rappeler pour plus tard, en cas de besoin.",
         "components": [
           {
             "id": "1bc3a16f-69c3-4f5d-a996-0a2c75e93276",
@@ -142,6 +186,48 @@
             "type": "ability",
             "name": "Explorateur stellaire",
             "description": "Réduisez de 5 le DD des tests de Sciences physiques effectués pour vous rappeler quelque chose à propos de nouveaux mondes ou de phénomènes spatiaux étranges."
+          }
+        ]
+      },
+      {
+        "id": "d4376a6a-83ba-41a3-86f6-67b6e6c993d5",
+        "level": 6,
+        "name": "Amateur passionné",
+        "description": "Vos voyages vous ont permis d’apprendre plein de choses utiles et variées, même si vous ne les avez pas étudiées à l’école, et vous pouvez souvent vous servir avantageusement de votre logique et de votre intuition.",
+        "components": [
+          {
+            "id": "b6c457a1-3821-4769-8ec1-33a98d41c54a",
+            "type": "ability",
+            "name": "Explorateur stellaire",
+            "description": "Vous bénéficiez d’un bonus de +2 aux tests de compétences auxquelles vous n’avez alloué aucun rang. Cet avantage ne vous permet pas d’effectuer des tests pour les compétences nécessitant une formation"
+          }
+        ]
+      },
+      {
+        "id": "67d9c8e9-5f28-4272-aabf-236d7f44ab3c",
+        "level": 12,
+        "name": "Touche-à-tout",
+        "description": "Vous pouvez accomplir à peu près n’importe quelle tâche à partir du moment où vous vous concentrez sur ce que vous faites et vous ne vous laissez jamais intimider par le manque de connaissances universitaires lorsqu’une tâche doit être accomplie.",
+        "components": [
+          {
+            "id": "2eded8ab-8238-4b69-afaf-c3cf041b2bac",
+            "type": "ability",
+            "name": "Explorateur stellaire",
+            "description": "Vous pouvez utiliser toutes les compétences, même celles pour lesquelles vous n’avez reçu aucune formation et donc que vous ne pourriez normalement pas utiliser, et si vous obtenez un résultat de 20 naturel en effectuant un test d’une compétence à laquelle vous n’avez alloué aucun rang, le bonus conféré par l’avantage amateur passionné passe à +4."
+          }
+        ]
+      },
+      {
+        "id": "d3fdf1e6-72f1-4bc0-8e3e-1df20e7c6611",
+        "level": 18,
+        "name": "Explorateur émérite",
+        "description": "Documenter d’un point de vue scientifique les moindres détails d’un nouvel endroit, que ce soient les couleurs visibles, les dénivelés, les températures, les phénomènes sismiques et autres évaluations exigeantes, vous revigore au plus haut point.",
+        "components": [
+          {
+            "id": "898c3fa9-5935-42a4-b820-898528895b56",
+            "type": "ability",
+            "name": "Explorateur stellaire",
+            "description": "Jusqu’à deux fois par jour lorsque vous êtes sur une planète inexplorée, vous pouvez passer 10 minutes à explorer, cartographier et relever une nouvelle caractéristique géographique pour récupérer 1 point de persévérance"
           }
         ]
       }
@@ -158,6 +244,7 @@
         "id": "58e042b4-6c47-4c7b-9e00-eb681cbf8495",
         "level": 1,
         "name": "Savoir thématique",
+        "description": "Vous êtes largement associé aux secrets douteux et aux deals conclus au fond des allées. Vous connaissez les acteurs majeurs de ces manigances et maîtrisez vous-même des compétences utiles dans ce domaine.",
         "components": [
           {
             "id": "ae4bf7a7-a4c7-4297-87a3-e884c440a7db",
@@ -169,6 +256,53 @@
             "type": "ability",
             "name": "Hors-la-loi",
             "description": "Réduisez de 5 le DD des tests de Culture effectués pour vous rappeler quelque chose à propos du milieu criminel de la pègre."
+          }
+        ]
+      },
+      {
+        "id": "c235d81c-91b8-4d23-aaf1-4186eff6e4e2",
+        "level": 6,
+        "name": "Corruptions des institutions juridiques et légales",
+        "components": [
+          {
+            "id": "fac12afd-c7dc-491f-983f-52b65eb2bd87",
+            "type": "ability",
+            "name": "Hors-la-loi",
+            "description": "Vos contacts au sein de la pègre exercent une certaine influence sur les corporations et les autorités et peuvent vous sortir de tous les problèmes juridiques – tant que vous y mettez le prix. En fonction de la gravité du délit, ce prix est compris entre 500 crédits × votre niveau de personnage et 10 000 crédits × votre niveau de personnage."
+          }
+        ]
+      },
+      {
+        "id": "1af7c51b-afe2-4e1c-8063-a284d49fb20d",
+        "level": 12,
+        "name": "Contacts sur le marché noir",
+        "description": "Vous avez des contacts qui peuvent expédier discrètement des marchandises de toutes sortes vers n’importe quelle destination imaginable ou presque.",
+        "components": [
+          {
+            "id": "20af836c-4115-40ae-b66c-48bc30126b56",
+            "type": "ability",
+            "name": "Hors-la-loi",
+            "description": "Vous pouvez vendre des marchandises dans n’importe quelle cité à leur prix habituel, même si elles sont illégales ou trop chères pour les autochtones."
+          },
+          {
+            "id": "e3b17d27-c7a2-40e5-9009-1f2f8ed559d9",
+            "type": "ability",
+            "name": "Hors-la-loi",
+            "description": "Vous pouvez acheter des marchandises, en augmentant leur prix de 10 %, et les faire expédier vers une destination de largage reculée (probablement à proximité du site où se déroule votre aventure) mais située dans le même système solaire qu’une cité connue."
+          }
+        ]
+      },
+      {
+        "id": "9b1f88ce-c9b8-40a2-9e4d-ee7778f41dd7",
+        "level": 18,
+        "name": "Hors-la-loi émérite",
+        "description": "La préparation de plans louches est l’une de vos spécialités et cette activité est pour vous comme une douce montée d’adrénaline.",
+        "components": [
+          {
+            "id": "a545ce83-c54e-4556-9b87-6faefec1c359",
+            "type": "ability",
+            "name": "Hors-la-loi",
+            "description": "Jusqu’à deux fois par jour après avoir passé au moins 10 minutes à planifier un cambriolage ou un autre délit et après avoir accompli avec succès une action en relation avec la mise en oeuvre de ce plan, vous récupérez 1 point de persévérance."
           }
         ]
       }
@@ -185,6 +319,7 @@
         "id": "c0221359-1fc3-4db8-b429-151b4f770afe",
         "level": 1,
         "name": "Savoir thématique",
+        "description": "Vous vous êtes largement imprégné de la culture de votre profession iconique",
         "components": [
           {
             "id": "51be81fa-1349-49f9-af55-3b49d712e894",
@@ -196,6 +331,57 @@
             "type": "ability",
             "name": "Icône",
             "description": "Réduisez de 5 le DD des tests de Culture ou de Profession que vous effectuez pour vous rappeler quelque chose à propos d’autres icônes ou de détails sur les aspects culturels de votre profession."
+          }
+        ]
+      },
+      {
+        "id": "d7ba918e-f358-4513-84d5-9d71674a3f6a",
+        "level": 6,
+        "name": "Célébrité",
+        "components": [
+          {
+            "id": "59d86284-326d-4ba7-bdcc-78ab090cd69f",
+            "type": "ability",
+            "name": "Icône",
+            "description": "Il faut réussir un test de Culture DD 10 pour vous reconnaître et un test de Culture DD 20 pour que quelqu’un vous reconnaisse par votre seule apparence, hors du contexte de votre profession."
+          },
+          {
+            "id": "be907f9e-2304-4855-8c37-58f29833ed9b",
+            "type": "ability",
+            "name": "Icône",
+            "description": "Vous parvenez presque toujours à trouver un fan dont l’attitude initiale envers vous est amicale ou serviable ; cette recherche dure 2d4 heures. À l’appréciation du MJ, des fans peuvent vous proposer leurs services (mais pas d’objets ou de marchandises) à prix réduit, voire gratuitement."
+          }
+        ]
+      },
+      {
+        "id": "849aaa41-bf32-48fa-9eb7-81a0273957b2",
+        "level": 12,
+        "name": "Méga célébrité",
+        "components": [
+          {
+            "id": "9d481cf8-796d-4619-9464-3d27617eba72",
+            "type": "ability",
+            "name": "Icône",
+            "description": "Le DD des tests de Culture effectués pour vous reconnaître est réduit à 5 (ou à 10 pour vous reconnaître par votre seule apparence en dehors du contexte de votre profession)."
+          },
+          {
+            "id": "f8a8c373-427d-4070-a06e-4edd78e9abdd",
+            "type": "ability",
+            "name": "Icône",
+            "description": "Il ne vous faut plus que 1d4 heures pour trouver un fan qui correspond à vos besoins. De plus, vos fans vous font bénéficier d’une remise de 10 % lorsque vous leur achetez des marchandises."
+          }
+        ]
+      },
+      {
+        "id": "353c0b69-0154-4bcc-b36d-5e3c7d757dfa",
+        "level": 18,
+        "name": "Icône émérite",
+        "components": [
+          {
+            "id": "31d66d6c-eb42-49ec-8af4-3e0dcbf8032a",
+            "type": "ability",
+            "name": "Icône",
+            "description": "Jusqu’à deux fois par jour, vous pouvez interagir avec le public à propos de votre profession (le plus souvent durant une représentation tel qu’un concert, mais parfois lors d’une conférence de presse après avoir exercé votre profession si celle-ci ne nécessite pas la présence d’un public) pendant au moins 10 minutes pour récupérer 1 point de persévérance."
           }
         ]
       }
@@ -225,6 +411,48 @@
             "description": "Réduisez de 5 le DD des tests de Culture et de Profession (mercenaire) effectués pour vous rappeler quelque chose à propos des hiérarchies, des usages, du personnel, etc. au sein de l’armée."
           }
         ]
+      },
+      {
+        "id": "b246d0ef-fe58-4a52-b0a1-e0b288bf60cb",
+        "level": 6,
+        "name": "Soldat",
+        "description": "Vous avez l’habitude des longues marches en portant un équipement lourd et vous pouvez soulever la plupart des machines avec facilité.",
+        "components": [
+          {
+            "id": "d3fee38f-8833-47a4-807f-ef6c74302e98",
+            "type": "ability",
+            "name": "Mercenaire",
+            "description": "Vous considérez que votre Force est supérieure d’un point lorsqu’il s’agit de déterminer vos limites de volume transportable."
+          }
+        ]
+      },
+      {
+        "id": "c0c02164-d349-498e-ba81-23c55a4d6cad",
+        "level": 12,
+        "name": "Chef d'escouade",
+        "description": "Vous êtes extrêmement compétent lorsqu’il s’agit de coordonner les actions des membres de votre escouade, à la fois grâce à votre efficacité tactique mais aussi grâce au respect que vous inspirez.",
+        "components": [
+          {
+            "id": "4b2bc831-70b5-4ceb-a52c-81540dacd12c",
+            "type": "ability",
+            "name": "Mercenaire",
+            "description": "Si vous êtes capable d’effectuer le test en question, vous le réussissez automatiquement dans le cadre de l’action aider autrui lorsque vous aidez un membre de votre escouade ou un allié de longue date (tel qu’un compagnon PJ)."
+          }
+        ]
+      },
+      {
+        "id": "2b683883-a43f-450b-a8d4-dad76460733a",
+        "level": 18,
+        "name": "Commandant",
+        "description": "Quel que soit le sang versé, les victoires remportées par votre escouade renforcent votre détermination.",
+        "components": [
+          {
+            "id": "2879cdb8-e8fc-45ec-85e3-d989a9243d34",
+            "type": "ability",
+            "name": "Mercenaire",
+            "description": "Lors d’une même journée, après avoir participé à trois combats au moins ayant abouti à la défaite de groupes distincts ou d’adversaires importants, vous récupérez 1 point de persévérance. Après avoir participé à six de ces combats lors d’une même journée, vous récupérez un deuxième point de persévérance."
+          }
+        ]
       }
     ]
   },
@@ -250,6 +478,60 @@
             "type": "ability",
             "name": "Pilote de chasse",
             "description": "Réduisez de 5 le DD des tests de Culture effectués pour vous rappeler quelque chose sur les modèles et les pièces détachées de vaisseaux spatiaux ou de véhicules, ainsi que sur les pilotes célèbres."
+          }
+        ]
+      },
+      {
+        "id": "fd6f9b6e-0213-4026-9e2e-aaf07d8086e4",
+        "level": 6,
+        "name": "Loup solitaire",
+        "description": "Vous en savez un peu sur tous les postes indispensables à bord d’un vaisseau spatial et vous êtes toujours prêt à remplacer quelqu’un sur le pouce et à accomplir ses tâches.",
+        "components": [
+          {
+            "id": "7e328b04-4e76-4581-8eb1-dfcf07d7d8d9",
+            "type": "ability",
+            "name": "Pilote de chasse",
+            "description": "Chaque fois que vous devez effectuer un test de compétence lors d’un combat spatial ou s’il vous faut directement réparer ou effectuer la maintenance de votre vaisseau spatial, vous considérez que la moitié de vos rangs alloués au Pilotage sont aussi des rangs alloués à la compétence appropriée dans le cadre de ce test, si cela vous avantage"
+          }
+        ]
+      },
+      {
+        "id": "7b7379f5-3875-48e9-8413-7b6b7b4e18c8",
+        "level": 12,
+        "name": "Fondu de vitesse",
+        "description": "La vitesse à bord d’un véhicule vous procure d’intenses montées d’adrénaline et vous pouvez aisément piloter les véhicules lancés à grande vitesse au contraire de pilotes moins talentueux qui perdraient aussitôt le contrôle de leur engin.",
+        "components": [
+          {
+            "id": "d4992290-b217-431a-9f1f-818311d3b974",
+            "type": "ability",
+            "name": "Pilote de chasse",
+            "description": "Réduisez de 1 les malus aux tests de Pilotage que vous effectuez aux commandes d’un véhicule."
+          },
+          {
+            "id": "c6f63627-5c11-48b9-9e76-13a32fef0168",
+            "type": "ability",
+            "name": "Pilote de chasse",
+            "description": "Lorsque vous effectuez l’action double manoeuvre lors d’une poursuite à bord d’un véhicule (voir page 282), réduisez de 1 le malus sur chaque action."
+          },
+          {
+            "id": "db16020a-a8cf-4573-8908-0d48708d88c2",
+            "type": "ability",
+            "name": "Pilote de chasse",
+            "description": "Chaque fois qu’un test de Pilotage produit un effet nocif lorsqu’on le rate de 5 points ou plus, vous ne subissez cet effet nocif que si vous ratez le test de 10 points ou plus."
+          }
+        ]
+      },
+      {
+        "id": "429faef0-6649-4aa0-a1e2-2342c7a3cbec",
+        "level": 18,
+        "name": "Pilote émérite",
+        "description": "Vos talents de pilote vous revigorent en renforçant votre zèle et votre détermination.",
+        "components": [
+          {
+            "id": "9bfb8b16-21ab-4051-9a1b-b906791958a5",
+            "type": "ability",
+            "name": "Pilote de chasse",
+            "description": "Jusqu’à deux fois par jour lorsque vous triomphez d’un adversaire important lors d’un combat spatial pendant lequel vous pilotez ou lorsque vous remportez une poursuite à bord d’un véhicule, vous récupérez 1 point de persévérance."
           }
         ]
       }
@@ -279,6 +561,47 @@
             "description": "Réduisez de 5 le DD des tests de Culture et de Mysticisme effectués pour vous rappeler quelque chose à propos des traditions religieuses, des symboles religieux et des chefs religieux célèbres."
           }
         ]
+      },
+      {
+        "id": "96eacb90-74de-47c7-96a5-2c509c3aebc2",
+        "level": 6,
+        "name": "Responsabilité du clergé",
+        "description": "Vous occupez un poste à responsabilités au sein de votre religion.",
+        "components": [
+          {
+            "id": "86b7ecc4-c5f2-4bdf-b3df-eb73d2eed116",
+            "type": "ability",
+            "name": "Prêtre",
+            "description": "Vous bénéficiez d’un bonus de +2 aux tests de Diplomatie et d’Intimidation effectués envers les fidèles et les membres de rang inférieur des clergés."
+          }
+        ]
+      },
+      {
+        "id": "3ddabc03-339d-4df3-b9bb-87ad14da347c",
+        "level": 12,
+        "name": "Bénédiction divine",
+        "description": "Votre divinité est à l’origine de vos pouvoirs mystiques.",
+        "components": [
+          {
+            "id": "7283d05d-186d-478c-aed4-ca261d5c2f3d",
+            "type": "ability",
+            "name": "Prêtre",
+            "description": "Choisissez un sort de mystique de niveau 1 ayant un lien avec les domaines de prédilection de votre divinité (soumis à l’approbation du MJ). Si vous avez des niveaux dans la classe du mystique, vous obtenez un sort de niveau 1 supplémentaire par jour que vous ajoutez à votre liste de sorts de mystique connus. Sinon, vous pouvez utiliser le sort choisi une fois par jour comme un pouvoir magique."
+          }
+        ]
+      },
+      {
+        "id": "b94bb951-e507-43a3-b3ad-e17bf3faeb0d",
+        "level": 18,
+        "name": "Communion profonde",
+        "components": [
+          {
+            "id": "ff81fbd3-4a07-4291-9fd5-de7bf95e6f92",
+            "type": "ability",
+            "name": "Prêtre",
+            "description": "Jusqu’à deux fois par jour, après avoir accompli une action importante en accord avec l’alignement et le dogme de votre religion (à l’appréciation du MJ), vous pouvez passer 10 minutes en profonde méditation ou en prières pour récupérer 1 point de persévérance."
+          }
+        ]
       }
     ]
   },
@@ -300,6 +623,45 @@
             "target": "any"
           }
         ]
+      },
+      {
+        "id": "a7a947df-e237-4aa6-ad11-b484b72b41f1",
+        "level": 6,
+        "name": "Certitude",
+        "components": [
+          {
+            "id": "c9a11c5c-86b4-4083-9ff7-6d3afe5ebd4b",
+            "type": "ability",
+            "name": "Sans thème",
+            "description": "Une fois par jour avant d’effectuer un test de compétence, vous pouvez bénéficier d’un bonus de +2 sur cette compétence pour ce test."
+          }
+        ]
+      },
+      {
+        "id": "4e39536a-d754-4e31-8bc1-bb2a3df0c465",
+        "level": 12,
+        "name": "Études approfondies",
+        "components": [
+          {
+            "id": "40b4cbf8-272f-48d5-bf2e-7bba4d46cede",
+            "type": "ability",
+            "name": "Sans thème",
+            "description": "Choisissez une compétence qui fait partie de la liste de vos compétences de classe. Une fois par jour, vous pouvez refaire un test de cette compétence avant de savoir si ce test est réussi ou non. Vous devez conserver le deuxième résultat, même s’il est moins bon."
+          }
+        ]
+      },
+      {
+        "id": "aa7a1ee6-7422-441b-a948-3cca3663d2cb",
+        "level": 18,
+        "name": "Détermination inflexible",
+        "components": [
+          {
+            "id": "19c33d6d-be8c-4419-9eb2-7b8cf3e1826a",
+            "type": "ability",
+            "name": "Sans thème",
+            "description": "Augmentez de 1 votre réserve de points de persévérance."
+          }
+        ]
       }
     ]
   },
@@ -314,6 +676,7 @@
         "id": "8db78891-c325-4190-9abe-7aba076fd80c",
         "level": 1,
         "name": "Savoir thématique",
+        "description": "Vous êtes formé pour découvrir des formes de vie extraterrestres, les identifier et interagir avec elles.",
         "components": [
           {
             "id": "88ca3ab7-aca7-49f4-b0fa-b7b150a1f4df",
@@ -325,6 +688,46 @@
             "type": "ability",
             "name": "Xéno-chercheur",
             "description": "Réduisez de 5 le DD des tests de Sciences de la vie effectués pour identifier une créature rare."
+          }
+        ]
+      },
+      {
+        "id": "52cffede-aeb8-4427-ab50-241afcd9dc7d",
+        "level": 6,
+        "name": "Language improvisé",
+        "components": [
+          {
+            "id": "b27689b3-a1b0-4461-a93a-b318c8502858",
+            "type": "ability",
+            "name": "Xéno-chercheur",
+            "description": "Si vous et les créatures que vous rencontrez ne parlent pas les mêmes langues, vous pouvez passer 10 minutes à tenter de discuter avec elles (si elles sont d’accord), après quoi vous effectuez un test de Culture DD 25. En cas de réussite, vous improvisez un langage simple permettant de communiquer succinctement. Vous pouvez utiliser ce langage improvisé avec ces créatures spécifiques seulement mais vous bénéficiez d’un bonus de +2 aux tests de Culture effectués pour improviser un autre langage avec des créatures similaires parlant la même langue."
+          }
+        ]
+      },
+      {
+        "id": "bb8c6ddc-cd4f-46ef-b53b-54c6554fb7ef",
+        "level": 12,
+        "name": "Premier contact",
+        "description": "Vous savez vous y prendre pour faire une première et bonne impression sur les membres de races nouvelles et apaiser leur peur de l’inconnu.",
+        "components": [
+          {
+            "id": "249c95d5-9e00-4cef-b9f7-1416b630fb04",
+            "type": "ability",
+            "name": "Xéno-chercheur",
+            "description": "Lorsque vous rencontrez une créature qui n’a jamais vu un membre de votre race ou de celles de vos compagnons de voyage, considérez que son attitude est indifférente au lieu d’inamicale comme elle devrait l’être normalement envers les membres de races inconnues. Cet avantage ne produit aucun effet si la créature est normalement hostile, indifférente, amicale ou serviable."
+          }
+        ]
+      },
+      {
+        "id": "abbb38a1-b9fc-44ee-ad3f-258575447b99",
+        "level": 18,
+        "name": "Découverte exceptionnelle",
+        "components": [
+          {
+            "id": "576fda6c-7266-4b2e-98cd-b286ab2426df",
+            "type": "ability",
+            "name": "Xéno-chercheur",
+            "description": "Jusqu’à deux fois par jour, lorsque vous découvrez et récoltez les données sur une espèce de plante ou d’animal, vous récupérez 1 PP. Sur une planète inexplorée où toutes les espèces sont nouvelles, ce processus prend généralement 10 minutes tout au plus mais, même sur des planètes connues, vous pouvez trouver une espèce nouvelle en 1d4 heures (ou moins) dans un biome isolé ou abritant une grande variété d’animaux et de plantes."
           }
         ]
       }
