@@ -61,6 +61,14 @@ h3,
 }
 
 /**
+  * Customize card styles.
+  * Remove background color to avoid conflicts.
+  */
+.card {
+  background-color: transparent;
+}
+
+/**
  * Remove arrows on number inputs.
  */
 /* Chrome, Safari, Edge, Opera */
@@ -92,7 +100,7 @@ input[type="number"] {
   bottom: 0;
   right: 0;
   top: 0;
-  z-index: -1000;
+  z-index: -100;
 }
 
 .badge {

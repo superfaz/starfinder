@@ -465,17 +465,19 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           <Stack direction="vertical" gap={2}>
             <h2>Traits raciaux</h2>
             {selectedRace.traits.map((trait) => (
-              <div
+              <Card
                 key={trait.id}
                 className={
                   character.traits.find((t) => t === trait.id) !== undefined ? "" : "text-decoration-line-through"
                 }
               >
-                <h5>{trait.name}</h5>
-                <p className="text-muted">{trait.description}</p>
-                {trait.components &&
-                  trait.components.map((component) => <Component key={component.id} component={component} />)}
-              </div>
+                <Card.Header>{trait.name}</Card.Header>
+                <Card.Body>
+                  {trait.description && <p className="text-muted">{trait.description}</p>}
+                  {trait.components &&
+                    trait.components.map((component) => <Component key={component.id} component={component} />)}
+                </Card.Body>
+              </Card>
             ))}
           </Stack>
         )}
@@ -487,26 +489,30 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <h2>Traits alternatifs</h2>
             {selectedRace.secondaryTraits &&
               selectedRace.secondaryTraits.map((trait) => (
-                <div key={trait.id}>
-                  <h5>
-                    <Form.Switch
-                      label={trait.name}
-                      checked={character.traits.find((t) => t === trait.id) !== undefined}
-                      onChange={(e) => handleTraitEnabled(trait, e)}
-                      disabled={
-                        character.traits.find((t) => t === trait.id) === undefined &&
-                        trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
-                      }
-                    />
-                  </h5>
-                  <div>
-                    <span>Remplace : </span>
-                    {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
-                  </div>
-                  <p className="text-muted">{trait.description}</p>
-                  {trait.components &&
-                    trait.components.map((component) => <Component key={component.id} component={component} />)}
-                </div>
+                <Card key={trait.id}>
+                  <Card.Header>
+                      <Form.Switch
+                        label={trait.name}
+                        checked={character.traits.find((t) => t === trait.id) !== undefined}
+                        onChange={(e) => handleTraitEnabled(trait, e)}
+                        disabled={
+                          character.traits.find((t) => t === trait.id) === undefined &&
+                          trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
+                        }
+                      />
+                  </Card.Header>
+                  <Card.Body>
+                    <div key={trait.id}>
+                      <div>
+                        <span>Remplace : </span>
+                        {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
+                      </div>
+                      <p className="text-muted">{trait.description}</p>
+                      {trait.components &&
+                        trait.components.map((component) => <Component key={component.id} component={component} />)}
+                    </div>
+                  </Card.Body>
+                </Card>
               ))}
           </Stack>
         )}
