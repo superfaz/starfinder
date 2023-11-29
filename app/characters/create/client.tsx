@@ -491,15 +491,15 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               selectedRace.secondaryTraits.map((trait) => (
                 <Card key={trait.id}>
                   <Card.Header>
-                      <Form.Switch
-                        label={trait.name}
-                        checked={character.traits.find((t) => t === trait.id) !== undefined}
-                        onChange={(e) => handleTraitEnabled(trait, e)}
-                        disabled={
-                          character.traits.find((t) => t === trait.id) === undefined &&
-                          trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
-                        }
-                      />
+                    <Form.Switch
+                      label={trait.name}
+                      checked={character.traits.find((t) => t === trait.id) !== undefined}
+                      onChange={(e) => handleTraitEnabled(trait, e)}
+                      disabled={
+                        character.traits.find((t) => t === trait.id) === undefined &&
+                        trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
+                      }
+                    />
                   </Card.Header>
                   <Card.Body>
                     <div key={trait.id}>
@@ -608,15 +608,17 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           <h2>Traits thématiques</h2>
           {selectedTheme &&
             selectedTheme.advantages.map((advantage) => (
-              <div key={advantage.id}>
-                <h5>
-                  <span className="badge bg-secondary">niveau {advantage.level}</span>
+              <Card key={advantage.id}>
+                <Card.Header>
+                  <Badge bg="secondary">niveau {advantage.level}</Badge>
                   {advantage.name}
-                </h5>
-                <p className="text-muted">{advantage.description}</p>
-                {advantage.components &&
-                  advantage.components.map((component) => <Component key={component.id} component={component} />)}
-              </div>
+                </Card.Header>
+                <Card.Body>
+                  {advantage.description && <p className="text-muted">{advantage.description}</p>}
+                  {advantage.components &&
+                    advantage.components.map((component) => <Component key={component.id} component={component} />)}
+                </Card.Body>
+              </Card>
             ))}
         </Stack>
       </Col>
