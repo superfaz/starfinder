@@ -106,7 +106,7 @@ function Component({ component }: { component: Component }) {
 }
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
-  const [navigation, updateNavigation] = useState("profil");
+  const [navigation, updateNavigation] = useState("introduction");
   const [character, updateCharacter] = useState<Character>({
     race: "",
     raceVariant: "",
@@ -325,6 +325,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       <Col lg={12}>
         <Nav variant="underline" activeKey={navigation} onSelect={handleNavigation}>
           <Nav.Item>
+            <Nav.Link eventKey="intro">Introduction</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
             <Nav.Link eventKey="profil">Profil</Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -367,6 +370,20 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <Nav.Link eventKey="debug">Debug</Nav.Link>
           </Nav.Item>
         </Nav>
+      </Col>
+      <Col lg={6} hidden={navigation !== "intro"}>
+        <Stack direction="vertical" gap={2}>
+          <h2>Introduction</h2>
+          <p>
+            Bienvenue dans le créateur de personnage pour le jeu de rôle <strong>StarFinder</strong> de Paizo
+            Publishing.
+          </p>
+          <p>
+            La version française se base sur la version publiée par Black Book Editions. Vous pouvez trouver plus
+            d&apos;informations sur le jeu sur le site de l&apos;éditeur :{" "}
+            <a href="https://www.black-book-editions.fr/catalogue.php?id=519">www.black-book-editions.fr</a>.
+          </p>
+        </Stack>
       </Col>
       <Col lg={3} hidden={navigation !== "profil"}>
         <Stack direction="vertical" gap={2}>
