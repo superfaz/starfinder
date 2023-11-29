@@ -660,6 +660,22 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               </Stack>
             </>
           )}
+          {selectedClass && (
+            <>
+              <hr />
+              <div>
+                <Badge bg="primary">Rang de compétence</Badge>+{selectedClass.skillRank}
+              </div>
+              <div>
+                <Badge bg="primary">Armures</Badge>
+                {selectedClass.armors.map((a) => data.armors[a]).join(", ")}
+              </div>
+              <div>
+                <Badge bg="primary">Armes</Badge>
+                {selectedClass.weapons.map((a) => data.weapons[a]).join(", ")}
+              </div>
+            </>
+          )}
         </Stack>
       </Col>
 

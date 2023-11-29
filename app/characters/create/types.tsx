@@ -8,6 +8,8 @@ export interface ClientComponentData {
   abilityScores: AbilityScore[];
   specials: Record<string, Special>;
   alignments: Alignment[];
+  armors: Record<string, string>;
+  weapons: Record<string, string>;
 }
 
 export class Character {

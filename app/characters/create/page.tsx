@@ -45,6 +45,16 @@ export default async function Page() {
     abilityScores: await getAbilityScores(),
     specials: await getSpecials(),
     alignments: await getAlignments(),
+    armors: { light: "Lègére", heavy: "Lourde" },
+    weapons: {
+      basic: "Armes de corps à corps simples",
+      advanced: "Armes de corps à corps évoluées",
+      small: "Armes légères",
+      long: "Armes longues",
+      heavy: "Armes lourdes",
+      sniper: "Armes de précision",
+      grenade: "Grenades",
+    },
   };
 
   return (

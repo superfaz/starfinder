@@ -77,6 +77,9 @@ export interface Class {
   staminaPoints: number;
   keyAbilityScore: string | string[];
   secondaryAbilityScore: string[];
+  skillRank: number;
+  armors: string[];
+  weapons: string[];
 }
 
 export interface Skill {
