@@ -1,110 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { Component, Trait, SecondaryTrait, AbilityScore, Class } from "../../types";
+import { Modifier, Trait, SecondaryTrait, AbilityScore, Class } from "../../types";
 import { Character, ClientComponentData } from "./types";
-import dynamic from "next/dynamic";
-
-function Component({ component }: { component: Component }) {
-  switch (component.type) {
-    case "ability":
-      return (
-        <p>
-          <Badge bg="primary">Pouvoir</Badge>
-          {component.name && <strong className="me-1">{component.name}.</strong>}
-          <span className="text-muted">{component.description}</span>
-        </p>
-      );
-    case "hitPoints":
-      return (
-        <p>
-          <Badge bg="primary">Points de vie</Badge>
-          <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
-          </strong>
-          {component.description && <span className="ms-1 text-muted">{component.description}</span>}
-        </p>
-      );
-    case "savingThrow":
-      return (
-        <p>
-          <Badge bg="primary">Jets de sauvegarde</Badge>
-          {component.name && <strong className="me-1">{component.name}.</strong>}
-          <span className="text-muted">{component.description}</span>
-        </p>
-      );
-    case "skill":
-      return (
-        <p>
-          <Badge bg="primary">Compétence</Badge>
-          <strong>
-            {component.target} {component.value > 0 ? "+" : ""}
-            {component.value}
-          </strong>
-          <span className="ms-1 text-muted">{component.description}</span>
-        </p>
-      );
-    case "classSkill":
-      return (
-        <p>
-          <Badge bg="primary">Compétence de classe</Badge>
-          <strong>{component.target}</strong>
-        </p>
-      );
-    case "featCount":
-      return (
-        <p>
-          <Badge bg="primary">Nombre de Dons</Badge>
-          <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
-          </strong>
-        </p>
-      );
-    case "feat":
-      return (
-        <p>
-          <Badge bg="primary">Don</Badge>
-          {component.level && component.level > 1 && <Badge bg="primary">Niveau {component.level}</Badge>}
-          <strong className="me-1">{component.name}.</strong>
-          <span className="text-muted">{component.description}</span>
-        </p>
-      );
-    case "skillRank":
-      return (
-        <p>
-          <Badge bg="primary">Rang de compétence</Badge>
-          <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
-          </strong>
-          <span className="ms-1 text-muted">{component.description}</span>
-        </p>
-      );
-    case "spell":
-      return (
-        <p>
-          <Badge bg="primary">Sort</Badge>
-          <strong>{component.name}</strong>
-          {component.description && <span className="ms-1 text-muted">{component.description}</span>}
-        </p>
-      );
-    case "languageCount":
-      return (
-        <p>
-          <Badge bg="primary">Nombre de langue</Badge>
-          <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
-          </strong>
-        </p>
-      );
-    default:
-      return null;
-  }
-}
+import ModifierComponent from "./ModifierComponent";
 
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
@@ -327,7 +228,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     updateAlignment(alignment);
   }
 
-  function findReplacedTrait(id: string): Trait | Component {
+  function findReplacedTrait(id: string): Trait | Modifier {
     let trait = selectedRace.traits.find((t) => t.id === id);
     if (trait) {
       return trait;
@@ -515,7 +416,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 <Card.Body>
                   {trait.description && <p className="text-muted">{trait.description}</p>}
                   {trait.components &&
-                    trait.components.map((component) => <Component key={component.id} component={component} />)}
+                    trait.components.map((component) => <ModifierComponent key={component.id} component={component} />)}
                 </Card.Body>
               </Card>
             ))}
@@ -549,7 +450,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       </div>
                       <p className="text-muted">{trait.description}</p>
                       {trait.components &&
-                        trait.components.map((component) => <Component key={component.id} component={component} />)}
+                        trait.components.map((component) => <ModifierComponent key={component.id} component={component} />)}
                     </div>
                   </Card.Body>
                 </Card>
@@ -647,16 +548,16 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         <Stack direction="vertical" gap={2}>
           <h2>Traits thématiques</h2>
           {selectedTheme &&
-            selectedTheme.advantages.map((advantage) => (
-              <Card key={advantage.id}>
+            selectedTheme.features.map((feature) => (
+              <Card key={feature.id}>
                 <Card.Header>
-                  <Badge bg="secondary">niveau {advantage.level}</Badge>
-                  {advantage.name}
+                  <Badge bg="secondary">niveau {feature.level}</Badge>
+                  {feature.name}
                 </Card.Header>
                 <Card.Body>
-                  {advantage.description && <p className="text-muted">{advantage.description}</p>}
-                  {advantage.components &&
-                    advantage.components.map((component) => <Component key={component.id} component={component} />)}
+                  {feature.description && <p className="text-muted">{feature.description}</p>}
+                  {feature.components &&
+                    feature.components.map((component) => <ModifierComponent key={component.id} component={component} />)}
                 </Card.Body>
               </Card>
             ))}
