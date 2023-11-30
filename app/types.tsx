@@ -5,7 +5,7 @@ export interface Variant {
   abilityScores: Record<string, number>;
 }
 
-export enum ComponentType {
+export enum ModifierType {
   ability = "ability",
   hitPoints = "hitPoints",
   savingThrow = "savingThrow",
@@ -18,9 +18,9 @@ export enum ComponentType {
   languageCount = "languageCount",
 }
 
-export interface Component {
+export interface Modifier {
   id: string;
-  type: ComponentType;
+  type: ModifierType;
   level?: number;
   name?: string;
   description?: string;
@@ -32,7 +32,7 @@ export interface Trait {
   id: string;
   name: string;
   description?: string;
-  components?: Component[];
+  components?: Modifier[];
 }
 
 export interface SecondaryTrait extends Trait {
@@ -51,12 +51,8 @@ export interface Race {
   secondaryTraits: SecondaryTrait[];
 }
 
-export interface Advantage {
-  id: string;
-  name: string;
+export interface Feature extends Trait {
   level: number;
-  description?: string;
-  components?: Component[];
 }
 
 export interface Theme {
@@ -65,7 +61,7 @@ export interface Theme {
   description: string;
   refs: string[];
   abilityScores: Record<string, number>;
-  advantages: Advantage[];
+  features: Feature[];
 }
 
 export interface Class {

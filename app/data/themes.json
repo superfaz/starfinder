@@ -5,7 +5,7 @@
     "description": "Rien ou presque ne peut vous empêcher de traquer vos proies et de les ramener mortes ou vives.",
     "refs": ["base-29"],
     "abilityScores": { "con": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "9eda60ce-2a5d-4af6-b988-0bef73555cc8",
         "level": 1,
@@ -99,7 +99,7 @@
     "description": "En tant qu’universitaire, vous avez assimilé une solide base de connaissances diverses et vous êtes toujours avide d’en savoir plus.",
     "refs": ["base-30"],
     "abilityScores": { "int": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "e70f9997-41b9-4062-a1eb-7d9a04c71ce2",
         "level": 1,
@@ -169,7 +169,7 @@
     "description": "Vous vivez au milieu des étoiles à la recherche de mondes nouveaux à explorer et êtes toujours prêt pour l’aventure.",
     "refs": ["base-31"],
     "abilityScores": { "con": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "3ca8af24-3c4b-42d3-baad-429bd9412eb6",
         "level": 1,
@@ -239,7 +239,7 @@
     "description": "Vous vivez au milieu des étoiles à la recherche de mondes nouveaux à explorer et êtes toujours prêt pour l’aventure.",
     "refs": ["base-32"],
     "abilityScores": { "dex": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "58e042b4-6c47-4c7b-9e00-eb681cbf8495",
         "level": 1,
@@ -314,7 +314,7 @@
     "description": "Vous êtes une célébrité populaire et respectée au sein de l’espace colonisé.",
     "refs": ["base-33"],
     "abilityScores": { "cha": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "c0221359-1fc3-4db8-b429-151b4f770afe",
         "level": 1,
@@ -393,7 +393,7 @@
     "description": "Vous êtes une célébrité populaire et respectée au sein de l’espace colonisé",
     "refs": ["base-34"],
     "abilityScores": { "str": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "ef6b60d5-3e09-4406-825b-32d5534b9915",
         "level": 1,
@@ -462,7 +462,7 @@
     "description": "Grâce à vos mains toujours fermes et vos nerfs d’acier, vous êtes devenu un pilote compétent de vaisseaux spatiaux et d’autres véhicules.",
     "refs": ["base-35"],
     "abilityScores": { "dex": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "8598734b-acdc-4b28-9f20-a8c3f6b91d55",
         "level": 1,
@@ -543,7 +543,7 @@
     "description": "Votre inébranlable dévotion à une philosophie ou une religion compose l’essentiel de votre personnalité.",
     "refs": ["base-36"],
     "abilityScores": { "wis": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "f62bd964-1efd-4d9f-8536-d688bea81a9f",
         "level": 1,
@@ -611,7 +611,7 @@
     "description": "Aucune des catégories décrites ci-dessus ne vous convient vraiment ou vous vous voyez comme une page blanche.",
     "refs": ["base-28"],
     "abilityScores": { "any": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "87153034-e406-4e75-babe-03b8a3a0ec05",
         "level": 1,
@@ -671,7 +671,7 @@
     "description": "En voyageant au-delà des frontières de l’espace des Mondes du Pacte, vous vous efforcez d’établir des contacts avec des formes de vie extraterrestres.",
     "refs": ["base-37"],
     "abilityScores": { "cha": 1 },
-    "advantages": [
+    "features": [
       {
         "id": "8db78891-c325-4190-9abe-7aba076fd80c",
         "level": 1,
