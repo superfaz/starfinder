@@ -1,6 +1,6 @@
 [
   {
-    "id": "class-agent",
+    "id": "class-operative",
     "name": "Agent",
     "description": "L’agent possède les compétences pour accomplir presque n’importe quelle mission exigeant de la discrétion et de la ruse, qu’il s’agisse d’une opération d’espionnage ou d’élimination.",
     "refs": ["base-60"],

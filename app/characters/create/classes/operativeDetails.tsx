@@ -1,6 +1,6 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
 
-export default function AgentClassDetails() {
+export default function OperativeClassDetails() {
   return (
     <>
       <Row className="mb-3">

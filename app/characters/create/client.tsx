@@ -106,7 +106,7 @@ function Component({ component }: { component: Component }) {
   }
 }
 
-const LazyAgentClassDetails = dynamic(() => import("./classes/agentDetails"));
+const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
 
 function ClassDetails({ classType }: { classType: Class }) {
   if (classType === null) {
@@ -114,8 +114,8 @@ function ClassDetails({ classType }: { classType: Class }) {
   }
 
   switch (classType.id) {
-    case "class-agent":
-      return <LazyAgentClassDetails />;
+    case "class-operative":
+      return <LazyOperativeClassDetails />;
 
     default:
       return null;
