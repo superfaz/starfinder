@@ -1,42 +1,43 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
+import { Character } from "../types";
+import operativeData from "@/data/class-operative.json";
 
-export default function OperativeClassDetails() {
-  return (
+export default function OperativeClassDetails({ character }: { character: Character }) {
+  return Array.from({ length: 20 }, (_, i) => i + 1).map((level) => (
+    <Row key={level} className="mb-3">
+      <Col lg={1}>
+        <Badge bg="secondary">Niv. {level}</Badge>
+      </Col>
+      {operativeData.features
+        .filter((s) => s.level === level)
+        .map((advantage) => (
+          <Col key={advantage.id}>
+            <Card>
+              <Card.Header>
+                {advantage.name} ({advantage.category})
+              </Card.Header>
+              <Card.Body>
+                <p className="text-muted">{advantage.description}</p>
+                COMPONENTS
+              </Card.Body>
+              <Card.Footer>
+                {Object.entries(advantage.evolutions).map(([key, value]) => (
+                  <div key={key}>
+                    <Badge bg="secondary">{key}</Badge> Bonus +{value.bonus}
+                  </div>
+                ))}
+              </Card.Footer>
+            </Card>
+          </Col>
+        ))}
+    </Row>
+  ));
+}
+
+/*
     <>
       <Row className="mb-3">
-        <Col lg={1}>
-          <Badge bg="secondary">Niv. 1</Badge>
-        </Col>
-        <Col>
-          <Card>
-            <Card.Header>Avantage de l'agent (EXT)</Card.Header>
-            <Card.Body>
-              <Badge bg="primary">Pouvoir</Badge>
-              Vos divers entraînements en tant qu’agent vous octroient un bonus d’intuition de +1 aux tests d’initiative
-              et aux tests de compétence.
-            </Card.Body>
-            <Card.Footer>
-              <div>
-                <Badge bg="secondary">1</Badge> Bonus +1
-              </div>
-              <div>
-                <Badge bg="secondary">3</Badge> Bonus +2
-              </div>
-              <div>
-                <Badge bg="secondary">7</Badge> Bonus +3
-              </div>
-              <div>
-                <Badge bg="secondary">11</Badge> Bonus +4
-              </div>
-              <div>
-                <Badge bg="secondary">15</Badge> Bonus +5
-              </div>
-              <div>
-                <Badge bg="secondary">19</Badge> Bonus +6
-              </div>
-            </Card.Footer>
-          </Card>
-        </Col>
+        
         <Col>
           <Card>
             <Card.Header>Spécialisation</Card.Header>
@@ -176,3 +177,4 @@ export default function OperativeClassDetails() {
     </>
   );
 }
+*/

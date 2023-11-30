@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, ComponentType, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
 import { Component, Trait, SecondaryTrait, AbilityScore, Class } from "../../types";
 import { Character, ClientComponentData } from "./types";
@@ -107,15 +107,38 @@ function Component({ component }: { component: Component }) {
 }
 
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
+const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 
-function ClassDetails({ classType }: { classType: Class }) {
+function ClassDetails({ classType, character }: { classType: Class; character: Character }) {
   if (classType === null) {
     return null;
   }
 
   switch (classType.id) {
     case "class-operative":
-      return <LazyOperativeClassDetails />;
+      return <LazyOperativeClassDetails character={character} />;
+
+    default:
+      return null;
+  }
+}
+
+function ClassEditor({
+  classType,
+  character,
+  updateCharacter,
+}: {
+  classType: Class;
+  character: Character;
+  updateCharacter: Dispatch<SetStateAction<Character>>;
+}) {
+  if (classType === null) {
+    return null;
+  }
+
+  switch (classType.id) {
+    case "class-operative":
+      return <LazyOperativeClassEditor character={character} updateCharacter={updateCharacter} />;
 
     default:
       return null;
@@ -699,13 +722,15 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 <Badge bg="primary">Armes</Badge>
                 {selectedClass.weapons.map((a) => data.weapons[a]).join(", ")}
               </div>
+              <hr />
+              <ClassEditor classType={selectedClass} character={character} updateCharacter={updateCharacter} />
             </>
           )}
         </Stack>
       </Col>
 
       <Col hidden={navigation !== "class"}>
-        <ClassDetails classType={selectedClass} />
+        <ClassDetails classType={selectedClass} character={character} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>

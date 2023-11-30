@@ -1,0 +1,96 @@
+{
+  "specializations": [
+    {
+      "id": "0110533f-eba1-4bad-ae1d-b18c584b7cbc",
+      "name": "Casse-cou",
+      "description": "Vous êtes spécialisé dans les missions nécessitant du courage et des compétences athlétiques."
+    },
+    {
+      "id": "7d74e198-2856-4496-8fff-4685a6187ed3",
+      "name": "Détective",
+      "description": "Votre talent pour cerner les gens et pour faire des déductions vous aide à connaître la vérité dans n’importe quelle situation."
+    },
+    {
+      "id": "e3cfed04-c68c-40e5-bf55-6dba733ce299",
+      "name": "Espion",
+      "description": "Vous pouvez voler et prendre de nouvelles identités aussi facilement que les gens changent de vêtements, ce qui vous permet de vous infiltrer dans n’importe quel cercle."
+    },
+    {
+      "id": "7c29946d-202e-432c-973d-8766e4fbc6d5",
+      "name": "Explorateur",
+      "description": "Grâce à vos connaissances et vos compétences de survie, vous êtes spécialisé dans l’exploration des sites dangereux"
+    },
+    {
+      "id": "6c2198ca-f609-43cc-9087-37d756f27385",
+      "name": "Fantôme",
+      "description": "Vous pouvez aller d’un endroit à un autre sans être remarqué."
+    },
+    {
+      "id": "1a4eafc7-19d4-498c-9463-bc26024cc013",
+      "name": "Hacker",
+      "description": "Que ce soit un système informatique ou un appareil électronique ou mécanique, vous pouvez le pirater."
+    },
+    {
+      "id": "6114714b-d51d-47e5-8ee7-6f3829b8160e",
+      "name": "Voleur",
+      "description": "Vous maîtrisez aussi bien les techniques de vol à la tire que celles de braquages beaucoup plus ambitieux."
+    }
+  ],
+  "features": [
+    {
+      "id": "5f8db8be-3b2a-46c1-815a-fff9053e4099",
+      "name": "Avantage de l'agent",
+      "level": 1,
+      "category": "ex",
+      "description": "Vos divers entraînements en tant qu’agent vous octroient un bonus d’intuition de +<bonus> aux tests d’initiative et aux tests de compétence.",
+      "components": [
+        {
+          "id": "e3cd9695-425e-4811-9574-615e5384ce67",
+          "type": "initiative",
+          "value": "bonus"
+        },
+        {
+          "id": "0de1e9aa-e146-41df-b125-ada7e6592370",
+          "type": "skill",
+          "target": "all",
+          "value": "bonus"
+        }
+      ],
+      "evolutions": {
+        "1": { "bonus": 1 },
+        "3": { "bonus": 2 },
+        "7": { "bonus": 3 },
+        "11": { "bonus": 4 },
+        "15": { "bonus": 5 },
+        "19": { "bonus": 6 }
+      }
+    },
+    {
+      "id": "181c29fd-551b-4860-923d-c2c797eb8fba",
+      "name": "Feinte offensive",
+      "level": 1,
+      "category": "ex",
+      "description": "Vous pouvez tromper ou surprendre un ennemi puis l’attaquer quand il baisse sa garde.",
+      "components": [
+        {
+          "id": "0f98709b-4d15-4e82-9bb3-e15f4faeb5f3",
+          "type": "ability",
+          "name": "Feinte offensive",
+          "description": "En tant qu’action complexe, vous pouvez vous déplacer et/ou effectuer une attaque avec une arme de corps à corps ayant la propriété spéciale agent ou avec n’importe quelle arme légère. Juste avant de porter votre attaque, tentez un test de Bluff, d’Intimidation ou de Discrétion ou <Specialization> avec un DD de 20 + le FP de la cible. Si vous réussissez ce test, vous infligez <damage> points de dégâts supplémentaires et la cible est prise au dépourvu contre cette attaque."
+        }
+      ],
+      "evolutions": {
+        "1": { "damage": "1d4" },
+        "3": { "damage": "1d8" },
+        "5": { "damage": "3d8" },
+        "7": { "damage": "4d8" },
+        "9": { "damage": "5d8" },
+        "11": { "damage": "6d8" },
+        "13": { "damage": "7d8" },
+        "15": { "damage": "8d8" },
+        "17": { "damage": "9d8" },
+        "19": { "damage": "10d8" }
+      }
+    }
+  ]
+}
