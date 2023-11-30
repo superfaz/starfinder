@@ -1,12 +1,12 @@
 import { AbilityScore, Alignment, Class, Race, Skill, Special, Theme } from "../../types";
 import { ClientComponent } from "./client";
-import Races from "./races.json";
-import Themes from "./themes.json";
-import Classes from "./classes.json";
-import Skills from "./skills.json";
-import AbilityScores from "./ability-scores.json";
-import Specials from "./specials.json";
-import Alignments from "./alignments.json";
+import Races from "@/data/races.json";
+import Themes from "@/data/themes.json";
+import Classes from "@/data/classes.json";
+import Skills from "@/data/skills.json";
+import AbilityScores from "@/data/ability-scores.json";
+import Specials from "@/data/specials.json";
+import Alignments from "@/data/alignments.json";
 
 async function getRaces(): Promise<Race[]> {
   return Races;

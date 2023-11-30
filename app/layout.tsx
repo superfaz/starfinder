@@ -1,6 +1,6 @@
-import "./site.scss";
 import React from "react";
 import { Container } from "react-bootstrap";
+import "./site.scss";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
