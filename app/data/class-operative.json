@@ -43,7 +43,7 @@
       "level": 1,
       "category": "ex",
       "description": "Vos divers entraînements en tant qu’agent vous octroient un bonus d’intuition de +<bonus> aux tests d’initiative et aux tests de compétence.",
-      "components": [
+      "modifiers": [
         {
           "id": "e3cd9695-425e-4811-9574-615e5384ce67",
           "type": "initiative",
@@ -71,7 +71,7 @@
       "level": 1,
       "category": "ex",
       "description": "Vous pouvez tromper ou surprendre un ennemi puis l’attaquer quand il baisse sa garde.",
-      "components": [
+      "modifiers": [
         {
           "id": "0f98709b-4d15-4e82-9bb3-e15f4faeb5f3",
           "type": "ability",

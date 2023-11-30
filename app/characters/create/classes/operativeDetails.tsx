@@ -1,8 +1,24 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import { Character } from "../types";
 import operativeData from "@/data/class-operative.json";
+import ModifierComponent from "../ModifierComponent";
+
+const categories = {
+  ex: "EXT",
+  ma: "MAG",
+  su: "SUR",
+};
 
 export default function OperativeClassDetails({ character }: { character: Character }) {
+  function replace(context: Record<string, string>, text: string): string {
+    if (context) {
+      Object.entries(context).forEach(([key, value]) => {
+        text = text.replace("<" + key + ">", value);
+      });
+    }
+    return text;
+  }
+
   return Array.from({ length: 20 }, (_, i) => i + 1).map((level) => (
     <Row key={level} className="mb-3">
       <Col lg={1}>
@@ -10,18 +26,20 @@ export default function OperativeClassDetails({ character }: { character: Charac
       </Col>
       {operativeData.features
         .filter((s) => s.level === level)
-        .map((advantage) => (
-          <Col key={advantage.id}>
+        .map((feature) => (
+          <Col key={feature.id}>
             <Card>
               <Card.Header>
-                {advantage.name} ({advantage.category})
+                {feature.name} {feature.category && "(" + categories[feature.category] + ")"}
               </Card.Header>
               <Card.Body>
-                <p className="text-muted">{advantage.description}</p>
-                COMPONENTS
+                <p className="text-muted">{replace(feature.evolutions[level], feature.description)}</p>
+                {feature.modifiers.map((modifier) => (
+                  <ModifierComponent key={modifier.id} component={modifier} />
+                ))}
               </Card.Body>
               <Card.Footer>
-                {Object.entries(advantage.evolutions).map(([key, value]) => (
+                {Object.entries(feature.evolutions).map(([key, value]) => (
                   <div key={key}>
                     <Badge bg="secondary">{key}</Badge> Bonus +{value.bonus}
                   </div>
