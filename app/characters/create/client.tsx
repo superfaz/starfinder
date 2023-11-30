@@ -1,9 +1,10 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ComponentType, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { Component, Trait, SecondaryTrait, AbilityScore } from "../../types";
+import { Component, Trait, SecondaryTrait, AbilityScore, Class } from "../../types";
 import { Character, ClientComponentData } from "./types";
+import dynamic from "next/dynamic";
 
 function Component({ component }: { component: Component }) {
   switch (component.type) {
@@ -100,6 +101,22 @@ function Component({ component }: { component: Component }) {
           </strong>
         </p>
       );
+    default:
+      return null;
+  }
+}
+
+const LazyAgentClassDetails = dynamic(() => import("./classes/agentDetails"));
+
+function ClassDetails({ classType }: { classType: Class }) {
+  if (classType === null) {
+    return null;
+  }
+
+  switch (classType.id) {
+    case "class-agent":
+      return <LazyAgentClassDetails />;
+
     default:
       return null;
   }
@@ -685,6 +702,10 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </>
           )}
         </Stack>
+      </Col>
+
+      <Col hidden={navigation !== "class"}>
+        <ClassDetails classType={selectedClass} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
