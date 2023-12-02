@@ -15,7 +15,7 @@
           {
             "id": "d3da2cb0-3475-4ef1-8c43-83a438cfd669",
             "type": "classSkill",
-            "target": "Survie"
+            "target": "surv"
           },
           {
             "id": "74329167-bfbf-4f52-bb52-82cb0046302e",
@@ -179,7 +179,7 @@
           {
             "id": "1bc3a16f-69c3-4f5d-a996-0a2c75e93276",
             "type": "classSkill",
-            "target": "Sciences physiques"
+            "target": "phys"
           },
           {
             "id": "1245033c-f90c-464e-87ad-60132abc8462",
@@ -249,7 +249,7 @@
           {
             "id": "ae4bf7a7-a4c7-4297-87a3-e884c440a7db",
             "type": "classSkill",
-            "target": "Escamotage"
+            "target": "slei"
           },
           {
             "id": "3ae95b8a-61ed-4389-a2de-89c4ab8b6f13",
@@ -324,7 +324,7 @@
           {
             "id": "51be81fa-1349-49f9-af55-3b49d712e894",
             "type": "classSkill",
-            "target": "Culture"
+            "target": "cult"
           },
           {
             "id": "d30e8b7b-b81a-4009-ad25-31835ff95836",
@@ -402,7 +402,7 @@
           {
             "id": "915556ec-b78b-4e4f-bd40-8075bb436172",
             "type": "classSkill",
-            "target": "Athlétisme"
+            "target": "athl"
           },
           {
             "id": "5255d792-922d-4ef8-8170-78c2e854e03e",
@@ -471,7 +471,7 @@
           {
             "id": "b3d23372-1ad1-46e7-8016-986d4e3f0e18",
             "type": "classSkill",
-            "target": "Pilotage"
+            "target": "pilo"
           },
           {
             "id": "a3b3b54d-ab64-4af1-a316-82317c631ee1",
@@ -552,7 +552,7 @@
           {
             "id": "c5d4daab-30e9-48b2-93bc-004d30bbd164",
             "type": "classSkill",
-            "target": "Mysticisme"
+            "target": "myst"
           },
           {
             "id": "136ca2f7-956d-4992-894c-fdd7a5a4fa82",
@@ -681,7 +681,7 @@
           {
             "id": "88ca3ab7-aca7-49f4-b0fa-b7b150a1f4df",
             "type": "classSkill",
-            "target": "Sciences de la vie"
+            "target": "life"
           },
           {
             "id": "e758cdaf-7b0c-4d28-8dad-554b50b4557a",

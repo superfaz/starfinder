@@ -1,5 +1,6 @@
 import { Badge } from "react-bootstrap";
 import { Modifier } from "app/types";
+import Skills from "@/data/skills.json";
 
 export default function ModifierComponent({ component }: { component: Modifier }) {
   switch (component.type) {
@@ -31,23 +32,40 @@ export default function ModifierComponent({ component }: { component: Modifier }
         </p>
       );
     case "skill":
-      return (
-        <p>
-          <Badge bg="primary">Compétence</Badge>
-          <strong>
-            {component.target} {component.value > 0 ? "+" : ""}
-            {component.value}
-          </strong>
-          <span className="ms-1 text-muted">{component.description}</span>
-        </p>
-      );
     case "classSkill":
-      return (
-        <p>
-          <Badge bg="primary">Compétence de classe</Badge>
-          <strong>{component.target}</strong>
-        </p>
-      );
+      let skillName: string;
+      if (component.target === "any") {
+        skillName = "Au choix";
+      } else if (component.target === "all") {
+        skillName = "Toutes";
+      } else {
+        let skill = Skills.find((skill) => skill.id === component.target);
+        skillName = skill ? skill.name : component.target;
+        if (skill === undefined) {
+          console.error(`Skill ${component.target} not found`);
+        }
+      }
+
+      if (component.type === "skill") {
+        return (
+          <p>
+            <Badge bg="primary">Compétence</Badge>
+            <strong>
+              {skillName} {component.value > 0 ? "+" : ""}
+              {component.value}
+            </strong>
+            <span className="ms-1 text-muted">{component.description}</span>
+          </p>
+        );
+      } else {
+        return (
+          <p>
+            <Badge bg="primary">Compétence de classe</Badge>
+            <strong>{skillName}</strong>
+          </p>
+        );
+      }
+
     case "featCount":
       return (
         <p>

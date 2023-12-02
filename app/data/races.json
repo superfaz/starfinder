@@ -90,7 +90,7 @@
           {
             "id": "382ab54c-a61c-49ee-b55e-3de37c91085a",
             "type": "skill",
-            "target": "Psychologie",
+            "target": "sens",
             "value": -2
           },
           {
@@ -297,7 +297,7 @@
             "name": "Vision nocture",
             "description": "Peut voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive."
           },
-          { "id": "2e646e48-4c6f-438b-9da3-2383b514c3f7", "type": "skill", "target": "Perception", "value": 2 }
+          { "id": "2e646e48-4c6f-438b-9da3-2383b514c3f7", "type": "skill", "target": "pers", "value": 2 }
         ]
       }
     ]
@@ -383,7 +383,7 @@
           {
             "id": "9f674707-c3bc-4c74-8c8d-808933aa0728",
             "type": "skill",
-            "target": "Culture",
+            "target": "cult",
             "value": 2
           }
         ]
@@ -395,13 +395,13 @@
           {
             "id": "24c2b62d-6cf5-48aa-bd8a-b88cda06d196",
             "type": "skill",
-            "target": "Acrobaties",
+            "target": "acro",
             "value": 2
           },
           {
             "id": "300a107f-ade4-437a-8efc-b60a878d1b4a",
             "type": "skill",
-            "target": "Athlétisme",
+            "target": "athl",
             "value": 2
           }
         ]
@@ -414,9 +414,9 @@
         "description": "Certaines familles kasathas servent en tant que membres d’équipage à bord de l’Idari depuis des générations.",
         "replace": ["1114ee16-c64f-4992-84de-cc31a3a62058"],
         "components": [
-          { "id": "5b16da83-094b-4745-9268-e42a7e55cb8a", "type": "skill", "target": "Informatique", "value": 2 },
-          { "id": "71fefae0-6dda-4f1b-87d5-2e7cecd36be7", "type": "skill", "target": "Ingénierie", "value": 2 },
-          { "id": "30bc2fc6-31cb-41f9-b9c6-21e9de6a57e4", "type": "skill", "target": "Pilotage", "value": 2 }
+          { "id": "5b16da83-094b-4745-9268-e42a7e55cb8a", "type": "skill", "target": "comp", "value": 2 },
+          { "id": "71fefae0-6dda-4f1b-87d5-2e7cecd36be7", "type": "skill", "target": "engi", "value": 2 },
+          { "id": "30bc2fc6-31cb-41f9-b9c6-21e9de6a57e4", "type": "skill", "target": "pilo", "value": 2 }
         ]
       },
       {
@@ -535,13 +535,13 @@
           {
             "id": "5562c539-6dad-491e-a62d-5f08f3f5ea5e",
             "type": "skill",
-            "target": "Any",
+            "target": "any",
             "value": 2
           },
           {
             "id": "04e34839-4742-4c1d-a65a-762572cd87f0",
             "type": "skill",
-            "target": "Any",
+            "target": "any",
             "value": 2
           }
         ]
@@ -651,8 +651,8 @@
         "id": "dde699b9-3055-4a38-b113-96c5958c1b1a",
         "name": "Fascination culturelle",
         "components": [
-          { "id": "68a49a21-f50c-4dbe-93e9-5ef2f460d6d5", "type": "skill", "target": "Culture", "value": 2 },
-          { "id": "f7e8f80d-f83e-4643-8a1a-4884a0553639", "type": "skill", "target": "Diplomatie", "value": 2 }
+          { "id": "68a49a21-f50c-4dbe-93e9-5ef2f460d6d5", "type": "skill", "target": "cult", "value": 2 },
+          { "id": "f7e8f80d-f83e-4643-8a1a-4884a0553639", "type": "skill", "target": "dipl", "value": 2 }
         ]
       },
       {
@@ -675,8 +675,8 @@
         "description": "De nombreux shirrens sont avides de nouvelles idées, ce qui leur permet de s’adapter plus facilement aux autres cultures.",
         "replace": ["dde699b9-3055-4a38-b113-96c5958c1b1a"],
         "components": [
-          { "id": "f1f71924-ff70-4fae-8de5-a90b17bcc818", "type": "skill", "target": "Culture", "value": 2 },
-          { "id": "85ea82d5-bd9e-4a2c-8b1c-72c5bb12b4a1", "type": "skill", "target": "Déguisement", "value": 2 }
+          { "id": "f1f71924-ff70-4fae-8de5-a90b17bcc818", "type": "skill", "target": "cult", "value": 2 },
+          { "id": "85ea82d5-bd9e-4a2c-8b1c-72c5bb12b4a1", "type": "skill", "target": "disg", "value": 2 }
         ]
       },
       {
@@ -720,7 +720,7 @@
         "description": "Les shirrens s’adaptent rapidement aux nouvelles langues qu’ils découvrent car cela leur permet de communiquer leurs pensées à de nouvelles personnes et de bénéficier de leurs expériences en retour.",
         "replace": ["dde699b9-3055-4a38-b113-96c5958c1b1a"],
         "components": [
-          { "id": "4a141f0f-7825-4d4f-88a8-f3b074e7d9a6", "type": "skill", "target": "Culture", "value": 2 },
+          { "id": "4a141f0f-7825-4d4f-88a8-f3b074e7d9a6", "type": "skill", "target": "cult", "value": 2 },
           {
             "id": "0768940d-f6e5-4a88-b2ce-90963e075566",
             "type": "ability",
@@ -986,19 +986,19 @@
           {
             "id": "13d05654-81d4-4166-ad7e-540e9d0d59a7",
             "type": "skill",
-            "target": "Ingénierie",
+            "target": "engi",
             "value": 2
           },
           {
             "id": "4bda69d1-57c4-4948-bd7a-a73d86ba3daa",
             "type": "skill",
-            "target": "Discrétion",
+            "target": "stea",
             "value": 2
           },
           {
             "id": "b6e23758-ee2c-419f-8668-f090d2c5220a",
             "type": "skill",
-            "target": "Survie",
+            "target": "surv",
             "value": 2
           }
         ]
@@ -1065,7 +1065,7 @@
         "description": "Depuis l’effondrement économique d’Akiton, de nombreux ysokis sur la Planète Rouge ont été forcés de se débrouiller avec ce qu’ils pouvaient récupérer.",
         "replace": ["bb77e446-8197-4ccd-ae28-31763675e931"],
         "components": [
-          { "id": "203b1d8e-671a-40c0-8e2a-e0d57de39887", "type": "skill", "target": "Survie", "value": 2 },
+          { "id": "203b1d8e-671a-40c0-8e2a-e0d57de39887", "type": "skill", "target": "surv", "value": 2 },
           {
             "id": "04b81ddd-4e65-4ce1-a141-f89ad603979d",
             "type": "savingThrow",
