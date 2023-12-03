@@ -1,7 +1,7 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
-import { Character } from "../types";
+import { Character, Context } from "../types";
 import operativeData from "@/data/class-operative.json";
-import ModifierComponent from "../ModifierComponent";
+import ModifierComponent, { replace } from "../ModifierComponent";
 
 const categories = {
   ex: "EXT",
@@ -9,16 +9,7 @@ const categories = {
   su: "SUR",
 };
 
-export default function OperativeClassDetails({ character }: { character: Character }) {
-  function replace(context: Record<string, string>, text: string): string {
-    if (context) {
-      Object.entries(context).forEach(([key, value]) => {
-        text = text.replace("<" + key + ">", value);
-      });
-    }
-    return text;
-  }
-
+export default function OperativeClassDetails({ character, context }: { character: Character; context: Context }) {
   return Array.from({ length: 20 }, (_, i) => i + 1).map((level) => (
     <Row key={level} className="mb-3">
       <Col lg={1}>
@@ -26,28 +17,31 @@ export default function OperativeClassDetails({ character }: { character: Charac
       </Col>
       {operativeData.features
         .filter((s) => s.level === level)
-        .map((feature) => (
-          <Col key={feature.id}>
-            <Card>
-              <Card.Header>
-                {feature.name} {feature.category && "(" + categories[feature.category] + ")"}
-              </Card.Header>
-              <Card.Body>
-                <p className="text-muted">{replace(feature.evolutions[level], feature.description)}</p>
-                {feature.modifiers.map((modifier) => (
-                  <ModifierComponent key={modifier.id} component={modifier} />
-                ))}
-              </Card.Body>
-              <Card.Footer>
-                {Object.entries(feature.evolutions).map(([key, value]) => (
-                  <div key={key}>
-                    <Badge bg="secondary">{key}</Badge> Bonus +{value.bonus}
-                  </div>
-                ))}
-              </Card.Footer>
-            </Card>
-          </Col>
-        ))}
+        .map((feature) => {
+          let localContext = { ...context, ...feature.evolutions[level] };
+          return (
+            <Col key={feature.id}>
+              <Card>
+                <Card.Header>
+                  {feature.name} {`${feature.category} (${categories[feature.category]})`}
+                </Card.Header>
+                <Card.Body>
+                  <p className="text-muted">{replace(localContext, feature.description)}</p>
+                  {feature.modifiers.map((modifier) => (
+                    <ModifierComponent key={modifier.id} component={modifier} context={localContext} />
+                  ))}
+                </Card.Body>
+                <Card.Footer>
+                  {Object.entries(feature.evolutions).map(([key, value]) => (
+                    <div key={key}>
+                      <Badge bg="secondary">{key}</Badge> Bonus +{value.bonus}
+                    </div>
+                  ))}
+                </Card.Footer>
+              </Card>
+            </Col>
+          );
+        })}
     </Row>
   ));
 }

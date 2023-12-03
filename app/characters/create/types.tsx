@@ -24,3 +24,5 @@ export class Character {
   traitsOptions?: Record<string, string>;
   abilityScores: Record<string, number>;
 }
+
+export type Context = Record<string, string | number>;

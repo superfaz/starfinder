@@ -1,34 +1,30 @@
 import { Badge } from "react-bootstrap";
 import { Modifier } from "app/types";
 import Skills from "@/data/skills.json";
+import { Context } from "./types";
 
-export default function ModifierComponent({
-  component,
-  context,
-}: {
-  component: Modifier;
-  context?: Record<string, any>;
-}) {
-  /**
-   * Replace all '<key>' in text by context[key] if it exists
-   *
-   * @param text text to update
-   * @returns updated text
-   */
-  function replace(text: string) {
-    if (context && text) {
-      Object.keys(context).forEach((key) => {
-        text = text.replaceAll(`<${key}>`, context[key] || `<${key}>`);
-      });
-    }
-
-    return text;
+/**
+ * Replace all '<key>' in text by context[key] if it exists.
+ *
+ * @param context context to use
+ * @param text text to update
+ * @returns updated text
+ */
+export function replace(context: Context, text: string): string {
+  if (context && text) {
+    Object.keys(context).forEach((key) => {
+      text = text.replaceAll(`<${key}>`, context[key]?.toString() || `<${key}>`);
+    });
   }
 
-  let target = replace(component.target);
-  let description = replace(component.description);
+  return text;
+}
+
+export default function ModifierComponent({ component, context }: { component: Modifier; context?: Context }) {
+  let target = replace(context, component.target);
+  let description = replace(context, component.description);
   let value: number = (component.value as string)
-    ? parseInt(replace(component.value as string))
+    ? parseInt(replace(context, component.value as string))
     : (component.value as number);
 
   switch (component.type) {

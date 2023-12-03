@@ -4,20 +4,20 @@ import dynamic from "next/dynamic";
 import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
 import { Modifier, Trait, SecondaryTrait, AbilityScore, Class } from "../../types";
-import { Character, ClientComponentData } from "./types";
+import { Character, ClientComponentData, Context } from "./types";
 import ModifierComponent from "./ModifierComponent";
 
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 
-function ClassDetails({ classType, character }: { classType: Class; character: Character }) {
+function ClassDetails({ classType, character, context }: { classType: Class; character: Character; context: Context }) {
   if (classType === null) {
     return null;
   }
 
   switch (classType.id) {
     case "class-operative":
-      return <LazyOperativeClassDetails character={character} />;
+      return <LazyOperativeClassDetails character={character} context={context} />;
 
     default:
       return null;
@@ -47,7 +47,7 @@ function ClassEditor({
 }
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
-  const [context, setContext] = useState({});
+  const [context, setContext] = useState<Context>({});
   const [navigation, setNavigation] = useState("intro");
   const [character, setCharacter] = useState<Character>({
     race: "",
@@ -662,7 +662,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       </Col>
 
       <Col hidden={navigation !== "class"}>
-        <ClassDetails classType={selectedClass} character={character} />
+        <ClassDetails classType={selectedClass} character={character} context={context} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
