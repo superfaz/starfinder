@@ -287,7 +287,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   return (
     <Row>
-      <Col lg={12}>
+      <Col lg={12} className="mb-3">
         <Nav variant="underline" activeKey={navigation} onSelect={handleNavigation}>
           <Nav.Item>
             <Nav.Link eventKey="intro">Introduction</Nav.Link>
