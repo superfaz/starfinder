@@ -27,11 +27,11 @@ function ClassDetails({ classType, character }: { classType: Class; character: C
 function ClassEditor({
   classType,
   character,
-  updateCharacter,
+  setCharacter,
 }: {
   classType: Class;
   character: Character;
-  updateCharacter: Dispatch<SetStateAction<Character>>;
+  setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
   if (classType === null) {
     return null;
@@ -39,7 +39,7 @@ function ClassEditor({
 
   switch (classType.id) {
     case "class-operative":
-      return <LazyOperativeClassEditor character={character} updateCharacter={updateCharacter} />;
+      return <LazyOperativeClassEditor character={character} setCharacter={setCharacter} />;
 
     default:
       return null;
@@ -47,8 +47,8 @@ function ClassEditor({
 }
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
-  const [navigation, updateNavigation] = useState("intro");
-  const [character, updateCharacter] = useState<Character>({
+  const [navigation, setNavigation] = useState("intro");
+  const [character, setCharacter] = useState<Character>({
     race: "",
     raceVariant: "",
     theme: "",
@@ -62,8 +62,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
   const selectedClass = data.classes.find((c) => c.id === character.class) || null;
 
-  const [alignment, updateAlignment] = useState(data.alignments[0]);
-  const [name, updateName] = useState("");
+  const [alignment, setAlignment] = useState(data.alignments[0]);
+  const [name, setName] = useState("");
 
   function getMinimalAbilityScoreFor(abilityScore: AbilityScore): number {
     let score = 10;
@@ -91,14 +91,14 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   }
 
   function handleNavigation(key: string) {
-    updateNavigation(key);
+    setNavigation(key);
   }
 
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     let race = data.races.find((r) => r.id === id);
     if (id === "humans") {
-      updateCharacter({
+      setCharacter({
         ...character,
         race: id,
         raceVariant: race.variants[0].id,
@@ -106,7 +106,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         traits: race.traits.map((t) => t.id),
       });
     } else {
-      updateCharacter({
+      setCharacter({
         ...character,
         race: id,
         raceVariant: race.variants[0].id,
@@ -119,42 +119,42 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     if (id === "humans-standard") {
-      updateCharacter({ ...character, raceVariant: id, raceOptions: { humanBonus: data.abilityScores[0].id } });
+      setCharacter({ ...character, raceVariant: id, raceOptions: { humanBonus: data.abilityScores[0].id } });
     } else {
-      updateCharacter({ ...character, raceVariant: id, raceOptions: null });
+      setCharacter({ ...character, raceVariant: id, raceOptions: null });
     }
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    updateCharacter({ ...character, raceOptions: { humanBonus: id } });
+    setCharacter({ ...character, raceOptions: { humanBonus: id } });
   }
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     if (id === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
       // theme scholar
-      updateCharacter({
+      setCharacter({
         ...character,
         theme: id,
         themeOptions: { scholarSkill: "life", scholarSpecialization: data.specials.scholar.life[0], scholarLabel: "" },
       });
     } else if (id === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
       // Sans thème
-      updateCharacter({
+      setCharacter({
         ...character,
         theme: id,
         themeOptions: { noThemeAbility: "str" },
       });
     } else {
       // Autre thème
-      updateCharacter({ ...character, theme: id, themeOptions: null });
+      setCharacter({ ...character, theme: id, themeOptions: null });
     }
   }
 
   function handleNoThemeSkillChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    updateCharacter({
+    setCharacter({
       ...character,
       themeOptions: {
         ...character.themeOptions,
@@ -165,7 +165,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    updateCharacter({
+    setCharacter({
       ...character,
       themeOptions: {
         ...character.themeOptions,
@@ -178,7 +178,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>) {
     let specialization = e.target.value;
-    updateCharacter({
+    setCharacter({
       ...character,
       themeOptions: {
         ...character.themeOptions,
@@ -190,7 +190,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>) {
     let label = e.target.value;
-    updateCharacter({
+    setCharacter({
       ...character,
       themeOptions: {
         ...character.themeOptions,
@@ -202,30 +202,30 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     if (id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab") {
-      updateCharacter({ ...character, class: id, classOptions: { soldierAbilityScore: "str" } });
+      setCharacter({ ...character, class: id, classOptions: { soldierAbilityScore: "str" } });
     } else {
-      updateCharacter({ ...character, class: id, classOptions: null });
+      setCharacter({ ...character, class: id, classOptions: null });
     }
   }
 
   function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
-    updateCharacter({ ...character, classOptions: { soldierAbilityScore: id } });
+    setCharacter({ ...character, classOptions: { soldierAbilityScore: id } });
   }
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>) {
-    updateName(e.target.value);
+    setName(e.target.value);
   }
 
   function handleRandomizeName() {
     let index = Math.floor(Math.random() * selectedRace.names.length);
-    updateName(selectedRace.names[index]);
+    setName(selectedRace.names[index]);
   }
 
   function handleAlignmentChange(e: ChangeEvent<HTMLSelectElement>) {
     let id = e.target.value;
     let alignment = data.alignments.find((a) => a.id === id);
-    updateAlignment(alignment);
+    setAlignment(alignment);
   }
 
   function findReplacedTrait(id: string): Trait | Modifier {
@@ -248,14 +248,14 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   function handleTraitEnabled(trait: SecondaryTrait, e: ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       let updatedTraits = character.traits.filter((t) => trait.replace.findIndex((r) => r === t) === -1);
-      updateCharacter({ ...character, traits: [...updatedTraits, trait.id] });
+      setCharacter({ ...character, traits: [...updatedTraits, trait.id] });
     } else {
-      updateCharacter({ ...character, traits: character.traits.filter((t) => t !== trait.id).concat(trait.replace) });
+      setCharacter({ ...character, traits: character.traits.filter((t) => t !== trait.id).concat(trait.replace) });
     }
   }
 
   function handleAbilityScoreClick(ablityScoreId: string, delta: number) {
-    updateCharacter({
+    setCharacter({
       ...character,
       abilityScores: { ...character.abilityScores, [ablityScoreId]: character.abilityScores[ablityScoreId] + delta },
     });
@@ -450,7 +450,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       </div>
                       <p className="text-muted">{trait.description}</p>
                       {trait.components &&
-                        trait.components.map((component) => <ModifierComponent key={component.id} component={component} />)}
+                        trait.components.map((component) => (
+                          <ModifierComponent key={component.id} component={component} />
+                        ))}
                     </div>
                   </Card.Body>
                 </Card>
@@ -483,7 +485,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </Stack>
           )}
           {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
-          {selectedTheme && character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" && (
+          {character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" && (
             <>
               <Form.FloatingLabel controlId="noThemeAbility" label="Choix de la charactérisque">
                 <Form.Select value={character.themeOptions.noThemeAbility} onChange={handleNoThemeSkillChange}>
@@ -557,7 +559,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 <Card.Body>
                   {feature.description && <p className="text-muted">{feature.description}</p>}
                   {feature.components &&
-                    feature.components.map((component) => <ModifierComponent key={component.id} component={component} />)}
+                    feature.components.map((component) => (
+                      <ModifierComponent key={component.id} component={component} />
+                    ))}
                 </Card.Body>
               </Card>
             ))}
@@ -624,7 +628,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 {selectedClass.weapons.map((a) => data.weapons[a]).join(", ")}
               </div>
               <hr />
-              <ClassEditor classType={selectedClass} character={character} updateCharacter={updateCharacter} />
+              <ClassEditor classType={selectedClass} character={character} setCharacter={setCharacter} />
             </>
           )}
         </Stack>

@@ -2,7 +2,13 @@ import { Badge } from "react-bootstrap";
 import { Modifier } from "app/types";
 import Skills from "@/data/skills.json";
 
-export default function ModifierComponent({ component }: { component: Modifier }) {
+export default function ModifierComponent({
+  component,
+  context,
+}: {
+  component: Modifier;
+  context: Record<string, any>;
+}) {
   switch (component.type) {
     case "ability":
       return (

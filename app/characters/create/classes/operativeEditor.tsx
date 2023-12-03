@@ -5,14 +5,14 @@ import operativeData from "@/data/class-operative.json";
 
 export default function OperativeEditor({
   character,
-  updateCharacter,
+  setCharacter,
 }: {
   character: Character;
-  updateCharacter: Dispatch<SetStateAction<Character>>;
+  setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
   useEffect(() => {
     if (character.classOptions === undefined || character.classOptions === null) {
-      updateCharacter({
+      setCharacter({
         ...character,
         classOptions: { ...character.classOptions, operativeSpecialization: operativeData.specializations[0].id },
       });
@@ -24,7 +24,7 @@ export default function OperativeEditor({
   );
 
   const handleSpecializationChange = (event) => {
-    updateCharacter({
+    setCharacter({
       ...character,
       classOptions: { ...character.classOptions, operativeSpecialization: event.target.value },
     });
