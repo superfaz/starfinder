@@ -45,7 +45,7 @@ export default async function Page() {
     abilityScores: await getAbilityScores(),
     specials: await getSpecials(),
     alignments: await getAlignments(),
-    armors: { light: "Lègére", heavy: "Lourde" },
+    armors: { light: "Légère", heavy: "Lourde" },
     weapons: {
       basic: "Armes de corps à corps simples",
       advanced: "Armes de corps à corps évoluées",
