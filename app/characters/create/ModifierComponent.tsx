@@ -27,6 +27,9 @@ export default function ModifierComponent({
 
   let target = replace(component.target);
   let description = replace(component.description);
+  let value: number = (component.value as string)
+    ? parseInt(replace(component.value as string))
+    : (component.value as number);
 
   switch (component.type) {
     case "ability":
@@ -42,8 +45,8 @@ export default function ModifierComponent({
         <p>
           <Badge bg="primary">Points de vie</Badge>
           <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
+            {value > 0 ? "+" : ""}
+            {value}
           </strong>
           {description && <span className="ms-1 text-muted">{description}</span>}
         </p>
@@ -76,8 +79,8 @@ export default function ModifierComponent({
           <p>
             <Badge bg="primary">Compétence</Badge>
             <strong>
-              {skillName} {component.value > 0 ? "+" : ""}
-              {component.value}
+              {skillName} {value > 0 ? "+" : ""}
+              {value}
             </strong>
             <span className="ms-1 text-muted">{description}</span>
           </p>
@@ -96,8 +99,8 @@ export default function ModifierComponent({
         <p>
           <Badge bg="primary">Nombre de Dons</Badge>
           <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
+            {value > 0 ? "+" : ""}
+            {value}
           </strong>
         </p>
       );
@@ -115,8 +118,8 @@ export default function ModifierComponent({
         <p>
           <Badge bg="primary">Rang de compétence</Badge>
           <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
+            {value > 0 ? "+" : ""}
+            {value}
           </strong>
           <span className="ms-1 text-muted">{description}</span>
         </p>
@@ -133,14 +136,19 @@ export default function ModifierComponent({
       return (
         <p>
           <Badge bg="primary">Nombre de langue</Badge>
+          <strong>
+            {value > 0 ? "+" : ""}
+            {value}
+          </strong>
+        </p>
       );
     case "initiative":
       return (
         <p>
           <Badge bg="primary">Initiative</Badge>
           <strong>
-            {component.value > 0 ? "+" : ""}
-            {component.value}
+            {value > 0 ? "+" : ""}
+            {value}
           </strong>
         </p>
       );

@@ -26,7 +26,7 @@ export interface Modifier {
   name?: string;
   description?: string;
   target?: string;
-  value?: number;
+  value?: string | number;
 }
 
 export interface Trait {
