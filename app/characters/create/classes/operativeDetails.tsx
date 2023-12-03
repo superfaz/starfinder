@@ -32,11 +32,24 @@ export default function OperativeClassDetails({ character, context }: { characte
                   ))}
                 </Card.Body>
                 <Card.Footer>
-                  {Object.entries(feature.evolutions).map(([key, value]) => (
-                    <div key={key}>
-                      <Badge bg="secondary">{key}</Badge> Bonus +{value.bonus}
-                    </div>
-                  ))}
+                  {Object.entries(feature.evolutions).map(([level, values]) => {
+                    if (values) {
+                      return (
+                        <div key={level}>
+                          <Badge bg="secondary">{level}</Badge>{" "}
+                          {Object.entries(values)
+                            .map(([key, value]) => `${key} +${value}`)
+                            .join(", ")}
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <Badge key={level} bg="secondary">
+                          {level}
+                        </Badge>
+                      );
+                    }
+                  })}
                 </Card.Footer>
               </Card>
             </Col>
