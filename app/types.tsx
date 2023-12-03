@@ -16,6 +16,7 @@ export enum ModifierType {
   feat = "feat",
   skillRank = "skillRank",
   languageCount = "languageCount",
+  initiative = "initiative",
 }
 
 export interface Modifier {

@@ -133,6 +133,11 @@ export default function ModifierComponent({
       return (
         <p>
           <Badge bg="primary">Nombre de langue</Badge>
+      );
+    case "initiative":
+      return (
+        <p>
+          <Badge bg="primary">Initiative</Badge>
           <strong>
             {component.value > 0 ? "+" : ""}
             {component.value}
