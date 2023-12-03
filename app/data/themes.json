@@ -109,13 +109,13 @@
           {
             "id": "aafb7874-5436-4bd4-b69d-6fdd0b61cf8f",
             "type": "classSkill",
-            "target": "<Erudit>"
+            "target": "<scholarSkill>"
           },
           {
             "id": "d98484ba-0d4a-4f73-af84-c4d14ede8e58",
             "type": "ability",
             "name": "Erudit",
-            "description": "Réduisez de 5 le DD des tests de compétence effectués pour vous rappeler quelque chose concernant votre spécialité."
+            "description": "Réduisez de 5 le DD des tests de compétence effectués pour vous rappeler quelque chose concernant votre spécialité (<scholarSpecialization>)."
           }
         ]
       },

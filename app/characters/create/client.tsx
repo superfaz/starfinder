@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import { Badge, Button, Card, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
 import { Modifier, Trait, SecondaryTrait, AbilityScore, Class } from "../../types";
 import { Character, ClientComponentData } from "./types";
@@ -47,6 +47,7 @@ function ClassEditor({
 }
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
+  const [context, setContext] = useState({});
   const [navigation, setNavigation] = useState("intro");
   const [character, setCharacter] = useState<Character>({
     race: "",
@@ -88,6 +89,24 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     }
 
     return score;
+  }
+
+  function addToContext(name, value) {
+    setContext((c) => ({ ...c, [name]: value }));
+  }
+
+  function handleContext<T extends HTMLInputElement | HTMLSelectElement>(
+    chain: ChangeEventHandler<T>
+  ): ChangeEventHandler<T> {
+    return (event: ChangeEvent<T>) => {
+      let name = event.target.id;
+      let value = event.target.value;
+      addToContext(name, value);
+
+      if (chain) {
+        return chain(event);
+      }
+    };
   }
 
   function handleNavigation(key: string) {
@@ -139,6 +158,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         theme: id,
         themeOptions: { scholarSkill: "life", scholarSpecialization: data.specials.scholar.life[0], scholarLabel: "" },
       });
+      addToContext("scholarSkill", "life");
+      addToContext("scholarSpecialization", data.specials.scholar.life[0]);
     } else if (id === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
       // Sans thème
       setCharacter({
@@ -174,6 +195,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         scholarLabel: "",
       },
     });
+    addToContext("scholarSpecialization", data.specials.scholar[id][0]);
   }
 
   function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -186,6 +208,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         scholarLabel: "",
       },
     });
+    addToContext("scholarSpecialization", specialization);
   }
 
   function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>) {
@@ -197,6 +220,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         scholarLabel: label,
       },
     });
+    addToContext("scholarSpecialization", label);
   }
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -507,7 +531,10 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           {character.theme === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
             <>
               <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
-                <Form.Select value={character.themeOptions.scholarSkill} onChange={handleScholarSkillChange}>
+                <Form.Select
+                  value={character.themeOptions.scholarSkill}
+                  onChange={handleContext(handleScholarSkillChange)}
+                >
                   {data.skills
                     .filter((s) => s.id === "life" || s.id === "phys")
                     .map((skill) => (
@@ -560,7 +587,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                   {feature.description && <p className="text-muted">{feature.description}</p>}
                   {feature.components &&
                     feature.components.map((component) => (
-                      <ModifierComponent key={component.id} component={component} />
+                      <ModifierComponent key={component.id} component={component} context={context} />
                     ))}
                 </Card.Body>
               </Card>
@@ -699,6 +726,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
       <Col lg={12} hidden={navigation !== "debug"}>
         <pre>{JSON.stringify(character, null, 2)}</pre>
+        <pre>{JSON.stringify(context, null, 2)}</pre>
       </Col>
     </Row>
   );

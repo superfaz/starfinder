@@ -7,15 +7,34 @@ export default function ModifierComponent({
   context,
 }: {
   component: Modifier;
-  context: Record<string, any>;
+  context?: Record<string, any>;
 }) {
+  /**
+   * Replace all '<key>' in text by context[key] if it exists
+   *
+   * @param text text to update
+   * @returns updated text
+   */
+  function replace(text: string) {
+    if (context && text) {
+      Object.keys(context).forEach((key) => {
+        text = text.replaceAll(`<${key}>`, context[key] || `<${key}>`);
+      });
+    }
+
+    return text;
+  }
+
+  let target = replace(component.target);
+  let description = replace(component.description);
+
   switch (component.type) {
     case "ability":
       return (
         <p>
           <Badge bg="primary">Pouvoir</Badge>
           {component.name && <strong className="me-1">{component.name}.</strong>}
-          <span className="text-muted">{component.description}</span>
+          <span className="text-muted">{description}</span>
         </p>
       );
     case "hitPoints":
@@ -26,7 +45,7 @@ export default function ModifierComponent({
             {component.value > 0 ? "+" : ""}
             {component.value}
           </strong>
-          {component.description && <span className="ms-1 text-muted">{component.description}</span>}
+          {description && <span className="ms-1 text-muted">{description}</span>}
         </p>
       );
     case "savingThrow":
@@ -34,21 +53,21 @@ export default function ModifierComponent({
         <p>
           <Badge bg="primary">Jets de sauvegarde</Badge>
           {component.name && <strong className="me-1">{component.name}.</strong>}
-          <span className="text-muted">{component.description}</span>
+          <span className="text-muted">{description}</span>
         </p>
       );
     case "skill":
     case "classSkill":
       let skillName: string;
-      if (component.target === "any") {
+      if (target === "any") {
         skillName = "Au choix";
-      } else if (component.target === "all") {
+      } else if (target === "all") {
         skillName = "Toutes";
       } else {
-        let skill = Skills.find((skill) => skill.id === component.target);
-        skillName = skill ? skill.name : component.target;
+        let skill = Skills.find((skill) => skill.id === target);
+        skillName = skill ? skill.name : target;
         if (skill === undefined) {
-          console.error(`Skill ${component.target} not found`);
+          console.error(`Skill '${component.target}' not found`);
         }
       }
 
@@ -60,7 +79,7 @@ export default function ModifierComponent({
               {skillName} {component.value > 0 ? "+" : ""}
               {component.value}
             </strong>
-            <span className="ms-1 text-muted">{component.description}</span>
+            <span className="ms-1 text-muted">{description}</span>
           </p>
         );
       } else {
@@ -88,7 +107,7 @@ export default function ModifierComponent({
           <Badge bg="primary">Don</Badge>
           {component.level && component.level > 1 && <Badge bg="primary">Niveau {component.level}</Badge>}
           <strong className="me-1">{component.name}.</strong>
-          <span className="text-muted">{component.description}</span>
+          <span className="text-muted">{description}</span>
         </p>
       );
     case "skillRank":
@@ -99,7 +118,7 @@ export default function ModifierComponent({
             {component.value > 0 ? "+" : ""}
             {component.value}
           </strong>
-          <span className="ms-1 text-muted">{component.description}</span>
+          <span className="ms-1 text-muted">{description}</span>
         </p>
       );
     case "spell":
@@ -107,7 +126,7 @@ export default function ModifierComponent({
         <p>
           <Badge bg="primary">Sort</Badge>
           <strong>{component.name}</strong>
-          {component.description && <span className="ms-1 text-muted">{component.description}</span>}
+          {description && <span className="ms-1 text-muted">{description}</span>}
         </p>
       );
     case "languageCount":
