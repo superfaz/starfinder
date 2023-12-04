@@ -7,16 +7,16 @@ export interface Variant {
 
 export enum ModifierType {
   ability = "ability",
-  hitPoints = "hitPoints",
-  savingThrow = "savingThrow",
-  skill = "skill",
-  spell = "spell",
   classSkill = "classSkill",
   featCount = "featCount",
   feat = "feat",
-  skillRank = "skillRank",
-  languageCount = "languageCount",
+  hitPoints = "hitPoints",
   initiative = "initiative",
+  languageCount = "languageCount",
+  savingThrow = "savingThrow",
+  skill = "skill",
+  skillRank = "skillRank",
+  spell = "spell",
 }
 
 export interface Modifier {
@@ -33,7 +33,7 @@ export interface Trait {
   id: string;
   name: string;
   description?: string;
-  components?: Modifier[];
+  modifiers?: Modifier[];
 }
 
 export interface SecondaryTrait extends Trait {
@@ -61,7 +61,7 @@ export interface Theme {
   name: string;
   description: string;
   refs: string[];
-  abilityScores: Record<string, number>;
+  abilityScores: Record<string, number | undefined>;
   features: Feature[];
 }
 

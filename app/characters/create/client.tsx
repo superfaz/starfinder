@@ -259,7 +259,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     }
 
     let component = selectedRace.traits
-      .map((t) => t.components)
+      .map((t) => t.modifiers)
       .flat()
       .find((c) => c.id === id);
     if (component) {
@@ -439,8 +439,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 <Card.Header>{trait.name}</Card.Header>
                 <Card.Body>
                   {trait.description && <p className="text-muted">{trait.description}</p>}
-                  {trait.components &&
-                    trait.components.map((component) => <ModifierComponent key={component.id} component={component} />)}
+                  {trait.modifiers &&
+                    trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} component={modifier} />)}
                 </Card.Body>
               </Card>
             ))}
@@ -473,9 +473,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                         {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
                       </div>
                       <p className="text-muted">{trait.description}</p>
-                      {trait.components &&
-                        trait.components.map((component) => (
-                          <ModifierComponent key={component.id} component={component} />
+                      {trait.modifiers &&
+                        trait.modifiers.map((modifier) => (
+                          <ModifierComponent key={modifier.id} component={modifier} />
                         ))}
                     </div>
                   </Card.Body>
@@ -585,9 +585,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 </Card.Header>
                 <Card.Body>
                   {feature.description && <p className="text-muted">{feature.description}</p>}
-                  {feature.components &&
-                    feature.components.map((component) => (
-                      <ModifierComponent key={component.id} component={component} context={context} />
+                  {feature.modifiers &&
+                    feature.modifiers.map((modifier) => (
+                      <ModifierComponent key={modifier.id} component={modifier} context={context} />
                     ))}
                 </Card.Body>
               </Card>

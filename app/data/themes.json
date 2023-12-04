@@ -11,7 +11,7 @@
         "level": 1,
         "name": "Savoir thématique",
         "description": "Votre esprit fonctionne comme un piège mortel lorsqu’il s’agit de récupérer le moindre renseignement sur les créatures que vous pourchassez.",
-        "components": [
+        "modifiers": [
           {
             "id": "d3da2cb0-3475-4ef1-8c43-83a438cfd669",
             "type": "classSkill",
@@ -30,7 +30,7 @@
         "level": 6,
         "name": "Chasseur réactif",
         "description": "Vous savez précisément comment vous renseigner à la vavite sur vos cibles.",
-        "components": [
+        "modifiers": [
           {
             "id": "f987708d-dff6-481a-bd02-4ff913b6dc59",
             "type": "ability",
@@ -50,7 +50,7 @@
         "level": 12,
         "name": "Infatigable",
         "description": "Vous ne semblez jamais fatigué, même quand vous travaillez plus longtemps et plus dur que tous ceux également à la poursuite de votre cible ; il arrive même que certaines de vos cibles parlent de vous comme d’un fantôme infatigable ou d’un chasseur omniscient.",
-        "components": [
+        "modifiers": [
           {
             "id": "9edceef0-2759-4067-a134-5faad6f14c3a",
             "type": "ability",
@@ -76,7 +76,7 @@
         "level": 18,
         "name": "Chasseur émérite",
         "description": "La traque incessante de votre cible renforce votre détermination et renouvèle vos forces.",
-        "components": [
+        "modifiers": [
           {
             "id": "7dcde656-c1fc-4fbd-8e99-6f9d3aad3bf3",
             "type": "ability",
@@ -105,7 +105,7 @@
         "level": 1,
         "name": "Savoir thématique",
         "description": "Vous êtes un expert dans un domaine de connaissances particulier, comme le prouve la passion dont vous faites preuve dès qu’on aborde ce sujet.",
-        "components": [
+        "modifiers": [
           {
             "id": "aafb7874-5436-4bd4-b69d-6fdd0b61cf8f",
             "type": "classSkill",
@@ -124,7 +124,7 @@
         "level": 6,
         "name": "Sur le bout de la langue",
         "description": "Parfois, après une pause pour rassembler vos esprits, vous réalisez que vous avez la réponse à une question particulièrement ardue.",
-        "components": [
+        "modifiers": [
           {
             "id": "9d4009e5-5c95-4585-8234-dd45364b57da",
             "type": "ability",
@@ -138,7 +138,7 @@
         "level": 12,
         "name": "Expert en recherches",
         "description": "Vous pouvez effectuer des recherches bien plus rapidement que quiconque",
-        "components": [
+        "modifiers": [
           {
             "id": "5940e577-9bdc-40af-94e8-713798b5f64a",
             "type": "ability",
@@ -152,7 +152,7 @@
         "level": 18,
         "name": "Erudit émérite",
         "description": "Pour vous, apprendre et assimiler des connaissances liées à votre domaine d’expertise est aussi rafraichissant que boire l’eau d’une source froide sur une planète désertique.",
-        "components": [
+        "modifiers": [
           {
             "id": "309c3e5c-d455-4bab-94e0-9f9af4184078",
             "type": "ability",
@@ -175,7 +175,7 @@
         "level": 1,
         "name": "Savoir thématique",
         "description": "Les mondes lointains sont pour vous une véritable obsession et vous êtes toujours en train de cataloguer dans votre esprit tout ce que vous apprenez sur les endroits nouveaux et étranges afin de vous en rappeler pour plus tard, en cas de besoin.",
-        "components": [
+        "modifiers": [
           {
             "id": "1bc3a16f-69c3-4f5d-a996-0a2c75e93276",
             "type": "classSkill",
@@ -194,7 +194,7 @@
         "level": 6,
         "name": "Amateur passionné",
         "description": "Vos voyages vous ont permis d’apprendre plein de choses utiles et variées, même si vous ne les avez pas étudiées à l’école, et vous pouvez souvent vous servir avantageusement de votre logique et de votre intuition.",
-        "components": [
+        "modifiers": [
           {
             "id": "b6c457a1-3821-4769-8ec1-33a98d41c54a",
             "type": "ability",
@@ -208,7 +208,7 @@
         "level": 12,
         "name": "Touche-à-tout",
         "description": "Vous pouvez accomplir à peu près n’importe quelle tâche à partir du moment où vous vous concentrez sur ce que vous faites et vous ne vous laissez jamais intimider par le manque de connaissances universitaires lorsqu’une tâche doit être accomplie.",
-        "components": [
+        "modifiers": [
           {
             "id": "2eded8ab-8238-4b69-afaf-c3cf041b2bac",
             "type": "ability",
@@ -222,7 +222,7 @@
         "level": 18,
         "name": "Explorateur émérite",
         "description": "Documenter d’un point de vue scientifique les moindres détails d’un nouvel endroit, que ce soient les couleurs visibles, les dénivelés, les températures, les phénomènes sismiques et autres évaluations exigeantes, vous revigore au plus haut point.",
-        "components": [
+        "modifiers": [
           {
             "id": "898c3fa9-5935-42a4-b820-898528895b56",
             "type": "ability",
@@ -245,7 +245,7 @@
         "level": 1,
         "name": "Savoir thématique",
         "description": "Vous êtes largement associé aux secrets douteux et aux deals conclus au fond des allées. Vous connaissez les acteurs majeurs de ces manigances et maîtrisez vous-même des compétences utiles dans ce domaine.",
-        "components": [
+        "modifiers": [
           {
             "id": "ae4bf7a7-a4c7-4297-87a3-e884c440a7db",
             "type": "classSkill",
@@ -263,7 +263,7 @@
         "id": "c235d81c-91b8-4d23-aaf1-4186eff6e4e2",
         "level": 6,
         "name": "Corruptions des institutions juridiques et légales",
-        "components": [
+        "modifiers": [
           {
             "id": "fac12afd-c7dc-491f-983f-52b65eb2bd87",
             "type": "ability",
@@ -277,7 +277,7 @@
         "level": 12,
         "name": "Contacts sur le marché noir",
         "description": "Vous avez des contacts qui peuvent expédier discrètement des marchandises de toutes sortes vers n’importe quelle destination imaginable ou presque.",
-        "components": [
+        "modifiers": [
           {
             "id": "20af836c-4115-40ae-b66c-48bc30126b56",
             "type": "ability",
@@ -297,7 +297,7 @@
         "level": 18,
         "name": "Hors-la-loi émérite",
         "description": "La préparation de plans louches est l’une de vos spécialités et cette activité est pour vous comme une douce montée d’adrénaline.",
-        "components": [
+        "modifiers": [
           {
             "id": "a545ce83-c54e-4556-9b87-6faefec1c359",
             "type": "ability",
@@ -320,7 +320,7 @@
         "level": 1,
         "name": "Savoir thématique",
         "description": "Vous vous êtes largement imprégné de la culture de votre profession iconique",
-        "components": [
+        "modifiers": [
           {
             "id": "51be81fa-1349-49f9-af55-3b49d712e894",
             "type": "classSkill",
@@ -338,7 +338,7 @@
         "id": "d7ba918e-f358-4513-84d5-9d71674a3f6a",
         "level": 6,
         "name": "Célébrité",
-        "components": [
+        "modifiers": [
           {
             "id": "59d86284-326d-4ba7-bdcc-78ab090cd69f",
             "type": "ability",
@@ -357,7 +357,7 @@
         "id": "849aaa41-bf32-48fa-9eb7-81a0273957b2",
         "level": 12,
         "name": "Méga célébrité",
-        "components": [
+        "modifiers": [
           {
             "id": "9d481cf8-796d-4619-9464-3d27617eba72",
             "type": "ability",
@@ -376,7 +376,7 @@
         "id": "353c0b69-0154-4bcc-b36d-5e3c7d757dfa",
         "level": 18,
         "name": "Icône émérite",
-        "components": [
+        "modifiers": [
           {
             "id": "31d66d6c-eb42-49ec-8af4-3e0dcbf8032a",
             "type": "ability",
@@ -398,7 +398,7 @@
         "id": "ef6b60d5-3e09-4406-825b-32d5534b9915",
         "level": 1,
         "name": "Savoir thématique",
-        "components": [
+        "modifiers": [
           {
             "id": "915556ec-b78b-4e4f-bd40-8075bb436172",
             "type": "classSkill",
@@ -417,7 +417,7 @@
         "level": 6,
         "name": "Soldat",
         "description": "Vous avez l’habitude des longues marches en portant un équipement lourd et vous pouvez soulever la plupart des machines avec facilité.",
-        "components": [
+        "modifiers": [
           {
             "id": "d3fee38f-8833-47a4-807f-ef6c74302e98",
             "type": "ability",
@@ -431,7 +431,7 @@
         "level": 12,
         "name": "Chef d'escouade",
         "description": "Vous êtes extrêmement compétent lorsqu’il s’agit de coordonner les actions des membres de votre escouade, à la fois grâce à votre efficacité tactique mais aussi grâce au respect que vous inspirez.",
-        "components": [
+        "modifiers": [
           {
             "id": "4b2bc831-70b5-4ceb-a52c-81540dacd12c",
             "type": "ability",
@@ -445,7 +445,7 @@
         "level": 18,
         "name": "Commandant",
         "description": "Quel que soit le sang versé, les victoires remportées par votre escouade renforcent votre détermination.",
-        "components": [
+        "modifiers": [
           {
             "id": "2879cdb8-e8fc-45ec-85e3-d989a9243d34",
             "type": "ability",
@@ -467,7 +467,7 @@
         "id": "8598734b-acdc-4b28-9f20-a8c3f6b91d55",
         "level": 1,
         "name": "Savoir thématique",
-        "components": [
+        "modifiers": [
           {
             "id": "b3d23372-1ad1-46e7-8016-986d4e3f0e18",
             "type": "classSkill",
@@ -486,7 +486,7 @@
         "level": 6,
         "name": "Loup solitaire",
         "description": "Vous en savez un peu sur tous les postes indispensables à bord d’un vaisseau spatial et vous êtes toujours prêt à remplacer quelqu’un sur le pouce et à accomplir ses tâches.",
-        "components": [
+        "modifiers": [
           {
             "id": "7e328b04-4e76-4581-8eb1-dfcf07d7d8d9",
             "type": "ability",
@@ -500,7 +500,7 @@
         "level": 12,
         "name": "Fondu de vitesse",
         "description": "La vitesse à bord d’un véhicule vous procure d’intenses montées d’adrénaline et vous pouvez aisément piloter les véhicules lancés à grande vitesse au contraire de pilotes moins talentueux qui perdraient aussitôt le contrôle de leur engin.",
-        "components": [
+        "modifiers": [
           {
             "id": "d4992290-b217-431a-9f1f-818311d3b974",
             "type": "ability",
@@ -526,7 +526,7 @@
         "level": 18,
         "name": "Pilote émérite",
         "description": "Vos talents de pilote vous revigorent en renforçant votre zèle et votre détermination.",
-        "components": [
+        "modifiers": [
           {
             "id": "9bfb8b16-21ab-4051-9a1b-b906791958a5",
             "type": "ability",
@@ -548,7 +548,7 @@
         "id": "f62bd964-1efd-4d9f-8536-d688bea81a9f",
         "level": 1,
         "name": "Savoir thématique",
-        "components": [
+        "modifiers": [
           {
             "id": "c5d4daab-30e9-48b2-93bc-004d30bbd164",
             "type": "classSkill",
@@ -567,7 +567,7 @@
         "level": 6,
         "name": "Responsabilité du clergé",
         "description": "Vous occupez un poste à responsabilités au sein de votre religion.",
-        "components": [
+        "modifiers": [
           {
             "id": "86b7ecc4-c5f2-4bdf-b3df-eb73d2eed116",
             "type": "ability",
@@ -581,7 +581,7 @@
         "level": 12,
         "name": "Bénédiction divine",
         "description": "Votre divinité est à l’origine de vos pouvoirs mystiques.",
-        "components": [
+        "modifiers": [
           {
             "id": "7283d05d-186d-478c-aed4-ca261d5c2f3d",
             "type": "ability",
@@ -594,7 +594,7 @@
         "id": "b94bb951-e507-43a3-b3ad-e17bf3faeb0d",
         "level": 18,
         "name": "Communion profonde",
-        "components": [
+        "modifiers": [
           {
             "id": "ff81fbd3-4a07-4291-9fd5-de7bf95e6f92",
             "type": "ability",
@@ -616,7 +616,7 @@
         "id": "87153034-e406-4e75-babe-03b8a3a0ec05",
         "level": 1,
         "name": "Savoir thématique",
-        "components": [
+        "modifiers": [
           {
             "id": "8c7bdc0c-4e1d-4ca5-b378-c0d3ced44766",
             "type": "classSkill",
@@ -628,7 +628,7 @@
         "id": "a7a947df-e237-4aa6-ad11-b484b72b41f1",
         "level": 6,
         "name": "Certitude",
-        "components": [
+        "modifiers": [
           {
             "id": "c9a11c5c-86b4-4083-9ff7-6d3afe5ebd4b",
             "type": "ability",
@@ -641,7 +641,7 @@
         "id": "4e39536a-d754-4e31-8bc1-bb2a3df0c465",
         "level": 12,
         "name": "Études approfondies",
-        "components": [
+        "modifiers": [
           {
             "id": "40b4cbf8-272f-48d5-bf2e-7bba4d46cede",
             "type": "ability",
@@ -654,7 +654,7 @@
         "id": "aa7a1ee6-7422-441b-a948-3cca3663d2cb",
         "level": 18,
         "name": "Détermination inflexible",
-        "components": [
+        "modifiers": [
           {
             "id": "19c33d6d-be8c-4419-9eb2-7b8cf3e1826a",
             "type": "ability",
@@ -677,7 +677,7 @@
         "level": 1,
         "name": "Savoir thématique",
         "description": "Vous êtes formé pour découvrir des formes de vie extraterrestres, les identifier et interagir avec elles.",
-        "components": [
+        "modifiers": [
           {
             "id": "88ca3ab7-aca7-49f4-b0fa-b7b150a1f4df",
             "type": "classSkill",
@@ -695,7 +695,7 @@
         "id": "52cffede-aeb8-4427-ab50-241afcd9dc7d",
         "level": 6,
         "name": "Language improvisé",
-        "components": [
+        "modifiers": [
           {
             "id": "b27689b3-a1b0-4461-a93a-b318c8502858",
             "type": "ability",
@@ -709,7 +709,7 @@
         "level": 12,
         "name": "Premier contact",
         "description": "Vous savez vous y prendre pour faire une première et bonne impression sur les membres de races nouvelles et apaiser leur peur de l’inconnu.",
-        "components": [
+        "modifiers": [
           {
             "id": "249c95d5-9e00-4cef-b9f7-1416b630fb04",
             "type": "ability",
@@ -722,7 +722,7 @@
         "id": "abbb38a1-b9fc-44ee-ad3f-258575447b99",
         "level": 18,
         "name": "Découverte exceptionnelle",
-        "components": [
+        "modifiers": [
           {
             "id": "576fda6c-7266-4b2e-98cd-b286ab2426df",
             "type": "ability",
