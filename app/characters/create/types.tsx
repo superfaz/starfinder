@@ -23,6 +23,15 @@ export class Character {
   traits: string[];
   traitsOptions?: Record<string, string>;
   abilityScores: Record<string, number>;
+
+  constructor() {
+    this.race = "";
+    this.raceVariant = "";
+    this.theme = "";
+    this.class = "";
+    this.traits = [];
+    this.abilityScores = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+  }
 }
 
 export type Context = Record<string, string | number>;

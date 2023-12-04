@@ -10,22 +10,36 @@ import { Context } from "./types";
  * @param text text to update
  * @returns updated text
  */
-export function replace(context: Context, text: string): string {
+export function replace(context: Context, text: string | undefined): string {
+  if (text === undefined) {
+    return "";
+  }
+
+  let result = text;
   if (context && text) {
     Object.keys(context).forEach((key) => {
-      text = text.replaceAll(`<${key}>`, context[key]?.toString() || `<${key}>`);
+      result = result.replaceAll(`<${key}>`, context[key]?.toString() || `<${key}>`);
     });
   }
 
-  return text;
+  return result;
+}
+
+function findOrError<T>(array: T[], predicate: (value: T) => boolean): T {
+  let result = array.find(predicate);
+  if (result === undefined) {
+    throw new Error("Can't find element in array");
+  }
+  return result;
 }
 
 export default function ModifierComponent({ component, context }: { component: Modifier; context?: Context }) {
-  let target = replace(context, component.target);
-  let description = replace(context, component.description);
-  let value: number = (component.value as string)
-    ? parseInt(replace(context, component.value as string))
-    : (component.value as number);
+  let target = replace(context || {}, component.target);
+  let description = replace(context || {}, component.description);
+  let value: number =
+    typeof component.value === "string"
+      ? parseInt(replace(context || {}, component.value as string))
+      : (component.value as number);
 
   switch (component.type) {
     case "ability":
@@ -107,7 +121,7 @@ export default function ModifierComponent({ component, context }: { component: M
           {component.level && component.level > 1 && <Badge bg="primary">Niveau {component.level}</Badge>}
           <strong className="me-1">
             {component.name}
-            {target && " " + Skills.find((s) => s.id === target).name}.
+            {target && " " + findOrError(Skills, (s) => s.id === target).name}.
           </strong>
           <span className="text-muted">{description}</span>
         </p>
@@ -117,7 +131,7 @@ export default function ModifierComponent({ component, context }: { component: M
         <p>
           <Badge bg="primary">Rang de compétence</Badge>
           <strong>
-            {target && Skills.find((skill) => skill.id === target)?.name} {value > 0 ? "+" : ""}
+            {target && findOrError(Skills, (skill) => skill.id === target).name} {value > 0 ? "+" : ""}
             {value}
           </strong>
           <span className="ms-1 text-muted">{description}</span>

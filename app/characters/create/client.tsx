@@ -46,17 +46,18 @@ function ClassEditor({
   }
 }
 
+function findOrError<T>(array: T[], predicate: (value: T) => boolean): T {
+  let result = array.find(predicate);
+  if (result === undefined) {
+    throw new Error("Can't find element in array");
+  }
+  return result;
+}
+
 export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [context, setContext] = useState<Context>({});
   const [navigation, setNavigation] = useState("intro");
-  const [character, setCharacter] = useState<Character>({
-    race: "",
-    raceVariant: "",
-    theme: "",
-    class: "",
-    traits: [],
-    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-  });
+  const [character, setCharacter] = useState<Character>(new Character());
 
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
   const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
@@ -77,12 +78,17 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       score += selectedTheme.abilityScores[abilityScore.id] || 0;
     }
 
-    if (character.raceVariant === "humans-standard" && abilityScore.id === character.raceOptions.humanBonus) {
+    if (
+      character.raceVariant === "humans-standard" &&
+      character.raceOptions !== undefined &&
+      abilityScore.id === character.raceOptions.humanBonus
+    ) {
       score += 2;
     }
 
     if (
       character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" &&
+      character.themeOptions !== undefined &&
       abilityScore.id === character.themeOptions.noThemeAbility
     ) {
       score += 1;
@@ -91,7 +97,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     return score;
   }
 
-  function addToContext(name, value) {
+  function addToContext(name: string, value: string | number): void {
     setContext((c) => ({ ...c, [name]: value }));
   }
 
@@ -109,14 +115,22 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     };
   }
 
-  function handleNavigation(key: string) {
-    setNavigation(key);
+  function handleNavigation(eventKey: string | null): void {
+    setNavigation(eventKey || "");
   }
 
-  function handleRaceChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     let race = data.races.find((r) => r.id === id);
-    if (id === "humans") {
+    if (race === undefined) {
+      setCharacter({
+        ...character,
+        race: "",
+        raceVariant: "",
+        raceOptions: undefined,
+        traits: [],
+      });
+    } else if (id === "humans") {
       setCharacter({
         ...character,
         race: id,
@@ -129,27 +143,27 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
         ...character,
         race: id,
         raceVariant: race.variants[0].id,
-        raceOptions: null,
+        raceOptions: undefined,
         traits: race.traits.map((t) => t.id),
       });
     }
   }
 
-  function handleVariantChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     if (id === "humans-standard") {
       setCharacter({ ...character, raceVariant: id, raceOptions: { humanBonus: data.abilityScores[0].id } });
     } else {
-      setCharacter({ ...character, raceVariant: id, raceOptions: null });
+      setCharacter({ ...character, raceVariant: id, raceOptions: undefined });
     }
   }
 
-  function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     setCharacter({ ...character, raceOptions: { humanBonus: id } });
   }
 
-  function handleThemeChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     if (id === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
       // theme scholar
@@ -169,11 +183,11 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       });
     } else {
       // Autre thème
-      setCharacter({ ...character, theme: id, themeOptions: null });
+      setCharacter({ ...character, theme: id, themeOptions: undefined });
     }
   }
 
-  function handleNoThemeSkillChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleNoThemeSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     setCharacter({
       ...character,
@@ -184,7 +198,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     });
   }
 
-  function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     setCharacter({
       ...character,
@@ -198,7 +212,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     addToContext("scholarSpecialization", data.specials.scholar[id][0]);
   }
 
-  function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>): void {
     let specialization = e.target.value;
     setCharacter({
       ...character,
@@ -211,7 +225,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     addToContext("scholarSpecialization", specialization);
   }
 
-  function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>): void {
     let label = e.target.value;
     setCharacter({
       ...character,
@@ -223,36 +237,49 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     addToContext("scholarSpecialization", label);
   }
 
-  function handleClassChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     if (id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab") {
       setCharacter({ ...character, class: id, classOptions: { soldierAbilityScore: "str" } });
     } else {
-      setCharacter({ ...character, class: id, classOptions: null });
+      setCharacter({ ...character, class: id, classOptions: undefined });
     }
   }
 
-  function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     setCharacter({ ...character, classOptions: { soldierAbilityScore: id } });
   }
 
-  function handleNameChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
     setName(e.target.value);
   }
 
-  function handleRandomizeName() {
+  function handleRandomizeName(): void {
+    if (selectedRace === null) {
+      console.error("Can't provide a name without a race selected - control should be disabled");
+      return;
+    }
+
     let index = Math.floor(Math.random() * selectedRace.names.length);
     setName(selectedRace.names[index]);
   }
 
-  function handleAlignmentChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleAlignmentChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     let alignment = data.alignments.find((a) => a.id === id);
-    setAlignment(alignment);
+    if (alignment === undefined) {
+      console.error("Can't find alignment with id", id);
+    } else {
+      setAlignment(alignment);
+    }
   }
 
-  function findReplacedTrait(id: string): Trait | Modifier {
+  function findReplacedTrait(id: string): Trait | Modifier | null {
+    if (!selectedRace) {
+      return null;
+    }
+
     let trait = selectedRace.traits.find((t) => t.id === id);
     if (trait) {
       return trait;
@@ -261,7 +288,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     let component = selectedRace.traits
       .map((t) => t.modifiers)
       .flat()
-      .find((c) => c.id === id);
+      .find((c) => c !== undefined && c.id === id);
     if (component) {
       return component;
     }
@@ -269,7 +296,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     return null;
   }
 
-  function handleTraitEnabled(trait: SecondaryTrait, e: ChangeEvent<HTMLInputElement>) {
+  function handleTraitEnabled(trait: SecondaryTrait, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
       let updatedTraits = character.traits.filter((t) => trait.replace.findIndex((r) => r === t) === -1);
       setCharacter({ ...character, traits: [...updatedTraits, trait.id] });
@@ -278,7 +305,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     }
   }
 
-  function handleAbilityScoreClick(ablityScoreId: string, delta: number) {
+  function handleAbilityScoreClick(ablityScoreId: string, delta: number): void {
     setCharacter({
       ...character,
       abilityScores: { ...character.abilityScores, [ablityScoreId]: character.abilityScores[ablityScoreId] + delta },
@@ -366,7 +393,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
               </Stack>
               <p className="text-muted">{selectedRace.description}</p>
-              {selectedRace.variants && (
+              {selectedRace.variants && selectedVariant && (
                 <>
                   <Form.FloatingLabel controlId="variant" label="Variante">
                     <Form.Select value={character.raceVariant} onChange={handleVariantChange}>
@@ -381,13 +408,13 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                     <Stack direction="horizontal">
                       {Object.entries(selectedVariant.abilityScores).map(([key, value]) => (
                         <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                          {data.abilityScores.find((a) => a.id === key).code} {value > 0 ? "+" : ""}
+                          {findOrError(data.abilityScores, (a) => a.id === key).code} {value > 0 ? "+" : ""}
                           {value}
                         </Badge>
                       ))}
                     </Stack>
                   )}
-                  {selectedVariant.id === "humans-standard" && (
+                  {selectedVariant.id === "humans-standard" && character.raceOptions && (
                     <>
                       <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
                         <Form.Select value={character.raceOptions.humanBonus} onChange={handleHumanBonusChange}>
@@ -400,7 +427,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       </Form.FloatingLabel>
                       <Stack direction="horizontal">
                         <Badge bg="primary">
-                          {data.abilityScores.find((a) => a.id === character.raceOptions.humanBonus).code}
+                          {findOrError(data.abilityScores, (a) => a.id === character.raceOptions.humanBonus).code}
                           {" +2"}
                         </Badge>
                       </Stack>
@@ -474,9 +501,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       </div>
                       <p className="text-muted">{trait.description}</p>
                       {trait.modifiers &&
-                        trait.modifiers.map((modifier) => (
-                          <ModifierComponent key={modifier.id} component={modifier} />
-                        ))}
+                        trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} component={modifier} />)}
                     </div>
                   </Card.Body>
                 </Card>
@@ -502,14 +527,14 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             <Stack direction="horizontal">
               {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
                 <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                  {data.abilityScores.find((a) => a.id === key).code} {value > 0 ? "+" : ""}
+                  {findOrError(data.abilityScores, (a) => a.id === key).code} {value > 0 ? "+" : ""}
                   {value}
                 </Badge>
               ))}
             </Stack>
           )}
           {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
-          {character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" && (
+          {character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" && character.themeOptions && (
             <>
               <Form.FloatingLabel controlId="noThemeAbility" label="Choix de la charactérisque">
                 <Form.Select value={character.themeOptions.noThemeAbility} onChange={handleNoThemeSkillChange}>
@@ -522,13 +547,13 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               </Form.FloatingLabel>
               <Stack direction="horizontal">
                 <Badge bg={"primary"}>
-                  {data.abilityScores.find((a) => a.id === character.themeOptions.noThemeAbility).code}
+                  {findOrError(data.abilityScores, (a) => a.id === character.themeOptions.noThemeAbility).code}
                   {" +1"}
                 </Badge>
               </Stack>
             </>
           )}
-          {character.theme === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && (
+          {character.theme === "74e471d9-db80-4fae-9610-44ea8eeedcb3" && character.themeOptions && (
             <>
               <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
                 <Form.Select
@@ -613,7 +638,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               <Stack direction="horizontal">
                 {!Array.isArray(selectedClass.keyAbilityScore) && (
                   <Badge bg="primary">
-                    {data.abilityScores.find((a) => a.id === selectedClass.keyAbilityScore).code}
+                    {findOrError(data.abilityScores, (a) => a.id === selectedClass.keyAbilityScore).code}
                   </Badge>
                 )}
                 <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
@@ -622,20 +647,20 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
               <p className="text-muted">{selectedClass.description}</p>
             </>
           )}
-          {selectedClass && selectedClass.id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab" && (
+          {selectedClass && selectedClass.id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab" && character.classOptions && (
             <>
               <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe">
                 <Form.Select
                   value={character.classOptions.soldierAbilityScore}
                   onChange={handleSoldierAbilityScoreChange}
                 >
-                  <option value="str">{data.abilityScores.find((a) => a.id === "str").name}</option>
-                  <option value="dex">{data.abilityScores.find((a) => a.id === "dex").name}</option>
+                  <option value="str">{findOrError(data.abilityScores, (a) => a.id === "str").name}</option>
+                  <option value="dex">{findOrError(data.abilityScores, (a) => a.id === "dex").name}</option>
                 </Form.Select>
               </Form.FloatingLabel>
               <Stack direction="horizontal">
                 <Badge bg="primary">
-                  {data.abilityScores.find((a) => a.id === character.classOptions.soldierAbilityScore).code}
+                  {findOrError(data.abilityScores, (a) => a.id === character.classOptions.soldierAbilityScore).code}
                 </Badge>
               </Stack>
             </>
@@ -662,7 +687,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       </Col>
 
       <Col hidden={navigation !== "class"}>
-        <ClassDetails classType={selectedClass} character={character} context={context} />
+        {selectedClass && <ClassDetails classType={selectedClass} character={character} context={context} />}
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
