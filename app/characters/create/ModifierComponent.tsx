@@ -105,7 +105,10 @@ export default function ModifierComponent({ component, context }: { component: M
         <p>
           <Badge bg="primary">Don</Badge>
           {component.level && component.level > 1 && <Badge bg="primary">Niveau {component.level}</Badge>}
-          <strong className="me-1">{component.name}.</strong>
+          <strong className="me-1">
+            {component.name}
+            {target && " " + Skills.find((s) => s.id === target).name}.
+          </strong>
           <span className="text-muted">{description}</span>
         </p>
       );
@@ -114,7 +117,7 @@ export default function ModifierComponent({ component, context }: { component: M
         <p>
           <Badge bg="primary">Rang de compétence</Badge>
           <strong>
-            {value > 0 ? "+" : ""}
+            {target && Skills.find((skill) => skill.id === target)?.name} {value > 0 ? "+" : ""}
             {value}
           </strong>
           <span className="ms-1 text-muted">{description}</span>

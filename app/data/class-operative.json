@@ -3,37 +3,326 @@
     {
       "id": "0110533f-eba1-4bad-ae1d-b18c584b7cbc",
       "name": "Casse-cou",
-      "description": "Vous êtes spécialisé dans les missions nécessitant du courage et des compétences athlétiques."
+      "description": "Vous êtes spécialisé dans les missions nécessitant du courage et des compétences athlétiques.",
+      "variables": {
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Acrobaties"
+      },
+      "features": [
+        {
+          "id": "7b343564-a3e3-4583-b65a-25fc31781f4f",
+          "name": "Spécialisation",
+          "level": 1,
+          "category": null,
+          "modifiers": [
+            {
+              "id": "e7b6c343-804d-4721-8545-86e0ac5450cd",
+              "type": "feat",
+              "name": "Talent",
+              "target": "acro"
+            },
+            {
+              "id": "f9371a67-bb85-488c-af11-72ad50703c5e",
+              "type": "feat",
+              "name": "Talent",
+              "target": "athl"
+            },
+            {
+              "id": "4bc4c85d-fb29-4fd4-b7ba-6d6a003a24e5",
+              "type": "skillRank",
+              "target": "acro",
+              "value": 1
+            },
+            {
+              "id": "91b80d8d-c5b3-4f0c-b1e6-a002455650ab",
+              "type": "skillRank",
+              "target": "athl",
+              "value": 1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "7d74e198-2856-4496-8fff-4685a6187ed3",
       "name": "Détective",
-      "description": "Votre talent pour cerner les gens et pour faire des déductions vous aide à connaître la vérité dans n’importe quelle situation."
+      "description": "Votre talent pour cerner les gens et pour faire des déductions vous aide à connaître la vérité dans n’importe quelle situation.",
+      "variables": {
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou de Psychologie"
+      },
+      "features": [
+        {
+          "id": "3d9caa6d-4d57-4d35-94ee-bb3e93acfdc8",
+          "name": "Spécialisation",
+          "level": 1,
+          "category": null,
+          "modifiers": [
+            {
+              "id": "016bc6c3-c5a6-486f-93fc-c816c3d111d1",
+              "type": "feat",
+              "name": "Talent",
+              "target": "cult"
+            },
+            {
+              "id": "390f6d4d-7eac-4054-9eec-6807f37e7693",
+              "type": "feat",
+              "name": "Talent",
+              "target": "sens"
+            },
+            {
+              "id": "2aaa4f87-fd2e-428d-bb22-1f395ce61b17",
+              "type": "skillRank",
+              "target": "cult",
+              "value": 1
+            },
+            {
+              "id": "6f657915-d6cc-45e4-8d18-6503f82323bd",
+              "type": "skillRank",
+              "target": "sens",
+              "value": 1
+            },
+            {
+              "id": "70c9863f-a407-4dbf-bc04-1cf14624994f",
+              "type": "ability",
+              "name": "Spécialisation",
+              "description": "Psychologie +4 pour effectuer une feinte offensive en interprétant le comportement de votre adversaire."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "e3cfed04-c68c-40e5-bf55-6dba733ce299",
       "name": "Espion",
-      "description": "Vous pouvez voler et prendre de nouvelles identités aussi facilement que les gens changent de vêtements, ce qui vous permet de vous infiltrer dans n’importe quel cercle."
+      "description": "Vous pouvez voler et prendre de nouvelles identités aussi facilement que les gens changent de vêtements, ce qui vous permet de vous infiltrer dans n’importe quel cercle.",
+      "variables": {
+        "operativeSkills": "de Bluff, d’Intimidation ou de Discrétion"
+      },
+      "features": [
+        {
+          "id": "2030c09e-247c-414b-9d98-3c37e28373d1",
+          "name": "Spécialisation",
+          "level": 1,
+          "category": null,
+          "modifiers": [
+            {
+              "id": "aaa91fda-184f-4861-8bb4-fe95cd50aa59",
+              "type": "feat",
+              "name": "Talent",
+              "target": "bluf"
+            },
+            {
+              "id": "a53a4251-c0e1-4816-b853-6d995fbec297",
+              "type": "feat",
+              "name": "Talent",
+              "target": "disg"
+            },
+            {
+              "id": "58d9bf2d-016c-4bbf-a6a5-93341bfdfcd9",
+              "type": "skillRank",
+              "target": "bluf",
+              "value": 1
+            },
+            {
+              "id": "e7ff04a9-da69-4f5a-a4ba-55712fa058da",
+              "type": "skillRank",
+              "target": "disg",
+              "value": 1
+            },
+            {
+              "id": "f8c3a4a8-8a0e-45c9-8650-cd8d2ecd8298",
+              "type": "ability",
+              "name": "Spécialisation",
+              "description": "Quand vous utilisez Bluff pour effectuer une feinte offensive, vous bénéficiez d’un bonus de +4 à votre test de compétence."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "7c29946d-202e-432c-973d-8766e4fbc6d5",
       "name": "Explorateur",
-      "description": "Grâce à vos connaissances et vos compétences de survie, vous êtes spécialisé dans l’exploration des sites dangereux"
+      "description": "Grâce à vos connaissances et vos compétences de survie, vous êtes spécialisé dans l’exploration des sites dangereux",
+      "variables": {
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou de Survie"
+      },
+      "features": [
+        {
+          "id": "",
+          "name": "Spécialisation",
+          "level": 1,
+          "category": null,
+          "modifiers": [
+            {
+              "id": "5f83a3dc-26f8-4132-bda8-710c11a5cf49",
+              "type": "feat",
+              "name": "Talent",
+              "target": "cult"
+            },
+            {
+              "id": "1e7d377e-1ed5-46a0-a32b-9af1af2c84ea",
+              "type": "feat",
+              "name": "Talent",
+              "target": "surv"
+            },
+            {
+              "id": "12bb4924-4359-4e7a-9390-7f55779c8ef3",
+              "type": "skillRank",
+              "target": "cult",
+              "value": 1
+            },
+            {
+              "id": "6c40cf60-9c5c-49fe-98f2-496a40a65b5c",
+              "type": "skillRank",
+              "target": "surv",
+              "value": 1
+            },
+            {
+              "id": "28114ff5-dda1-4959-9136-7d435e651143",
+              "type": "ability",
+              "name": "Spécialisation",
+              "description": "Vous pouvez tenter un test de Survie avec un bonus de +4 pour effectuer une feinte offensive en utilisant votre environnement à votre avantage."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "6c2198ca-f609-43cc-9087-37d756f27385",
       "name": "Fantôme",
-      "description": "Vous pouvez aller d’un endroit à un autre sans être remarqué."
+      "description": "Vous pouvez aller d’un endroit à un autre sans être remarqué.",
+      "variables": {
+        "operativeSkills": "de Bluff, d’Intimidation ou de Discrétion"
+      },
+      "features": [
+        {
+          "id": "b4fc402d-1d20-4923-95d1-e49eec1539fc",
+          "name": "Spécialisation",
+          "level": 1,
+          "category": null,
+          "modifiers": [
+            {
+              "id": "602c1c5a-7146-4458-b9cd-30e43891d1bc",
+              "type": "feat",
+              "name": "Talent",
+              "target": "acro"
+            },
+            {
+              "id": "325c820c-26c0-4479-bfdc-c1e542ca375d",
+              "type": "feat",
+              "name": "Talent",
+              "target": "stea"
+            },
+            {
+              "id": "c786cca7-34e7-4f56-98b8-57f2c2b3fc9a",
+              "type": "skillRank",
+              "target": "acro",
+              "value": 1
+            },
+            {
+              "id": "ff530f77-c7c8-40f0-a3c6-a5cf77096b12",
+              "type": "skillRank",
+              "target": "stea",
+              "value": 1
+            },
+            {
+              "id": "867b2a9a-82bd-4295-9830-8bda7c5a8766",
+              "type": "ability",
+              "name": "Spécialisation",
+              "description": "Quand vous utilisez Discrétion pour effectuer une feinte offensive, vous bénéficiez d’un bonus de +4 au test de compétence."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "1a4eafc7-19d4-498c-9463-bc26024cc013",
       "name": "Hacker",
-      "description": "Que ce soit un système informatique ou un appareil électronique ou mécanique, vous pouvez le pirater."
+      "description": "Que ce soit un système informatique ou un appareil électronique ou mécanique, vous pouvez le pirater.",
+      "variables": {
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Informatique"
+      },
+      "features": [
+        {
+          "id": "",
+          "name": "Spécialisation",
+          "level": 1,
+          "category": null,
+          "modifiers": [
+            {
+              "id": "01feaa17-32e3-49e1-8598-f94e6bbdb485",
+              "type": "feat",
+              "name": "Talent",
+              "target": "comp"
+            },
+            {
+              "id": "95b52cbd-3052-496c-942c-97643a02fb30",
+              "type": "feat",
+              "name": "Talent",
+              "target": "engi"
+            },
+            {
+              "id": "faaa77ce-fb4b-46f1-9498-bec83292c352",
+              "type": "skillRank",
+              "target": "comp",
+              "value": 1
+            },
+            {
+              "id": "3c4a28eb-4c0d-4bf0-838a-fe1e6082bffe",
+              "type": "skillRank",
+              "target": "engi",
+              "value": 1
+            },
+            {
+              "id": "9a510e61-2e92-4bc8-a7c2-7284b56bdbbc",
+              "type": "ability",
+              "name": "Spécialisation",
+              "description": "Vous pouvez tenter un test d’Informatique avec un bonus de +4 pour effectuer une feinte offensive en créant une diversion informatisée (vous ne pouvez utiliser cette option si vous ne possédez aucun équipement informatique dans une zone sans ordinateur)."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "6114714b-d51d-47e5-8ee7-6f3829b8160e",
       "name": "Voleur",
-      "description": "Vous maîtrisez aussi bien les techniques de vol à la tire que celles de braquages beaucoup plus ambitieux."
+      "description": "Vous maîtrisez aussi bien les techniques de vol à la tire que celles de braquages beaucoup plus ambitieux.",
+      "variables": {
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Escamotage"
+      },
+      "features": [
+        {
+          "id": "5000e80f-17ba-4797-93f4-1530c1e12106",
+          "name": "Spécialisation",
+          "level": 1,
+          "category": null,
+          "modifiers": [
+            {
+              "id": "87866093-54e2-45d2-899f-a5fd8a2279e5",
+              "type": "feat",
+              "name": "Talent",
+              "target": "pers"
+            },
+            {
+              "id": "96fe4707-33d9-440c-b119-c2bd8a0168e2",
+              "type": "feat",
+              "name": "Talent",
+              "target": "slei"
+            },
+            {
+              "id": "292d46db-3a69-42f9-8480-4a2205e96060",
+              "type": "skillRank",
+              "target": "pers",
+              "value": 1
+            },
+            {
+              "id": "b929496f-cca5-4b1c-85f5-3eacefeb45e0",
+              "type": "skillRank",
+              "target": "slei",
+              "value": 1
+            }
+          ]
+        }
+      ]
     }
   ],
   "features": [
@@ -76,7 +365,7 @@
           "id": "0f98709b-4d15-4e82-9bb3-e15f4faeb5f3",
           "type": "ability",
           "name": "Feinte offensive",
-          "description": "En tant qu’action complexe, vous pouvez vous déplacer et/ou effectuer une attaque avec une arme de corps à corps ayant la propriété spéciale agent ou avec n’importe quelle arme légère. Juste avant de porter votre attaque, tentez un test de Bluff, d’Intimidation ou de Discrétion ou <Specialization> avec un DD de 20 + le FP de la cible. Si vous réussissez ce test, vous infligez <damage> points de dégâts supplémentaires et la cible est prise au dépourvu contre cette attaque."
+          "description": "En tant qu’action complexe, vous pouvez vous déplacer et/ou effectuer une attaque avec une arme de corps à corps ayant la propriété spéciale agent ou avec n’importe quelle arme légère. Juste avant de porter votre attaque, tentez un test <operativeSkills> avec un DD de 20 + le FP de la cible. Si vous réussissez ce test, vous infligez <damage> points de dégâts supplémentaires et la cible est prise au dépourvu contre cette attaque."
         }
       ],
       "evolutions": {

@@ -10,47 +10,59 @@ const categories = {
 };
 
 export default function OperativeClassDetails({ character, context }: { character: Character; context: Context }) {
-  return Array.from({ length: 20 }, (_, i) => i + 1).map((level) => (
+  const selectedSpecialization = operativeData.specializations.find(
+    (s) => s.id === character.classOptions?.operativeSpecialization
+  );
+  const features = [...(selectedSpecialization?.features || []), ...operativeData.features];
+  const levels = features
+    .map((f) => f.level)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .sort((a, b) => a - b);
+
+  return levels.map((level) => (
     <Row key={level} className="mb-3">
       <Col lg={1}>
         <Badge bg="secondary">Niv. {level}</Badge>
       </Col>
-      {operativeData.features
+      {features
         .filter((s) => s.level === level)
         .map((feature) => {
-          let localContext = { ...context, ...feature.evolutions[level] };
+          let evolutions = feature.evolutions || {};
+          let localContext = { ...context, ...(selectedSpecialization?.variables || {}), ...(evolutions[level] || {}) };
           return (
             <Col key={feature.id}>
               <Card>
                 <Card.Header>
-                  {feature.name} {`${feature.category} (${categories[feature.category]})`}
+                  {feature.name} {feature.category && `(${categories[feature.category]})`}
                 </Card.Header>
                 <Card.Body>
-                  <p className="text-muted">{replace(localContext, feature.description)}</p>
+                  {feature.description && <p className="text-muted">{replace(localContext, feature.description)}</p>}
                   {feature.modifiers.map((modifier) => (
                     <ModifierComponent key={modifier.id} component={modifier} context={localContext} />
                   ))}
                 </Card.Body>
-                <Card.Footer>
-                  {Object.entries(feature.evolutions).map(([level, values]) => {
-                    if (values) {
-                      return (
-                        <div key={level}>
-                          <Badge bg="secondary">{level}</Badge>{" "}
-                          {Object.entries(values)
-                            .map(([key, value]) => `${key} +${value}`)
-                            .join(", ")}
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <Badge key={level} bg="secondary">
-                          {level}
-                        </Badge>
-                      );
-                    }
-                  })}
-                </Card.Footer>
+                {feature.evolutions && (
+                  <Card.Footer>
+                    {Object.entries(feature.evolutions).map(([level, values]) => {
+                      if (values) {
+                        return (
+                          <div key={level}>
+                            <Badge bg="secondary">{level}</Badge>{" "}
+                            {Object.entries(values)
+                              .map(([key, value]) => `${key} +${value}`)
+                              .join(", ")}
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <Badge key={level} bg="secondary">
+                            {level}
+                          </Badge>
+                        );
+                      }
+                    })}
+                  </Card.Footer>
+                )}
               </Card>
             </Col>
           );
