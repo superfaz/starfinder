@@ -1,7 +1,7 @@
 import { findOrError } from "app/helpers";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { Character, ClientComponentData, Context } from "./types";
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import ModifierComponent from "./ModifierComponent";
 
 export function TabThemeSelection({
@@ -12,7 +12,7 @@ export function TabThemeSelection({
 }: {
   data: ClientComponentData;
   character: Character;
-  setCharacter: (c: Character) => void;
+  setCharacter: Dispatch<SetStateAction<Character>>;
   addToContext: (key: string, value: string) => void;
 }) {
   const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;

@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { Character, ClientComponentData } from "./types";
@@ -12,7 +12,7 @@ export function TabRaceSelection({
 }: {
   data: ClientComponentData;
   character: Character;
-  setCharacter: (c: Character) => void;
+  setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
   const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
