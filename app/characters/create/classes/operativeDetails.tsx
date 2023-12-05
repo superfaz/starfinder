@@ -55,8 +55,10 @@ export default function OperativeClassDetails({ character, context }: { characte
                         return (
                           <div key={level}>
                             <Badge bg="secondary">{level}</Badge>{" "}
+                            {values.name && <strong>{values.name}</strong>}{" "}
                             {Object.entries(values)
-                              .map(([key, value]) => `${key} +${value}`)
+                              .filter(([key, value]) => key !== "name")
+                              .map(([key, value]) => `${operativeData.labels[key]}${value}`)
                               .join(", ")}
                           </div>
                         );
@@ -75,7 +77,7 @@ export default function OperativeClassDetails({ character, context }: { characte
           );
         })}
       {[...new Array(3 - Math.min(3, features.filter((s) => s.level === level).length))].map((_, index) => (
-        <Col key={"test" + index}></Col>
+        <Col key={index}></Col>
       ))}
     </Row>
   ));
