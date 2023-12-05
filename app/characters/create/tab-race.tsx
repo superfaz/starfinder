@@ -20,13 +20,17 @@ export function TabRaceSelection({
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     let race = data.races.find((r) => r.id === id);
+
     if (race === undefined) {
-      setCharacter({
-        ...character,
-        race: "",
-        raceVariant: "",
-        raceOptions: undefined,
-        traits: [],
+      setCharacter((character) => {
+        return {
+          ...character,
+          race: "",
+          raceVariant: "",
+          raceOptions: undefined,
+          traits: [],
+          abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+        };
       });
     } else if (id === "humans") {
       setCharacter({
@@ -35,6 +39,7 @@ export function TabRaceSelection({
         raceVariant: race.variants[0].id,
         raceOptions: { humanBonus: data.abilityScores[0].id },
         traits: race.traits.map((t) => t.id),
+        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
       });
     } else {
       setCharacter({
@@ -43,6 +48,7 @@ export function TabRaceSelection({
         raceVariant: race.variants[0].id,
         raceOptions: undefined,
         traits: race.traits.map((t) => t.id),
+        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
       });
     }
   }

@@ -20,28 +20,35 @@ export function TabThemeSelection({
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     if (id === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
-      // theme scholar
+      // Theme: Scholar
       setCharacter({
         ...character,
         theme: id,
         themeOptions: { scholarSkill: "life", scholarSpecialization: data.specials.scholar.life[0], scholarLabel: "" },
+        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
       });
       addToContext("scholarSkill", "life");
       addToContext("scholarSpecialization", data.specials.scholar.life[0]);
     } else if (id === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
-      // Sans thème
+      // Theme: No theme
       setCharacter({
         ...character,
         theme: id,
         themeOptions: { noThemeAbility: "str" },
+        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
       });
     } else {
-      // Autre thème
-      setCharacter({ ...character, theme: id, themeOptions: undefined });
+      // Other themes
+      setCharacter({
+        ...character,
+        theme: id,
+        themeOptions: undefined,
+        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      });
     }
   }
 
-  function handleNoThemeSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
+  function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
     setCharacter({
       ...character,
@@ -49,6 +56,7 @@ export function TabThemeSelection({
         ...character.themeOptions,
         noThemeAbility: id,
       },
+      abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
     });
   }
 
@@ -119,7 +127,7 @@ export function TabThemeSelection({
       {character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" && character.themeOptions && (
         <>
           <Form.FloatingLabel controlId="noThemeAbility" label="Choix de la charactérisque">
-            <Form.Select value={character.themeOptions.noThemeAbility} onChange={handleNoThemeSkillChange}>
+            <Form.Select value={character.themeOptions.noThemeAbility} onChange={handleNoThemeAbilityChange}>
               {data.abilityScores.map((abilityScore) => (
                 <option key={abilityScore.id} value={abilityScore.id}>
                   {abilityScore.name}

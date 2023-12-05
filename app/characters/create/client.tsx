@@ -1,13 +1,13 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Button, Col, Form, InputGroup, Nav, Row, Stack } from "react-bootstrap";
-import { AbilityScore } from "../../types";
+import { Col, Nav, Row } from "react-bootstrap";
 import { Character, ClientComponentData, Context } from "./types";
 import { TabIntro } from "./tab-intro";
 import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-race";
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
 import { TabClassDetails, TabClassSelection } from "./tab-class";
+import { TabAbilityScoresSelection } from "./tab-abilityScores";
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [context, setContext] = useState<Context>({});
@@ -21,36 +21,6 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   const [alignment, setAlignment] = useState(data.alignments[0]);
   const [name, setName] = useState("");
-
-  function getMinimalAbilityScoreFor(abilityScore: AbilityScore): number {
-    let score = 10;
-
-    if (selectedVariant) {
-      score += selectedVariant.abilityScores[abilityScore.id] || 0;
-    }
-
-    if (selectedTheme) {
-      score += selectedTheme.abilityScores[abilityScore.id] || 0;
-    }
-
-    if (
-      character.raceVariant === "humans-standard" &&
-      character.raceOptions !== undefined &&
-      abilityScore.id === character.raceOptions.humanBonus
-    ) {
-      score += 2;
-    }
-
-    if (
-      character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" &&
-      character.themeOptions !== undefined &&
-      abilityScore.id === character.themeOptions.noThemeAbility
-    ) {
-      score += 1;
-    }
-
-    return score;
-  }
 
   function addToContext(name: string, value: string | number): void {
     setContext((c) => ({ ...c, [name]: value }));
@@ -82,13 +52,6 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     } else {
       setAlignment(alignment);
     }
-  }
-
-  function handleAbilityScoreClick(ablityScoreId: string, delta: number): void {
-    setCharacter({
-      ...character,
-      abilityScores: { ...character.abilityScores, [ablityScoreId]: character.abilityScores[ablityScoreId] + delta },
-    });
   }
 
   return (
@@ -171,62 +134,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
-        <Stack direction="vertical" gap={2}>
-          <h2>Caractéristiques</h2>
-          <Form.FloatingLabel controlId="abilityScoresMethod" label="Méthode de génération">
-            <Form.Select>
-              <option value="buy">Achat (méthode conseillée)</option>
-              <option value="quick" disabled>
-                Déterminaton rapide
-              </option>
-              <option value="random" disabled>
-                Déterminaton aléatoire
-              </option>
-            </Form.Select>
-          </Form.FloatingLabel>
-          {data.abilityScores.map((abilityScore) => {
-            let minimalScore = getMinimalAbilityScoreFor(abilityScore);
-            let delta = minimalScore - 10;
-            return (
-              <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
-                <Form.Label column>
-                  {abilityScore.name}
-                  {delta < 0 && <span className="badge ms-3 bg-secondary">{delta}</span>}
-                  {delta > 0 && <span className="badge ms-3 bg-primary">+{delta}</span>}
-                </Form.Label>
-                <Col lg={4}>
-                  <InputGroup>
-                    <Button
-                      variant="outline-secondary"
-                      disabled={character.abilityScores[abilityScore.id] <= minimalScore}
-                      onClick={() => handleAbilityScoreClick(abilityScore.id, -1)}
-                    >
-                      <i className="bi-dash-lg"></i>
-                    </Button>
-                    <Form.Control
-                      type="number"
-                      className="text-center"
-                      value={character.abilityScores[abilityScore.id] || minimalScore}
-                      onChange={() => {}}
-                      min={minimalScore}
-                      max={4}
-                    />
-                    <Button
-                      variant="outline-secondary"
-                      disabled={character.abilityScores[abilityScore.id] >= 18}
-                      onClick={() => handleAbilityScoreClick(abilityScore.id, 1)}
-                    >
-                      <i className="bi-plus-lg"></i>
-                    </Button>
-                  </InputGroup>
-                </Col>
-                <Col lg={2}>
-                  <div className="border rounded h-100 border-primary text-center">+2</div>
-                </Col>
-              </Form.Group>
-            );
-          })}
-        </Stack>
+        <TabAbilityScoresSelection data={data} character={character} setCharacter={setCharacter} />
       </Col>
 
       <Col lg={12} hidden={navigation !== "debug"}>
