@@ -24,4 +24,14 @@ Theme : Sans thème / Choix de la compétence de classe
 
 Classe / Ajouter les classes du guide des options
 
-Classe : Soldat / Choix de la caractérisque principale
+Classe : Emissaire / Ajouter les détails de classe
+
+Classe : Mecano / Ajouter les détails de classe
+
+Classe : Mystique / Ajouter les détails de classe
+
+Classe : Solarien / Ajouter les détails de classe
+
+Classe : Soldat / Ajouter les détails de classe
+
+Classe : Technomancien / Ajouter les détails de classe
