@@ -63,7 +63,7 @@ export interface Theme {
   name: string;
   description: string;
   refs: string[];
-  abilityScores: Record<string, number | undefined>;
+  abilityScores: Record<string, number>;
   features: Feature[];
 }
 

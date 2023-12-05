@@ -1,6 +1,6 @@
 import { Stack } from "react-bootstrap";
 
-export default function TabIntro() {
+export function TabIntro() {
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Introduction</h2>

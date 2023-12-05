@@ -12,7 +12,7 @@ export function TabRaceSelection({
 }: {
   data: ClientComponentData;
   character: Character;
-  setCharacter: (character: Character) => void;
+  setCharacter: (c: Character) => void;
 }) {
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
   const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
@@ -178,7 +178,7 @@ export function TabRaceAlternateTraits({
 }: {
   data: ClientComponentData;
   character: Character;
-  setCharacter: (character: Character) => void;
+  setCharacter: (c: Character) => void;
 }) {
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
 
