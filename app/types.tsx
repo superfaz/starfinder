@@ -21,7 +21,7 @@ export enum ModifierType {
 
 export interface Modifier {
   id: string;
-  type: ModifierType;
+  type: ModifierType | string;
   level?: number;
   name?: string;
   description?: string;
@@ -54,6 +54,8 @@ export interface Race {
 
 export interface Feature extends Trait {
   level: number;
+  category?: "ex" | "ma" | "su";
+  evolutions?: Record<string, Record<string, string | number | null>>;
 }
 
 export interface Theme {

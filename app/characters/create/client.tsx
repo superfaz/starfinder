@@ -285,12 +285,12 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
       return trait;
     }
 
-    let component = selectedRace.traits
+    let modifier = selectedRace.traits
       .map((t) => t.modifiers)
       .flat()
       .find((c) => c !== undefined && c.id === id);
-    if (component) {
-      return component;
+    if (modifier) {
+      return modifier;
     }
 
     return null;
@@ -467,7 +467,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                 <Card.Body>
                   {trait.description && <p className="text-muted">{trait.description}</p>}
                   {trait.modifiers &&
-                    trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} component={modifier} />)}
+                    trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
                 </Card.Body>
               </Card>
             ))}
@@ -501,7 +501,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                       </div>
                       <p className="text-muted">{trait.description}</p>
                       {trait.modifiers &&
-                        trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} component={modifier} />)}
+                        trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
                     </div>
                   </Card.Body>
                 </Card>
@@ -612,7 +612,7 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
                   {feature.description && <p className="text-muted">{feature.description}</p>}
                   {feature.modifiers &&
                     feature.modifiers.map((modifier) => (
-                      <ModifierComponent key={modifier.id} component={modifier} context={context} />
+                      <ModifierComponent key={modifier.id} modifier={modifier} context={context} />
                     ))}
                 </Card.Body>
               </Card>

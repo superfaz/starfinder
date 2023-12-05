@@ -33,20 +33,20 @@ function findOrError<T>(array: T[], predicate: (value: T) => boolean): T {
   return result;
 }
 
-export default function ModifierComponent({ component, context }: { component: Modifier; context?: Context }) {
-  let target = replace(context || {}, component.target);
-  let description = replace(context || {}, component.description);
+export default function ModifierComponent({ modifier, context }: { modifier: Modifier; context?: Context }) {
+  let target = replace(context || {}, modifier.target);
+  let description = replace(context || {}, modifier.description);
   let value: number =
-    typeof component.value === "string"
-      ? parseInt(replace(context || {}, component.value as string))
-      : (component.value as number);
+    typeof modifier.value === "string"
+      ? parseInt(replace(context || {}, modifier.value as string))
+      : (modifier.value as number);
 
-  switch (component.type) {
+  switch (modifier.type) {
     case "ability":
       return (
         <p>
           <Badge bg="primary">Pouvoir</Badge>
-          {component.name && <strong className="me-1">{component.name}.</strong>}
+          {modifier.name && <strong className="me-1">{modifier.name}.</strong>}
           <span className="text-muted">{description}</span>
         </p>
       );
@@ -65,7 +65,7 @@ export default function ModifierComponent({ component, context }: { component: M
       return (
         <p>
           <Badge bg="primary">Jets de sauvegarde</Badge>
-          {component.name && <strong className="me-1">{component.name}.</strong>}
+          {modifier.name && <strong className="me-1">{modifier.name}.</strong>}
           <span className="text-muted">{description}</span>
         </p>
       );
@@ -80,11 +80,11 @@ export default function ModifierComponent({ component, context }: { component: M
         let skill = Skills.find((skill) => skill.id === target);
         skillName = skill ? skill.name : target;
         if (skill === undefined) {
-          console.error(`Skill '${component.target}' not found`);
+          console.error(`Skill '${modifier.target}' not found`);
         }
       }
 
-      if (component.type === "skill") {
+      if (modifier.type === "skill") {
         return (
           <p>
             <Badge bg="primary">Compétence</Badge>
@@ -118,9 +118,9 @@ export default function ModifierComponent({ component, context }: { component: M
       return (
         <p>
           <Badge bg="primary">Don</Badge>
-          {component.level && component.level > 1 && <Badge bg="primary">Niveau {component.level}</Badge>}
+          {modifier.level && modifier.level > 1 && <Badge bg="primary">Niveau {modifier.level}</Badge>}
           <strong className="me-1">
-            {component.name}
+            {modifier.name}
             {target && " " + findOrError(Skills, (s) => s.id === target).name}.
           </strong>
           <span className="text-muted">{description}</span>
@@ -141,7 +141,7 @@ export default function ModifierComponent({ component, context }: { component: M
       return (
         <p>
           <Badge bg="primary">Sort</Badge>
-          <strong>{component.name}</strong>
+          <strong>{modifier.name}</strong>
           {description && <span className="ms-1 text-muted">{description}</span>}
         </p>
       );

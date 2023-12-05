@@ -5,14 +5,14 @@
       "name": "Casse-cou",
       "description": "Vous êtes spécialisé dans les missions nécessitant du courage et des compétences athlétiques.",
       "variables": {
-        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Acrobaties"
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Acrobaties",
+        "operativeExploit": "Déplacement polyvalent"
       },
       "features": [
         {
           "id": "7b343564-a3e3-4583-b65a-25fc31781f4f",
           "name": "Spécialisation",
           "level": 1,
-          "category": null,
           "modifiers": [
             {
               "id": "e7b6c343-804d-4721-8545-86e0ac5450cd",
@@ -39,6 +39,20 @@
               "value": 1
             }
           ]
+        },
+        {
+          "id": "393f77d6-f984-4a0b-9b6d-ad1020d4b206",
+          "name": "Pouvoir de spécialisation",
+          "level": 11,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "a44b8585-3439-4c29-834b-2af15fefae65",
+              "type": "ability",
+              "name": "Avantage du terrain",
+              "description": "Quand votre adversaire et vous-même êtes en équilibre, en train de nager, de voler ou d’escalader, vous réussissez automatiquement tous les tests de Bluff nécessaires pour effectuer une feinte offensive contre cet adversaire."
+            }
+          ]
         }
       ]
     },
@@ -47,14 +61,14 @@
       "name": "Détective",
       "description": "Votre talent pour cerner les gens et pour faire des déductions vous aide à connaître la vérité dans n’importe quelle situation.",
       "variables": {
-        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou de Psychologie"
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou de Psychologie",
+        "operativeExploit": "Esquisse de vérité"
       },
       "features": [
         {
           "id": "3d9caa6d-4d57-4d35-94ee-bb3e93acfdc8",
           "name": "Spécialisation",
           "level": 1,
-          "category": null,
           "modifiers": [
             {
               "id": "016bc6c3-c5a6-486f-93fc-c816c3d111d1",
@@ -87,6 +101,21 @@
               "description": "Psychologie +4 pour effectuer une feinte offensive en interprétant le comportement de votre adversaire."
             }
           ]
+        },
+        {
+          "id": "f6c887cb-97f6-4286-8a7f-1a7a16ab65da",
+          "name": "Pouvoir de spécialisation",
+          "level": 11,
+          "category": "ex",
+          "description": "Votre incroyable perspicacité vous aide à faire progresser vos enquêtes quand les investigations plus classiques échouent.",
+          "modifiers": [
+            {
+              "id": "e3f42c81-d3b9-48d0-899e-39b6c48da8c2",
+              "type": "ability",
+              "name": "Sagacité du détective",
+              "description": "Une fois par jour, vous pouvez dépenser 1 point de persévérance pour réfléchir à un mystère, ou à un dilemme, pendant 10 minutes pour bénéficier d’une révélation comme si vous aviez lancé un sort de divination (bien que cette révélation soit souvent assez énigmatique)."
+            }
+          ]
         }
       ]
     },
@@ -95,14 +124,14 @@
       "name": "Espion",
       "description": "Vous pouvez voler et prendre de nouvelles identités aussi facilement que les gens changent de vêtements, ce qui vous permet de vous infiltrer dans n’importe quel cercle.",
       "variables": {
-        "operativeSkills": "de Bluff, d’Intimidation ou de Discrétion"
+        "operativeSkills": "de Bluff, d’Intimidation ou de Discrétion",
+        "operativeExploit": "Maître des déguisements"
       },
       "features": [
         {
           "id": "2030c09e-247c-414b-9d98-3c37e28373d1",
           "name": "Spécialisation",
           "level": 1,
-          "category": null,
           "modifiers": [
             {
               "id": "aaa91fda-184f-4861-8bb4-fe95cd50aa59",
@@ -135,6 +164,19 @@
               "description": "Quand vous utilisez Bluff pour effectuer une feinte offensive, vous bénéficiez d’un bonus de +4 à votre test de compétence."
             }
           ]
+        },
+        {
+          "id": "57fc9bf7-3627-468c-bec0-110df90ad518",
+          "name": "Pouvoir de spécialisation",
+          "level": 11,
+          "modifiers": [
+            {
+              "id": "6535f9b6-df04-4aec-9353-b3ef0c309aeb",
+              "type": "ability",
+              "name": "Désinformation",
+              "description": "A chaque fois que vous réussissez un jet de sauvegarde contre un sort, un appareil technologique ou une capacité qui fournirait des informations à votre sujet (comme détection des pensées), au lieu d’en annuler les effets, vous pouvez fournir de fausses informations qui correspondent à votre fausse identité. Si un tel effet n’autorise pas de jet de sauvegarde, vous pouvez tenter un test de Bluff opposé au test de Psychologie de votre adversaire et, si vous le remportez, fournir de fausses informations."
+            }
+          ]
         }
       ]
     },
@@ -143,14 +185,14 @@
       "name": "Explorateur",
       "description": "Grâce à vos connaissances et vos compétences de survie, vous êtes spécialisé dans l’exploration des sites dangereux",
       "variables": {
-        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou de Survie"
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou de Survie",
+        "operativeExploit": "Vigilance constante"
       },
       "features": [
         {
-          "id": "",
+          "id": "79d647c5-58a9-4b93-ada8-44911f979ce0",
           "name": "Spécialisation",
           "level": 1,
-          "category": null,
           "modifiers": [
             {
               "id": "5f83a3dc-26f8-4132-bda8-710c11a5cf49",
@@ -183,6 +225,20 @@
               "description": "Vous pouvez tenter un test de Survie avec un bonus de +4 pour effectuer une feinte offensive en utilisant votre environnement à votre avantage."
             }
           ]
+        },
+        {
+          "id": "da252e1a-e65d-48c4-b6c4-3f843c65b09b",
+          "name": "Pouvoir de spécialisation",
+          "level": 11,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "6ad4e17c-01be-490a-87d0-79c231af6dc1",
+              "type": "ability",
+              "name": "Au coeur de l’inconnu",
+              "description": "vous bénéficiez d’un bonus de +4 à vos tests de Culture et de Survie. Tant que vous êtes à la fois hors de votre système stellaire d’origine et des Mondes du Pacte (si ce ne sont pas les mêmes), vous bénéficiez d’un bonus de +2 à vos tests d’initiative."
+            }
+          ]
         }
       ]
     },
@@ -191,14 +247,14 @@
       "name": "Fantôme",
       "description": "Vous pouvez aller d’un endroit à un autre sans être remarqué.",
       "variables": {
-        "operativeSkills": "de Bluff, d’Intimidation ou de Discrétion"
+        "operativeSkills": "de Bluff, d’Intimidation ou de Discrétion",
+        "operativeExploit": "Champ de camouflage"
       },
       "features": [
         {
           "id": "b4fc402d-1d20-4923-95d1-e49eec1539fc",
           "name": "Spécialisation",
           "level": 1,
-          "category": null,
           "modifiers": [
             {
               "id": "602c1c5a-7146-4458-b9cd-30e43891d1bc",
@@ -231,6 +287,21 @@
               "description": "Quand vous utilisez Discrétion pour effectuer une feinte offensive, vous bénéficiez d’un bonus de +4 au test de compétence."
             }
           ]
+        },
+        {
+          "id": "d87c54de-2f1e-4c6e-865b-0e51890a49eb",
+          "name": "Pouvoir de spécialisation",
+          "level": 11,
+          "category": "ex",
+          "description": "Vous pouvez traverser la matière solide en déphasant votre corps pendant un bref moment.",
+          "modifiers": [
+            {
+              "id": "c2a46948-d0b3-49a0-9094-c7969beda10e",
+              "type": "ability",
+              "name": "Déphasage corporel",
+              "description": "En tant qu’action complexe, vous pouvez dépenser 1 point de persévérance pour traverser un maximum d’1,50 m de matière solide. Si vous tentez de franchir une matière trop épaisse, vous dépensez le point de persévérance et effectuez l’action mais votre tentative échoue. Vous ne pouvez franchir des effets de force comme un champ de force ou une barrière engendrée par le sort de mur de force. Après avoir utilisé ce pouvoir, vous ne pouvez y avoir de nouveau recours avant de vous être reposé pendant 8 heures."
+            }
+          ]
         }
       ]
     },
@@ -239,14 +310,14 @@
       "name": "Hacker",
       "description": "Que ce soit un système informatique ou un appareil électronique ou mécanique, vous pouvez le pirater.",
       "variables": {
-        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Informatique"
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Informatique",
+        "operativeExploit": "Hacker insaisissable"
       },
       "features": [
         {
-          "id": "",
+          "id": "829fe272-a3e4-4c8b-82fc-4f7cfbc2656c",
           "name": "Spécialisation",
           "level": 1,
-          "category": null,
           "modifiers": [
             {
               "id": "01feaa17-32e3-49e1-8598-f94e6bbdb485",
@@ -279,6 +350,20 @@
               "description": "Vous pouvez tenter un test d’Informatique avec un bonus de +4 pour effectuer une feinte offensive en créant une diversion informatisée (vous ne pouvez utiliser cette option si vous ne possédez aucun équipement informatique dans une zone sans ordinateur)."
             }
           ]
+        },
+        {
+          "id": "706e60ca-f495-464d-8f97-a630f4d10d00",
+          "name": "Pouvoir de spécialisation",
+          "level": 11,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "adb5c753-bfde-454e-b3a5-d91addd6f77d",
+              "type": "ability",
+              "name": "Piratage contrôlé",
+              "description": "Quand vous dépassez d’au moins 5 points le DD d’un test d’Informatique ou d’Ingénierie pour désactiver un appareil ou un système informatique, à la place vous pouvez en prendre le contrôle. Tous les 5 points au-dessus du DD, typiquement l’appareil ou le système effectuera une tâche de votre choix, à la discrétion du MJ. Une fois que l’appareil a effectué ce que vous lui avez demandé, vous décidez s’il est désactivé ou s’il fonctionne de nouveau normalement."
+            }
+          ]
         }
       ]
     },
@@ -287,14 +372,14 @@
       "name": "Voleur",
       "description": "Vous maîtrisez aussi bien les techniques de vol à la tire que celles de braquages beaucoup plus ambitieux.",
       "variables": {
-        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Escamotage"
+        "operativeSkills": "de Bluff, d’Intimidation, de Discrétion ou d'Escamotage",
+        "operativeExploit": "Diversion holographique"
       },
       "features": [
         {
           "id": "5000e80f-17ba-4797-93f4-1530c1e12106",
           "name": "Spécialisation",
           "level": 1,
-          "category": null,
           "modifiers": [
             {
               "id": "87866093-54e2-45d2-899f-a5fd8a2279e5",
@@ -319,6 +404,21 @@
               "type": "skillRank",
               "target": "slei",
               "value": 1
+            }
+          ]
+        },
+        {
+          "id": "a05e405d-46e4-405d-9c0a-a427a10cc0aa",
+          "name": "Pouvoir de spécialisation",
+          "level": 11,
+          "category": "ex",
+          "description": "Vous avez effectué suffisamment de cambriolages pour comprendre que les choses ne se passent jamais exactement comme prévu.",
+          "modifiers": [
+            {
+              "id": "502caee2-7a19-44de-a03b-0b4f42a36ae0",
+              "type": "ability",
+              "name": "Plan de secours",
+              "description": "Quand quelque chose d’inattendu se produit au cours d’un vol ou d’une infiltration, vous pouvez dépenser 2 points de persévérance et annoncer un plan de secours que vous avez établi par avance pour cette éventualité. Vous avez alors soit le bon accessoire (comme une identification ou un fichier informatique mais jamais un objet très onéreux), la bonne information ou un agent que vous avez engagé pour effectuer une seule tâche au bon moment. Vous tentez alors un test de compétence. La compétence appropriée et le DD sont à la discrétion du MJ mais plus le plan est complexe et improbable plus le DD sera élevé (voir DD des compétences page 392 pour définir ces DD). Si vous réussissez, vous avez cet objet, cette connaissance ou votre confrère réalise la tâche spécifiée. Si vous échouez, soit vous n’avez pas ce dont vous avez besoin, soit votre plan échoue."
             }
           ]
         }
@@ -380,6 +480,188 @@
         "17": { "damage": "9d8" },
         "19": { "damage": "10d8" }
       }
+    },
+    {
+      "id": "ca6c47e7-db1e-496e-9885-ea60a783a26b",
+      "name": "Esquive totale",
+      "level": 2,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "0e65fda2-c274-4100-94d0-23226cdc9a11",
+          "type": "ability",
+          "name": "Esquive totale",
+          "description": "Si vous réussissez un jet de Réflexes contre un effet qui, normalement, ne serait que partiel à cause d’une sauvegarde réussie, vous échappez totalement à cet effet. Vous bénéficiez de cet avantage uniquement lorsque vous n’êtes pas encombré et que vous ne portez aucune armure ou une armure légère. Vous perdez cet avantage quand vous êtes sans défense ou incapable de bouger."
+        }
+      ]
+    },
+    {
+      "id": "0506b2df-dff0-4156-b87f-35df4b8f144b",
+      "name": "Exploit d'agent",
+      "level": 2,
+      "description": "En gagnant de l’expérience, vous apprenez des techniques spéciales appelées des exploits d’agent.",
+      "evolutions": {
+        "2": null,
+        "4": null,
+        "6": null,
+        "8": null,
+        "10": null,
+        "12": null,
+        "14": null,
+        "16": null,
+        "18": null,
+        "20": null
+      }
+    },
+    {
+      "id": "8e3432ad-9960-4612-a806-f7cd63593956",
+      "name": "Déplacement rapide",
+      "level": 3,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "cb2442f5-df13-4a5e-a1ac-59d72ac35b9a",
+          "type": "ability",
+          "name": "Déplacement rapide",
+          "description": "Tant que vous n’êtes pas encombré et que vous portez une armure légère ou aucune armure, votre vitesse de mouvement est augmentée de <distance> mètres"
+        }
+      ],
+      "evolutions": {
+        "3": { "distance": 3 },
+        "6": { "distance": 6 },
+        "9": { "distance": 9 }
+      }
+    },
+    {
+      "id": "f752a0b0-527f-4ddc-826d-33f6e8b0aa48",
+      "name": "Spécialisation martiale",
+      "level": 3,
+      "category": "ex",
+      "description": "Vous obtenez le don bonus de Spécialisation martiale pour chaque type d’armes que vous savez manier grâce à cette classe.",
+      "modifiers": [
+        {
+          "id": "1e436bf1-2349-4b8f-817e-8f2ba6fcad88",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes de corps à corps)"
+        },
+        {
+          "id": "ebf79669-2820-423d-a7e2-131418f8dfcf",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes légères)"
+        },
+        {
+          "id": "700c1216-d109-4c7c-bc3c-21bad86c5a21",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes de précision)"
+        }
+      ]
+    },
+    {
+      "id": "900b7087-b0a5-4273-9cac-f4da18f4cb4f",
+      "name": "Séquelle handicapante",
+      "level": 4,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "649bf7b2-8174-48d0-8f00-48161ae8bb35",
+          "type": "ability",
+          "name": "Séquelle handicapante",
+          "description": "Quand vous touchez un ennemi avec une feinte offensive, vous choisissez si la créature est prise au dépourvu ou imprécise jusqu’au début de votre prochain tour."
+        }
+      ]
+    },
+    {
+      "id": "c459a487-bac7-43b5-bedf-df16d4cc0bd1",
+      "name": "Exploit de spécialisation",
+      "level": 5,
+      "modifiers": [
+        {
+          "id": "1aa41bd5-ad04-41d5-8f09-4f8c8c4a6089",
+          "type": "ability",
+          "name": "Exploit de spécialisation",
+          "description": "Vous gagnez l’exploit <operativeExploit> en tant qu’exploit d’agent bonus même si vous n’avez pas les prérequis nécessaires."
+        }
+      ]
+    },
+    {
+      "id": "5c1cbb09-ede5-4748-b04f-b7099ff1c05c",
+      "name": "Maîtrise de spécialisation",
+      "level": 7,
+      "description": "Vous êtes tellement à l’aise avec certaines compétences que vous pouvez les utiliser efficacement même dans les pires conditions.",
+      "modifiers": [
+        {
+          "id": "b04b4a93-4932-4832-94ff-36552c6bafee",
+          "type": "ability",
+          "name": "Maîtrise de spécialisation",
+          "description": "Quand vous tentez un test avec une compétence pour laquelle vous bénéficiez du don de Talent, vous pouvez faire 10 même si le stress et les distractions vous en empêcheraient normalement."
+        }
+      ]
+    },
+    {
+      "id": "5f14273e-d5b8-459e-a94f-713c569b3b53",
+      "name": "Agilité surhumaine",
+      "level": 7,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "74575a8a-0f6d-4fea-924e-5800d2db2417",
+          "type": "ability",
+          "name": "Agilité surhumaine",
+          "description": "Vous êtes insensible à l’état pris au dépourvu et votre adversaire ne bénéficie d’aucun bonus à ses jets d’attaque contre vous quand vous êtes pris en tenaille ou qu’il vous attaque alors que vous êtes à terre. De plus, les tirs de couverture et les tirs de diversion ne confèrent aucun avantage contre vous."
+        }
+      ]
+    },
+    {
+      "id": "49193c03-0373-4780-95f9-91c075483d6d",
+      "name": "Triple attaque",
+      "level": 8,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "43690b4b-8fc0-40ca-87df-5d757de13338",
+          "type": "ability",
+          "name": "Triple attaque",
+          "description": "Quand vous effectuez une attaque à outrance en utilisant uniquement des armes de corps à corps ayant la propriété spéciale agent ou des armes légères, vous pouvez effectuer jusqu’à <strike> attaques au lieu de 2."
+        }
+      ],
+      "evolutions": {
+        "8": { "name": "Triple attaque", "strike": 3 },
+        "13": { "name": "Quadruple attaque", "strike": 4 }
+      }
+    },
+    {
+      "id": "207388a9-b3a5-4100-be18-75d5b70c7a15",
+      "name": "Double handicap",
+      "level": 17,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "01d34dfb-19fe-4d44-b4cf-d18536cffa91",
+          "type": "ability",
+          "name": "Double handicap",
+          "description": "Quand vous touchez un ennemi avec une feinte offensive, il subit deux des effets de séquelle handicapante."
+        }
+      ]
+    },
+    {
+      "id": "42cd5720-167d-4e5c-af4a-09af489ecc51",
+      "name": "Agent suprême",
+      "level": 20,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "9366a5b2-d822-4268-89df-67f34e79006e",
+          "type": "ability",
+          "name": "Agent suprême",
+          "description": "À chaque fois que vous tentez un test avec une des compétences associées à votre spécialisation, vous pouvez lancer deux fois le dé et prendre le meilleur résultat."
+        },
+        {
+          "id": "a19d0ef5-08d1-447c-916a-a70c2b168a5a",
+          "type": "ability",
+          "name": "Agent suprême",
+          "description": "Une fois par jour, en tant qu’action de mouvement, vous pouvez échanger temporairement un de vos exploits contre un autre exploit du même niveau ou inférieur. Cet échange dure 24 heures. Si l’exploit que vous échangez est un prérequis pour d’autres pouvoirs, vous ne pouvez plus utiliser ces dernières pendant toute la durée de l’échange."
+        }
+      ]
     }
   ]
 }

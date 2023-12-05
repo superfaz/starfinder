@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { Character } from "../types";
 import operativeData from "@/data/class-operative.json";
 
@@ -11,19 +11,24 @@ export default function OperativeEditor({
   setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
   useEffect(() => {
-    if (character.classOptions === undefined || character.classOptions === null) {
+    if (character.classOptions === undefined) {
+      setCharacter({
+        ...character,
+        classOptions: { operativeSpecialization: operativeData.specializations[0].id },
+      });
+    } else if (character.classOptions.operativeSpecialization === undefined) {
       setCharacter({
         ...character,
         classOptions: { ...character.classOptions, operativeSpecialization: operativeData.specializations[0].id },
       });
     }
-  });
+  }, [character, setCharacter]);
 
   const selectedSpecialization = operativeData.specializations.find(
     (s) => s.id === character.classOptions?.operativeSpecialization
   );
 
-  const handleSpecializationChange = (event) => {
+  const handleSpecializationChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setCharacter({
       ...character,
       classOptions: { ...character.classOptions, operativeSpecialization: event.target.value },
