@@ -83,11 +83,6 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="equipment" disabled={selectedRace === null}>
-              Équipement
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
             <Nav.Link eventKey="spells" disabled={selectedRace === null}>
               Sorts
             </Nav.Link>
@@ -95,6 +90,11 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
           <Nav.Item>
             <Nav.Link eventKey="feats" disabled={selectedRace === null}>
               Don
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="equipment" disabled={selectedRace === null}>
+              Équipement
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
