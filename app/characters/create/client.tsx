@@ -54,6 +54,9 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
     }
   }
 
+  // This is a hack to make the character sheet fill the screen
+  window.document.getElementsByTagName("html")[0].className = "fullscreen";
+
   return (
     <Row>
       <Col lg={12} className="mb-3">

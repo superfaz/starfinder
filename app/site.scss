@@ -2,8 +2,9 @@
 
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-html,
-body {
+html.fullscreen,
+.fullscreen body,
+.fullscreen {
   margin-left: auto;
   margin-right: auto;
   width: 1600px;
