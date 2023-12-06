@@ -7,7 +7,7 @@ import { TabIntro } from "./tab-intro";
 import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-race";
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
 import { TabClassDetails, TabClassSelection } from "./tab-class";
-import { TabAbilityScoresSelection } from "./tab-abilityScores";
+import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScores";
 
 export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [context, setContext] = useState<Context>({});
@@ -135,6 +135,10 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
         <TabAbilityScoresSelection data={data} character={character} setCharacter={setCharacter} />
+      </Col>
+
+      <Col lg={4} hidden={navigation !== "abilityScores"}>
+        <TabSkillsSelection data={data} character={character} setCharacter={setCharacter} />
       </Col>
 
       <Col lg={12} hidden={navigation !== "debug"}>

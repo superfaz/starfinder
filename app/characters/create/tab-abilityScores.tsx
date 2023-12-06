@@ -116,7 +116,7 @@ export function TabAbilityScoresSelection({
         let modifier = Math.floor((character.abilityScores[abilityScore.id] - 10) / 2);
         return (
           <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
-            <Form.Label column>
+            <Form.Label column className="header">
               {abilityScore.name}
               {delta < 0 && <span className="badge ms-3 bg-secondary">{delta}</span>}
               {delta > 0 && <span className="badge ms-3 bg-primary">+{delta}</span>}
@@ -148,10 +148,23 @@ export function TabAbilityScoresSelection({
               </InputGroup>
             </Col>
             <Col lg={2}>
-              <div className="form-control bg-secondary text-center">
-                {modifier > 0 ? "+" + modifier : modifier}
-              </div>
+              <div className="form-control bg-secondary text-center">{modifier > 0 ? "+" + modifier : modifier}</div>
             </Col>
+          </Form.Group>
+        );
+      })}
+    </Stack>
+  );
+}
+
+export function TabSkillsSelection({ data }: { data: ClientComponentData }) {
+  return (
+    <Stack direction="vertical" gap={2}>
+      <h2>Compétences</h2>
+      {data.skills.map((skill) => {
+        return (
+          <Form.Group key={skill.id} as={Row} controlId={skill.id}>
+            <Form.Label column>{skill.name}</Form.Label>
           </Form.Group>
         );
       })}
