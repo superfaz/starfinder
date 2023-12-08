@@ -1,4 +1,4 @@
-import { AbilityScore, Alignment, Class, Race, Skill, Special, Theme } from "../../types";
+import { AbilityScore, Alignment, Class, Race, Skill, Special, Theme } from "model";
 
 export interface ClientComponentData {
   races: Race[];

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { Character, ClientComponentData } from "./types";
-import { AbilityScore, Modifier } from "app/types";
+import { AbilityScore, Modifier } from "model";
 import { displayBonus, findOrError } from "app/helpers";
 
 function computeMinimalAbilityScoreFor(

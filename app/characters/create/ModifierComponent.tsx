@@ -1,6 +1,6 @@
 import { Badge } from "react-bootstrap";
-import { Modifier } from "app/types";
-import Skills from "@/data/skills.json";
+import { Modifier } from "model";
+import Skills from "data/skills.json";
 import { Context } from "./types";
 import { displayBonus } from "app/helpers";
 

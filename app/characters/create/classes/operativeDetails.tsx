@@ -1,9 +1,8 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import { Character, Context } from "../types";
-import operativeData from "@/data/class-operative.json";
+import operativeData from "data/class-operative.json";
 import ModifierComponent, { replace } from "../ModifierComponent";
-import { Feature } from "app/types";
-import { json } from "stream/consumers";
+import { Feature } from "model";
 
 const categories = {
   ex: "EXT",
@@ -54,8 +53,7 @@ export default function OperativeClassDetails({ character, context }: { characte
                       if (values) {
                         return (
                           <div key={level}>
-                            <Badge bg="secondary">{level}</Badge>{" "}
-                            {values.name && <strong>{values.name}</strong>}{" "}
+                            <Badge bg="secondary">{level}</Badge> {values.name && <strong>{values.name}</strong>}{" "}
                             {Object.entries(values)
                               .filter(([key, value]) => key !== "name")
                               .map(([key, value]) => `${operativeData.labels[key]}${value}`)

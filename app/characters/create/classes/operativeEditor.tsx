@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { Character } from "../types";
-import operativeData from "@/data/class-operative.json";
+import operativeData from "data/class-operative.json";
 
 export default function OperativeEditor({
   character,
