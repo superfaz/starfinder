@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { Class } from "model";
-import { Character, ClientComponentData, Context } from "./types";
+import { Character, DataSet, Context } from "./types";
 
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
@@ -31,7 +31,7 @@ export function TabClassSelection({
   character,
   setCharacter,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
@@ -126,7 +126,7 @@ export function TabClassDetails({
   character,
   context,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   context: Context;
 }) {

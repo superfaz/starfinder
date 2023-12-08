@@ -1,6 +1,6 @@
 import { displayBonus, findOrError } from "app/helpers";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
-import { Character, ClientComponentData, Context } from "./types";
+import { Character, DataSet, Context } from "./types";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import ModifierComponent from "./ModifierComponent";
 
@@ -10,7 +10,7 @@ export function TabThemeSelection({
   setCharacter,
   addToContext,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   setCharacter: Dispatch<SetStateAction<Character>>;
   addToContext: (key: string, value: string) => void;
@@ -192,7 +192,7 @@ export function TabThemeTraits({
   character,
   context,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   context: Context;
 }) {

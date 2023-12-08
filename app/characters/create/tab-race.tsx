@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { Character, ClientComponentData } from "./types";
+import { Character, DataSet } from "./types";
 import ModifierComponent from "./ModifierComponent";
 import { Modifier, SecondaryTrait, Trait } from "model";
 
@@ -10,7 +10,7 @@ export function TabRaceSelection({
   character,
   setCharacter,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
@@ -151,7 +151,7 @@ export function TabRaceSelection({
   );
 }
 
-export function TabRaceTraits({ data, character }: { data: ClientComponentData; character: Character }) {
+export function TabRaceTraits({ data, character }: { data: DataSet; character: Character }) {
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
   if (!selectedRace) {
     return null;
@@ -182,7 +182,7 @@ export function TabRaceAlternateTraits({
   character,
   setCharacter,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   setCharacter: (c: Character) => void;
 }) {

@@ -1,6 +1,7 @@
 import { AbilityScore, Alignment, Class, Race, Skill, Special, Theme } from "model";
 import { ClientComponent } from "./client";
 import { AbilityScores, Alignments, Classes, Races, Skills, Specials, Themes } from "data";
+import { DataSet } from "data";
 
 async function getRaces(): Promise<Race[]> {
   return Races;
@@ -31,7 +32,7 @@ async function getAlignments(): Promise<Alignment[]> {
 }
 
 export default async function Page() {
-  const data = {
+  const data: DataSet = {
     races: await getRaces(),
     themes: await getThemes(),
     classes: await getClasses(),

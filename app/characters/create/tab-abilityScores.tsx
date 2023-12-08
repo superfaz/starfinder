@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
-import { Character, ClientComponentData } from "./types";
+import { Character, DataSet } from "./types";
 import { AbilityScore, Modifier } from "model";
 import { displayBonus, findOrError } from "app/helpers";
 
 function computeMinimalAbilityScoreFor(
-  data: ClientComponentData,
+  data: DataSet,
   character: Character,
   abilityScore: AbilityScore
 ): number {
@@ -44,7 +44,7 @@ function computeMinimalAbilityScoreFor(
   return score;
 }
 
-function computeRemainingPoints(data: ClientComponentData, character: Character): number {
+function computeRemainingPoints(data: DataSet, character: Character): number {
   let points = 10;
   data.abilityScores.forEach((abilityScore) => {
     let minimalScore = computeMinimalAbilityScoreFor(data, character, abilityScore);
@@ -60,7 +60,7 @@ function computeAbilityScoreModifier(character: Character, abilityScoreId: strin
   return Math.floor((character.abilityScores[abilityScoreId] - 10) / 2);
 }
 
-function computeSkillBonus(data: ClientComponentData, character: Character, skillId: string): number | undefined {
+function computeSkillBonus(data: DataSet, character: Character, skillId: string): number | undefined {
   const selectedClass = findOrError(data.classes, (c) => c.id === character.class);
   const classSkills = selectedClass.classSkills;
   const skill = findOrError(data.skills, (s) => s.id === skillId);
@@ -87,7 +87,7 @@ export function TabAbilityScoresSelection({
   character,
   setCharacter,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
@@ -189,7 +189,7 @@ export function TabSkillsSelection({
   character,
   setCharacter,
 }: {
-  data: ClientComponentData;
+  data: DataSet;
   character: Character;
   setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
