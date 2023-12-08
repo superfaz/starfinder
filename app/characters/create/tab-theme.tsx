@@ -5,6 +5,13 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import ModifierComponent from "./ModifierComponent";
 import { DataSet } from "data";
 import { Character } from "model";
+import {
+  updateNoThemeAbilityScore,
+  updateScholarLabel,
+  updateScholarSkill,
+  updateScholarSpecialization,
+  updateTheme,
+} from "logic/Character";
 
 export function TabThemeSelection({
   data,
@@ -21,84 +28,35 @@ export function TabThemeSelection({
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
+    setCharacter((character) => updateTheme(data, character, id));
+
     if (id === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
-      // Theme: Scholar
-      setCharacter({
-        ...character,
-        theme: id,
-        themeOptions: { scholarSkill: "life", scholarSpecialization: data.specials.scholar.life[0], scholarLabel: "" },
-        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      });
       addToContext("scholarSkill", "life");
       addToContext("scholarSpecialization", data.specials.scholar.life[0]);
-    } else if (id === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
-      // Theme: No theme
-      setCharacter({
-        ...character,
-        theme: id,
-        themeOptions: { noThemeAbility: "str" },
-        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      });
-    } else {
-      // Other themes
-      setCharacter({
-        ...character,
-        theme: id,
-        themeOptions: undefined,
-        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      });
     }
   }
 
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter({
-      ...character,
-      themeOptions: {
-        ...character.themeOptions,
-        noThemeAbility: id,
-      },
-      abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-    });
+    setCharacter((character) => updateNoThemeAbilityScore(character, id));
   }
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter({
-      ...character,
-      themeOptions: {
-        ...character.themeOptions,
-        scholarSkill: id,
-        scholarSpecialization: data.specials.scholar[id][0],
-        scholarLabel: "",
-      },
-    });
+    setCharacter((character) => updateScholarSkill(character, id));
     addToContext("scholarSkill", id);
     addToContext("scholarSpecialization", data.specials.scholar[id][0]);
   }
 
   function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>): void {
     let specialization = e.target.value;
-    setCharacter({
-      ...character,
-      themeOptions: {
-        ...character.themeOptions,
-        scholarSpecialization: specialization,
-        scholarLabel: "",
-      },
-    });
+    setCharacter((character) => updateScholarSpecialization(character, specialization));
     addToContext("scholarSpecialization", specialization);
   }
 
   function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>): void {
     let label = e.target.value;
-    setCharacter({
-      ...character,
-      themeOptions: {
-        ...character.themeOptions,
-        scholarLabel: label,
-      },
-    });
+    setCharacter((character) => updateScholarLabel(character, label));
     addToContext("scholarSpecialization", label);
   }
 

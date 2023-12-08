@@ -3,12 +3,9 @@ import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstra
 import { AbilityScore, Character, Modifier } from "model";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
+import { updateAbilityScore, updateSkillRank } from "logic/Character";
 
-function computeMinimalAbilityScoreFor(
-  data: DataSet,
-  character: Character,
-  abilityScore: AbilityScore
-): number {
+function computeMinimalAbilityScoreFor(data: DataSet, character: Character, abilityScore: AbilityScore): number {
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
   const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
   const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
@@ -108,10 +105,7 @@ export function TabAbilityScoresSelection({
   let points = computeRemainingPoints(data, character);
 
   function handleAbilityScoreClick(abilityScoreId: string, delta: number): void {
-    setCharacter({
-      ...character,
-      abilityScores: { ...character.abilityScores, [abilityScoreId]: character.abilityScores[abilityScoreId] + delta },
-    });
+    setCharacter((character) => updateAbilityScore(character, abilityScoreId, delta));
   }
 
   return (
@@ -228,20 +222,7 @@ export function TabSkillsSelection({
   function handleSkillRankChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const skillId = event.target.id;
     const checked = event.target.checked;
-    setCharacter((character) => {
-      if (checked) {
-        return {
-          ...character,
-          skillRanks: { ...character.skillRanks, [skillId]: 1 },
-        };
-      } else {
-        const { [skillId]: _, ...skillRanks } = character.skillRanks;
-        return {
-          ...character,
-          skillRanks,
-        };
-      }
-    });
+    setCharacter((character) => updateSkillRank(character, skillId, checked ? 1 : -1));
   }
 
   return (

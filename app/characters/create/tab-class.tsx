@@ -5,6 +5,7 @@ import { findOrError } from "app/helpers";
 import { Character, Class } from "model";
 import { Context } from "./types";
 import { DataSet } from "data";
+import { updateClass, updateSoldierAbilityScore } from "logic/Character";
 
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
@@ -40,17 +41,12 @@ export function TabClassSelection({
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    if (id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab") {
-      // Soldier
-      setCharacter({ ...character, class: id, classOptions: { soldierAbilityScore: "str" } });
-    } else {
-      setCharacter({ ...character, class: id, classOptions: undefined });
-    }
+    setCharacter((character) => updateClass(character, id));
   }
 
   function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter({ ...character, classOptions: { soldierAbilityScore: id } });
+    setCharacter((character) => updateSoldierAbilityScore(character, id));
   }
 
   return (

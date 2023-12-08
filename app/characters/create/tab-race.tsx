@@ -1,9 +1,16 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import ModifierComponent from "./ModifierComponent";
-import { Character, Modifier, SecondaryTrait, Trait } from "model";
 import { DataSet } from "data";
+import { Character, Modifier, SecondaryTrait, Trait } from "model";
+import {
+  disableSecondaryTrait,
+  enableSecondaryTrait,
+  updateHumanBonus,
+  updateRace,
+  updateVariant,
+} from "logic/Character";
+import ModifierComponent from "./ModifierComponent";
 
 export function TabRaceSelection({
   data,
@@ -19,52 +26,17 @@ export function TabRaceSelection({
 
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    let race = data.races.find((r) => r.id === id);
-
-    if (race === undefined) {
-      setCharacter((character) => {
-        return {
-          ...character,
-          race: "",
-          raceVariant: "",
-          raceOptions: undefined,
-          traits: [],
-          abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-        };
-      });
-    } else if (id === "humans") {
-      setCharacter({
-        ...character,
-        race: id,
-        raceVariant: race.variants[0].id,
-        raceOptions: { humanBonus: data.abilityScores[0].id },
-        traits: race.traits.map((t) => t.id),
-        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      });
-    } else {
-      setCharacter({
-        ...character,
-        race: id,
-        raceVariant: race.variants[0].id,
-        raceOptions: undefined,
-        traits: race.traits.map((t) => t.id),
-        abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      });
-    }
+    setCharacter((character) => updateRace(data, character, id));
   }
 
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    if (id === "humans-standard") {
-      setCharacter({ ...character, raceVariant: id, raceOptions: { humanBonus: data.abilityScores[0].id } });
-    } else {
-      setCharacter({ ...character, raceVariant: id, raceOptions: undefined });
-    }
+    setCharacter((character) => updateVariant(data, character, id));
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter({ ...character, raceOptions: { humanBonus: id } });
+    setCharacter((character) => updateHumanBonus(character, id));
   }
 
   return (
@@ -184,7 +156,7 @@ export function TabRaceAlternateTraits({
 }: {
   data: DataSet;
   character: Character;
-  setCharacter: (c: Character) => void;
+  setCharacter: Dispatch<SetStateAction<Character>>;
 }) {
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
 
@@ -211,10 +183,9 @@ export function TabRaceAlternateTraits({
 
   function handleTraitEnabled(trait: SecondaryTrait, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
-      let updatedTraits = character.traits.filter((t) => trait.replace.findIndex((r) => r === t) === -1);
-      setCharacter({ ...character, traits: [...updatedTraits, trait.id] });
+      setCharacter((character) => enableSecondaryTrait(character, trait));
     } else {
-      setCharacter({ ...character, traits: character.traits.filter((t) => t !== trait.id).concat(trait.replace) });
+      setCharacter((character) => disableSecondaryTrait(character, trait));
     }
   }
 
