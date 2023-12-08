@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { Character, ClientComponentData } from "./types";
 import { AbilityScore, Modifier } from "app/types";
-import { findOrError } from "app/helpers";
+import { displayBonus, findOrError } from "app/helpers";
 
-function getMinimalAbilityScoreFor(
+function computeMinimalAbilityScoreFor(
   data: ClientComponentData,
   character: Character,
   abilityScore: AbilityScore
@@ -47,7 +47,7 @@ function getMinimalAbilityScoreFor(
 function computeRemainingPoints(data: ClientComponentData, character: Character): number {
   let points = 10;
   data.abilityScores.forEach((abilityScore) => {
-    let minimalScore = getMinimalAbilityScoreFor(data, character, abilityScore);
+    let minimalScore = computeMinimalAbilityScoreFor(data, character, abilityScore);
     if (character.abilityScores[abilityScore.id] > minimalScore) {
       points -= character.abilityScores[abilityScore.id] - minimalScore;
     }
@@ -56,8 +56,30 @@ function computeRemainingPoints(data: ClientComponentData, character: Character)
   return points;
 }
 
-function getAbilityScoreModifier(character: Character, abilityScoreId: string): number {
+function computeAbilityScoreModifier(character: Character, abilityScoreId: string): number {
   return Math.floor((character.abilityScores[abilityScoreId] - 10) / 2);
+}
+
+function computeSkillBonus(data: ClientComponentData, character: Character, skillId: string): number | undefined {
+  const selectedClass = findOrError(data.classes, (c) => c.id === character.class);
+  const classSkills = selectedClass.classSkills;
+  const skill = findOrError(data.skills, (s) => s.id === skillId);
+  const abilityScore = skill.abilityScore;
+  const abilityScoreModifier = computeAbilityScoreModifier(character, abilityScore);
+
+  const ranks = character.skillRanks[skillId] || 0;
+  const isTrained = character.skillRanks[skillId] !== undefined;
+  const isClassSkill = classSkills.includes(skillId);
+
+  if (isClassSkill && isTrained) {
+    return 3 + ranks + abilityScoreModifier;
+  } else if (isTrained) {
+    return ranks + abilityScoreModifier;
+  } else if (skill.trainedOnly) {
+    return undefined;
+  } else {
+    return abilityScoreModifier;
+  }
 }
 
 export function TabAbilityScoresSelection({
@@ -71,7 +93,7 @@ export function TabAbilityScoresSelection({
 }) {
   useEffect(() => {
     data.abilityScores.forEach((abilityScore) => {
-      let minimalScore = getMinimalAbilityScoreFor(data, character, abilityScore);
+      let minimalScore = computeMinimalAbilityScoreFor(data, character, abilityScore);
       if (character.abilityScores[abilityScore.id] < minimalScore) {
         setCharacter((character) => {
           return {
@@ -116,9 +138,9 @@ export function TabAbilityScoresSelection({
         </Col>
       </Form.Group>
       {data.abilityScores.map((abilityScore) => {
-        let minimalScore = getMinimalAbilityScoreFor(data, character, abilityScore);
+        let minimalScore = computeMinimalAbilityScoreFor(data, character, abilityScore);
         let delta = minimalScore - 10;
-        let modifier = getAbilityScoreModifier(character, abilityScore.id);
+        let modifier = computeAbilityScoreModifier(character, abilityScore.id);
         return (
           <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
             <Form.Label column className="header">
@@ -196,7 +218,7 @@ export function TabSkillsSelection({
 
   const skillRanks =
     selectedClass.skillRank +
-    getAbilityScoreModifier(character, "int") +
+    computeAbilityScoreModifier(character, "int") +
     modifiers
       .filter((m) => m.type === "skillRank")
       .reduce((acc, m) => acc + (typeof m.value === "number" ? m.value : 0), 0);
@@ -256,6 +278,7 @@ export function TabSkillsSelection({
       {data.skills
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .map((skill) => {
+          const bonus = computeSkillBonus(data, character, skill.id);
           return (
             <Form.Group key={skill.id} as={Row} controlId={skill.id}>
               <Form.Label column>
@@ -282,7 +305,8 @@ export function TabSkillsSelection({
                 />
               </Col>
               <Col lg={2} className="pt-2 text-center">
-                <Badge bg="primary">+2</Badge>
+                {bonus !== undefined && <Badge bg={bonus > 0 ? "primary" : "secondary"}>{displayBonus(bonus)}</Badge>}
+                {bonus === undefined && "-"}
               </Col>
             </Form.Group>
           );
