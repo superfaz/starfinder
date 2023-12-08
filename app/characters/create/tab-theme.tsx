@@ -1,4 +1,4 @@
-import { findOrError } from "app/helpers";
+import { displayBonus, findOrError } from "app/helpers";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { Character, ClientComponentData, Context } from "./types";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
@@ -117,8 +117,8 @@ export function TabThemeSelection({
         <Stack direction="horizontal">
           {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
             <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-              {findOrError(data.abilityScores, (a) => a.id === key).code} {value > 0 ? "+" : ""}
-              {value}
+              {findOrError(data.abilityScores, (a) => a.id === key).code}
+              {displayBonus(value)}
             </Badge>
           ))}
         </Stack>

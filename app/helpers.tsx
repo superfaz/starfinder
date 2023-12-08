@@ -5,3 +5,7 @@ export function findOrError<T>(array: T[], predicate: (value: T) => boolean): T 
   }
   return result;
 }
+
+export function displayBonus(bonus: number): string {
+  return bonus > 0 ? `+${bonus}` : `${bonus}`;
+}

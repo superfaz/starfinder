@@ -2,6 +2,7 @@ import { Badge } from "react-bootstrap";
 import { Modifier } from "app/types";
 import Skills from "@/data/skills.json";
 import { Context } from "./types";
+import { displayBonus } from "app/helpers";
 
 /**
  * Replace all '<key>' in text by context[key] if it exists.
@@ -54,10 +55,7 @@ export default function ModifierComponent({ modifier, context }: { modifier: Mod
       return (
         <p>
           <Badge bg="primary">Points de vie</Badge>
-          <strong>
-            {value > 0 ? "+" : ""}
-            {value}
-          </strong>
+          <strong>{displayBonus(value)}</strong>
           {description && <span className="ms-1 text-muted">{description}</span>}
         </p>
       );
@@ -89,8 +87,7 @@ export default function ModifierComponent({ modifier, context }: { modifier: Mod
           <p>
             <Badge bg="primary">Compétence</Badge>
             <strong>
-              {skillName} {value > 0 ? "+" : ""}
-              {value}
+              {skillName} {displayBonus(value)}
             </strong>
             <span className="ms-1 text-muted">{description}</span>
           </p>
@@ -108,10 +105,7 @@ export default function ModifierComponent({ modifier, context }: { modifier: Mod
       return (
         <p>
           <Badge bg="primary">Nombre de Dons</Badge>
-          <strong>
-            {value > 0 ? "+" : ""}
-            {value}
-          </strong>
+          <strong>{displayBonus(value)}</strong>
         </p>
       );
     case "feat":
@@ -131,8 +125,8 @@ export default function ModifierComponent({ modifier, context }: { modifier: Mod
         <p>
           <Badge bg="primary">Rang de compétence</Badge>
           <strong>
-            {target && findOrError(Skills, (skill) => skill.id === target).name} {value > 0 ? "+" : ""}
-            {value}
+            {target && findOrError(Skills, (skill) => skill.id === target).name}
+            {displayBonus(value)}
           </strong>
           <span className="ms-1 text-muted">{description}</span>
         </p>
@@ -149,20 +143,14 @@ export default function ModifierComponent({ modifier, context }: { modifier: Mod
       return (
         <p>
           <Badge bg="primary">Nombre de langue</Badge>
-          <strong>
-            {value > 0 ? "+" : ""}
-            {value}
-          </strong>
+          <strong>{displayBonus(value)}</strong>
         </p>
       );
     case "initiative":
       return (
         <p>
           <Badge bg="primary">Initiative</Badge>
-          <strong>
-            {value > 0 ? "+" : ""}
-            {value}
-          </strong>
+          <strong>{displayBonus(value)}</strong>
         </p>
       );
     default:

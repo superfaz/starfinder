@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
-import { findOrError } from "app/helpers";
+import { displayBonus, findOrError } from "app/helpers";
 import { Character, ClientComponentData } from "./types";
 import ModifierComponent from "./ModifierComponent";
 import { Modifier, SecondaryTrait, Trait } from "app/types";
@@ -101,8 +101,8 @@ export function TabRaceSelection({
                 <Stack direction="horizontal">
                   {Object.entries(selectedVariant.abilityScores).map(([key, value]) => (
                     <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                      {findOrError(data.abilityScores, (a) => a.id === key).code} {value > 0 ? "+" : ""}
-                      {value}
+                      {findOrError(data.abilityScores, (a) => a.id === key).code}
+                      {displayBonus(value)}
                     </Badge>
                   ))}
                 </Stack>
