@@ -23,6 +23,7 @@ export class Character {
   traits: string[];
   traitsOptions?: Record<string, string>;
   abilityScores: Record<string, number>;
+  skillRanks: Record<string, number>;
 
   constructor() {
     this.race = "";
@@ -31,6 +32,7 @@ export class Character {
     this.class = "";
     this.traits = [];
     this.abilityScores = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
+    this.skillRanks = {};
   }
 }
 

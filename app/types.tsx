@@ -77,6 +77,7 @@ export interface Class {
   keyAbilityScore: string | string[];
   secondaryAbilityScore: string[];
   skillRank: number;
+  classSkills: string[];
   armors: string[];
   weapons: string[];
 }
