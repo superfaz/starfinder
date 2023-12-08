@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
 import { Character, ClientComponentData, Context } from "./types";
 import { TabIntro } from "./tab-intro";
@@ -15,12 +15,8 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
   const [character, setCharacter] = useState<Character>(new Character());
 
   const selectedRace = data.races.find((r) => r.id === character.race) || null;
-  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
   const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
   const selectedClass = data.classes.find((c) => c.id === character.class) || null;
-
-  const [alignment, setAlignment] = useState(data.alignments[0]);
-  const [name, setName] = useState("");
 
   function addToContext(name: string, value: string | number): void {
     setContext((c) => ({ ...c, [name]: value }));
@@ -28,30 +24,6 @@ export function ClientComponent({ data }: { data: ClientComponentData }) {
 
   function handleNavigation(eventKey: string | null): void {
     setNavigation(eventKey || "");
-  }
-
-  function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
-    setName(e.target.value);
-  }
-
-  function handleRandomizeName(): void {
-    if (selectedRace === null) {
-      console.error("Can't provide a name without a race selected - control should be disabled");
-      return;
-    }
-
-    let index = Math.floor(Math.random() * selectedRace.names.length);
-    setName(selectedRace.names[index]);
-  }
-
-  function handleAlignmentChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
-    let alignment = data.alignments.find((a) => a.id === id);
-    if (alignment === undefined) {
-      console.error("Can't find alignment with id", id);
-    } else {
-      setAlignment(alignment);
-    }
   }
 
   // This is a hack to make the character sheet fill the screen
