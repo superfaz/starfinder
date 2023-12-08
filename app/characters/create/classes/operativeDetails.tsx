@@ -1,8 +1,9 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
-import { Character, Context } from "../types";
+import { Context } from "../types";
 import operativeData from "data/class-operative.json";
 import ModifierComponent, { replace } from "../ModifierComponent";
 import { Feature } from "model";
+import { Character } from "model";
 
 const categories = {
   ex: "EXT",

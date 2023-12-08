@@ -1,8 +1,10 @@
 import { displayBonus, findOrError } from "app/helpers";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
-import { Character, DataSet, Context } from "./types";
+import { Context } from "./types";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import ModifierComponent from "./ModifierComponent";
+import { DataSet } from "data";
+import { Character } from "model";
 
 export function TabThemeSelection({
   data,

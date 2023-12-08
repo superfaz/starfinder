@@ -1,5 +1,6 @@
 export * from "./AbilityScore";
 export * from "./Alignment";
+export * from "./Character";
 export * from "./Class";
 export * from "./Feature";
 export * from "./Modifier";

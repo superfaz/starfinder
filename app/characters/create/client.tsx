@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
-import { Character, DataSet, Context } from "./types";
+import { Context } from "./types";
 import { TabIntro } from "./tab-intro";
 import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-race";
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
 import { TabClassDetails, TabClassSelection } from "./tab-class";
 import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScores";
+import { DataSet } from "data";
+import { Character } from "model";
 
 export function ClientComponent({ data }: { data: DataSet }) {
   const [context, setContext] = useState<Context>({});

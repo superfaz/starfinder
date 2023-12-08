@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { Character, DataSet } from "./types";
 import ModifierComponent from "./ModifierComponent";
-import { Modifier, SecondaryTrait, Trait } from "model";
+import { Character, Modifier, SecondaryTrait, Trait } from "model";
+import { DataSet } from "data";
 
 export function TabRaceSelection({
   data,
