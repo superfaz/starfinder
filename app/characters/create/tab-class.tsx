@@ -2,11 +2,10 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
+import { DataSet } from "data";
+import { CharacterMutators, CharacterPresenter } from "logic";
 import { Class } from "model";
 import { Context } from "./types";
-import { DataSet } from "data";
-import CharacterMutators from "logic/CharacterMutators";
-import CharacterPresenter from "logic/CharacterPresenter";
 
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));

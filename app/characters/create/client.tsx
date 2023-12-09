@@ -3,16 +3,14 @@
 import { useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
 import { DataSet } from "data";
+import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
-import CharacterPresenter from "logic/CharacterPresenter";
 import { Context } from "./types";
 import { TabIntro } from "./tab-intro";
 import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-race";
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
 import { TabClassDetails, TabClassSelection } from "./tab-class";
 import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScores";
-import { updateRace } from "logic/CharacterMutators";
-import CharacterMutators from "logic/CharacterMutators";
 
 export function ClientComponent({ data }: { data: DataSet }) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));

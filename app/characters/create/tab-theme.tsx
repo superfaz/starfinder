@@ -1,11 +1,10 @@
-import { displayBonus, findOrError } from "app/helpers";
-import { Badge, Card, Form, Stack } from "react-bootstrap";
-import { Context } from "./types";
 import { ChangeEvent } from "react";
-import ModifierComponent from "./ModifierComponent";
+import { Badge, Card, Form, Stack } from "react-bootstrap";
+import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
-import CharacterMutators from "logic/CharacterMutators";
-import CharacterPresenter from "logic/CharacterPresenter";
+import { CharacterMutators, CharacterPresenter } from "logic";
+import { Context } from "./types";
+import ModifierComponent from "./ModifierComponent";
 
 export interface CharacterTabProps {
   data: DataSet;

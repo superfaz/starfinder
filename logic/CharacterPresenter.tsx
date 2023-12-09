@@ -1,7 +1,7 @@
 import { DataSet } from "data";
 import { Character, Class, Race, Theme, Trait, Variant } from "model";
 
-export default class CharacterPresenter {
+export class CharacterPresenter {
   private data: DataSet;
 
   private character: Readonly<Character>;

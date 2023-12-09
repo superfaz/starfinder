@@ -2,10 +2,9 @@ import { ChangeEvent } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
+import { CharacterMutators, CharacterPresenter } from "logic";
 import { Modifier, SecondaryTrait, Trait } from "model";
 import ModifierComponent from "./ModifierComponent";
-import CharacterPresenter from "logic/CharacterPresenter";
-import CharacterMutators from "logic/CharacterMutators";
 
 export interface CharacterTabProps {
   data: DataSet;

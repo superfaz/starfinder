@@ -2,7 +2,7 @@ import { findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { Character, SecondaryTrait } from "model";
 
-export default class CharacterMutators {
+export class CharacterMutators {
   private data: DataSet;
   private setCharacter: (update: Character | ((c: Character) => Character)) => void;
 
