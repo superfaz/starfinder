@@ -1,8 +1,7 @@
-import { Form } from "react-bootstrap";
 import { ChangeEvent } from "react";
+import { Form } from "react-bootstrap";
 import operativeData from "data/class-operative.json";
-import CharacterPresenter from "logic/CharacterPresenter";
-import CharacterMutators from "logic/CharacterMutators";
+import { CharacterMutators, CharacterPresenter } from "logic";
 
 export default function OperativeEditor({
   character,
