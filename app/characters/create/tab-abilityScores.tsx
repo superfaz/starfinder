@@ -3,7 +3,7 @@ import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstra
 import { AbilityScore, Character, Modifier } from "model";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
-import { updateAbilityScore, updateSkillRank } from "logic/Character";
+import { updateAbilityScore, updateSkillRank } from "logic/CharacterMutators";
 
 function computeMinimalAbilityScoreFor(data: DataSet, character: Character, abilityScore: AbilityScore): number {
   const selectedRace = data.races.find((r) => r.id === character.race) || null;

@@ -1,50 +1,43 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
-import { Character, Modifier, SecondaryTrait, Trait } from "model";
-import {
-  disableSecondaryTrait,
-  enableSecondaryTrait,
-  updateHumanBonus,
-  updateRace,
-  updateVariant,
-} from "logic/Character";
+import { Modifier, SecondaryTrait, Trait } from "model";
 import ModifierComponent from "./ModifierComponent";
+import CharacterPresenter from "logic/CharacterPresenter";
+import CharacterMutators from "logic/CharacterMutators";
 
-export function TabRaceSelection({
-  data,
-  character,
-  setCharacter,
-}: {
+export interface CharacterTabProps {
   data: DataSet;
-  character: Character;
-  setCharacter: Dispatch<SetStateAction<Character>>;
-}) {
-  const selectedRace = data.races.find((r) => r.id === character.race) || null;
-  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
+  character: CharacterPresenter;
+  mutators: CharacterMutators;
+}
+
+export function TabRaceSelection({ data, character, mutators }: CharacterTabProps) {
+  const selectedRace = character.getRace();
+  const selectedVariant = character.getRaceVariant();
 
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter((character) => updateRace(data, character, id));
+    mutators.updateRace(id);
   }
 
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter((character) => updateVariant(data, character, id));
+    mutators.updateRaceVariant(id);
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter((character) => updateHumanBonus(character, id));
+    mutators.updateHumanBonus(id);
   }
 
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Race</h2>
       <Form.FloatingLabel controlId="race" label="Race">
-        <Form.Select value={character.race} onChange={handleRaceChange}>
-          {character.race === "" && <option value=""></option>}
+        <Form.Select value={selectedRace?.id || ""} onChange={handleRaceChange}>
+          {selectedRace === null && <option value=""></option>}
           {data.races.map((race) => (
             <option key={race.id} value={race.id}>
               {race.name}
@@ -61,7 +54,7 @@ export function TabRaceSelection({
           {selectedRace.variants && selectedVariant && (
             <>
               <Form.FloatingLabel controlId="variant" label="Variante">
-                <Form.Select value={character.raceVariant} onChange={handleVariantChange}>
+                <Form.Select value={selectedVariant?.id || ""} onChange={handleVariantChange}>
                   {selectedRace.variants.map((variant, index) => (
                     <option key={index} value={variant.id}>
                       {variant.name}
@@ -69,7 +62,7 @@ export function TabRaceSelection({
                   ))}
                 </Form.Select>
               </Form.FloatingLabel>
-              {selectedVariant.id !== "humans-standard" && (
+              {!character.isHumanStandard() && (
                 <Stack direction="horizontal">
                   {Object.entries(selectedVariant.abilityScores).map(([key, value]) => (
                     <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
@@ -79,10 +72,10 @@ export function TabRaceSelection({
                   ))}
                 </Stack>
               )}
-              {selectedVariant.id === "humans-standard" && character.raceOptions && (
+              {character.isHumanStandard() && (
                 <>
                   <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-                    <Form.Select value={character.raceOptions.humanBonus} onChange={handleHumanBonusChange}>
+                    <Form.Select value={character.getHumanStandardBonus() || ""} onChange={handleHumanBonusChange}>
                       {data.abilityScores.map((abilityScore) => (
                         <option key={abilityScore.id} value={abilityScore.id}>
                           {abilityScore.name}
@@ -92,12 +85,7 @@ export function TabRaceSelection({
                   </Form.FloatingLabel>
                   <Stack direction="horizontal">
                     <Badge bg="primary">
-                      {
-                        findOrError(
-                          data.abilityScores,
-                          (a) => character.raceOptions !== undefined && a.id === character.raceOptions.humanBonus
-                        ).code
-                      }
+                      {findOrError(data.abilityScores, (a) => a.id === character.getHumanStandardBonus()).code}
                       {" +2"}
                     </Badge>
                   </Stack>
@@ -123,8 +111,8 @@ export function TabRaceSelection({
   );
 }
 
-export function TabRaceTraits({ data, character }: { data: DataSet; character: Character }) {
-  const selectedRace = data.races.find((r) => r.id === character.race) || null;
+export function TabRaceTraits({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+  const selectedRace = character.getRace();
   if (!selectedRace) {
     return null;
   }
@@ -135,7 +123,9 @@ export function TabRaceTraits({ data, character }: { data: DataSet; character: C
       {selectedRace.traits.map((trait) => (
         <Card
           key={trait.id}
-          className={character.traits.find((t) => t === trait.id) !== undefined ? "" : "text-decoration-line-through"}
+          className={
+            character.getTraits().find((t) => t.id === trait.id) !== undefined ? "" : "text-decoration-line-through"
+          }
         >
           <Card.Header>{trait.name}</Card.Header>
           <Card.Body>
@@ -149,16 +139,8 @@ export function TabRaceTraits({ data, character }: { data: DataSet; character: C
   );
 }
 
-export function TabRaceAlternateTraits({
-  data,
-  character,
-  setCharacter,
-}: {
-  data: DataSet;
-  character: Character;
-  setCharacter: Dispatch<SetStateAction<Character>>;
-}) {
-  const selectedRace = data.races.find((r) => r.id === character.race) || null;
+export function TabRaceAlternateTraits({ data, character, mutators }: CharacterTabProps) {
+  const selectedRace = character.getRace();
 
   function findReplacedTrait(id: string): Trait | Modifier | null {
     if (!selectedRace) {
@@ -183,9 +165,9 @@ export function TabRaceAlternateTraits({
 
   function handleTraitEnabled(trait: SecondaryTrait, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
-      setCharacter((character) => enableSecondaryTrait(character, trait));
+      mutators.enableSecondaryTrait(trait);
     } else {
-      setCharacter((character) => disableSecondaryTrait(character, trait));
+      mutators.disableSecondaryTrait(trait);
     }
   }
 
@@ -202,11 +184,11 @@ export function TabRaceAlternateTraits({
             <Card.Header>
               <Form.Switch
                 label={trait.name}
-                checked={character.traits.find((t) => t === trait.id) !== undefined}
+                checked={character.getTraits().find((t) => t.id === trait.id) !== undefined}
                 onChange={(e) => handleTraitEnabled(trait, e)}
                 disabled={
-                  character.traits.find((t) => t === trait.id) === undefined &&
-                  trait.replace.some((r) => character.traits.find((t) => t === r) === undefined)
+                  character.getTraits().find((t) => t.id === trait.id) === undefined &&
+                  trait.replace.some((r) => character.getTraits().find((t) => t.id === r) === undefined)
                 }
               />
             </Card.Header>

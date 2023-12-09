@@ -2,6 +2,76 @@ import { findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { Character, SecondaryTrait } from "model";
 
+export default class CharacterMutators {
+  private data: DataSet;
+  private setCharacter: (update: Character | ((c: Character) => Character)) => void;
+
+  constructor(data: DataSet, setCharacter: (update: Character | ((c: Character) => Character)) => void) {
+    this.data = data;
+    this.setCharacter = setCharacter;
+  }
+
+  updateRace(id: string) {
+    this.setCharacter((c) => updateRace(this.data, c, id));
+  }
+
+  updateRaceVariant(id: string) {
+    this.setCharacter((c) => updateRaceVariant(this.data, c, id));
+  }
+
+  updateHumanBonus(id: string) {
+    this.setCharacter((c) => updateHumanBonus(c, id));
+  }
+
+  enableSecondaryTrait(trait: SecondaryTrait) {
+    this.setCharacter((c) => enableSecondaryTrait(c, trait));
+  }
+
+  disableSecondaryTrait(trait: SecondaryTrait) {
+    this.setCharacter((c) => disableSecondaryTrait(c, trait));
+  }
+
+  updateTheme(id: string) {
+    this.setCharacter((c) => updateTheme(this.data, c, id));
+  }
+
+  updateNoThemeAbilityScore(id: string) {
+    this.setCharacter((c) => updateNoThemeAbilityScore(c, id));
+  }
+
+  updateScholarSkill(id: string) {
+    this.setCharacter((c) => updateScholarSkill(c, id));
+  }
+
+  updateScholarSpecialization(id: string) {
+    this.setCharacter((c) => updateScholarSpecialization(c, id));
+  }
+
+  updateScholarLabel(label: string) {
+    this.setCharacter((c) => updateScholarLabel(c, label));
+  }
+
+  updateClass(id: string) {
+    this.setCharacter((c) => updateClass(c, id));
+  }
+
+  updateSoldierAbilityScore(id: string) {
+    this.setCharacter((c) => updateSoldierAbilityScore(c, id));
+  }
+
+  updateOperativeSpecialization(id: string) {
+    this.setCharacter((c) => updateOperativeSpecialization(c, id));
+  }
+
+  updateAbilityScore(id: string, delta: number) {
+    this.setCharacter((c) => updateAbilityScore(c, id, delta));
+  }
+
+  updateSkillRank(id: string, delta: number) {
+    this.setCharacter((c) => updateSkillRank(c, id, delta));
+  }
+}
+
 /**
  * Updates the race associated with a character.
  *
@@ -47,7 +117,7 @@ export function updateRace(data: DataSet, character: Character, raceId: string):
  * @param variantId The identifier of its new race variant
  * @returns The updated character
  */
-export function updateVariant(data: DataSet, character: Character, variantId: string): Character {
+export function updateRaceVariant(data: DataSet, character: Character, variantId: string): Character {
   if (character.raceVariant === variantId) {
     // No change
     return character;
@@ -266,6 +336,23 @@ export function updateSoldierAbilityScore(character: Character, abilityScoreId: 
     classOptions: {
       ...character.classOptions,
       soldierAbilityScore: abilityScoreId,
+    },
+  };
+}
+
+/**
+ * Updates the specialization selected for an operative character.
+ *
+ * @param character The character to update
+ * @param specialization The selected operative specialization
+ * @returns The updated character
+ */
+export function updateOperativeSpecialization(character: Character, specialization: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      operativeSpecialization: specialization,
     },
   };
 }

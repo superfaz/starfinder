@@ -1,60 +1,59 @@
 import dynamic from "next/dynamic";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { Character, Class } from "model";
+import { Class } from "model";
 import { Context } from "./types";
 import { DataSet } from "data";
-import { updateClass, updateSoldierAbilityScore } from "logic/Character";
+import CharacterMutators from "logic/CharacterMutators";
+import CharacterPresenter from "logic/CharacterPresenter";
 
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
 
+export interface CharacterTabProps {
+  data: DataSet;
+  character: CharacterPresenter;
+  mutators: CharacterMutators;
+}
+
 function ClassEditor({
   classType,
   character,
-  setCharacter,
+  mutators,
 }: {
   classType: Class;
-  character: Character;
-  setCharacter: Dispatch<SetStateAction<Character>>;
+  character: CharacterPresenter;
+  mutators: CharacterMutators;
 }) {
   switch (classType.id) {
     case "class-operative":
-      return <LazyOperativeClassEditor character={character} setCharacter={setCharacter} />;
+      return <LazyOperativeClassEditor character={character} mutators={mutators} />;
 
     default:
       return null;
   }
 }
 
-export function TabClassSelection({
-  data,
-  character,
-  setCharacter,
-}: {
-  data: DataSet;
-  character: Character;
-  setCharacter: Dispatch<SetStateAction<Character>>;
-}) {
-  const selectedClass = data.classes.find((c) => c.id === character.class);
+export function TabClassSelection({ data, character, mutators }: CharacterTabProps) {
+  const selectedClass = character.getClass();
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter((character) => updateClass(character, id));
+    mutators.updateClass(id);
   }
 
   function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>): void {
     let id = e.target.value;
-    setCharacter((character) => updateSoldierAbilityScore(character, id));
+    mutators.updateSoldierAbilityScore(id);
   }
 
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Classe</h2>
       <Form.FloatingLabel controlId="class" label="Classe">
-        <Form.Select value={character.class} onChange={handleClassChange}>
-          {character.class === "" && <option value=""></option>}
+        <Form.Select value={selectedClass?.id || ""} onChange={handleClassChange}>
+          {selectedClass === null && <option value=""></option>}
           {data.classes.map((classType) => (
             <option key={classType.id} value={classType.id}>
               {classType.name}
@@ -76,22 +75,17 @@ export function TabClassSelection({
           <p className="text-muted">{selectedClass.description}</p>
         </>
       )}
-      {selectedClass && selectedClass.id === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab" && character.classOptions && (
+      {character.isSoldier() && (
         <>
           <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe">
-            <Form.Select value={character.classOptions.soldierAbilityScore} onChange={handleSoldierAbilityScoreChange}>
+            <Form.Select value={character.getSoldierAbilityScore() || ""} onChange={handleSoldierAbilityScoreChange}>
               <option value="str">{findOrError(data.abilityScores, (a) => a.id === "str").name}</option>
               <option value="dex">{findOrError(data.abilityScores, (a) => a.id === "dex").name}</option>
             </Form.Select>
           </Form.FloatingLabel>
           <Stack direction="horizontal">
             <Badge bg="primary">
-              {
-                findOrError(
-                  data.abilityScores,
-                  (a) => character.classOptions !== undefined && a.id === character.classOptions.soldierAbilityScore
-                ).code
-              }
+              {findOrError(data.abilityScores, (a) => a.id === character.getSoldierAbilityScore()).code}
             </Badge>
           </Stack>
         </>
@@ -111,7 +105,7 @@ export function TabClassSelection({
             {selectedClass.weapons.map((a) => data.weapons[a]).join(", ")}
           </div>
           <hr />
-          <ClassEditor classType={selectedClass} character={character} setCharacter={setCharacter} />
+          <ClassEditor classType={selectedClass} character={character} mutators={mutators} />
         </>
       )}
     </Stack>
@@ -124,12 +118,12 @@ export function TabClassDetails({
   context,
 }: {
   data: DataSet;
-  character: Character;
+  character: CharacterPresenter;
   context: Context;
 }) {
-  const selectedClass = data.classes.find((c) => c.id === character.class);
+  const selectedClass = character.getClass();
 
-  if (selectedClass === undefined) {
+  if (!selectedClass) {
     return null;
   }
 

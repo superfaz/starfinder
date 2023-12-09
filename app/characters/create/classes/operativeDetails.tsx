@@ -3,7 +3,7 @@ import { Context } from "../types";
 import operativeData from "data/class-operative.json";
 import ModifierComponent, { replace } from "../ModifierComponent";
 import { Feature } from "model";
-import { Character } from "model";
+import CharacterPresenter from "logic/CharacterPresenter";
 
 const categories = {
   ex: "EXT",
@@ -11,11 +11,21 @@ const categories = {
   su: "SUR",
 };
 
-export default function OperativeClassDetails({ character, context }: { character: Character; context: Context }) {
+export default function OperativeClassDetails({
+  character,
+  context,
+}: {
+  character: CharacterPresenter;
+  context: Context;
+}) {
   const selectedSpecialization = operativeData.specializations.find(
-    (s) => s.id === character.classOptions?.operativeSpecialization
+    (s) => s.id === character.getOperativeSpecialization()
   );
-  const features: Feature[] = [...(selectedSpecialization?.features || []), ...operativeData.features];
+  if (!selectedSpecialization) {
+    return null;
+  }
+
+  const features: Feature[] = selectedSpecialization.features.concat(operativeData.features);
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)

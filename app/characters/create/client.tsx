@@ -11,6 +11,8 @@ import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-r
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
 import { TabClassDetails, TabClassSelection } from "./tab-class";
 import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScores";
+import { updateRace } from "logic/CharacterMutators";
+import CharacterMutators from "logic/CharacterMutators";
 
 export function ClientComponent({ data }: { data: DataSet }) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
@@ -18,13 +20,15 @@ export function ClientComponent({ data }: { data: DataSet }) {
   const [navigation, setNavigation] = useState("intro");
 
   const character = presenter.getCharacter();
-  function setCharacter(c: Character | ((c: Character) => Character)) {
-    if (typeof c === "function") {
-      setPresenter(new CharacterPresenter(data, c(character)));
+  function setCharacter(update: Character | ((c: Character) => Character)) {
+    if (typeof update === "function") {
+      setPresenter((p) => new CharacterPresenter(data, update(p.getCharacter())));
     } else {
-      setPresenter(new CharacterPresenter(data, c));
+      setPresenter(new CharacterPresenter(data, update));
     }
   }
+
+  const mutators = new CharacterMutators(data, setCharacter);
 
   const selectedRace = presenter.getRace();
   const selectedTheme = presenter.getTheme();
@@ -93,31 +97,31 @@ export function ClientComponent({ data }: { data: DataSet }) {
         <TabIntro />
       </Col>
       <Col lg={3} hidden={navigation !== "race"}>
-        <TabRaceSelection data={data} character={character} setCharacter={setCharacter} />
+        <TabRaceSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col hidden={navigation !== "race"}>
-        <TabRaceTraits data={data} character={character} />
+        <TabRaceTraits data={data} character={presenter} />
       </Col>
 
       <Col hidden={navigation !== "race"}>
-        <TabRaceAlternateTraits data={data} character={character} setCharacter={setCharacter} />
+        <TabRaceAlternateTraits data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col lg={3} hidden={navigation !== "theme"}>
-        <TabThemeSelection data={data} character={character} setCharacter={setCharacter} addToContext={addToContext} />
+        <TabThemeSelection data={data} character={presenter} mutators={mutators} addToContext={addToContext} />
       </Col>
 
       <Col hidden={navigation !== "theme"}>
-        <TabThemeTraits data={data} character={character} context={context} />
+        <TabThemeTraits data={data} character={presenter} context={context} />
       </Col>
 
       <Col lg={3} hidden={navigation !== "class"}>
-        <TabClassSelection data={data} character={character} setCharacter={setCharacter} />
+        <TabClassSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col hidden={navigation !== "class"}>
-        <TabClassDetails data={data} character={character} context={context} />
+        <TabClassDetails data={data} character={presenter} context={context} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>

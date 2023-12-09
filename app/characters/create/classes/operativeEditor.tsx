@@ -1,44 +1,28 @@
 import { Form } from "react-bootstrap";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
-import { Character } from "model";
+import { ChangeEvent } from "react";
 import operativeData from "data/class-operative.json";
+import CharacterPresenter from "logic/CharacterPresenter";
+import CharacterMutators from "logic/CharacterMutators";
 
 export default function OperativeEditor({
   character,
-  setCharacter,
+  mutators,
 }: {
-  character: Character;
-  setCharacter: Dispatch<SetStateAction<Character>>;
+  character: CharacterPresenter;
+  mutators: CharacterMutators;
 }) {
-  useEffect(() => {
-    if (character.classOptions === undefined) {
-      setCharacter({
-        ...character,
-        classOptions: { operativeSpecialization: operativeData.specializations[0].id },
-      });
-    } else if (character.classOptions.operativeSpecialization === undefined) {
-      setCharacter({
-        ...character,
-        classOptions: { ...character.classOptions, operativeSpecialization: operativeData.specializations[0].id },
-      });
-    }
-  }, [character, setCharacter]);
-
   const selectedSpecialization = operativeData.specializations.find(
-    (s) => s.id === character.classOptions?.operativeSpecialization
+    (s) => s.id === character.getOperativeSpecialization()
   );
 
   const handleSpecializationChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setCharacter({
-      ...character,
-      classOptions: { ...character.classOptions, operativeSpecialization: event.target.value },
-    });
+    mutators.updateOperativeSpecialization(event.target.value);
   };
 
   return (
     <>
       <Form.FloatingLabel label="Spécialisation">
-        <Form.Select value={character.classOptions?.operativeSpecialization} onChange={handleSpecializationChange}>
+        <Form.Select value={character.getOperativeSpecialization() || ""} onChange={handleSpecializationChange}>
           {operativeData.specializations.map((specialization, i) => (
             <option key={i} value={specialization.id}>
               {specialization.name}
