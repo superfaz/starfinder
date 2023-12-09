@@ -314,10 +314,13 @@ export function updateClass(character: Character, classId: string): Character {
     abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   };
 
-  // Special case - prepare the associated options
+  // Special cases - prepare the associated options
   if (classId === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab") {
     // Class: Soldier
     result.classOptions = { soldierAbilityScore: "str" };
+  } else if (classId === "class-operative") {
+    // Class: Operative
+    result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
   }
 
   return result;
