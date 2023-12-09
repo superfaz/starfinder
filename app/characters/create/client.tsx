@@ -2,23 +2,33 @@
 
 import { useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
+import { DataSet } from "data";
+import { Character } from "model";
+import CharacterPresenter from "logic/CharacterPresenter";
 import { Context } from "./types";
 import { TabIntro } from "./tab-intro";
 import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-race";
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
 import { TabClassDetails, TabClassSelection } from "./tab-class";
 import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScores";
-import { DataSet } from "data";
-import { Character } from "model";
 
 export function ClientComponent({ data }: { data: DataSet }) {
+  const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
   const [context, setContext] = useState<Context>({});
   const [navigation, setNavigation] = useState("intro");
-  const [character, setCharacter] = useState<Character>(new Character());
 
-  const selectedRace = data.races.find((r) => r.id === character.race) || null;
-  const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
-  const selectedClass = data.classes.find((c) => c.id === character.class) || null;
+  const character = presenter.getCharacter();
+  function setCharacter(c: Character | ((c: Character) => Character)) {
+    if (typeof c === "function") {
+      setPresenter(new CharacterPresenter(data, c(character)));
+    } else {
+      setPresenter(new CharacterPresenter(data, c));
+    }
+  }
+
+  const selectedRace = presenter.getRace();
+  const selectedTheme = presenter.getTheme();
+  const selectedClass = presenter.getClass();
 
   function addToContext(name: string, value: string | number): void {
     setContext((c) => ({ ...c, [name]: value }));
