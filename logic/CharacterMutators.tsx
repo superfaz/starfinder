@@ -1,13 +1,13 @@
 import { findOrError } from "app/helpers";
 import { DataSet } from "data";
-import { AbilityScore, Character, SecondaryTrait } from "model";
+import { Character, SecondaryTrait } from "model";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 export class CharacterMutators {
   private data: DataSet;
-  private setCharacter: (update: Character | ((c: Character) => Character)) => void;
+  private setCharacter: (updator: (c: Character) => Character) => void;
 
-  constructor(data: DataSet, setCharacter: (update: Character | ((c: Character) => Character)) => void) {
+  constructor(data: DataSet, setCharacter: (updator: (c: Character) => Character) => void) {
     this.data = data;
     this.setCharacter = setCharacter;
   }

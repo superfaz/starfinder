@@ -38,12 +38,12 @@ export function TabClassSelection({ data, character, mutators }: CharacterTabPro
   const selectedClass = character.getClass();
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateClass(id);
   }
 
   function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateSoldierAbilityScore(id);
   }
 
@@ -111,15 +111,7 @@ export function TabClassSelection({ data, character, mutators }: CharacterTabPro
   );
 }
 
-export function TabClassDetails({
-  data,
-  character,
-  context,
-}: {
-  data: DataSet;
-  character: CharacterPresenter;
-  context: Context;
-}) {
+export function TabClassDetails({ character, context }: { character: CharacterPresenter; context: Context }) {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {

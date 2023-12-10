@@ -17,17 +17,17 @@ export function TabRaceSelection({ data, character, mutators }: CharacterTabProp
   const selectedVariant = character.getRaceVariant();
 
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateRace(id);
   }
 
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateRaceVariant(id);
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateHumanBonus(id);
   }
 
@@ -110,7 +110,7 @@ export function TabRaceSelection({ data, character, mutators }: CharacterTabProp
   );
 }
 
-export function TabRaceTraits({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+export function TabRaceTraits({ character }: { character: CharacterPresenter }) {
   const selectedRace = character.getRace();
   if (!selectedRace) {
     return null;
@@ -138,7 +138,7 @@ export function TabRaceTraits({ data, character }: { data: DataSet; character: C
   );
 }
 
-export function TabRaceAlternateTraits({ data, character, mutators }: CharacterTabProps) {
+export function TabRaceAlternateTraits({ character, mutators }: CharacterTabProps) {
   const selectedRace = character.getRace();
 
   function findReplacedTrait(id: string): Trait | Modifier | null {
@@ -146,12 +146,12 @@ export function TabRaceAlternateTraits({ data, character, mutators }: CharacterT
       return null;
     }
 
-    let trait = selectedRace.traits.find((t) => t.id === id);
+    const trait = selectedRace.traits.find((t) => t.id === id);
     if (trait) {
       return trait;
     }
 
-    let modifier = selectedRace.traits
+    const modifier = selectedRace.traits
       .map((t) => t.modifiers)
       .flat()
       .find((c) => c !== undefined && c.id === id);

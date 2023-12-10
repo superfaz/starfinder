@@ -17,12 +17,8 @@ export function ClientComponent({ data }: { data: DataSet }) {
   const [context, setContext] = useState<Context>({});
   const [navigation, setNavigation] = useState("intro");
 
-  function setCharacter(update: Character | ((c: Character) => Character)) {
-    if (typeof update === "function") {
-      setPresenter((p) => new CharacterPresenter(data, update(p.getCharacter())));
-    } else {
-      setPresenter(new CharacterPresenter(data, update));
-    }
+  function setCharacter(updator: (c: Character) => Character) {
+    setPresenter((p) => new CharacterPresenter(data, updator(p.getCharacter())));
   }
 
   const mutators = new CharacterMutators(data, setCharacter);
@@ -118,7 +114,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
       </Col>
 
       <Col hidden={navigation !== "class"}>
-        <TabClassDetails data={data} character={presenter} context={context} />
+        <TabClassDetails character={presenter} context={context} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>

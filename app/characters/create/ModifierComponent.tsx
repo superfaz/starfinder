@@ -27,7 +27,7 @@ export function replace(context: Context, text: string | undefined): string {
 }
 
 function findOrError<T>(array: T[], predicate: (value: T) => boolean): T {
-  let result = array.find(predicate);
+  const result = array.find(predicate);
   if (result === undefined) {
     throw new Error("Can't find element in array");
   }
@@ -35,9 +35,9 @@ function findOrError<T>(array: T[], predicate: (value: T) => boolean): T {
 }
 
 export default function ModifierComponent({ modifier, context }: { modifier: Modifier; context?: Context }) {
-  let target = replace(context || {}, modifier.target);
-  let description = replace(context || {}, modifier.description);
-  let value: number =
+  const target = replace(context || {}, modifier.target);
+  const description = replace(context || {}, modifier.description);
+  const value: number =
     typeof modifier.value === "string"
       ? parseInt(replace(context || {}, modifier.value as string))
       : (modifier.value as number);
@@ -68,14 +68,14 @@ export default function ModifierComponent({ modifier, context }: { modifier: Mod
         </p>
       );
     case "skill":
-    case "classSkill":
+    case "classSkill": {
       let skillName: string;
       if (target === "any") {
         skillName = "Au choix";
       } else if (target === "all") {
         skillName = "Toutes";
       } else {
-        let skill = Skills.find((skill) => skill.id === target);
+        const skill = Skills.find((skill) => skill.id === target);
         skillName = skill ? skill.name : target;
         if (skill === undefined) {
           console.error(`Skill '${modifier.target}' not found`);
@@ -100,7 +100,7 @@ export default function ModifierComponent({ modifier, context }: { modifier: Mod
           </p>
         );
       }
-
+    }
     case "featCount":
       return (
         <p>

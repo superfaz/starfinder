@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
@@ -42,10 +43,10 @@ export function TabAbilityScoresSelection({ data, character, mutators }: Charact
         </Col>
       </Form.Group>
       {data.abilityScores.map((abilityScore) => {
-        let score = abilityScores[abilityScore.id];
-        let minimalScore = minimalAbilityScores[abilityScore.id];
-        let delta = minimalScore - 10;
-        let modifier = computeAbilityScoreModifier(score);
+        const score = abilityScores[abilityScore.id];
+        const minimalScore = minimalAbilityScores[abilityScore.id];
+        const delta = minimalScore - 10;
+        const modifier = computeAbilityScoreModifier(score);
         return (
           <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
             <Form.Label column className="header">
@@ -103,7 +104,7 @@ export function TabSkillsSelection({ data, character, mutators }: CharacterTabPr
 
   const availableSkillRanks = character.getRemainingSkillRanksPoints();
 
-  function handleSkillRankChange(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handleSkillRankChange(event: ChangeEvent<HTMLInputElement>): void {
     const skillId = event.target.id;
     const checked = event.target.checked;
     mutators.updateSkillRank(skillId, checked ? 1 : -1);

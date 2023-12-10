@@ -39,8 +39,8 @@ export default function OperativeClassDetails({
       {features
         .filter((s) => s.level === level)
         .map((feature, index) => {
-          let evolutions = feature.evolutions || {};
-          let localContext = {
+          const evolutions = feature.evolutions || {};
+          const localContext = {
             ...context,
             ...(selectedSpecialization?.variables || {}),
             ...(evolutions[level] || {}),
@@ -66,7 +66,7 @@ export default function OperativeClassDetails({
                           <div key={level}>
                             <Badge bg="secondary">{level}</Badge> {values.name && <strong>{values.name}</strong>}{" "}
                             {Object.entries(values)
-                              .filter(([key, value]) => key !== "name")
+                              .filter(([key]) => key !== "name")
                               .map(([key, value]) => `${operativeData.labels[key]}${value}`)
                               .join(", ")}
                           </div>

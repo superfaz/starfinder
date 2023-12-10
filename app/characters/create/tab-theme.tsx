@@ -27,7 +27,7 @@ export function TabThemeSelection({
   const scholarDetails = character.getScholarDetails();
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateTheme(id);
 
     if (id === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
@@ -37,25 +37,25 @@ export function TabThemeSelection({
   }
 
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateNoThemeAbilityScore(id);
   }
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let id = e.target.value;
+    const id = e.target.value;
     mutators.updateScholarSkill(id);
     addToContext("scholarSkill", id);
     addToContext("scholarSpecialization", data.specials.scholar[id][0]);
   }
 
   function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>): void {
-    let specialization = e.target.value;
+    const specialization = e.target.value;
     mutators.updateScholarSpecialization(specialization);
     addToContext("scholarSpecialization", specialization);
   }
 
   function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>): void {
-    let label = e.target.value;
+    const label = e.target.value;
     mutators.updateScholarLabel(label);
     addToContext("scholarSpecialization", label);
   }
@@ -139,15 +139,7 @@ export function TabThemeSelection({
   );
 }
 
-export function TabThemeTraits({
-  data,
-  character,
-  context,
-}: {
-  data: DataSet;
-  character: CharacterPresenter;
-  context: Context;
-}) {
+export function TabThemeTraits({ character, context }: { character: CharacterPresenter; context: Context }) {
   const selectedTheme = character.getTheme();
 
   return (
