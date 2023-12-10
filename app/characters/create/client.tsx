@@ -17,7 +17,6 @@ export function ClientComponent({ data }: { data: DataSet }) {
   const [context, setContext] = useState<Context>({});
   const [navigation, setNavigation] = useState("intro");
 
-  const character = presenter.getCharacter();
   function setCharacter(update: Character | ((c: Character) => Character)) {
     if (typeof update === "function") {
       setPresenter((p) => new CharacterPresenter(data, update(p.getCharacter())));
@@ -41,7 +40,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
   }
 
   // This is a hack to make the character sheet fill the screen
-  window.document.getElementsByTagName("html")[0].className = "fullscreen";
+  window && (window.document.getElementsByTagName("html")[0].className = "fullscreen");
 
   return (
     <Row>
@@ -132,7 +131,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
 
       <Col lg={12} hidden={navigation !== "debug"}>
         <h5>Character</h5>
-        <pre>{JSON.stringify(character, null, 2)}</pre>
+        <pre>{JSON.stringify(presenter.getCharacter(), null, 2)}</pre>
         <h5>Context</h5>
         <pre>{JSON.stringify(context, null, 2)}</pre>
       </Col>
