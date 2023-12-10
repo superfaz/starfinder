@@ -1,6 +1,7 @@
 import { findOrError } from "app/helpers";
 import { DataSet } from "data";
-import { Character, SecondaryTrait } from "model";
+import { AbilityScore, Character, SecondaryTrait } from "model";
+import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 export class CharacterMutators {
   private data: DataSet;
@@ -20,7 +21,7 @@ export class CharacterMutators {
   }
 
   updateHumanBonus(id: string) {
-    this.setCharacter((c) => updateHumanBonus(c, id));
+    this.setCharacter((c) => updateHumanBonus(this.data, c, id));
   }
 
   enableSecondaryTrait(trait: SecondaryTrait) {
@@ -36,7 +37,7 @@ export class CharacterMutators {
   }
 
   updateNoThemeAbilityScore(id: string) {
-    this.setCharacter((c) => updateNoThemeAbilityScore(c, id));
+    this.setCharacter((c) => updateNoThemeAbilityScore(this.data, c, id));
   }
 
   updateScholarSkill(id: string) {
@@ -52,7 +53,7 @@ export class CharacterMutators {
   }
 
   updateClass(id: string) {
-    this.setCharacter((c) => updateClass(c, id));
+    this.setCharacter((c) => updateClass(this.data, c, id));
   }
 
   updateSoldierAbilityScore(id: string) {
@@ -96,7 +97,6 @@ export function updateRace(data: DataSet, character: Character, raceId: string):
     raceVariant: race.variants[0].id,
     raceOptions: undefined,
     traits: race.traits.map((t) => t.id),
-    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   };
 
   // Special case - prepare the associated options
@@ -104,6 +104,7 @@ export function updateRace(data: DataSet, character: Character, raceId: string):
     result.raceOptions = { humanBonus: data.abilityScores[0].id };
   }
 
+  result.abilityScores = computeMinimalAbilityScores(data, result);
   return result;
 }
 
@@ -127,7 +128,6 @@ export function updateRaceVariant(data: DataSet, character: Character, variantId
     ...character,
     raceVariant: variantId,
     raceOptions: undefined,
-    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   };
 
   // Special case - prepare the associated options
@@ -135,6 +135,7 @@ export function updateRaceVariant(data: DataSet, character: Character, variantId
     result.raceOptions = { humanBonus: data.abilityScores[0].id };
   }
 
+  result.abilityScores = computeMinimalAbilityScores(data, result);
   return result;
 }
 
@@ -143,16 +144,19 @@ export function updateRaceVariant(data: DataSet, character: Character, variantId
  *
  * Ensure that the ability scores are reset.
  *
+ * @param data The data set
  * @param character The character to update
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateHumanBonus(character: Character, abilityScoreId: string): Character {
-  return {
+export function updateHumanBonus(data: DataSet, character: Character, abilityScoreId: string): Character {
+  let result: Character = {
     ...character,
     raceOptions: { humanBonus: abilityScoreId },
-    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   };
+
+  result.abilityScores = computeMinimalAbilityScores(data, result);
+  return result;
 }
 
 /**
@@ -197,7 +201,6 @@ export function updateTheme(data: DataSet, character: Character, themeId: string
     ...character,
     theme: themeId,
     themeOptions: undefined,
-    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   };
 
   // Special cases - prepare the associated options
@@ -213,25 +216,28 @@ export function updateTheme(data: DataSet, character: Character, themeId: string
     result.themeOptions = { noThemeAbility: "str" };
   }
 
+  result.abilityScores = computeMinimalAbilityScores(data, result);
   return result;
 }
 
 /**
  * Updates the ability score selected as a bonus for a character with 'no theme'.
  *
+ * @param data The data set
  * @param character The character to update
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateNoThemeAbilityScore(character: Character, abilityScoreId: string): Character {
-  return {
+export function updateNoThemeAbilityScore(data: DataSet, character: Character, abilityScoreId: string): Character {
+  let result: Character = {
     ...character,
     themeOptions: {
       ...character.themeOptions,
       noThemeAbility: abilityScoreId,
     },
-    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   };
+  result.abilityScores = computeMinimalAbilityScores(data, result);
+  return result;
 }
 
 /**
@@ -297,11 +303,12 @@ export function updateScholarLabel(character: Character, label: string): Charact
  *
  * Ensure that the class options and ability scores are reset.
  *
+ * @param data The data set
  * @param character The character to update
  * @param classId The identifier of its new class
  * @returns The updated character
  */
-export function updateClass(character: Character, classId: string): Character {
+export function updateClass(data: DataSet, character: Character, classId: string): Character {
   if (character.class === classId) {
     // No change
     return character;
@@ -311,7 +318,6 @@ export function updateClass(character: Character, classId: string): Character {
     ...character,
     class: classId,
     classOptions: undefined,
-    abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
   };
 
   // Special cases - prepare the associated options
@@ -323,6 +329,7 @@ export function updateClass(character: Character, classId: string): Character {
     result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
   }
 
+  result.abilityScores = computeMinimalAbilityScores(data, result);
   return result;
 }
 
@@ -393,8 +400,8 @@ export function updateSkillRank(character: Character, skillId: string, delta: nu
     return character;
   }
 
-  const newRank = currentRank ?? 0 + delta;
-  if (newRank < 0) {
+  const newRank = (currentRank ?? 0) + delta;
+  if (newRank <= 0) {
     // Remove the rank
     const { [skillId]: _, ...skillRanks } = character.skillRanks;
     return {

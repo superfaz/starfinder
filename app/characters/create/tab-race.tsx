@@ -123,7 +123,7 @@ export function TabRaceTraits({ data, character }: { data: DataSet; character: C
         <Card
           key={trait.id}
           className={
-            character.getTraits().find((t) => t.id === trait.id) !== undefined ? "" : "text-decoration-line-through"
+            character.getRaceTraits().find((t) => t.id === trait.id) !== undefined ? "" : "text-decoration-line-through"
           }
         >
           <Card.Header>{trait.name}</Card.Header>
@@ -183,11 +183,11 @@ export function TabRaceAlternateTraits({ data, character, mutators }: CharacterT
             <Card.Header>
               <Form.Switch
                 label={trait.name}
-                checked={character.getTraits().find((t) => t.id === trait.id) !== undefined}
+                checked={character.getRaceTraits().find((t) => t.id === trait.id) !== undefined}
                 onChange={(e) => handleTraitEnabled(trait, e)}
                 disabled={
-                  character.getTraits().find((t) => t.id === trait.id) === undefined &&
-                  trait.replace.some((r) => character.getTraits().find((t) => t.id === r) === undefined)
+                  character.getRaceTraits().find((t) => t.id === trait.id) === undefined &&
+                  trait.replace.some((r) => character.getRaceTraits().find((t) => t.id === r) === undefined)
                 }
               />
             </Card.Header>

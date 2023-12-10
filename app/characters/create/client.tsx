@@ -123,11 +123,11 @@ export function ClientComponent({ data }: { data: DataSet }) {
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
-        <TabAbilityScoresSelection data={data} character={character} setCharacter={setCharacter} />
+        <TabAbilityScoresSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
-        <TabSkillsSelection data={data} character={character} setCharacter={setCharacter} />
+        <TabSkillsSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col lg={12} hidden={navigation !== "debug"}>

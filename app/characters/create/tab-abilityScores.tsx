@@ -1,111 +1,21 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
-import { AbilityScore, Character, Modifier } from "model";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
-import { updateAbilityScore, updateSkillRank } from "logic/CharacterMutators";
+import { CharacterMutators, CharacterPresenter, computeAbilityScoreModifier } from "logic";
 
-function computeMinimalAbilityScoreFor(data: DataSet, character: Character, abilityScore: AbilityScore): number {
-  const selectedRace = data.races.find((r) => r.id === character.race) || null;
-  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
-  const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
-
-  let score = 10;
-
-  if (selectedVariant) {
-    score += selectedVariant.abilityScores[abilityScore.id] || 0;
-  }
-
-  if (selectedTheme) {
-    score += selectedTheme.abilityScores[abilityScore.id] || 0;
-  }
-
-  if (
-    // Race: Human and Variant: Standard
-    character.raceVariant === "humans-standard" &&
-    character.raceOptions !== undefined &&
-    abilityScore.id === character.raceOptions.humanBonus
-  ) {
-    score += 2;
-  }
-
-  if (
-    // Theme: No Theme
-    character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" &&
-    character.themeOptions !== undefined &&
-    abilityScore.id === character.themeOptions.noThemeAbility
-  ) {
-    score += 1;
-  }
-
-  return score;
-}
-
-function computeRemainingPoints(data: DataSet, character: Character): number {
-  let points = 10;
-  data.abilityScores.forEach((abilityScore) => {
-    let minimalScore = computeMinimalAbilityScoreFor(data, character, abilityScore);
-    if (character.abilityScores[abilityScore.id] > minimalScore) {
-      points -= character.abilityScores[abilityScore.id] - minimalScore;
-    }
-  });
-
-  return points;
-}
-
-function computeAbilityScoreModifier(character: Character, abilityScoreId: string): number {
-  return Math.floor((character.abilityScores[abilityScoreId] - 10) / 2);
-}
-
-function computeSkillBonus(data: DataSet, character: Character, skillId: string): number | undefined {
-  const selectedClass = findOrError(data.classes, (c) => c.id === character.class);
-  const classSkills = selectedClass.classSkills;
-  const skill = findOrError(data.skills, (s) => s.id === skillId);
-  const abilityScore = skill.abilityScore;
-  const abilityScoreModifier = computeAbilityScoreModifier(character, abilityScore);
-
-  const ranks = character.skillRanks[skillId] || 0;
-  const isTrained = character.skillRanks[skillId] !== undefined;
-  const isClassSkill = classSkills.includes(skillId);
-
-  if (isClassSkill && isTrained) {
-    return 3 + ranks + abilityScoreModifier;
-  } else if (isTrained) {
-    return ranks + abilityScoreModifier;
-  } else if (skill.trainedOnly) {
-    return undefined;
-  } else {
-    return abilityScoreModifier;
-  }
-}
-
-export function TabAbilityScoresSelection({
-  data,
-  character,
-  setCharacter,
-}: {
+export interface CharacterTabProps {
   data: DataSet;
-  character: Character;
-  setCharacter: Dispatch<SetStateAction<Character>>;
-}) {
-  useEffect(() => {
-    data.abilityScores.forEach((abilityScore) => {
-      let minimalScore = computeMinimalAbilityScoreFor(data, character, abilityScore);
-      if (character.abilityScores[abilityScore.id] < minimalScore) {
-        setCharacter((character) => {
-          return {
-            ...character,
-            abilityScores: { ...character.abilityScores, [abilityScore.id]: minimalScore },
-          };
-        });
-      }
-    });
-  }, [data, character, setCharacter]);
+  character: CharacterPresenter;
+  mutators: CharacterMutators;
+}
 
-  let points = computeRemainingPoints(data, character);
+export function TabAbilityScoresSelection({ data, character, mutators }: CharacterTabProps) {
+  const points = character.getRemainingAbilityScoresPoints();
+  const abilityScores = character.getAbilityScores();
+  const minimalAbilityScores = character.getMinimalAbilityScores();
 
   function handleAbilityScoreClick(abilityScoreId: string, delta: number): void {
-    setCharacter((character) => updateAbilityScore(character, abilityScoreId, delta));
+    mutators.updateAbilityScore(abilityScoreId, delta);
   }
 
   return (
@@ -132,21 +42,25 @@ export function TabAbilityScoresSelection({
         </Col>
       </Form.Group>
       {data.abilityScores.map((abilityScore) => {
-        let minimalScore = computeMinimalAbilityScoreFor(data, character, abilityScore);
+        let score = abilityScores[abilityScore.id];
+        let minimalScore = minimalAbilityScores[abilityScore.id];
         let delta = minimalScore - 10;
-        let modifier = computeAbilityScoreModifier(character, abilityScore.id);
+        let modifier = computeAbilityScoreModifier(score);
         return (
           <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
             <Form.Label column className="header">
               {abilityScore.name}
-              {delta < 0 && <span className="badge ms-3 bg-secondary">{delta}</span>}
-              {delta > 0 && <span className="badge ms-3 bg-primary">+{delta}</span>}
+              {delta && (
+                <Badge bg={delta < 0 ? "secondary" : "primary"} className="ms-3">
+                  {displayBonus(delta)}
+                </Badge>
+              )}
             </Form.Label>
             <Col lg={4}>
               <InputGroup>
                 <Button
                   variant="outline-secondary"
-                  disabled={character.abilityScores[abilityScore.id] <= minimalScore}
+                  disabled={score <= minimalScore}
                   onClick={() => handleAbilityScoreClick(abilityScore.id, -1)}
                 >
                   <i className="bi-dash-lg"></i>
@@ -154,14 +68,14 @@ export function TabAbilityScoresSelection({
                 <Form.Control
                   type="number"
                   className="text-center"
-                  value={character.abilityScores[abilityScore.id] || minimalScore}
+                  value={score}
                   onChange={() => {}}
                   min={minimalScore}
-                  max={4}
+                  max={18}
                 />
                 <Button
                   variant="outline-secondary"
-                  disabled={points <= 0 || character.abilityScores[abilityScore.id] >= 18}
+                  disabled={points <= 0 || score >= 18}
                   onClick={() => handleAbilityScoreClick(abilityScore.id, 1)}
                 >
                   <i className="bi-plus-lg"></i>
@@ -169,7 +83,7 @@ export function TabAbilityScoresSelection({
               </InputGroup>
             </Col>
             <Col lg={2}>
-              <div className="form-control bg-secondary text-center">{modifier > 0 ? "+" + modifier : modifier}</div>
+              <div className="form-control bg-secondary text-center">{displayBonus(modifier)}</div>
             </Col>
           </Form.Group>
         );
@@ -178,51 +92,21 @@ export function TabAbilityScoresSelection({
   );
 }
 
-export function TabSkillsSelection({
-  data,
-  character,
-  setCharacter,
-}: {
-  data: DataSet;
-  character: Character;
-  setCharacter: Dispatch<SetStateAction<Character>>;
-}) {
-  const selectedRace = data.races.find((r) => r.id === character.race);
-  const selectedTheme = data.themes.find((t) => t.id === character.theme);
-  const selectedClass = data.classes.find((c) => c.id === character.class);
+export function TabSkillsSelection({ data, character, mutators }: CharacterTabProps) {
+  const selectedRace = character.getRace();
+  const selectedTheme = character.getTheme();
+  const selectedClass = character.getClass();
 
-  if (selectedRace === undefined || selectedTheme === undefined || selectedClass === undefined) {
+  if (!selectedRace || !selectedTheme || !selectedClass) {
     return null;
   }
 
-  const allRaceTraits = selectedRace.traits.concat(selectedRace.secondaryTraits);
-  const selectedRaceTraits = allRaceTraits.filter((t) => character.traits.includes(t.id));
-  const themeTraits = selectedTheme.features;
-  const characterTraits = selectedRaceTraits.concat(themeTraits);
-
-  const modifiers = characterTraits
-    .map((t) => t.modifiers)
-    .flat()
-    .filter((t) => t && (t.level === undefined || t.level <= 1)) as Modifier[];
-
-  const classSkillsFromRace = modifiers
-    .filter((m) => m.type === "classSkill" && m.target)
-    .map((m) => m.target) as string[];
-  const classSkills = selectedClass.classSkills.concat(classSkillsFromRace);
-
-  const skillRanks =
-    selectedClass.skillRank +
-    computeAbilityScoreModifier(character, "int") +
-    modifiers
-      .filter((m) => m.type === "skillRank")
-      .reduce((acc, m) => acc + (typeof m.value === "number" ? m.value : 0), 0);
-
-  const availableSkillRanks = skillRanks - Object.values(character.skillRanks).reduce((acc, v) => acc + v, 0);
+  const availableSkillRanks = character.getRemainingSkillRanksPoints();
 
   function handleSkillRankChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const skillId = event.target.id;
     const checked = event.target.checked;
-    setCharacter((character) => updateSkillRank(character, skillId, checked ? 1 : -1));
+    mutators.updateSkillRank(skillId, checked ? 1 : -1);
   }
 
   return (
@@ -256,42 +140,39 @@ export function TabSkillsSelection({
         <Col lg={2}></Col>
       </Row>
 
-      {data.skills
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .map((skill) => {
-          const bonus = computeSkillBonus(data, character, skill.id);
-          return (
-            <Form.Group key={skill.id} as={Row} controlId={skill.id}>
-              <Form.Label column>
-                {skill.trainedOnly && (
-                  <i className="bi bi-mortarboard-fill text-secondary" title="Formation nécessaire"></i>
-                )}{" "}
-                {skill.armorCheckPenalty && (
-                  <i className="bi bi-shield-shaded text-secondary" title="Le malus d’armure aux tests s’applique"></i>
-                )}{" "}
-                {skill.name}{" "}
-                {skill.abilityScore &&
-                  "(" + findOrError(data.abilityScores, (a) => a.id === skill.abilityScore).code + ")"}
-              </Form.Label>
-              <Col lg={2} className="pt-2 text-center">
-                {classSkills.includes(skill.id) && <Form.Check type="checkbox" checked disabled />}
-              </Col>
-              <Col lg={2} className="pt-2 text-center">
-                <Form.Check
-                  type="checkbox"
-                  id={skill.id}
-                  disabled={character.skillRanks[skill.id] === undefined && availableSkillRanks <= 0}
-                  checked={character.skillRanks[skill.id] !== undefined}
-                  onChange={handleSkillRankChange}
-                />
-              </Col>
-              <Col lg={2} className="pt-2 text-center">
-                {bonus !== undefined && <Badge bg={bonus > 0 ? "primary" : "secondary"}>{displayBonus(bonus)}</Badge>}
-                {bonus === undefined && "-"}
-              </Col>
-            </Form.Group>
-          );
-        })}
+      {character.getSkills().map((skill) => (
+        <Form.Group key={skill.id} as={Row} controlId={skill.id}>
+          <Form.Label column>
+            {skill.definition.trainedOnly && (
+              <i className="bi bi-mortarboard-fill text-secondary" title="Formation nécessaire"></i>
+            )}{" "}
+            {skill.definition.armorCheckPenalty && (
+              <i className="bi bi-shield-shaded text-secondary" title="Le malus d’armure aux tests s’applique"></i>
+            )}{" "}
+            {skill.definition.name}{" "}
+            {skill.definition.abilityScore &&
+              "(" + findOrError(data.abilityScores, (a) => a.id === skill.definition.abilityScore).code + ")"}
+          </Form.Label>
+          <Col lg={2} className="pt-2 text-center">
+            {skill.isClassSkill && <Form.Check type="checkbox" checked disabled />}
+          </Col>
+          <Col lg={2} className="pt-2 text-center">
+            <Form.Check
+              type="checkbox"
+              id={skill.id}
+              disabled={skill.ranks === 0 && availableSkillRanks <= 0}
+              checked={skill.ranks > 0}
+              onChange={handleSkillRankChange}
+            />
+          </Col>
+          <Col lg={2} className="pt-2 text-center">
+            {skill.bonus !== undefined && (
+              <Badge bg={skill.bonus > 0 ? "primary" : "secondary"}>{displayBonus(skill.bonus)}</Badge>
+            )}
+            {skill.bonus === undefined && "-"}
+          </Col>
+        </Form.Group>
+      ))}
     </Stack>
   );
 }
