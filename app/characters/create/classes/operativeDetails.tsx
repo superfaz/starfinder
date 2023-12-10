@@ -2,8 +2,8 @@ import { Badge, Card, Col, Row } from "react-bootstrap";
 import { Context } from "../types";
 import operativeData from "data/class-operative.json";
 import ModifierComponent, { replace } from "../ModifierComponent";
-import { Feature } from "model";
-import CharacterPresenter from "logic/CharacterPresenter";
+import { FeatureTemplate } from "model";
+import { CharacterPresenter } from "logic";
 
 const categories = {
   ex: "EXT",
@@ -25,7 +25,7 @@ export default function OperativeClassDetails({
     return null;
   }
 
-  const features: Feature[] = selectedSpecialization.features.concat(operativeData.features);
+  const features: FeatureTemplate[] = selectedSpecialization.features.concat(operativeData.features);
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)

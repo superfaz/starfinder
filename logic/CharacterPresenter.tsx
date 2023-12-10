@@ -1,5 +1,5 @@
 import { DataSet } from "data";
-import { Character, Class, Modifier, Race, Skill, Theme, Trait, Variant } from "model";
+import { Character, Class, Modifier, Race, SkillDefinition, Theme, Trait, Variant } from "model";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -239,7 +239,7 @@ export class CharacterPresenter {
     return this.cachedClassSkills;
   }
 
-  getSkills(): { id: string; definition: Skill; ranks: number; isClassSkill: boolean; bonus: number | undefined }[] {
+  getSkills(): { id: string; definition: SkillDefinition; ranks: number; isClassSkill: boolean; bonus: number | undefined }[] {
     return this.data.skills
       .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {

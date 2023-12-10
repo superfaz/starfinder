@@ -1,4 +1,4 @@
-import { AbilityScore, Alignment, Class, Race, Skill, Special, Theme } from "model";
+import { AbilityScore, Alignment, Class, Race, SkillDefinition, Special, Theme } from "model";
 import { ClientComponent } from "./client";
 import { AbilityScores, Alignments, Classes, Races, Skills, Specials, Themes } from "data";
 import { DataSet } from "data";
@@ -15,7 +15,7 @@ async function getClasses(): Promise<Class[]> {
   return Classes;
 }
 
-async function getSkills(): Promise<Skill[]> {
+async function getSkills(): Promise<SkillDefinition[]> {
   return Skills;
 }
 
