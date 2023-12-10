@@ -9,7 +9,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Orbitron&display=block"
+          href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Orbitron&display=optional"
           rel="stylesheet"
         />
       </head>
