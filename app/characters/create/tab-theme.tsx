@@ -75,12 +75,15 @@ export function TabThemeSelection({
       </Form.FloatingLabel>
       {selectedTheme && !character.hasNoTheme() && (
         <Stack direction="horizontal">
-          {Object.entries(selectedTheme.abilityScores).map(([key, value]) => (
-            <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-              {findOrError(data.abilityScores, (a) => a.id === key).code}
-              {displayBonus(value)}
-            </Badge>
-          ))}
+          {Object.entries(selectedTheme.abilityScores).map(
+            ([key, value]) =>
+              value && (
+                <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                  {findOrError(data.abilityScores, (a) => a.id === key).code}
+                  {displayBonus(value)}
+                </Badge>
+              )
+          )}
         </Stack>
       )}
       {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}

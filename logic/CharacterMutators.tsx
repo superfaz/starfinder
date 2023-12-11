@@ -91,7 +91,7 @@ export function updateRace(data: DataSet, character: Character, raceId: string):
     return character;
   }
 
-  let result: Character = {
+  const result: Character = {
     ...character,
     race: race.id,
     raceVariant: race.variants[0].id,
@@ -124,7 +124,7 @@ export function updateRaceVariant(data: DataSet, character: Character, variantId
     return character;
   }
 
-  let result: Character = {
+  const result: Character = {
     ...character,
     raceVariant: variantId,
     raceOptions: undefined,
@@ -150,7 +150,7 @@ export function updateRaceVariant(data: DataSet, character: Character, variantId
  * @returns The updated character
  */
 export function updateHumanBonus(data: DataSet, character: Character, abilityScoreId: string): Character {
-  let result: Character = {
+  const result: Character = {
     ...character,
     raceOptions: { humanBonus: abilityScoreId },
   };
@@ -197,7 +197,7 @@ export function disableSecondaryTrait(character: Character, trait: SecondaryTrai
  * @returns The updated character
  */
 export function updateTheme(data: DataSet, character: Character, themeId: string): Character {
-  let result: Character = {
+  const result: Character = {
     ...character,
     theme: themeId,
     themeOptions: undefined,
@@ -229,7 +229,7 @@ export function updateTheme(data: DataSet, character: Character, themeId: string
  * @returns The updated character
  */
 export function updateNoThemeAbilityScore(data: DataSet, character: Character, abilityScoreId: string): Character {
-  let result: Character = {
+  const result: Character = {
     ...character,
     themeOptions: {
       ...character.themeOptions,
@@ -314,7 +314,7 @@ export function updateClass(data: DataSet, character: Character, classId: string
     return character;
   }
 
-  let result: Character = {
+  const result: Character = {
     ...character,
     class: classId,
     classOptions: undefined,

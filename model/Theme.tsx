@@ -5,6 +5,6 @@ export interface Theme {
   name: string;
   description: string;
   refs: string[];
-  abilityScores: Record<string, number>;
+  abilityScores: Record<string, number | undefined>;
   features: FeatureTemplate[];
 }

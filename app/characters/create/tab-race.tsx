@@ -63,12 +63,15 @@ export function TabRaceSelection({ data, character, mutators }: CharacterTabProp
               </Form.FloatingLabel>
               {!character.isHumanStandard() && (
                 <Stack direction="horizontal">
-                  {Object.entries(selectedVariant.abilityScores).map(([key, value]) => (
-                    <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                      {findOrError(data.abilityScores, (a) => a.id === key).code}
-                      {displayBonus(value)}
-                    </Badge>
-                  ))}
+                  {Object.entries(selectedVariant.abilityScores).map(
+                    ([key, value]) =>
+                      value && (
+                        <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                          {findOrError(data.abilityScores, (a) => a.id === key).code}
+                          {displayBonus(value)}
+                        </Badge>
+                      )
+                  )}
                 </Stack>
               )}
               {character.isHumanStandard() && (

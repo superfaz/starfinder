@@ -35,9 +35,6 @@ export function ClientComponent({ data }: { data: DataSet }) {
     setNavigation(eventKey || "");
   }
 
-  // This is a hack to make the character sheet fill the screen
-  window && (window.document.getElementsByTagName("html")[0].className = "fullscreen");
-
   return (
     <Row>
       <Col lg={12} className="mb-3">
@@ -94,7 +91,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
       </Col>
 
       <Col hidden={navigation !== "race"}>
-        <TabRaceTraits data={data} character={presenter} />
+        <TabRaceTraits character={presenter} />
       </Col>
 
       <Col hidden={navigation !== "race"}>
@@ -106,7 +103,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
       </Col>
 
       <Col hidden={navigation !== "theme"}>
-        <TabThemeTraits data={data} character={presenter} context={context} />
+        <TabThemeTraits character={presenter} context={context} />
       </Col>
 
       <Col lg={3} hidden={navigation !== "class"}>

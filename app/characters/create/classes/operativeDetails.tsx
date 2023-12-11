@@ -5,7 +5,7 @@ import ModifierComponent, { replace } from "../ModifierComponent";
 import { FeatureTemplate } from "model";
 import { CharacterPresenter } from "logic";
 
-const categories = {
+const categories: Record<string, string> = {
   ex: "EXT",
   ma: "MAG",
   su: "SUR",
@@ -25,7 +25,9 @@ export default function OperativeClassDetails({
     return null;
   }
 
-  const features: FeatureTemplate[] = selectedSpecialization.features.concat(operativeData.features);
+  const classFeatures: FeatureTemplate[] = operativeData.features;
+  const specializationFeatures: FeatureTemplate[] = selectedSpecialization.features;
+  const features: FeatureTemplate[] = classFeatures.concat(specializationFeatures);
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)
@@ -67,7 +69,7 @@ export default function OperativeClassDetails({
                             <Badge bg="secondary">{level}</Badge> {values.name && <strong>{values.name}</strong>}{" "}
                             {Object.entries(values)
                               .filter(([key]) => key !== "name")
-                              .map(([key, value]) => `${operativeData.labels[key]}${value}`)
+                              .map(([key, value]) => `${(operativeData.labels as Record<string, string>)[key]}${value}`)
                               .join(", ")}
                           </div>
                         );
