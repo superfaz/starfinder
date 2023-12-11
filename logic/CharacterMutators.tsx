@@ -169,7 +169,7 @@ export function updateHumanBonus(data: DataSet, character: Character, abilitySco
  * @returns The updated character
  */
 export function enableSecondaryTrait(character: Character, trait: SecondaryTrait): Character {
-  let traits = character.traits.filter((t) => !trait.replace.includes(t));
+  const traits = character.traits.filter((t) => !trait.replace.includes(t));
   return { ...character, traits: [...traits, trait.id] };
 }
 
