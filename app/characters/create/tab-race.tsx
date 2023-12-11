@@ -122,26 +122,30 @@ export function TabRaceTraits({ character }: { character: CharacterPresenter }) 
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Traits raciaux</h2>
-      {selectedRace.traits.map((trait) => (
-        <Card
-          key={trait.id}
-          className={
-            character.getRaceTraits().find((t) => t.id === trait.id) !== undefined ? "" : "text-decoration-line-through"
-          }
-        >
-          <Card.Header>{trait.name}</Card.Header>
-          <Card.Body>
-            {trait.description && <p className="text-muted">{trait.description}</p>}
-            {trait.modifiers &&
-              trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
-          </Card.Body>
-        </Card>
-      ))}
+      {selectedRace.traits.map((trait) => {
+        const isTraitEnabled = character.getRaceTraits().find((t) => t.id === trait.id) !== undefined;
+        return (
+          <Card key={trait.id} className={isTraitEnabled ? "border-primary" : "text-decoration-line-through"}>
+            <Card.Header>{trait.name}</Card.Header>
+            <Card.Body>
+              {trait.description && <p className="text-muted">{trait.description}</p>}
+              {trait.modifiers &&
+                trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
+            </Card.Body>
+          </Card>
+        );
+      })}
     </Stack>
   );
 }
 
-export function TabRaceAlternateTraits({ character, mutators }: CharacterTabProps) {
+export function TabRaceAlternateTraits({
+  character,
+  mutators,
+}: {
+  character: CharacterPresenter;
+  mutators: CharacterMutators;
+}) {
   const selectedRace = character.getRace();
 
   function findReplacedTrait(id: string): Trait | Modifier | null {
@@ -181,32 +185,35 @@ export function TabRaceAlternateTraits({ character, mutators }: CharacterTabProp
     <Stack direction="vertical" gap={2}>
       <h2>Traits alternatifs</h2>
       {selectedRace.secondaryTraits &&
-        selectedRace.secondaryTraits.map((trait) => (
-          <Card key={trait.id}>
-            <Card.Header>
-              <Form.Switch
-                label={trait.name}
-                checked={character.getRaceTraits().find((t) => t.id === trait.id) !== undefined}
-                onChange={(e) => handleTraitEnabled(trait, e)}
-                disabled={
-                  character.getRaceTraits().find((t) => t.id === trait.id) === undefined &&
-                  trait.replace.some((r) => character.getRaceTraits().find((t) => t.id === r) === undefined)
-                }
-              />
-            </Card.Header>
-            <Card.Body>
-              <div key={trait.id}>
-                <div>
-                  <span>Remplace : </span>
-                  {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
+        selectedRace.secondaryTraits.map((trait) => {
+          const isTraitEnabled = character.getRaceTraits().find((t) => t.id === trait.id) !== undefined;
+          return (
+            <Card key={trait.id} className={isTraitEnabled ? "border-primary" : ""}>
+              <Card.Header>
+                <Form.Switch
+                  label={trait.name}
+                  checked={isTraitEnabled}
+                  onChange={(e) => handleTraitEnabled(trait, e)}
+                  disabled={
+                    !isTraitEnabled &&
+                    trait.replace.some((r) => character.getRaceTraits().find((t) => t.id === r) === undefined)
+                  }
+                />
+              </Card.Header>
+              <Card.Body>
+                <div key={trait.id}>
+                  <div>
+                    <span>Remplace : </span>
+                    {trait.replace.map((r) => findReplacedTrait(r)?.name).join(", ")}
+                  </div>
+                  <p className="text-muted">{trait.description}</p>
+                  {trait.modifiers &&
+                    trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
                 </div>
-                <p className="text-muted">{trait.description}</p>
-                {trait.modifiers &&
-                  trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
-              </div>
-            </Card.Body>
-          </Card>
-        ))}
+              </Card.Body>
+            </Card>
+          );
+        })}
     </Stack>
   );
 }

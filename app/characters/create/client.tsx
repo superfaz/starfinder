@@ -95,7 +95,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
       </Col>
 
       <Col hidden={navigation !== "race"}>
-        <TabRaceAlternateTraits data={data} character={presenter} mutators={mutators} />
+        <TabRaceAlternateTraits character={presenter} mutators={mutators} />
       </Col>
 
       <Col lg={3} hidden={navigation !== "theme"}>
