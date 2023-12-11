@@ -41,7 +41,7 @@ export class CharacterMutators {
   }
 
   updateScholarSkill(id: string) {
-    this.setCharacter((c) => updateScholarSkill(c, id));
+    this.setCharacter((c) => updateScholarSkill(this.data, c, id));
   }
 
   updateScholarSpecialization(id: string) {
@@ -245,17 +245,18 @@ export function updateNoThemeAbilityScore(data: DataSet, character: Character, a
  *
  * Ensure that the scholar specialization and label are reset.
  *
+ * @param data The data set
  * @param character The character to update
  * @param skillId The identifier of the selected scholar skill
  * @returns The updated character
  */
-export function updateScholarSkill(character: Character, skillId: string): Character {
+export function updateScholarSkill(data: DataSet, character: Character, skillId: string): Character {
   return {
     ...character,
     themeOptions: {
       ...character.themeOptions,
       scholarSkill: skillId,
-      scholarSpecialization: "",
+      scholarSpecialization: data.specials.scholar[skillId][0],
       scholarLabel: "",
     },
   };
