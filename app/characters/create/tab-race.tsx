@@ -3,7 +3,7 @@ import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
-import { Modifier, SecondaryTrait, Trait } from "model";
+import { Feature, ModifierTemplate, SecondaryTrait } from "model";
 import ModifierComponent from "./ModifierComponent";
 
 export interface CharacterTabProps {
@@ -148,7 +148,7 @@ export function TabRaceAlternateTraits({
 }) {
   const selectedRace = character.getRace();
 
-  function findReplacedTrait(id: string): Trait | Modifier | null {
+  function findReplacedTrait(id: string): Feature | ModifierTemplate | null {
     if (!selectedRace) {
       return null;
     }

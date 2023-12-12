@@ -2,7 +2,7 @@ import { Badge, Card, Col, Row } from "react-bootstrap";
 import { Context } from "../types";
 import operativeData from "data/class-operative.json";
 import ModifierComponent, { replace } from "../ModifierComponent";
-import { FeatureTemplate } from "model";
+import { Feature } from "model";
 import { CharacterPresenter } from "logic";
 
 const categories: Record<string, string> = {
@@ -25,9 +25,9 @@ export default function OperativeClassDetails({
     return null;
   }
 
-  const classFeatures: FeatureTemplate[] = operativeData.features;
-  const specializationFeatures: FeatureTemplate[] = selectedSpecialization.features;
-  const features: FeatureTemplate[] = classFeatures.concat(specializationFeatures);
+  const classFeatures: Feature[] = operativeData.features;
+  const specializationFeatures: Feature[] = selectedSpecialization.features;
+  const features: Feature[] = classFeatures.concat(specializationFeatures);
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)

@@ -1,11 +1,11 @@
 import { ModifierType } from ".";
 
-export interface Modifier {
+export interface ModifierTemplate {
   id: string;
-  type: ModifierType;
+  type: ModifierType | string;
   level?: number;
   name?: string;
   description?: string;
   target?: string;
-  value?: number;
+  value?: string | number;
 }

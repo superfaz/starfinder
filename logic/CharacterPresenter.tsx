@@ -1,5 +1,5 @@
 import { DataSet } from "data";
-import { Character, Class, Modifier, Race, SkillDefinition, Theme, Trait, Variant } from "model";
+import { Character, Class, Feature, ModifierTemplate, Race, SkillDefinition, Theme, Variant } from "model";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -13,7 +13,7 @@ export function computeMinimalAbilityScores(data: DataSet, character: Character)
   const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
   const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
 
-  let scores: Record<string, number> = {};
+  const scores: Record<string, number> = {};
   data.abilityScores.forEach((abilityScore) => {
     let score = 10;
 
@@ -66,7 +66,7 @@ export class CharacterPresenter {
 
   private cachedRace: Race | null = null;
   private cachedRaceVariant: Variant | null = null;
-  private cachedRaceTraits: Trait[] | null = null;
+  private cachedRaceTraits: Feature[] | null = null;
   private cachedTheme: Theme | null = null;
   private cachedClass: Class | null = null;
   private cachedMinimalAbilityScores: Record<string, number> | null = null;
@@ -113,7 +113,7 @@ export class CharacterPresenter {
     return this.character.raceOptions?.humanBonus || null;
   }
 
-  getRaceTraits(): Trait[] {
+  getRaceTraits(): Feature[] {
     const race = this.getRace();
     if (!race) {
       return [];
@@ -202,7 +202,7 @@ export class CharacterPresenter {
       const abilityScores = this.getAbilityScores();
       const minimalAbilityScores = this.getMinimalAbilityScores();
       this.data.abilityScores.forEach((abilityScore) => {
-        let minimalScore = minimalAbilityScores[abilityScore.id];
+        const minimalScore = minimalAbilityScores[abilityScore.id];
         if (abilityScores[abilityScore.id] > minimalScore) {
           points -= abilityScores[abilityScore.id] - minimalScore;
         }
@@ -213,7 +213,14 @@ export class CharacterPresenter {
     return this.cachedRemainingAbilityScoresPoints;
   }
 
-  getModifiers(): Modifier[] {
+  /**
+   * Retrieves all the modifiers for the current character based on its race, theme, class and level.
+   *
+   * The provided modifier list is updated to ensure that all templates are managed.
+   *
+   * @returns The list of modifiers that apply to the character.
+   */
+  getModifiers(): ModifierTemplate[] {
     const selectedTheme = this.getTheme();
     const selectedRaceTraits = this.getRaceTraits();
     const themeTraits = selectedTheme?.features || [];
@@ -222,7 +229,7 @@ export class CharacterPresenter {
     return characterTraits
       .map((t) => t.modifiers)
       .flat()
-      .filter((t) => t && (t.level === undefined || t.level <= 1)) as Modifier[];
+      .filter((t) => t && (t.level === undefined || t.level <= 1)) as ModifierTemplate[];
   }
 
   getClassSkills(): string[] {
@@ -239,7 +246,13 @@ export class CharacterPresenter {
     return this.cachedClassSkills;
   }
 
-  getSkills(): { id: string; definition: SkillDefinition; ranks: number; isClassSkill: boolean; bonus: number | undefined }[] {
+  getSkills(): {
+    id: string;
+    definition: SkillDefinition;
+    ranks: number;
+    isClassSkill: boolean;
+    bonus: number | undefined;
+  }[] {
     return this.data.skills
       .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {

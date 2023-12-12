@@ -43,6 +43,7 @@
       {
         "id": "62551516-da4e-4adb-9d4e-af52ade0d7fa",
         "name": "Fabriqué",
+        "level": 1,
         "modifiers": [
           {
             "id": "988bc5e9-688c-4f3a-87d0-246cc92c4b56",
@@ -67,6 +68,7 @@
       {
         "id": "1653ddac-b66e-4da0-9a97-35dfcd5a71e3",
         "name": "Vision exceptionnelle",
+        "level": 1,
         "modifiers": [
           {
             "id": "04537386-ce38-429f-a732-dd71d767aa63",
@@ -86,6 +88,7 @@
         "id": "07b883eb-4568-4e24-bec4-293ced40adc2",
         "name": "Emotions contrôlées",
         "description": "Les androïdes trouvent les émotions déstabilisantes et les tiennent donc en respect.",
+        "level": 1,
         "modifiers": [
           {
             "id": "382ab54c-a61c-49ee-b55e-3de37c91085a",
@@ -104,6 +107,7 @@
       {
         "id": "470b64bd-f308-4192-99fd-17656e9bc386",
         "name": "Emplacement d'amélioration",
+        "level": 1,
         "modifiers": [
           {
             "id": "4adda420-bc94-4c18-9b91-99c0dc8a7c58",
@@ -119,11 +123,13 @@
         "id": "048c9e5c-f590-4e27-8f89-eafa88c351fd",
         "name": "Androïde xénométrique",
         "description": "Bien que la plupart des androïdes soient fabriqués pour ressembler aux humains, il en existe qui ont l’aspect d’autres espèces. Ces androïdes xénométriques possèdent des capacités qui imitent celles des autres races et, parfois, ont même recours à des technologies hybrides pour dupliquer des pouvoirs magiques.",
+        "level": 1,
         "replace": ["470b64bd-f308-4192-99fd-17656e9bc386", "1653ddac-b66e-4da0-9a97-35dfcd5a71e3"]
       },
       {
         "id": "382dc7bb-b245-4e28-81bb-4a3d852ae2d5",
         "name": "Augmentations facilitées",
+        "level": 1,
         "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
         "modifiers": [
           {
@@ -137,6 +143,7 @@
       {
         "id": "2937ca64-e195-4531-a8bf-6706c05be83e",
         "name": "Intégration à l’infosphère",
+        "level": 1,
         "replace": ["1653ddac-b66e-4da0-9a97-35dfcd5a71e3"],
         "modifiers": [
           {
@@ -150,6 +157,7 @@
       {
         "id": "de088f8b-dea2-4440-8691-c5c7ec67ae6e",
         "name": "Matrice d’imitation",
+        "level": 1,
         "replace": ["cb513c06-d9ea-44fe-9cbd-9a96ed64223d"],
         "modifiers": [
           {
@@ -163,12 +171,14 @@
       {
         "id": "19218a1a-73f2-4504-9f29-16a1fd9c5790",
         "name": "Nano-amélioration",
+        "level": 1,
         "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
         "modifiers": [{ "id": "4a9370f2-489c-4d12-abcd-43ca5d6709a1", "type": "feat", "name": "Nano-intégration" }]
       },
       {
         "id": "01ad5e2a-125e-4c06-a7ca-8cf49efb586f",
         "name": "Polyglotte",
+        "level": 1,
         "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
         "modifiers": [
           { "id": "452259d3-d474-4cf8-b48c-8b13536cfbcc", "type": "languageCount", "value": 4 },
@@ -237,11 +247,13 @@
       {
         "id": "da2c4adf-edb8-4f4c-8d8f-f25fced341ed",
         "name": "Don supplémentaire",
+        "level": 1,
         "modifiers": [{ "id": "63d2b8ec-3868-4fd8-b0c8-3baa3f933434", "type": "featCount", "value": 1 }]
       },
       {
         "id": "ceb2713a-636e-4a17-87c2-af82ee5a4a38",
         "name": "Compétent",
+        "level": 1,
         "modifiers": [{ "id": "25a4565e-8ced-434d-8743-87aac1c0ced9", "type": "skillRank", "value": 1 }]
       }
     ],
@@ -250,6 +262,7 @@
         "id": "b416c069-f77b-427d-9fce-de79297c9ca0",
         "name": "Adopté",
         "description": "De nombreux humains prospèrent dans différents secteurs métropolitains dominés par d’autres races, et certains d’entre eux sont adoptés par des membres d’une espèce différente.",
+        "level": 1,
         "replace": ["ceb2713a-636e-4a17-87c2-af82ee5a4a38"],
         "modifiers": [
           {
@@ -270,6 +283,7 @@
         "id": "f27e550f-819a-45e1-8f83-a400894435aa",
         "name": "Fortifié",
         "description": "De petites enclaves humaines survivent dans des environnements fatals aux autres membres de leur espèce et, au fil des générations, ils développent une immunité contre ces conditions.",
+        "level": 1,
         "replace": ["ceb2713a-636e-4a17-87c2-af82ee5a4a38"],
         "modifiers": [
           {
@@ -289,6 +303,7 @@
         "id": "417702b4-390e-4267-a45a-01ab5a14f63c",
         "name": "Vision crépusculaire",
         "description": "Les humains vivant dans des environnements qui sont peu exposés à la lumière naturelle, tels que les cités de l’hémisphère crépusculaire de Verces ou les complexes souterrains aballoniens, s’adaptent du mieux qu’ils peuvent.",
+        "level": 1,
         "replace": ["ceb2713a-636e-4a17-87c2-af82ee5a4a38"],
         "modifiers": [
           {
@@ -355,6 +370,7 @@
       {
         "id": "9dd99dd2-9a57-41e6-9de0-e23b8ea215ca",
         "name": "Foulée du désert",
+        "level": 1,
         "modifiers": [
           {
             "id": "0985d4b1-5288-49b3-9c01-b13d438e2f08",
@@ -367,6 +383,7 @@
       {
         "id": "d131ddc2-fcff-4e0a-9f2b-b055644c28c5",
         "name": "Quatre bras",
+        "level": 1,
         "modifiers": [
           {
             "id": "59492ac8-29e3-499c-967f-af4e261ea837",
@@ -379,6 +396,7 @@
       {
         "id": "1114ee16-c64f-4992-84de-cc31a3a62058",
         "name": "Historien",
+        "level": 1,
         "modifiers": [
           {
             "id": "9f674707-c3bc-4c74-8c8d-808933aa0728",
@@ -391,6 +409,7 @@
       {
         "id": "4baba625-1838-41e9-95e0-fa0bb2cae087",
         "name": "Grâce naturelle",
+        "level": 1,
         "modifiers": [
           {
             "id": "24c2b62d-6cf5-48aa-bd8a-b88cda06d196",
@@ -412,6 +431,7 @@
         "id": "f877f934-3987-4b77-9df8-0c5fb4484e09",
         "name": "Membre d’équipage",
         "description": "Certaines familles kasathas servent en tant que membres d’équipage à bord de l’Idari depuis des générations.",
+        "level": 1,
         "replace": ["1114ee16-c64f-4992-84de-cc31a3a62058"],
         "modifiers": [
           { "id": "5b16da83-094b-4745-9268-e42a7e55cb8a", "type": "skill", "target": "comp", "value": 2 },
@@ -423,6 +443,7 @@
         "id": "711975a9-249b-4607-b860-87942b5fe1cb",
         "name": "Traditions personnelles",
         "description": "Les kasathas qui n’ont pas de liens solides avec leur société trouvent parfois leur force dans des traditions personnelles.",
+        "level": 1,
         "replace": ["4baba625-1838-41e9-95e0-fa0bb2cae087"],
         "modifiers": [
           {
@@ -497,6 +518,7 @@
       {
         "id": "46a9cb91-a33b-4b46-97d5-2ac959b4a3a1",
         "name": "Magie des lashuntas",
+        "level": 1,
         "modifiers": [
           {
             "id": "25386467-1737-4cc7-bd18-c33393aaf210",
@@ -519,6 +541,7 @@
       {
         "id": "6488006c-92b6-44e3-9d31-1d726381b3b9",
         "name": "Télépathie limitée",
+        "level": 1,
         "modifiers": [
           {
             "id": "d9490af8-e54e-4cf1-8bee-004a2f00399e",
@@ -531,6 +554,7 @@
       {
         "id": "f3b13f96-aab9-4f63-822b-d3075515ccd6",
         "name": "Etudiant",
+        "level": 1,
         "modifiers": [
           {
             "id": "5562c539-6dad-491e-a62d-5f08f3f5ea5e",
@@ -552,6 +576,7 @@
         "id": "4334bdaa-1b4d-403c-a888-321dd8e2c23c",
         "name": "Psychiquement résistant",
         "description": "Les archives pré-Faille indiquent qu’il y a fort longtemps vivaient des lashuntas sans capacité télépathique, qui sont réapparus au paroxysme des guerres formiennes. Ces lashuntas psychiquement résistants émettent un faible signal psychique parasite qui pousse parfois les autres membres de leur société naturellement télépathique à les exclure. Cependant, ces lashuntas sont généralement plus compétents dans le domaine de l’expression verbale. Certains peuvent utiliser ce signal parasite pour perturber les communications télépathiques proches.",
+        "level": 1,
         "replace": ["46a9cb91-a33b-4b46-97d5-2ac959b4a3a1", "6488006c-92b6-44e3-9d31-1d726381b3b9"],
         "modifiers": [
           {
@@ -571,6 +596,7 @@
         "id": "d1a485c0-d4c2-42b8-8e1d-4b20fb9611dd",
         "name": "Rude",
         "description": "Certains lashuntas expriment la soif d’apprendre de leur espèce en se focalisant sur les entraînements physiques plutôt que les apprentissages académiques.",
+        "level": 1,
         "replace": ["f3b13f96-aab9-4f63-822b-d3075515ccd6"],
         "modifiers": [{ "id": "899a1b99-bd80-4479-8839-69dfec53b572", "type": "feat", "name": "Robustesse" }]
       }
@@ -626,6 +652,7 @@
       {
         "id": "47133266-e09f-42ef-a8ed-df8541aff715",
         "name": "Perception aveugle",
+        "level": 1,
         "modifiers": [
           {
             "id": "5149addf-2cd4-4879-804d-f4df8d842f9b",
@@ -638,6 +665,7 @@
       {
         "id": "1441c348-c5de-4e2a-ac9e-0ab02ff91892",
         "name": "Communautarisme",
+        "level": 1,
         "modifiers": [
           {
             "id": "7b838368-1259-49e3-b6f9-2eaf7b8f8cc4",
@@ -650,6 +678,7 @@
       {
         "id": "dde699b9-3055-4a38-b113-96c5958c1b1a",
         "name": "Fascination culturelle",
+        "level": 1,
         "modifiers": [
           { "id": "68a49a21-f50c-4dbe-93e9-5ef2f460d6d5", "type": "skill", "target": "cult", "value": 2 },
           { "id": "f7e8f80d-f83e-4643-8a1a-4884a0553639", "type": "skill", "target": "dipl", "value": 2 }
@@ -658,6 +687,7 @@
       {
         "id": "295c7545-40b5-4c77-bf7c-720015d54b3e",
         "name": "Téléphathie limitée",
+        "level": 1,
         "modifiers": [
           {
             "id": "6d5d172f-c987-47d7-85cd-2b6b8686e55b",
@@ -673,6 +703,7 @@
         "id": "7e562d2c-7159-4fae-9db1-1fc9e216d17b",
         "name": "Assimilation culturelle",
         "description": "De nombreux shirrens sont avides de nouvelles idées, ce qui leur permet de s’adapter plus facilement aux autres cultures.",
+        "level": 1,
         "replace": ["dde699b9-3055-4a38-b113-96c5958c1b1a"],
         "modifiers": [
           { "id": "f1f71924-ff70-4fae-8de5-a90b17bcc818", "type": "skill", "target": "cult", "value": 2 },
@@ -683,6 +714,7 @@
         "id": "50ce413c-c55e-4b25-b975-89ef731e0789",
         "name": "Défense de l’Essaim",
         "description": "Les shirrens apprécient profondément leurs amis et font constamment attention à eux.",
+        "level": 1,
         "replace": ["1441c348-c5de-4e2a-ac9e-0ab02ff91892"],
         "modifiers": [
           {
@@ -696,6 +728,7 @@
       {
         "id": "f46aaa34-1e74-4e7b-81d8-6f63883bd94e",
         "name": "Obsession individuelle",
+        "level": 1,
         "replace": ["1441c348-c5de-4e2a-ac9e-0ab02ff91892", "dde699b9-3055-4a38-b113-96c5958c1b1a"],
         "modifiers": [
           { "id": "b5731606-cc62-4d2f-9332-b8bc26a9142a", "type": "classSkill", "target": "any" },
@@ -718,6 +751,7 @@
         "id": "d00b801f-e6a1-44ce-8633-04667dce34ab",
         "name": "Acculturation linguistique",
         "description": "Les shirrens s’adaptent rapidement aux nouvelles langues qu’ils découvrent car cela leur permet de communiquer leurs pensées à de nouvelles personnes et de bénéficier de leurs expériences en retour.",
+        "level": 1,
         "replace": ["dde699b9-3055-4a38-b113-96c5958c1b1a"],
         "modifiers": [
           { "id": "4a141f0f-7825-4d4f-88a8-f3b074e7d9a6", "type": "skill", "target": "cult", "value": 2 },
@@ -780,6 +814,7 @@
       {
         "id": "2aea0fee-90b5-4950-a478-a80f968db158",
         "name": "Expert en armure",
+        "level": 1,
         "modifiers": [
           {
             "id": "91668a52-2700-4343-b0ea-741eedbde647",
@@ -792,6 +827,7 @@
       {
         "id": "0c3faf4d-73dd-454d-980e-028aff761272",
         "name": "Intrépide",
+        "level": 1,
         "modifiers": [
           {
             "id": "466de7a5-aa27-4047-862e-a26fabaa14a8",
@@ -804,6 +840,7 @@
       {
         "id": "be1f9450-8d42-4251-9e5f-6ff784f4814f",
         "name": "Vision nocturne",
+        "level": 1,
         "modifiers": [
           {
             "id": "9890d63d-f10c-4e6a-90b7-7d72f3681ca4",
@@ -816,6 +853,7 @@
       {
         "id": "5181e460-0ddb-425d-a28c-714ff599db01",
         "name": "Armes naturelles",
+        "level": 1,
         "modifiers": [
           {
             "id": "3e964c5d-cb72-4cf0-9b15-feb393db1396",
@@ -838,6 +876,7 @@
         "id": "793c209f-1607-4259-ad74-bca41f0ed767",
         "name": "Capacité pulmonaire accrue",
         "description": "Certains vesks ont une capacité pulmonaire extraordinaire. Ces individus peuvent faire carrière en travaillant dans des installations ou des vaisseaux sous-marins ou spatiaux.",
+        "level": 1,
         "replace": ["2aea0fee-90b5-4950-a478-a80f968db158"],
         "modifiers": [
           {
@@ -852,6 +891,7 @@
         "id": "adcfdbf6-7ee4-4250-8611-5f9575d383f8",
         "name": "Observateur",
         "description": "Certains vesks apprennent à observer leur environnement et les créatures qui les entourent pour déceler le moindre signe de danger.",
+        "level": 1,
         "replace": ["0c3faf4d-73dd-454d-980e-028aff761272"],
         "modifiers": [
           {
@@ -866,6 +906,7 @@
         "id": "5d1af77d-a0d5-4001-9b66-0bc4ab23ed6b",
         "name": "Queue préhensile",
         "description": "Parfois, un vesk peut naître avec une queue plus fine et plus souple que celle des autres membres de son espèce. Bien que moins communes, il existe d’anciennes techniques vesks qui permettent à un individu d’apprendre à utiliser sa queue au bout de plusieurs années de pratique.",
+        "level": 1,
         "replace": ["5181e460-0ddb-425d-a28c-714ff599db01"],
         "modifiers": [
           {
@@ -880,6 +921,7 @@
         "id": "bd63cb16-1bfc-4caf-847f-249ee9bc989c",
         "name": "Vesk venimeux",
         "description": "Bien que la plupart des vesks ne soient pas venimeux, certains d’entre eux ont des poches de poison et des dents plus longues, héritées d’une sous-espèce disparue depuis longtemps, peut-être liée au peuple serpent de Vesk Prime.",
+        "level": 1,
         "replace": [
           "2aea0fee-90b5-4950-a478-a80f968db158",
           "0c3faf4d-73dd-454d-980e-028aff761272",
@@ -933,6 +975,7 @@
       {
         "id": "36564346-5d94-462a-8b72-0581c646b5e1",
         "name": "Abajoues",
+        "level": 1,
         "modifiers": [
           {
             "id": "4f0cb555-d207-4f98-a7c2-1ef78bfe1cf8",
@@ -945,6 +988,7 @@
       {
         "id": "0b6f463b-701d-47c4-9246-a0c2896f1b3e",
         "name": "Vision dans le noir",
+        "level": 1,
         "modifiers": [
           {
             "id": "f34d1543-7dca-4cd2-ad2b-2a8e4b8836a6",
@@ -958,6 +1002,7 @@
         "id": "52e9b33a-c7a8-4dba-bb40-ed3c916ddb5d",
         "name": "Dynamique",
         "description": "Les ysokis sont combatifs et agiles même quand les probabilités sont contre eux.",
+        "level": 1,
         "modifiers": [
           {
             "id": "ef015eda-f62c-46b4-a691-91592693ff81",
@@ -982,6 +1027,7 @@
       {
         "id": "bb77e446-8197-4ccd-ae28-31763675e931",
         "name": "Débrouillard",
+        "level": 1,
         "modifiers": [
           {
             "id": "13d05654-81d4-4166-ad7e-540e9d0d59a7",
@@ -1009,6 +1055,7 @@
         "id": "f4e94264-8531-4c73-a420-3ea14d2e6582",
         "name": "Armes naturelles",
         "description": "Les ysokis peuvent avoir de longues dents tranchantes.",
+        "level": 1,
         "replace": ["36564346-5d94-462a-8b72-0581c646b5e1"],
         "modifiers": [
           {
@@ -1029,12 +1076,14 @@
       {
         "id": "24aacda4-3fe4-4e30-9efd-ef2da6af65d6",
         "name": "Compétent",
+        "level": 1,
         "replace": ["bb77e446-8197-4ccd-ae28-31763675e931"],
         "modifiers": [{ "id": "4b00cc2a-91db-4ea9-97c0-964be01d92d0", "type": "skillRank", "value": 1 }]
       },
       {
         "id": "88e04bb5-2f96-43c8-aeb3-a974375859cc",
         "name": "Perception aveugle",
+        "level": 1,
         "replace": ["0b6f463b-701d-47c4-9246-a0c2896f1b3e"],
         "modifiers": [
           {
@@ -1048,6 +1097,7 @@
         "id": "74341616-e818-4c3a-85bf-39d73e224cd3",
         "name": "Pugnace",
         "description": "De nombreux ysokis sont capables d’encaisser et d’infliger une quantité étonnante de dégâts.",
+        "level": 1,
         "replace": ["52e9b33a-c7a8-4dba-bb40-ed3c916ddb5d"],
         "modifiers": [
           { "id": "46854379-e599-46c5-881e-bfc7a553b3c0", "type": "hitPoints", "value": 2 },
@@ -1063,6 +1113,7 @@
         "id": "6f32d6cf-0b4d-4ffa-9ca9-4b44ef31df8b",
         "name": "Récupérateur",
         "description": "Depuis l’effondrement économique d’Akiton, de nombreux ysokis sur la Planète Rouge ont été forcés de se débrouiller avec ce qu’ils pouvaient récupérer.",
+        "level": 1,
         "replace": ["bb77e446-8197-4ccd-ae28-31763675e931"],
         "modifiers": [
           { "id": "203b1d8e-671a-40c0-8e2a-e0d57de39887", "type": "skill", "target": "surv", "value": 2 },
@@ -1077,6 +1128,7 @@
         "id": "982be75f-ffb0-4289-89c5-8c3063798292",
         "name": "Voltigeur",
         "description": "Les ysokis voltigeurs utilisent leur petite taille pour franchir les défenses ennemies afin de frapper les points faibles.",
+        "level": 1,
         "replace": ["52e9b33a-c7a8-4dba-bb40-ed3c916ddb5d", "bb77e446-8197-4ccd-ae28-31763675e931"],
         "modifiers": [
           {
