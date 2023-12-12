@@ -110,7 +110,7 @@ export function TabClassSelection({ data, character, mutators }: CharacterTabPro
   );
 }
 
-export function TabClassDetails({ character }: { character: CharacterPresenter }) {
+function ClassDetails({ character }: { character: CharacterPresenter }): JSX.Element | null {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {
@@ -124,4 +124,13 @@ export function TabClassDetails({ character }: { character: CharacterPresenter }
     default:
       return null;
   }
+}
+
+export function TabClassDetails({ character }: { character: CharacterPresenter }) {
+  return (
+    <Stack direction="vertical" gap={2}>
+      <h2>Abilités de classe</h2>
+      <ClassDetails character={character} />
+    </Stack>
+  );
 }
