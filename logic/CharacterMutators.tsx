@@ -44,12 +44,8 @@ export class CharacterMutators {
     this.setCharacter((c) => updateScholarSkill(this.data, c, id));
   }
 
-  updateScholarSpecialization(id: string) {
-    this.setCharacter((c) => updateScholarSpecialization(c, id));
-  }
-
-  updateScholarLabel(label: string) {
-    this.setCharacter((c) => updateScholarLabel(c, label));
+  updateScholarSpecialization(idOrLabel: string) {
+    this.setCharacter((c) => updateScholarSpecialization(c, idOrLabel));
   }
 
   updateClass(id: string) {
@@ -209,7 +205,6 @@ export function updateTheme(data: DataSet, character: Character, themeId: string
     result.themeOptions = {
       scholarSkill: "life",
       scholarSpecialization: data.specials.scholar.life[0],
-      scholarLabel: "",
     };
   } else if (themeId === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
     // Theme: No theme
@@ -243,7 +238,7 @@ export function updateNoThemeAbilityScore(data: DataSet, character: Character, a
 /**
  * Updates the scholar skill selected for a character.
  *
- * Ensure that the scholar specialization and label are reset.
+ * Ensure that the scholar specialization is reset.
  *
  * @param data The data set
  * @param character The character to update
@@ -257,7 +252,6 @@ export function updateScholarSkill(data: DataSet, character: Character, skillId:
       ...character.themeOptions,
       scholarSkill: skillId,
       scholarSpecialization: data.specials.scholar[skillId][0],
-      scholarLabel: "",
     },
   };
 }
@@ -265,10 +259,8 @@ export function updateScholarSkill(data: DataSet, character: Character, skillId:
 /**
  * Updates the scholar specialization selected for a character.
  *
- * Ensure that the scholar label is reset.
- *
  * @param character The character to update
- * @param specialization The selected scholar specialization
+ * @param specialization The selected scholar specialization or its label
  * @returns The updated character
  */
 export function updateScholarSpecialization(character: Character, specialization: string): Character {
@@ -277,24 +269,6 @@ export function updateScholarSpecialization(character: Character, specialization
     themeOptions: {
       ...character.themeOptions,
       scholarSpecialization: specialization,
-      scholarLabel: "",
-    },
-  };
-}
-
-/**
- * Updates the scholar label entered for a character.
- *
- * @param character The character to update
- * @param label The entered scholar label
- * @returns The updated character
- */
-export function updateScholarLabel(character: Character, label: string): Character {
-  return {
-    ...character,
-    themeOptions: {
-      ...character.themeOptions,
-      scholarLabel: label,
     },
   };
 }

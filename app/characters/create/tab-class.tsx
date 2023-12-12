@@ -5,7 +5,6 @@ import { findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Class } from "model";
-import { Context } from "./types";
 
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
@@ -111,7 +110,7 @@ export function TabClassSelection({ data, character, mutators }: CharacterTabPro
   );
 }
 
-export function TabClassDetails({ character, context }: { character: CharacterPresenter; context: Context }) {
+export function TabClassDetails({ character }: { character: CharacterPresenter }) {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {
@@ -120,7 +119,7 @@ export function TabClassDetails({ character, context }: { character: CharacterPr
 
   switch (selectedClass.id) {
     case "class-operative":
-      return <LazyOperativeClassDetails character={character} context={context} />;
+      return <LazyOperativeClassDetails character={character} />;
 
     default:
       return null;

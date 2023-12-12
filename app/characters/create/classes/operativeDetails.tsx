@@ -1,5 +1,4 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
-import { Context } from "../types";
 import operativeData from "data/class-operative.json";
 import ModifierComponent, { replace } from "../ModifierComponent";
 import { Feature } from "model";
@@ -11,13 +10,7 @@ const categories: Record<string, string> = {
   su: "SUR",
 };
 
-export default function OperativeClassDetails({
-  character,
-  context,
-}: {
-  character: CharacterPresenter;
-  context: Context;
-}) {
+export default function OperativeClassDetails({ character }: { character: CharacterPresenter }) {
   const selectedSpecialization = operativeData.specializations.find(
     (s) => s.id === character.getOperativeSpecialization()
   );
@@ -43,7 +36,6 @@ export default function OperativeClassDetails({
         .map((feature, index) => {
           const evolutions = feature.evolutions || {};
           const localContext = {
-            ...context,
             ...(selectedSpecialization?.variables || {}),
             ...(evolutions[level] || {}),
           };

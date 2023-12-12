@@ -1,7 +1,7 @@
 import { Badge } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { Skills } from "data";
-import { ModifierTemplate } from "model";
+import { Modifier, ModifierTemplate } from "model";
 import { Context } from "./types";
 
 /**
@@ -26,7 +26,13 @@ export function replace(context: Context, text: string | undefined): string {
   return result;
 }
 
-export default function ModifierComponent({ modifier, context }: { modifier: ModifierTemplate; context?: Context }) {
+export default function ModifierComponent({
+  modifier,
+  context,
+}: {
+  modifier: ModifierTemplate | Modifier;
+  context?: Context;
+}) {
   const target = replace(context || {}, modifier.target);
   const description = replace(context || {}, modifier.description);
   const value: number =

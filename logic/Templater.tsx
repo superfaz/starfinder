@@ -1,4 +1,4 @@
-import { Modifier, ModifierTemplate, ModifierType } from "model";
+import { Feature, Modifier, ModifierTemplate, ModifierType } from "model";
 
 export class Templater {
   private context: Record<string, string | number>;
@@ -7,7 +7,21 @@ export class Templater {
     this.context = context;
   }
 
-  apply(template: ModifierTemplate): Modifier {
+  convertFeature(template: Feature): Feature {
+    const result: Feature = {
+      ...template,
+      name: this.applyForString(template.name) || "",
+      description: this.applyForString(template.description),
+    };
+
+    if (template.modifiers) {
+      result.modifiers = template.modifiers.map((m) => this.convertModifier(m));
+    }
+
+    return result;
+  }
+
+  convertModifier(template: ModifierTemplate): Modifier {
     if (!Object.keys(ModifierType).includes(template.type)) {
       throw new Error(`Invalid modifier type: ${template.type}`);
     }

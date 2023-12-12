@@ -5,7 +5,6 @@ import { Col, Nav, Row } from "react-bootstrap";
 import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
-import { Context } from "./types";
 import { TabIntro } from "./tab-intro";
 import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-race";
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
@@ -14,7 +13,6 @@ import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScor
 
 export function ClientComponent({ data }: { data: DataSet }) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
-  const [context, setContext] = useState<Context>({});
   const [navigation, setNavigation] = useState("intro");
 
   function setCharacter(updator: (c: Character) => Character) {
@@ -26,10 +24,6 @@ export function ClientComponent({ data }: { data: DataSet }) {
   const selectedRace = presenter.getRace();
   const selectedTheme = presenter.getTheme();
   const selectedClass = presenter.getClass();
-
-  function addToContext(name: string, value: string | number): void {
-    setContext((c) => ({ ...c, [name]: value }));
-  }
 
   function handleNavigation(eventKey: string | null): void {
     setNavigation(eventKey || "");
@@ -99,11 +93,11 @@ export function ClientComponent({ data }: { data: DataSet }) {
       </Col>
 
       <Col lg={3} hidden={navigation !== "theme"}>
-        <TabThemeSelection data={data} character={presenter} mutators={mutators} addToContext={addToContext} />
+        <TabThemeSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col hidden={navigation !== "theme"}>
-        <TabThemeTraits character={presenter} context={context} />
+        <TabThemeTraits character={presenter} />
       </Col>
 
       <Col lg={3} hidden={navigation !== "class"}>
@@ -111,7 +105,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
       </Col>
 
       <Col hidden={navigation !== "class"}>
-        <TabClassDetails character={presenter} context={context} />
+        <TabClassDetails character={presenter} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
@@ -125,8 +119,6 @@ export function ClientComponent({ data }: { data: DataSet }) {
       <Col lg={12} hidden={navigation !== "debug"}>
         <h5>Character</h5>
         <pre>{JSON.stringify(presenter.getCharacter(), null, 2)}</pre>
-        <h5>Context</h5>
-        <pre>{JSON.stringify(context, null, 2)}</pre>
       </Col>
     </Row>
   );

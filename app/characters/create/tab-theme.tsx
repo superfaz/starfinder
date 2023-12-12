@@ -3,8 +3,8 @@ import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
-import { Context } from "./types";
 import ModifierComponent from "./ModifierComponent";
+import { Feature } from "model";
 
 export interface CharacterTabProps {
   data: DataSet;
@@ -12,28 +12,13 @@ export interface CharacterTabProps {
   mutators: CharacterMutators;
 }
 
-export function TabThemeSelection({
-  data,
-  character,
-  mutators,
-  addToContext,
-}: {
-  data: DataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-  addToContext: (key: string, value: string) => void;
-}) {
+export function TabThemeSelection({ data, character, mutators }: CharacterTabProps) {
   const selectedTheme = character.getTheme();
   const scholarDetails = character.getScholarDetails();
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
     mutators.updateTheme(id);
-
-    if (id === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
-      addToContext("scholarSkill", "life");
-      addToContext("scholarSpecialization", data.specials.scholar.life[0]);
-    }
   }
 
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
@@ -44,20 +29,16 @@ export function TabThemeSelection({
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
     mutators.updateScholarSkill(id);
-    addToContext("scholarSkill", id);
-    addToContext("scholarSpecialization", data.specials.scholar[id][0]);
   }
 
   function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>): void {
     const specialization = e.target.value;
     mutators.updateScholarSpecialization(specialization);
-    addToContext("scholarSpecialization", specialization);
   }
 
   function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>): void {
     const label = e.target.value;
-    mutators.updateScholarLabel(label);
-    addToContext("scholarSpecialization", label);
+    mutators.updateScholarSpecialization(label);
   }
 
   return (
@@ -142,28 +123,35 @@ export function TabThemeSelection({
   );
 }
 
-export function TabThemeTraits({ character, context }: { character: CharacterPresenter; context: Context }) {
+export function TabThemeTraits({ character }: { character: CharacterPresenter }) {
   const selectedTheme = character.getTheme();
+
+  if (!selectedTheme) {
+    return (
+      <Stack direction="vertical" gap={2}>
+        <h2>Traits thématiques</h2>
+      </Stack>
+    );
+  }
+
+  const features: Feature[] = character.getThemeFeatures();
 
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Traits thématiques</h2>
-      {selectedTheme &&
-        selectedTheme.features.map((feature) => (
-          <Card key={feature.id}>
-            <Card.Header>
-              <Badge bg="secondary">niveau {feature.level}</Badge>
-              {feature.name}
-            </Card.Header>
-            <Card.Body>
-              {feature.description && <p className="text-muted">{feature.description}</p>}
-              {feature.modifiers &&
-                feature.modifiers.map((modifier) => (
-                  <ModifierComponent key={modifier.id} modifier={modifier} context={context} />
-                ))}
-            </Card.Body>
-          </Card>
-        ))}
+      {features.map((feature) => (
+        <Card key={feature.id}>
+          <Card.Header>
+            <Badge bg="secondary">niveau {feature.level}</Badge>
+            {feature.name}
+          </Card.Header>
+          <Card.Body>
+            {feature.description && <p className="text-muted">{feature.description}</p>}
+            {feature.modifiers &&
+              feature.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
+          </Card.Body>
+        </Card>
+      ))}
     </Stack>
   );
 }

@@ -11,5 +11,4 @@ export * from "./SecondaryTrait";
 export * from "./SkillDefinition";
 export * from "./Special";
 export * from "./Theme";
-export * from "./Trait";
 export * from "./Variant";

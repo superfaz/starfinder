@@ -1,5 +1,6 @@
 import { DataSet } from "data";
 import { Character, Class, Feature, ModifierTemplate, Race, SkillDefinition, Theme, Variant } from "model";
+import { Templater } from "./Templater";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -138,6 +139,21 @@ export class CharacterPresenter {
     return this.cachedTheme;
   }
 
+  getThemeFeatures(): Feature[] {
+    const theme = this.getTheme();
+    if (!theme) {
+      return [];
+    }
+
+    const templater = new Templater({
+      race: this.character.race,
+      theme: this.character.theme,
+      ...this.character.raceOptions,
+      ...this.character.themeOptions,
+    });
+    return theme.features.map((f) => templater.convertFeature(f));
+  }
+
   hasNoTheme(): boolean {
     return this.character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f";
   }
@@ -151,14 +167,18 @@ export class CharacterPresenter {
   }
 
   getScholarDetails(): { skill: string; specialization: string; label: string } | null {
-    if (!this.character.themeOptions) {
+    const themeOptions = this.character.themeOptions;
+    if (!themeOptions || !themeOptions.scholarSkill || themeOptions.scholarSpecialization === undefined) {
       return null;
     }
 
+    const specializations = this.data.specials.scholar[themeOptions.scholarSkill];
+    const specialization = specializations.find((s) => s === themeOptions.scholarSpecialization) ?? "";
+    const label = specialization === "" ? themeOptions.scholarSpecialization : "";
     return {
-      skill: this.character.themeOptions.scholarSkill,
-      specialization: this.character.themeOptions.scholarSpecialization,
-      label: this.character.themeOptions.scholarLabel,
+      skill: themeOptions.scholarSkill,
+      specialization: specialization,
+      label: label,
     };
   }
 
