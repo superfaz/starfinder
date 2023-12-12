@@ -1,8 +1,8 @@
 import { Badge } from "react-bootstrap";
-import { Modifier } from "model";
-import Skills from "data/skills.json";
+import { displayBonus, findOrError } from "app/helpers";
+import { Skills } from "data";
+import { ModifierTemplate } from "model";
 import { Context } from "./types";
-import { displayBonus } from "app/helpers";
 
 /**
  * Replace all '<key>' in text by context[key] if it exists.
@@ -26,15 +26,7 @@ export function replace(context: Context, text: string | undefined): string {
   return result;
 }
 
-function findOrError<T>(array: T[], predicate: (value: T) => boolean): T {
-  const result = array.find(predicate);
-  if (result === undefined) {
-    throw new Error("Can't find element in array");
-  }
-  return result;
-}
-
-export default function ModifierComponent({ modifier, context }: { modifier: Modifier; context?: Context }) {
+export default function ModifierComponent({ modifier, context }: { modifier: ModifierTemplate; context?: Context }) {
   const target = replace(context || {}, modifier.target);
   const description = replace(context || {}, modifier.description);
   const value: number =
