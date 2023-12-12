@@ -4,7 +4,7 @@ import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Feature } from "model";
-import ModifierComponent from "./ModifierComponent";
+import FeatureComponent from "./FeatureComponent";
 
 export interface CharacterTabProps {
   data: DataSet;
@@ -125,14 +125,12 @@ export function TabRaceTraits({ character }: { character: CharacterPresenter }) 
       {character.getPrimaryRaceTraits().map((trait) => {
         const isTraitEnabled = character.getSelectedRaceTraits().find((t) => t.id === trait.id) !== undefined;
         return (
-          <Card key={trait.id} className={isTraitEnabled ? "border-primary" : "text-decoration-line-through"}>
-            <Card.Header>{trait.name}</Card.Header>
-            <Card.Body>
-              {trait.description && <p className="text-muted">{trait.description}</p>}
-              {trait.modifiers &&
-                trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
-            </Card.Body>
-          </Card>
+          <FeatureComponent
+            key={trait.id}
+            character={character}
+            feature={trait}
+            className={isTraitEnabled ? "border-primary" : "text-decoration-line-through"}
+          />
         );
       })}
     </Stack>
@@ -147,28 +145,6 @@ export function TabRaceAlternateTraits({
   mutators: CharacterMutators;
 }) {
   const selectedRace = character.getRace();
-
-  function findReplacedTraitName(id: string): string | null {
-    if (!selectedRace) {
-      return null;
-    }
-
-    const trait = character.getPrimaryRaceTraits().find((t) => t.id === id);
-    if (trait) {
-      return trait.name;
-    }
-
-    const modifier = character
-      .getPrimaryRaceTraits()
-      .map((t) => t.modifiers)
-      .flat()
-      .find((c) => c.id === id);
-    if (modifier) {
-      return modifier.name || null;
-    }
-
-    return null;
-  }
 
   function handleTraitEnabled(trait: Feature, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
@@ -188,30 +164,22 @@ export function TabRaceAlternateTraits({
       {character.getSecondaryRaceTraits().map((trait) => {
         const isTraitEnabled = character.getSelectedRaceTraits().find((t) => t.id === trait.id) !== undefined;
         return (
-          <Card key={trait.id} className={isTraitEnabled ? "border-primary" : ""}>
-            <Card.Header>
-              <Form.Switch
-                label={trait.name}
-                checked={isTraitEnabled}
-                onChange={(e) => handleTraitEnabled(trait, e)}
-                disabled={
-                  !isTraitEnabled &&
-                  trait.replace.some((r) => character.getSelectedRaceTraits().find((t) => t.id === r) === undefined)
-                }
-              />
-            </Card.Header>
-            <Card.Body>
-              <div key={trait.id}>
-                <div>
-                  <span>Remplace : </span>
-                  {trait.replace.map((r) => findReplacedTraitName(r)).join(", ")}
-                </div>
-                <p className="text-muted">{trait.description}</p>
-                {trait.modifiers &&
-                  trait.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
-              </div>
-            </Card.Body>
-          </Card>
+          <FeatureComponent
+            key={trait.id}
+            character={character}
+            feature={trait}
+            className={isTraitEnabled ? "border-primary" : ""}
+          >
+            <Form.Switch
+              label={trait.name}
+              checked={isTraitEnabled}
+              onChange={(e) => handleTraitEnabled(trait, e)}
+              disabled={
+                !isTraitEnabled &&
+                trait.replace.some((r) => character.getSelectedRaceTraits().find((t) => t.id === r) === undefined)
+              }
+            />
+          </FeatureComponent>
         );
       })}
     </Stack>

@@ -1,10 +1,10 @@
 import { ChangeEvent } from "react";
-import { Badge, Card, Form, Stack } from "react-bootstrap";
+import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
-import ModifierComponent from "./ModifierComponent";
 import { Feature } from "model";
+import FeatureComponent from "./FeatureComponent";
 
 export interface CharacterTabProps {
   data: DataSet;
@@ -124,33 +124,20 @@ export function TabThemeSelection({ data, character, mutators }: CharacterTabPro
 }
 
 export function TabThemeTraits({ character }: { character: CharacterPresenter }) {
-  const selectedTheme = character.getTheme();
-
-  if (!selectedTheme) {
-    return (
-      <Stack direction="vertical" gap={2}>
-        <h2>Traits thématiques</h2>
-      </Stack>
-    );
-  }
-
   const features: Feature[] = character.getThemeFeatures();
 
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Traits thématiques</h2>
       {features.map((feature) => (
-        <Card key={feature.id}>
-          <Card.Header>
-            <Badge bg="secondary">niveau {feature.level}</Badge>
-            {feature.name}
-          </Card.Header>
-          <Card.Body>
-            {feature.description && <p className="text-muted">{feature.description}</p>}
-            {feature.modifiers &&
-              feature.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
-          </Card.Body>
-        </Card>
+        <Row key={feature.id}>
+          <Col lg={1}>
+            <Badge bg="secondary">Niv. {feature.level}</Badge>
+          </Col>
+          <Col>
+            <FeatureComponent character={character} feature={feature} />
+          </Col>
+        </Row>
       ))}
     </Stack>
   );

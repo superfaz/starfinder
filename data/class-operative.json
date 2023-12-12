@@ -663,11 +663,5 @@
         }
       ]
     }
-  ],
-  "labels": {
-    "bonus": "Bonus: +",
-    "damage": "Dégâts: ",
-    "distance": "Distance: ",
-    "strike": "Attaques: "
-  }
+  ]
 }
