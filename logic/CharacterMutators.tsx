@@ -1,6 +1,6 @@
 import { findOrError } from "app/helpers";
 import { DataSet } from "data";
-import { Character, SecondaryTrait } from "model";
+import { Character, Feature } from "model";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 export class CharacterMutators {
@@ -24,11 +24,11 @@ export class CharacterMutators {
     this.setCharacter((c) => updateHumanBonus(this.data, c, id));
   }
 
-  enableSecondaryTrait(trait: SecondaryTrait) {
+  enableSecondaryTrait(trait: Feature) {
     this.setCharacter((c) => enableSecondaryTrait(c, trait));
   }
 
-  disableSecondaryTrait(trait: SecondaryTrait) {
+  disableSecondaryTrait(trait: Feature) {
     this.setCharacter((c) => disableSecondaryTrait(c, trait));
   }
 
@@ -164,7 +164,7 @@ export function updateHumanBonus(data: DataSet, character: Character, abilitySco
  * @param trait The enabled secondary trait
  * @returns The updated character
  */
-export function enableSecondaryTrait(character: Character, trait: SecondaryTrait): Character {
+export function enableSecondaryTrait(character: Character, trait: Feature): Character {
   const traits = character.traits.filter((t) => !trait.replace.includes(t));
   return { ...character, traits: [...traits, trait.id] };
 }
@@ -178,7 +178,7 @@ export function enableSecondaryTrait(character: Character, trait: SecondaryTrait
  * @param trait The disabled secondary trait
  * @returns The updated character
  */
-export function disableSecondaryTrait(character: Character, trait: SecondaryTrait): Character {
+export function disableSecondaryTrait(character: Character, trait: Feature): Character {
   return { ...character, traits: character.traits.filter((t) => t !== trait.id).concat(trait.replace) };
 }
 

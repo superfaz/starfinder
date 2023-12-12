@@ -1,4 +1,4 @@
-import { Feature, SecondaryTrait, Variant } from ".";
+import { FeatureTemplate, Variant } from ".";
 
 export interface Race {
   id: string;
@@ -8,6 +8,6 @@ export interface Race {
   hitPoints: number;
   variants: Variant[];
   names: string[];
-  traits: Feature[];
-  secondaryTraits: SecondaryTrait[];
+  traits: FeatureTemplate[];
+  secondaryTraits: FeatureTemplate[];
 }

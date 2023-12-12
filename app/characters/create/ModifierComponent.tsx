@@ -1,44 +1,12 @@
 import { Badge } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { Skills } from "data";
-import { Modifier, ModifierTemplate } from "model";
-import { Context } from "./types";
+import { Modifier } from "model";
 
-/**
- * Replace all '<key>' in text by context[key] if it exists.
- *
- * @param context context to use
- * @param text text to update
- * @returns updated text
- */
-export function replace(context: Context, text: string | undefined): string {
-  if (text === undefined) {
-    return "";
-  }
-
-  let result = text;
-  if (context && text) {
-    Object.keys(context).forEach((key) => {
-      result = result.replaceAll(`<${key}>`, context[key]?.toString() || `<${key}>`);
-    });
-  }
-
-  return result;
-}
-
-export default function ModifierComponent({
-  modifier,
-  context,
-}: {
-  modifier: ModifierTemplate | Modifier;
-  context?: Context;
-}) {
-  const target = replace(context || {}, modifier.target);
-  const description = replace(context || {}, modifier.description);
-  const value: number =
-    typeof modifier.value === "string"
-      ? parseInt(replace(context || {}, modifier.value as string))
-      : (modifier.value as number);
+export default function ModifierComponent({ modifier }: { modifier: Modifier }) {
+  const target = modifier.target;
+  const description = modifier.description;
+  const value: number = modifier.value ?? 0;
 
   switch (modifier.type) {
     case "ability":
@@ -73,11 +41,7 @@ export default function ModifierComponent({
       } else if (target === "all") {
         skillName = "Toutes";
       } else {
-        const skill = Skills.find((skill) => skill.id === target);
-        skillName = skill ? skill.name : target;
-        if (skill === undefined) {
-          console.error(`Skill '${modifier.target}' not found`);
-        }
+        skillName = findOrError(Skills, (skill) => skill.id === target).name;
       }
 
       if (modifier.type === "skill") {

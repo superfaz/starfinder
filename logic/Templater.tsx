@@ -1,4 +1,24 @@
-import { Feature, Modifier, ModifierTemplate, ModifierType } from "model";
+import { Feature, FeatureTemplate, Modifier, ModifierTemplate, ModifierType } from "model";
+
+function cleanEvolutions(
+  evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
+): Record<string, Record<string, string | number>> {
+  if (!evolutions) {
+    return {};
+  }
+  const result: Record<string, Record<string, string | number>> = {};
+  Object.entries(evolutions).forEach(([level, values]) => {
+    result[level] = {};
+    if (values) {
+      Object.entries(values).forEach(([key, value]) => {
+        if (value) {
+          result[level][key] = value;
+        }
+      });
+    }
+  });
+  return result;
+}
 
 export class Templater {
   private context: Record<string, string | number>;
@@ -7,11 +27,15 @@ export class Templater {
     this.context = context;
   }
 
-  convertFeature(template: Feature): Feature {
+  convertFeature(template: FeatureTemplate): Feature {
     const result: Feature = {
       ...template,
       name: this.applyForString(template.name) || "",
       description: this.applyForString(template.description),
+      modifiers: [],
+      category: template.category as "ex" | "ma" | "su" | undefined,
+      evolutions: cleanEvolutions(template.evolutions) || {},
+      replace: template.replace || [],
     };
 
     if (template.modifiers) {

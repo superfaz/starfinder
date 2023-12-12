@@ -1,6 +1,6 @@
 import { DataSet } from "data";
 import { Character, Class, Feature, ModifierTemplate, Race, SkillDefinition, Theme, Variant } from "model";
-import { Templater } from "./Templater";
+import { Templater } from ".";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -67,7 +67,9 @@ export class CharacterPresenter {
 
   private cachedRace: Race | null = null;
   private cachedRaceVariant: Variant | null = null;
-  private cachedRaceTraits: Feature[] | null = null;
+  private cachedPrimaryRaceTraits: Feature[] | null = null;
+  private cachedSecondaryRaceTraits: Feature[] | null = null;
+  private cachedSelectedRaceTraits: Feature[] | null = null;
   private cachedTheme: Theme | null = null;
   private cachedClass: Class | null = null;
   private cachedMinimalAbilityScores: Record<string, number> | null = null;
@@ -114,19 +116,49 @@ export class CharacterPresenter {
     return this.character.raceOptions?.humanBonus || null;
   }
 
-  getRaceTraits(): Feature[] {
+  getPrimaryRaceTraits(): Feature[] {
     const race = this.getRace();
     if (!race) {
       return [];
     }
 
-    if (!this.cachedRaceTraits) {
-      this.cachedRaceTraits = race.traits
-        .concat(race.secondaryTraits)
-        .filter((t) => this.character.traits.includes(t.id));
+    const templater = new Templater({ race: this.character.race, ...this.character.raceOptions });
+    if (!this.cachedPrimaryRaceTraits) {
+      this.cachedPrimaryRaceTraits = race.traits.map((t) => templater.convertFeature(t));
     }
 
-    return this.cachedRaceTraits;
+    return this.cachedPrimaryRaceTraits;
+  }
+
+  getSecondaryRaceTraits(): Feature[] {
+    const race = this.getRace();
+    if (!race) {
+      return [];
+    }
+
+    const templater = new Templater({ race: this.character.race, ...this.character.raceOptions });
+    if (!this.cachedSecondaryRaceTraits) {
+      this.cachedSecondaryRaceTraits = race.secondaryTraits.map((t) => templater.convertFeature(t));
+    }
+
+    return this.cachedSecondaryRaceTraits;
+  }
+
+  getSelectedRaceTraits(): Feature[] {
+    const race = this.getRace();
+    if (!race) {
+      return [];
+    }
+
+    const templater = new Templater({ race: this.character.race, ...this.character.raceOptions });
+    if (!this.cachedSelectedRaceTraits) {
+      this.cachedSelectedRaceTraits = race.traits
+        .concat(race.secondaryTraits)
+        .filter((t) => this.character.traits.includes(t.id))
+        .map((t) => templater.convertFeature(t));
+    }
+
+    return this.cachedSelectedRaceTraits;
   }
 
   getTheme(): Theme | null {
@@ -241,9 +273,8 @@ export class CharacterPresenter {
    * @returns The list of modifiers that apply to the character.
    */
   getModifiers(): ModifierTemplate[] {
-    const selectedTheme = this.getTheme();
-    const selectedRaceTraits = this.getRaceTraits();
-    const themeTraits = selectedTheme?.features || [];
+    const selectedRaceTraits = this.getSelectedRaceTraits();
+    const themeTraits = this.getThemeFeatures();
     const characterTraits = selectedRaceTraits.concat(themeTraits);
 
     return characterTraits

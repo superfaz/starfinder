@@ -1,8 +1,8 @@
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import operativeData from "data/class-operative.json";
-import ModifierComponent, { replace } from "../ModifierComponent";
-import { Feature } from "model";
-import { CharacterPresenter } from "logic";
+import ModifierComponent from "../ModifierComponent";
+import { FeatureTemplate } from "model";
+import { CharacterPresenter, Templater } from "logic";
 
 const categories: Record<string, string> = {
   ex: "EXT",
@@ -18,9 +18,9 @@ export default function OperativeClassDetails({ character }: { character: Charac
     return null;
   }
 
-  const classFeatures: Feature[] = operativeData.features;
-  const specializationFeatures: Feature[] = selectedSpecialization.features;
-  const features: Feature[] = classFeatures.concat(specializationFeatures);
+  const classFeatures: FeatureTemplate[] = operativeData.features;
+  const specializationFeatures: FeatureTemplate[] = selectedSpecialization.features;
+  const features: FeatureTemplate[] = classFeatures.concat(specializationFeatures);
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)
@@ -33,12 +33,14 @@ export default function OperativeClassDetails({ character }: { character: Charac
       </Col>
       {features
         .filter((s) => s.level === level)
-        .map((feature, index) => {
-          const evolutions = feature.evolutions || {};
-          const localContext = {
+        .map((template, index) => {
+          const evolutions = template.evolutions || {};
+          const templater = new Templater({
             ...(selectedSpecialization?.variables || {}),
             ...(evolutions[level] || {}),
-          };
+          });
+          const feature = templater.convertFeature(template);
+          const hasEvolutions = Object.keys(feature.evolutions).length > 0;
           return (
             <Col key={index}>
               <Card>
@@ -46,16 +48,14 @@ export default function OperativeClassDetails({ character }: { character: Charac
                   {feature.name} {feature.category && `(${categories[feature.category]})`}
                 </Card.Header>
                 <Card.Body>
-                  {feature.description && <p className="text-muted">{replace(localContext, feature.description)}</p>}
+                  {feature.description && <p className="text-muted">{feature.description}</p>}
                   {feature.modifiers &&
-                    feature.modifiers.map((modifier) => (
-                      <ModifierComponent key={modifier.id} modifier={modifier} context={localContext} />
-                    ))}
+                    feature.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
                 </Card.Body>
-                {feature.evolutions && (
+                {hasEvolutions && (
                   <Card.Footer>
                     {Object.entries(feature.evolutions).map(([level, values]) => {
-                      if (values) {
+                      if (Object.entries(values).length > 0) {
                         return (
                           <div key={level}>
                             <Badge bg="secondary">{level}</Badge> {values.name && <strong>{values.name}</strong>}{" "}

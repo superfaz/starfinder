@@ -1,4 +1,4 @@
-import { Feature } from ".";
+import { FeatureTemplate } from ".";
 
 export interface Theme {
   id: string;
@@ -6,5 +6,5 @@ export interface Theme {
   description: string;
   refs: string[];
   abilityScores: Record<string, number | undefined>;
-  features: Feature[];
+  features: FeatureTemplate[];
 }

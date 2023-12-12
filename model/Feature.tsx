@@ -1,4 +1,4 @@
-import { ModifierTemplate } from ".";
+import { Modifier } from ".";
 
 /**
  * Represents a racial trait as well as a thematic or a class feature that can be applied to a character.
@@ -7,15 +7,17 @@ export interface Feature {
   id: string;
   name: string;
   description?: string;
-  modifiers?: ModifierTemplate[];
+  modifiers: Modifier[];
   level: number;
+  category?: "ex" | "ma" | "su";
 
   /**
-   * The type of feature.
-   *
-   * @example "ex", "ma", "su"
+   * The evolutions of the feature, indexed by level - for class features.
    */
-  category?: string;
+  evolutions: Record<string, Record<string, string | number>>;
 
-  evolutions?: Record<string, Record<string, string | number | null | undefined> | null | undefined>;
+  /**
+   * The IDs of the replaced racial traits - for secondary racial traits.
+   */
+  replace: string[];
 }
