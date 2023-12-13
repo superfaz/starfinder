@@ -14,6 +14,7 @@ const evolutionLabels: Record<string, string> = {
   damage: "Dégâts: ",
   distance: "Distance: ",
   strike: "Attaques: ",
+  dice: "Dés: ",
 };
 
 function convertReplaceToText(character: CharacterPresenter, replace: string[]): string[] {

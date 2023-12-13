@@ -1,0 +1,42 @@
+{
+  "skills": ["bluf", "comp", "cult", "dipl", "disg", "engi", "inti", "medi"],
+  "features": [
+    {
+      "id": "1be169c7-1067-4a8f-8414-e14d7bcf2c1e",
+      "name": "Improvisation de l'émissaire",
+      "level": 1,
+      "description": "En gagnant de l’expérience, vous apprenez des improvisations de l’émissaire, des petites astuces qui, par la ruse, l’inspiration ou la chance, stimulent vos alliés, déconcertent vos adversaires ou modifient le déroulement d’un combat.",
+      "modifiers": []
+    },
+    {
+      "id": "bf0845e8-4b82-4cc2-a19b-535579196296",
+      "name": "Maîtrise",
+      "level": 1,
+      "category": "ex",
+      "description": "Vous êtes un expert pour surmonter les événements qui mettent à l’épreuve vos compétences, que ces épreuves soient d’ordre social ou pas.",
+      "modifiers": [
+        {
+          "id": "248ee2a9-32a9-485d-99f3-8490acb17cb0",
+          "type": "ability",
+          "name": "Maîtrise",
+          "description": "Quand vous tentez un test de Psychologie ou <operativeSkill>, vous pouvez lancer <dice> (votre dé de maîtrise) et ajouter le chiffre obtenu au résultat de votre test en tant que bonus d’intuition. Vous pouvez utiliser cette aptitude et toutes autres capacités de maîtrise tant que vous avez encore au moins 1 point de persévérance."
+        },
+        {
+          "id": "7aa92787-7a34-43ca-bc5c-66698b5d9812",
+          "type": "ability",
+          "name": "Maîtrise",
+          "level": 9,
+          "description": "Une fois par jour quand vous lancez votre dé de maîtrise, vous pouvez le lancer deux fois et choisir le meilleur résultat."
+        }
+      ],
+      "evolutions": {
+        "1": { "dice": "1d6" },
+        "5": { "dice": "1d6+1" },
+        "9": { "dice": "1d6+2" },
+        "13": { "dice": "1d8+2" },
+        "17": { "dice": "1d8+3" },
+        "20": { "dice": "1d8+4" }
+      }
+    }
+  ]
+}

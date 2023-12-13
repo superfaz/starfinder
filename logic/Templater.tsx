@@ -1,6 +1,6 @@
 import { Feature, FeatureTemplate, Modifier, ModifierTemplate, ModifierType } from "model";
 
-function cleanEvolutions(
+export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
 ): Record<string, Record<string, string | number>> {
   if (!evolutions) {

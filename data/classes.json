@@ -31,7 +31,7 @@
     "weapons": ["basic", "small", "sniper"]
   },
   {
-    "id": "8a850480-0b1b-4bb3-8788-2f28fddbdf81",
+    "id": "class-envoy",
     "name": "Emissaire",
     "description": "Un émissaire use de son intelligence et de son magnétisme personnel pour aider ses alliés et tromper ses ennemis, souvent dans le cadre de négociations ou de démarches politiques.",
     "refs": ["base-68"],

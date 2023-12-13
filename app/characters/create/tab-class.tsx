@@ -6,6 +6,8 @@ import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Class } from "model";
 
+const LazyEnvoyClassEditor = dynamic(() => import("./classes/envoyEditor"));
+const LazyEnvoyClassDetails = dynamic(() => import("./classes/envoyDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
 
@@ -27,6 +29,9 @@ function ClassEditor({
   switch (classType.id) {
     case "class-operative":
       return <LazyOperativeClassEditor character={character} mutators={mutators} />;
+
+    case "class-envoy":
+      return <LazyEnvoyClassEditor character={character} mutators={mutators} />;
 
     default:
       return null;
@@ -120,6 +125,9 @@ function ClassDetails({ character }: { character: CharacterPresenter }): JSX.Ele
   switch (selectedClass.id) {
     case "class-operative":
       return <LazyOperativeClassDetails character={character} />;
+
+    case "class-envoy":
+      return <LazyEnvoyClassDetails character={character} />;
 
     default:
       return null;
