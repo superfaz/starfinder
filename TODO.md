@@ -1,5 +1,7 @@
 # TODOS
 
+## Création
+
 Race / Ajouter les races classiques du livre de règles
 
 Race : Androide / Traits secondaires : Androïde xénométrique / Choix de la race
@@ -22,9 +24,11 @@ Theme : Sans thème / Choix de la compétence de classe
 
 Classe / Ajouter les classes du guide des options
 
-Classe : Emissaire / Ajouter les détails de classe
+Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation
 
-Classe : Mecano / Ajouter les détails de classe
+Classe : Emissaire / Abilité : Maîtrise de compétence / Choix de la compétence
+
+Classe : Mécano / Ajouter les détails de classe
 
 Classe : Mystique / Ajouter les détails de classe
 
@@ -33,3 +37,11 @@ Classe : Solarien / Ajouter les détails de classe
 Classe : Soldat / Ajouter les détails de classe
 
 Classe : Technomancien / Ajouter les détails de classe
+
+## Level increase
+
+Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
+
+Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation
+
+Classe : Emissaire / Abilité : Savoir-faire maîtrisé / Choix de l'improvisation

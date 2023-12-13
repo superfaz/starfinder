@@ -6,7 +6,20 @@
       "name": "Improvisation de l'émissaire",
       "level": 1,
       "description": "En gagnant de l’expérience, vous apprenez des improvisations de l’émissaire, des petites astuces qui, par la ruse, l’inspiration ou la chance, stimulent vos alliés, déconcertent vos adversaires ou modifient le déroulement d’un combat.",
-      "modifiers": []
+      "modifiers": [],
+      "evolutions": {
+        "1": {},
+        "2": {},
+        "4": {},
+        "6": {},
+        "8": {},
+        "10": {},
+        "12": {},
+        "14": {},
+        "16": {},
+        "18": {},
+        "20": {}
+      }
     },
     {
       "id": "bf0845e8-4b82-4cc2-a19b-535579196296",
@@ -37,6 +50,68 @@
         "17": { "dice": "1d8+3" },
         "20": { "dice": "1d8+4" }
       }
+    },
+    {
+      "id": "06c9d88b-1991-4249-af31-7c4f1c362fcd",
+      "name": "Maîtrise de compétence",
+      "level": 1,
+      "category": "ex",
+      "description": "Vous pouvez utiliser Maîtrise avec une compétence de classe supplémentaire. Vous devez avoir au moins un rang 1 dans la compétence pour la sélectionner et elle doit faire partie de la liste suivante : Bluff (Cha), Informatique (Int), Culture (Int), Diplomatie (Cha), Déguisement (Cha), Ingénierie (Int), Intimidation (Cha) et Médecine (Int).",
+      "evolutions": {
+        "1": {},
+        "5": {},
+        "9": {},
+        "13": {},
+        "17": {}
+      }
+    },
+    {
+      "id": "07f4efff-0013-4b7f-9ac8-06e4b49df87f",
+      "name": "Savoir-faire maîtrisé",
+      "level": 3,
+      "description": "Vous choisissez un savoir-faire qui vous octroie une option supplémentaire quand vous utilisez une compétence que vous maîtrisez.",
+      "modifiers": [],
+      "evolutions": {
+        "3": {},
+        "7": {},
+        "11": {},
+        "15": {},
+        "19": {}
+      }
+    },
+    {
+      "id": "f752a0b0-527f-4ddc-826d-33f6e8b0aa48",
+      "name": "Spécialisation martiale",
+      "level": 3,
+      "category": "ex",
+      "description": "Vous obtenez le don bonus de Spécialisation martiale pour chaque type d’armes que vous savez manier grâce à cette classe.",
+      "modifiers": [
+        {
+          "id": "1e436bf1-2349-4b8f-817e-8f2ba6fcad88",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes de corps à corps)"
+        },
+        {
+          "id": "ebf79669-2820-423d-a7e2-131418f8dfcf",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes légères)"
+        }
+      ]
+    },
+    {
+      "id": "f3f045e0-0919-447f-b04c-b85a7febdb83",
+      "name": "Maîtrise totale",
+      "level": 20,
+      "category": "ex",
+      "description": "Vous obtenez la maîtrise totale d’une de vos improvisations et vous pouvez l’utiliser d’une simple pensée. Quand vous obtenez cette aptitude, choisissez une improvisation que vous connaissez et qui a un effet quand vous dépensez 1 point de persévérance.",
+      "modifiers": [
+        {
+          "id": "f9e23f17-d646-4292-aeae-807f38b929f9",
+          "name": "Maîtrise totale",
+          "type": "ability",
+          "description": "Tant qu’il vous reste au moins 1 point de persévérance, vous pouvez bénéficier de l’effet de l’improvisation sans dépenser de point de persévérance. Cette aptitude n’est pas applicable si l’improvisation nécessite plus d’un point de persévérance. De plus, quand vous lancez votre dé de maîtrise, vous pouvez ajouter au résultat de votre test de compétence 2d8 au lieu de 1d8+4."
+        }
+      ]
     }
   ]
 }
