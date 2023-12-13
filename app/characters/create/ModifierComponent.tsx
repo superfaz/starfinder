@@ -36,7 +36,7 @@ export default function ModifierComponent({ modifier }: { modifier: Modifier }) 
       {modifier.level && modifier.level > 1 && <Badge bg="primary">Niveau {modifier.level}</Badge>}
       {modifier.name && <strong className="me-2">{modifier.name}.</strong>}
       {skillName && <strong className="me-2">{skillName}</strong>}
-      {modifier.value && <strong>{displayBonus(modifier.value)}</strong>}
+      {modifier.value && <strong className="me-2">{displayBonus(modifier.value)}</strong>}
       {modifier.description && <span className="me-2 text-muted">{modifier.description}</span>}
     </p>
   );
