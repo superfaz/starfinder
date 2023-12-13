@@ -889,7 +889,7 @@
       },
       {
         "id": "adcfdbf6-7ee4-4250-8611-5f9575d383f8",
-        "name": "Observateur",
+        "name": "Observateur (Perception)",
         "description": "Certains vesks apprennent à observer leur environnement et les créatures qui les entourent pour déceler le moindre signe de danger.",
         "level": 1,
         "replace": ["0c3faf4d-73dd-454d-980e-028aff761272"],
@@ -897,7 +897,22 @@
           {
             "id": "5f99502d-ab71-4d77-9da7-74880bf6e927",
             "type": "skill",
-            "target": "Perception ou Psychologie",
+            "target": "pers",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "id": "c2eee2c4-b0b3-4b33-874d-ae9ff6bb7d4f",
+        "name": "Observateur (Psychologie)",
+        "description": "Certains vesks apprennent à observer leur environnement et les créatures qui les entourent pour déceler le moindre signe de danger.",
+        "level": 1,
+        "replace": ["0c3faf4d-73dd-454d-980e-028aff761272"],
+        "modifiers": [
+          {
+            "id": "31ce0db6-d033-48cd-94ba-dda390e22962",
+            "type": "skill",
+            "target": "sens",
             "value": 3
           }
         ]

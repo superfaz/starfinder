@@ -10,8 +10,6 @@ Race : Lashuntas / Traits : Etudiant / Choix des compétences
 
 Race : Shirrens / Traits secondaires : Obsession individuelle / Choix de la compétence
 
-Race : Vesks / Traits secondaires : Observateur / Choix de la compétence
-
 Race : Ysokis / Taille
 
 Theme / Ajouter les thèmes du guide des options
