@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:azure": "next build -c next.config.azure.js",
+    "build:azure": "next build",
     "start": "next start",
     "lint": "next lint"
   },
