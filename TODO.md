@@ -14,13 +14,13 @@ Race : Shirrens / Traits secondaires : Obsession individuelle / Choix de la comp
 
 Race : Ysokis / Taille
 
-Theme / Ajouter les thèmes du guide des options
+Thème / Ajouter les thèmes du guide des options
 
-Theme : Icône / Sélection de la compétence de Profession
+Thème : Icône / Sélection de la compétence de Profession
 
-Theme : Prêtre / Sélection de la divinité ou de la philosophie
+Thème : Prêtre / Sélection de la divinité ou de la philosophie
 
-Theme : Sans thème / Choix de la compétence de classe
+Thème : Sans thème / Choix de la compétence de classe
 
 Classe / Ajouter les classes du guide des options
 
@@ -37,6 +37,10 @@ Classe : Solarien / Ajouter les détails de classe
 Classe : Soldat / Ajouter les détails de classe
 
 Classe : Technomancien / Ajouter les détails de classe
+
+Caractérisques / Méthode de génération : Aléatoire / A implémenter
+
+Caractérisques / Méthode de génération : Rapide / A implémenter
 
 ## Level increase
 
