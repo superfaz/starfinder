@@ -58,11 +58,6 @@ export function ClientComponent({ data }: { data: DataSet }) {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="spells" disabled={selectedRace === null}>
-              Sorts
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
             <Nav.Link eventKey="feats" disabled={selectedRace === null}>
               Don
             </Nav.Link>
