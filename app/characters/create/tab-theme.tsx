@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
@@ -12,33 +13,15 @@ export interface CharacterTabProps {
   mutators: CharacterMutators;
 }
 
+const LazyThemeNoneEditor = dynamic(() => import("./themes/ThemeNoneEditor"));
+const LazyThemeScholarEditor = dynamic(() => import("./themes/ThemeScholarEditor"));
+
 export function TabThemeSelection({ data, character, mutators }: CharacterTabProps) {
   const selectedTheme = character.getTheme();
-  const scholarDetails = character.getScholarDetails();
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
     mutators.updateTheme(id);
-  }
-
-  function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    mutators.updateNoThemeAbilityScore(id);
-  }
-
-  function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    mutators.updateScholarSkill(id);
-  }
-
-  function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const specialization = e.target.value;
-    mutators.updateScholarSpecialization(specialization);
-  }
-
-  function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>): void {
-    const label = e.target.value;
-    mutators.updateScholarSpecialization(label);
   }
 
   return (
@@ -68,57 +51,8 @@ export function TabThemeSelection({ data, character, mutators }: CharacterTabPro
         </Stack>
       )}
       {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
-      {character.hasNoTheme() && (
-        <>
-          <Form.FloatingLabel controlId="noThemeAbility" label="Choix de la charactérisque">
-            <Form.Select value={character.getNoThemeAbilityScore() || ""} onChange={handleNoThemeAbilityChange}>
-              {data.abilityScores.map((abilityScore) => (
-                <option key={abilityScore.id} value={abilityScore.id}>
-                  {abilityScore.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.FloatingLabel>
-          <Stack direction="horizontal">
-            <Badge bg={"primary"}>
-              {findOrError(data.abilityScores, (a) => a.id === character.getNoThemeAbilityScore()).code}
-              {" +1"}
-            </Badge>
-          </Stack>
-        </>
-      )}
-      {character.isScholar() && scholarDetails && (
-        <>
-          <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
-            <Form.Select value={scholarDetails.skill} onChange={handleScholarSkillChange}>
-              {data.skills
-                .filter((s) => s.id === "life" || s.id === "phys")
-                .map((skill) => (
-                  <option key={skill.id} value={skill.id}>
-                    {skill.name}
-                  </option>
-                ))}
-            </Form.Select>
-          </Form.FloatingLabel>
-          <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
-            <Form.Select value={scholarDetails.specialization} onChange={handleScholarSpecializationChange}>
-              {data.specials.scholar[scholarDetails.skill].map((d) => (
-                <option key={d} value={d}>
-                  {d}
-                </option>
-              ))}
-              <option value="">Autre domaine</option>
-            </Form.Select>
-          </Form.FloatingLabel>
-          <Form.FloatingLabel
-            controlId="scholarLabel"
-            label="Domaine de spécialité"
-            hidden={scholarDetails.specialization !== ""}
-          >
-            <Form.Control type="text" value={scholarDetails.label} onChange={handleScholarLabelChange} />
-          </Form.FloatingLabel>
-        </>
-      )}
+      {character.hasNoTheme() && <LazyThemeNoneEditor data={data} character={character} mutators={mutators} />}
+      {character.isScholar() && <LazyThemeScholarEditor data={data} character={character} mutators={mutators} />}
     </Stack>
   );
 }
