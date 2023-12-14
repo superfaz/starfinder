@@ -1,6 +1,7 @@
 import { DataSet } from "data";
-import { Character, Class, Feature, ModifierTemplate, Race, SkillDefinition, Theme, Variant } from "model";
+import { Character, Class, Feature, Modifier, Race, SkillDefinition, Theme, Variant } from "model";
 import { Templater } from ".";
+import { getOperativeFeatureTemplates } from "./ClassPresenter";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -224,6 +225,29 @@ export class CharacterPresenter {
     return this.cachedClass;
   }
 
+  getClassFeatures(): Feature[] {
+    const selectedClass = this.getClass();
+    if (!selectedClass) {
+      return [];
+    }
+
+    const templater = new Templater({
+      race: this.character.race,
+      theme: this.character.theme,
+      class: this.character.class,
+      ...this.character.raceOptions,
+      ...this.character.themeOptions,
+      ...this.character.classOptions,
+    });
+
+    switch (selectedClass.id) {
+      case "class-operative":
+        return getOperativeFeatureTemplates(this).map((f) => templater.convertFeature(f));
+      default:
+        return [];
+    }
+  }
+
   isSoldier(): boolean {
     return this.character.class === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab";
   }
@@ -272,26 +296,32 @@ export class CharacterPresenter {
    *
    * @returns The list of modifiers that apply to the character.
    */
-  getModifiers(): ModifierTemplate[] {
+  getModifiers(): Modifier[] {
     const selectedRaceTraits = this.getSelectedRaceTraits();
-    const themeTraits = this.getThemeFeatures();
-    const characterTraits = selectedRaceTraits.concat(themeTraits);
+    const themeFeatures = this.getThemeFeatures();
+    const classFeatures = this.getClassFeatures();
+    const characterFeatures = selectedRaceTraits.concat(themeFeatures).concat(classFeatures);
 
-    return characterTraits
+    return characterFeatures
+      .filter((f) => f.level <= 1)
       .map((t) => t.modifiers)
       .flat()
-      .filter((t) => t && (t.level === undefined || t.level <= 1)) as ModifierTemplate[];
+      .filter((t) => t && (t.level === undefined || t.level <= 1));
   }
 
   getClassSkills(): string[] {
+    const selectedClass = this.getClass();
+    if (!selectedClass) {
+      return [];
+    }
+
     if (!this.cachedClassSkills) {
-      const selectedClass = this.getClass();
       const modifiers = this.getModifiers();
 
       const classSkillsFromRace = modifiers
         .filter((m) => m.type === "classSkill" && m.target)
         .map((m) => m.target) as string[];
-      this.cachedClassSkills = classSkillsFromRace.concat(selectedClass?.classSkills || []);
+      this.cachedClassSkills = classSkillsFromRace.concat(selectedClass.classSkills);
     }
 
     return this.cachedClassSkills;
@@ -332,13 +362,16 @@ export class CharacterPresenter {
 
   getRemainingSkillRanksPoints(): number {
     const selectedClass = this.getClass();
+    if (!selectedClass) {
+      return 0;
+    }
 
     const skillRanks =
-      (selectedClass?.skillRank || 0) +
+      selectedClass.skillRank +
       computeAbilityScoreModifier(this.getAbilityScores().int) +
       this.getModifiers()
         .filter((m) => m.type === "skillRank")
-        .reduce((acc, m) => acc + (typeof m.value === "number" ? m.value : 0), 0);
+        .reduce((acc, m) => acc + (m.value ?? 0), 0);
 
     return skillRanks - Object.values(this.character.skillRanks).reduce((acc, v) => acc + v, 0);
   }
