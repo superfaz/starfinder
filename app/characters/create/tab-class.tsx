@@ -22,7 +22,7 @@ function ClassEditor({ character, mutators }: { character: CharacterPresenter; m
       return <LazyOperativeClassEditor character={character} mutators={mutators} />;
 
     case "class-envoy":
-      return <LazyEnvoyClassEditor character={character} mutators={mutators} />;
+      return <LazyEnvoyClassEditor />;
 
     default:
       return null;
