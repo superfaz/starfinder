@@ -60,6 +60,10 @@ export class Templater {
     };
   }
 
+  convertString(text: string): string {
+    return this.applyForString(text) || "";
+  }
+
   private applyForString(template: string | undefined): string | undefined {
     if (typeof template === "undefined") {
       return undefined;

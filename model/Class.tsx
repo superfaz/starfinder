@@ -5,8 +5,8 @@ export interface Class {
   refs: string[];
   hitPoints: number;
   staminaPoints: number;
-  keyAbilityScore: string | string[];
-  secondaryAbilityScore: string[];
+  primaryAbilityScore: string;
+  secondaryAbilityScores: string[];
   skillRank: number;
   classSkills: string[];
   armors: string[];

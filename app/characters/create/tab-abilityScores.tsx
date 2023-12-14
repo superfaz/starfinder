@@ -9,6 +9,9 @@ export function TabAbilityScoresSelection({ data, character, mutators }: Charact
   const abilityScores = character.getAbilityScores();
   const minimalAbilityScores = character.getMinimalAbilityScores();
 
+  const primaryAbilityScore = character.getPrimaryAbilityScore();
+  const secondaryAbilityScores = character.getSecondaryAbilityScores();
+
   function handleAbilityScoreClick(abilityScoreId: string, delta: number): void {
     mutators.updateAbilityScore(abilityScoreId, delta);
   }
@@ -44,7 +47,16 @@ export function TabAbilityScoresSelection({ data, character, mutators }: Charact
         return (
           <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
             <Form.Label column className="header">
-              {abilityScore.name}
+              {primaryAbilityScore === abilityScore.id && (
+                <i className="bi bi-star-fill text-gold" title="Caractéristique principale"></i>
+              )}
+              {secondaryAbilityScores.includes(abilityScore.id) && (
+                <i className="bi bi-star-half text-gold" title="Caractéristique secondaire"></i>
+              )}
+              {primaryAbilityScore !== abilityScore.id && !secondaryAbilityScores.includes(abilityScore.id) && (
+                <i className="bi bi-empty"></i>
+              )}
+              <span className="ms-1">{abilityScore.name}</span>
               {delta !== 0 && (
                 <Badge bg={delta < 0 ? "secondary" : "primary"} className="ms-3">
                   {displayBonus(delta)}

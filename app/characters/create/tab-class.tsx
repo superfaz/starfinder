@@ -77,9 +77,9 @@ export function TabClassSelection({ data, character, mutators }: CharacterTabPro
       {selectedClass && (
         <>
           <Stack direction="horizontal">
-            {!Array.isArray(selectedClass.keyAbilityScore) && (
+            {!character.isSoldier() && (
               <Badge bg="primary">
-                {findOrError(data.abilityScores, (a) => a.id === selectedClass.keyAbilityScore).code}
+                {findOrError(data.abilityScores, (a) => a.id === selectedClass.primaryAbilityScore).code}
               </Badge>
             )}
             <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>

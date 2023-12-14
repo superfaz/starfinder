@@ -264,6 +264,34 @@ export class CharacterPresenter {
     return this.character.abilityScores;
   }
 
+  getPrimaryAbilityScore(): string {
+    const selectedClass = this.getClass();
+    if (!selectedClass) {
+      return "";
+    }
+
+    const templater = new Templater({
+      class: this.character.class,
+      ...this.character.classOptions,
+    });
+
+    return templater.convertString(selectedClass.primaryAbilityScore);
+  }
+
+  getSecondaryAbilityScores(): string[] {
+    const selectedClass = this.getClass();
+    if (!selectedClass) {
+      return [];
+    }
+
+    const templater = new Templater({
+      race: this.character.race,
+      ...this.character.classOptions,
+    });
+
+    return selectedClass.secondaryAbilityScores.map((s) => templater.convertString(s));
+  }
+
   getMinimalAbilityScores(): Record<string, number> {
     if (!this.cachedMinimalAbilityScores) {
       this.cachedMinimalAbilityScores = computeMinimalAbilityScores(this.data, this.character);

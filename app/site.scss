@@ -2,6 +2,14 @@
 
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+/**
+ * Extend bootstrap icons with an empty placeholder.
+ */
+.bi-empty {
+  display: inline-block;
+  width: 1em;
+}
+
 html.fullscreen,
 .fullscreen body,
 .fullscreen {
@@ -124,6 +132,16 @@ input[type="number"] {
   }
 }
 
+/**
+ * Custom colors
+ */
+.text-gold {
+  color: #fada80;
+}
+
+/**
+ * Custom elements.
+ */
 .ref {
   margin-top: 0.25em;
   display: inline-block;
