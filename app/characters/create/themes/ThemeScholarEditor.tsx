@@ -1,13 +1,6 @@
 import { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
-import { CharacterMutators, CharacterPresenter } from "logic";
-import { DataSet } from "data";
-
-export interface CharacterTabProps {
-  data: DataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}
+import { CharacterTabProps } from "../CharacterTabProps";
 
 export default function ThemeScholarEditor({ data, character, mutators }: CharacterTabProps) {
   const scholarDetails = character.getScholarDetails();

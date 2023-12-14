@@ -1,14 +1,8 @@
 import { ChangeEvent } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { DataSet } from "data";
-import { CharacterMutators, CharacterPresenter, computeAbilityScoreModifier } from "logic";
-
-export interface CharacterTabProps {
-  data: DataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}
+import { computeAbilityScoreModifier } from "logic";
+import { CharacterTabProps } from "./CharacterTabProps";
 
 export function TabAbilityScoresSelection({ data, character, mutators }: CharacterTabProps) {
   const points = character.getRemainingAbilityScoresPoints();

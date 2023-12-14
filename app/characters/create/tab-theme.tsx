@@ -2,16 +2,10 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { DataSet } from "data";
-import { CharacterMutators, CharacterPresenter } from "logic";
+import { CharacterPresenter } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "./FeatureComponent";
-
-export interface CharacterTabProps {
-  data: DataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}
+import { CharacterTabProps } from "./CharacterTabProps";
 
 const LazyThemeNoneEditor = dynamic(() => import("./themes/ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("./themes/ThemeScholarEditor"));

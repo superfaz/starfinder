@@ -1,14 +1,7 @@
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { DataSet } from "data";
-import { CharacterMutators, CharacterPresenter } from "logic";
-
-export interface CharacterTabProps {
-  data: DataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}
+import { CharacterTabProps } from "../CharacterTabProps";
 
 export default function ThemeNoneEditor({ data, character, mutators }: CharacterTabProps) {
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {

@@ -2,20 +2,14 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Class } from "model";
+import { CharacterTabProps } from "./CharacterTabProps";
 
 const LazyEnvoyClassEditor = dynamic(() => import("./classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("./classes/envoyDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
-
-export interface CharacterTabProps {
-  data: DataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}
 
 function ClassEditor({
   classType,

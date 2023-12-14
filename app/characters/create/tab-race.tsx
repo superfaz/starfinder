@@ -1,16 +1,10 @@
 import { ChangeEvent } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "./FeatureComponent";
-
-export interface CharacterTabProps {
-  data: DataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}
+import { CharacterTabProps } from "./CharacterTabProps";
 
 export function TabRaceSelection({ data, character, mutators }: CharacterTabProps) {
   const selectedRace = character.getRace();
