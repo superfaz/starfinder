@@ -1,4 +1,5 @@
 export class Character {
+  level: number;
   race: string;
   raceVariant: string;
   raceOptions?: Record<string, string>;
@@ -12,6 +13,7 @@ export class Character {
   skillRanks: Record<string, number>;
 
   constructor() {
+    this.level = 1;
     this.race = "";
     this.raceVariant = "";
     this.theme = "";

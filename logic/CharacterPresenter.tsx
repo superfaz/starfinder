@@ -303,10 +303,10 @@ export class CharacterPresenter {
     const characterFeatures = selectedRaceTraits.concat(themeFeatures).concat(classFeatures);
 
     return characterFeatures
-      .filter((f) => f.level <= 1)
+      .filter((f) => f.level <= this.character.level)
       .map((t) => t.modifiers)
       .flat()
-      .filter((t) => t && (t.level === undefined || t.level <= 1));
+      .filter((t) => t && (t.level === undefined || t.level <= this.character.level));
   }
 
   getClassSkills(): string[] {
