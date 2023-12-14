@@ -1,5 +1,8 @@
 # StarFinder
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=superfaz_starfinder&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=superfaz_starfinder)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=superfaz_starfinder&metric=coverage)](https://sonarcloud.io/summary/new_code?id=superfaz_starfinder)
+
 Provides an easy-to-use online creation tool for StarFinder.
 
 ## Current Status
