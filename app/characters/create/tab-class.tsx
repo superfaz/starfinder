@@ -3,7 +3,6 @@ import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { CharacterMutators, CharacterPresenter } from "logic";
-import { Class } from "model";
 import { CharacterTabProps } from "./CharacterTabProps";
 
 const LazyEnvoyClassEditor = dynamic(() => import("./classes/envoyEditor"));
@@ -11,21 +10,38 @@ const LazyEnvoyClassDetails = dynamic(() => import("./classes/envoyDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
 
-function ClassEditor({
-  classType,
-  character,
-  mutators,
-}: {
-  classType: Class;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}) {
-  switch (classType.id) {
+function ClassEditor({ character, mutators }: { character: CharacterPresenter; mutators: CharacterMutators }) {
+  const selectedClass = character.getClass();
+
+  if (!selectedClass) {
+    return null;
+  }
+
+  switch (selectedClass.id) {
     case "class-operative":
       return <LazyOperativeClassEditor character={character} mutators={mutators} />;
 
     case "class-envoy":
       return <LazyEnvoyClassEditor character={character} mutators={mutators} />;
+
+    default:
+      return null;
+  }
+}
+
+function ClassDetails({ character }: { character: CharacterPresenter }): JSX.Element | null {
+  const selectedClass = character.getClass();
+
+  if (!selectedClass) {
+    return null;
+  }
+
+  switch (selectedClass.id) {
+    case "class-operative":
+      return <LazyOperativeClassDetails character={character} />;
+
+    case "class-envoy":
+      return <LazyEnvoyClassDetails character={character} />;
 
     default:
       return null;
@@ -102,30 +118,11 @@ export function TabClassSelection({ data, character, mutators }: CharacterTabPro
             {selectedClass.weapons.map((a) => data.weapons[a]).join(", ")}
           </div>
           <hr />
-          <ClassEditor classType={selectedClass} character={character} mutators={mutators} />
+          <ClassEditor character={character} mutators={mutators} />
         </>
       )}
     </Stack>
   );
-}
-
-function ClassDetails({ character }: { character: CharacterPresenter }): JSX.Element | null {
-  const selectedClass = character.getClass();
-
-  if (!selectedClass) {
-    return null;
-  }
-
-  switch (selectedClass.id) {
-    case "class-operative":
-      return <LazyOperativeClassDetails character={character} />;
-
-    case "class-envoy":
-      return <LazyEnvoyClassDetails character={character} />;
-
-    default:
-      return null;
-  }
 }
 
 export function TabClassDetails({ character }: { character: CharacterPresenter }) {
