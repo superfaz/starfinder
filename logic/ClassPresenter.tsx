@@ -13,6 +13,5 @@ export function getOperativeFeatureTemplates(character: CharacterPresenter): Fea
   const specializationFeatures: FeatureTemplate[] = selectedSpecialization?.features || [];
   const features: FeatureTemplate[] = classFeatures.concat(specializationFeatures);
 
-  console.log("ici", classFeatures, specializationFeatures, features);
   return features;
 }
