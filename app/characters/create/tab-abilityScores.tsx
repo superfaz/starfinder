@@ -45,7 +45,7 @@ export function TabAbilityScoresSelection({ data, character, mutators }: Charact
           <Form.Group key={abilityScore.id} as={Row} controlId={abilityScore.id}>
             <Form.Label column className="header">
               {abilityScore.name}
-              {delta && (
+              {delta !== 0 && (
                 <Badge bg={delta < 0 ? "secondary" : "primary"} className="ms-3">
                   {displayBonus(delta)}
                 </Badge>
