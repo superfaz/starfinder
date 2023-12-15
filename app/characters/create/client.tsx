@@ -10,6 +10,7 @@ import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-r
 import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
 import { TabClassDetails, TabClassSelection } from "./tab-class";
 import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScores";
+import { TabSheet } from "./tab-sheet";
 
 export function ClientComponent({ data }: { data: DataSet }) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
@@ -68,6 +69,9 @@ export function ClientComponent({ data }: { data: DataSet }) {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
+            <Nav.Link eventKey="sheet">Fiche</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
             <Nav.Link eventKey="debug">Debug</Nav.Link>
           </Nav.Item>
         </Nav>
@@ -109,6 +113,10 @@ export function ClientComponent({ data }: { data: DataSet }) {
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
         <TabSkillsSelection data={data} character={presenter} mutators={mutators} />
+      </Col>
+
+      <Col lg={12} hidden={navigation !== "sheet"}>
+        <TabSheet data={data} character={presenter} />
       </Col>
 
       <Col lg={12} hidden={navigation !== "debug"}>

@@ -150,15 +150,16 @@ export function TabSkillsSelection({ data, character, mutators }: CharacterTabPr
       {character.getSkills().map((skill) => (
         <Form.Group key={skill.id} as={Row} controlId={skill.id}>
           <Form.Label column>
+            <span className="me-1">{skill.definition.name}</span>
+            {skill.definition.abilityScore && (
+              <span className="me-1">({findOrError(data.abilityScores, (a) => a.id === skill.definition.abilityScore).code})</span>
+            )}
             {skill.definition.trainedOnly && (
-              <i className="bi bi-mortarboard-fill text-secondary" title="Formation nécessaire"></i>
-            )}{" "}
+              <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
+            )}
             {skill.definition.armorCheckPenalty && (
-              <i className="bi bi-shield-shaded text-secondary" title="Le malus d’armure aux tests s’applique"></i>
-            )}{" "}
-            {skill.definition.name}{" "}
-            {skill.definition.abilityScore &&
-              "(" + findOrError(data.abilityScores, (a) => a.id === skill.definition.abilityScore).code + ")"}
+              <i className="bi bi-shield-shaded text-secondary me-1" title="Le malus d’armure aux tests s’applique"></i>
+            )}
           </Form.Label>
           <Col lg={2} className="pt-2 text-center">
             {skill.isClassSkill && <Form.Check type="checkbox" checked disabled />}
