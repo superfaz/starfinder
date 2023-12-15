@@ -2,6 +2,7 @@ import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier } from "logic";
+import { ModifierType } from "model";
 
 function ValueComponent({
   label,
@@ -142,13 +143,26 @@ function CardKeyPoints() {
   );
 }
 
-function CardSavingThrows() {
+function CardSavingThrows({ character }: { character: CharacterPresenter }) {
+  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.savingThrow);
   return (
     <Card>
       <Card.Header>
         <Badge bg="primary">Jets de sauvegarde</Badge>
       </Card.Header>
       <Card.Body className="position-relative">test</Card.Body>
+      {modifiers.length > 0 && (
+        <Card.Footer className="small">
+          <Stack gap={2}>
+            {modifiers.map((modifier) => (
+              <div key={modifier.id}>
+                <strong className="me-2">{modifier.name}.</strong>
+                <span className="text-muted">{modifier.description}</span>
+              </div>
+            ))}
+          </Stack>
+        </Card.Footer>
+      )}
     </Card>
   );
 }
@@ -179,7 +193,7 @@ function CardWeapons() {
   return (
     <Card>
       <Card.Header>
-        <Badge bg="primary">Bonus d&apos;attaque</Badge>
+        <Badge bg="primary">Armes</Badge>
       </Card.Header>
       <Card.Body className="position-relative">test</Card.Body>
     </Card>
@@ -187,19 +201,21 @@ function CardWeapons() {
 }
 
 function CardAbilities({ character }: { character: CharacterPresenter }) {
-  const modifiers = character.getModifiers().filter((m) => m.type === "ability");
+  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.ability);
   return (
     <Card>
       <Card.Header>
         <Badge bg="primary">Pouvoirs</Badge>
       </Card.Header>
       <Card.Body className="small">
-        {modifiers.map((modifier) => (
-          <div key={modifier.id} className="mb-2">
-            <strong className="me-2">{modifier.name}.</strong>
-            <span className="text-muted">{modifier.description}</span>
-          </div>
-        ))}
+        <Stack gap={2}>
+          {modifiers.map((modifier) => (
+            <div key={modifier.id}>
+              <strong className="me-2">{modifier.name}.</strong>
+              <span className="text-muted">{modifier.description}</span>
+            </div>
+          ))}
+        </Stack>
       </Card.Body>
     </Card>
   );
@@ -209,25 +225,29 @@ export function TabSheet({ data, character }: { data: DataSet; character: Charac
   return (
     <Row>
       <Col lg={3}>
-        <CardProfile character={character} />
+        <Stack direction="vertical" gap={2}>
+          <CardProfile character={character} />
+          <CardAbilityScores data={data} character={character} />
+        </Stack>
       </Col>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
-          <CardAbilityScores data={data} character={character} />
           <CardSkills data={data} character={character} />
         </Stack>
       </Col>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
           <CardKeyPoints />
-          <CardSavingThrows />
+          <CardSavingThrows character={character} />
           <CardArmorClass />
           <CardAttackBonus />
           <CardWeapons />
         </Stack>
       </Col>
       <Col lg={3}>
-        <CardAbilities character={character} />
+        <Stack direction="vertical" gap={2}>
+          <CardAbilities character={character} />
+        </Stack>
       </Col>
     </Row>
   );
