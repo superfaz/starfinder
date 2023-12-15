@@ -1,6 +1,7 @@
 export default function nextConfig() {
   if (process.env.GITHUB_WORKFLOW) {
     // Configuration for Azure Static Web Apps
+    console.log("Azure Static Web Apps configuration");
     return {
       output: "standalone",
     };
