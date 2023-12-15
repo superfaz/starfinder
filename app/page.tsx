@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Col, Row } from "react-bootstrap";
 
-export default async function Page() {
+export default function Page() {
   return (
     <>
       <h1>Bienvenue !</h1>

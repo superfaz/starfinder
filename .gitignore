@@ -13,3 +13,7 @@
 .pnp.*
 
 .next/*
+
+coverage/*
+
+node_modules/*
