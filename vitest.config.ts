@@ -11,4 +11,12 @@ export default defineConfig({
       reporter: ["text", "clover"],
     },
   },
+  resolve: {
+    alias: {
+      app: "/app",
+      data: "/data",
+      logic: "/logic",
+      model: "/model",
+    },
+  },
 });

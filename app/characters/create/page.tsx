@@ -3,43 +3,43 @@ import { ClientComponent } from "./client";
 import { AbilityScores, Alignments, Classes, Races, Skills, Specials, Themes } from "data";
 import { DataSet } from "data";
 
-async function getRaces(): Promise<Race[]> {
+function getRaces(): Race[] {
   return Races;
 }
 
-async function getThemes(): Promise<Theme[]> {
+function getThemes(): Theme[] {
   return Themes;
 }
 
-async function getClasses(): Promise<Class[]> {
+function getClasses(): Class[] {
   return Classes;
 }
 
-async function getSkills(): Promise<SkillDefinition[]> {
+function getSkills(): SkillDefinition[] {
   return Skills;
 }
 
-async function getAbilityScores(): Promise<AbilityScore[]> {
+function getAbilityScores(): AbilityScore[] {
   return AbilityScores;
 }
 
-async function getSpecials(): Promise<Record<string, Special>> {
+function getSpecials(): Record<string, Special> {
   return Specials;
 }
 
-async function getAlignments(): Promise<Alignment[]> {
+function getAlignments(): Alignment[] {
   return Alignments;
 }
 
-export default async function Page() {
+export default function Page() {
   const data: DataSet = {
-    races: await getRaces(),
-    themes: await getThemes(),
-    classes: await getClasses(),
-    skills: await getSkills(),
-    abilityScores: await getAbilityScores(),
-    specials: await getSpecials(),
-    alignments: await getAlignments(),
+    races: getRaces(),
+    themes: getThemes(),
+    classes: getClasses(),
+    skills: getSkills(),
+    abilityScores: getAbilityScores(),
+    specials: getSpecials(),
+    alignments: getAlignments(),
     armors: { light: "Légère", heavy: "Lourde" },
     weapons: {
       basic: "Armes de corps à corps simples",
