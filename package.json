@@ -18,8 +18,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test": "vitest --typecheck",
+    "test:coverage": "vitest run --coverage --typecheck"
   },
   "devDependencies": {
     "@testing-library/react": "^14.1.2",

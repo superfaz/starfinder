@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import Page from "../app/page";
+import Page from "./page";
 
 describe("Page", () => {
   beforeEach(() => {
@@ -12,6 +12,12 @@ describe("Page", () => {
   });
 
   test("Page has link to create character", async () => {
-    expect(screen.getByRole("link", { name: "Créer un personnage" })).toBeDefined();
+    const link = screen.getByRole("link", { name: "Créer un personnage" });
+    expect(link).toBeDefined();
+    expect(link.attributes).toHaveProperty("href");
+    expect(link.attributes.getNamedItem("href")).toBeDefined();
+
+    const attribute = link.attributes.getNamedItem("href") as Attr;
+    expect(attribute.value).toEqual("/characters/create");
   });
 });
