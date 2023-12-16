@@ -1,4 +1,4 @@
-name: Azure Static Web Apps CI/CD
+name: Deploy Action
 
 on:
   push:
@@ -53,7 +53,7 @@ jobs:
         run: yarn install
 
       - name: Build
-        run: yarn build:azure
+        run: yarn build
 
       - name: Test
         run: yarn test:coverage
