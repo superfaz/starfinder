@@ -7,8 +7,8 @@ export default defineConfig({
     environment: "happy-dom",
     setupFiles: ["./vitest.setup.ts"],
     coverage: {
-      provider: "istanbul", // or 'v8',
-      reporter: ["text", "clover"],
+      provider: "v8",
+      reporter: ["text", "lcov"],
     },
   },
   resolve: {

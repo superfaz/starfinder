@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "@vitejs/plugin-react": "^4.2.1",
-    "@vitest/coverage-istanbul": "^1.0.4",
+    "@vitest/coverage-v8": "^1.0.4",
     "eslint": "^8.53.0",
     "eslint-config-next": "^14.0.1",
     "eslint-config-prettier": "^9.1.0",
