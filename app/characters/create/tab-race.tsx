@@ -4,9 +4,9 @@ import { displayBonus, findOrError } from "app/helpers";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "./FeatureComponent";
-import { CharacterTabProps } from "./CharacterTabProps";
+import { TabEditProps } from "./TabEditProps";
 
-export function TabRaceSelection({ data, character, mutators }: CharacterTabProps) {
+export function TabRaceSelection({ data, character, mutators }: TabEditProps) {
   const selectedRace = character.getRace();
   const selectedVariant = character.getRaceVariant();
 

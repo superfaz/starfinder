@@ -1,8 +1,8 @@
 import { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
-import { CharacterTabProps } from "../CharacterTabProps";
+import { TabEditProps } from "../TabEditProps";
 
-export default function ThemeScholarEditor({ data, character, mutators }: CharacterTabProps) {
+export default function ThemeScholarEditor({ data, character, mutators }: TabEditProps) {
   const scholarDetails = character.getScholarDetails();
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {

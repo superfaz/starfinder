@@ -5,12 +5,12 @@ import { displayBonus, findOrError } from "app/helpers";
 import { CharacterPresenter } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "./FeatureComponent";
-import { CharacterTabProps } from "./CharacterTabProps";
+import { TabEditProps } from "./TabEditProps";
 
 const LazyThemeNoneEditor = dynamic(() => import("./themes/ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("./themes/ThemeScholarEditor"));
 
-export function TabThemeSelection({ data, character, mutators }: CharacterTabProps) {
+export function TabThemeSelection({ data, character, mutators }: TabEditProps) {
   const selectedTheme = character.getTheme();
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {

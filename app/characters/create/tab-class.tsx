@@ -3,7 +3,7 @@ import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { CharacterMutators, CharacterPresenter } from "logic";
-import { CharacterTabProps } from "./CharacterTabProps";
+import { TabEditProps } from "./TabEditProps";
 
 const LazyEnvoyClassEditor = dynamic(() => import("./classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("./classes/envoyDetails"));
@@ -48,7 +48,7 @@ function ClassDetails({ character }: { character: CharacterPresenter }): JSX.Ele
   }
 }
 
-export function TabClassSelection({ data, character, mutators }: CharacterTabProps) {
+export function TabClassSelection({ data, character, mutators }: TabEditProps) {
   const selectedClass = character.getClass();
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {

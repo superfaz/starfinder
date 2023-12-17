@@ -2,9 +2,9 @@ import { ChangeEvent } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { computeAbilityScoreModifier } from "logic";
-import { CharacterTabProps } from "./CharacterTabProps";
+import { TabEditProps } from "./TabEditProps";
 
-export function TabAbilityScoresSelection({ data, character, mutators }: CharacterTabProps) {
+export function TabAbilityScoresSelection({ data, character, mutators }: TabEditProps) {
   const points = character.getRemainingAbilityScoresPoints();
   const abilityScores = character.getAbilityScores();
   const minimalAbilityScores = character.getMinimalAbilityScores();
@@ -99,7 +99,7 @@ export function TabAbilityScoresSelection({ data, character, mutators }: Charact
   );
 }
 
-export function TabSkillsSelection({ data, character, mutators }: CharacterTabProps) {
+export function TabSkillsSelection({ data, character, mutators }: TabEditProps) {
   const selectedRace = character.getRace();
   const selectedTheme = character.getTheme();
   const selectedClass = character.getClass();
