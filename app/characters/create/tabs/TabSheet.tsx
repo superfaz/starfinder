@@ -221,7 +221,7 @@ function CardAbilities({ character }: { character: CharacterPresenter }) {
   );
 }
 
-export function TabSheet({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+export function Sheet({ data, character }: { data: DataSet; character: CharacterPresenter }) {
   return (
     <Row>
       <Col lg={3}>

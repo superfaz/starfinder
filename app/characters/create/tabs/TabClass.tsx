@@ -3,14 +3,14 @@ import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { CharacterMutators, CharacterPresenter } from "logic";
-import { TabEditProps } from "./TabEditProps";
+import { TabEditProps } from "../TabEditProps";
 
-const LazyEnvoyClassEditor = dynamic(() => import("./classes/envoyEditor"));
-const LazyEnvoyClassDetails = dynamic(() => import("./classes/envoyDetails"));
-const LazyOperativeClassEditor = dynamic(() => import("./classes/operativeEditor"));
-const LazyOperativeClassDetails = dynamic(() => import("./classes/operativeDetails"));
+const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
+const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));
+const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
+const LazyOperativeClassDetails = dynamic(() => import("../classes/operativeDetails"));
 
-function ClassEditor({ character, mutators }: { character: CharacterPresenter; mutators: CharacterMutators }) {
+function LazyClassEditor({ character, mutators }: { character: CharacterPresenter; mutators: CharacterMutators }) {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {
@@ -29,7 +29,7 @@ function ClassEditor({ character, mutators }: { character: CharacterPresenter; m
   }
 }
 
-function ClassDetails({ character }: { character: CharacterPresenter }): JSX.Element | null {
+function LazyClassDetails({ character }: { character: CharacterPresenter }): JSX.Element | null {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {
@@ -48,7 +48,7 @@ function ClassDetails({ character }: { character: CharacterPresenter }): JSX.Ele
   }
 }
 
-export function TabClassSelection({ data, character, mutators }: TabEditProps) {
+export function ClassSelection({ data, character, mutators }: TabEditProps) {
   const selectedClass = character.getClass();
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
@@ -118,18 +118,18 @@ export function TabClassSelection({ data, character, mutators }: TabEditProps) {
             {selectedClass.weapons.map((a) => data.weapons[a]).join(", ")}
           </div>
           <hr />
-          <ClassEditor character={character} mutators={mutators} />
+          <LazyClassEditor character={character} mutators={mutators} />
         </>
       )}
     </Stack>
   );
 }
 
-export function TabClassDetails({ character }: { character: CharacterPresenter }) {
+export function ClassDetails({ character }: { character: CharacterPresenter }) {
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Abilités de classe</h2>
-      <ClassDetails character={character} />
+      <LazyClassDetails character={character} />
     </Stack>
   );
 }

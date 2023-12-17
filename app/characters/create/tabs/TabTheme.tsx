@@ -4,13 +4,13 @@ import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { CharacterPresenter } from "logic";
 import { Feature } from "model";
-import FeatureComponent from "./FeatureComponent";
-import { TabEditProps } from "./TabEditProps";
+import FeatureComponent from "../FeatureComponent";
+import { TabEditProps } from "../TabEditProps";
 
-const LazyThemeNoneEditor = dynamic(() => import("./themes/ThemeNoneEditor"));
-const LazyThemeScholarEditor = dynamic(() => import("./themes/ThemeScholarEditor"));
+const LazyThemeNoneEditor = dynamic(() => import("../themes/ThemeNoneEditor"));
+const LazyThemeScholarEditor = dynamic(() => import("../themes/ThemeScholarEditor"));
 
-export function TabThemeSelection({ data, character, mutators }: TabEditProps) {
+export function ThemeSelection({ data, character, mutators }: TabEditProps) {
   const selectedTheme = character.getTheme();
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
@@ -51,7 +51,7 @@ export function TabThemeSelection({ data, character, mutators }: TabEditProps) {
   );
 }
 
-export function TabThemeTraits({ character }: { character: CharacterPresenter }) {
+export function ThemeTraits({ character }: { character: CharacterPresenter }) {
   const features: Feature[] = character.getThemeFeatures();
 
   return (

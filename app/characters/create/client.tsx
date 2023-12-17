@@ -5,12 +5,7 @@ import { Col, Nav, Row } from "react-bootstrap";
 import { DataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
-import { TabIntro } from "./tab-intro";
-import { TabRaceAlternateTraits, TabRaceSelection, TabRaceTraits } from "./tab-race";
-import { TabThemeSelection, TabThemeTraits } from "./tab-theme";
-import { TabClassDetails, TabClassSelection } from "./tab-class";
-import { TabAbilityScoresSelection, TabSkillsSelection } from "./tab-abilityScores";
-import { TabSheet } from "./tab-sheet";
+import * as Tab from "./tabs";
 
 export function ClientComponent({ data }: { data: DataSet }) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
@@ -77,46 +72,46 @@ export function ClientComponent({ data }: { data: DataSet }) {
         </Nav>
       </Col>
       <Col lg={6} hidden={navigation !== "intro"}>
-        <TabIntro />
+        <Tab.Intro />
       </Col>
       <Col lg={3} hidden={navigation !== "race"}>
-        <TabRaceSelection data={data} character={presenter} mutators={mutators} />
+        <Tab.RaceSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col hidden={navigation !== "race"}>
-        <TabRaceTraits character={presenter} />
+        <Tab.RaceTraits character={presenter} />
       </Col>
 
       <Col hidden={navigation !== "race"}>
-        <TabRaceAlternateTraits character={presenter} mutators={mutators} />
+        <Tab.RaceAlternateTraits character={presenter} mutators={mutators} />
       </Col>
 
       <Col lg={3} hidden={navigation !== "theme"}>
-        <TabThemeSelection data={data} character={presenter} mutators={mutators} />
+        <Tab.ThemeSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col hidden={navigation !== "theme"}>
-        <TabThemeTraits character={presenter} />
+        <Tab.ThemeTraits character={presenter} />
       </Col>
 
       <Col lg={3} hidden={navigation !== "class"}>
-        <TabClassSelection data={data} character={presenter} mutators={mutators} />
+        <Tab.ClassSelection data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col hidden={navigation !== "class"}>
-        <TabClassDetails character={presenter} />
+        <Tab.ClassDetails character={presenter} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
-        <TabAbilityScoresSelection data={data} character={presenter} mutators={mutators} />
+        <Tab.AbilityScores data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col lg={4} hidden={navigation !== "abilityScores"}>
-        <TabSkillsSelection data={data} character={presenter} mutators={mutators} />
+        <Tab.Skills data={data} character={presenter} mutators={mutators} />
       </Col>
 
       <Col lg={12} hidden={navigation !== "sheet"}>
-        <TabSheet data={data} character={presenter} />
+        <Tab.Sheet data={data} character={presenter} />
       </Col>
 
       <Col lg={12} hidden={navigation !== "debug"}>

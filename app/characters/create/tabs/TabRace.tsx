@@ -3,10 +3,10 @@ import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Feature } from "model";
-import FeatureComponent from "./FeatureComponent";
-import { TabEditProps } from "./TabEditProps";
+import FeatureComponent from "../FeatureComponent";
+import { TabEditProps } from "../TabEditProps";
 
-export function TabRaceSelection({ data, character, mutators }: TabEditProps) {
+export function RaceSelection({ data, character, mutators }: TabEditProps) {
   const selectedRace = character.getRace();
   const selectedVariant = character.getRaceVariant();
 
@@ -107,7 +107,7 @@ export function TabRaceSelection({ data, character, mutators }: TabEditProps) {
   );
 }
 
-export function TabRaceTraits({ character }: { character: CharacterPresenter }) {
+export function RaceTraits({ character }: { character: CharacterPresenter }) {
   const selectedRace = character.getRace();
   if (!selectedRace) {
     return null;
@@ -131,7 +131,7 @@ export function TabRaceTraits({ character }: { character: CharacterPresenter }) 
   );
 }
 
-export function TabRaceAlternateTraits({
+export function RaceAlternateTraits({
   character,
   mutators,
 }: {
