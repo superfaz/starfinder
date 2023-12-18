@@ -108,11 +108,6 @@ export function RaceSelection({ data, character, mutators }: TabEditProps) {
 }
 
 export function RaceTraits({ character }: { character: CharacterPresenter }) {
-  const selectedRace = character.getRace();
-  if (!selectedRace) {
-    return null;
-  }
-
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Traits raciaux</h2>
@@ -138,18 +133,12 @@ export function RaceAlternateTraits({
   character: CharacterPresenter;
   mutators: CharacterMutators;
 }) {
-  const selectedRace = character.getRace();
-
   function handleTraitEnabled(trait: Feature, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
       mutators.enableSecondaryTrait(trait);
     } else {
       mutators.disableSecondaryTrait(trait);
     }
-  }
-
-  if (!selectedRace) {
-    return null;
   }
 
   return (
