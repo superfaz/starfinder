@@ -9,6 +9,6 @@ describe("TabIntro", () => {
 
   test("Intro is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.queryByRole("heading", { level: 2, name: "Introduction" })).toBeNull();
+    expect(content.queryByRole("heading", { level: 2, name: "Introduction" })).not.toBeNull();
   });
 });
