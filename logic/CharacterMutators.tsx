@@ -378,6 +378,7 @@ export function updateSkillRank(character: Character, skillId: string, delta: nu
   const newRank = (currentRank ?? 0) + delta;
   if (newRank <= 0) {
     // Remove the rank
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { [skillId]: _, ...skillRanks } = character.skillRanks;
     return {
       ...character,
