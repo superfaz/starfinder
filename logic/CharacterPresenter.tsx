@@ -1,7 +1,8 @@
 import { DataSet } from "data";
-import { Character, Class, Feature, Modifier, Race, SkillDefinition, Theme, Variant } from "model";
+import { Avatar, Character, Class, Feature, Modifier, Race, SkillDefinition, Theme, Variant } from "model";
 import { Templater } from ".";
 import { getOperativeFeatureTemplates } from "./ClassPresenter";
+import { findOrError } from "app/helpers";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -402,5 +403,33 @@ export class CharacterPresenter {
         .reduce((acc, m) => acc + (m.value ?? 0), 0);
 
     return skillRanks - Object.values(this.character.skillRanks).reduce((acc, v) => acc + v, 0);
+  }
+
+  getName(): string {
+    return this.character.name;
+  }
+
+  getAlignment(): string {
+    return this.character.alignment;
+  }
+
+  getSex(): string {
+    return this.character.sex;
+  }
+
+  getHomeWorld(): string {
+    return this.character.homeWorld;
+  }
+
+  getDeity(): string {
+    return this.character.deity;
+  }
+
+  getAvatar(): Avatar | null {
+    if (!this.character.avatar) {
+      return null;
+    } else {
+      return findOrError(this.data.avatars, (a) => a.id === this.character.avatar);
+    }
   }
 }

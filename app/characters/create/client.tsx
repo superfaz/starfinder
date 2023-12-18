@@ -45,20 +45,22 @@ export function ClientComponent({ data }: { data: DataSet }) {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link
-            eventKey="abilityScores"
-            disabled={selectedRace === null || selectedTheme === null || selectedClass === null}
-          >
+          <Nav.Link eventKey="profile" disabled={selectedClass === null}>
+            Profil
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="abilityScores" disabled={selectedClass === null}>
             Caractéristiques & Compétences
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="feats" disabled={selectedRace === null}>
+          <Nav.Link eventKey="feats" disabled={selectedClass === null}>
             Don
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="equipment" disabled={selectedRace === null}>
+          <Nav.Link eventKey="equipment" disabled={selectedClass === null}>
             Équipement
           </Nav.Link>
         </Nav.Item>
@@ -99,6 +101,14 @@ export function ClientComponent({ data }: { data: DataSet }) {
 
         <Col hidden={navigation !== "class"}>
           <Tab.ClassDetails character={presenter} />
+        </Col>
+
+        <Col lg={3} hidden={navigation !== "profile"}>
+          <Tab.Profile data={data} character={presenter} mutators={mutators} />
+        </Col>
+
+        <Col lg={3} hidden={navigation !== "profile"}>
+          <Tab.Avatar data={data} character={presenter} mutators={mutators} />
         </Col>
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>

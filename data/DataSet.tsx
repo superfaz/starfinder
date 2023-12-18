@@ -1,8 +1,9 @@
-import { AbilityScore, Alignment, Class, Race, SkillDefinition, Special, Theme } from "model";
+import { AbilityScore, Alignment, Avatar, Class, Race, SkillDefinition, Special, Theme } from "model";
 
 export interface DataSet {
   abilityScores: AbilityScore[];
   alignments: Alignment[];
+  avatars: Avatar[];
   classes: Class[];
   races: Race[];
   skills: SkillDefinition[];

@@ -1,6 +1,6 @@
-import { AbilityScore, Alignment, Class, Race, SkillDefinition, Special, Theme } from "model";
+import { AbilityScore, Alignment, Avatar, Class, Race, SkillDefinition, Special, Theme } from "model";
 import { ClientComponent } from "./client";
-import { AbilityScores, Alignments, Classes, Races, Skills, Specials, Themes } from "data";
+import { AbilityScores, Alignments, Avatars, Classes, Races, Skills, Specials, Themes } from "data";
 import { DataSet } from "data";
 
 function getRaces(): Race[] {
@@ -31,15 +31,20 @@ function getAlignments(): Alignment[] {
   return Alignments;
 }
 
+function getAvatars(): Avatar[] {
+  return Avatars;
+}
+
 export default function Page() {
   const data: DataSet = {
+    abilityScores: getAbilityScores(),
+    alignments: getAlignments(),
+    avatars: getAvatars(),
+    classes: getClasses(),
     races: getRaces(),
     themes: getThemes(),
-    classes: getClasses(),
     skills: getSkills(),
-    abilityScores: getAbilityScores(),
     specials: getSpecials(),
-    alignments: getAlignments(),
     armors: { light: "Légère", heavy: "Lourde" },
     weapons: {
       basic: "Armes de corps à corps simples",

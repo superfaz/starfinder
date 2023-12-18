@@ -67,6 +67,30 @@ export class CharacterMutators {
   updateSkillRank(id: string, delta: number) {
     this.setCharacter((c) => updateSkillRank(c, id, delta));
   }
+
+  updateName(name: string) {
+    this.setCharacter((c) => ({ ...c, name }));
+  }
+
+  updateAlignment(id: string) {
+    this.setCharacter((c) => ({ ...c, alignment: id }));
+  }
+
+  updateSex(sex: string) {
+    this.setCharacter((c) => ({ ...c, sex }));
+  }
+
+  updateHomeWorld(homeWorld: string) {
+    this.setCharacter((c) => ({ ...c, homeWorld }));
+  }
+
+  updateDeity(deity: string) {
+    this.setCharacter((c) => ({ ...c, deity }));
+  }
+
+  updateAvatar(avatar: string) {
+    this.setCharacter((c) => ({ ...c, avatar }));
+  }
 }
 
 /**

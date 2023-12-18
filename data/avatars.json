@@ -1,0 +1,6 @@
+[
+  { "id": "androids-female", "image": "androids-female.png", "tags": ["androids", "female"] },
+  { "id": "androids-male", "image": "androids-male.png", "tags": ["androids", "male"] },
+  { "id": "humans-female", "image": "humans-female.png", "tags": ["humans", "female"] },
+  { "id": "humans-male", "image": "humans-male.png", "tags": ["humans", "male"] }
+]
