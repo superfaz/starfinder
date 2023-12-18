@@ -12,8 +12,6 @@
 #!.yarn/cache
 .pnp.*
 
-.next/*
-
-coverage/*
-
-node_modules/*
+.next
+coverage
+node_modules
