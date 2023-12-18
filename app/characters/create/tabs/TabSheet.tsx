@@ -2,7 +2,7 @@ import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier } from "logic";
-import { ModifierType } from "model";
+import { Alignment, ModifierType } from "model";
 
 function ValueComponent({
   label,
@@ -19,13 +19,16 @@ function ValueComponent({
 }) {
   return (
     <div className={className} title={title}>
-      <div className="header">{children ?? value ?? "-"}</div>
+      {children && <div className="header">{children}</div>}
+      {!children && <div className="header">{value === undefined || value === "" ? "-" : value}</div>}
       <div className="small text-muted border-top border-secondary">{label}</div>
     </div>
   );
 }
 
-function CardProfile({ character }: { character: CharacterPresenter }) {
+function CardProfile({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+  const alignment: Alignment | undefined = data.alignments.find((a) => a.id === character.getAlignment());
+
   return (
     <Card>
       <Card.Header>
@@ -33,7 +36,7 @@ function CardProfile({ character }: { character: CharacterPresenter }) {
       </Card.Header>
       <Card.Body>
         <Stack direction="vertical" gap={2}>
-          <ValueComponent label="Nom du personnage" value={"test de nom"} />
+          <ValueComponent label="Nom du personnage" value={character.getName()} />
           <Row>
             <ValueComponent label="Classe" className="col-8" value={character.getClass()?.name} />
             <ValueComponent label="Niveau" className="col-4" value={character.getCharacter().level} />
@@ -43,12 +46,17 @@ function CardProfile({ character }: { character: CharacterPresenter }) {
           <Row>
             <ValueComponent label="Taille" className="col" value={"Normale"} />
             <ValueComponent label="Vitesse" className="col" value={"Normale"} />
-            <ValueComponent label="Sexe" className="col-3" value={"X"} />
+            <ValueComponent label="Sexe" className="col-3" value={character.getSex()} />
           </Row>
-          <ValueComponent label="Monde natal" value={"Test"} />
+          <ValueComponent label="Monde natal" value={character.getHomeWorld()} />
           <Row>
-            <ValueComponent label="Alignement" className="col-4" value={"LN"} title={"Loyal Neutre"} />
-            <ValueComponent label="Divinité" className="col" value={"test"} />
+            <ValueComponent
+              label="Alignement"
+              className="col-4"
+              value={alignment?.code ?? ""}
+              title={alignment?.name ?? undefined}
+            />
+            <ValueComponent label="Divinité" className="col" value={character.getDeity()} />
           </Row>
         </Stack>
       </Card.Body>
@@ -226,7 +234,7 @@ export function Sheet({ data, character }: { data: DataSet; character: Character
     <Row>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
-          <CardProfile character={character} />
+          <CardProfile data={data} character={character} />
           <CardAbilityScores data={data} character={character} />
         </Stack>
       </Col>
