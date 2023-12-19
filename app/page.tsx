@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <h1>Bienvenue !</h1>
-      <Link href="/characters/create" className="btn btn-primary">
+      <Link href="/create" className="btn btn-primary">
         Créer un personnage
       </Link>
       <Row>
