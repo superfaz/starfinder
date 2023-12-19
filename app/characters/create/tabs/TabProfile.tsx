@@ -48,11 +48,7 @@ export function Profile({ data, character, mutators }: TabEditProps) {
 
       <Form.FloatingLabel controlId="alignment" label="Alignement">
         <Form.Select value={character.getAlignment()} onChange={handleAlignmentChange}>
-          {character.getAlignment() === "" && (
-            <option value="" disabled>
-              Choisir un alignement
-            </option>
-          )}
+          {character.getAlignment() === "" && <option value=""></option>}
           {data.alignments.map((alignment) => (
             <option key={alignment.id} value={alignment.id}>
               {`${alignment.name} (${alignment.code})`}
