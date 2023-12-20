@@ -5,6 +5,10 @@ export default function nextConfig() {
     return {
       output: "standalone",
     };
+  } else if (process.env.NEXTJS_STANDALONE) {
+    return {
+      output: "standalone",
+    };
   } else {
     // Default configuration
     return {};
