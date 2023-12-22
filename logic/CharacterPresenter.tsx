@@ -241,6 +241,7 @@ export class CharacterPresenter {
       ...this.character.classOptions,
     });
 
+    // eslint-disable-next-line sonarjs/no-small-switch
     switch (selectedClass.id) {
       case "class-operative":
         return getOperativeFeatureTemplates(this).map((f) => templater.convertFeature(f));
