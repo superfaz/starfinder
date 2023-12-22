@@ -2,5 +2,15 @@
   { "id": "androids-female", "image": "androids-female.png", "tags": ["androids", "female"] },
   { "id": "androids-male", "image": "androids-male.png", "tags": ["androids", "male"] },
   { "id": "humans-female", "image": "humans-female.png", "tags": ["humans", "female"] },
-  { "id": "humans-male", "image": "humans-male.png", "tags": ["humans", "male"] }
+  { "id": "humans-male", "image": "humans-male.png", "tags": ["humans", "male"] },
+  { "id": "kasathas-female", "image": "kasathas-female.png", "tags": ["kasathas", "female"] },
+  { "id": "kasathas-male", "image": "kasathas-male.png", "tags": ["kasathas", "male"] },
+  { "id": "lashuntas-female", "image": "lashuntas-female.png", "tags": ["lashuntas", "female"] },
+  { "id": "lashuntas-male", "image": "lashuntas-male.png", "tags": ["lashuntas", "male"] },
+  { "id": "shirrens-female", "image": "shirrens-female.png", "tags": ["shirrens", "female"] },
+  { "id": "shirrens-male", "image": "shirrens-male.png", "tags": ["shirrens", "male"] },
+  { "id": "vesks-female", "image": "vesks-female.png", "tags": ["vesks", "female"] },
+  { "id": "vesks-male", "image": "vesks-male.png", "tags": ["vesks", "male"] },
+  { "id": "ysokis-female", "image": "ysokis-female.png", "tags": ["ysokis", "female"] },
+  { "id": "ysokis-male", "image": "ysokis-male.png", "tags": ["ysokis", "male"] }
 ]
