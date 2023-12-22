@@ -30,8 +30,8 @@ The data provided by this application are available under Black Book Editions an
 ](https://yarnpkg.com)
 [![bootstrap](https://img.shields.io/badge/bootstrap-white?logo=bootstrap&logoColor=%237952B3)
 ](https://getbootstrap.com)
-[![vitest](https://img.shields.io/badge/vitest-white?logo=vitest&logoColor=%236E9F18)
-](https://vitest.dev)
+[![jest](https://img.shields.io/badge/jest-white?logo=jest&logoColor=%23C21325)
+](https://jestjs.io)
 
 This project is build with next.js and the standard commands apply:
 
