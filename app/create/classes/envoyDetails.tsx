@@ -19,12 +19,12 @@ export default function EnvoyClassDetails({ character }: CharacterProps) {
       </Col>
       {features
         .filter((s) => s.level === level)
-        .map((template, index) => {
+        .map((template) => {
           const evolutions = template.evolutions ?? {};
           const templater = new Templater(cleanEvolutions(evolutions)[level] ?? {});
           const feature = templater.convertFeature(template);
           return (
-            <Col key={index}>
+            <Col key={feature.id}>
               <FeatureComponent character={character} feature={feature} />
             </Col>
           );

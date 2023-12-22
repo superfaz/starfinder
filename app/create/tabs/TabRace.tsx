@@ -47,8 +47,8 @@ export function RaceSelection({ data, character, mutators }: TabEditProps) {
             <>
               <Form.FloatingLabel controlId="variant" label="Variante">
                 <Form.Select value={selectedVariant?.id ?? ""} onChange={handleVariantChange}>
-                  {selectedRace.variants.map((variant, index) => (
-                    <option key={index} value={variant.id}>
+                  {selectedRace.variants.map((variant) => (
+                    <option key={variant.id} value={variant.id}>
                       {variant.name}
                     </option>
                   ))}
