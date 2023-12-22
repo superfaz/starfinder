@@ -1,10 +1,11 @@
 import { Badge, Col, Row } from "react-bootstrap";
 import operativeData from "data/class-operative.json";
 import { FeatureTemplate } from "model";
-import { CharacterPresenter, Templater } from "logic";
+import { Templater } from "logic";
 import FeatureComponent from "../FeatureComponent";
+import { CharacterProps } from "../Props";
 
-export default function OperativeClassDetails({ character }: { character: CharacterPresenter }) {
+export default function OperativeClassDetails({ character }: CharacterProps) {
   const selectedSpecialization = operativeData.specializations.find(
     (s) => s.id === character.getOperativeSpecialization()
   );

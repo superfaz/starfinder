@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { TabEditProps } from "../TabEditProps";
+import { TabEditProps } from "../Props";
 
 export function Skills({ data, character, mutators }: TabEditProps) {
   const selectedRace = character.getRace();

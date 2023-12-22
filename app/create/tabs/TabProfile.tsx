@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { Button, Card, Form, InputGroup, Stack } from "react-bootstrap";
-import { TabEditProps } from "../TabEditProps";
+import { TabEditProps } from "../Props";
 
 export function Profile({ data, character, mutators }: TabEditProps) {
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {

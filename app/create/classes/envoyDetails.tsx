@@ -1,10 +1,11 @@
 import { Badge, Col, Row } from "react-bootstrap";
 import classData from "data/class-envoy.json";
 import { FeatureTemplate } from "model";
-import { CharacterPresenter, Templater, cleanEvolutions } from "logic";
+import { Templater, cleanEvolutions } from "logic";
 import FeatureComponent from "../FeatureComponent";
+import { CharacterProps } from "../Props";
 
-export default function EnvoyClassDetails({ character }: { character: CharacterPresenter }) {
+export default function EnvoyClassDetails({ character }: CharacterProps) {
   const features: FeatureTemplate[] = classData.features;
   const levels = features
     .map((f) => f.level)

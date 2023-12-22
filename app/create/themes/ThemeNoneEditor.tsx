@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { TabEditProps } from "../TabEditProps";
+import { TabEditProps } from "../Props";
 
 export default function ThemeNoneEditor({ data, character, mutators }: TabEditProps) {
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {

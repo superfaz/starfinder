@@ -2,10 +2,9 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { CharacterPresenter } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "../FeatureComponent";
-import { TabEditProps } from "../TabEditProps";
+import { CharacterProps, TabEditProps } from "../Props";
 
 const LazyThemeNoneEditor = dynamic(() => import("../themes/ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("../themes/ThemeScholarEditor"));
@@ -51,7 +50,7 @@ export function ThemeSelection({ data, character, mutators }: TabEditProps) {
   );
 }
 
-export function ThemeTraits({ character }: { character: CharacterPresenter }) {
+export function ThemeTraits({ character }: CharacterProps) {
   const features: Feature[] = character.getThemeFeatures();
 
   return (

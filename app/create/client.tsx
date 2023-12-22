@@ -7,7 +7,7 @@ import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
 import * as Tab from "./tabs";
 
-export function ClientComponent({ data }: { data: DataSet }) {
+export function ClientComponent({ data }: Readonly<{ data: DataSet }>) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
   const [navigation, setNavigation] = useState("intro");
 

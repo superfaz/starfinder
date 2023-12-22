@@ -1,10 +1,9 @@
 import { ChangeEvent } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { CharacterMutators, CharacterPresenter } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "../FeatureComponent";
-import { TabEditProps } from "../TabEditProps";
+import { CharacterProps, SimpleEditProps, TabEditProps } from "../Props";
 
 export function RaceSelection({ data, character, mutators }: TabEditProps) {
   const selectedRace = character.getRace();
@@ -107,7 +106,7 @@ export function RaceSelection({ data, character, mutators }: TabEditProps) {
   );
 }
 
-export function RaceTraits({ character }: { character: CharacterPresenter }) {
+export function RaceTraits({ character }: CharacterProps) {
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Traits raciaux</h2>
@@ -126,13 +125,7 @@ export function RaceTraits({ character }: { character: CharacterPresenter }) {
   );
 }
 
-export function RaceAlternateTraits({
-  character,
-  mutators,
-}: {
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}) {
+export function RaceAlternateTraits({ character, mutators }: SimpleEditProps) {
   function handleTraitEnabled(trait: Feature, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
       mutators.enableSecondaryTrait(trait);

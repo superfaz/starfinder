@@ -2,15 +2,14 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { CharacterMutators, CharacterPresenter } from "logic";
-import { TabEditProps } from "../TabEditProps";
+import { CharacterProps, SimpleEditProps, TabEditProps } from "../Props";
 
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("../classes/operativeDetails"));
 
-function LazyClassEditor({ character, mutators }: { character: CharacterPresenter; mutators: CharacterMutators }) {
+function LazyClassEditor({ character, mutators }: SimpleEditProps): JSX.Element | null {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {
@@ -29,7 +28,7 @@ function LazyClassEditor({ character, mutators }: { character: CharacterPresente
   }
 }
 
-function LazyClassDetails({ character }: { character: CharacterPresenter }): JSX.Element | null {
+function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {
@@ -125,7 +124,7 @@ export function ClassSelection({ data, character, mutators }: TabEditProps) {
   );
 }
 
-export function ClassDetails({ character }: { character: CharacterPresenter }) {
+export function ClassDetails({ character }: CharacterProps) {
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Abilités de classe</h2>

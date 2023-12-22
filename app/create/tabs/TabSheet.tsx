@@ -3,20 +3,19 @@ import { displayBonus, findOrError } from "app/helpers";
 import { DataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier } from "logic";
 import { Alignment, ModifierType } from "model";
+import { CharacterProps } from "../Props";
 
-function ValueComponent({
-  label,
-  value,
-  title,
-  className,
-  children,
-}: {
+interface IValueComponentProps {
   label: string;
   value?: string | number | undefined;
   title?: string;
   className?: string;
   children?: JSX.Element[] | JSX.Element;
-}) {
+}
+
+type ValueComponentProps = Readonly<IValueComponentProps>;
+
+function ValueComponent({ label, value, title, className, children }: ValueComponentProps) {
   return (
     <div className={className} title={title}>
       {children && <div className="header">{children}</div>}
@@ -26,7 +25,7 @@ function ValueComponent({
   );
 }
 
-function CardProfile({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+function CardProfile({ data, character }: SheetProps) {
   const alignment: Alignment | undefined = data.alignments.find((a) => a.id === character.getAlignment());
 
   return (
@@ -64,7 +63,7 @@ function CardProfile({ data, character }: { data: DataSet; character: CharacterP
   );
 }
 
-function CardAbilityScores({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+function CardAbilityScores({ data, character }: SheetProps) {
   return (
     <Card>
       <Card.Header>
@@ -98,7 +97,7 @@ function CardAbilityScores({ data, character }: { data: DataSet; character: Char
   );
 }
 
-function CardSkills({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+function CardSkills({ data, character }: SheetProps) {
   return (
     <Card>
       <Card.Header>
@@ -151,7 +150,7 @@ function CardKeyPoints() {
   );
 }
 
-function CardSavingThrows({ character }: { character: CharacterPresenter }) {
+function CardSavingThrows({ character }: CharacterProps) {
   const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.savingThrow);
   return (
     <Card>
@@ -208,7 +207,7 @@ function CardWeapons() {
   );
 }
 
-function CardAbilities({ character }: { character: CharacterPresenter }) {
+function CardAbilities({ character }: CharacterProps) {
   const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.ability);
   return (
     <Card>
@@ -229,7 +228,14 @@ function CardAbilities({ character }: { character: CharacterPresenter }) {
   );
 }
 
-export function Sheet({ data, character }: { data: DataSet; character: CharacterPresenter }) {
+interface ISheetProps {
+  data: DataSet;
+  character: CharacterPresenter;
+}
+
+type SheetProps = Readonly<ISheetProps>;
+
+export function Sheet({ data, character }: SheetProps) {
   return (
     <Row>
       <Col lg={3}>

@@ -1,7 +1,7 @@
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus } from "app/helpers";
 import { computeAbilityScoreModifier } from "logic";
-import { TabEditProps } from "../TabEditProps";
+import { TabEditProps } from "../Props";
 
 export function AbilityScores({ data, character, mutators }: TabEditProps) {
   const points = character.getRemainingAbilityScoresPoints();

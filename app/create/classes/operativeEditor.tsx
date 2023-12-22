@@ -1,15 +1,9 @@
 import { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
 import operativeData from "data/class-operative.json";
-import { CharacterMutators, CharacterPresenter } from "logic";
+import { SimpleEditProps } from "../Props";
 
-export default function OperativeEditor({
-  character,
-  mutators,
-}: {
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}) {
+export default function OperativeEditor({ character, mutators }: SimpleEditProps) {
   const selectedSpecialization = operativeData.specializations.find(
     (s) => s.id === character.getOperativeSpecialization()
   );

@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
-import { TabEditProps } from "../TabEditProps";
+import { TabEditProps } from "../Props";
 
 export default function ThemeScholarEditor({ data, character, mutators }: TabEditProps) {
   const scholarDetails = character.getScholarDetails();

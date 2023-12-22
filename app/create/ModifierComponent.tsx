@@ -17,7 +17,7 @@ const displayLabelsForType: Record<string, string> = {
   initiative: "Initiative",
 };
 
-export default function ModifierComponent({ modifier }: { modifier: Modifier }) {
+export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
   const target = modifier.target;
   let skillName: string | undefined;
   if (target === undefined) {

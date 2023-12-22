@@ -34,17 +34,19 @@ function convertReplaceToText(character: CharacterPresenter, replace: string[]):
   });
 }
 
+interface FeatureComponentProps {
+  character: CharacterPresenter;
+  feature: Feature;
+  className?: string;
+  children?: JSX.Element;
+}
+
 export default function FeatureComponent({
   character,
   feature,
   className,
   children,
-}: {
-  character: CharacterPresenter;
-  feature: Feature;
-  className?: string;
-  children?: JSX.Element;
-}): JSX.Element {
+}: Readonly<FeatureComponentProps>): JSX.Element {
   const hasEvolutions = Object.keys(feature.evolutions).length > 0;
   return (
     <Card className={className}>
