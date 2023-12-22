@@ -65,7 +65,7 @@ export function ClassSelection({ data, character, mutators }: TabEditProps) {
     <Stack direction="vertical" gap={2}>
       <h2>Classe</h2>
       <Form.FloatingLabel controlId="class" label="Classe">
-        <Form.Select value={selectedClass?.id |?? ""} onChange={handleClassChange}>
+        <Form.Select value={selectedClass?.id ?? ""} onChange={handleClassChange}>
           {selectedClass === null && <option value=""></option>}
           {data.classes.map((classType) => (
             <option key={classType.id} value={classType.id}>
