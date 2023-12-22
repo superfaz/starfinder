@@ -12,7 +12,7 @@ export default function ThemeNoneEditor({ data, character, mutators }: TabEditPr
   return (
     <>
       <Form.FloatingLabel controlId="noThemeAbility" label="Choix de la caractérisque">
-        <Form.Select value={character.getNoThemeAbilityScore() || ""} onChange={handleNoThemeAbilityChange}>
+        <Form.Select value={character.getNoThemeAbilityScore() ?? ""} onChange={handleNoThemeAbilityChange}>
           {data.abilityScores.map((abilityScore) => (
             <option key={abilityScore.id} value={abilityScore.id}>
               {abilityScore.name}

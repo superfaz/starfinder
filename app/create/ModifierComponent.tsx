@@ -32,7 +32,7 @@ export default function ModifierComponent({ modifier }: { modifier: Modifier }) 
 
   return (
     <p>
-      <Badge bg="primary">{displayLabelsForType[modifier.type] || ""}</Badge>
+      <Badge bg="primary">{displayLabelsForType[modifier.type] ?? ""}</Badge>
       {modifier.level && modifier.level > 1 && <Badge bg="primary">Niveau {modifier.level}</Badge>}
       {modifier.name && <strong className="me-2">{modifier.name}.</strong>}
       {skillName && <strong className="me-2">{skillName}</strong>}

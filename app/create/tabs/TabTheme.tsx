@@ -22,7 +22,7 @@ export function ThemeSelection({ data, character, mutators }: TabEditProps) {
     <Stack direction="vertical" gap={2}>
       <h2>Thème</h2>
       <Form.FloatingLabel controlId="theme" label="Thème">
-        <Form.Select value={selectedTheme?.id || ""} onChange={handleThemeChange}>
+        <Form.Select value={selectedTheme?.id ?? ""} onChange={handleThemeChange}>
           {selectedTheme === null && <option value=""></option>}
           {data.themes.map((theme) => (
             <option key={theme.id} value={theme.id}>

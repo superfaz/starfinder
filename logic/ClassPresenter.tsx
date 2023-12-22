@@ -10,7 +10,7 @@ export function getOperativeFeatureTemplates(character: CharacterPresenter): Fea
 
   const selectedSpecialization = operativeData.specializations.find((s) => s.id === specialization);
   const classFeatures: FeatureTemplate[] = operativeData.features;
-  const specializationFeatures: FeatureTemplate[] = selectedSpecialization?.features || [];
+  const specializationFeatures: FeatureTemplate[] = selectedSpecialization?.features ?? [];
   const features: FeatureTemplate[] = classFeatures.concat(specializationFeatures);
 
   return features;

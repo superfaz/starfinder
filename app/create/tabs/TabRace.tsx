@@ -29,7 +29,7 @@ export function RaceSelection({ data, character, mutators }: TabEditProps) {
     <Stack direction="vertical" gap={2}>
       <h2>Race</h2>
       <Form.FloatingLabel controlId="race" label="Race">
-        <Form.Select value={selectedRace?.id || ""} onChange={handleRaceChange}>
+        <Form.Select value={selectedRace?.id ?? ""} onChange={handleRaceChange}>
           {selectedRace === null && <option value=""></option>}
           {data.races.map((race) => (
             <option key={race.id} value={race.id}>
@@ -47,7 +47,7 @@ export function RaceSelection({ data, character, mutators }: TabEditProps) {
           {selectedRace.variants && selectedVariant && (
             <>
               <Form.FloatingLabel controlId="variant" label="Variante">
-                <Form.Select value={selectedVariant?.id || ""} onChange={handleVariantChange}>
+                <Form.Select value={selectedVariant?.id ?? ""} onChange={handleVariantChange}>
                   {selectedRace.variants.map((variant, index) => (
                     <option key={index} value={variant.id}>
                       {variant.name}
@@ -71,7 +71,7 @@ export function RaceSelection({ data, character, mutators }: TabEditProps) {
               {character.isHumanStandard() && (
                 <>
                   <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-                    <Form.Select value={character.getHumanStandardBonus() || ""} onChange={handleHumanBonusChange}>
+                    <Form.Select value={character.getHumanStandardBonus() ?? ""} onChange={handleHumanBonusChange}>
                       {data.abilityScores.map((abilityScore) => (
                         <option key={abilityScore.id} value={abilityScore.id}>
                           {abilityScore.name}

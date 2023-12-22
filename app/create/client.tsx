@@ -22,7 +22,7 @@ export function ClientComponent({ data }: { data: DataSet }) {
   const selectedClass = presenter.getClass();
 
   function handleNavigation(eventKey: string | null): void {
-    setNavigation(eventKey || "");
+    setNavigation(eventKey ?? "");
   }
 
   return (

@@ -12,20 +12,20 @@ import { findOrError } from "app/helpers";
  * @returns The minimal ability scores for the specified character
  */
 export function computeMinimalAbilityScores(data: DataSet, character: Character): Record<string, number> {
-  const selectedRace = data.races.find((r) => r.id === character.race) || null;
-  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant) || null;
-  const selectedTheme = data.themes.find((r) => r.id === character.theme) || null;
+  const selectedRace = data.races.find((r) => r.id === character.race);
+  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant);
+  const selectedTheme = data.themes.find((r) => r.id === character.theme);
 
   const scores: Record<string, number> = {};
   data.abilityScores.forEach((abilityScore) => {
     let score = 10;
 
     if (selectedVariant) {
-      score += selectedVariant.abilityScores[abilityScore.id] || 0;
+      score += selectedVariant.abilityScores[abilityScore.id] ?? 0;
     }
 
     if (selectedTheme) {
-      score += selectedTheme.abilityScores[abilityScore.id] || 0;
+      score += selectedTheme.abilityScores[abilityScore.id] ?? 0;
     }
 
     if (
@@ -92,7 +92,7 @@ export class CharacterPresenter {
       return null;
     }
     if (!this.cachedRace) {
-      this.cachedRace = this.data.races.find((r) => r.id === this.character.race) || null;
+      this.cachedRace = this.data.races.find((r) => r.id === this.character.race) ?? null;
     }
     return this.cachedRace;
   }
@@ -104,7 +104,7 @@ export class CharacterPresenter {
     }
 
     if (!this.cachedRaceVariant) {
-      this.cachedRaceVariant = race.variants.find((v) => v.id === this.character.raceVariant) || null;
+      this.cachedRaceVariant = race.variants.find((v) => v.id === this.character.raceVariant) ?? null;
     }
 
     return this.cachedRaceVariant;
@@ -115,7 +115,7 @@ export class CharacterPresenter {
   }
 
   getHumanStandardBonus(): string | null {
-    return this.character.raceOptions?.humanBonus || null;
+    return this.character.raceOptions?.humanBonus ?? null;
   }
 
   getPrimaryRaceTraits(): Feature[] {
@@ -168,7 +168,7 @@ export class CharacterPresenter {
       return null;
     }
     if (!this.cachedTheme) {
-      this.cachedTheme = this.data.themes.find((r) => r.id === this.character.theme) || null;
+      this.cachedTheme = this.data.themes.find((r) => r.id === this.character.theme) ?? null;
     }
     return this.cachedTheme;
   }
@@ -193,7 +193,7 @@ export class CharacterPresenter {
   }
 
   getNoThemeAbilityScore(): string | null {
-    return this.character.themeOptions?.noThemeAbility || null;
+    return this.character.themeOptions?.noThemeAbility ?? null;
   }
 
   isScholar(): boolean {
@@ -221,7 +221,7 @@ export class CharacterPresenter {
       return null;
     }
     if (!this.cachedClass) {
-      this.cachedClass = this.data.classes.find((c) => c.id === this.character.class) || null;
+      this.cachedClass = this.data.classes.find((c) => c.id === this.character.class) ?? null;
     }
     return this.cachedClass;
   }
@@ -255,11 +255,11 @@ export class CharacterPresenter {
   }
 
   getSoldierAbilityScore(): string | null {
-    return this.character.classOptions?.soldierAbilityScore || null;
+    return this.character.classOptions?.soldierAbilityScore ?? null;
   }
 
   getOperativeSpecialization(): string | null {
-    return this.character.classOptions?.operativeSpecialization || null;
+    return this.character.classOptions?.operativeSpecialization ?? null;
   }
 
   getAbilityScores(): Record<string, number> {
@@ -367,7 +367,7 @@ export class CharacterPresenter {
     return this.data.skills
       .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {
-        const ranks = this.character.skillRanks[s.id] || 0;
+        const ranks = this.character.skillRanks[s.id] ?? 0;
         const isTrained = this.character.skillRanks[s.id] !== undefined;
         const isClassSkill = this.getClassSkills().includes(s.id);
         const abilityScoreModifier = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);

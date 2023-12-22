@@ -28,10 +28,10 @@ export default function OperativeClassDetails({ character }: { character: Charac
       {features
         .filter((s) => s.level === level)
         .map((template, index) => {
-          const evolutions = template.evolutions || {};
+          const evolutions = template.evolutions ?? {};
           const templater = new Templater({
-            ...(selectedSpecialization?.variables || {}),
-            ...(evolutions[level] || {}),
+            ...(selectedSpecialization?.variables ?? {}),
+            ...(evolutions[level] ?? {}),
           });
           const feature = templater.convertFeature(template);
           return (

@@ -30,12 +30,12 @@ export class Templater {
   convertFeature(template: FeatureTemplate): Feature {
     const result: Feature = {
       ...template,
-      name: this.applyForString(template.name) || "",
+      name: this.applyForString(template.name) ?? "",
       description: this.applyForString(template.description),
       modifiers: [],
       category: template.category as "ex" | "ma" | "su" | undefined,
-      evolutions: cleanEvolutions(template.evolutions) || {},
-      replace: template.replace || [],
+      evolutions: cleanEvolutions(template.evolutions) ?? {},
+      replace: template.replace ?? [],
     };
 
     if (template.modifiers) {
@@ -61,7 +61,7 @@ export class Templater {
   }
 
   convertString(text: string): string {
-    return this.applyForString(text) || "";
+    return this.applyForString(text) ?? "";
   }
 
   private applyForString(template: string | undefined): string | undefined {
@@ -71,7 +71,7 @@ export class Templater {
 
     let result = template;
     Object.keys(this.context).forEach((key) => {
-      result = result.replaceAll(`<${key}>`, this.context[key]?.toString() || "");
+      result = result.replaceAll(`<${key}>`, this.context[key]?.toString() ?? "");
     });
 
     return result;

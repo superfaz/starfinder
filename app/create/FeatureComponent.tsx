@@ -28,7 +28,7 @@ function convertReplaceToText(character: CharacterPresenter, replace: string[]):
     if (trait) {
       return trait.name;
     } else if (modifier) {
-      return modifier.name || id;
+      return modifier.name ?? id;
     }
     return id;
   });
@@ -49,7 +49,7 @@ export default function FeatureComponent({
   return (
     <Card className={className}>
       <Card.Header>
-        {children || feature.name}
+        {children ?? feature.name}
         {feature.category && ` (${categories[feature.category]})`}
       </Card.Header>
       <Card.Body>

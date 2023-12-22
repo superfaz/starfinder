@@ -19,8 +19,8 @@ export default function EnvoyClassDetails({ character }: { character: CharacterP
       {features
         .filter((s) => s.level === level)
         .map((template, index) => {
-          const evolutions = template.evolutions || {};
-          const templater = new Templater(cleanEvolutions(evolutions)[level] || {});
+          const evolutions = template.evolutions ?? {};
+          const templater = new Templater(cleanEvolutions(evolutions)[level] ?? {});
           const feature = templater.convertFeature(template);
           return (
             <Col key={index}>
