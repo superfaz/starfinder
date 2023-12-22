@@ -1,11 +1,12 @@
-import { beforeEach, describe, expect, test } from "vitest";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
 describe("TabClass", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     render(<Page />);
-    fireEvent.click(screen.getByRole("button", { name: "Classe" }), { bubbles: true });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Classe" }));
   });
 
   test("ClassSelection is not displayed", async () => {
@@ -15,15 +16,14 @@ describe("TabClass", () => {
 });
 
 describe("TabClass", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     render(<Page />);
-    fireEvent.click(screen.getByRole("button", { name: "Race" }), { bubbles: true });
-    fireEvent.change(screen.getByRole("combobox", { name: "Race" }), { target: { value: "androids" } });
-    fireEvent.click(screen.getByRole("button", { name: "Thème" }), { bubbles: true });
-    fireEvent.change(screen.getByRole("combobox", { name: "Thème" }), {
-      target: { value: "aa401a3f-5c53-40d5-8157-9276b130735d" },
-    });
-    fireEvent.click(screen.getByRole("button", { name: "Classe" }), { bubbles: true });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "aa401a3f-5c53-40d5-8157-9276b130735d");
+    await user.click(screen.getByRole("button", { name: "Classe" }));
   });
 
   test("ClassSelection is displayed", async () => {

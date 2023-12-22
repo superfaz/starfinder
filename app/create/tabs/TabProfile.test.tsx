@@ -1,11 +1,12 @@
-import { beforeEach, describe, expect, test } from "vitest";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
 describe("TabProfile", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     render(<Page />);
-    fireEvent.click(screen.getByRole("button", { name: "Profil" }), { bubbles: true });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Profil" }));
   });
 
   test("Profile is not displayed", async () => {
@@ -15,17 +16,16 @@ describe("TabProfile", () => {
 });
 
 describe("TabProfile", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     render(<Page />);
-    fireEvent.click(screen.getByRole("button", { name: "Race" }), { bubbles: true });
-    fireEvent.change(screen.getByRole("combobox", { name: "Race" }), { target: { value: "androids" } });
-    fireEvent.click(screen.getByRole("button", { name: "Thème" }), { bubbles: true });
-    fireEvent.change(screen.getByRole("combobox", { name: "Thème" }), {
-      target: { value: "aa401a3f-5c53-40d5-8157-9276b130735d" },
-    });
-    fireEvent.click(screen.getByRole("button", { name: "Classe" }), { bubbles: true });
-    fireEvent.change(screen.getByRole("combobox", { name: "Classe" }), { target: { value: "class-operative" } });
-    fireEvent.click(screen.getByRole("button", { name: "Profil" }), { bubbles: true });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "aa401a3f-5c53-40d5-8157-9276b130735d");
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "class-operative");
+    await user.click(screen.getByRole("button", { name: "Profil" }));
   });
 
   test("Profile is displayed", async () => {
@@ -34,52 +34,57 @@ describe("TabProfile", () => {
   });
 
   test("Character name modified", async () => {
+    const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
-    fireEvent.change(content.getByRole("textbox", { name: "Nom du personnage" }), { target: { value: "Bob" } });
+    await user.type(content.getByRole("textbox", { name: "Nom du personnage" }), "Bob");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Nom du personnage" }).value).toBe("Bob");
 
-    fireEvent.click(screen.getByRole("button", { name: "Fiche" }), { bubbles: true });
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
     expect(content.queryByText("Bob")).not.toBeNull();
   });
 
   test("Alignment modified", async () => {
+    const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
-    fireEvent.change(content.getByRole("combobox", { name: "Alignement" }), { target: { value: "cn" } });
+    await user.selectOptions(content.getByRole("combobox", { name: "Alignement" }), "cn");
     expect(content.getByRole<HTMLInputElement>("combobox", { name: "Alignement" }).value).toBe("cn");
 
-    fireEvent.click(screen.getByRole("button", { name: "Fiche" }), { bubbles: true });
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
     expect(content.queryByText("CN")).not.toBeNull();
   });
 
   test("Sex modified", async () => {
+    const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
-    fireEvent.change(content.getByRole("textbox", { name: "Sexe" }), { target: { value: "F" } });
+    await user.type(content.getByRole("textbox", { name: "Sexe" }), "F");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Sexe" }).value).toBe("F");
 
-    fireEvent.click(screen.getByRole("button", { name: "Fiche" }), { bubbles: true });
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
     expect(content.queryByText("F")).not.toBeNull();
   });
 
   test("Home world modified", async () => {
+    const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
-    fireEvent.change(content.getByRole("textbox", { name: "Monde natal" }), { target: { value: "Abraxar" } });
+    await user.type(content.getByRole("textbox", { name: "Monde natal" }), "Abraxar");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Monde natal" }).value).toBe("Abraxar");
 
-    fireEvent.click(screen.getByRole("button", { name: "Fiche" }), { bubbles: true });
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
     expect(content.queryByText("Abraxar")).not.toBeNull();
   });
 
   test("Deity modified", async () => {
+    const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
-    fireEvent.change(content.getByRole("textbox", { name: "Divinité" }), { target: { value: "Desna" } });
+    await user.type(content.getByRole("textbox", { name: "Divinité" }), "Desna");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Divinité" }).value).toBe("Desna");
 
-    fireEvent.click(screen.getByRole("button", { name: "Fiche" }), { bubbles: true });
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
     expect(content.queryByText("Desna")).not.toBeNull();
   });
 });

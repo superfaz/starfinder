@@ -1,11 +1,12 @@
-import { beforeEach, describe, expect, test } from "vitest";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
 describe("TabTheme", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     render(<Page />);
-    fireEvent.click(screen.getByRole("button", { name: "Thème" }), { bubbles: true });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Thème" }));
   });
 
   test("ThemeSelection is not displayed", async () => {
@@ -15,11 +16,12 @@ describe("TabTheme", () => {
 });
 
 describe("TabTheme", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     render(<Page />);
-    fireEvent.click(screen.getByRole("button", { name: "Race" }), { bubbles: true });
-    fireEvent.change(screen.getByRole("combobox", { name: "Race" }), { target: { value: "androids" } });
-    fireEvent.click(screen.getByRole("button", { name: "Thème" }), { bubbles: true });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
   });
 
   test("ThemeSelection is displayed", async () => {
