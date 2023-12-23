@@ -24,10 +24,9 @@ jobs:
         run: npm install --global yarn
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          submodules: true
-          lfs: false
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Get Yarn cache path
         id: yarn-cache-dir-path
