@@ -66,6 +66,7 @@ jobs:
           action: "upload"
           app_location: "/"
           output_location: ".next"
+          skip_app_build: true
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
