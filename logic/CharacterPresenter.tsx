@@ -364,8 +364,8 @@ export class CharacterPresenter {
     isClassSkill: boolean;
     bonus: number | undefined;
   }[] {
-    return this.data.skills
-      .toSorted((a, b) => a.name.localeCompare(b.name, "fr"))
+    return [...this.data.skills]
+      .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {
         const ranks = this.character.skillRanks[s.id] ?? 0;
         const isTrained = this.character.skillRanks[s.id] !== undefined;
