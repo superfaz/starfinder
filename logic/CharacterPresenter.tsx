@@ -202,7 +202,7 @@ export class CharacterPresenter {
 
   getScholarDetails(): { skill: string; specialization: string; label: string } | null {
     const themeOptions = this.character.themeOptions;
-    if (!themeOptions || !themeOptions.scholarSkill || themeOptions.scholarSpecialization === undefined) {
+    if (!themeOptions?.scholarSkill || themeOptions.scholarSpecialization === undefined) {
       return null;
     }
 
@@ -365,7 +365,7 @@ export class CharacterPresenter {
     bonus: number | undefined;
   }[] {
     return this.data.skills
-      .sort((a, b) => a.name.localeCompare(b.name, "fr"))
+      .toSorted((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {
         const ranks = this.character.skillRanks[s.id] ?? 0;
         const isTrained = this.character.skillRanks[s.id] !== undefined;

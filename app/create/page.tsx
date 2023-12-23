@@ -1,7 +1,6 @@
+import { AbilityScores, Alignments, Avatars, Classes, DataSet, Races, Skills, Specials, Themes } from "data";
 import { AbilityScore, Alignment, Avatar, Class, Race, SkillDefinition, Special, Theme } from "model";
 import { ClientComponent } from "./client";
-import { AbilityScores, Alignments, Avatars, Classes, Races, Skills, Specials, Themes } from "data";
-import { DataSet } from "data";
 
 function getRaces(): Race[] {
   return Races;

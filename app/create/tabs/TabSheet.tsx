@@ -7,7 +7,7 @@ import { CharacterProps } from "../Props";
 
 interface IValueComponentProps {
   label: string;
-  value?: string | number | undefined;
+  value?: string | number;
   title?: string;
   className?: string;
   children?: JSX.Element[] | JSX.Element;

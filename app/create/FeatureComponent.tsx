@@ -62,8 +62,7 @@ export default function FeatureComponent({
           </p>
         )}
         {feature.description && <p className="text-muted">{feature.description}</p>}
-        {feature.modifiers &&
-          feature.modifiers.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
+        {feature.modifiers?.map((modifier) => <ModifierComponent key={modifier.id} modifier={modifier} />)}
       </Card.Body>
       {hasEvolutions && (
         <Card.Footer>

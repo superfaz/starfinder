@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import "./site.scss";
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-bs-theme="dark">
       <head>
