@@ -1,4 +1,6 @@
-export interface Variant {
+import { IModel } from "./IModel";
+
+export interface Variant extends IModel {
   id: string;
   name: string;
   description: string;

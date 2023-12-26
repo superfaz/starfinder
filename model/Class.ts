@@ -1,4 +1,6 @@
-export interface Class {
+import { IModel } from ".";
+
+export interface Class extends IModel {
   id: string;
   name: string;
   description: string;

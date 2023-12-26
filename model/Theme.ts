@@ -1,6 +1,6 @@
-import { FeatureTemplate } from ".";
+import { FeatureTemplate, IModel } from ".";
 
-export interface Theme {
+export interface Theme extends IModel {
   id: string;
   name: string;
   description: string;

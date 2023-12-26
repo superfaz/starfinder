@@ -1,6 +1,6 @@
-import { ModifierType } from ".";
+import { IModel, ModifierType } from ".";
 
-export interface ModifierTemplate {
+export interface ModifierTemplate extends IModel {
   id: string;
   type: ModifierType | string;
   level?: number;

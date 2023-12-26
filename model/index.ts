@@ -5,6 +5,7 @@ export * from "./Character";
 export * from "./Class";
 export * from "./Feature";
 export * from "./FeatureTemplate";
+export * from "./IModel";
 export * from "./Modifier";
 export * from "./ModifierTemplate";
 export * from "./ModifierType";

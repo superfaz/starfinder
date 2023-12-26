@@ -1,9 +1,9 @@
-import { Modifier } from ".";
+import { IModel, Modifier } from ".";
 
 /**
  * Represents a racial trait as well as a thematic or a class feature that can be applied to a character.
  */
-export interface Feature {
+export interface Feature extends IModel {
   id: string;
   name: string;
   description?: string;

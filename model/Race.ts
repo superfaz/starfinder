@@ -1,6 +1,6 @@
-import { FeatureTemplate, Variant } from ".";
+import { FeatureTemplate, IModel, Variant } from ".";
 
-export interface Race {
+export interface Race extends IModel {
   id: string;
   name: string;
   description: string;
