@@ -1,8 +1,9 @@
-import { DataSet, buildDataSet } from "data";
+import { DataSet, DataSetBuilder } from "data";
 import { ClientComponent } from "./client";
 
 export default async function Page() {
-  const data: DataSet = buildDataSet();
+  const builder = new DataSetBuilder();
+  const data: DataSet = await builder.build();
 
   return (
     <>

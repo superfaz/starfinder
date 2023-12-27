@@ -8,4 +8,5 @@ import Specials from "./specials.json";
 import Themes from "./themes.json";
 
 export * from "./DataSet";
+export * from "./DataSetBuilder";
 export { AbilityScores, Alignments, Avatars, Classes, Races, Skills, Specials, Themes };
