@@ -3,8 +3,8 @@ import { render, within } from "@testing-library/react";
 import Page from "../page";
 
 describe("TabIntro", () => {
-  beforeEach(() => {
-    render(<Page />);
+  beforeEach(async () => {
+    render(await Page());
   });
 
   test("Intro is displayed", async () => {

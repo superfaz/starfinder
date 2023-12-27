@@ -5,7 +5,7 @@ import Page from "../page";
 
 describe("TabRace", () => {
   beforeEach(async () => {
-    render(<Page />);
+    render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
   });

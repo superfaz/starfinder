@@ -5,7 +5,7 @@ import Page from "../page";
 
 describe("TabProfile", () => {
   beforeEach(async () => {
-    render(<Page />);
+    render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Profil" }));
   });
@@ -18,7 +18,7 @@ describe("TabProfile", () => {
 
 describe("TabProfile", () => {
   beforeEach(async () => {
-    render(<Page />);
+    render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");

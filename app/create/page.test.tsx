@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react";
 import Page from "./page";
 
 describe("Page", () => {
-  beforeEach(() => {
-    render(<Page />);
+  beforeEach(async () => {
+    render(await Page());
   });
 
   test("Page is live", async () => {
