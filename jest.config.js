@@ -11,7 +11,8 @@ const config = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jsdom",
   transform: {
-    "^.+\\.(t|j)sx?$": "@swc/jest",
+    "^.+\\.tsx?$": "@swc/jest",
+    "^.+\\.ts?$": "@swc/jest",
   },
   moduleNameMapper: {
     "^logic$": "<rootDir>/logic",
