@@ -1,6 +1,6 @@
 import { CosmosClient, Database } from "@azure/cosmos";
 import { IModel } from "model";
-import { DataSet } from "./DataSet";
+import { IDataSet } from "./DataSet";
 
 export class DataSetBuilder {
   private readonly client: CosmosClient;
@@ -41,8 +41,8 @@ export class DataSetBuilder {
     return this.getWithQuery(name, "SELECT * FROM c ORDER BY c.name");
   }
 
-  async build(): Promise<DataSet> {
-    const data: DataSet = {
+  async build(): Promise<IDataSet> {
+    const data: IDataSet = {
       abilityScores: await this.getOrdered("ability-scores"),
       alignments: await this.getOrdered("alignments"),
       avatars: await this.getAll("avatars"),

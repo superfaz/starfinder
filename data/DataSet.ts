@@ -1,6 +1,6 @@
 import { Avatar, Class, CodedModel, NamedModel, Race, SkillDefinition, Theme } from "model";
 
-export interface DataSet {
+export interface IDataSet {
   abilityScores: CodedModel[];
   alignments: CodedModel[];
   avatars: Avatar[];

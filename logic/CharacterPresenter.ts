@@ -1,4 +1,4 @@
-import { DataSet } from "data";
+import { IDataSet } from "data";
 import { Avatar, Character, Class, Feature, Modifier, Race, SkillDefinition, Theme, Variant } from "model";
 import { Templater } from ".";
 import { getOperativeFeatureTemplates } from "./ClassPresenter";
@@ -11,7 +11,7 @@ import { findOrError } from "app/helpers";
  * @param character The reference character
  * @returns The minimal ability scores for the specified character
  */
-export function computeMinimalAbilityScores(data: DataSet, character: Character): Record<string, number> {
+export function computeMinimalAbilityScores(data: IDataSet, character: Character): Record<string, number> {
   const selectedRace = data.races.find((r) => r.id === character.race);
   const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant);
   const selectedTheme = data.themes.find((r) => r.id === character.theme);
@@ -63,7 +63,7 @@ export function computeAbilityScoreModifier(abilityScore: number): number {
 }
 
 export class CharacterPresenter {
-  private data: DataSet;
+  private data: IDataSet;
 
   private character: Readonly<Character>;
 
@@ -78,7 +78,7 @@ export class CharacterPresenter {
   private cachedRemainingAbilityScoresPoints: number | null = null;
   private cachedClassSkills: string[] | null = null;
 
-  constructor(data: DataSet, character: Character) {
+  constructor(data: IDataSet, character: Character) {
     this.data = data;
     this.character = character;
   }

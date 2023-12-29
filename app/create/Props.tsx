@@ -1,4 +1,4 @@
-import { DataSet } from "data";
+import { IDataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 
 interface ICharacterProps {
@@ -14,7 +14,7 @@ interface ISimpleEditProps {
  * Base props for standard character tabs with editing capabilities.
  */
 interface ITabEditProps {
-  data: DataSet;
+  data: IDataSet;
   character: CharacterPresenter;
   mutators: CharacterMutators;
 }

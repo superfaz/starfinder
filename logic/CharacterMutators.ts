@@ -1,13 +1,13 @@
 import { findOrError } from "app/helpers";
-import { DataSet } from "data";
+import { IDataSet } from "data";
 import { Character, Feature } from "model";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 export class CharacterMutators {
-  private data: DataSet;
+  private data: IDataSet;
   private setCharacter: (updator: (c: Character) => Character) => void;
 
-  constructor(data: DataSet, setCharacter: (updator: (c: Character) => Character) => void) {
+  constructor(data: IDataSet, setCharacter: (updator: (c: Character) => Character) => void) {
     this.data = data;
     this.setCharacter = setCharacter;
   }
@@ -103,7 +103,7 @@ export class CharacterMutators {
  * @param raceId The identifier of its new race
  * @returns The updated character
  */
-export function updateRace(data: DataSet, character: Character, raceId: string): Character {
+export function updateRace(data: IDataSet, character: Character, raceId: string): Character {
   const race = findOrError(data.races, (r) => r.id === raceId);
 
   if (character.race === raceId) {
@@ -138,7 +138,7 @@ export function updateRace(data: DataSet, character: Character, raceId: string):
  * @param variantId The identifier of its new race variant
  * @returns The updated character
  */
-export function updateRaceVariant(data: DataSet, character: Character, variantId: string): Character {
+export function updateRaceVariant(data: IDataSet, character: Character, variantId: string): Character {
   if (character.raceVariant === variantId) {
     // No change
     return character;
@@ -169,7 +169,7 @@ export function updateRaceVariant(data: DataSet, character: Character, variantId
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateHumanBonus(data: DataSet, character: Character, abilityScoreId: string): Character {
+export function updateHumanBonus(data: IDataSet, character: Character, abilityScoreId: string): Character {
   const result: Character = {
     ...character,
     raceOptions: { humanBonus: abilityScoreId },
@@ -216,7 +216,7 @@ export function disableSecondaryTrait(character: Character, trait: Feature): Cha
  * @param themeId The identifier of its new theme
  * @returns The updated character
  */
-export function updateTheme(data: DataSet, character: Character, themeId: string): Character {
+export function updateTheme(data: IDataSet, character: Character, themeId: string): Character {
   const result: Character = {
     ...character,
     theme: themeId,
@@ -247,7 +247,7 @@ export function updateTheme(data: DataSet, character: Character, themeId: string
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateNoThemeAbilityScore(data: DataSet, character: Character, abilityScoreId: string): Character {
+export function updateNoThemeAbilityScore(data: IDataSet, character: Character, abilityScoreId: string): Character {
   const result: Character = {
     ...character,
     themeOptions: {
@@ -269,7 +269,7 @@ export function updateNoThemeAbilityScore(data: DataSet, character: Character, a
  * @param skillId The identifier of the selected scholar skill
  * @returns The updated character
  */
-export function updateScholarSkill(data: DataSet, character: Character, skillId: string): Character {
+export function updateScholarSkill(data: IDataSet, character: Character, skillId: string): Character {
   return {
     ...character,
     themeOptions: {
@@ -307,7 +307,7 @@ export function updateScholarSpecialization(character: Character, specialization
  * @param classId The identifier of its new class
  * @returns The updated character
  */
-export function updateClass(data: DataSet, character: Character, classId: string): Character {
+export function updateClass(data: IDataSet, character: Character, classId: string): Character {
   if (character.class === classId) {
     // No change
     return character;

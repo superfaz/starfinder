@@ -1,6 +1,6 @@
 import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { DataSet } from "data";
+import { IDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier } from "logic";
 import { Alignment, ModifierType } from "model";
 import { CharacterProps } from "../Props";
@@ -229,7 +229,7 @@ function CardAbilities({ character }: CharacterProps) {
 }
 
 interface ISheetProps {
-  data: DataSet;
+  data: IDataSet;
   character: CharacterPresenter;
 }
 

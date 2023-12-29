@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
-import { DataSet } from "data";
+import { IDataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
 import * as Tab from "./tabs";
 
-export function ClientComponent({ data }: Readonly<{ data: DataSet }>) {
+export function ClientComponent({ data }: Readonly<{ data: IDataSet }>) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
   const [navigation, setNavigation] = useState("intro");
 
