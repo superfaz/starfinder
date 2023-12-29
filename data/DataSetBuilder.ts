@@ -1,6 +1,6 @@
 import { CosmosClient, Database } from "@azure/cosmos";
 import { IModel } from "model";
-import { IDataSet } from "./DataSet";
+import { IDataSet } from ".";
 
 export class DataSetBuilder {
   private readonly client: CosmosClient;
