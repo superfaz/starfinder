@@ -29,6 +29,23 @@ export class DataSetBuilder {
     }
   }
 
+  private async getOne<T>(name: string, id: string): Promise<T> {
+    const preparedQuery = this.database.container(name).item(id, id);
+    try {
+      const result = await preparedQuery.read<IModel>();
+      console.log(result);
+      return result.resource as T;
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.error(e.message);
+      } else {
+        console.error(e);
+      }
+
+      throw new Error(`Failed to get ${name}/${id}`);
+    }
+  }
+
   async getAll<T extends IModel>(name: string): Promise<T[]> {
     return this.getWithQuery(name, "SELECT * FROM c");
   }
@@ -43,15 +60,17 @@ export class DataSetBuilder {
 
   async build(): Promise<IDataSet> {
     const data: IDataSet = {
-      abilityScores: await this.getOrdered("ability-scores"),
-      alignments: await this.getOrdered("alignments"),
-      avatars: await this.getAll("avatars"),
-      classes: await this.getNamed("classes"),
-      races: await this.getNamed("races"),
-      themes: await this.getNamed("themes"),
-      skills: await this.getNamed("skills"),
-      armors: await this.getOrdered("armors"),
-      weapons: await this.getOrdered("weapons"),
+      getAbilityScores: () => this.getOrdered("ability-scores"),
+      getAlignments: () => this.getOrdered("alignments"),
+      getAvatars: () => this.getAll("avatars"),
+      getClasses: () => this.getNamed("classes"),
+      getClassDetails: <T>(classId: string) => this.getOne<T>("classes-details", classId),
+      getRaces: () => this.getNamed("races"),
+      getThemes: () => this.getNamed("themes"),
+      getThemeDetails: <T>(themeId: string) => this.getOne<T>("themes-details", themeId),
+      getSkills: () => this.getNamed("skills"),
+      getArmors: () => this.getOrdered("armors"),
+      getWeapons: () => this.getOrdered("weapons"),
     };
 
     return data;

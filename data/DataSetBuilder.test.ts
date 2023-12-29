@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import { DataSetBuilder } from "./DataSetBuilder";
+import { DataSetBuilder, IDataSet } from ".";
 
 describe("DataSetBuilder", () => {
   test("constructor()", async () => {
@@ -9,9 +9,38 @@ describe("DataSetBuilder", () => {
 
   test("build()", async () => {
     const builder = new DataSetBuilder();
-    const data = await builder.build();
+    const data: IDataSet = await builder.build();
     expect(data).toBeDefined();
-    expect(data.alignments).toBeDefined();
-    expect(data.alignments.length).toBeGreaterThan(0);
+  });
+
+  const cases: Array<keyof IDataSet> = [
+    "getAbilityScores",
+    "getAlignments",
+    "getAvatars",
+    "getClasses",
+    "getClassDetails",
+    "getRaces",
+    "getSkills",
+    "getThemes",
+    "getThemeDetails",
+    "getArmors",
+    "getWeapons",
+  ];
+
+  test.each(cases)("%s()", async (method: keyof IDataSet) => {
+    const builder = new DataSetBuilder();
+    const data: IDataSet = await builder.build();
+    if (method === "getClassDetails") {
+      const classId = "operative";
+      await expect(data[method](classId)).resolves.toBeDefined();
+      await expect(data[method](classId)).resolves.toHaveProperty("length");
+    } else if (method === "getThemeDetails") {
+      const themeId = "scholar";
+      await expect(data[method](themeId)).resolves.toBeDefined();
+      await expect(data[method](themeId)).resolves.toHaveProperty("length");
+    } else {
+      await expect(data[method]()).resolves.toBeDefined();
+      await expect(data[method]()).resolves.toHaveProperty("length");
+    }
   });
 });
