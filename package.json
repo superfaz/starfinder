@@ -10,7 +10,7 @@
     "build:standalone": "cross-env NEXTJS_STANDALONE=true next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
+    "test": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 jest",
     "test:coverage": "jest --coverage"
   },
   "dependencies": {

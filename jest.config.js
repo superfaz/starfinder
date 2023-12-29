@@ -15,6 +15,7 @@ const config = {
     "^.+\\.ts?$": "@swc/jest",
   },
   moduleNameMapper: {
+    uuid: "<rootDir>/mocks/uuid.js",
     "^logic$": "<rootDir>/logic",
     "^model$": "<rootDir>/model",
     "^data$": "<rootDir>/data",
