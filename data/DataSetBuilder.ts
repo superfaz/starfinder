@@ -33,7 +33,6 @@ export class DataSetBuilder {
     const preparedQuery = this.database.container(name).item(id, id);
     try {
       const result = await preparedQuery.read<IModel>();
-      console.log(result);
       return result.resource as T;
     } catch (e: unknown) {
       if (e instanceof Error) {

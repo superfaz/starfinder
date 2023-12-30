@@ -33,11 +33,11 @@ describe("DataSetBuilder", () => {
     if (method === "getClassDetails") {
       const classId = "operative";
       await expect(data[method](classId)).resolves.toBeDefined();
-      await expect(data[method](classId)).resolves.toHaveProperty("length");
+      await expect(data[method](classId)).resolves.toHaveProperty("features");
     } else if (method === "getThemeDetails") {
       const themeId = "scholar";
       await expect(data[method](themeId)).resolves.toBeDefined();
-      await expect(data[method](themeId)).resolves.toHaveProperty("length");
+      await expect(data[method](themeId)).resolves.toHaveProperty("values");
     } else {
       await expect(data[method]()).resolves.toBeDefined();
       await expect(data[method]()).resolves.toHaveProperty("length");
