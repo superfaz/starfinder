@@ -197,7 +197,7 @@ export class CharacterPresenter {
   }
 
   isScholar(): boolean {
-    return this.character.theme === "74e471d9-db80-4fae-9610-44ea8eeedcb3";
+    return this.character.theme === "scholar";
   }
 
   getScholarDetails(): { skill: string; specialization: string } | null {

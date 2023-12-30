@@ -10,10 +10,12 @@ interface IThemeDetailsScholar {
 function useThemeDetails(themeId: string) {
   const [details, setDetails] = useState<IThemeDetailsScholar | null>(null);
   useEffect(() => {
-    fetch("/api/themes-details/" + themeId)
-      .then((response) => response.json())
-      .then((data) => setDetails(data));
-  }, [themeId]);
+    if (themeId && details === null) {
+      fetch("/api/themes/" + themeId)
+        .then((response) => response.json())
+        .then((data) => setDetails(data));
+    }
+  }, [themeId, details]);
 
   return details;
 }
@@ -38,21 +40,21 @@ export default function ThemeScholarEditor({ data, character, mutators }: TabEdi
   }
 
   if (!selectedDetails || !themeDetails) {
-    return null;
+    return "loading...";
   }
 
+  console.log(selectedDetails);
   let specialization: string;
   let label: string;
   if (selectedDetails.specialization === "") {
     specialization = "";
     label = "";
-  }
-  if (themeDetails.values[selectedDetails.skill].find((s) => s === selectedDetails.specialization)) {
+  } else if (themeDetails.values[selectedDetails.skill].find((s) => s === selectedDetails.specialization)) {
     specialization = selectedDetails.specialization;
     label = "";
   } else {
     specialization = "other";
-    label = selectedDetails.specialization;
+    label = selectedDetails.specialization === "other" ? "" : selectedDetails.specialization;
   }
 
   return (
@@ -79,11 +81,7 @@ export default function ThemeScholarEditor({ data, character, mutators }: TabEdi
           <option value="other">Autre domaine</option>
         </Form.Select>
       </Form.FloatingLabel>
-      <Form.FloatingLabel
-        controlId="scholarLabel"
-        label="Domaine de spécialité"
-        hidden={selectedDetails.specialization !== ""}
-      >
+      <Form.FloatingLabel controlId="scholarLabel" label="Domaine de spécialité" hidden={specialization !== "other"}>
         <Form.Control type="text" value={label} onChange={handleScholarLabelChange} />
       </Form.FloatingLabel>
     </>

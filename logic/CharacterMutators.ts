@@ -224,7 +224,7 @@ export function updateTheme(data: IClientDataSet, character: Character, themeId:
   };
 
   // Special cases - prepare the associated options
-  if (themeId === "74e471d9-db80-4fae-9610-44ea8eeedcb3") {
+  if (themeId === "scholar") {
     // Theme: Scholar
     result.themeOptions = {
       scholarSkill: "life",
