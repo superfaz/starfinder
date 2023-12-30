@@ -1,6 +1,24 @@
 import { CosmosClient, Database } from "@azure/cosmos";
-import { IModel } from "model";
+import { CodedModel, IModel } from "model";
 import { IDataSet } from ".";
+
+const cached: Record<string, unknown> = {};
+
+function cache<T>(key: string, fn: () => Promise<T>): () => Promise<T> {
+  return async () => {
+    if (cached[key]) {
+      return cached[key] as T;
+    } else {
+      const result = await fn();
+      cached[key] = result;
+      return result;
+    }
+  };
+}
+
+export function clearCache() {
+  Object.keys(cached).forEach((key) => delete cached[key]);
+}
 
 export class DataSetBuilder {
   private readonly client: CosmosClient;
@@ -59,17 +77,17 @@ export class DataSetBuilder {
 
   async build(): Promise<IDataSet> {
     const data: IDataSet = {
-      getAbilityScores: () => this.getOrdered("ability-scores"),
-      getAlignments: () => this.getOrdered("alignments"),
-      getAvatars: () => this.getAll("avatars"),
-      getClasses: () => this.getNamed("classes"),
+      getAbilityScores: cache("ability-scores", () => this.getOrdered<CodedModel>("ability-scores")),
+      getAlignments: cache("alignments", () => this.getOrdered("alignments")),
+      getAvatars: cache("avatars", () => this.getAll("avatars")),
+      getClasses: cache("classes", () => this.getNamed("classes")),
       getClassDetails: <T>(classId: string) => this.getOne<T>("classes-details", classId),
-      getRaces: () => this.getNamed("races"),
-      getThemes: () => this.getNamed("themes"),
+      getRaces: cache("races", () => this.getNamed("races")),
+      getThemes: cache("themes", () => this.getNamed("themes")),
       getThemeDetails: <T>(themeId: string) => this.getOne<T>("themes-details", themeId),
-      getSkills: () => this.getNamed("skills"),
-      getArmors: () => this.getOrdered("armors"),
-      getWeapons: () => this.getOrdered("weapons"),
+      getSkills: cache("skills", () => this.getNamed("skills")),
+      getArmors: cache("armors", () => this.getOrdered("armors")),
+      getWeapons: cache("weapons", () => this.getOrdered("weapons")),
     };
 
     return data;
