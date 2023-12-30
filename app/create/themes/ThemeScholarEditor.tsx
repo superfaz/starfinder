@@ -1,9 +1,26 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { TabEditProps } from "../Props";
 
+interface IThemeDetailsScholar {
+  id: string;
+  values: Record<string, string[]>;
+}
+
+function useThemeDetails(themeId: string) {
+  const [details, setDetails] = useState<IThemeDetailsScholar | null>(null);
+  useEffect(() => {
+    fetch("/api/themes-details/" + themeId)
+      .then((response) => response.json())
+      .then((data) => setDetails(data));
+  }, [themeId]);
+
+  return details;
+}
+
 export default function ThemeScholarEditor({ data, character, mutators }: TabEditProps) {
-  const scholarDetails = character.getScholarDetails();
+  const selectedDetails = character.getScholarDetails();
+  const themeDetails = useThemeDetails("scholar");
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
@@ -20,14 +37,28 @@ export default function ThemeScholarEditor({ data, character, mutators }: TabEdi
     mutators.updateScholarSpecialization(label);
   }
 
-  if (!scholarDetails) {
+  if (!selectedDetails || !themeDetails) {
     return null;
+  }
+
+  let specialization: string;
+  let label: string;
+  if (selectedDetails.specialization === "") {
+    specialization = "";
+    label = "";
+  }
+  if (themeDetails.values[selectedDetails.skill].find((s) => s === selectedDetails.specialization)) {
+    specialization = selectedDetails.specialization;
+    label = "";
+  } else {
+    specialization = "other";
+    label = selectedDetails.specialization;
   }
 
   return (
     <>
       <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
-        <Form.Select value={scholarDetails.skill} onChange={handleScholarSkillChange}>
+        <Form.Select value={selectedDetails.skill} onChange={handleScholarSkillChange}>
           {data.skills
             .filter((s) => s.id === "life" || s.id === "phys")
             .map((skill) => (
@@ -38,21 +69,22 @@ export default function ThemeScholarEditor({ data, character, mutators }: TabEdi
         </Form.Select>
       </Form.FloatingLabel>
       <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
-        <Form.Select value={scholarDetails.specialization} onChange={handleScholarSpecializationChange}>
-          {data.specials.scholar[scholarDetails.skill].map((d) => (
+        <Form.Select value={specialization} onChange={handleScholarSpecializationChange}>
+          <option value=""></option>
+          {themeDetails.values[selectedDetails.skill].map((d) => (
             <option key={d} value={d}>
               {d}
             </option>
           ))}
-          <option value="">Autre domaine</option>
+          <option value="other">Autre domaine</option>
         </Form.Select>
       </Form.FloatingLabel>
       <Form.FloatingLabel
         controlId="scholarLabel"
         label="Domaine de spécialité"
-        hidden={scholarDetails.specialization !== ""}
+        hidden={selectedDetails.specialization !== ""}
       >
-        <Form.Control type="text" value={scholarDetails.label} onChange={handleScholarLabelChange} />
+        <Form.Control type="text" value={label} onChange={handleScholarLabelChange} />
       </Form.FloatingLabel>
     </>
   );

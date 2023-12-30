@@ -228,7 +228,7 @@ export function updateTheme(data: IClientDataSet, character: Character, themeId:
     // Theme: Scholar
     result.themeOptions = {
       scholarSkill: "life",
-      scholarSpecialization: data.specials.scholar.life[0],
+      scholarSpecialization: "",
     };
   } else if (themeId === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
     // Theme: No theme
@@ -275,7 +275,7 @@ export function updateScholarSkill(data: IClientDataSet, character: Character, s
     themeOptions: {
       ...character.themeOptions,
       scholarSkill: skillId,
-      scholarSpecialization: data.specials.scholar[skillId][0],
+      scholarSpecialization: "",
     },
   };
 }

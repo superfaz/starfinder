@@ -200,19 +200,15 @@ export class CharacterPresenter {
     return this.character.theme === "74e471d9-db80-4fae-9610-44ea8eeedcb3";
   }
 
-  getScholarDetails(): { skill: string; specialization: string; label: string } | null {
+  getScholarDetails(): { skill: string; specialization: string } | null {
     const themeOptions = this.character.themeOptions;
     if (!themeOptions?.scholarSkill || themeOptions.scholarSpecialization === undefined) {
       return null;
     }
 
-    const specializations = this.data.specials.scholar[themeOptions.scholarSkill];
-    const specialization = specializations.find((s) => s === themeOptions.scholarSpecialization) ?? "";
-    const label = specialization === "" ? themeOptions.scholarSpecialization : "";
     return {
       skill: themeOptions.scholarSkill,
-      specialization: specialization,
-      label: label,
+      specialization: themeOptions.scholarSpecialization,
     };
   }
 
