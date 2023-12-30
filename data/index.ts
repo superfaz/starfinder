@@ -7,6 +7,7 @@ import Skills from "./skills.json";
 import Specials from "./specials.json";
 import Themes from "./themes.json";
 
+export * from "./IClientDataSet";
 export * from "./IDataSet";
 export * from "./DataSetBuilder";
 export { AbilityScores, Alignments, Avatars, Classes, Races, Skills, Specials, Themes };
