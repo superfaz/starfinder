@@ -56,6 +56,9 @@ jobs:
 
       - name: Test
         run: yarn test:coverage
+        env:
+          STARFINDER_COSMOS_ENDPOINT: ${{ secrets.STARFINDER_COSMOS_ENDPOINT }}
+          STARFINDER_COSMOS_KEY_RO: ${{ secrets.STARFINDER_COSMOS_KEY_RO }}
 
       - name: Deploy
         id: deploy
