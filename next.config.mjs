@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 export default function nextConfig() {
   const standardConfig = {
     eslint: { dirs: ["app", "data", "logic", "model"] },
