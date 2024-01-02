@@ -30,7 +30,7 @@ jobs:
 
       - name: Setup Yarn
         run: corepack enable
-      - run: yarn config enableGlobalCache false
+      - run: yarn config set enableGlobalCache false
       - run: yarn config set cacheFolder .yarn/cache
 
       - name: Cache for Yarn
