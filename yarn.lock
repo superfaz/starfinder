@@ -2582,19 +2582,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "cross-env@npm:7.0.3"
-  dependencies:
-    cross-spawn: "npm:^7.0.1"
-  bin:
-    cross-env: src/bin/cross-env.js
-    cross-env-shell: src/bin/cross-env-shell.js
-  checksum: f3765c25746c69fcca369655c442c6c886e54ccf3ab8c16847d5ad0e91e2f337d36eedc6599c1227904bf2a228d721e690324446876115bc8e7b32a866735ecf
-  languageName: node
-  linkType: hard
-
-"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -2859,6 +2847,13 @@ __metadata:
   dependencies:
     webidl-conversions: "npm:^7.0.0"
   checksum: 774277cd9d4df033f852196e3c0077a34dbd15a96baa4d166e0e47138a80f4c0bdf0d94e4703e6ff5883cec56bb821a6fff84402d8a498e31de7c87eb932a294
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: b95ff1bbe624ead85a3cd70dbd827e8e06d5f05f716f2d0cbc476532d54c7c9469c3bc4dd93ea519f6ad711cb522c00ac9a62b6eb340d5affae8008facc3fbd7
   languageName: node
   linkType: hard
 
@@ -6612,7 +6607,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.13.2"
     bootstrap: "npm:^5.3.2"
     bootstrap-icons: "npm:^1.11.1"
-    cross-env: "npm:^7.0.3"
+    dotenv: "npm:^16.3.1"
     eslint: "npm:^8.53.0"
     eslint-config-next: "npm:^14.0.1"
     eslint-config-prettier: "npm:^9.1.0"
