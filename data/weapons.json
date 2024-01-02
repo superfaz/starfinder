@@ -1,0 +1,30 @@
+[
+  {
+    "id": "basic",
+    "name": "Armes de corps à corps simples"
+  },
+  {
+    "id": "advanced",
+    "name": "Armes de corps à corps évoluées"
+  },
+  {
+    "id": "small",
+    "name": "Armes légères"
+  },
+  {
+    "id": "long",
+    "name": "Armes longues"
+  },
+  {
+    "id": "heavy",
+    "name": "Armes lourdes"
+  },
+  {
+    "id": "sniper",
+    "name": "Armes de précision"
+  },
+  {
+    "id": "grenade",
+    "name": "Grenades"
+  }
+]

@@ -1,5 +1,6 @@
 {
-  "scholar": {
+  "id": "scholar",
+  "values": {
     "life": ["Bio-ingénierie", "Biologie", "Botanique", "Ecologie", "Génétique", "Xéno-biologie", "Zoologie"],
     "phys": [
       "Astronomie",
