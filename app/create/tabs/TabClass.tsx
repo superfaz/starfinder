@@ -110,11 +110,11 @@ export function ClassSelection({ data, character, mutators }: TabEditProps) {
           </div>
           <div>
             <Badge bg="primary">Armures</Badge>
-            {selectedClass.armors.map((a) => findOrError(data.armors, (e) => e.id === a)).join(", ")}
+            {selectedClass.armors.map((a) => findOrError(data.armors, (e) => e.id === a).name).join(", ")}
           </div>
           <div>
             <Badge bg="primary">Armes</Badge>
-            {selectedClass.weapons.map((a) => findOrError(data.weapons, (e) => e.id === a)).join(", ")}
+            {selectedClass.weapons.map((a) => findOrError(data.weapons, (e) => e.id === a).name).join(", ")}
           </div>
           <hr />
           <LazyClassEditor character={character} mutators={mutators} />
