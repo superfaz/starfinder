@@ -67,6 +67,8 @@ jobs:
           action: "upload"
           app_location: "/"
           output_location: ".next"
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
