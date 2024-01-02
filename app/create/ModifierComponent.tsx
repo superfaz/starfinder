@@ -1,6 +1,6 @@
 import { Badge } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { Skills } from "data";
+import Skills from "data/skills.json";
 import { Modifier } from "model";
 
 const displayLabelsForType: Record<string, string> = {
