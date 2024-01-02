@@ -45,7 +45,7 @@ export class DataSetBuilder {
       } else {
         console.error(e);
       }
-      throw new Error(`Failed to get ${name}`);
+      throw new Error(`Failed to get ${name}`, { cause: e });
     }
   }
 
@@ -61,7 +61,7 @@ export class DataSetBuilder {
         console.error(e);
       }
 
-      throw new Error(`Failed to get ${name}/${id}`);
+      throw new Error(`Failed to get ${name}/${id}`, { cause: e });
     }
   }
 
