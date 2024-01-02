@@ -53,7 +53,7 @@ jobs:
         run: yarn install
 
       - name: Test
-        run: yarn test --no-watch --coverage
+        run: yarn test:ci
 
       - name: Build
         run: yarn build
