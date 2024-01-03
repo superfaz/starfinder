@@ -23,7 +23,7 @@ describe("TabProfile", () => {
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
     await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "aa401a3f-5c53-40d5-8157-9276b130735d");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "caa91400-c6ef-4c16-bb00-3b09792dda92");
     await user.click(screen.getByRole("button", { name: "Classe" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "class-operative");
     await user.click(screen.getByRole("button", { name: "Profil" }));

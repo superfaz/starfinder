@@ -17,7 +17,7 @@ async function mockBuild(): Promise<IDataSet> {
     getRaces: async () => readFile("./data/races.json"),
     getSkills: async () => readFile("./data/skills.json"),
     getThemes: async () => readFile("./data/themes.json"),
-    getThemeDetails: async () => readFile("./data/specials.json"),
+    getThemeDetails: async () => readFile("./data/themes-details.json"),
     getArmors: async () => readFile("./data/armors.json"),
     getWeapons: async () => readFile("./data/weapons.json"),
   };
