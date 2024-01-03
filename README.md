@@ -48,10 +48,22 @@ To prepare a release, the following commands can be used:
 
 Finally a special command has been created for code coverage needs:
 
-- `yarn test:coverage` to run all the tests once and provide coverage reports (on-screen and lcov formats)
+- `yarn test:ci` to run all the tests once and provide coverage reports (on-screen and lcov formats)
 
 ### Yarn and IDE
 
-The integration of yarn with your IDE could require some extra steps. Please take a look at the official documentation: https://yarnpkg.com/getting-started/editor-sdks
+The integration of yarn with your IDE could require some extra steps. Please take a look at the official documentation: [Yarn | Editor SDKs](https://yarnpkg.com/getting-started/editor-sdks)
 
-For `vscode`, you will need to enable the typescript version used by the workspace (`ctrl + shift + P` > **Select TypeScript Version** > **Use Workspace Version**).
+For Visual Studio Code, you will need to enable the typescript version used by the workspace (`ctrl + shift + P` > **Select TypeScript Version** > **Use Workspace Version**).
+
+### Monitoring via Sentry
+
+The monitoring of the application in production is linked to [sentry](https://sentry.io).
+
+The local application could be linked as well if needed, if you have an authorized sentry account.
+
+The command to connect to sentry is:
+
+```bash
+sentry-cli login
+```
