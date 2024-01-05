@@ -9,17 +9,17 @@ async function readFile(path: string) {
 
 async function mockBuild(): Promise<IDataSet> {
   return {
-    getAbilityScores: async () => readFile("./data/ability-scores.json"),
-    getAlignments: async () => readFile("./data/alignments.json"),
-    getAvatars: async () => readFile("./data/avatars.json"),
-    getClasses: async () => readFile("./data/classes.json"),
+    getAbilityScores: async () => readFile("./mocks/ability-scores.json"),
+    getAlignments: async () => readFile("./mocks/alignments.json"),
+    getAvatars: async () => readFile("./mocks/avatars.json"),
+    getClasses: async () => readFile("./mocks/classes.json"),
     getClassDetails: async () => readFile("./data/class-operative.json"),
-    getRaces: async () => readFile("./data/races.json"),
+    getRaces: async () => readFile("./mocks/races.json"),
     getSkills: async () => readFile("./data/skills.json"),
-    getThemes: async () => readFile("./data/themes.json"),
-    getThemeDetails: async () => readFile("./data/themes-details.json"),
-    getArmors: async () => readFile("./data/armors.json"),
-    getWeapons: async () => readFile("./data/weapons.json"),
+    getThemes: async () => readFile("./mocks/themes.json"),
+    getThemeDetails: async () => readFile("./mocks/themes-details.json"),
+    getArmors: async () => readFile("./mocks/armors.json"),
+    getWeapons: async () => readFile("./mocks/weapons.json"),
   };
 }
 
