@@ -1,11 +1,22 @@
+import { useEffect, useState } from "react";
 import { Badge, Col, Row } from "react-bootstrap";
-import operativeData from "data/class-operative.json";
-import { FeatureTemplate } from "model";
-import { Templater } from "logic";
+import { ClassOperative, FeatureTemplate } from "model";
+import { Templater, cleanEvolutions } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 
 export default function OperativeClassDetails({ character }: CharacterProps) {
+  const [operativeData, setOperativeData] = useState<ClassOperative | null>(null);
+  useEffect(() => {
+    fetch("/api/classes/operative/details")
+      .then((response) => response.json())
+      .then((data) => setOperativeData(data));
+  }, []);
+
+  if (!operativeData) {
+    return <p>Loading...</p>;
+  }
+
   const selectedSpecialization = operativeData.specializations.find(
     (s) => s.id === character.getOperativeSpecialization()
   );
@@ -29,7 +40,7 @@ export default function OperativeClassDetails({ character }: CharacterProps) {
       {features
         .filter((s) => s.level === level)
         .map((template) => {
-          const evolutions = template.evolutions ?? {};
+          const evolutions = cleanEvolutions(template.evolutions) ?? {};
           const templater = new Templater({
             ...(selectedSpecialization?.variables ?? {}),
             ...(evolutions[level] ?? {}),

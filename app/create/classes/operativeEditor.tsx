@@ -1,9 +1,20 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import operativeData from "data/class-operative.json";
+import { ClassOperative } from "model";
 import { SimpleEditProps } from "../Props";
 
 export default function OperativeEditor({ character, mutators }: SimpleEditProps) {
+  const [operativeData, setOperativeData] = useState<ClassOperative | null>(null);
+  useEffect(() => {
+    fetch("/api/classes/operative/details")
+      .then((response) => response.json())
+      .then((data) => setOperativeData(data));
+  }, []);
+
+  if (!operativeData) {
+    return <p>Loading...</p>;
+  }
+
   const selectedSpecialization = operativeData.specializations.find(
     (s) => s.id === character.getOperativeSpecialization()
   );
