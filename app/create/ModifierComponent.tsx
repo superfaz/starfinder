@@ -1,7 +1,8 @@
+import { useContext } from "react";
 import { Badge } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import Skills from "data/skills.json";
 import { Modifier } from "model";
+import { DataContext } from "./contexts";
 
 const displayLabelsForType: Record<string, string> = {
   ability: "Pouvoir",
@@ -18,6 +19,12 @@ const displayLabelsForType: Record<string, string> = {
 };
 
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return null;
+  }
+
+  const skills = data.skills;
   const target = modifier.target;
   let skillName: string | undefined;
   if (target === undefined) {
@@ -27,7 +34,7 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
   } else if (target === "all") {
     skillName = "Toutes";
   } else {
-    skillName = findOrError(Skills, (s) => s.id === target).name;
+    skillName = findOrError(skills, (s) => s.id === target).name;
   }
 
   return (
