@@ -16,11 +16,12 @@ const config = {
   },
   moduleNameMapper: {
     uuid: "<rootDir>/mocks/uuid.js",
-    "^logic$": "<rootDir>/logic",
-    "^model$": "<rootDir>/model",
+    "^app/(.*)$": "<rootDir>/app/$1",
     "^data$": "<rootDir>/data",
     "^data/(.*)$": "<rootDir>/data/$1",
-    "^app/(.*)$": "<rootDir>/app/$1",
+    "^logic$": "<rootDir>/logic",
+    "^mocks/(.*)$": "<rootDir>/mocks/$1",
+    "^model$": "<rootDir>/model",
   },
 };
 

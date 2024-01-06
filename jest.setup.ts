@@ -2,6 +2,7 @@ import * as fs from "fs/promises";
 import { beforeAll, jest } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { DataSetBuilder, IDataSet } from "data";
+import { mockFetch } from "./mocks/fetch";
 
 async function readFile(path: string) {
   return fs.readFile(path, "utf-8").then((data: string) => JSON.parse(data));
@@ -24,5 +25,7 @@ async function mockBuild(): Promise<IDataSet> {
 }
 
 beforeAll(() => {
+  window.fetch = mockFetch;
+
   jest.spyOn(DataSetBuilder.prototype, "build").mockImplementation(mockBuild);
 });

@@ -1,6 +1,8 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
+import { beforeAll, beforeEach, describe, expect, test } from "@jest/globals";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { addFetchMock } from "mocks/fetch";
+import operativeDetails from "data/class-operative.json";
 import Page from "../page";
 
 describe("TabProfile", () => {
@@ -17,6 +19,10 @@ describe("TabProfile", () => {
 });
 
 describe("TabProfile", () => {
+  beforeAll(() => {
+    addFetchMock("/api/classes/operative/details", operativeDetails);
+  });
+
   beforeEach(async () => {
     render(await Page());
     const user = userEvent.setup();
