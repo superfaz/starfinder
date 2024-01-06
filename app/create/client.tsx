@@ -5,6 +5,7 @@ import { Col, Nav, Row } from "react-bootstrap";
 import { IClientDataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
+import { DataContext } from "./contexts";
 import * as Tab from "./tabs";
 
 export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
@@ -26,7 +27,7 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
   }
 
   return (
-    <>
+    <DataContext.Provider value={data}>
       <Nav variant="underline" className="mb-3" activeKey={navigation} onSelect={handleNavigation}>
         <Nav.Item>
           <Nav.Link eventKey="intro">Introduction</Nav.Link>
@@ -76,7 +77,7 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
           <Tab.Intro />
         </Col>
         <Col lg={3} hidden={navigation !== "race"}>
-          <Tab.RaceSelection data={data} character={presenter} mutators={mutators} />
+          <Tab.RaceSelection character={presenter} mutators={mutators} />
         </Col>
 
         <Col hidden={navigation !== "race"}>
@@ -88,7 +89,7 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
         </Col>
 
         <Col lg={3} hidden={navigation !== "theme"}>
-          <Tab.ThemeSelection data={data} character={presenter} mutators={mutators} />
+          <Tab.ThemeSelection character={presenter} mutators={mutators} />
         </Col>
 
         <Col hidden={navigation !== "theme"}>
@@ -96,7 +97,7 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
         </Col>
 
         <Col lg={3} hidden={navigation !== "class"}>
-          <Tab.ClassSelection data={data} character={presenter} mutators={mutators} />
+          <Tab.ClassSelection character={presenter} mutators={mutators} />
         </Col>
 
         <Col hidden={navigation !== "class"}>
@@ -104,23 +105,23 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
         </Col>
 
         <Col lg={3} hidden={navigation !== "profile"}>
-          <Tab.Profile data={data} character={presenter} mutators={mutators} />
+          <Tab.Profile character={presenter} mutators={mutators} />
         </Col>
 
         <Col lg={3} hidden={navigation !== "profile"}>
-          <Tab.Avatar data={data} character={presenter} mutators={mutators} />
+          <Tab.Avatar character={presenter} mutators={mutators} />
         </Col>
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>
-          <Tab.AbilityScores data={data} character={presenter} mutators={mutators} />
+          <Tab.AbilityScores character={presenter} mutators={mutators} />
         </Col>
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>
-          <Tab.Skills data={data} character={presenter} mutators={mutators} />
+          <Tab.Skills character={presenter} mutators={mutators} />
         </Col>
 
         <Col lg={12} hidden={navigation !== "sheet"}>
-          <Tab.Sheet data={data} character={presenter} />
+          <Tab.Sheet character={presenter} />
         </Col>
 
         <Col lg={12} hidden={navigation !== "debug"}>
@@ -128,6 +129,6 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
           <pre>{JSON.stringify(presenter.getCharacter(), null, 2)}</pre>
         </Col>
       </Row>
-    </>
+    </DataContext.Provider>
   );
 }

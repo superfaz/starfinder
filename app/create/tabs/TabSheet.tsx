@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier } from "logic";
 import { Alignment, ModifierType } from "model";
+import { DataContext } from "../contexts";
 import { CharacterProps } from "../Props";
 
 interface IValueComponentProps {
@@ -15,6 +17,13 @@ interface IValueComponentProps {
 
 type ValueComponentProps = Readonly<IValueComponentProps>;
 
+interface ISheetProps {
+  data: IClientDataSet;
+  character: CharacterPresenter;
+}
+
+type SheetProps = Readonly<ISheetProps>;
+  
 function ValueComponent({ label, value, title, className, children }: ValueComponentProps) {
   return (
     <div className={className} title={title}>
@@ -228,14 +237,12 @@ function CardAbilities({ character }: CharacterProps) {
   );
 }
 
-interface ISheetProps {
-  data: IClientDataSet;
-  character: CharacterPresenter;
-}
+export function Sheet({ character }: CharacterProps) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
 
-type SheetProps = Readonly<ISheetProps>;
-
-export function Sheet({ data, character }: SheetProps) {
   return (
     <Row>
       <Col lg={3}>

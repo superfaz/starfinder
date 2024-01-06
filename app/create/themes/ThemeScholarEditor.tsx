@@ -1,6 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import { TabEditProps } from "../Props";
+import { DataContext } from "../contexts";
+import { SimpleEditProps } from "../Props";
 
 interface IThemeDetailsScholar {
   id: string;
@@ -20,9 +21,14 @@ function useThemeDetails(themeId: string) {
   return details;
 }
 
-export default function ThemeScholarEditor({ data, character, mutators }: TabEditProps) {
+export default function ThemeScholarEditor({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
   const selectedDetails = character.getScholarDetails();
   const themeDetails = useThemeDetails("scholar");
+
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;

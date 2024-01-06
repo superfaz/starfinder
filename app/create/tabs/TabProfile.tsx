@@ -1,8 +1,14 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext } from "react";
 import { Button, Card, Form, InputGroup, Stack } from "react-bootstrap";
-import { TabEditProps } from "../Props";
+import { DataContext } from "../contexts";
+import { SimpleEditProps } from "../Props";
 
-export function Profile({ data, character, mutators }: TabEditProps) {
+export function Profile({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
+
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
     mutators.updateName(e.target.value);
   }
@@ -72,7 +78,12 @@ export function Profile({ data, character, mutators }: TabEditProps) {
   );
 }
 
-export function Avatar({ data, character, mutators }: TabEditProps) {
+export function Avatar({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
+
   const selectedRace = character.getRace();
   if (!selectedRace) {
     return null;

@@ -1,15 +1,21 @@
 import dynamic from "next/dynamic";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { Feature } from "model";
+import { DataContext } from "../contexts";
 import FeatureComponent from "../FeatureComponent";
-import { CharacterProps, TabEditProps } from "../Props";
+import { CharacterProps, SimpleEditProps } from "../Props";
 
 const LazyThemeNoneEditor = dynamic(() => import("../themes/ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("../themes/ThemeScholarEditor"));
 
-export function ThemeSelection({ data, character, mutators }: TabEditProps) {
+export function ThemeSelection({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
+
   const selectedTheme = character.getTheme();
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
@@ -44,8 +50,8 @@ export function ThemeSelection({ data, character, mutators }: TabEditProps) {
         </Stack>
       )}
       {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
-      {character.hasNoTheme() && <LazyThemeNoneEditor data={data} character={character} mutators={mutators} />}
-      {character.isScholar() && <LazyThemeScholarEditor data={data} character={character} mutators={mutators} />}
+      {character.hasNoTheme() && <LazyThemeNoneEditor character={character} mutators={mutators} />}
+      {character.isScholar() && <LazyThemeScholarEditor character={character} mutators={mutators} />}
     </Stack>
   );
 }

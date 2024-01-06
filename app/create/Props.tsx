@@ -1,4 +1,3 @@
-import { IClientDataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 
 interface ICharacterProps {
@@ -10,15 +9,5 @@ interface ISimpleEditProps {
   mutators: CharacterMutators;
 }
 
-/**
- * Base props for standard character tabs with editing capabilities.
- */
-interface ITabEditProps {
-  data: IClientDataSet;
-  character: CharacterPresenter;
-  mutators: CharacterMutators;
-}
-
 export type CharacterProps = Readonly<ICharacterProps>;
 export type SimpleEditProps = Readonly<ISimpleEditProps>;
-export type TabEditProps = Readonly<ITabEditProps>;

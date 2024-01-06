@@ -1,9 +1,15 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { TabEditProps } from "../Props";
+import { DataContext } from "../contexts";
+import { SimpleEditProps } from "../Props";
 
-export default function ThemeNoneEditor({ data, character, mutators }: TabEditProps) {
+export default function ThemeNoneEditor({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
+
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
     mutators.updateNoThemeAbilityScore(id);

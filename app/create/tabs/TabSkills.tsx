@@ -1,9 +1,15 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { TabEditProps } from "../Props";
+import { DataContext } from "../contexts";
+import { SimpleEditProps } from "../Props";
 
-export function Skills({ data, character, mutators }: TabEditProps) {
+export function Skills({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
+
   const selectedRace = character.getRace();
   const selectedTheme = character.getTheme();
   const selectedClass = character.getClass();

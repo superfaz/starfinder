@@ -1,9 +1,17 @@
+import { useContext } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus } from "app/helpers";
 import { computeAbilityScoreModifier } from "logic";
-import { TabEditProps } from "../Props";
+import { DataContext } from "../contexts";
+import { SimpleEditProps } from "../Props";
 
-export function AbilityScores({ data, character, mutators }: TabEditProps) {
+export function AbilityScores({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
+
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
+
   const points = character.getRemainingAbilityScoresPoints();
   const abilityScores = character.getAbilityScores();
   const minimalAbilityScores = character.getMinimalAbilityScores();

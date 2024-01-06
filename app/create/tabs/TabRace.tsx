@@ -1,11 +1,17 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { Feature } from "model";
 import FeatureComponent from "../FeatureComponent";
-import { CharacterProps, SimpleEditProps, TabEditProps } from "../Props";
+import { DataContext } from "../contexts";
+import { CharacterProps, SimpleEditProps } from "../Props";
 
-export function RaceSelection({ data, character, mutators }: TabEditProps) {
+export function RaceSelection({ character, mutators }: SimpleEditProps) {
+  const data = useContext(DataContext);
+  if (data === null) {
+    return <div>Loading...</div>;
+  }
+
   const selectedRace = character.getRace();
   const selectedVariant = character.getRaceVariant();
 
