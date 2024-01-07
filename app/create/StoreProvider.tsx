@@ -11,7 +11,7 @@ import { IClientDataSet } from "data";
  * @param data The data set to initialize the store with.
  * @param children The application to render.
  * @returns The application wrapped in a Redux store.
- * @see https://redux.js.org/usage/nextjs
+ * @see https://redux-toolkit.js.org/usage/nextjs
  */
 export default function StoreProvider({ data, children }: { data: IClientDataSet; children: React.ReactNode }) {
   const storeRef = useRef<AppStore>();
