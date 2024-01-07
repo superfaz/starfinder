@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { DataContext } from "../contexts";
 import { CharacterProps, SimpleEditProps } from "../Props";
+import { useAppSelector } from "../store";
 
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));
@@ -49,11 +49,7 @@ function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
 }
 
 export function ClassSelection({ character, mutators }: SimpleEditProps) {
-  const data = useContext(DataContext);
-
-  if (data === null) {
-    return <div>Loading...</div>;
-  }
+  const data = useAppSelector((state) => state.data);
 
   const selectedClass = character.getClass();
 

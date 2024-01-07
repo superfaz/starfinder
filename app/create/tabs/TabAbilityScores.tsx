@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus } from "app/helpers";
 import { computeAbilityScoreModifier } from "logic";
-import { DataContext } from "../contexts";
 import { SimpleEditProps } from "../Props";
+import { useAppSelector } from "../store";
 
 export function AbilityScores({ character, mutators }: SimpleEditProps) {
-  const data = useContext(DataContext);
+  const data = useAppSelector((state) => state.data);
 
   if (data === null) {
     return <div>Loading...</div>;

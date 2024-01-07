@@ -1,14 +1,11 @@
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { DataContext } from "../contexts";
 import { SimpleEditProps } from "../Props";
+import { useAppSelector } from "../store";
 
 export default function ThemeNoneEditor({ character, mutators }: SimpleEditProps) {
-  const data = useContext(DataContext);
-  if (data === null) {
-    return <div>Loading...</div>;
-  }
+  const data = useAppSelector((state) => state.data);
 
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;

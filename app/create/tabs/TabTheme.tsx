@@ -1,20 +1,17 @@
 import dynamic from "next/dynamic";
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { Feature } from "model";
-import { DataContext } from "../contexts";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps, SimpleEditProps } from "../Props";
+import { useAppSelector } from "../store";
 
 const LazyThemeNoneEditor = dynamic(() => import("../themes/ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("../themes/ThemeScholarEditor"));
 
 export function ThemeSelection({ character, mutators }: SimpleEditProps) {
-  const data = useContext(DataContext);
-  if (data === null) {
-    return <div>Loading...</div>;
-  }
+  const data = useAppSelector((state) => state.data);
 
   const selectedTheme = character.getTheme();
 

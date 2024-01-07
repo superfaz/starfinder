@@ -1,7 +1,7 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import { DataContext } from "../contexts";
 import { SimpleEditProps } from "../Props";
+import { useAppSelector } from "../store";
 
 interface IThemeDetailsScholar {
   id: string;
@@ -22,7 +22,7 @@ function useThemeDetails(themeId: string) {
 }
 
 export default function ThemeScholarEditor({ character, mutators }: SimpleEditProps) {
-  const data = useContext(DataContext);
+  const data = useAppSelector((state) => state.data);
   const selectedDetails = character.getScholarDetails();
   const themeDetails = useThemeDetails("scholar");
 

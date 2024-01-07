@@ -1,8 +1,7 @@
-import { useContext } from "react";
 import { Badge } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { Modifier } from "model";
-import { DataContext } from "./contexts";
+import { useAppSelector } from "./store";
 
 const displayLabelsForType: Record<string, string> = {
   ability: "Pouvoir",
@@ -19,10 +18,7 @@ const displayLabelsForType: Record<string, string> = {
 };
 
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
-  const data = useContext(DataContext);
-  if (data === null) {
-    return null;
-  }
+  const data = useAppSelector((state) => state.data);
 
   const skills = data.skills;
   const target = modifier.target;

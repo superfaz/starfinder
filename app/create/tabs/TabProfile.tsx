@@ -1,13 +1,10 @@
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent } from "react";
 import { Button, Card, Form, InputGroup, Stack } from "react-bootstrap";
-import { DataContext } from "../contexts";
 import { SimpleEditProps } from "../Props";
+import { useAppSelector } from "../store";
 
 export function Profile({ character, mutators }: SimpleEditProps) {
-  const data = useContext(DataContext);
-  if (data === null) {
-    return <div>Loading...</div>;
-  }
+  const data = useAppSelector((state) => state.data);
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
     mutators.updateName(e.target.value);
@@ -79,7 +76,7 @@ export function Profile({ character, mutators }: SimpleEditProps) {
 }
 
 export function Avatar({ character, mutators }: SimpleEditProps) {
-  const data = useContext(DataContext);
+  const data = useAppSelector((state) => state.data);
   if (data === null) {
     return <div>Loading...</div>;
   }

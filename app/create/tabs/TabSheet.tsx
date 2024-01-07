@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier } from "logic";
 import { Alignment, ModifierType } from "model";
-import { DataContext } from "../contexts";
 import { CharacterProps } from "../Props";
+import { useAppSelector } from "../store";
 
 interface IValueComponentProps {
   label: string;
@@ -238,10 +237,7 @@ function CardAbilities({ character }: CharacterProps) {
 }
 
 export function Sheet({ character }: CharacterProps) {
-  const data = useContext(DataContext);
-  if (data === null) {
-    return <div>Loading...</div>;
-  }
+  const data = useAppSelector((state) => state.data);
 
   return (
     <Row>

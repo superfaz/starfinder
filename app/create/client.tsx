@@ -5,8 +5,8 @@ import { Col, Nav, Row } from "react-bootstrap";
 import { IClientDataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
-import { DataContext } from "./contexts";
 import * as Tab from "./tabs";
+import StoreProvider from "./StoreProvider";
 
 export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
@@ -27,7 +27,7 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
   }
 
   return (
-    <DataContext.Provider value={data}>
+    <StoreProvider data={data}>
       <Nav variant="underline" className="mb-3" activeKey={navigation} onSelect={handleNavigation}>
         <Nav.Item>
           <Nav.Link eventKey="intro">Introduction</Nav.Link>
@@ -129,6 +129,6 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
           <pre>{JSON.stringify(presenter.getCharacter(), null, 2)}</pre>
         </Col>
       </Row>
-    </DataContext.Provider>
+    </StoreProvider>
   );
 }
