@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Badge, Col, Row } from "react-bootstrap";
-import { ClassOperative, FeatureTemplate } from "model";
+import { FeatureTemplate } from "model";
 import { Templater, cleanEvolutions } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
+import { retrieveClassDetails, useAppDispatch, useAppSelector } from "../store";
 
 export default function OperativeClassDetails({ character }: CharacterProps) {
-  const [operativeData, setOperativeData] = useState<ClassOperative | null>(null);
+  const operativeData = useAppSelector((state) => state.classDetails);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    fetch("/api/classes/operative/details")
-      .then((response) => response.json())
-      .then((data) => setOperativeData(data));
-  }, []);
+    dispatch(retrieveClassDetails("operative"));
+  }, [dispatch]);
 
   if (!operativeData) {
     return <p>Loading...</p>;

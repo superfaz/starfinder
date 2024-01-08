@@ -1,15 +1,14 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { ClassOperative } from "model";
 import { SimpleEditProps } from "../Props";
+import { retrieveClassDetails, useAppDispatch, useAppSelector } from "../store";
 
 export default function OperativeEditor({ character, mutators }: SimpleEditProps) {
-  const [operativeData, setOperativeData] = useState<ClassOperative | null>(null);
+  const operativeData = useAppSelector((state) => state.classDetails);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    fetch("/api/classes/operative/details")
-      .then((response) => response.json())
-      .then((data) => setOperativeData(data));
-  }, []);
+    dispatch(retrieveClassDetails("operative"));
+  }, [dispatch]);
 
   if (!operativeData) {
     return <p>Loading...</p>;
