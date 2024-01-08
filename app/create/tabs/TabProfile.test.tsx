@@ -35,7 +35,7 @@ describe("TabProfile", () => {
     await user.click(screen.getByRole("button", { name: "Profil" }));
   });
 
-  test.skip("Profile is displayed", async () => {
+  test("Profile is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Profil" })).not.toBeNull();
   });
@@ -51,7 +51,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("Bob")).not.toBeNull();
   });
 
-  test.skip("Alignment modified", async () => {
+  test("Alignment modified", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
@@ -62,7 +62,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("CN")).not.toBeNull();
   });
 
-  test.skip("Sex modified", async () => {
+  test("Sex modified", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
@@ -73,7 +73,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("F")).not.toBeNull();
   });
 
-  test.skip("Home world modified", async () => {
+  test("Home world modified", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
@@ -84,7 +84,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("Abraxar")).not.toBeNull();
   });
 
-  test.skip("Deity modified", async () => {
+  test("Deity modified", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
