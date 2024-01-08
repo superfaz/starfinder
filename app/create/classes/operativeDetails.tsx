@@ -7,11 +7,13 @@ import { CharacterProps } from "../Props";
 import { retrieveClassDetails, useAppDispatch, useAppSelector } from "../store";
 
 export default function OperativeClassDetails({ character }: CharacterProps) {
-  const operativeData = useAppSelector((state) => state.classDetails);
+  const operativeData = useAppSelector((state) => state.classesDetails.operative);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(retrieveClassDetails("operative"));
-  }, [dispatch]);
+    if (!operativeData) {
+      dispatch(retrieveClassDetails("operative"));
+    }
+  }, [dispatch, operativeData]);
 
   if (!operativeData) {
     return <p>Loading...</p>;

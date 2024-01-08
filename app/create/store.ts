@@ -8,8 +8,12 @@ function createDataReducer(data: IClientDataSet) {
   return createReducer(data, () => {});
 }
 
+/**
+ * Redux action to retrieve class details using the API.
+ * @param classId The ID of the class to retrieve.
+ */
 export const retrieveClassDetails = createAsyncThunk<ClassOperative, string>(
-  "classDetails/retrieve",
+  "classesDetails/retrieve",
   async (classId) => {
     const response = await fetch(`/api/classes/${classId}/details`);
     const data = await response.json();
@@ -17,9 +21,9 @@ export const retrieveClassDetails = createAsyncThunk<ClassOperative, string>(
   }
 );
 
-function createClassDetailsSlice() {
+function createClassesDetailsSlice() {
   return createSlice({
-    name: "classDetails",
+    name: "classesDetails",
     initialState: {} as Record<string, ClassOperative>,
     reducers: {},
     extraReducers: (builder) => {
@@ -34,7 +38,7 @@ export function makeStore(data: IClientDataSet) {
   return configureStore({
     reducer: {
       data: createDataReducer(data),
-      classDetails: createClassDetailsSlice().reducer,
+      classesDetails: createClassesDetailsSlice().reducer,
     },
   });
 }
