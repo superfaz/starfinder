@@ -1,11 +1,11 @@
 module.exports = {
   env: { es6: true, node: true, jest: true },
   extends: [
-    "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
     "plugin:sonarjs/recommended",
+    "next/core-web-vitals",
+    "prettier",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: { project: "./tsconfig.json" },
