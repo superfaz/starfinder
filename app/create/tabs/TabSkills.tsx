@@ -1,8 +1,8 @@
 import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
+import { useAppSelector } from "logic";
 import { SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 export function Skills({ character, mutators }: SimpleEditProps) {
   const data = useAppSelector((state) => state.data);

@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
+import { useAppSelector } from "logic";
 import { SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 interface IThemeDetailsScholar {
   id: string;

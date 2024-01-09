@@ -6,7 +6,7 @@ import { IClientDataSet } from "data";
 import { CharacterMutators, CharacterPresenter } from "logic";
 import { Character } from "model";
 import * as Tab from "./tabs";
-import StoreProvider from "./StoreProvider";
+import StoreProvider from "../../logic/StoreProvider";
 
 export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
   const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));

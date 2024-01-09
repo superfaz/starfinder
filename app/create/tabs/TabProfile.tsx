@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { Button, Card, Form, InputGroup, Stack } from "react-bootstrap";
+import { useAppSelector } from "logic";
 import { SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 export function Profile({ character, mutators }: SimpleEditProps) {
   const data = useAppSelector((state) => state.data);

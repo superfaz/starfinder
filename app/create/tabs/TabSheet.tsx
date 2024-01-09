@@ -1,10 +1,9 @@
 import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { CharacterPresenter, computeAbilityScoreModifier } from "logic";
+import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
 import { Alignment, ModifierType } from "model";
 import { CharacterProps } from "../Props";
-import { useAppSelector } from "../store";
 
 interface IValueComponentProps {
   label: string;
@@ -22,7 +21,7 @@ interface ISheetProps {
 }
 
 type SheetProps = Readonly<ISheetProps>;
-  
+
 function ValueComponent({ label, value, title, className, children }: ValueComponentProps) {
   return (
     <div className={className} title={title}>

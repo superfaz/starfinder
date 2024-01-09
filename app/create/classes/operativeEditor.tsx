@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { SimpleEditProps } from "../Props";
-import { retrieveClassDetails, useAppDispatch, useAppSelector } from "../store";
+import { retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
 
 export default function OperativeEditor({ character, mutators }: SimpleEditProps) {
   const operativeData = useAppSelector((state) => state.classesDetails.operative);

@@ -1,8 +1,8 @@
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
+import { useAppSelector } from "logic";
 import { SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 export default function ThemeNoneEditor({ character, mutators }: SimpleEditProps) {
   const data = useAppSelector((state) => state.data);

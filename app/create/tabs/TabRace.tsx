@@ -1,10 +1,10 @@
 import { ChangeEvent } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
+import { useAppSelector } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps, SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 export function RaceSelection({ character, mutators }: SimpleEditProps) {
   const data = useAppSelector((state) => state.data);

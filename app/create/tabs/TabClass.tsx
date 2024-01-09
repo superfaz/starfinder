@@ -2,8 +2,8 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
+import { useAppSelector } from "logic";
 import { CharacterProps, SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));

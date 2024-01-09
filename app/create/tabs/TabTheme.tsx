@@ -2,10 +2,10 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
+import { useAppSelector } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps, SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 const LazyThemeNoneEditor = dynamic(() => import("../themes/ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("../themes/ThemeScholarEditor"));

@@ -1,8 +1,7 @@
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus } from "app/helpers";
-import { computeAbilityScoreModifier } from "logic";
+import { computeAbilityScoreModifier, useAppSelector } from "logic";
 import { SimpleEditProps } from "../Props";
-import { useAppSelector } from "../store";
 
 export function AbilityScores({ character, mutators }: SimpleEditProps) {
   const data = useAppSelector((state) => state.data);
