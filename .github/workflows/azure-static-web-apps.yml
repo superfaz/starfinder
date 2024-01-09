@@ -60,6 +60,8 @@ jobs:
           app_location: "/"
           output_location: ".next"
         env:
+          PLATFORM_NAME: nodejs
+          PLATFORM_VERSION: 18
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: SonarCloud Scan
