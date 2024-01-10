@@ -1,8 +1,10 @@
 import { CharacterPresenter } from "./CharacterPresenter";
-import { FeatureTemplate } from "model";
-import operativeData from "data/class-operative.json";
+import { ClassOperative, FeatureTemplate } from "model";
 
-export function getOperativeFeatureTemplates(character: CharacterPresenter): FeatureTemplate[] {
+export function getOperativeFeatureTemplates(
+  operativeData: ClassOperative,
+  character: CharacterPresenter
+): FeatureTemplate[] {
   const specialization = character.getOperativeSpecialization();
   if (!specialization) {
     return [];

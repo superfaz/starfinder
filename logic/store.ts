@@ -2,7 +2,7 @@ import { configureStore, createAsyncThunk, createReducer, createSlice } from "@r
 import { useDispatch, useSelector, useStore } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 import { IClientDataSet } from "data";
-import { ClassOperative } from "model";
+import { IModel } from "model";
 
 function createDataReducer(data: IClientDataSet) {
   return createReducer(data, () => {});
@@ -12,19 +12,16 @@ function createDataReducer(data: IClientDataSet) {
  * Redux action to retrieve class details using the API.
  * @param classId The ID of the class to retrieve.
  */
-export const retrieveClassDetails = createAsyncThunk<ClassOperative, string>(
-  "classesDetails/retrieve",
-  async (classId) => {
-    const response = await fetch(`/api/classes/${classId}/details`);
-    const data = await response.json();
-    return data as ClassOperative;
-  }
-);
+export const retrieveClassDetails = createAsyncThunk<IModel, string>("classesDetails/retrieve", async (classId) => {
+  const response = await fetch(`/api/classes/${classId}/details`);
+  const data = await response.json();
+  return data as IModel;
+});
 
 function createClassesDetailsSlice() {
   return createSlice({
     name: "classesDetails",
-    initialState: {} as Record<string, ClassOperative>,
+    initialState: {} as Record<string, IModel>,
     reducers: {},
     extraReducers: (builder) => {
       builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {
