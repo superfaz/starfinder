@@ -1,4 +1,4 @@
-import { FeatureTemplate, NamedModel } from ".";
+import { FeatureTemplate, IModel, NamedModel } from ".";
 
 export interface ClassOperativeSpecialization extends NamedModel {
   description: string;
@@ -6,7 +6,8 @@ export interface ClassOperativeSpecialization extends NamedModel {
   features: FeatureTemplate[];
 }
 
-export interface ClassOperative {
+export interface ClassOperative extends IModel {
+  id: string;
   specializations: ClassOperativeSpecialization[];
   features: FeatureTemplate[];
 }

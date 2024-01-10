@@ -239,7 +239,7 @@ export class CharacterPresenter {
 
     // eslint-disable-next-line sonarjs/no-small-switch
     switch (selectedClass.id) {
-      case "class-operative":
+      case "operative":
         return getOperativeFeatureTemplates(this).map((f) => templater.convertFeature(f));
       default:
         return [];
@@ -247,7 +247,7 @@ export class CharacterPresenter {
   }
 
   isSoldier(): boolean {
-    return this.character.class === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab";
+    return this.character.class === "soldier";
   }
 
   getSoldierAbilityScore(): string | null {

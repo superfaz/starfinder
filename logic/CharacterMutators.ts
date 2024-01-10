@@ -320,10 +320,10 @@ export function updateClass(data: IClientDataSet, character: Character, classId:
   };
 
   // Special cases - prepare the associated options
-  if (classId === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab") {
+  if (classId === "soldier") {
     // Class: Soldier
     result.classOptions = { soldierAbilityScore: "str" };
-  } else if (classId === "class-operative") {
+  } else if (classId === "operative") {
     // Class: Operative
     result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
   }
