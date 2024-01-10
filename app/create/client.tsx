@@ -8,13 +8,16 @@ import { Character } from "model";
 import * as Tab from "./tabs";
 import StoreProvider from "../../logic/StoreProvider";
 
-export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
-  const state = useAppSelector((state) => state);
-  const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(state, new Character()));
+function ClientComponentPresenter() {
+  const data = useAppSelector((state) => state.data);
+  const classesDetails = useAppSelector((state) => state.classesDetails);
+  const [presenter, setPresenter] = useState<CharacterPresenter>(
+    () => new CharacterPresenter(data, classesDetails, new Character())
+  );
   const [navigation, setNavigation] = useState("intro");
 
   function setCharacter(updator: (c: Character) => Character) {
-    setPresenter((p) => new CharacterPresenter(state, updator(p.getCharacter())));
+    setPresenter((p) => new CharacterPresenter(data, classesDetails, updator(p.getCharacter())));
   }
 
   const mutators = new CharacterMutators(data, setCharacter);
@@ -28,7 +31,7 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
   }
 
   return (
-    <StoreProvider data={data}>
+    <>
       <Nav variant="underline" className="mb-3" activeKey={navigation} onSelect={handleNavigation}>
         <Nav.Item>
           <Nav.Link eventKey="intro">Introduction</Nav.Link>
@@ -130,6 +133,14 @@ export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
           <pre>{JSON.stringify(presenter.getCharacter(), null, 2)}</pre>
         </Col>
       </Row>
+    </>
+  );
+}
+
+export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
+  return (
+    <StoreProvider data={data}>
+      <ClientComponentPresenter />
     </StoreProvider>
   );
 }

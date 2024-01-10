@@ -12,7 +12,7 @@ import {
   Theme,
   Variant,
 } from "model";
-import { RootState, Templater } from ".";
+import { Templater } from ".";
 import { getOperativeFeatureTemplates } from "./ClassPresenter";
 import { findOrError } from "app/helpers";
 
@@ -90,9 +90,9 @@ export class CharacterPresenter {
   private cachedRemainingAbilityScoresPoints: number | null = null;
   private cachedClassSkills: string[] | null = null;
 
-  constructor(state: RootState, character: Character) {
-    this.data = state.data;
-    this.classesDetails = state.classesDetails;
+  constructor(data: IClientDataSet, classesDetails: Record<string, IModel>, character: Character) {
+    this.data = data;
+    this.classesDetails = classesDetails;
     this.character = character;
   }
 
