@@ -1,6 +1,6 @@
 [
   {
-    "id": "class-operative",
+    "id": "operative",
     "name": "Agent",
     "description": "L’agent possède les compétences pour accomplir presque n’importe quelle mission exigeant de la discrétion et de la ruse, qu’il s’agisse d’une opération d’espionnage ou d’élimination.",
     "refs": ["base-60"],
@@ -31,7 +31,7 @@
     "weapons": ["basic", "small", "sniper"]
   },
   {
-    "id": "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab",
+    "id": "soldier",
     "name": "Soldat",
     "description": "Maîtrisant parfaitement les armes de la guerre, le soldat est prêt à semer le chaos quand il est nécessaire d’avoir recours à la force. Il se spécialise généralement dans une forme de combat.",
     "refs": ["base-110"],

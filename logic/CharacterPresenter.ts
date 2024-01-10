@@ -1,6 +1,18 @@
 import { IClientDataSet } from "data";
-import { Avatar, Character, Class, Feature, Modifier, Race, SkillDefinition, Theme, Variant } from "model";
-import { Templater } from ".";
+import {
+  Avatar,
+  Character,
+  Class,
+  ClassOperative,
+  Feature,
+  IModel,
+  Modifier,
+  Race,
+  SkillDefinition,
+  Theme,
+  Variant,
+} from "model";
+import { RootState, Templater } from ".";
 import { getOperativeFeatureTemplates } from "./ClassPresenter";
 import { findOrError } from "app/helpers";
 
@@ -64,7 +76,7 @@ export function computeAbilityScoreModifier(abilityScore: number): number {
 
 export class CharacterPresenter {
   private data: IClientDataSet;
-
+  private classesDetails: Record<string, IModel>;
   private character: Readonly<Character>;
 
   private cachedRace: Race | null = null;
@@ -78,8 +90,9 @@ export class CharacterPresenter {
   private cachedRemainingAbilityScoresPoints: number | null = null;
   private cachedClassSkills: string[] | null = null;
 
-  constructor(data: IClientDataSet, character: Character) {
-    this.data = data;
+  constructor(state: RootState, character: Character) {
+    this.data = state.data;
+    this.classesDetails = state.classesDetails;
     this.character = character;
   }
 
@@ -237,17 +250,25 @@ export class CharacterPresenter {
       ...this.character.classOptions,
     });
 
+    // Retrieve the class details
+    const classDetails = this.classesDetails[selectedClass.id];
+    if (!classDetails) {
+      return [];
+    }
+
     // eslint-disable-next-line sonarjs/no-small-switch
     switch (selectedClass.id) {
-      case "class-operative":
-        return getOperativeFeatureTemplates(this).map((f) => templater.convertFeature(f));
+      case "operative":
+        return getOperativeFeatureTemplates(classDetails as ClassOperative, this).map((f) =>
+          templater.convertFeature(f)
+        );
       default:
         return [];
     }
   }
 
   isSoldier(): boolean {
-    return this.character.class === "7d165a8f-d874-4d09-88ff-9f2ccd77a3ab";
+    return this.character.class === "soldier";
   }
 
   getSoldierAbilityScore(): string | null {

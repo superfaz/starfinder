@@ -18,10 +18,10 @@ function LazyClassEditor({ character, mutators }: SimpleEditProps): JSX.Element 
   }
 
   switch (selectedClass.id) {
-    case "class-operative":
+    case "operative":
       return <LazyOperativeClassEditor character={character} mutators={mutators} />;
 
-    case "class-envoy":
+    case "envoy":
       return <LazyEnvoyClassEditor />;
 
     default:
@@ -37,10 +37,10 @@ function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
   }
 
   switch (selectedClass.id) {
-    case "class-operative":
+    case "operative":
       return <LazyOperativeClassDetails character={character} />;
 
-    case "class-envoy":
+    case "envoy":
       return <LazyEnvoyClassDetails character={character} />;
 
     default:

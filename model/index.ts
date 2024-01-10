@@ -3,6 +3,7 @@ export * from "./Alignment";
 export * from "./Avatar";
 export * from "./Character";
 export * from "./Class";
+export * from "./ClassEnvoy";
 export * from "./ClassOperative";
 export * from "./CodedModel";
 export * from "./Feature";

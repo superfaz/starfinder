@@ -3,17 +3,18 @@
 import { useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
 import { IClientDataSet } from "data";
-import { CharacterMutators, CharacterPresenter } from "logic";
+import { CharacterMutators, CharacterPresenter, useAppSelector } from "logic";
 import { Character } from "model";
 import * as Tab from "./tabs";
 import StoreProvider from "../../logic/StoreProvider";
 
 export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
-  const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(data, new Character()));
+  const state = useAppSelector((state) => state);
+  const [presenter, setPresenter] = useState<CharacterPresenter>(() => new CharacterPresenter(state, new Character()));
   const [navigation, setNavigation] = useState("intro");
 
   function setCharacter(updator: (c: Character) => Character) {
-    setPresenter((p) => new CharacterPresenter(data, updator(p.getCharacter())));
+    setPresenter((p) => new CharacterPresenter(state, updator(p.getCharacter())));
   }
 
   const mutators = new CharacterMutators(data, setCharacter);
