@@ -9,6 +9,7 @@ export async function GET() {
 
   const raw: ClassOperative = (await data.getClassDetails("operative")) as ClassOperative;
   const result: ClassOperative = {
+    id: raw.id,
     specializations: raw.specializations,
     features: raw.features,
   };

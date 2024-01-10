@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Badge, Col, Row } from "react-bootstrap";
 import { ClassEnvoy, FeatureTemplate } from "model";
-import { Templater, cleanEvolutions, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
+import { Templater, cleanEvolutions, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 
 export default function EnvoyClassDetails({ character }: CharacterProps) {
-  const classDetails = useAppSelector((state) => state.classesDetails.envoy) as ClassEnvoy;
+  const classDetails = useClassDetails<ClassEnvoy>("envoy");
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!classDetails) {

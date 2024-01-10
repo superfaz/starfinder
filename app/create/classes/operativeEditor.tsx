@@ -1,22 +1,23 @@
 import { ChangeEvent, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { SimpleEditProps } from "../Props";
-import { retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
+import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
+import { ClassOperative } from "model";
 
 export default function OperativeEditor({ character, mutators }: SimpleEditProps) {
-  const operativeData = useAppSelector((state) => state.classesDetails.operative);
+  const classDetails = useClassDetails<ClassOperative>("operative");
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (!operativeData) {
+    if (!classDetails) {
       dispatch(retrieveClassDetails("operative"));
     }
-  }, [dispatch, operativeData]);
+  }, [dispatch, classDetails]);
 
-  if (!operativeData) {
+  if (!classDetails) {
     return <p>Loading...</p>;
   }
 
-  const selectedSpecialization = operativeData.specializations.find(
+  const selectedSpecialization = classDetails.specializations.find(
     (s) => s.id === character.getOperativeSpecialization()
   );
 
@@ -28,7 +29,7 @@ export default function OperativeEditor({ character, mutators }: SimpleEditProps
     <>
       <Form.FloatingLabel label="Spécialisation">
         <Form.Select value={character.getOperativeSpecialization() ?? ""} onChange={handleSpecializationChange}>
-          {operativeData.specializations.map((specialization) => (
+          {classDetails.specializations.map((specialization) => (
             <option key={specialization.id} value={specialization.id}>
               {specialization.name}
             </option>

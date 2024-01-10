@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Badge, Col, Row } from "react-bootstrap";
 import { ClassOperative, FeatureTemplate } from "model";
-import { Templater, cleanEvolutions, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
+import { Templater, cleanEvolutions, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 
 export default function OperativeClassDetails({ character }: CharacterProps) {
-  const classDetails = useAppSelector((state) => state.classesDetails.operative) as ClassOperative;
+  const classDetails = useClassDetails<ClassOperative>("operative");
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!classDetails) {

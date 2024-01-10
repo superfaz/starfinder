@@ -51,3 +51,7 @@ export type AppDispatch = AppStore["dispatch"];
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppStore: () => AppStore = useStore;
+
+export function useClassDetails<T extends IModel>(classId: string): T | undefined {
+  return useAppSelector((state) => state.classesDetails[classId]) as T | undefined;
+}
