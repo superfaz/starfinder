@@ -1,31 +1,31 @@
 import { useEffect } from "react";
 import { Badge, Col, Row } from "react-bootstrap";
-import { FeatureTemplate } from "model";
+import { ClassOperative, FeatureTemplate } from "model";
 import { Templater, cleanEvolutions, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 
 export default function OperativeClassDetails({ character }: CharacterProps) {
-  const operativeData = useAppSelector((state) => state.classesDetails.operative);
+  const classDetails = useAppSelector((state) => state.classesDetails.operative) as ClassOperative;
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (!operativeData) {
+    if (!classDetails) {
       dispatch(retrieveClassDetails("operative"));
     }
-  }, [dispatch, operativeData]);
+  }, [dispatch, classDetails]);
 
-  if (!operativeData) {
+  if (!classDetails) {
     return <p>Loading...</p>;
   }
 
-  const selectedSpecialization = operativeData.specializations.find(
+  const selectedSpecialization = classDetails.specializations.find(
     (s) => s.id === character.getOperativeSpecialization()
   );
   if (!selectedSpecialization) {
     return null;
   }
 
-  const classFeatures: FeatureTemplate[] = operativeData.features;
+  const classFeatures: FeatureTemplate[] = classDetails.features;
   const specializationFeatures: FeatureTemplate[] = selectedSpecialization.features;
   const features: FeatureTemplate[] = classFeatures.concat(specializationFeatures);
   const levels = features
