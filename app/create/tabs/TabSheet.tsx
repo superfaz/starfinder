@@ -24,7 +24,7 @@ type SheetProps = Readonly<ISheetProps>;
 
 function ValueComponent({ label, value, title, className, children }: ValueComponentProps) {
   return (
-    <div className={className} title={title}>
+    <div className={className} title={title} data-testid={label}>
       {children && <div className="header">{children}</div>}
       {!children && <div className="header">{value === undefined || value === "" ? "-" : value}</div>}
       <div className="small text-muted border-top border-secondary">{label}</div>
