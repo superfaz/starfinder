@@ -230,7 +230,7 @@ export function updateTheme(data: IClientDataSet, character: Character, themeId:
       scholarSkill: "life",
       scholarSpecialization: "",
     };
-  } else if (themeId === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f") {
+  } else if (themeId === "themeless") {
     // Theme: No theme
     result.themeOptions = { noThemeAbility: "str" };
   }

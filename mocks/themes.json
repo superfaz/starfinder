@@ -1,6 +1,6 @@
 [
   {
-    "id": "caa91400-c6ef-4c16-bb00-3b09792dda92",
+    "id": "bounty-hunter",
     "name": "Chasseur de primes",
     "description": "Rien ou presque ne peut vous empêcher de traquer vos proies et de les ramener mortes ou vives.",
     "refs": ["base-29"],
@@ -164,7 +164,7 @@
     ]
   },
   {
-    "id": "e1a9a6ad-0c95-4f31-a692-3327c77bb53f",
+    "id": "themeless",
     "name": "Sans thème",
     "description": "Aucune des catégories décrites ci-dessus ne vous convient vraiment ou vous vous voyez comme une page blanche.",
     "refs": ["base-28"],

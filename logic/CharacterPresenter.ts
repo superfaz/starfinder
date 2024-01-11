@@ -50,7 +50,7 @@ export function computeMinimalAbilityScores(data: IClientDataSet, character: Cha
     }
 
     if (
-      character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f" &&
+      character.theme === "themeless" &&
       character.themeOptions !== undefined &&
       abilityScore.id === character.themeOptions.noThemeAbility
     ) {
@@ -202,7 +202,7 @@ export class CharacterPresenter {
   }
 
   hasNoTheme(): boolean {
-    return this.character.theme === "e1a9a6ad-0c95-4f31-a692-3327c77bb53f";
+    return this.character.theme === "themeless";
   }
 
   getNoThemeAbilityScore(): string | null {
