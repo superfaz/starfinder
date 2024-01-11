@@ -123,4 +123,64 @@ describe("TabSheet", () => {
     expect(within(view).queryByText("-")).toBeNull();
     expect(within(view).queryByText(value)).not.toBeNull();
   });
+
+  test("has Abilities empty by default", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("abilities");
+    expect(within(view).queryByText("Pouvoirs")).toBeVisible();
+    expect(within(view).queryByText("Androïde.")).toBeNull();
+  });
+
+  test("has Abilities added by Race selection", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("abilities");
+    expect(within(view).queryByText("Pouvoirs")).toBeVisible();
+    expect(within(view).queryByText("Androïde.")).not.toBeNull();
+    expect(within(view).queryByText("Fabriqué.")).not.toBeNull();
+    expect(within(view).queryByText("Vision nocturne.")).not.toBeNull();
+    expect(within(view).queryByText("Vision dans le noir.")).not.toBeNull();
+    expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
+    expect(within(view).queryByText("Emplacement d'amélioration.")).not.toBeNull();
+  });
+
+  test("has Abilities added by Race selection with alternate traits", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("switch", { name: "Augmentations facilitées" }));
+    await user.click(screen.getByRole("switch", { name: "Intégration à l’infosphère" }));
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("abilities");
+    expect(within(view).queryByText("Pouvoirs")).toBeVisible();
+    expect(within(view).queryByText("Androïde.")).not.toBeNull();
+    expect(within(view).queryByText("Fabriqué.")).not.toBeNull();
+    expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
+    expect(within(view).queryByText("Intégration à l’infosphère.")).not.toBeNull();
+  });
+
+  test("has Abilities added by Theme selection", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "caa91400-c6ef-4c16-bb00-3b09792dda92");
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("abilities");
+    expect(within(view).queryByText("Pouvoirs")).toBeVisible();
+    expect(within(view).queryByText("Androïde.")).not.toBeNull();
+    expect(within(view).queryByText("Fabriqué.")).not.toBeNull();
+    expect(within(view).queryByText("Vision nocturne.")).not.toBeNull();
+    expect(within(view).queryByText("Vision dans le noir.")).not.toBeNull();
+    expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
+    expect(within(view).queryByText("Emplacement d'amélioration.")).not.toBeNull();
+    expect(within(view).queryByText("Chasseur de primes.")).not.toBeNull();
+  });
 });

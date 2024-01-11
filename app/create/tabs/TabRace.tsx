@@ -150,6 +150,8 @@ export function RaceAlternateTraits({ character, mutators }: SimpleEditProps) {
             className={isTraitEnabled ? "border-primary" : ""}
           >
             <Form.Switch
+              role="switch"
+              aria-label={trait.name}
               label={trait.name}
               checked={isTraitEnabled}
               onChange={(e) => handleTraitEnabled(trait, e)}

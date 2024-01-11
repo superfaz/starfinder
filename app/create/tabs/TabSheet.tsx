@@ -217,7 +217,7 @@ function CardWeapons() {
 function CardAbilities({ character }: CharacterProps) {
   const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.ability);
   return (
-    <Card>
+    <Card data-testid="abilities">
       <Card.Header>
         <Badge bg="primary">Pouvoirs</Badge>
       </Card.Header>
