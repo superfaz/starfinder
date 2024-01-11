@@ -49,7 +49,6 @@ export default function ThemeScholarEditor({ character, mutators }: SimpleEditPr
     return "loading...";
   }
 
-  console.log(selectedDetails);
   let specialization: string;
   let label: string;
   if (selectedDetails.specialization === "") {
