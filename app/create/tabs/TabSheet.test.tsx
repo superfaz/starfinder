@@ -29,21 +29,98 @@ describe("TabSheet", () => {
     expect(content.getByTestId("Nom du personnage")).toBeVisible();
   });
 
+  const emptyByDefault = [
+    ["Name", "Nom du personnage"],
+    ["Class", "Classe"],
+    ["Race", "Race"],
+    ["Theme", "Thème"],
+    ["Sex", "Sexe"],
+    ["Home world", "Monde natal"],
+    ["Alignment", "Alignement"],
+    ["Deity", "Divinité"],
+  ];
+
+  test.each(emptyByDefault)("has %s empty by default", async (_, label) => {
+    const view = screen.getByTestId(label);
+    expect(within(view).queryByText(label)).not.toBeNull();
+    expect(within(view).queryByText("-")).not.toBeNull();
+  });
+
+  const fixedValueByDefault = [
+    ["Level", "Niveau", "1"],
+    ["Size", "Taille", "Normale"],
+    ["Speed", "Vitesse", "Normale"],
+  ];
+
+  test.each(fixedValueByDefault)("has %s has its default value", async (_, label, defaultValue) => {
+    const view = screen.getByTestId(label);
+    expect(within(view).queryByText(label)).not.toBeNull();
+    expect(within(view).queryByText(defaultValue)).not.toBeNull();
+  });
+
   test("has Race updated", async () => {
     const user = userEvent.setup();
-
-    const view = screen.getByTestId("Race");
-    expect(within(view).queryByText("Race")).not.toBeNull();
-    expect(within(view).queryByText("-")).not.toBeNull();
-    expect(within(view).queryByText("Androïdes")).toBeNull();
-    expect(within(view).queryByText("Race")).not.toBeVisible();
-
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-
     await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("Race");
     expect(within(view).queryByText("Race")).toBeVisible();
     expect(within(view).queryByText("-")).toBeNull();
     expect(within(view).queryByText("Androïdes")).not.toBeNull();
+  });
+
+  test("has Theme updated", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "caa91400-c6ef-4c16-bb00-3b09792dda92");
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("Thème");
+    expect(within(view).queryByText("Thème")).toBeVisible();
+    expect(within(view).queryByText("-")).toBeNull();
+    expect(within(view).queryByText("Chasseur de primes")).not.toBeNull();
+  });
+
+  test("has Class updated", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "caa91400-c6ef-4c16-bb00-3b09792dda92");
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("Classe");
+    expect(within(view).queryByText("Classe")).toBeVisible();
+    expect(within(view).queryByText("-")).toBeNull();
+    expect(within(view).queryByText("Agent")).not.toBeNull();
+  });
+
+  const profileTexts = [
+    ["Name", "Nom du personnage", "Bob"],
+    ["Sex", "Sexe", "ABC"],
+    ["Home world", "Monde natal", "Asgard"],
+    ["Deity", "Divinité", "Ra"],
+  ];
+  test.each(profileTexts)("has %s updated", async (_, label, value) => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "caa91400-c6ef-4c16-bb00-3b09792dda92");
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+    await user.click(screen.getByRole("button", { name: "Profil" }));
+    await user.type(screen.getByRole("textbox", { name: label }), value);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId(label);
+    expect(within(view).queryByText(label)).toBeVisible();
+    expect(within(view).queryByText("-")).toBeNull();
+    expect(within(view).queryByText(value)).not.toBeNull();
   });
 });
