@@ -7,7 +7,7 @@ describe("TabIntro", () => {
     render(await Page());
   });
 
-  test("Intro is displayed", async () => {
+  test("is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Introduction" })).not.toBeNull();
   });

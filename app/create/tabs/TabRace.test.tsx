@@ -6,26 +6,37 @@ import Page from "../page";
 describe("TabRace", () => {
   beforeEach(async () => {
     render(await Page());
+  });
+
+  test("is not displayed by default", async () => {
+    const content = within(document.querySelector("#content") as HTMLElement);
+    expect(content.queryByRole("heading", { level: 2, name: "Race" })).toBeNull();
+  });
+});
+
+describe("TabRace", () => {
+  beforeEach(async () => {
+    render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
   });
 
-  test("RaceSelection is displayed", async () => {
+  test("displays RaceSelection", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.getByRole("heading", { level: 2, name: "Race" })).toBeDefined();
   });
 
-  test("RaceTraits is displayed", async () => {
+  test("displays RaceTraits", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.getByRole("heading", { level: 2, name: "Traits raciaux" })).toBeDefined();
   });
 
-  test("RaceAlternateTraits is displayed", async () => {
+  test("displays RaceAlternateTraits", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.getByRole("heading", { level: 2, name: "Traits alternatifs" })).toBeDefined();
   });
 
-  test("Selecting a race displays the variants", async () => {
+  test("displays the variants after race selection", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryAllByRole("combobox", { name: "Variante" }).length).toBe(0);

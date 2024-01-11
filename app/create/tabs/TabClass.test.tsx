@@ -10,7 +10,7 @@ describe("TabClass", () => {
     await user.click(screen.getByRole("button", { name: "Classe" }));
   });
 
-  test("ClassSelection is not displayed", async () => {
+  test("is not displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Classe" })).toBeNull();
   });
@@ -27,7 +27,7 @@ describe("TabClass", () => {
     await user.click(screen.getByRole("button", { name: "Classe" }));
   });
 
-  test("ClassSelection is displayed", async () => {
+  test("is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Classe" })).not.toBeNull();
   });

@@ -10,7 +10,7 @@ describe("TabSheet", () => {
     await user.click(screen.getByRole("button", { name: "Fiche" }));
   });
 
-  test("Sheet is not displayed", async () => {
+  test("is not displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Fiche de personnage" })).toBeNull();
   });
@@ -21,7 +21,7 @@ describe("TabSheet", () => {
     render(await Page());
   });
 
-  test("Sheet is displayed", async () => {
+  test("is displayed", async () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Fiche" }));
     const content = within(document.querySelector("#content") as HTMLElement);
@@ -29,7 +29,7 @@ describe("TabSheet", () => {
     expect(content.getByTestId("Nom du personnage")).toBeVisible();
   });
 
-  test("Race is updated", async () => {
+  test("has Race updated", async () => {
     const user = userEvent.setup();
 
     const view = screen.getByTestId("Race");

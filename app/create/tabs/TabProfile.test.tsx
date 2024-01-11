@@ -10,7 +10,7 @@ describe("TabProfile", () => {
     await user.click(screen.getByRole("button", { name: "Profil" }));
   });
 
-  test("Profile is not displayed", async () => {
+  test("is not displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Profil" })).toBeNull();
   });
@@ -29,12 +29,12 @@ describe("TabProfile", () => {
     await user.click(screen.getByRole("button", { name: "Profil" }));
   });
 
-  test("Profile is displayed", async () => {
+  test("is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Profil" })).not.toBeNull();
   });
 
-  test("Character name modified", async () => {
+  test("can be used to modify the character name", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
@@ -45,7 +45,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("Bob")).not.toBeNull();
   });
 
-  test("Alignment modified", async () => {
+  test("can be used to modify the alignment", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
@@ -56,7 +56,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("CN")).not.toBeNull();
   });
 
-  test("Sex modified", async () => {
+  test("can be used to modify the character sex", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
@@ -67,7 +67,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("F")).not.toBeNull();
   });
 
-  test("Home world modified", async () => {
+  test("can be used to modify the home world", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 
@@ -78,7 +78,7 @@ describe("TabProfile", () => {
     expect(content.queryByText("Abraxar")).not.toBeNull();
   });
 
-  test("Deity modified", async () => {
+  test("can be used to modify the deity", async () => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
 

@@ -10,7 +10,7 @@ describe("TabTheme", () => {
     await user.click(screen.getByRole("button", { name: "Thème" }));
   });
 
-  test("ThemeSelection is not displayed", async () => {
+  test("is not displayed by default", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Thème" })).toBeNull();
   });
@@ -25,7 +25,7 @@ describe("TabTheme", () => {
     await user.click(screen.getByRole("button", { name: "Thème" }));
   });
 
-  test("ThemeSelection is displayed", async () => {
+  test("displays ThemeSelection", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Thème" })).not.toBeNull();
   });
