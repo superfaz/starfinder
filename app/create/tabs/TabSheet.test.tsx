@@ -3,6 +3,33 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
+const races = [
+  {
+    id: "androids",
+    label: "Androïdes",
+    abilities: [
+      "Androïde",
+      "Fabriqué",
+      "Vision nocturne",
+      "Vision dans le noir",
+      "Emotions contrôlées",
+      "Emplacement d'amélioration",
+    ],
+  },
+  { id: "humans", label: "Humains", abilities: [] },
+];
+
+const themes = [
+  { id: "bounty-hunter", label: "Chasseur de primes", abilities: ["Chasseur de primes"] },
+  { id: "scholar", label: "Erudit", abilities: ["Erudit"] },
+  { id: "themeless", label: "Sans thème", abilities: [] },
+];
+
+const classes = [
+  { id: "operative", label: "Agent", abilities: ["Feinte offensive"] },
+  { id: "soldier", label: "Soldat", abilities: [] },
+];
+
 describe("TabSheet", () => {
   beforeEach(async () => {
     render(await Page());
@@ -26,7 +53,7 @@ describe("TabSheet", () => {
     await user.click(screen.getByRole("button", { name: "Fiche" }));
     const content = within(document.querySelector("#content") as HTMLElement);
 
-    expect(content.getByTestId("Nom du personnage")).toBeVisible();
+    expect(content.getByTestId("Race")).toBeVisible();
   });
 
   const emptyByDefault = [
@@ -58,46 +85,46 @@ describe("TabSheet", () => {
     expect(within(view).queryByText(defaultValue)).not.toBeNull();
   });
 
-  test("has Race updated", async () => {
+  test.each(races)("has Race updated for '$id'", async (race) => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("Race");
     expect(within(view).queryByText("Race")).toBeVisible();
     expect(within(view).queryByText("-")).toBeNull();
-    expect(within(view).queryByText("Androïdes")).not.toBeNull();
+    expect(within(view).queryByText(race.label)).not.toBeNull();
   });
 
-  test("has Theme updated", async () => {
-const user = userEvent.setup();
+  test.each(themes)("has Theme updated for '$id'", async (theme) => {
+    const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
     await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("Thème");
     expect(within(view).queryByText("Thème")).toBeVisible();
     expect(within(view).queryByText("-")).toBeNull();
-    expect(within(view).queryByText("Chasseur de primes")).not.toBeNull();
+    expect(within(view).queryByText(theme.label)).not.toBeNull();
   });
 
-  test("has Class updated", async () => {
+  test.each(classes)("has Class updated for '$id'", async (klass) => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
     await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
     await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("Classe");
     expect(within(view).queryByText("Classe")).toBeVisible();
     expect(within(view).queryByText("-")).toBeNull();
-    expect(within(view).queryByText("Agent")).not.toBeNull();
+    expect(within(view).queryByText(klass.label)).not.toBeNull();
   });
 
   const profileTexts = [
@@ -109,11 +136,11 @@ const user = userEvent.setup();
   test.each(profileTexts)("has %s updated", async (_, label, value) => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
     await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
     await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
     await user.click(screen.getByRole("button", { name: "Profil" }));
     await user.type(screen.getByRole("textbox", { name: label }), value);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
@@ -133,26 +160,23 @@ const user = userEvent.setup();
     expect(within(view).queryByText("Androïde.")).toBeNull();
   });
 
-  test("has Abilities added by Race selection", async () => {
+  test.each(races)("has Abilities added by Race selection for '$id'", async (race) => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("abilities");
     expect(within(view).queryByText("Pouvoirs")).toBeVisible();
-    expect(within(view).queryByText("Androïde.")).not.toBeNull();
-    expect(within(view).queryByText("Fabriqué.")).not.toBeNull();
-    expect(within(view).queryByText("Vision nocturne.")).not.toBeNull();
-    expect(within(view).queryByText("Vision dans le noir.")).not.toBeNull();
-    expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
-    expect(within(view).queryByText("Emplacement d'amélioration.")).not.toBeNull();
+    for (const ability of race.abilities) {
+      expect(within(view).queryByText(ability + ".")).not.toBeNull();
+    }
   });
 
   test("has Abilities added by Race selection with alternate traits", async () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
     await user.click(screen.getByRole("switch", { name: "Augmentations facilitées" }));
     await user.click(screen.getByRole("switch", { name: "Intégration à l’infosphère" }));
     await user.click(screen.getByRole("button", { name: "Fiche" }));
@@ -165,44 +189,45 @@ const user = userEvent.setup();
     expect(within(view).queryByText("Intégration à l’infosphère.")).not.toBeNull();
   });
 
-  test("has Abilities added by Theme selection", async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-    await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+  const themeMatrix = races.map((race) => themes.map((theme) => ({ race, theme }))).flat();
+  test.each(themeMatrix)(
+    "has Abilities added by Theme selection for '$race.id' and '$theme.id'",
+    async ({ race, theme }) => {
+      const user = userEvent.setup();
+      await user.click(screen.getByRole("button", { name: "Race" }));
+      await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
+      await user.click(screen.getByRole("button", { name: "Thème" }));
+      await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
+      await user.click(screen.getByRole("button", { name: "Fiche" }));
 
-    const view = screen.getByTestId("abilities");
-    expect(within(view).queryByText("Pouvoirs")).toBeVisible();
-    expect(within(view).queryByText("Androïde.")).not.toBeNull();
-    expect(within(view).queryByText("Fabriqué.")).not.toBeNull();
-    expect(within(view).queryByText("Vision nocturne.")).not.toBeNull();
-    expect(within(view).queryByText("Vision dans le noir.")).not.toBeNull();
-    expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
-    expect(within(view).queryByText("Emplacement d'amélioration.")).not.toBeNull();
-    expect(within(view).queryByText("Chasseur de primes.")).not.toBeNull();
-  });
+      const view = screen.getByTestId("abilities");
 
-  test.failing("has Abilities added by Class selection", async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-    await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+      expect(within(view).queryByText("Pouvoirs")).toBeVisible();
+      for (const ability of [...race.abilities, ...theme.abilities]) {
+        expect(within(view).queryByText(ability + ".")).not.toBeNull();
+      }
+    }
+  );
 
-    const view = screen.getByTestId("abilities");
-    expect(within(view).queryByText("Pouvoirs")).toBeVisible();
-    expect(within(view).queryByText("Androïde.")).not.toBeNull();
-    expect(within(view).queryByText("Fabriqué.")).not.toBeNull();
-    expect(within(view).queryByText("Vision nocturne.")).not.toBeNull();
-    expect(within(view).queryByText("Vision dans le noir.")).not.toBeNull();
-    expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
-    expect(within(view).queryByText("Emplacement d'amélioration.")).not.toBeNull();
-    expect(within(view).queryByText("Chasseur de primes.")).not.toBeNull();
-    expect(within(view).queryByText("Feinte offensive.")).not.toBeNull();
-  });
+  const classMatrix = races
+    .map((race) => themes.map((theme) => classes.map((klass) => ({ race, theme, klass }))))
+    .flat();
+  test.failing.each(classMatrix)(
+    "has Abilities added by Class selection for '$race.id', '$theme.id' and '$klass.id'",
+    async ({ race, theme, klass }) => {
+      const user = userEvent.setup();
+      await user.click(screen.getByRole("button", { name: "Race" }));
+      await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
+      await user.click(screen.getByRole("button", { name: "Thème" }));
+      await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
+      await user.click(screen.getByRole("button", { name: "Classe" }));
+      await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
+      await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+      const view = screen.getByTestId("abilities");
+      for (const ability of [...race.abilities, ...theme.abilities, ...klass.abilities]) {
+        expect(within(view).queryByText(ability + ".")).not.toBeNull();
+      }
+    }
+  );
 });

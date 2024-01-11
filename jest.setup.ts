@@ -4,6 +4,7 @@ import { beforeAll, jest } from "@jest/globals";
 import { DataSetBuilder, IDataSet } from "data";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import operativeDetails from "./data/class-operative.json";
+import scholarDetails from "./mocks/themes-details.json";
 
 async function readFile(path: string) {
   return fs.readFile(path, "utf-8").then((data: string) => JSON.parse(data));
@@ -31,4 +32,5 @@ beforeAll(() => {
   jest.spyOn(DataSetBuilder.prototype, "build").mockImplementation(mockBuild);
 
   addFetchMock("/api/classes/operative/details", operativeDetails);
+  addFetchMock("/api/themes/scholar", scholarDetails);
 });
