@@ -71,7 +71,7 @@ describe("TabSheet", () => {
   });
 
   test("has Theme updated", async () => {
-    const user = userEvent.setup();
+const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
     await user.click(screen.getByRole("button", { name: "Thème" }));
@@ -182,5 +182,27 @@ describe("TabSheet", () => {
     expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
     expect(within(view).queryByText("Emplacement d'amélioration.")).not.toBeNull();
     expect(within(view).queryByText("Chasseur de primes.")).not.toBeNull();
+  });
+
+  test.failing("has Abilities added by Class selection", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("abilities");
+    expect(within(view).queryByText("Pouvoirs")).toBeVisible();
+    expect(within(view).queryByText("Androïde.")).not.toBeNull();
+    expect(within(view).queryByText("Fabriqué.")).not.toBeNull();
+    expect(within(view).queryByText("Vision nocturne.")).not.toBeNull();
+    expect(within(view).queryByText("Vision dans le noir.")).not.toBeNull();
+    expect(within(view).queryByText("Emotions contrôlées.")).not.toBeNull();
+    expect(within(view).queryByText("Emplacement d'amélioration.")).not.toBeNull();
+    expect(within(view).queryByText("Chasseur de primes.")).not.toBeNull();
+    expect(within(view).queryByText("Feinte offensive.")).not.toBeNull();
   });
 });
