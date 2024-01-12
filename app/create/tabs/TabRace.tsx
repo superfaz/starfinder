@@ -1,30 +1,31 @@
 import { ChangeEvent } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { useAppSelector } from "logic";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "../FeatureComponent";
-import { CharacterProps, SimpleEditProps } from "../Props";
+import type { CharacterProps } from "../Props";
 
-export function RaceSelection({ character, mutators }: SimpleEditProps) {
+export function RaceSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
 
   const selectedRace = character.getRace();
   const selectedVariant = character.getRaceVariant();
 
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    mutators.updateRace(id);
+    dispatch(mutators.updateRace(id));
   }
 
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    mutators.updateRaceVariant(id);
+    dispatch(mutators.updateRaceVariant(id));
   }
 
   function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    mutators.updateHumanBonus(id);
+    dispatch(mutators.updateHumanBonus(id));
   }
 
   return (
@@ -128,12 +129,14 @@ export function RaceTraits({ character }: CharacterProps) {
   );
 }
 
-export function RaceAlternateTraits({ character, mutators }: SimpleEditProps) {
+export function RaceAlternateTraits({ character }: CharacterProps) {
+  const dispatch = useAppDispatch();
+
   function handleTraitEnabled(trait: Feature, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
-      mutators.enableSecondaryTrait(trait);
+      dispatch(mutators.enableSecondaryTrait(trait));
     } else {
-      mutators.disableSecondaryTrait(trait);
+      dispatch(mutators.disableSecondaryTrait(trait));
     }
   }
 

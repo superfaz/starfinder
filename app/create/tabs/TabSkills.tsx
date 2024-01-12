@@ -1,11 +1,12 @@
 import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
-import { useAppSelector } from "logic";
-import { SimpleEditProps } from "../Props";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterProps } from "../Props";
 
-export function Skills({ character, mutators }: SimpleEditProps) {
+export function Skills({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
 
   const selectedRace = character.getRace();
   const selectedTheme = character.getTheme();
@@ -20,7 +21,7 @@ export function Skills({ character, mutators }: SimpleEditProps) {
   function handleSkillRankChange(event: ChangeEvent<HTMLInputElement>): void {
     const skillId = event.target.id;
     const checked = event.target.checked;
-    mutators.updateSkillRank(skillId, checked ? 1 : -1);
+    dispatch(mutators.updateSkillRank({ id: skillId, delta: checked ? 1 : -1 }));
   }
 
   return (

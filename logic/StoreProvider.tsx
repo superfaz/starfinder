@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Provider } from "react-redux";
 import { makeStore, AppStore } from "./store";
 import { IClientDataSet } from "data";
+import { mutators } from "./slice-create";
 
 /**
  * Encapsulates the Redux store and provides it to the application.
@@ -17,7 +18,8 @@ export default function StoreProvider({ data, children }: { data: IClientDataSet
   const storeRef = useRef<AppStore>();
   if (!storeRef.current) {
     // Create the store instance the first time this renders
-    storeRef.current = makeStore(data);
+    storeRef.current = makeStore();
+    storeRef.current.dispatch(mutators.initializeData(data));
   }
 
   return <Provider store={storeRef.current}>{children}</Provider>;

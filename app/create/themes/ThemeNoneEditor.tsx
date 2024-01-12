@@ -1,15 +1,16 @@
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { useAppSelector } from "logic";
-import { SimpleEditProps } from "../Props";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterProps } from "../Props";
 
-export default function ThemeNoneEditor({ character, mutators }: SimpleEditProps) {
+export default function ThemeNoneEditor({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
 
   function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    mutators.updateNoThemeAbilityScore(id);
+    dispatch(mutators.updateNoThemeAbilityScore(id));
   }
 
   return (

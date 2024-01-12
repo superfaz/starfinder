@@ -1,10 +1,11 @@
 import { Badge, Button, Col, Form, InputGroup, Row, Stack } from "react-bootstrap";
 import { displayBonus } from "app/helpers";
-import { computeAbilityScoreModifier, useAppSelector } from "logic";
-import { SimpleEditProps } from "../Props";
+import { computeAbilityScoreModifier, mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterProps } from "../Props";
 
-export function AbilityScores({ character, mutators }: SimpleEditProps) {
+export function AbilityScores({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
 
   if (data === null) {
     return <div>Loading...</div>;
@@ -18,7 +19,7 @@ export function AbilityScores({ character, mutators }: SimpleEditProps) {
   const secondaryAbilityScores = character.getSecondaryAbilityScores();
 
   function handleAbilityScoreClick(abilityScoreId: string, delta: number): void {
-    mutators.updateAbilityScore(abilityScoreId, delta);
+    dispatch(mutators.updateAbilityScore({ id: abilityScoreId, delta }));
   }
 
   return (

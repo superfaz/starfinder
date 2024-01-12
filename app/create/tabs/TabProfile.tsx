@@ -1,13 +1,14 @@
 import { ChangeEvent } from "react";
 import { Button, Card, Form, InputGroup, Stack } from "react-bootstrap";
-import { useAppSelector } from "logic";
-import { SimpleEditProps } from "../Props";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterProps } from "../Props";
 
-export function Profile({ character, mutators }: SimpleEditProps) {
+export function Profile({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
-    mutators.updateName(e.target.value);
+    dispatch(mutators.updateName(e.target.value));
   }
 
   function handleRandomNameClick(): void {
@@ -18,23 +19,23 @@ export function Profile({ character, mutators }: SimpleEditProps) {
 
     const names = selectedRace.names;
     const name = names[Math.floor(Math.random() * names.length)];
-    mutators.updateName(name);
+    dispatch(mutators.updateName(name));
   }
 
   function handleAlignmentChange(e: ChangeEvent<HTMLSelectElement>): void {
-    mutators.updateAlignment(e.target.value);
+    dispatch(mutators.updateAlignment(e.target.value));
   }
 
   function handleSexChange(e: ChangeEvent<HTMLInputElement>): void {
-    mutators.updateSex(e.target.value);
+    dispatch(mutators.updateSex(e.target.value));
   }
 
   function handleHomeWorldChange(e: ChangeEvent<HTMLInputElement>): void {
-    mutators.updateHomeWorld(e.target.value);
+    dispatch(mutators.updateHomeWorld(e.target.value));
   }
 
   function handleDeityChange(e: ChangeEvent<HTMLInputElement>): void {
-    mutators.updateDeity(e.target.value);
+    dispatch(mutators.updateDeity(e.target.value));
   }
 
   return (
@@ -75,8 +76,10 @@ export function Profile({ character, mutators }: SimpleEditProps) {
   );
 }
 
-export function Avatar({ character, mutators }: SimpleEditProps) {
+export function Avatar({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
+
   if (data === null) {
     return <div>Loading...</div>;
   }
@@ -93,7 +96,7 @@ export function Avatar({ character, mutators }: SimpleEditProps) {
   function handleAvatarChange(e: ChangeEvent<HTMLInputElement>): void {
     const index = parseInt(e.target.value);
     const avatar = avatars[index];
-    mutators.updateAvatar(avatar.id);
+    dispatch(mutators.updateAvatar(avatar.id));
   }
 
   return (

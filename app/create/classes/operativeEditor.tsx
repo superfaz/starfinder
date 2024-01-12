@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { SimpleEditProps } from "../Props";
-import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
+import { CharacterProps } from "../Props";
+import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import { ClassOperative } from "model";
 
-export default function OperativeEditor({ character, mutators }: SimpleEditProps) {
+export default function OperativeEditor({ character }: CharacterProps) {
   const classDetails = useClassDetails<ClassOperative>("operative");
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function OperativeEditor({ character, mutators }: SimpleEditProps
   );
 
   const handleSpecializationChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    mutators.updateOperativeSpecialization(event.target.value);
+    dispatch(mutators.updateOperativeSpecialization(event.target.value));
   };
 
   return (

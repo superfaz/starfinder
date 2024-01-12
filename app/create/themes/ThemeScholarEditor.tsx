@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import { useAppSelector } from "logic";
-import { SimpleEditProps } from "../Props";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterProps } from "../Props";
 
 interface IThemeDetailsScholar {
   id: string;
@@ -21,8 +21,10 @@ function useThemeDetails(themeId: string) {
   return details;
 }
 
-export default function ThemeScholarEditor({ character, mutators }: SimpleEditProps) {
+export default function ThemeScholarEditor({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
+
   const selectedDetails = character.getScholarDetails();
   const themeDetails = useThemeDetails("scholar");
 
@@ -32,17 +34,17 @@ export default function ThemeScholarEditor({ character, mutators }: SimpleEditPr
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    mutators.updateScholarSkill(id);
+    dispatch(mutators.updateScholarSkill(id));
   }
 
   function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>): void {
     const specialization = e.target.value;
-    mutators.updateScholarSpecialization(specialization);
+    dispatch(mutators.updateScholarSpecialization(specialization));
   }
 
   function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>): void {
     const label = e.target.value;
-    mutators.updateScholarSpecialization(label);
+    dispatch(mutators.updateScholarSpecialization(label));
   }
 
   if (!selectedDetails || !themeDetails) {

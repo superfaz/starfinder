@@ -1,97 +1,123 @@
 import { findOrError } from "app/helpers";
-import { IClientDataSet } from "data";
-import { Character, Feature } from "model";
+import { EmptyClientDataSet, IClientDataSet } from "data";
+import { Character, EmptyCharacter, Feature, IModel } from "model";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export class CharacterMutators {
-  private data: IClientDataSet;
-  private setCharacter: (updator: (c: Character) => Character) => void;
+const initialState = {
+  data: EmptyClientDataSet,
+  character: EmptyCharacter,
+  classesDetails: {} as Record<string, IModel>,
+};
 
-  constructor(data: IClientDataSet, setCharacter: (updator: (c: Character) => Character) => void) {
-    this.data = data;
-    this.setCharacter = setCharacter;
-  }
+const mainSlice = createSlice({
+  name: "main",
+  initialState,
+  reducers: {
+    initializeData(state, action: PayloadAction<IClientDataSet>) {
+      state.data = action.payload;
+    },
 
-  updateRace(id: string) {
-    this.setCharacter((c) => updateRace(this.data, c, id));
-  }
+    updateRace(state, action: PayloadAction<string>) {
+      state.character = updateRaceImpl(state.data, state.character, action.payload);
+    },
 
-  updateRaceVariant(id: string) {
-    this.setCharacter((c) => updateRaceVariant(this.data, c, id));
-  }
+    updateRaceVariant(state, action: PayloadAction<string>) {
+      state.character = updateRaceVariantImpl(state.data, state.character, action.payload);
+    },
 
-  updateHumanBonus(id: string) {
-    this.setCharacter((c) => updateHumanBonus(this.data, c, id));
-  }
+    updateHumanBonus(state, action: PayloadAction<string>) {
+      state.character = updateHumanBonusImpl(state.data, state.character, action.payload);
+    },
 
-  enableSecondaryTrait(trait: Feature) {
-    this.setCharacter((c) => enableSecondaryTrait(c, trait));
-  }
+    enableSecondaryTrait(state, action: PayloadAction<Feature>) {
+      state.character = enableSecondaryTraitImpl(state.character, action.payload);
+    },
 
-  disableSecondaryTrait(trait: Feature) {
-    this.setCharacter((c) => disableSecondaryTrait(c, trait));
-  }
+    disableSecondaryTrait(state, action: PayloadAction<Feature>) {
+      state.character = disableSecondaryTraitImpl(state.character, action.payload);
+    },
 
-  updateTheme(id: string) {
-    this.setCharacter((c) => updateTheme(this.data, c, id));
-  }
+    updateTheme(state, action: PayloadAction<string>) {
+      state.character = updateThemeImpl(state.data, state.character, action.payload);
+    },
 
-  updateNoThemeAbilityScore(id: string) {
-    this.setCharacter((c) => updateNoThemeAbilityScore(this.data, c, id));
-  }
+    updateNoThemeAbilityScore(state, action: PayloadAction<string>) {
+      state.character = updateNoThemeAbilityScoreImpl(state.data, state.character, action.payload);
+    },
 
-  updateScholarSkill(id: string) {
-    this.setCharacter((c) => updateScholarSkill(this.data, c, id));
-  }
+    updateScholarSkill(state, action: PayloadAction<string>) {
+      state.character = updateScholarSkillImpl(state.data, state.character, action.payload);
+    },
 
-  updateScholarSpecialization(idOrLabel: string) {
-    this.setCharacter((c) => updateScholarSpecialization(c, idOrLabel));
-  }
+    updateScholarSpecialization(state, action: PayloadAction<string>) {
+      state.character = updateScholarSpecializationImpl(state.character, action.payload);
+    },
 
-  updateClass(id: string) {
-    this.setCharacter((c) => updateClass(this.data, c, id));
-  }
+    updateClass(state, action: PayloadAction<string>) {
+      state.character = updateClassImpl(state.data, state.character, action.payload);
+    },
 
-  updateSoldierAbilityScore(id: string) {
-    this.setCharacter((c) => updateSoldierAbilityScore(c, id));
-  }
+    updateSoldierAbilityScore(state, action: PayloadAction<string>) {
+      state.character = updateSoldierAbilityScoreImpl(state.character, action.payload);
+    },
 
-  updateOperativeSpecialization(id: string) {
-    this.setCharacter((c) => updateOperativeSpecialization(c, id));
-  }
+    updateOperativeSpecialization(state, action: PayloadAction<string>) {
+      state.character = updateOperativeSpecializationImpl(state.character, action.payload);
+    },
 
-  updateAbilityScore(id: string, delta: number) {
-    this.setCharacter((c) => updateAbilityScore(c, id, delta));
-  }
+    updateAbilityScore(state, action: PayloadAction<{ id: string; delta: number }>) {
+      state.character = updateAbilityScoreImpl(state.character, action.payload.id, action.payload.delta);
+    },
 
-  updateSkillRank(id: string, delta: number) {
-    this.setCharacter((c) => updateSkillRank(c, id, delta));
-  }
+    updateSkillRank(state, action: PayloadAction<{ id: string; delta: number }>) {
+      state.character = updateSkillRankImpl(state.character, action.payload.id, action.payload.delta);
+    },
 
-  updateName(name: string) {
-    this.setCharacter((c) => ({ ...c, name }));
-  }
+    updateName(state, action: PayloadAction<string>) {
+      state.character.name = action.payload;
+    },
 
-  updateAlignment(id: string) {
-    this.setCharacter((c) => ({ ...c, alignment: id }));
-  }
+    updateAlignment(state, action: PayloadAction<string>) {
+      state.character.alignment = action.payload;
+    },
 
-  updateSex(sex: string) {
-    this.setCharacter((c) => ({ ...c, sex }));
-  }
+    updateSex(state, action: PayloadAction<string>) {
+      state.character.sex = action.payload;
+    },
 
-  updateHomeWorld(homeWorld: string) {
-    this.setCharacter((c) => ({ ...c, homeWorld }));
-  }
+    updateHomeWorld(state, action: PayloadAction<string>) {
+      state.character.homeWorld = action.payload;
+    },
 
-  updateDeity(deity: string) {
-    this.setCharacter((c) => ({ ...c, deity }));
-  }
+    updateDeity(state, action: PayloadAction<string>) {
+      state.character.deity = action.payload;
+    },
 
-  updateAvatar(avatar: string) {
-    this.setCharacter((c) => ({ ...c, avatar }));
-  }
-}
+    updateAvatar(state, action: PayloadAction<string>) {
+      state.character.avatar = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {
+      return { ...state, classesDetails: { ...state.classesDetails, [action.meta.arg]: action.payload } };
+    });
+  },
+});
+
+/**
+ * Redux action to retrieve class details using the API.
+ * @param classId The ID of the class to retrieve.
+ */
+export const retrieveClassDetails = createAsyncThunk<IModel, string>("classesDetails/retrieve", async (classId) => {
+  const response = await fetch(`/api/classes/${classId}/details`);
+  const data = await response.json();
+  return data as IModel;
+});
+
+export const mutators = mainSlice.actions;
+
+export default mainSlice.reducer;
 
 /**
  * Updates the race associated with a character.
@@ -103,7 +129,7 @@ export class CharacterMutators {
  * @param raceId The identifier of its new race
  * @returns The updated character
  */
-export function updateRace(data: IClientDataSet, character: Character, raceId: string): Character {
+function updateRaceImpl(data: IClientDataSet, character: Character, raceId: string): Character {
   const race = findOrError(data.races, (r) => r.id === raceId);
 
   if (character.race === raceId) {
@@ -138,7 +164,7 @@ export function updateRace(data: IClientDataSet, character: Character, raceId: s
  * @param variantId The identifier of its new race variant
  * @returns The updated character
  */
-export function updateRaceVariant(data: IClientDataSet, character: Character, variantId: string): Character {
+function updateRaceVariantImpl(data: IClientDataSet, character: Character, variantId: string): Character {
   if (character.raceVariant === variantId) {
     // No change
     return character;
@@ -169,7 +195,7 @@ export function updateRaceVariant(data: IClientDataSet, character: Character, va
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateHumanBonus(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
+function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
   const result: Character = {
     ...character,
     raceOptions: { humanBonus: abilityScoreId },
@@ -188,7 +214,7 @@ export function updateHumanBonus(data: IClientDataSet, character: Character, abi
  * @param trait The enabled secondary trait
  * @returns The updated character
  */
-export function enableSecondaryTrait(character: Character, trait: Feature): Character {
+function enableSecondaryTraitImpl(character: Character, trait: Feature): Character {
   const traits = character.traits.filter((t) => !trait.replace.includes(t));
   return { ...character, traits: [...traits, trait.id] };
 }
@@ -202,7 +228,7 @@ export function enableSecondaryTrait(character: Character, trait: Feature): Char
  * @param trait The disabled secondary trait
  * @returns The updated character
  */
-export function disableSecondaryTrait(character: Character, trait: Feature): Character {
+function disableSecondaryTraitImpl(character: Character, trait: Feature): Character {
   return { ...character, traits: [...character.traits.filter((t) => t !== trait.id), ...trait.replace] };
 }
 
@@ -216,7 +242,7 @@ export function disableSecondaryTrait(character: Character, trait: Feature): Cha
  * @param themeId The identifier of its new theme
  * @returns The updated character
  */
-export function updateTheme(data: IClientDataSet, character: Character, themeId: string): Character {
+function updateThemeImpl(data: IClientDataSet, character: Character, themeId: string): Character {
   const result: Character = {
     ...character,
     theme: themeId,
@@ -247,11 +273,7 @@ export function updateTheme(data: IClientDataSet, character: Character, themeId:
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateNoThemeAbilityScore(
-  data: IClientDataSet,
-  character: Character,
-  abilityScoreId: string
-): Character {
+function updateNoThemeAbilityScoreImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
   const result: Character = {
     ...character,
     themeOptions: {
@@ -273,7 +295,7 @@ export function updateNoThemeAbilityScore(
  * @param skillId The identifier of the selected scholar skill
  * @returns The updated character
  */
-export function updateScholarSkill(data: IClientDataSet, character: Character, skillId: string): Character {
+function updateScholarSkillImpl(data: IClientDataSet, character: Character, skillId: string): Character {
   return {
     ...character,
     themeOptions: {
@@ -291,7 +313,7 @@ export function updateScholarSkill(data: IClientDataSet, character: Character, s
  * @param specialization The selected scholar specialization or its label
  * @returns The updated character
  */
-export function updateScholarSpecialization(character: Character, specialization: string): Character {
+function updateScholarSpecializationImpl(character: Character, specialization: string): Character {
   return {
     ...character,
     themeOptions: {
@@ -311,7 +333,7 @@ export function updateScholarSpecialization(character: Character, specialization
  * @param classId The identifier of its new class
  * @returns The updated character
  */
-export function updateClass(data: IClientDataSet, character: Character, classId: string): Character {
+function updateClassImpl(data: IClientDataSet, character: Character, classId: string): Character {
   if (character.class === classId) {
     // No change
     return character;
@@ -343,7 +365,7 @@ export function updateClass(data: IClientDataSet, character: Character, classId:
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateSoldierAbilityScore(character: Character, abilityScoreId: string): Character {
+function updateSoldierAbilityScoreImpl(character: Character, abilityScoreId: string): Character {
   return {
     ...character,
     classOptions: {
@@ -360,7 +382,7 @@ export function updateSoldierAbilityScore(character: Character, abilityScoreId: 
  * @param specialization The selected operative specialization
  * @returns The updated character
  */
-export function updateOperativeSpecialization(character: Character, specialization: string): Character {
+function updateOperativeSpecializationImpl(character: Character, specialization: string): Character {
   return {
     ...character,
     classOptions: {
@@ -378,7 +400,7 @@ export function updateOperativeSpecialization(character: Character, specializati
  * @param delta The delta to apply to the ability score
  * @returns The updated character
  */
-export function updateAbilityScore(character: Character, abilityScoreId: string, delta: number): Character {
+function updateAbilityScoreImpl(character: Character, abilityScoreId: string, delta: number): Character {
   const score = character.abilityScores[abilityScoreId] + delta;
   return {
     ...character,
@@ -396,7 +418,7 @@ export function updateAbilityScore(character: Character, abilityScoreId: string,
  * @param delta The delta to apply to the skill rank
  * @returns The updated character
  */
-export function updateSkillRank(character: Character, skillId: string, delta: number): Character {
+function updateSkillRankImpl(character: Character, skillId: string, delta: number): Character {
   const currentRank = character.skillRanks[skillId];
   if (delta === 0 || (currentRank === undefined && delta <= 0)) {
     // No change

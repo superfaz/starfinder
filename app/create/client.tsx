@@ -1,26 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
 import { IClientDataSet } from "data";
-import { CharacterMutators, CharacterPresenter, useAppSelector } from "logic";
-import { Character } from "model";
+import { CharacterPresenter, useAppSelector } from "logic";
 import * as Tab from "./tabs";
 import StoreProvider from "../../logic/StoreProvider";
 
 function ClientComponentPresenter() {
   const data = useAppSelector((state) => state.data);
+  const character = useAppSelector((state) => state.character);
   const classesDetails = useAppSelector((state) => state.classesDetails);
-  const [presenter, setPresenter] = useState<CharacterPresenter>(
-    () => new CharacterPresenter(data, classesDetails, new Character())
+  const presenter = useMemo(
+    () => new CharacterPresenter(data, classesDetails, character),
+    [data, classesDetails, character]
   );
+
   const [navigation, setNavigation] = useState("intro");
-
-  function setCharacter(updator: (c: Character) => Character) {
-    setPresenter((p) => new CharacterPresenter(data, classesDetails, updator(p.getCharacter())));
-  }
-
-  const mutators = new CharacterMutators(data, setCharacter);
 
   const selectedRace = presenter.getRace();
   const selectedTheme = presenter.getTheme();
@@ -81,7 +77,7 @@ function ClientComponentPresenter() {
           <Tab.Intro />
         </Col>
         <Col lg={3} hidden={navigation !== "race"}>
-          <Tab.RaceSelection character={presenter} mutators={mutators} />
+          <Tab.RaceSelection character={presenter} />
         </Col>
 
         <Col hidden={navigation !== "race"}>
@@ -89,11 +85,11 @@ function ClientComponentPresenter() {
         </Col>
 
         <Col hidden={navigation !== "race"}>
-          <Tab.RaceAlternateTraits character={presenter} mutators={mutators} />
+          <Tab.RaceAlternateTraits character={presenter} />
         </Col>
 
         <Col lg={3} hidden={navigation !== "theme"}>
-          <Tab.ThemeSelection character={presenter} mutators={mutators} />
+          <Tab.ThemeSelection character={presenter} />
         </Col>
 
         <Col hidden={navigation !== "theme"}>
@@ -101,7 +97,7 @@ function ClientComponentPresenter() {
         </Col>
 
         <Col lg={3} hidden={navigation !== "class"}>
-          <Tab.ClassSelection character={presenter} mutators={mutators} />
+          <Tab.ClassSelection character={presenter} />
         </Col>
 
         <Col hidden={navigation !== "class"}>
@@ -109,19 +105,19 @@ function ClientComponentPresenter() {
         </Col>
 
         <Col lg={3} hidden={navigation !== "profile"}>
-          <Tab.Profile character={presenter} mutators={mutators} />
+          <Tab.Profile character={presenter} />
         </Col>
 
         <Col lg={3} hidden={navigation !== "profile"}>
-          <Tab.Avatar character={presenter} mutators={mutators} />
+          <Tab.Avatar character={presenter} />
         </Col>
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>
-          <Tab.AbilityScores character={presenter} mutators={mutators} />
+          <Tab.AbilityScores character={presenter} />
         </Col>
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>
-          <Tab.Skills character={presenter} mutators={mutators} />
+          <Tab.Skills character={presenter} />
         </Col>
 
         <Col lg={12} hidden={navigation !== "sheet"}>
@@ -130,7 +126,7 @@ function ClientComponentPresenter() {
 
         <Col lg={12} hidden={navigation !== "debug"}>
           <h5>Character</h5>
-          <pre>{JSON.stringify(presenter.getCharacter(), null, 2)}</pre>
+          <pre>{JSON.stringify(character, null, 2)}</pre>
         </Col>
       </Row>
     </>

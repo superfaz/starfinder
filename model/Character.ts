@@ -1,4 +1,4 @@
-export class Character {
+export interface Character {
   level: number;
   race: string;
   raceVariant: string;
@@ -17,21 +17,21 @@ export class Character {
   homeWorld: string;
   deity: string;
   avatar: string;
-
-  constructor() {
-    this.level = 1;
-    this.race = "";
-    this.raceVariant = "";
-    this.theme = "";
-    this.class = "";
-    this.traits = [];
-    this.abilityScores = { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 };
-    this.skillRanks = {};
-    this.name = "";
-    this.alignment = "";
-    this.sex = "";
-    this.homeWorld = "";
-    this.deity = "";
-    this.avatar = "";
-  }
 }
+
+export const EmptyCharacter: Readonly<Character> = {
+  level: 1,
+  race: "",
+  raceVariant: "",
+  theme: "",
+  class: "",
+  traits: [],
+  abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+  skillRanks: {},
+  name: "",
+  alignment: "",
+  sex: "",
+  homeWorld: "",
+  deity: "",
+  avatar: "",
+};

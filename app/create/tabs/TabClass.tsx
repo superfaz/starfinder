@@ -2,15 +2,15 @@ import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
 import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { useAppSelector } from "logic";
-import { CharacterProps, SimpleEditProps } from "../Props";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterProps } from "../Props";
 
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("../classes/operativeDetails"));
 
-function LazyClassEditor({ character, mutators }: SimpleEditProps): JSX.Element | null {
+function LazyClassEditor({ character }: CharacterProps): JSX.Element | null {
   const selectedClass = character.getClass();
 
   if (!selectedClass) {
@@ -19,7 +19,7 @@ function LazyClassEditor({ character, mutators }: SimpleEditProps): JSX.Element 
 
   switch (selectedClass.id) {
     case "operative":
-      return <LazyOperativeClassEditor character={character} mutators={mutators} />;
+      return <LazyOperativeClassEditor character={character} />;
 
     case "envoy":
       return <LazyEnvoyClassEditor />;
@@ -48,19 +48,20 @@ function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
   }
 }
 
-export function ClassSelection({ character, mutators }: SimpleEditProps) {
+export function ClassSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
+  const dispatch = useAppDispatch();
 
   const selectedClass = character.getClass();
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    mutators.updateClass(id);
+    dispatch(mutators.updateClass(id));
   }
 
   function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    mutators.updateSoldierAbilityScore(id);
+    dispatch(mutators.updateSoldierAbilityScore(id));
   }
 
   return (
@@ -120,7 +121,7 @@ export function ClassSelection({ character, mutators }: SimpleEditProps) {
             {selectedClass.weapons.map((a) => findOrError(data.weapons, (e) => e.id === a).name).join(", ")}
           </div>
           <hr />
-          <LazyClassEditor character={character} mutators={mutators} />
+          <LazyClassEditor character={character} />
         </>
       )}
     </Stack>

@@ -1,42 +1,12 @@
-import { configureStore, createAsyncThunk, createReducer, createSlice } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
-import { IClientDataSet } from "data";
 import { IModel } from "model";
+import sliceCreate from "./slice-create";
 
-function createDataReducer(data: IClientDataSet) {
-  return createReducer(data, () => {});
-}
-
-/**
- * Redux action to retrieve class details using the API.
- * @param classId The ID of the class to retrieve.
- */
-export const retrieveClassDetails = createAsyncThunk<IModel, string>("classesDetails/retrieve", async (classId) => {
-  const response = await fetch(`/api/classes/${classId}/details`);
-  const data = await response.json();
-  return data as IModel;
-});
-
-function createClassesDetailsSlice() {
-  return createSlice({
-    name: "classesDetails",
-    initialState: {} as Record<string, IModel>,
-    reducers: {},
-    extraReducers: (builder) => {
-      builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {
-        return { ...state, [action.meta.arg]: action.payload };
-      });
-    },
-  });
-}
-
-export function makeStore(data: IClientDataSet) {
+export function makeStore() {
   return configureStore({
-    reducer: {
-      data: createDataReducer(data),
-      classesDetails: createClassesDetailsSlice().reducer,
-    },
+    reducer: sliceCreate,
   });
 }
 

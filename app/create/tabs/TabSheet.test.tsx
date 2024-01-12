@@ -212,7 +212,7 @@ describe("TabSheet", () => {
   const classMatrix = races
     .map((race) => themes.map((theme) => classes.map((klass) => ({ race, theme, klass }))))
     .flat();
-  test.failing.each(classMatrix)(
+  test.each(classMatrix)(
     "has Abilities added by Class selection for '$race.id', '$theme.id' and '$klass.id'",
     async ({ race, theme, klass }) => {
       const user = userEvent.setup();
