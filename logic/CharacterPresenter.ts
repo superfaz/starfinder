@@ -167,8 +167,7 @@ export class CharacterPresenter {
 
     const templater = new Templater({ race: this.character.race, ...this.character.raceOptions });
     if (!this.cachedSelectedRaceTraits) {
-      this.cachedSelectedRaceTraits = race.traits
-        .concat(race.secondaryTraits)
+      this.cachedSelectedRaceTraits = [...race.traits, ...race.secondaryTraits]
         .filter((t) => this.character.traits.includes(t.id))
         .map((t) => templater.convertFeature(t));
     }
@@ -347,7 +346,7 @@ export class CharacterPresenter {
     const selectedRaceTraits = this.getSelectedRaceTraits();
     const themeFeatures = this.getThemeFeatures();
     const classFeatures = this.getClassFeatures();
-    const characterFeatures = selectedRaceTraits.concat(themeFeatures).concat(classFeatures);
+    const characterFeatures = [...selectedRaceTraits, ...themeFeatures, ...classFeatures];
 
     return characterFeatures
       .filter((f) => f.level <= this.character.level)
@@ -368,7 +367,7 @@ export class CharacterPresenter {
       const classSkillsFromRace = modifiers
         .filter((m) => m.type === "classSkill" && m.target)
         .map((m) => m.target) as string[];
-      this.cachedClassSkills = classSkillsFromRace.concat(selectedClass.classSkills);
+      this.cachedClassSkills = [...classSkillsFromRace, ...selectedClass.classSkills];
     }
 
     return this.cachedClassSkills;

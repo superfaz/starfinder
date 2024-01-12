@@ -203,7 +203,7 @@ export function enableSecondaryTrait(character: Character, trait: Feature): Char
  * @returns The updated character
  */
 export function disableSecondaryTrait(character: Character, trait: Feature): Character {
-  return { ...character, traits: character.traits.filter((t) => t !== trait.id).concat(trait.replace) };
+  return { ...character, traits: [...character.traits.filter((t) => t !== trait.id), ...trait.replace] };
 }
 
 /**
@@ -247,7 +247,11 @@ export function updateTheme(data: IClientDataSet, character: Character, themeId:
  * @param abilityScoreId The identifier of the selected ability score
  * @returns The updated character
  */
-export function updateNoThemeAbilityScore(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
+export function updateNoThemeAbilityScore(
+  data: IClientDataSet,
+  character: Character,
+  abilityScoreId: string
+): Character {
   const result: Character = {
     ...character,
     themeOptions: {

@@ -27,7 +27,7 @@ export default function OperativeClassDetails({ character }: CharacterProps) {
 
   const classFeatures: FeatureTemplate[] = classDetails.features;
   const specializationFeatures: FeatureTemplate[] = selectedSpecialization.features;
-  const features: FeatureTemplate[] = classFeatures.concat(specializationFeatures);
+  const features: FeatureTemplate[] = [...classFeatures, ...specializationFeatures];
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)
