@@ -56,7 +56,7 @@ export function Skills({ character }: CharacterProps) {
       </Row>
 
       {character.getSkills().map((skill) => (
-        <Form.Group key={skill.id} as={Row} controlId={skill.id}>
+        <Form.Group key={skill.id} as={Row} controlId={skill.id} data-testid={skill.id}>
           <Form.Label column>
             <span className="me-1">{skill.definition.name}</span>
             {skill.definition.abilityScore && (
