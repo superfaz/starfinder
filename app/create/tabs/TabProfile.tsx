@@ -107,7 +107,14 @@ export function Avatar({ character }: CharacterProps) {
           <img alt="avatar" src={"/" + avatars[index].image} className="img-fluid" />
         </picture>
         <Card.Body>
-          <Form.Range min={0} max={avatars.length - 1} step={1} value={index} onChange={handleAvatarChange} />
+          <Form.Range
+            aria-label="Avatar"
+            min={0}
+            max={avatars.length - 1}
+            step={1}
+            value={index}
+            onChange={handleAvatarChange}
+          />
         </Card.Body>
       </Card>
     </Stack>

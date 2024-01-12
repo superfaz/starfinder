@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
@@ -230,4 +230,22 @@ describe("TabSheet", () => {
       }
     }
   );
+
+  test.failing("has Avatar updated", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Profil" }));
+    fireEvent.change(screen.getByRole("slider", { name: "Avatar" }), { target: { value: 1 } });
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("Avatar");
+    expect(within(view).queryByText("Avatar")).toBeVisible();
+    expect(within(view).queryByText("-")).toBeNull();
+    expect(within(view).queryByText("Avatar")).not.toBeNull();
+  });
 });
