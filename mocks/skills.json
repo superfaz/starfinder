@@ -51,7 +51,7 @@
   {
     "id": "engi",
     "name": "Ingénierie",
-    "abilityScore": "cha",
+    "abilityScore": "int",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
