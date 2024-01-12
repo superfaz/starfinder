@@ -70,6 +70,23 @@ function CardProfile({ data, character }: SheetProps) {
   );
 }
 
+function CardAvatar({ character }: CharacterProps) {
+  const avatar = character.getAvatar();
+  return (
+    <Card data-testid="avatar">
+      <Card.Header>
+        <Badge bg="primary">Avatar</Badge>
+      </Card.Header>
+      {!avatar && <Card.Body className="text-center text-em">Pas d&apos;avatar sélectionné</Card.Body>}
+      {avatar && (
+        <picture>
+          <img alt="avatar" src={"/" + avatar.image} className="img-fluid" />
+        </picture>
+      )}
+    </Card>
+  );
+}
+
 function CardAbilityScores({ data, character }: SheetProps) {
   return (
     <Card>
@@ -243,11 +260,12 @@ export function Sheet({ character }: CharacterProps) {
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
           <CardProfile data={data} character={character} />
-          <CardAbilityScores data={data} character={character} />
+          <CardAvatar character={character} />
         </Stack>
       </Col>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
+          <CardAbilityScores data={data} character={character} />
           <CardSkills data={data} character={character} />
         </Stack>
       </Col>

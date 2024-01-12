@@ -231,7 +231,7 @@ describe("TabSheet", () => {
     }
   );
 
-  test.failing("has Avatar updated", async () => {
+  test("has Avatar updated", async () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
@@ -243,9 +243,8 @@ describe("TabSheet", () => {
     fireEvent.change(screen.getByRole("slider", { name: "Avatar" }), { target: { value: 1 } });
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
-    const view = screen.getByTestId("Avatar");
+    const view = screen.getByTestId("avatar");
     expect(within(view).queryByText("Avatar")).toBeVisible();
-    expect(within(view).queryByText("-")).toBeNull();
-    expect(within(view).queryByText("Avatar")).not.toBeNull();
+    expect(within(view).queryByRole('img', { name: "avatar"})).not.toBeNull();
   });
 });
