@@ -118,7 +118,7 @@ describe("TabSkills", () => {
     }
   );
 
-  test.failing("add +1 when the theme skill is already a class skill", async () => {
+  test("add +1 when the theme skill is already a class skill", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     const view = within(content.getByTestId("surv"));
     expect(view.getByText("+1")).not.toBeNull();

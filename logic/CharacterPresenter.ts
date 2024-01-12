@@ -364,10 +364,10 @@ export class CharacterPresenter {
     if (!this.cachedClassSkills) {
       const modifiers = this.getModifiers();
 
-      const classSkillsFromRace = modifiers
+      const classSkillsFromModifiers = modifiers
         .filter((m) => m.type === "classSkill" && m.target)
         .map((m) => m.target) as string[];
-      this.cachedClassSkills = [...classSkillsFromRace, ...selectedClass.classSkills];
+      this.cachedClassSkills = [...classSkillsFromModifiers, ...selectedClass.classSkills];
     }
 
     return this.cachedClassSkills;
@@ -386,19 +386,20 @@ export class CharacterPresenter {
         const ranks = this.character.skillRanks[s.id] ?? 0;
         const isTrained = this.character.skillRanks[s.id] !== undefined;
         const isClassSkill = this.getClassSkills().includes(s.id);
+        const bonusDoubleClassSkill = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
         const abilityScoreModifier = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
 
-        // TODO: Add modifiers
+        // TODO: Add bonus from modifiers
 
         function computeSkillBonus() {
           if (isClassSkill && isTrained) {
-            return 3 + ranks + abilityScoreModifier;
+            return 3 + ranks + abilityScoreModifier + bonusDoubleClassSkill;
           } else if (isTrained) {
             return ranks + abilityScoreModifier;
           } else if (s.trainedOnly) {
             return undefined;
           } else {
-            return abilityScoreModifier;
+            return abilityScoreModifier + bonusDoubleClassSkill;
           }
         }
 
