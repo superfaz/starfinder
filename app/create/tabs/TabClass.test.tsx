@@ -31,4 +31,16 @@ describe("TabClass", () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Classe" })).not.toBeNull();
   });
+
+  const classes = [
+    { id: "operative", expected: "Avantage de l'agent (EXT)" },
+    { id: "soldier", expected: "Technique du style de combat principal" },
+  ];
+  test.failing.each(classes)("displays details for class '$id'", async (klass) => {
+    const user = userEvent.setup();
+    const content = within(document.querySelector("#content") as HTMLElement);
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
+
+    expect(content.queryByText(klass.expected)).not.toBeNull();
+  });
 });
