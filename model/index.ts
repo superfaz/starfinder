@@ -5,6 +5,7 @@ export * from "./Character";
 export * from "./Class";
 export * from "./ClassEnvoy";
 export * from "./ClassOperative";
+export * from "./ClassSoldier";
 export * from "./CodedModel";
 export * from "./Feature";
 export * from "./FeatureTemplate";
