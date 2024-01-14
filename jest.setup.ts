@@ -3,9 +3,10 @@ import * as fs from "fs/promises";
 import { beforeAll, jest } from "@jest/globals";
 import { DataSetBuilder, IDataSet } from "data";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
-import operativeDetails from "./mocks/class-operative.json";
 import envoyDetails from "./mocks/class-envoy.json";
+import operativeDetails from "./mocks/class-operative.json";
 import scholarDetails from "./mocks/themes-details.json";
+import soldierDetails from "./mocks/class-soldier.json";
 
 async function readFile(path: string) {
   return fs.readFile(path, "utf-8").then((data: string) => JSON.parse(data));
@@ -32,7 +33,8 @@ beforeAll(() => {
 
   jest.spyOn(DataSetBuilder.prototype, "build").mockImplementation(mockBuild);
 
-  addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/envoy/details", envoyDetails);
+  addFetchMock("/api/classes/operative/details", operativeDetails);
+  addFetchMock("/api/classes/soldier/details", soldierDetails);
   addFetchMock("/api/themes/scholar", scholarDetails);
 });

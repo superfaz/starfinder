@@ -1,0 +1,664 @@
+{
+  "id": "soldier",
+  "features": [
+    {
+      "id": "812bf527-7ea9-4d46-8ceb-c31e6ab9ffe0",
+      "name": "Don de combat",
+      "level": 2,
+      "description": "Au niveau 2 puis tous les 2 niveaux suivants, vous gagnez un don bonus en plus de ceux que vous gagnez normalement en progressant. Ces dons bonus doivent être choisis parmi les dons de combat. À chaque fois que vous gagnez un nouveau don bonus, vous pouvez aussi choisir de remplacer un des dons bonus que vous avez déjà obtenus par un don bonus différent. Le don que vous remplacez ne peut pas être l’un des prérequis pour un autre don ou une autre aptitude. À chaque niveau, vous ne pouvez remplacer qu’un seul don et vous devez décider de le faire au moment où vous gagnez un nouveau don bonus.",
+      "evolutions": {
+        "2": {},
+        "4": {},
+        "6": {},
+        "8": {},
+        "10": {},
+        "12": {},
+        "14": {},
+        "16": {},
+        "18": {},
+        "20": {}
+      }
+    },
+    {
+      "id": "da4a3c0f-4843-4614-8427-cb729a42aeb0",
+      "name": "Optimisation d’équipement",
+      "level": 3,
+      "description": "Au niveau 3 puis tous les 4 niveaux suivants, vous apprenez une astuce appelée optimisation d’équipement qui vous permet d’être plus performant avec un type précis d’armes ou d’armures."
+    },
+    {
+      "id": "6816576f-8013-4aec-8883-f7e8b1cea311",
+      "name": "Spécialisation martiale",
+      "level": 3,
+      "category": "ex",
+      "description": "Vous obtenez le don bonus de Spécialisation martiale pour chaque type d’armes que vous savez manier grâce à cette classe.",
+      "modifiers": [
+        {
+          "id": "da571f27-2766-4b9d-9d0c-b2910183785e",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes de corps à corps simples)"
+        },
+        {
+          "id": "6b0a765c-7d17-4df9-a9f2-585cde524b1f",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes de corps à corps évoluées)"
+        },
+        {
+          "id": "78368f02-6443-4a5e-8974-7b28b1410f12",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes légères)"
+        },
+        {
+          "id": "bf3c9850-f96e-4c5a-85f6-4eebc4097fa2",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes longues)"
+        },
+        {
+          "id": "79f93316-c71c-4979-9dbf-a5d6c13f9a97",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes lourdes)"
+        },
+        {
+          "id": "c51389f9-9c59-4c04-8d5f-b2d9bb5f53b8",
+          "type": "feat",
+          "name": "Spécialisation martiale (armes de précision)"
+        }
+      ]
+    },
+    {
+      "id": "7c2df9d1-8b43-46c2-804d-3225ee59bef2",
+      "name": "Style de combat secondaire",
+      "level": 9,
+      "description": "Vous choisissez un autre style de combat. Une fois ce choix effectué, il ne peut être modifié."
+    },
+    {
+      "id": "8df9c980-ad8b-4273-b44e-775a29fa3b57",
+      "name": "Assaut du soldat",
+      "level": 11,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "2a11ab1d-4dbf-426d-87c6-44791a66aacf",
+          "type": "ability",
+          "name": "Assaut du soldat",
+          "description": "Quand vous effectuez une attaque à outrance, vous pouvez porter jusqu’à trois attaques au lieu de deux. Ces attaques subissent un malus de -6 au lieu de –4."
+        }
+      ]
+    },
+    {
+      "id": "40e0fbfc-a328-4ea4-9708-4adc3474a9aa",
+      "name": "Attaque fatale",
+      "level": 20,
+      "category": "ex",
+      "modifiers": [
+        {
+          "id": "d0334e01-418e-4c34-b554-7fee540cd657",
+          "type": "ability",
+          "name": "Attaque fatale",
+          "description": "En tant qu’action simple, vous pouvez effectuer une seule attaque contre un adversaire. Si cette attaque touche et ne le tue pas, vous pouvez dépenser 1 point de persévérance pour obliger la créature à réussir un jet de Vigueur ou mourir. Une fois que vous avez utilisé ce pouvoir sur une cible (qu’elle ait ou non été forcée de tenter un jet de Vigueur), elle est immunisée contre votre attaque fatale pendant 24 heures."
+        }
+      ]
+    }
+  ],
+  "styles": [
+    {
+      "id": "5103271c-c10e-4afc-8750-fb0e3e22c7d5",
+      "name": "Combat arcane",
+      "description": "Le combat arcane permet au combattant de renforcer son efficacité grâce à des pouvoirs magiques en s’inspirant de la tradition des guerriers- mages, une tradition remontant bien avant la Faille. Ces techniques permettent l’utilisation de runes magiques pour augmenter la puissance de vos armes. De plus, vous avez accès à des pouvoirs légendaires qui vous confèrent des options magiques quand vous n’avez pas d’arme enchantée en votre possession.",
+      "features": [
+        {
+          "id": "d1ce005b-8266-428d-b5e3-7fd9d879a1e0",
+          "name": "Rune du chevalier sorcier",
+          "level": 1,
+          "category": "su",
+          "modifiers": [
+            {
+              "id": "622d4b3d-4859-4645-afff-a71463ce7588",
+              "type": "ability",
+              "name": "Rune du chevalier sorcier",
+              "description": "Vous pouvez enchanter une arme avec un symbole magique, la rune du chevalier sorcier, ce qui lui permet d’agir comme une arme magique pour ce qui est d’affecter des créatures intangibles et de franchir leur Réduction des dégâts. Cela demande 10 minutes et vous ne pouvez enchanter qu’une seule arme à la fois. Si vous enchantez une autre arme avec la rune, celle qui avait été enchantée précédemment en perd les avantages. Quand vous calculez les points de vie et la solidité d’une arme dotée de cette rune, son niveau d’objet est augmenté de 5 points."
+            }
+          ]
+        },
+        {
+          "id": "f8696a3b-5fc9-4992-829c-e2701dc60bc2",
+          "name": "Secret du thaumaturge",
+          "level": 5,
+          "category": "su",
+          "modifiers": [
+            {
+              "id": "1c4733dd-c2b3-4081-a34f-bdd0308e9fb5",
+              "type": "ability",
+              "name": "Secret du thaumaturge",
+              "description": "Quand vous enchantez une arme avec la rune du chevalier sorcier, en plus des avantages normaux, la rune octroie à l’arme une des fusions d’arme suivantes : spectrale, enflammée, glacée, miséricordieuse ou foudroyante. L’arme ne peut pas gagner une fusion qu’elle possède déjà et cette fusion bonus ne compte pas dans le nombre maximum de niveaux de fusion qu’une arme peut avoir en même temps. La fusion bonus se termine quand l’arme n’est plus enchantée avec la rune."
+            }
+          ]
+        },
+        {
+          "id": "411e94fb-e9fe-42a8-9477-8fa3a0255f8a",
+          "name": "Puissance légendaire",
+          "level": 9,
+          "category": "su",
+          "modifiers": [
+            {
+              "id": "1d297544-32c8-4a88-addf-1a85c761f88c",
+              "type": "ability",
+              "name": "Puissance légendaire",
+              "description": "Vous pouvez faire appel au lien qui vous unit aux héros légendaires qui, il y a une éternité, utilisaient de puissantes armes magiques pour surmonter l’adversité. En tant qu’action de mouvement, quand vous maniez une arme magique ou une arme enchantée avec la rune du chevalier sorcier, vous pouvez dépenser 1 point de persévérance pour mettre un terme à un des états suivants qui vous affecte : hémorragie, enflammé, confus, épuisé, fatigué, pris au dépourvu, imprécis, secoué ou fiévreux. Vous pouvez aussi dépenser 1 point de persévérance pour modifier l’état recroquevillé en effrayé ou changer l’état effrayé en secoué. Dans ce cas, le nouvel état dure aussi longtemps que la précédente condition et ne peut plus être affecté par ce pouvoir."
+            }
+          ]
+        },
+        {
+          "id": "2b144566-25d0-4a34-a060-48fb10e0625c",
+          "name": "Secret de l’archimage",
+          "level": 13,
+          "category": "su",
+          "modifiers": [
+            {
+              "id": "ab57d1b9-a91f-4c9e-91aa-94b1e55e1c4d",
+              "type": "ability",
+              "name": "Secret de l’archimage",
+              "description": "Vous pouvez enchanter deux armes avec la rune du chevalier sorcier. Si vous tentez d’en enchanter une troisième, la première qui a été enchantée perd la rune et ses avantages. En plus des avantages normaux, les runes confèrent à ces armes au moins une des fusions d’arme suivantes : fatale, corrosive, spectrale, enflammée, glacée, sanctifiée, miséricordieuse, foudroyante, assourdissante ou impie. Vous ne pouvez attribuer plus de 10 niveaux de fusion répartis entre les deux armes et la fusion fatale compte ici comme une fusion de niveau 10."
+            }
+          ]
+        },
+        {
+          "id": "d24ad733-1379-43c1-944a-e06ca598b2b1",
+          "name": "Attaque arcane",
+          "level": 17,
+          "category": "su",
+          "modifiers": [
+            {
+              "id": "128118c1-0b3a-416e-bc6b-973ac1e6513d",
+              "type": "ability",
+              "name": "Attaque arcane",
+              "description": "En tant qu’action simple, vous pouvez dépenser 1 point de persévérance pour utiliser une arme enchantée avec la rune du chevalier sorcier pour effectuer une attaque qui frappe juste. Cette attaque ignore tous les abris et les camouflages ce qui inclut le camouflage total (mais vous devez au moins être conscient de la présence de la créature pour la cibler avec cette attaque). S’il s’agit d’une attaque à distance, la cible doit se trouver dans le premier facteur de portée. L’attaque n’affecte que la cible choisie même si, normalement, elle devait affecter une zone ou plusieurs cibles. Vous devez tout de même effectuer un jet d’attaque normal et, si vous ratez, il n’y a aucun effet."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "737b9421-1e37-43a3-bb8f-d959ec79aa86",
+      "name": "Tempête blindée",
+      "description": "Le style de combat tempête blindée se focalise sur l’utilisation de l’armure en tant qu’arme pour maximiser les dégâts des armes équipant cette armure tout en encaissant les tirs adverses. Vous apprenez à augmenter l’efficacité des attaques effectuées avec votre armure et y ajoutez plus d’équipements qu’elle ne peut normalement en accepter.",
+      "features": [
+        {
+          "id": "207840bd-9a62-414f-b9f4-e60554749411",
+          "name": "Marteau-pilon",
+          "level": 1,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "1740c719-fb2d-4c1f-a9da-9899d6827d4d",
+              "type": "ability",
+              "name": "Marteau-pilon",
+              "description": "Quand vous êtes équipé d’une armure lourde ou d’une armure assistée, vous considérez toutes les attaques à mains nues que vous effectuez comme si elles étaient effectuées avec un gant de combat avec un niveau d’objet égal ou inférieur à votre niveau de soldat et vous calculez les dégâts comme si vous aviez l’optimisation d’équipement expert du corps à corps. Si vous avez l’optimisation d’équipement expert du corps à corps, quand vous utilisez ce pouvoir, vous gagnez un bonus de +2 aux jets de dégâts avec vos attaques à mains nues. Ces attaques ne bénéficient pas d’autres capacités qui s’appliquent spécifiquement aux attaques à mains nues (tel que le don Science du combat à mains nues)."
+            }
+          ]
+        },
+        {
+          "id": "57ce78ce-ab2e-4e9a-8d45-c9ebcf5763c0",
+          "name": "Optimisation d’armure",
+          "level": 5,
+          "category": "ex",
+          "description": "Vous gagnez le don Port des armures assistées et vous pouvez améliorer votre armure. Cela peut être dû à vos propres capacités de technicien, à vos contacts auprès de personnes qui peuvent vous fournir du matériel expérimental ou parce que vous avez un puissant mécène qui partage vos objectifs et qui vous fournit des équipements à accès restreint.",
+          "modifiers": [
+            {
+              "id": "3c84a9b2-4fa1-458d-8493-c87237eaa185",
+              "type": "ability",
+              "name": "Optimisation d’armure",
+              "description": "Vous pouvez ajouter une amélioration d’armure supplémentaire en plus des emplacements d’amélioration normaux de votre armure. Si vous améliorez une armure lourde, vous pouvez choisir une amélioration réservée normalement aux armures assistées. Une amélioration installée dans cet emplacement coûte moitié moins cher."
+            },
+            {
+              "id": "dfa6f532-97e4-4d52-8748-2271cccec912",
+              "type": "feat",
+              "name": "Port des armures assistées"
+            }
+          ]
+        },
+        {
+          "id": "abedb621-3160-434c-b613-292860e1cf7a",
+          "name": "Charge irresistible",
+          "level": 9,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "8af1145e-54fd-4721-aebb-cdde56266f1d",
+              "type": "ability",
+              "name": "Charge irresistible",
+              "description": "Quand vous êtes équipé d’une armure lourde ou d’une armure assistée, vous bénéficiez d’un bonus de +4 à vos jets d’attaque pour effectuer la manoeuvre offensive bousculade. Si vous réussissez à faire reculer la cible d’au moins 3 mètres, vous pouvez aussi effectuer contre elle une attaque à mains nues (et vous pouvez utiliser à cette occasion votre technique de marteau-pilon)."
+            }
+          ]
+        },
+        {
+          "id": "7491d943-3056-4239-a388-17e5e6f2c3ca",
+          "name": "Armée mobile",
+          "level": 13,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "6e064dad-8aad-4e73-a57d-88f4d09de023",
+              "type": "ability",
+              "name": "Armée mobile",
+              "description": "Vous êtes passé maître dans l’utilisation des armes de votre armure. Vous infligez 1d6 points de dégâts supplémentaires avec toute attaque effectuée avec une arme qui est intégrée à votre armure ce qui inclut les attaques à mains nues en utilisant le pouvoir de marteau-pilon et les armes installées comme des améliorations d’armure. Les dégâts supplémentaires sont du même type que ceux infligés par l’arme. De plus, quand vous utilisez une armure lourde ou assistée, vous bénéficiez d’un bonus de +2 à votre CAC contre les manoeuvres offensives."
+            }
+          ]
+        },
+        {
+          "id": "fec2801a-a3d5-4fc0-ad2d-be60ac4e8321",
+          "name": "Mobilité blindée",
+          "level": 17,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "97b2d59c-a975-4c00-bb6c-3a06f1c46d94",
+              "type": "ability",
+              "name": "Mobilité blindée",
+              "description": "Vous avez appris à contrôler votre armure avec une telle aisance que vous manoeuvrez mieux avec que sans. Quand vous êtes équipé d’une armure lourde ou assistée, vous pouvez vous déplacer à votre vitesse quand vous effectuez une attaque à outrance. Vous pouvez vous déplacer avant ou après vos attaques mais pas les deux. Si vous avez le don Tir en mouvement, vous pouvez répartir votre potentiel de mouvement pour vous déplacer avant et après une attaque à outrance tant que vous n’effectuez que des attaques à distance. Si vous avez le don Attaque éclair vous pouvez répartir votre potentiel de mouvement pour vous déplacer avant et après une attaque à outrance tant que vous n’effectuez que des attaques au corps à corps. Si vous avez les deux dons, vos attaques peuvent être une combinaison d’attaques à distance et de corps à corps."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "47702378-e71a-44fa-8daa-19d23830b349",
+      "name": "Blitz",
+      "description": "Le style de combat blitz se base sur l’utilisation de la vitesse et de l’agressivité pour se retrouver au coeur de la mêlée. Vous augmentez votre vitesse et votre réactivité, vous gagnez des capacités qui vous permettent d’être meilleur que vos ennemis au combat au corps à corps et vous continuez de combattre même quand vous êtes entouré d’adversaires.",
+      "features": [
+        {
+          "id": "19390365-80d9-4811-825b-f0ed1a4f6dd3",
+          "name": "Réponse rapide",
+          "level": 1,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "44ad4540-bfd1-4d90-9af0-311baeca1484",
+              "type": "initiative",
+              "value": 4
+            },
+            {
+              "id": "80a65da0-e773-4059-9a53-f1ee1946a761",
+              "type": "speed",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "id": "39066dd5-bbcd-4957-842d-7322f69378de",
+          "name": "Charge offensive",
+          "level": 5,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "279321b1-33bb-44e5-8fbf-6bb0554673fc",
+              "type": "ability",
+              "name": "Charge offensive",
+              "description": "En tant qu’action simple, vous pouvez effectuer une charge sans le malus qui lui est associé et vous pouvez remplacer l’attaque de corps à corps par bousculade. Quand vous gagnez l’aptitude de classe assaut du soldat, vous pouvez effectuer deux attaques au lieu d’une après la charge. Ces deux attaques ont un malus de –4."
+            }
+          ]
+        },
+        {
+          "id": "ef8e70a8-6b38-490c-96e9-bb356b0d2c1b",
+          "name": "Persévérance martiale",
+          "level": 9,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "273ded48-e226-49ed-89aa-c776542e433c",
+              "type": "ability",
+              "name": "Persévérance martiale",
+              "description": "En tant qu’action de mouvement, vous pouvez dépenser 1 point de persévérance pour récupérer un nombre de points d’endurance égal à 2d6 + votre niveau de soldat. Vous ne pouvez utiliser à nouveau ce pouvoir tant que vous n’avez pas récupéré des points d’endurance après un repos de 10 minutes. Le nombre de points d’endurance que vous récupérez augmente de 1d6 au niveau 10, au niveau 15 et au niveau 20."
+            }
+          ]
+        },
+        {
+          "id": "b5838ba5-6deb-448b-936e-ec96864b6b2a",
+          "name": "Opportunité optimale",
+          "level": 13,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "cd634ca0-6e8a-44f9-9076-83ee5614e830",
+              "type": "ability",
+              "name": "Opportunité optimale",
+              "description": "Quand vous touchez une créature avec une attaque d’opportunité, cette créature ne peut quitter les cases que vous menacez avant le début de son prochain tour. De plus, quand un adversaire effectue un déplacement prudent hors d’un espace que vous menacez, vous pouvez effectuer une attaque d’opportunité contre lui avec un malus de –2 au jet d’attaque. Si une cible provoque une attaque d’opportunité en se déplaçant, toucher avec votre attaque d’opportunité met immédiatement un terme à son déplacement ce qui l’empêche de poursuivre son mouvement."
+            }
+          ]
+        },
+        {
+          "id": "d935ff9c-2b5e-494d-bc01-bd62bab538c7",
+          "name": "Contre toute attente",
+          "level": 17,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "d4bc49bc-54f9-49e2-9152-f879862deb8d",
+              "type": "ability",
+              "name": "Contre toute attente",
+              "description": "Vous gagnez un bonus aux jets de dégâts au corps à corps égal au double du nombre d’ennemis situés à moins de 3 mètres de vous. Les adversaires qui ne constituent pas une menace suffisante (ceux ayant un FP égal à votre niveau -4 ou moins, ou au choix du MJ) ne comptent pas pour calculer ce bonus."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b459050c-cb71-4a5f-8071-ca041bf75bb9",
+      "name": "Bombardement",
+      "description": "Le style de combat bombardement est basé sur l’attaque de plusieurs cibles, souvent grâce à l’utilisation de grenades, et l’optimisation de la force physique pour manipuler des armes lourdes ayant un important recul. À haut niveau, vous pouvez utiliser des lanceurs, des missiles et d’autres armes lourdes.",
+      "features": [
+        {
+          "id": "769176ca-b3d7-478a-97da-4a1b995bdcc9",
+          "name": "Expert en grenades",
+          "level": 1,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "ee54202d-5fb3-4ca8-ab74-50595f5892eb",
+              "type": "ability",
+              "name": "Expert en grenades",
+              "description": "Vous augmentez le facteur de portée des grenades que vous lancez de 5 x votre bonus de Force. De plus, vous pouvez récupérer suffisamment de matériel pour fabriquer une grenade sans en payer le coût. Fabriquer une grenade prend 10 minutes. Vous pouvez fabriquer n’importe quelle grenade dont le niveau d’objet est inférieur ou égal à votre niveau de soldat, mais elle sera instable et vous êtes le seul à pouvoir l’utiliser efficacement. Si quelqu’un d’autre essaie, il échoue. Vous ne pouvez avoir qu’une seule grenade à la fois fabriquée avec ce pouvoir (si vous en créez une autre en utilisant ce pouvoir, l’ancienne grenade ne fonctionne plus)."
+            }
+          ]
+        },
+        {
+          "id": "c2f8b54b-aa72-4d2c-b6c3-63ace68455b8",
+          "name": "Déluge de feu",
+          "level": 5,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "1b8209f9-c487-499f-811f-f02d4ff6a219",
+              "type": "ability",
+              "name": "Déluge de feu",
+              "description": "Vous pouvez utiliser votre puissance physique pour stabiliser votre arme et rendre vos attaques plus dangereuses. En tant qu’action complexe, vous pouvez effectuer une seule attaque à distance qui inflige des dégâts supplémentaires à toutes les cibles, égaux à votre bonus de Force. Vous pouvez utiliser ce pouvoir en conjonction avec les propriétés spéciales automatique, explosion et peu maniable."
+            }
+          ]
+        },
+        {
+          "id": "85eccf9e-8972-47f7-b2c8-3a938ff8a5ad",
+          "name": "Attaque incapacitante",
+          "level": 9,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "7f5fbf7c-910e-4d3f-93aa-b8d70b45812d",
+              "type": "ability",
+              "name": "Attaque incapacitante",
+              "description": "Quand vous touchez un ennemi avec une attaque à distance ou une attaque effectuée avec une arme dotée de la propriété spéciale dispersion ou explosion, vous pouvez dépenser 1 point de persévérance pour infliger un effet incapacitant à cet adversaire pendant un nombre de rounds égal à votre bonus de Force. Vous pouvez choisir entre surdité, pris au dépourvu ou imprécis, ou vous pouvez réduire sa vitesse de moitié (minimum 3 mètres). La cible peut annuler cet effet en réussissant un jet de Vigueur (DD = 10 + la moitié de votre niveau de soldat + votre modificateur de Force)."
+            }
+          ]
+        },
+        {
+          "id": "3d7481f4-e150-4710-8322-3143cdcc79c1",
+          "name": "Expert en explosifs",
+          "level": 13,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "61225cda-6882-4ea8-a046-2b6499ea3fd2",
+              "type": "ability",
+              "name": "Expert en explosifs",
+              "description": "Vous augmentez de 1 le DD pour éviter les attaques que vous effectuez avec des armes dotées de la propriété spéciale explosion. Vous réduisez de votre bonus de Force les dégâts que vous subissez à cause d’armes dotées de la propriété spéciale explosion."
+            }
+          ]
+        },
+        {
+          "id": "c6e1b91c-c432-492f-9607-05d62faad5ac",
+          "name": "Attaque percutante",
+          "level": 17,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "1c020d73-748a-471e-8a8d-fb9de4742f65",
+              "type": "ability",
+              "name": "Attaque percutante",
+              "description": "En tant qu’action complexe, vous pouvez effectuer une attaque à distance qui fait reculer vos ennemis. Les cibles que vous touchez reculent de 1,50 mètre en s’éloignant de vous. Si vous utilisez une arme avec la propriété spéciale explosion, toutes les cibles qui ratent leur jet de sauvegarde reculent de 1,50 mètre par rapport au centre de l’explosion. Un adversaire contre lequel vous avez obtenu un résultat critique ou qui obtient un 1 naturel à son jet de sauvegarde est également mis à terre. Vous ne pouvez pas effectuer une attaque percutante avec une arme automatique mais vous pouvez utiliser ce pouvoir avec une arme qui a la propriété spéciale dispersion."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "964fd8b5-9776-433c-b3e5-3f5394cda1bd",
+      "name": "Garde",
+      "description": "Le style de combat garde est basé sur la défense. Vous devenez un expert en port d’armure, pour vous protéger des attaques et pour encaisser les dégâts et autres revers dus aux attaques qui franchissent vos défenses.",
+      "features": [
+        {
+          "id": "15b47188-dd9c-4828-99c7-aeee4bfc67c1",
+          "name": "Entraînement aux armures",
+          "level": 1,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "c7d9a70e-bc95-47b2-85de-ce815f1589e4",
+              "type": "ability",
+              "name": "Entraînement aux armures",
+              "description": "Vous réduisez de 1 point le malus aux tests des armures que vous portez (minimum 0) et vous augmentez de 1 point le bonus maximum de Dextérité autorisé par votre armure."
+            }
+          ]
+        },
+        {
+          "id": "36939466-c6e6-427b-a839-c0f010855dda",
+          "name": "Défense de proximité",
+          "level": 5,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "66edf150-090d-4f66-8cba-e8ff138ceb99",
+              "type": "ability",
+              "name": "Défense de proximité",
+              "description": "Quand un allié qui vous est adjacent subit les dégâts d’une attaque, vous pouvez utiliser l’action réaction pour en absorber une partie. Vous subissez la moitié des dégâts et votre allié subit l’autre moitié. Ce pouvoir n’a aucun effet sur les sorts et sur les états qui peuvent découler de cette attaque aussi bien sur votre allié que sur vous."
+            },
+            {
+              "id": "054017be-036f-417f-8be4-08d7ed5e516f",
+              "type": "feat",
+              "name": "Port des armures assistées"
+            }
+          ]
+        },
+        {
+          "id": "1d073070-4bea-443f-bd08-9948d92b3294",
+          "name": "Rétablissement rapide",
+          "level": 9,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "42015521-c6b9-4a6c-bdd8-8d298de8fe0b",
+              "type": "ability",
+              "name": "Rétablissement rapide",
+              "description": "Vous pouvez dépenser 1 point de persévérance pour ignorer des états néfastes. En tant qu’action de mouvement, vous pouvez dépenser 1 point de persévérance pour annuler les effets d’un des états suivants pendant 10 minutes : épuisé, fatigué, effrayé, nauséeux, secoué, fiévreux ou chancelant. Au bout de 10 minutes, si la durée de cet état n’est pas terminée, ses effets se font de nouveau sentir. Vous ne pouvez annuler les effets que d’un seul état à la fois ; si vous êtes à la fois fatigué et secoué, vous ne pouvez éviter les effets que d’un seul de ces deux états et si vous êtes affecté deux fois par le même état, vous subissez toujours les effets de l’un des deux."
+            }
+          ]
+        },
+        {
+          "id": "fa27017e-46df-45c2-b651-a11c86a1845a",
+          "name": "Résistance cinétique",
+          "level": 13,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "e91080a8-1599-452b-83e7-7b1222f4be1e",
+              "type": "ability",
+              "name": "Résistance cinétique",
+              "description": "Vous gagnez RD 3/—. Au niveau 17, votre RD augmente à 5/—."
+            }
+          ]
+        },
+        {
+          "id": "819731e4-a54b-402c-85d9-12883188b06d",
+          "name": "Défense impénétrable",
+          "level": 17,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "d43f8b46-b128-4d69-a9f9-02ed768d58f3",
+              "type": "ability",
+              "name": "Défense impénétrable",
+              "description": "En tant qu’action simple, vous pouvez vous positionner pour établir une puissante défense pour vous et un allié qui vous est adjacent. Jusqu’au début de votre prochain tour, vous bénéficiez de trois avantages : votre Réduction des dégâts est de RD 10/—; vous et l’allié de votre choix gagnez chacun un bonus de +4 à votre CA ; et si vous utilisez défense de proximité, vous subissez tous les dégâts et votre allié aucun."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "81736624-9fe2-47eb-af1c-6f221c80f2ed",
+      "name": "Guérilla",
+      "description": "Le style de combat guérilla est basé sur les déplacements tactiques, que ceux-ci vous conduisent au coeur du combat ou à distance de tir. Vous utilisez des armes à distance mais vous combattez à proximité de l’action et vous pouvez même avoir recours à des armes de corps à corps. Vos capacités vous permettent de vous déplacer quand vous effectuez des attaques à outrance et pour éviter d’être acculé par vos ennemis.",
+      "features": [
+        {
+          "id": "4b6d3cc3-87dc-4476-836c-e6a627d9aad3",
+          "name": "Première salve",
+          "level": 1,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "71897d20-7c80-4a4b-9283-a434d4255abf",
+              "type": "feat",
+              "name": "Première salve"
+            },
+            {
+              "id": "6ffb7e55-90e3-44ed-8ea9-7e286def6018",
+              "type": "ability",
+              "name": "Première salve",
+              "level": 9,
+              "description": "Vous pouvez utiliser Première salve à votre 1er et second tour de combat."
+            }
+          ]
+        },
+        {
+          "id": "9bee813b-5828-41b8-94a3-e29f1e8362ea",
+          "name": "Aisance au combat",
+          "level": 5,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "2735943a-1620-46cd-afde-f1383c8b155e",
+              "type": "ability",
+              "name": "Aisance au combat",
+              "description": "Quand vous effectuez une attaque à outrance, vous pouvez aussi soit effectuer un déplacement prudent, soit vous déplacez à la moitié de votre vitesse. Ce déplacement peut s’effectuer avant, après ou entre vos deux attaques mais il ne peut être fractionné."
+            }
+          ]
+        },
+        {
+          "id": "46505ce8-50b1-4a8f-bf72-e8dcac14646e",
+          "name": "Esquives et zigzagues",
+          "level": 9,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "2eb6c626-2aa3-4f42-b745-ac5e502094a6",
+              "type": "ability",
+              "name": "Esquives et zigzagues",
+              "description": "Quand vous vous déplacez ou que vous effectuez une attaque à distance, vous pouvez dépenser 1 point de persévérance pour éviter de provoquer des attaques d’opportunité à cause de ce déplacement ou de cette attaque."
+            }
+          ]
+        },
+        {
+          "id": "2c3bf281-6156-4b35-9083-f546d5910297",
+          "name": "Cible insaisissable",
+          "level": 13,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "b69d4435-e51f-4946-b199-267f52961981",
+              "type": "ability",
+              "name": "Cible insaisissable",
+              "description": "À n’importe quel tour au cours duquel vous vous déplacez, vous bénéficiez d’un bonus d’intuition de +1 à votre CA jusqu’au début de votre prochain tour."
+            }
+          ]
+        },
+        {
+          "id": "4bf41cfe-b802-4b1c-813a-843d9aee4c21",
+          "name": "Attaque de diversion",
+          "level": 17,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "deb2a885-eb87-4687-9f07-446e7a8cca48",
+              "type": "ability",
+              "name": "Attaque de diversion",
+              "description": "En tant qu’action complexe, vous pouvez effectuer une attaque qui bénéficiera des avantages d’un tir de diversion contre la créature que vous touchez avec cette attaque. Si vous utilisez une arme avec la propriété spéciale dispersion ou automatique, l’avantage s’applique contre toutes les cibles touchées. Vous pouvez aussi effectuer votre déplacement accompagnant attaque de diversion avant ou après cette attaque."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b8f82be1-5648-4f24-8af1-3890341b8fed",
+      "name": "Précision offensive",
+      "description": "Le style de combat précision offensive vous permet d’exceller dans l’art d’effectuer des attaques précises, généralement avec des armes à longue distance. Vous pouvez ignorer les abris et les autres obstacles susceptibles de vous gêner. De plus, votre intense concentration vous permet d’améliorer vos attaques.",
+      "features": [
+        {
+          "id": "1ec73a9e-2c28-49e6-8185-293697255918",
+          "name": "Visée du tireur d’élite",
+          "level": 1,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "d801adc4-96e4-4f13-b4e3-5c9bc9b3bc0c",
+              "type": "ability",
+              "name": "Visée du tireur d’élite",
+              "description": "Quand vous effectuez une attaque à distance contre une cible bénéficiant d’un abri, réduisez de 2 points son bonus à sa CA. Vous ne pouvez utiliser visée du tireur d’élite contre un adversaire bénéficiant d’un abri total."
+            }
+          ]
+        },
+        {
+          "id": "06a45357-bd72-4085-81cd-d4ef5de2a8a8",
+          "name": "Tir concentré",
+          "level": 5,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "a51be678-4126-4db7-8395-a64bed05c0aa",
+              "type": "ability",
+              "name": "Tir concentré",
+              "description": "Quand vous effectuez une attaque à outrance avec une arme de tir, vous pouvez effectuer les deux attaques avec un malus de –3 au lieu de –4 si vos deux attaques ciblent la même créature. Si votre première attaque tue ou neutralise la cible, vous pouvez effectuer la seconde contre une autre créature mais avec un malus de –4. Une fois que vous bénéficiez de l’aptitude de classe assaut du soldat, vous pouvez utiliser ce pouvoir avec celle-ci et effectuer trois attaques contre la même créature avec un malus de –5 ; si votre première ou seconde attaque tue ou neutralise la cible, vous pouvez effectuer celles qui vous restent contre une autre créature mais avec un malus de –6."
+            }
+          ]
+        },
+        {
+          "id": "aba81d3c-8b17-4290-8d36-89fa19a57c5a",
+          "name": "Concentration intensive",
+          "level": 9,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "f34b17cd-b013-40c7-9191-7907e58fdf17",
+              "type": "ability",
+              "name": "Concentration intensive",
+              "description": "Quand vous effectuez une attaque à distance contre une cible bénéficiant d’un abri ou d’un camouflage, vous pouvez dépenser 1 point de persévérance pour annuler son bonus de CA dû à son abri ou réduire d’une catégorie son camouflage (de camouflage total à camouflage ou de camouflage à aucun camouflage). Cet avantage s’applique à toutes les attaques à distance que vous effectuez contre cette cible au cours de ce round. Vous ne pouvez utiliser concentration intensive plus d’une fois par round et contre un ennemi bénéficiant d’un abri total."
+            }
+          ]
+        },
+        {
+          "id": "267b1f6b-2624-4527-aec9-666260fcfb8d",
+          "name": "Dégâts concentrés",
+          "level": 13,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "690ed1ae-a8ce-4cfa-86b5-07d722b0ea0d",
+              "type": "ability",
+              "name": "Dégâts concentrés",
+              "description": "Quand vous utilisez tir concentré, chaque attaque contre la première cible inflige 2d6 points de dégâts supplémentaires. Les créatures additionnelles que vous attaquez après avoir tué ou neutralisé la première cible ne subissent pas ces dégâts supplémentaires."
+            }
+          ]
+        },
+        {
+          "id": "d8c16014-7d88-4c93-9269-b0fdce497c7e",
+          "name": "Attaque préparée",
+          "level": 17,
+          "category": "ex",
+          "modifiers": [
+            {
+              "id": "7e43a231-03a8-4eda-869d-e069b81b7436",
+              "type": "ability",
+              "name": "Attaque préparée",
+              "description": "En tant qu’action simple, vous pouvez examiner attentivement une cible avant de l’attaquer. Cette dernière doit être dans votre ligne de vue et soit prise au dépourvu, soit inconsciente de votre présence. Pour la première attaque que vous effectuez contre cette cible à votre prochain tour, vous gagnez un bonus de +2 à votre jet d’attaque. Si vous touchez, la cible est chancelante pendant 1 round ; si vous obtenez un résultat critique, la cible est étourdie pendant 1 round. Une fois que vous avez utilisé attaque préparée, vous ne pouvez y avoir recours une nouvelle fois contre la même cible pendant 24 heures. Vous ne pouvez pas effectuer d’attaque au cours du round pendant lequel vous examinez votre cible même si un pouvoir vous permettrait d’attaquer sans utiliser une action simple ou complexe."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
