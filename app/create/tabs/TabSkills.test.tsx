@@ -2,12 +2,13 @@ import { beforeEach, describe, expect, test } from "@jest/globals";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
+import referential from "./TabSkills.test.json";
 
 describe("TabSkills", () => {
   beforeEach(async () => {
     render(await Page());
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Caractéristiques & Compétences" }));
+    await user.click(screen.getByRole("button", { name: referential.title }));
   });
 
   test("is not displayed", async () => {
@@ -27,7 +28,7 @@ describe("TabSkills", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
     await user.click(screen.getByRole("button", { name: "Classe" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
-    await user.click(screen.getByRole("button", { name: "Caractéristiques & Compétences" }));
+    await user.click(screen.getByRole("button", { name: referential.title }));
   });
 
   test("is displayed", async () => {
@@ -46,59 +47,7 @@ describe("TabSkills", () => {
     expect(content.getByRole("spinbutton", { name: "Charisme -2" })).toHaveProperty("value", "8");
   });
 
-  const classes = [
-    {
-      id: "operative",
-      classSkills: [
-        "Acrobaties (DEX)",
-        "Athlétisme (FOR)",
-        "Bluff (CHA)",
-        "Culture (INT)",
-        "Déguisement (CHA)",
-        "Discrétion (DEX)",
-        "Escamotage (DEX)",
-        "Informatique (INT)",
-        "Ingénierie (INT)",
-        "Intimidation (CHA)",
-        "Médecine (INT)",
-        "Perception (SAG)",
-        "Pilotage (DEX)",
-        "Profession",
-        "Psychologie (SAG)",
-        "Survie (SAG)",
-      ],
-    },
-    {
-      id: "soldier",
-      classSkills: [
-        "Acrobaties (DEX)",
-        "Athlétisme (FOR)",
-        "Ingénierie (INT)",
-        "Intimidation (CHA)",
-        "Médecine (INT)",
-        "Pilotage (DEX)",
-        "Profession",
-        "Survie (SAG)",
-      ],
-    },
-  ];
-
-  const themes = [
-    {
-      id: "bounty-hunter",
-      classSkills: ["Survie (SAG)"],
-    },
-    {
-      id: "scholar",
-      classSkills: ["Science de la vie (INT)"],
-    },
-    {
-      id: "themeless",
-      classSkills: [],
-    },
-  ];
-
-  const matrix = classes.flatMap((klass) => themes.map((theme) => ({ klass, theme })));
+  const matrix = referential.classes.flatMap((klass) => referential.themes.map((theme) => ({ klass, theme })));
   test.each(matrix)(
     "displays the class skills based on theme '$theme.id' and class '$klass.id'",
     async ({ theme, klass }) => {
@@ -107,7 +56,7 @@ describe("TabSkills", () => {
       await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
       await user.click(screen.getByRole("button", { name: "Thème" }));
       await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
-      await user.click(screen.getByRole("button", { name: "Caractéristiques & Compétences" }));
+      await user.click(screen.getByRole("button", { name: referential.title }));
 
       const content = within(document.querySelector("#content") as HTMLElement);
 

@@ -1,0 +1,54 @@
+{
+  "title": "Caractéristiques & Compétences",
+  "classes": [
+    {
+      "id": "operative",
+      "classSkills": [
+        "Acrobaties (DEX)",
+        "Athlétisme (FOR)",
+        "Bluff (CHA)",
+        "Culture (INT)",
+        "Déguisement (CHA)",
+        "Discrétion (DEX)",
+        "Escamotage (DEX)",
+        "Informatique (INT)",
+        "Ingénierie (INT)",
+        "Intimidation (CHA)",
+        "Médecine (INT)",
+        "Perception (SAG)",
+        "Pilotage (DEX)",
+        "Profession",
+        "Psychologie (SAG)",
+        "Survie (SAG)"
+      ]
+    },
+    {
+      "id": "soldier",
+      "classSkills": [
+        "Acrobaties (DEX)",
+        "Athlétisme (FOR)",
+        "Ingénierie (INT)",
+        "Intimidation (CHA)",
+        "Médecine (INT)",
+        "Pilotage (DEX)",
+        "Profession",
+        "Survie (SAG)"
+      ]
+    }
+  ],
+
+  "themes": [
+    {
+      "id": "bounty-hunter",
+      "classSkills": ["Survie (SAG)"]
+    },
+    {
+      "id": "scholar",
+      "classSkills": ["Science de la vie (INT)"]
+    },
+    {
+      "id": "themeless",
+      "classSkills": []
+    }
+  ]
+}
