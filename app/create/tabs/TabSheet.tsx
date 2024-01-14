@@ -175,7 +175,7 @@ function CardKeyPoints() {
 }
 
 function CardSavingThrows({ character }: CharacterProps) {
-  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.savingThrow);
+  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.enum.savingThrow);
   return (
     <Card>
       <Card.Header>
@@ -232,7 +232,7 @@ function CardWeapons() {
 }
 
 function CardAbilities({ character }: CharacterProps) {
-  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.ability);
+  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.enum.ability);
   return (
     <Card data-testid="abilities">
       <Card.Header>

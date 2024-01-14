@@ -1,13 +1,21 @@
-export enum ModifierType {
-  ability = "ability",
-  classSkill = "classSkill",
-  featCount = "featCount",
-  feat = "feat",
-  hitPoints = "hitPoints",
-  initiative = "initiative",
-  languageCount = "languageCount",
-  savingThrow = "savingThrow",
-  skill = "skill",
-  skillRank = "skillRank",
-  spell = "spell",
+import { z } from "zod";
+
+export const ModifierType = z.enum([
+  "ability",
+  "classSkill",
+  "featCount",
+  "feat",
+  "hitPoints",
+  "initiative",
+  "languageCount",
+  "savingThrow",
+  "skill",
+  "skillRank",
+  "spell",
+]);
+
+export type ModifierType = z.infer<typeof ModifierType>;
+
+export function isModifierType(value: unknown): value is ModifierType {
+  return ModifierType.safeParse(value).success;
 }

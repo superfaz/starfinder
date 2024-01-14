@@ -1,4 +1,4 @@
-import { Feature, FeatureTemplate, Modifier, ModifierTemplate, ModifierType } from "model";
+import { Feature, FeatureTemplate, Modifier, ModifierTemplate, ModifierType, isModifierType } from "model";
 
 export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
@@ -46,7 +46,7 @@ export class Templater {
   }
 
   convertModifier(template: ModifierTemplate): Modifier {
-    if (!Object.keys(ModifierType).includes(template.type)) {
+    if (!isModifierType(template.type)) {
       throw new Error(`Invalid modifier type: ${template.type}`);
     }
 
