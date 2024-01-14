@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import { Badge, Col, Row } from "react-bootstrap";
-import { ClassOperative } from "model";
 import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 
-export default function OperativeClassDetails({ character }: CharacterProps) {
-  const classDetails = useClassDetails<ClassOperative>("operative");
+export default function EnvoyClassDetails({ character, classId }: CharacterProps & { classId: string }) {
+  const classDetails = useClassDetails(classId);
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!classDetails) {
-      dispatch(retrieveClassDetails("operative"));
+      dispatch(retrieveClassDetails(classId));
     }
-  }, [dispatch, classDetails]);
+  }, [dispatch, classDetails, classId]);
 
   if (!classDetails) {
     return <p>Loading...</p>;

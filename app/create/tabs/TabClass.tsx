@@ -6,10 +6,10 @@ import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
 import { AbilityScoreIds } from "model";
 
+const LazyGenericClassDetails = dynamic(() => import("../classes/genericDetails"));
+
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
-const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
-const LazyOperativeClassDetails = dynamic(() => import("../classes/operativeDetails"));
 const LazySoldierClassEditor = dynamic(() => import("../classes/soldierEditor"));
 
 function LazyClassEditor({ character }: CharacterProps): JSX.Element | null {
@@ -43,10 +43,8 @@ function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
 
   switch (selectedClass.id) {
     case "operative":
-      return <LazyOperativeClassDetails character={character} />;
-
     case "envoy":
-      return <LazyEnvoyClassDetails character={character} />;
+      return <LazyGenericClassDetails character={character} classId={selectedClass.id} />;
 
     default:
       return null;

@@ -3,6 +3,7 @@ import {
   Avatar,
   Character,
   Class,
+  ClassEnvoy,
   ClassOperative,
   Feature,
   IModel,
@@ -255,7 +256,16 @@ export class CharacterPresenter {
       return [];
     }
 
-    if (classDetails.id === "operative") {
+    if (classDetails.id === "envoy") {
+      return (classDetails as ClassEnvoy).features.map((f) => {
+        const level = f.level ?? 1;
+        const templater = new Templater({
+          ...context,
+          ...(cleanEvolutions(f.evolutions)[level] ?? {}),
+        });
+        return templater.convertFeature(f);
+      });
+    } else if (classDetails.id === "operative") {
       const selectedSpecialization = (classDetails as ClassOperative).specializations.find(
         (s) => s.id === this.getOperativeSpecialization()
       );
