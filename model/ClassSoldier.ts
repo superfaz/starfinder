@@ -9,5 +9,5 @@ export interface ClassSoldierStyle extends NamedModel {
 export interface ClassSoldier extends IModel {
   id: string;
   features: FeatureTemplate[];
-  fightingStyles: ClassSoldierStyle[];
+  styles: ClassSoldierStyle[];
 }
