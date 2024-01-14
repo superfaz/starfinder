@@ -4,6 +4,7 @@ import { FeatureTemplate } from "./FeatureTemplate";
 
 export const ClassEnvoy = IModel.extend({
   id: z.literal("envoy"),
+  skills: z.array(z.string()),
   features: z.array(FeatureTemplate),
 });
 
