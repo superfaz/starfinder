@@ -1,5 +1,5 @@
 import { IDataSet, DataSetBuilder } from "data";
-import { ClassEnvoy, ClassOperative, IModel, asClassEnvoy, asClassOperative, asClassSoldier, isIModel } from "model";
+import { asClassEnvoy, asClassOperative, asClassSoldier, isIModel } from "model";
 import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
