@@ -17,4 +17,5 @@ export * from "./ModifierType";
 export * from "./Race";
 export * from "./SkillDefinition";
 export * from "./Theme";
+export * from "./ThemeScholar";
 export * from "./Variant";

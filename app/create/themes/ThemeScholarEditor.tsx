@@ -2,14 +2,10 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
-
-interface IThemeDetailsScholar {
-  id: string;
-  values: Record<string, string[]>;
-}
+import { ThemeScholar } from "model";
 
 function useThemeDetails(themeId: string) {
-  const [details, setDetails] = useState<IThemeDetailsScholar | null>(null);
+  const [details, setDetails] = useState<ThemeScholar | null>(null);
   useEffect(() => {
     if (themeId && details === null) {
       fetch("/api/themes/" + themeId)
