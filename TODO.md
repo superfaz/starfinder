@@ -34,7 +34,7 @@ Classe : Mystique / Ajouter les détails de classe
 
 Classe : Solarien / Ajouter les détails de classe
 
-Classe : Soldat / Ajouter les détails de classe
+Classe : Soldat / Style de combat: Garde/ Gérer Résistance cinétique
 
 Classe : Technomancien / Ajouter les détails de classe
 
@@ -49,3 +49,9 @@ Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
 Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation
 
 Classe : Emissaire / Abilité : Savoir-faire maîtrisé / Choix de l'improvisation
+
+Classe : Soldat / Abilité : Don de combat / Choix des deux dons
+
+Classe : Soldat / Abilité : Amélioration d'équipement / Liste des améliorations possibles
+
+Classe : Soldat / Abilité : Second style de combat / Choix du style
