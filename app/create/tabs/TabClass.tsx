@@ -4,6 +4,7 @@ import { Badge, Form, Stack } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
+import { AbilityScoreIds } from "model";
 
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));
@@ -95,8 +96,11 @@ export function ClassSelection({ character }: CharacterProps) {
         <>
           <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe">
             <Form.Select value={character.getSoldierAbilityScore() ?? ""} onChange={handleSoldierAbilityScoreChange}>
-              <option value="str">{findOrError(data.abilityScores, (a) => a.id === "str").name}</option>
-              <option value="dex">{findOrError(data.abilityScores, (a) => a.id === "dex").name}</option>
+              {[AbilityScoreIds.str, AbilityScoreIds.dex].map((id) => (
+                <option key={id} value={id}>
+                  {findOrError(data.abilityScores, (a) => a.id === id).name}
+                </option>
+              ))}
             </Form.Select>
           </Form.FloatingLabel>
           <Stack direction="horizontal">

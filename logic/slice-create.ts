@@ -1,6 +1,6 @@
 import { findOrError } from "app/helpers";
 import { EmptyClientDataSet, IClientDataSet } from "data";
-import { Character, EmptyCharacter, Feature, IModel } from "model";
+import { AbilityScoreIds, Character, EmptyCharacter, Feature, IModel } from "model";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -258,7 +258,7 @@ function updateThemeImpl(data: IClientDataSet, character: Character, themeId: st
     };
   } else if (themeId === "themeless") {
     // Theme: No theme
-    result.themeOptions = { noThemeAbility: "str" };
+    result.themeOptions = { noThemeAbility: AbilityScoreIds.str };
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -348,7 +348,7 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
   // Special cases - prepare the associated options
   if (classId === "soldier") {
     // Class: Soldier
-    result.classOptions = { soldierAbilityScore: "str" };
+    result.classOptions = { soldierAbilityScore: AbilityScoreIds.str };
   } else if (classId === "operative") {
     // Class: Operative
     result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
