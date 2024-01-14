@@ -12,7 +12,7 @@ import {
   Theme,
   Variant,
 } from "model";
-import { Templater } from ".";
+import { Templater, cleanEvolutions } from ".";
 import { getOperativeFeatureTemplates } from "./ClassPresenter";
 import { findOrError } from "app/helpers";
 
@@ -240,14 +240,14 @@ export class CharacterPresenter {
       return [];
     }
 
-    const templater = new Templater({
+    const context = {
       race: this.character.race,
       theme: this.character.theme,
       class: this.character.class,
       ...this.character.raceOptions,
       ...this.character.themeOptions,
       ...this.character.classOptions,
-    });
+    };
 
     // Retrieve the class details
     const classDetails = this.classesDetails[selectedClass.id];
@@ -255,14 +255,21 @@ export class CharacterPresenter {
       return [];
     }
 
-    // eslint-disable-next-line sonarjs/no-small-switch
-    switch (selectedClass.id) {
-      case "operative":
-        return getOperativeFeatureTemplates(classDetails as ClassOperative, this).map((f) =>
-          templater.convertFeature(f)
-        );
-      default:
-        return [];
+    if (classDetails.id === "operative") {
+      const selectedSpecialization = (classDetails as ClassOperative).specializations.find(
+        (s) => s.id === this.getOperativeSpecialization()
+      );
+      return getOperativeFeatureTemplates(classDetails as ClassOperative, this).map((f) => {
+        const level = f.level ?? 1;
+        const templater = new Templater({
+          ...context,
+          ...(selectedSpecialization?.variables ?? {}),
+          ...(cleanEvolutions(f.evolutions)[level] ?? {}),
+        });
+        return templater.convertFeature(f);
+      });
+    } else {
+      return [];
     }
   }
 

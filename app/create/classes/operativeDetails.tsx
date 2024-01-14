@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Badge, Col, Row } from "react-bootstrap";
-import { ClassOperative, FeatureTemplate } from "model";
-import { Templater, cleanEvolutions, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
+import { ClassOperative } from "model";
+import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 
@@ -18,16 +18,7 @@ export default function OperativeClassDetails({ character }: CharacterProps) {
     return <p>Loading...</p>;
   }
 
-  const selectedSpecialization = classDetails.specializations.find(
-    (s) => s.id === character.getOperativeSpecialization()
-  );
-  if (!selectedSpecialization) {
-    return null;
-  }
-
-  const classFeatures: FeatureTemplate[] = classDetails.features;
-  const specializationFeatures: FeatureTemplate[] = selectedSpecialization.features;
-  const features: FeatureTemplate[] = [...classFeatures, ...specializationFeatures];
+  const features = character.getClassFeatures();
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)
@@ -40,13 +31,7 @@ export default function OperativeClassDetails({ character }: CharacterProps) {
       </Col>
       {features
         .filter((s) => s.level === level)
-        .map((template) => {
-          const evolutions = cleanEvolutions(template.evolutions) ?? {};
-          const templater = new Templater({
-            ...(selectedSpecialization?.variables ?? {}),
-            ...(evolutions[level] ?? {}),
-          });
-          const feature = templater.convertFeature(template);
+        .map((feature) => {
           return (
             <Col key={feature.id}>
               <FeatureComponent character={character} feature={feature} />
