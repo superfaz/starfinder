@@ -1,29 +1,35 @@
-import { IModel, ModifierTemplate } from ".";
+import { z } from "zod";
+import { INamedModel } from "./INamedModel";
+import { ModifierTemplate } from "./ModifierTemplate";
 
 /**
  * Represents a racial trait or a thematic or a class feature that can be applied to a character.
  */
-export interface FeatureTemplate extends IModel {
-  id: string;
-  name: string;
-  description?: string;
-  modifiers?: ModifierTemplate[];
-  level: number;
+export const FeatureTemplate = INamedModel.extend({
+  description: z.optional(z.string()),
+  modifiers: z.optional(z.array(ModifierTemplate)),
+  level: z.number(),
 
   /**
    * The type of feature.
-   *
-   * @example "ex", "ma", "su"
    */
-  category?: string;
+  category: z.optional(z.enum(["ex", "ma", "su"])),
 
   /**
    * The evolutions of the feature, indexed by level - for class features.
    */
-  evolutions?: Record<string, Record<string, string | number | null | undefined> | null | undefined>;
+  evolutions: z.optional(
+    z.record(z.union([z.null(), z.undefined(), z.record(z.union([z.null(), z.undefined(), z.number(), z.string()]))]))
+  ),
 
   /**
    * The IDs of the replaced racial traits - for secondary racial traits.
    */
-  replace?: string[];
+  replace: z.optional(z.array(z.string())),
+}).strict();
+
+export type FeatureTemplate = z.infer<typeof FeatureTemplate>;
+
+export function isFeatureTemplate(data: unknown): data is FeatureTemplate {
+  return FeatureTemplate.safeParse(data).success;
 }

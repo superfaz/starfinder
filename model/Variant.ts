@@ -1,8 +1,13 @@
-import { IModel } from "./IModel";
+import { z } from "zod";
+import { INamedModel } from "./INamedModel";
 
-export interface Variant extends IModel {
-  id: string;
-  name: string;
-  description: string;
-  abilityScores: Record<string, number | undefined>;
+export const Variant = INamedModel.extend({
+  description: z.string(),
+  abilityScores: z.record(z.union([z.number(), z.undefined()])),
+});
+
+export type Variant = z.infer<typeof Variant>;
+
+export function isVariant(obj: unknown): obj is Variant {
+  return Variant.safeParse(obj).success;
 }

@@ -1,16 +1,21 @@
-import { IModel } from ".";
+import { z } from "zod";
+import { INamedModel } from "./INamedModel";
 
-export interface Class extends IModel {
-  id: string;
-  name: string;
-  description: string;
-  refs: string[];
-  hitPoints: number;
-  staminaPoints: number;
-  primaryAbilityScore: string;
-  secondaryAbilityScores: string[];
-  skillRank: number;
-  classSkills: string[];
-  armors: string[];
-  weapons: string[];
+export const Class = INamedModel.extend({
+  description: z.string(),
+  refs: z.array(z.string()),
+  hitPoints: z.number(),
+  staminaPoints: z.number(),
+  primaryAbilityScore: z.string(),
+  secondaryAbilityScores: z.array(z.string()),
+  skillRank: z.number(),
+  classSkills: z.array(z.string()),
+  armors: z.array(z.string()),
+  weapons: z.array(z.string()),
+}).strict();
+
+export type Class = z.infer<typeof Class>;
+
+export function isClass(data: unknown): data is Class {
+  return Class.safeParse(data).success;
 }

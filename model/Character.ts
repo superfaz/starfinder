@@ -1,22 +1,32 @@
-export interface Character {
-  level: number;
-  race: string;
-  raceVariant: string;
-  raceOptions?: Record<string, string>;
-  theme: string;
-  themeOptions?: Record<string, string>;
-  class: string;
-  classOptions?: Record<string, string>;
-  traits: string[];
-  traitsOptions?: Record<string, string>;
-  abilityScores: Record<string, number>;
-  skillRanks: Record<string, number>;
-  name: string;
-  alignment: string;
-  sex: string;
-  homeWorld: string;
-  deity: string;
-  avatar: string;
+import { z } from "zod";
+
+export const Character = z
+  .object({
+    level: z.number(),
+    race: z.string(),
+    raceVariant: z.string(),
+    raceOptions: z.optional(z.record(z.string())),
+    theme: z.string(),
+    themeOptions: z.optional(z.record(z.string())),
+    class: z.string(),
+    classOptions: z.optional(z.record(z.string())),
+    traits: z.array(z.string()),
+    traitsOptions: z.optional(z.record(z.string())),
+    abilityScores: z.record(z.number()),
+    skillRanks: z.record(z.number()),
+    name: z.string(),
+    alignment: z.string(),
+    sex: z.string(),
+    homeWorld: z.string(),
+    deity: z.string(),
+    avatar: z.string(),
+  })
+  .strict();
+
+export type Character = z.infer<typeof Character>;
+
+export function isCharacter(obj: unknown): obj is Character {
+  return Character.safeParse(obj).success;
 }
 
 export const EmptyCharacter: Readonly<Character> = {

@@ -1,15 +1,15 @@
-import { Avatar, Class, CodedModel, NamedModel, Race, SkillDefinition, Theme } from "model";
+import { Avatar, Class, ICodedModel, INamedModel, Race, SkillDefinition, Theme } from "model";
 
 export interface IClientDataSet {
-  abilityScores: CodedModel[];
-  alignments: CodedModel[];
+  abilityScores: ICodedModel[];
+  alignments: ICodedModel[];
   avatars: Avatar[];
   classes: Class[];
   races: Race[];
   skills: SkillDefinition[];
   themes: Theme[];
-  armors: NamedModel[];
-  weapons: NamedModel[];
+  armors: INamedModel[];
+  weapons: INamedModel[];
 }
 
 export const EmptyClientDataSet: IClientDataSet = {

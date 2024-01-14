@@ -1,6 +1,8 @@
-import { FeatureTemplate, IModel, NamedModel } from ".";
+import { FeatureTemplate } from "./FeatureTemplate";
+import { IModel } from "./IModel";
+import { INamedModel } from "./INamedModel";
 
-export interface ClassOperativeSpecialization extends NamedModel {
+export interface ClassOperativeSpecialization extends INamedModel {
   description: string;
   variables: Record<string, string | number>;
   features: FeatureTemplate[];
