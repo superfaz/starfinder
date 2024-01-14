@@ -62,6 +62,10 @@ const mainSlice = createSlice({
       state.character = updateSoldierAbilityScoreImpl(state.character, action.payload);
     },
 
+    updateSoldierPrimayStyle(state, action: PayloadAction<string>) {
+      state.character = updateSoldierPrimaryStyleImpl(state.character, action.payload);
+    },
+
     updateOperativeSpecialization(state, action: PayloadAction<string>) {
       state.character = updateOperativeSpecializationImpl(state.character, action.payload);
     },
@@ -371,6 +375,23 @@ function updateSoldierAbilityScoreImpl(character: Character, abilityScoreId: str
     classOptions: {
       ...character.classOptions,
       soldierAbilityScore: abilityScoreId,
+    },
+  };
+}
+
+/**
+ * Updates the primary fightying style selected for a soldier character.
+ *
+ * @param character The character to update
+ * @param styleId The identifier of the selected style
+ * @returns The updated character
+ */
+function updateSoldierPrimaryStyleImpl(character: Character, styleId: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      soldierPrimaryStyle: styleId,
     },
   };
 }

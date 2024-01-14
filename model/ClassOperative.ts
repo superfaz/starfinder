@@ -1,15 +1,28 @@
+import { z } from "zod";
 import { FeatureTemplate } from "./FeatureTemplate";
 import { IModel } from "./IModel";
 import { INamedModel } from "./INamedModel";
 
-export interface ClassOperativeSpecialization extends INamedModel {
-  description: string;
-  variables: Record<string, string | number>;
-  features: FeatureTemplate[];
+export const ClassOperativeSpecialization = INamedModel.extend({
+  description: z.string(),
+  variables: z.record(z.union([z.string(), z.number()])),
+  features: z.array(FeatureTemplate),
+});
+
+export type ClassOperativeSpecialization = z.infer<typeof ClassOperativeSpecialization>;
+
+export const ClassOperative = IModel.extend({
+  id: z.string(),
+  specializations: z.array(ClassOperativeSpecialization),
+  features: z.array(FeatureTemplate),
+});
+
+export type ClassOperative = z.infer<typeof ClassOperative>;
+
+export function isClassOperative(data: unknown): data is ClassOperative {
+  return ClassOperative.safeParse(data).success;
 }
 
-export interface ClassOperative extends IModel {
-  id: string;
-  specializations: ClassOperativeSpecialization[];
-  features: FeatureTemplate[];
+export function asClassOperative(data: unknown): ClassOperative {
+  return ClassOperative.parse(data);
 }

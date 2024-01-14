@@ -274,6 +274,10 @@ export class CharacterPresenter {
     return this.character.classOptions?.soldierAbilityScore ?? null;
   }
 
+  getSoldierPrimaryStyle(): string | null {
+    return this.character.classOptions?.soldierPrimaryStyle ?? null;
+  }
+
   getOperativeSpecialization(): string | null {
     return this.character.classOptions?.operativeSpecialization ?? null;
   }

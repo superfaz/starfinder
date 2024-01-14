@@ -10,6 +10,7 @@ const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyEnvoyClassDetails = dynamic(() => import("../classes/envoyDetails"));
 const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
 const LazyOperativeClassDetails = dynamic(() => import("../classes/operativeDetails"));
+const LazySoldierClassEditor = dynamic(() => import("../classes/soldierEditor"));
 
 function LazyClassEditor({ character }: CharacterProps): JSX.Element | null {
   const selectedClass = character.getClass();
@@ -19,11 +20,14 @@ function LazyClassEditor({ character }: CharacterProps): JSX.Element | null {
   }
 
   switch (selectedClass.id) {
+    case "envoy":
+      return <LazyEnvoyClassEditor />;
+
     case "operative":
       return <LazyOperativeClassEditor character={character} />;
 
-    case "envoy":
-      return <LazyEnvoyClassEditor />;
+    case "soldier":
+      return <LazySoldierClassEditor character={character} />;
 
     default:
       return null;

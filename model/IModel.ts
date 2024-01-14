@@ -9,3 +9,7 @@ export type IModel = z.infer<typeof IModel>;
 export function isIModel(obj: unknown): obj is IModel {
   return IModel.safeParse(obj).success;
 }
+
+export function asIModel(obj: unknown): IModel {
+  return IModel.parse(obj);
+}

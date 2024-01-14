@@ -1,15 +1,27 @@
+import { z } from "zod";
 import { FeatureTemplate } from "./FeatureTemplate";
 import { IModel } from "./IModel";
 import { INamedModel } from "./INamedModel";
 
-export interface ClassSoldierStyle extends INamedModel {
-  description: string;
-  variables: Record<string, string | number>;
-  features: FeatureTemplate[];
+export const ClassSoldierStyle = INamedModel.extend({
+  description: z.string(),
+  features: z.array(FeatureTemplate),
+});
+
+export type ClassSoldierStyle = z.infer<typeof ClassSoldierStyle>;
+
+export const ClassSoldier = IModel.extend({
+  id: z.string(),
+  features: z.array(FeatureTemplate),
+  styles: z.array(ClassSoldierStyle),
+});
+
+export type ClassSoldier = z.infer<typeof ClassSoldier>;
+
+export function isClassSoldier(data: unknown): data is ClassSoldier {
+  return ClassSoldier.safeParse(data).success;
 }
 
-export interface ClassSoldier extends IModel {
-  id: string;
-  features: FeatureTemplate[];
-  styles: ClassSoldierStyle[];
+export function asClassSoldier(data: unknown): ClassSoldier {
+  return ClassSoldier.parse(data);
 }
