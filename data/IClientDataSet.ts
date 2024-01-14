@@ -1,8 +1,8 @@
-import { Avatar, Class, ICodedModel, INamedModel, Race, SkillDefinition, Theme } from "model";
+import { AbilityScore, Alignment, Avatar, Class, INamedModel, Race, SkillDefinition, Theme } from "model";
 
 export interface IClientDataSet {
-  abilityScores: ICodedModel[];
-  alignments: ICodedModel[];
+  abilityScores: AbilityScore[];
+  alignments: Alignment[];
   avatars: Avatar[];
   classes: Class[];
   races: Race[];

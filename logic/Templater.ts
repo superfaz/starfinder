@@ -33,7 +33,7 @@ export class Templater {
       name: this.applyForString(template.name) ?? "",
       description: this.applyForString(template.description),
       modifiers: [],
-      category: template.category as "ex" | "ma" | "su" | undefined,
+      category: template.category,
       evolutions: cleanEvolutions(template.evolutions) ?? {},
       replace: template.replace ?? [],
     };

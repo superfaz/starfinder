@@ -1,5 +1,5 @@
 import { CosmosClient, Database } from "@azure/cosmos";
-import { ICodedModel, IModel, INamedModel } from "model";
+import { IModel, INamedModel } from "model";
 import { IDataSet } from ".";
 
 const cached: Record<string, unknown> = {};
@@ -79,7 +79,7 @@ export class DataSetBuilder {
 
   async build(): Promise<IDataSet> {
     const data: IDataSet = {
-      getAbilityScores: cache("ability-scores", () => this.getOrdered<ICodedModel>("ability-scores")),
+      getAbilityScores: cache("ability-scores", () => this.getOrdered("ability-scores")),
       getAlignments: cache("alignments", () => this.getOrdered("alignments")),
       getAvatars: cache("avatars", () => this.getAll("avatars")),
       getClasses: cache("classes", () => this.getNamed("classes")),

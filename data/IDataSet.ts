@@ -1,8 +1,8 @@
-import { Avatar, Class, ICodedModel, INamedModel, Race, SkillDefinition, Theme } from "model";
+import { AbilityScore, Alignment, Avatar, Class, INamedModel, Race, SkillDefinition, Theme } from "model";
 
 export interface IDataSet {
-  getAbilityScores(): Promise<ICodedModel[]>;
-  getAlignments(): Promise<ICodedModel[]>;
+  getAbilityScores(): Promise<AbilityScore[]>;
+  getAlignments(): Promise<Alignment[]>;
   getAvatars(): Promise<Avatar[]>;
   getClasses(): Promise<Class[]>;
   getClassDetails(classId: string): Promise<unknown>;
