@@ -79,18 +79,29 @@ describe("TabSkills", () => {
   });
 
   test("adds +1 when the theme skill is already a class skill", async () => {
+    // Survival is expected to be at +2:
     //   Wisdom: 10       --> +0
+    //   Class skills x2  --> +1
+    //   Class: Operative --> +1 (all)
     const content = within(document.querySelector("#content") as HTMLElement);
     const view = within(content.getByTestId("surv"));
-    expect(view.getByText("+1")).not.toBeNull();
+    expect(view.getByText("+2")).not.toBeNull();
   });
 
-  test.failing("applies 'skill' modifiers", async () => {
+  test("applies 'skill' modifiers", async () => {
     // Sens motive is expected to be at -1:
     //   Wisdom: 10       --> +0
     //   Race: Android    --> -2 (sens)
     //   Class: Operative --> +1 (all)
     const view = within(screen.getByTestId("sens"));
     expect(view.getByText("-1")).not.toBeNull();
+  });
+
+  test.failing("applies 'rank' modifiers", async () => {
+    const view = within(screen.getByTestId("acro"));
+    const control = view.queryByRole("checkbox", { name: /compétence de classe/i });
+    expect(control).not.toBeNull();
+    expect(control).not.toBeChecked();
+    expect(control).not.toBeDisabled();
   });
 });

@@ -411,6 +411,7 @@ export class CharacterPresenter {
     isClassSkill: boolean;
     bonus: number | undefined;
   }[] {
+    const skillModifiers = this.getModifiers().filter((m) => m.type === "skill");
     return [...this.data.skills]
       .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {
@@ -421,16 +422,18 @@ export class CharacterPresenter {
         const abilityScoreModifier = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
 
         // TODO: Add bonus from modifiers
+        const bonusFromModifiers = skillModifiers
+          .filter((m) => m.target === s.id || m.target === "all")
+          .reduce((acc, m) => acc + (m.value ?? 0), 0);
 
         function computeSkillBonus() {
+          const base = ranks + abilityScoreModifier + bonusFromModifiers + bonusDoubleClassSkill;
           if (isClassSkill && isTrained) {
-            return 3 + ranks + abilityScoreModifier + bonusDoubleClassSkill;
-          } else if (isTrained) {
-            return ranks + abilityScoreModifier;
-          } else if (s.trainedOnly) {
+            return base + 3;
+          } else if (!isTrained && s.trainedOnly) {
             return undefined;
           } else {
-            return abilityScoreModifier + bonusDoubleClassSkill;
+            return base;
           }
         }
 
