@@ -72,4 +72,15 @@ describe("TabSkills", () => {
     const view = within(content.getByTestId("surv"));
     expect(view.getByText("+1")).not.toBeNull();
   });
+
+  test("displays modifiers", async () => {
+    const content = within(document.querySelector("#content") as HTMLElement);
+    expect(content.getByRole("heading", { name: "Modificateurs", level: 2 })).not.toBeNull();
+    const section = content.getByRole("heading", { name: "Modificateurs", level: 2 }).parentElement;
+    if (section !== null) {
+      expect(within(section).getByText("Emotions contrôlées")).toBeVisible();
+    } else {
+      expect(true).toBeFalsy();
+    }
+  });
 });

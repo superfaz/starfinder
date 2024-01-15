@@ -1,8 +1,15 @@
 import { ChangeEvent } from "react";
-import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
+import { Badge, Card, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
+import ModifierComponent from "../ModifierComponent";
+
+const categories: Record<string, string> = {
+  ex: "EXT",
+  ma: "MAG",
+  su: "SUR",
+};
 
 export function Skills({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
@@ -90,6 +97,34 @@ export function Skills({ character }: CharacterProps) {
             {skill.bonus === undefined && "-"}
           </Col>
         </Form.Group>
+      ))}
+    </Stack>
+  );
+}
+
+export function SkillsModifiers({ character }: CharacterProps) {
+  const types = ["skill", "classSkill", "skillRank"];
+  const features = [
+    ...character.getSelectedRaceTraits().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
+    ...character.getThemeFeatures().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
+    ...character.getClassFeatures().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
+  ];
+  return (
+    <Stack direction="vertical" gap={2}>
+      <h2>Modificateurs</h2>
+      {features.map((feature) => (
+        <Card key={feature.id}>
+          <Card.Header>
+            {feature.name} {feature.category && ` (${categories[feature.category]})`}
+          </Card.Header>
+          <Card.Body>
+            {feature.modifiers
+              .filter((m) => types.includes(m.type))
+              .map((modifier) => (
+                <ModifierComponent key={modifier.id} modifier={modifier} />
+              ))}
+          </Card.Body>
+        </Card>
       ))}
     </Stack>
   );
