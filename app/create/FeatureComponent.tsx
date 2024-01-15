@@ -17,20 +17,31 @@ const evolutionLabels: Record<string, string> = {
   dice: "Dés: ",
 };
 
+/**
+ * Converts a list of replace ids to a list of trait names
+ *
+ * @param character The character
+ * @param replace the list of replace ids
+ * @returns the list of trait names
+ */
 function convertReplaceToText(character: CharacterPresenter, replace: string[]): string[] {
   return replace.map((id) => {
     const trait = character.getPrimaryRaceTraits().find((t) => t.id === id);
+    if (trait) {
+      return trait.name;
+    }
+
     const modifier = character
       .getPrimaryRaceTraits()
       .map((t) => t.modifiers)
       .flat()
       .find((c) => c.id === id);
-    if (trait) {
-      return trait.name;
-    } else if (modifier) {
-      return modifier.name ?? id;
+
+    if (!modifier || (modifier.type !== "ability" && modifier.type !== "savingThrow")) {
+      return id;
     }
-    return id;
+
+    return modifier.name;
   });
 }
 

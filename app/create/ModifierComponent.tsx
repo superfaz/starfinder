@@ -1,9 +1,9 @@
 import { Badge } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
-import { Modifier } from "model";
+import { Modifier, ModifierType } from "model";
 
-const displayLabelsForType: Record<string, string> = {
+const displayLabelsForType: Record<ModifierType, string> = {
   ability: "Pouvoir",
   hitPoints: "Points de vie",
   savingThrow: "Jets de sauvegarde",
@@ -21,26 +21,48 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
   const data = useAppSelector((state) => state.data);
 
   const skills = data.skills;
-  const target = modifier.target;
   let skillName: string | undefined;
-  if (target === undefined) {
-    skillName = undefined;
-  } else if (target === "any") {
-    skillName = "Au choix";
-  } else if (target === "all") {
-    skillName = "Toutes";
-  } else {
-    skillName = findOrError(skills, (s) => s.id === target).name;
+  if (modifier.type === "skill" || modifier.type === "classSkill" || modifier.type === "skillRank") {
+    const target = modifier.target;
+    if (target === undefined) {
+      skillName = undefined;
+    } else if (target === "any") {
+      skillName = "Au choix";
+    } else if (target === "all") {
+      skillName = "Toutes";
+    } else {
+      skillName = findOrError(skills, (s) => s.id === target).name;
+    }
   }
 
   return (
     <p>
       <Badge bg="primary">{displayLabelsForType[modifier.type] ?? ""}</Badge>
       {modifier.level && modifier.level > 1 && <Badge bg="primary">Niveau {modifier.level}</Badge>}
-      {modifier.name && <strong className="me-2">{modifier.name}.</strong>}
+      {hasName(modifier) && modifier.name && <strong className="me-2">{modifier.name}.</strong>}
       {skillName && <strong className="me-2">{skillName}</strong>}
-      {modifier.value && <strong className="me-2">{displayBonus(modifier.value)}</strong>}
-      {modifier.description && <span className="me-2 text-muted">{modifier.description}</span>}
+      {hasValue(modifier) && modifier.value && <strong className="me-2">{displayBonus(modifier.value)}</strong>}
+      {hasDescription(modifier) && modifier.description && (
+        <span className="me-2 text-muted">{modifier.description}</span>
+      )}
     </p>
   );
+}
+
+type ModifierWithValue = Extract<Modifier, { value: number }>;
+
+function hasValue(modifier: Modifier): modifier is ModifierWithValue {
+  return Object.prototype.hasOwnProperty.call(modifier, "value");
+}
+
+type ModifierWithName = Extract<Modifier, { name: string }>;
+
+function hasName(modifier: Modifier): modifier is ModifierWithName {
+  return Object.prototype.hasOwnProperty.call(modifier, "name");
+}
+
+type ModifierWithDescription = Extract<Modifier, { description: string }>;
+
+function hasDescription(modifier: Modifier): modifier is ModifierWithDescription {
+  return Object.prototype.hasOwnProperty.call(modifier, "description");
 }

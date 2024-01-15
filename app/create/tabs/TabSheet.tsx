@@ -2,7 +2,7 @@ import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
-import { Alignment, ModifierType } from "model";
+import { Alignment, ModifierType, ofType } from "model";
 import { CharacterProps } from "../Props";
 
 interface IValueComponentProps {
@@ -175,7 +175,7 @@ function CardKeyPoints() {
 }
 
 function CardSavingThrows({ character }: CharacterProps) {
-  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.enum.savingThrow);
+  const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.savingThrow));
   return (
     <Card>
       <Card.Header>
@@ -232,7 +232,7 @@ function CardWeapons() {
 }
 
 function CardAbilities({ character }: CharacterProps) {
-  const modifiers = character.getModifiers().filter((m) => m.type === ModifierType.enum.ability);
+  const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.ability));
   return (
     <Card data-testid="abilities">
       <Card.Header>

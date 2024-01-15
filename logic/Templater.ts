@@ -31,7 +31,7 @@ export class Templater {
     const result: Feature = {
       ...template,
       name: this.applyForString(template.name) ?? "",
-      description: this.applyForString(template.description),
+      description: template.description ? this.applyForString(template.description) : undefined,
       modifiers: [],
       category: template.category,
       evolutions: cleanEvolutions(template.evolutions) ?? {},
@@ -50,25 +50,47 @@ export class Templater {
       throw new Error(`Invalid modifier type: ${template.type}`);
     }
 
-    const type = template.type as ModifierType;
-    return {
-      ...template,
-      type,
-      target: this.applyForString(template.target),
-      description: this.applyForString(template.description),
-      value: this.applyForNumber(template.value),
-    };
+    switch (template.type) {
+      case ModifierType.enum.ability:
+      case ModifierType.enum.savingThrow:
+        return {
+          ...template,
+          description: this.applyForString(template.description),
+        };
+      case ModifierType.enum.classSkill:
+      case ModifierType.enum.skillRank:
+        return {
+          ...template,
+          target: this.applyForString(template.target),
+        };
+      case ModifierType.enum.featCount:
+      case ModifierType.enum.hitPoints:
+      case ModifierType.enum.initiative:
+      case ModifierType.enum.languageCount:
+        return {
+          ...template,
+          value: this.applyForNumber(template.value),
+        };
+      case ModifierType.enum.skill:
+        return {
+          ...template,
+          target: this.applyForString(template.target),
+          value: this.applyForNumber(template.value),
+        };
+      case ModifierType.enum.spell:
+      case ModifierType.enum.feat:
+      default:
+        return {
+          ...template,
+        };
+    }
   }
 
   convertString(text: string): string {
     return this.applyForString(text) ?? "";
   }
 
-  private applyForString(template: string | undefined): string | undefined {
-    if (typeof template === "undefined") {
-      return undefined;
-    }
-
+  private applyForString(template: string): string {
     let result = template;
     Object.keys(this.context).forEach((key) => {
       result = result.replaceAll(`<${key}>`, this.context[key]?.toString() ?? "");
@@ -77,10 +99,7 @@ export class Templater {
     return result;
   }
 
-  private applyForNumber(template: string | number | undefined): number | undefined {
-    if (typeof template === "undefined") {
-      return undefined;
-    }
+  private applyForNumber(template: string | number): number {
     if (typeof template === "number") {
       return template;
     }

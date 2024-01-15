@@ -408,7 +408,7 @@ export class CharacterPresenter {
       const modifiers = this.getModifiers();
 
       const classSkillsFromModifiers = modifiers
-        .filter((m) => m.type === "classSkill" && m.target)
+        .filter(ofType(ModifierType.enum.classSkill))
         .map((m) => m.target) as string[];
       this.cachedClassSkills = [...classSkillsFromModifiers, ...selectedClass.classSkills];
     }
@@ -476,9 +476,7 @@ export class CharacterPresenter {
     const skillRanks =
       selectedClass.skillRank +
       computeAbilityScoreModifier(this.getAbilityScores().int) +
-      this.getModifiers()
-        .filter((m) => m.type === "skillRank")
-        .reduce((acc, m) => acc + (m.value ?? 0), 0);
+      this.getModifiers().filter(ofType(ModifierType.enum.skillRank)).length;
 
     return skillRanks - Object.values(this.character.skillRanks).reduce((acc, v) => acc + v, 0);
   }

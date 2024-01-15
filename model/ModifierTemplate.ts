@@ -1,15 +1,43 @@
 import { z } from "zod";
 import { IModel } from "./IModel";
 import { ModifierType } from "./ModifierType";
+import {
+  AbilityModifier,
+  ClassSkillModifier,
+  FeatModifier,
+  SavingThrowModifier,
+  SkillRankModifier,
+  SpellModifier,
+} from "./Modifier";
 
-export const ModifierTemplate = IModel.extend({
-  type: z.union([z.string(), ModifierType]),
-  level: z.optional(z.number()),
-  name: z.optional(z.string()),
-  description: z.optional(z.string()),
-  target: z.optional(z.string()),
-  value: z.optional(z.union([z.string(), z.number()])),
-}).strict();
+export const SimpleModifierTemplate = IModel.extend({
+  type: z.enum([
+    ModifierType.enum.featCount,
+    ModifierType.enum.hitPoints,
+    ModifierType.enum.initiative,
+    ModifierType.enum.languageCount,
+  ]),
+  level: z.number().optional(),
+  value: z.union([z.string(), z.number()]),
+});
+
+export const SkillModifierTemplate = IModel.extend({
+  type: z.literal(ModifierType.enum.skill),
+  level: z.number().optional(),
+  target: z.string(),
+  value: z.union([z.string(), z.number()]),
+});
+
+export const ModifierTemplate = z.discriminatedUnion("type", [
+  AbilityModifier,
+  ClassSkillModifier,
+  FeatModifier,
+  SimpleModifierTemplate,
+  SavingThrowModifier,
+  SkillModifierTemplate,
+  SkillRankModifier,
+  SpellModifier,
+]);
 
 export type ModifierTemplate = z.infer<typeof ModifierTemplate>;
 
