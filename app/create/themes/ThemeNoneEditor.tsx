@@ -15,7 +15,7 @@ export default function ThemeNoneEditor({ character }: CharacterProps) {
 
   return (
     <>
-      <Form.FloatingLabel controlId="noThemeAbility" label="Choix de la caractérisque">
+      <Form.FloatingLabel controlId="noThemeAbility" label="Caractérisque du thème">
         <Form.Select value={character.getNoThemeAbilityScore() ?? ""} onChange={handleNoThemeAbilityChange}>
           {data.abilityScores.map((abilityScore) => (
             <option key={abilityScore.id} value={abilityScore.id}>

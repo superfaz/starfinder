@@ -62,7 +62,7 @@ export default function ThemeScholarEditor({ character }: CharacterProps) {
 
   return (
     <>
-      <Form.FloatingLabel controlId="scholarSkill" label="Choix de la compétence de classe">
+      <Form.FloatingLabel controlId="scholarSkill" label="Compétence de classe">
         <Form.Select value={selectedDetails.skill} onChange={handleScholarSkillChange}>
           {data.skills
             .filter((s) => s.id === "life" || s.id === "phys")
@@ -73,7 +73,7 @@ export default function ThemeScholarEditor({ character }: CharacterProps) {
             ))}
         </Form.Select>
       </Form.FloatingLabel>
-      <Form.FloatingLabel controlId="scholarSpecialization" label="Choix de la spécialité">
+      <Form.FloatingLabel controlId="scholarSpecialization" label="Spécialité">
         <Form.Select value={specialization} onChange={handleScholarSpecializationChange}>
           <option value=""></option>
           {themeDetails.values[selectedDetails.skill].map((d) => (

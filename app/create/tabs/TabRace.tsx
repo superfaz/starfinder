@@ -64,8 +64,7 @@ export function RaceSelection({ character }: CharacterProps) {
                     ([key, value]) =>
                       value && (
                         <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                          {findOrError(data.abilityScores, (a) => a.id === key).code}
-                          {displayBonus(value)}
+                          {findOrError(data.abilityScores, (a) => a.id === key).code} {displayBonus(value)}
                         </Badge>
                       )
                   )}
