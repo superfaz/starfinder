@@ -8,9 +8,11 @@ export const ModifierType = z.enum([
   "hitPoints",
   "initiative",
   "languageCount",
+  "rank",
+  "rankSkill",
   "savingThrow",
   "skill",
-  "skillRank",
+  "speed",
   "spell",
 ]);
 

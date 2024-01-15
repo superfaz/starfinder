@@ -11,10 +11,12 @@ const displayLabelsForType: Record<ModifierType, string> = {
   classSkill: "Compétence de classe",
   featCount: "Nombre de Dons",
   feat: "Don",
-  skillRank: "Rang de compétence",
+  rank: "Rang de compétence",
+  rankSkill: "Rang de compétence",
   spell: "Sort",
   languageCount: "Nombre de langue",
   initiative: "Initiative",
+  speed: "Vitesse de déplacement",
 };
 
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
@@ -22,7 +24,7 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
 
   const skills = data.skills;
   let skillName: string | undefined;
-  if (modifier.type === "skill" || modifier.type === "classSkill" || modifier.type === "skillRank") {
+  if (modifier.type === "skill" || modifier.type === "classSkill" || modifier.type === "rankSkill") {
     const target = modifier.target;
     if (target === undefined) {
       skillName = undefined;

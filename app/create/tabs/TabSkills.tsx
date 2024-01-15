@@ -117,7 +117,7 @@ export function Skills({ character }: CharacterProps) {
 }
 
 export function SkillsModifiers({ character }: CharacterProps) {
-  const types = ["skill", "classSkill", "skillRank"];
+  const types = ["skill", "classSkill", "rankSkill"];
   const features = [
     ...character.getSelectedRaceTraits().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
     ...character.getThemeFeatures().filter((f) => f.modifiers.some((m) => types.includes(m.type))),

@@ -58,7 +58,7 @@ export class Templater {
           description: this.applyForString(template.description),
         };
       case ModifierType.enum.classSkill:
-      case ModifierType.enum.skillRank:
+      case ModifierType.enum.rankSkill:
         return {
           ...template,
           target: this.applyForString(template.target),
@@ -67,6 +67,8 @@ export class Templater {
       case ModifierType.enum.hitPoints:
       case ModifierType.enum.initiative:
       case ModifierType.enum.languageCount:
+      case ModifierType.enum.rank:
+      case ModifierType.enum.speed:
         return {
           ...template,
           value: this.applyForNumber(template.value),

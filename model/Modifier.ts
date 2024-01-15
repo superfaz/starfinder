@@ -19,6 +19,13 @@ export const FeatModifier = IModel.extend({
   type: z.literal(ModifierType.enum.feat),
   level: z.number().optional(),
   name: z.string(),
+  extra: z.string().optional(),
+});
+
+export const RankSkillModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.rankSkill),
+  level: z.number().optional(),
+  target: z.string(),
 });
 
 export const SimpleModifier = IModel.extend({
@@ -27,6 +34,8 @@ export const SimpleModifier = IModel.extend({
     ModifierType.enum.hitPoints,
     ModifierType.enum.initiative,
     ModifierType.enum.languageCount,
+    ModifierType.enum.rank,
+    ModifierType.enum.speed,
   ]),
   level: z.number().optional(),
   value: z.number(),
@@ -46,26 +55,21 @@ export const SkillModifier = IModel.extend({
   value: z.number(),
 });
 
-export const SkillRankModifier = IModel.extend({
-  type: z.literal(ModifierType.enum.skillRank),
-  level: z.number().optional(),
-  target: z.string(),
-});
-
 export const SpellModifier = IModel.extend({
   type: z.literal(ModifierType.enum.spell),
   level: z.number().optional(),
   name: z.string(),
+  extra: z.string().optional(),
 });
 
 export const Modifier = z.discriminatedUnion("type", [
   AbilityModifier,
   ClassSkillModifier,
   FeatModifier,
+  RankSkillModifier,
   SimpleModifier,
   SavingThrowModifier,
   SkillModifier,
-  SkillRankModifier,
   SpellModifier,
 ]);
 

@@ -418,7 +418,7 @@ export class CharacterPresenter {
 
   getSkills(): SkillPresenter[] {
     const skillModifiers = this.getModifiers().filter(ofType(ModifierType.enum.skill));
-    const rankModifiers = this.getModifiers().filter(ofType(ModifierType.enum.skillRank));
+    const rankModifiers = this.getModifiers().filter(ofType(ModifierType.enum.rankSkill));
     return [...this.data.skills]
       .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {
@@ -473,10 +473,9 @@ export class CharacterPresenter {
       return 0;
     }
 
-    const skillRanks =
-      selectedClass.skillRank +
-      computeAbilityScoreModifier(this.getAbilityScores().int) +
-      this.getModifiers().filter(ofType(ModifierType.enum.skillRank)).length;
+    // TODO: Check rank calculation
+    const ranks = this.getModifiers().filter(ofType(ModifierType.enum.rank)).length;
+    const skillRanks = selectedClass.skillRank + computeAbilityScoreModifier(this.getAbilityScores().int) + ranks;
 
     return skillRanks - Object.values(this.character.skillRanks).reduce((acc, v) => acc + v, 0);
   }

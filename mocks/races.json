@@ -242,7 +242,7 @@
         "id": "ceb2713a-636e-4a17-87c2-af82ee5a4a38",
         "name": "Compétent",
         "level": 1,
-        "modifiers": [{ "id": "25a4565e-8ced-434d-8743-87aac1c0ced9", "type": "skillRank", "value": 1 }]
+        "modifiers": [{ "id": "25a4565e-8ced-434d-8743-87aac1c0ced9", "type": "rank", "value": 1 }]
       }
     ],
     "secondaryTraits": [
@@ -277,6 +277,7 @@
           {
             "id": "ce780398-9d09-4eba-afac-feb0b7ae260a",
             "type": "savingThrow",
+            "name": "Fortifié",
             "description": "+2 à leurs tests de Vigueur contre les effets des dangers de l’environnement et des radiations."
           },
           {

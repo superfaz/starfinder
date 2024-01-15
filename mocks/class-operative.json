@@ -29,13 +29,13 @@
             },
             {
               "id": "4bc4c85d-fb29-4fd4-b7ba-6d6a003a24e5",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "acro",
               "value": 1
             },
             {
               "id": "91b80d8d-c5b3-4f0c-b1e6-a002455650ab",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "athl",
               "value": 1
             }
@@ -85,13 +85,13 @@
             },
             {
               "id": "2aaa4f87-fd2e-428d-bb22-1f395ce61b17",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "cult",
               "value": 1
             },
             {
               "id": "6f657915-d6cc-45e4-8d18-6503f82323bd",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "sens",
               "value": 1
             },
@@ -148,13 +148,13 @@
             },
             {
               "id": "58d9bf2d-016c-4bbf-a6a5-93341bfdfcd9",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "bluf",
               "value": 1
             },
             {
               "id": "e7ff04a9-da69-4f5a-a4ba-55712fa058da",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "disg",
               "value": 1
             },
@@ -209,13 +209,13 @@
             },
             {
               "id": "12bb4924-4359-4e7a-9390-7f55779c8ef3",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "cult",
               "value": 1
             },
             {
               "id": "6c40cf60-9c5c-49fe-98f2-496a40a65b5c",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "surv",
               "value": 1
             },
@@ -271,13 +271,13 @@
             },
             {
               "id": "c786cca7-34e7-4f56-98b8-57f2c2b3fc9a",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "acro",
               "value": 1
             },
             {
               "id": "ff530f77-c7c8-40f0-a3c6-a5cf77096b12",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "stea",
               "value": 1
             },
@@ -334,13 +334,13 @@
             },
             {
               "id": "faaa77ce-fb4b-46f1-9498-bec83292c352",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "comp",
               "value": 1
             },
             {
               "id": "3c4a28eb-4c0d-4bf0-838a-fe1e6082bffe",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "engi",
               "value": 1
             },
@@ -396,13 +396,13 @@
             },
             {
               "id": "292d46db-3a69-42f9-8480-4a2205e96060",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "pers",
               "value": 1
             },
             {
               "id": "b929496f-cca5-4b1c-85f5-3eacefeb45e0",
-              "type": "skillRank",
+              "type": "rankSkill",
               "target": "slei",
               "value": 1
             }

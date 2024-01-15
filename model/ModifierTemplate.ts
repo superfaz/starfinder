@@ -5,8 +5,8 @@ import {
   AbilityModifier,
   ClassSkillModifier,
   FeatModifier,
+  RankSkillModifier,
   SavingThrowModifier,
-  SkillRankModifier,
   SpellModifier,
 } from "./Modifier";
 
@@ -16,6 +16,8 @@ export const SimpleModifierTemplate = IModel.extend({
     ModifierType.enum.hitPoints,
     ModifierType.enum.initiative,
     ModifierType.enum.languageCount,
+    ModifierType.enum.rank,
+    ModifierType.enum.speed,
   ]),
   level: z.number().optional(),
   value: z.union([z.string(), z.number()]),
@@ -32,10 +34,10 @@ export const ModifierTemplate = z.discriminatedUnion("type", [
   AbilityModifier,
   ClassSkillModifier,
   FeatModifier,
+  RankSkillModifier,
   SimpleModifierTemplate,
   SavingThrowModifier,
   SkillModifierTemplate,
-  SkillRankModifier,
   SpellModifier,
 ]);
 
