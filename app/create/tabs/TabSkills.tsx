@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { Badge, Card, Col, Form, Row, Stack } from "react-bootstrap";
-import { displayBonus, findOrError } from "app/helpers";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { displayBonus } from "app/helpers";
+import { SkillPresenter, mutators, useAppDispatch } from "logic";
 import { CharacterProps } from "../Props";
 import ModifierComponent from "../ModifierComponent";
 
@@ -11,8 +11,55 @@ const categories: Record<string, string> = {
   su: "SUR",
 };
 
+type SkillProps = {
+  skill: SkillPresenter;
+  availableSkillRanks: number;
+  onCheck: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+
+function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
+  return (
+    <Form.Group key={skill.id} as={Row} controlId={skill.id} data-testid={skill.id}>
+      <Form.Label column>
+        <span className="me-1">{skill.fullName}</span>
+        {skill.definition.trainedOnly && (
+          <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
+        )}
+        {skill.definition.armorCheckPenalty && (
+          <i className="bi bi-shield-shaded text-secondary me-1" title="Le malus d’armure aux tests s’applique"></i>
+        )}
+      </Form.Label>
+      <Col lg={2} className="pt-2 text-center">
+        {skill.isClassSkill && (
+          <Form.Check
+            type="checkbox"
+            id={skill.id + "-class"}
+            checked
+            disabled
+            aria-label={skill.fullName + " - Compétence de classe"}
+          />
+        )}
+      </Col>
+      <Col lg={2} className="pt-2 text-center">
+        <Form.Check
+          type="checkbox"
+          id={skill.id}
+          disabled={skill.ranks === 0 && availableSkillRanks <= 0}
+          checked={skill.ranks > 0}
+          onChange={onCheck}
+        />
+      </Col>
+      <Col lg={2} className="pt-2 text-center">
+        {skill.bonus !== undefined && (
+          <Badge bg={skill.bonus > 0 ? "primary" : "secondary"}>{displayBonus(skill.bonus)}</Badge>
+        )}
+        {skill.bonus === undefined && "-"}
+      </Col>
+    </Form.Group>
+  );
+}
+
 export function Skills({ character }: CharacterProps) {
-  const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
   const selectedRace = character.getRace();
@@ -62,55 +109,9 @@ export function Skills({ character }: CharacterProps) {
         <Col lg={2}></Col>
       </Row>
 
-      {character.getSkills().map((skill) => {
-        const abilityCode = skill.definition.abilityScore
-          ? findOrError(data.abilityScores, (a) => a.id === skill.definition.abilityScore).code
-          : "";
-        const skillFullName = abilityCode ? `${skill.definition.name} (${abilityCode})` : skill.definition.name;
-
-        return (
-          <Form.Group key={skill.id} as={Row} controlId={skill.id} data-testid={skill.id}>
-            <Form.Label column>
-              <span className="me-1">{skillFullName}</span>
-              {skill.definition.trainedOnly && (
-                <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
-              )}
-              {skill.definition.armorCheckPenalty && (
-                <i
-                  className="bi bi-shield-shaded text-secondary me-1"
-                  title="Le malus d’armure aux tests s’applique"
-                ></i>
-              )}
-            </Form.Label>
-            <Col lg={2} className="pt-2 text-center">
-              {skill.isClassSkill && (
-                <Form.Check
-                  type="checkbox"
-                  id={skill.id + "-class"}
-                  checked
-                  disabled
-                  aria-label={skillFullName + " - Compétence de classe"}
-                />
-              )}
-            </Col>
-            <Col lg={2} className="pt-2 text-center">
-              <Form.Check
-                type="checkbox"
-                id={skill.id}
-                disabled={skill.ranks === 0 && availableSkillRanks <= 0}
-                checked={skill.ranks > 0}
-                onChange={handleSkillRankChange}
-              />
-            </Col>
-            <Col lg={2} className="pt-2 text-center">
-              {skill.bonus !== undefined && (
-                <Badge bg={skill.bonus > 0 ? "primary" : "secondary"}>{displayBonus(skill.bonus)}</Badge>
-              )}
-              {skill.bonus === undefined && "-"}
-            </Col>
-          </Form.Group>
-        );
-      })}
+      {character.getSkills().map((skill) => (
+        <Skill key={skill.id} skill={skill} availableSkillRanks={availableSkillRanks} onCheck={handleSkillRankChange} />
+      ))}
     </Stack>
   );
 }

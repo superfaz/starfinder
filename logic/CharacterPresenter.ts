@@ -1,5 +1,6 @@
 import { IClientDataSet } from "data";
 import {
+  AbilityScore,
   Avatar,
   Character,
   Class,
@@ -9,10 +10,12 @@ import {
   Feature,
   IModel,
   Modifier,
+  ModifierType,
   Race,
   SkillDefinition,
   Theme,
   Variant,
+  ofType,
 } from "model";
 import { Templater, cleanEvolutions } from ".";
 import { getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
@@ -74,6 +77,15 @@ export function computeMinimalAbilityScores(data: IClientDataSet, character: Cha
  */
 export function computeAbilityScoreModifier(abilityScore: number): number {
   return Math.floor((abilityScore - 10) / 2);
+}
+
+export interface SkillPresenter {
+  id: string;
+  fullName: string;
+  definition: SkillDefinition;
+  ranks: number;
+  isClassSkill: boolean;
+  bonus: number | undefined;
 }
 
 export class CharacterPresenter {
@@ -404,14 +416,9 @@ export class CharacterPresenter {
     return this.cachedClassSkills;
   }
 
-  getSkills(): {
-    id: string;
-    definition: SkillDefinition;
-    ranks: number;
-    isClassSkill: boolean;
-    bonus: number | undefined;
-  }[] {
-    const skillModifiers = this.getModifiers().filter((m) => m.type === "skill");
+  getSkills(): SkillPresenter[] {
+    const skillModifiers = this.getModifiers().filter(ofType(ModifierType.enum.skill));
+    const rankModifiers = this.getModifiers().filter(ofType(ModifierType.enum.skillRank));
     return [...this.data.skills]
       .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {
@@ -422,12 +429,15 @@ export class CharacterPresenter {
         const abilityScoreModifier = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
 
         // TODO: Add bonus from modifiers
-        const bonusFromModifiers = skillModifiers
+        const bonusFromSkillModifiers = skillModifiers
           .filter((m) => m.target === s.id || m.target === "all")
-          .reduce((acc, m) => acc + (m.value ?? 0), 0);
+          .reduce((acc, m) => acc + m.value, 0);
+
+        const bonusFromRankModifiers = rankModifiers.filter((m) => m.target === s.id).length;
 
         function computeSkillBonus() {
-          const base = ranks + abilityScoreModifier + bonusFromModifiers + bonusDoubleClassSkill;
+          const base =
+            ranks + abilityScoreModifier + bonusFromSkillModifiers + bonusFromRankModifiers + bonusDoubleClassSkill;
           if (isClassSkill && isTrained) {
             return base + 3;
           } else if (!isTrained && s.trainedOnly) {
@@ -437,7 +447,23 @@ export class CharacterPresenter {
           }
         }
 
-        return { id: s.id, definition: s, ranks, isClassSkill, bonus: computeSkillBonus() };
+        function computeFullName(abilityScores: AbilityScore[]) {
+          if (!s.abilityScore) {
+            return s.name;
+          }
+
+          const abilityCode = findOrError(abilityScores, (a) => a.id === s.abilityScore).code;
+          return `${s.name} (${abilityCode})`;
+        }
+
+        return {
+          id: s.id,
+          fullName: computeFullName(this.data.abilityScores),
+          definition: s,
+          ranks,
+          isClassSkill,
+          bonus: computeSkillBonus(),
+        };
       });
   }
 
