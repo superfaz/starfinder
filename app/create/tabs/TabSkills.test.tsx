@@ -58,20 +58,14 @@ describe("TabSkills", () => {
       await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
       await user.click(screen.getByRole("button", { name: referential.title }));
 
-      const content = within(document.querySelector("#content") as HTMLElement);
-
       for (const skill of [...klass.classSkills, ...theme.classSkills]) {
-        expect(content.queryByRole("checkbox", { name: skill })).not.toBeNull();
-        expect(content.getByRole("checkbox", { name: skill })).toBeChecked();
+        const control = screen.queryByRole("checkbox", { name: skill + " - Compétence de classe" });
+        expect(control).not.toBeNull();
+        expect(control).toBeChecked();
+        expect(control).toBeDisabled();
       }
     }
   );
-
-  test("add +1 when the theme skill is already a class skill", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    const view = within(content.getByTestId("surv"));
-    expect(view.getByText("+1")).not.toBeNull();
-  });
 
   test("displays modifiers", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
@@ -82,5 +76,20 @@ describe("TabSkills", () => {
     } else {
       expect(true).toBeFalsy();
     }
+  });
+
+  test("adds +1 when the theme skill is already a class skill", async () => {
+    const content = within(document.querySelector("#content") as HTMLElement);
+    const view = within(content.getByTestId("surv"));
+    expect(view.getByText("+1")).not.toBeNull();
+  });
+
+  test.failing("applies 'skill' modifiers", async () => {
+    // Sens motive is expected to be at -1:
+    //   Wisdom: 10       --> +0
+    //   Race: Android    --> -2 (sens)
+    //   Class: Operative --> +1 (all)
+    const view = within(screen.getByTestId("sens"));
+    expect(view.getByText("-1")).not.toBeNull();
   });
 });
