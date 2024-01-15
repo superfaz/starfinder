@@ -5,6 +5,7 @@ import {
   Class,
   ClassEnvoy,
   ClassOperative,
+  ClassSoldier,
   Feature,
   IModel,
   Modifier,
@@ -14,7 +15,7 @@ import {
   Variant,
 } from "model";
 import { Templater, cleanEvolutions } from ".";
-import { getOperativeFeatureTemplates } from "./ClassPresenter";
+import { getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
 import { findOrError } from "app/helpers";
 
 /**
@@ -274,6 +275,15 @@ export class CharacterPresenter {
         const templater = new Templater({
           ...context,
           ...(selectedSpecialization?.variables ?? {}),
+          ...(cleanEvolutions(f.evolutions)[level] ?? {}),
+        });
+        return templater.convertFeature(f);
+      });
+    } else if (classDetails.id === "soldier") {
+      return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {
+        const level = f.level ?? 1;
+        const templater = new Templater({
+          ...context,
           ...(cleanEvolutions(f.evolutions)[level] ?? {}),
         });
         return templater.convertFeature(f);

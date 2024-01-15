@@ -352,7 +352,10 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
   // Special cases - prepare the associated options
   if (classId === "soldier") {
     // Class: Soldier
-    result.classOptions = { soldierAbilityScore: AbilityScoreIds.str };
+    result.classOptions = {
+      soldierAbilityScore: AbilityScoreIds.str,
+      soldierPrimaryStyle: "5103271c-c10e-4afc-8750-fb0e3e22c7d5",
+    };
   } else if (classId === "operative") {
     // Class: Operative
     result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };

@@ -42,8 +42,9 @@ function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
   }
 
   switch (selectedClass.id) {
-    case "operative":
     case "envoy":
+    case "operative":
+    case "soldier":
       return <LazyGenericClassDetails character={character} classId={selectedClass.id} />;
 
     default:

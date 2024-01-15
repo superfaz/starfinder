@@ -36,7 +36,7 @@ describe("TabClass", () => {
     { id: "operative", expected: "Avantage de l'agent (EXT)" },
     { id: "soldier", expected: "Don de combat" },
   ];
-  test.each(classes.filter((k) => k.id !== "soldier"))("displays details for class '$id'", async (klass) => {
+  test.each(classes)("displays details for class '$id'", async (klass) => {
     const user = userEvent.setup();
     const content = within(document.querySelector("#content") as HTMLElement);
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
