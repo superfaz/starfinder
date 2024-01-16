@@ -46,7 +46,6 @@ describe("TabClass", () => {
       throw new Error("view is null");
     }
 
-    screen.debug(view);
     expect(within(view).queryByText(klass.expected)).not.toBeNull();
   });
 });
