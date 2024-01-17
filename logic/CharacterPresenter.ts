@@ -84,6 +84,7 @@ export interface SkillPresenter {
   fullName: string;
   definition: SkillDefinition;
   ranks: number;
+  rankForced: boolean;
   isClassSkill: boolean;
   bonus: number | undefined;
 }
@@ -425,6 +426,7 @@ export class CharacterPresenter {
         const ranks = this.character.skillRanks[s.id] ?? 0;
         const isTrained = this.character.skillRanks[s.id] !== undefined;
         const isClassSkill = this.getClassSkills().includes(s.id);
+        const rankForced = rankModifiers.some((m) => m.target === s.id);
         const bonusDoubleClassSkill = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
         const abilityScoreModifier = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
 
@@ -462,6 +464,7 @@ export class CharacterPresenter {
           definition: s,
           ranks,
           isClassSkill,
+          rankForced,
           bonus: computeSkillBonus(),
         };
       });

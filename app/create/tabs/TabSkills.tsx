@@ -41,13 +41,16 @@ function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
         )}
       </Col>
       <Col lg={2} className="pt-2 text-center">
-        <Form.Check
-          type="checkbox"
-          id={skill.id}
-          disabled={skill.ranks === 0 && availableSkillRanks <= 0}
-          checked={skill.ranks > 0}
-          onChange={onCheck}
-        />
+        {skill.rankForced && <Form.Check type="checkbox" id={skill.id} disabled={true} checked={true} />}
+        {!skill.rankForced && (
+          <Form.Check
+            type="checkbox"
+            id={skill.id}
+            disabled={skill.ranks === 0 && availableSkillRanks <= 0}
+            checked={skill.ranks > 0}
+            onChange={onCheck}
+          />
+        )}
       </Col>
       <Col lg={2} className="pt-2 text-center">
         {skill.bonus !== undefined && (
@@ -100,6 +103,7 @@ export function Skills({ character }: CharacterProps) {
         <Col lg={2} className="text-center"></Col>
         <Col lg={2} className="text-center">
           <Form.Control
+            title="Rangs de compétence à distribuer"
             type="text"
             className={"text-center " + (availableSkillRanks < 0 && "bg-danger")}
             value={availableSkillRanks}

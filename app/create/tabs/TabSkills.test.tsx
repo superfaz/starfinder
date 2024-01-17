@@ -97,11 +97,23 @@ describe("TabSkills", () => {
     expect(view.getByText("-1")).not.toBeNull();
   });
 
-  test.failing("applies 'rank' modifiers", async () => {
-    const view = within(screen.getByTestId("acro"));
+  test("calculates skill rank points", async () => {
+    // skill rank points is expected to be 9:
+    //   Class: Operative --> +8
+    //   Intelligence: 12 --> +1
+    const control = screen.getByRole("textbox", {
+      name: /rangs de compétence à distribuer/i,
+    }) as HTMLInputElement;
+
+    expect(control).not.toBeNull();
+    expect(control.value).toBe("9");
+  });
+
+  test.each(["acro"])("applies 'rank' modifiers for '%s'", async (skill) => {
+    const view = within(screen.getByTestId(skill));
     const control = view.queryByRole("checkbox", { name: /compétence de classe/i });
     expect(control).not.toBeNull();
-    expect(control).not.toBeChecked();
-    expect(control).not.toBeDisabled();
+    expect(control).toBeChecked();
+    expect(control).toBeDisabled();
   });
 });
