@@ -24,7 +24,12 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
 
   const skills = data.skills;
   let skillName: string | undefined;
-  if (modifier.type === "skill" || modifier.type === "classSkill" || modifier.type === "rankSkill") {
+  if (
+    modifier.type === "skill" ||
+    modifier.type === "classSkill" ||
+    modifier.type === "rankSkill" ||
+    modifier.type === "feat"
+  ) {
     const target = modifier.target;
     if (target === undefined) {
       skillName = undefined;
@@ -37,6 +42,9 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
     }
   }
 
+  if (modifier.type === "feat") {
+    console.log(modifier);
+  }
   return (
     <p>
       <Badge bg="primary">{displayLabelsForType[modifier.type] ?? ""}</Badge>
@@ -47,6 +55,7 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       {hasDescription(modifier) && modifier.description && (
         <span className="me-2 text-muted">{modifier.description}</span>
       )}
+      {hasExtra(modifier) && modifier.extra && <span className="me-2 text-muted">{modifier.extra}</span>}
     </p>
   );
 }
@@ -67,4 +76,10 @@ type ModifierWithDescription = Extract<Modifier, { description: string }>;
 
 function hasDescription(modifier: Modifier): modifier is ModifierWithDescription {
   return Object.prototype.hasOwnProperty.call(modifier, "description");
+}
+
+type ModifierWithExtra = Extract<Modifier, { extra?: string }>;
+
+function hasExtra(modifier: Modifier): modifier is ModifierWithExtra {
+  return Object.prototype.hasOwnProperty.call(modifier, "extra");
 }

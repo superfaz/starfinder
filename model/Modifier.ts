@@ -19,6 +19,7 @@ export const FeatModifier = IModel.extend({
   type: z.literal(ModifierType.enum.feat),
   level: z.number().optional(),
   name: z.string(),
+  target: z.string().optional(),
   extra: z.string().optional(),
 });
 
