@@ -42,9 +42,6 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
     }
   }
 
-  if (modifier.type === "feat") {
-    console.log(modifier);
-  }
   return (
     <p>
       <Badge bg="primary">{displayLabelsForType[modifier.type] ?? ""}</Badge>
