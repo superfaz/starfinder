@@ -36,12 +36,12 @@ describe("TabClass", () => {
     { id: "operative", expected: "Avantage de l'agent (EXT)" },
     { id: "soldier", expected: "Don de combat" },
   ];
-  test.failing.each(classes)("displays details for class '$id'", async (klass) => {
+  test.each(classes)("displays details for class '$id'", async (klass) => {
     const user = userEvent.setup();
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
 
     const content = within(document.querySelector("#content") as HTMLElement);
-    const view = content.getByRole("heading", { level: 2, name: "Classe" }).parentElement;
+    const view = content.getByRole("heading", { level: 2, name: "Abilités de classe" }).parentElement;
     if (view === null) {
       throw new Error("view is null");
     }
