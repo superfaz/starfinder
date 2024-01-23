@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ICodedModel } from "./ICodedModel";
 
-const AbilityScoreId = z.enum(["str", "dex", "con", "int", "wis", "cha"]);
+export const AbilityScoreId = z.enum(["str", "dex", "con", "int", "wis", "cha"]);
 
 export const AbilityScore = ICodedModel.extend({
   id: AbilityScoreId,

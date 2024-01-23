@@ -16,6 +16,7 @@ export * from "./Modifier";
 export * from "./ModifierTemplate";
 export * from "./ModifierType";
 export * from "./Prerequisite";
+export * from "./PrerequisiteType";
 export * from "./Race";
 export * from "./SkillDefinition";
 export * from "./Theme";
