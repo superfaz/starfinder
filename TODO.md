@@ -42,6 +42,34 @@ Caractérisques / Méthode de génération : Aléatoire / A implémenter
 
 Caractérisques / Méthode de génération : Rapide / A implémenter
 
+Dons : Combat adaptatif / Sélection des trois dons
+
+Dons : Compétence synergique / Sélection des deux compétences
+
+Dons : Compétence synergique / Gestion des bonus (compétences de classe ou +2)
+
+Dons : Connexion limitée / Sélection et ajout des sorts
+
+Dons : Magie renforcée / Gestion des évolutions par niveau
+
+Dons : Pouvoir psychique / Choix des sorts
+
+Dons : Pouvoir psychique majeur / Choix des sorts
+
+Dons : Pouvoir psychique mineur / Choix des sorts
+
+Dons : Science du combat à mains nues / Gestion de l'évolution par niveau
+
+Dons : Spécialisation martiale / Gestion des armes de corps à corps d'agent
+
+Dons : Spécialisation martiale / Gestion des dégâts pour les armes légères
+
+Dons : Spécialisation polyvalente / Impact
+
+Dons : Technomancien amateur / Choix des sorts
+
+Dons : Tir de repli / Gestion de la feinte offensive
+
 ## Level increase
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
