@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ModifierType = z.enum([
   "ability",
+  "attack",
   "classSkill",
   "featCount",
   "feat",
@@ -10,10 +11,12 @@ export const ModifierType = z.enum([
   "languageCount",
   "rank",
   "rankSkill",
+  "resolve",
   "savingThrow",
   "skill",
   "speed",
   "spell",
+  "stamina",
 ]);
 
 export type ModifierType = z.infer<typeof ModifierType>;

@@ -30,24 +30,27 @@ export const RankSkillModifier = IModel.extend({
   target: z.string(),
 });
 
-export const SimpleModifier = IModel.extend({
-  type: z.enum([
-    ModifierType.enum.featCount,
-    ModifierType.enum.hitPoints,
-    ModifierType.enum.initiative,
-    ModifierType.enum.languageCount,
-    ModifierType.enum.rank,
-    ModifierType.enum.speed,
-  ]),
-  level: z.number().optional(),
-  value: z.number(),
-});
-
 export const SavingThrowModifier = IModel.extend({
   type: z.literal(ModifierType.enum.savingThrow),
   level: z.number().optional(),
   name: z.string(),
   description: Description,
+});
+
+export const SimpleModifier = IModel.extend({
+  type: z.enum([
+    ModifierType.enum.attack,
+    ModifierType.enum.featCount,
+    ModifierType.enum.hitPoints,
+    ModifierType.enum.initiative,
+    ModifierType.enum.languageCount,
+    ModifierType.enum.rank,
+    ModifierType.enum.resolve,
+    ModifierType.enum.speed,
+    ModifierType.enum.stamina,
+  ]),
+  level: z.number().optional(),
+  value: z.number(),
 });
 
 export const SkillModifier = IModel.extend({
@@ -60,7 +63,7 @@ export const SkillModifier = IModel.extend({
 export const SpellModifier = IModel.extend({
   type: z.literal(ModifierType.enum.spell),
   level: z.number().optional(),
-  name: z.string(),
+  target: z.string(),
   extra: z.string().optional(),
 });
 

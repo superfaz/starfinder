@@ -12,12 +12,15 @@ import {
 
 export const SimpleModifierTemplate = IModel.extend({
   type: z.enum([
+    ModifierType.enum.attack,
     ModifierType.enum.featCount,
     ModifierType.enum.hitPoints,
     ModifierType.enum.initiative,
     ModifierType.enum.languageCount,
     ModifierType.enum.rank,
+    ModifierType.enum.resolve,
     ModifierType.enum.speed,
+    ModifierType.enum.stamina,
   ]),
   level: z.number().optional(),
   value: z.union([z.string(), z.number()]),
