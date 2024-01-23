@@ -2,12 +2,13 @@ import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { ModifierTemplate } from "./ModifierTemplate";
 import { FeatureCategory } from "./Feature";
+import { Description } from "./helper";
 
 /**
  * Represents a racial trait or a thematic or a class feature that can be applied to a character.
  */
 export const FeatureTemplate = INamedModel.extend({
-  description: z.optional(z.string()),
+  description: z.optional(Description),
   modifiers: z.optional(z.array(ModifierTemplate)),
   level: z.number(),
 

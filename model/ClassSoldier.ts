@@ -2,9 +2,10 @@ import { z } from "zod";
 import { FeatureTemplate } from "./FeatureTemplate";
 import { IModel } from "./IModel";
 import { INamedModel } from "./INamedModel";
+import { Description } from "./helper";
 
 export const ClassSoldierStyle = INamedModel.extend({
-  description: z.string(),
+  description: Description,
   features: z.array(FeatureTemplate),
 });
 

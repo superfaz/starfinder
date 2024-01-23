@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { Modifier } from "./Modifier";
+import { Description } from "./helper";
 
 export const FeatureCategory = z.enum(["ex", "ma", "su"]);
 
@@ -8,7 +9,7 @@ export const FeatureCategory = z.enum(["ex", "ma", "su"]);
  * Represents a racial trait as well as a thematic or a class feature that can be applied to a character.
  */
 export const Feature = INamedModel.extend({
-  description: z.optional(z.string()),
+  description: z.optional(Description),
   modifiers: z.array(Modifier),
   level: z.number(),
   category: z.optional(FeatureCategory),

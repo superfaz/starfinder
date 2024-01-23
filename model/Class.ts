@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
+import { Description } from "./helper";
 
 export const Class = INamedModel.extend({
-  description: z.string(),
+  description: Description,
   refs: z.array(z.string()),
   hitPoints: z.number(),
   staminaPoints: z.number(),

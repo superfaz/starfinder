@@ -2,9 +2,10 @@ import { z } from "zod";
 import { FeatureTemplate } from "./FeatureTemplate";
 import { IModel } from "./IModel";
 import { INamedModel } from "./INamedModel";
+import { Description } from "./helper";
 
 export const ClassOperativeSpecialization = INamedModel.extend({
-  description: z.string(),
+  description: Description,
   variables: z.record(z.union([z.string(), z.number()])),
   features: z.array(FeatureTemplate),
 });

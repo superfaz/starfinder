@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
+import { Description } from "./helper";
 
 export const Variant = INamedModel.extend({
-  description: z.string(),
+  description: z.optional(Description),
   abilityScores: z.record(z.union([z.number(), z.undefined()])),
 });
 

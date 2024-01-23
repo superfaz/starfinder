@@ -1,9 +1,10 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { FeatureTemplate } from "./FeatureTemplate";
+import { Description } from "./helper";
 
 export const Theme = INamedModel.extend({
-  description: z.string(),
+  description: Description,
   refs: z.array(z.string()),
   abilityScores: z.record(z.union([z.undefined(), z.number()])),
   features: z.array(FeatureTemplate),
