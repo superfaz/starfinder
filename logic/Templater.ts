@@ -63,12 +63,15 @@ export class Templater {
           ...template,
           target: this.applyForString(template.target),
         };
+      case ModifierType.enum.attack:
       case ModifierType.enum.featCount:
       case ModifierType.enum.hitPoints:
       case ModifierType.enum.initiative:
       case ModifierType.enum.languageCount:
       case ModifierType.enum.rank:
+      case ModifierType.enum.resolve:
       case ModifierType.enum.speed:
+      case ModifierType.enum.stamina:
         return {
           ...template,
           value: this.applyForNumber(template.value),

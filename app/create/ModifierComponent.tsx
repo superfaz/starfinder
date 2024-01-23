@@ -4,19 +4,22 @@ import { useAppSelector } from "logic";
 import { Modifier, ModifierType } from "model";
 
 const displayLabelsForType: Record<ModifierType, string> = {
+  attack: "Bonus de base à l’attaque",
   ability: "Pouvoir",
-  hitPoints: "Points de vie",
-  savingThrow: "Jets de sauvegarde",
-  skill: "Compétence",
   classSkill: "Compétence de classe",
-  featCount: "Nombre de Dons",
   feat: "Don",
+  featCount: "Nombre de Dons",
+  hitPoints: "Points de vie",
+  initiative: "Initiative",
+  languageCount: "Nombre de langue",
   rank: "Rang de compétence",
   rankSkill: "Rang de compétence",
-  spell: "Sort",
-  languageCount: "Nombre de langue",
-  initiative: "Initiative",
+  resolve: "Points de persévérance",
+  savingThrow: "Jets de sauvegarde",
+  skill: "Compétence",
   speed: "Vitesse de déplacement",
+  spell: "Sort",
+  stamina: "Points d'endurance",
 };
 
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
