@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const PrerequisiteType = z.enum([
   "abilityScore",
-  "attackBase",
   "arms",
+  "baseAttack",
   "class",
   "combatFeatCount",
   "feat",

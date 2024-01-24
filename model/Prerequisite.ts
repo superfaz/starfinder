@@ -28,8 +28,8 @@ export const SavingThrowPrerequisite = IModel.extend({
 
 export const SimplePrerequisite = IModel.extend({
   type: z.enum([
-    PrerequisiteType.enum.attackBase,
     PrerequisiteType.enum.arms,
+    PrerequisiteType.enum.baseAttack,
     PrerequisiteType.enum.combatFeatCount,
     PrerequisiteType.enum.level,
     PrerequisiteType.enum.spellCasterLevel,
