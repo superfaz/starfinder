@@ -1,5 +1,5 @@
 [
-  { "id": "fortitude", "name": "Constitution", "abilityScore": "con" },
+  { "id": "fortitude", "name": "Vigueur", "abilityScore": "vig" },
   { "id": "reflex", "name": "Réflexe", "abilityScore": "dex" },
   { "id": "will", "name": "Volonté", "abilityScore": "wis" }
 ]

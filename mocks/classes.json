@@ -28,7 +28,12 @@
       "surv"
     ],
     "armors": ["light"],
-    "weapons": ["basic", "small", "sniper"]
+    "weapons": ["basic", "small", "sniper"],
+    "savingThrows": {
+      "fortitude": "low",
+      "reflex": "high",
+      "will": "high"
+    }
   },
   {
     "id": "soldier",
@@ -42,6 +47,11 @@
     "skillRank": 4,
     "classSkills": ["acro", "athl", "engi", "inti", "medi", "pilo", "prof", "surv"],
     "armors": ["light", "heavy"],
-    "weapons": ["basic", "advanced", "small", "long", "heavy", "sniper", "grenade"]
+    "weapons": ["basic", "advanced", "small", "long", "heavy", "sniper", "grenade"],
+    "savingThrows": {
+      "fortitude": "high",
+      "reflex": "low",
+      "will": "high"
+    }
   }
 ]

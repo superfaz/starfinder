@@ -1,7 +1,7 @@
 import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
+import { CharacterPresenter, computeAbilityScoreModifier, computeSavingThrowBonus, useAppSelector } from "logic";
 import { Alignment, ModifierType, ofType } from "model";
 import { CharacterProps } from "../Props";
 
@@ -174,14 +174,39 @@ function CardKeyPoints() {
   );
 }
 
-function CardSavingThrows({ character }: CharacterProps) {
+function CardSavingThrows({ data, character }: SheetProps) {
+  const selectedClass = character.getClass();
   const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.savingThrow));
+  const bonuses = character.getModifiers().filter(ofType(ModifierType.enum.savingThrowBonus));
+
+  if (!selectedClass) {
+    return null;
+  }
+
   return (
     <Card>
       <Card.Header>
         <Badge bg="primary">Jets de sauvegarde</Badge>
       </Card.Header>
-      <Card.Body className="position-relative">test</Card.Body>
+      <Card.Body className="position-relative">
+        <Row>
+          {data.savingThrows.map((savingThrow) => {
+            const classBonus = computeSavingThrowBonus(1, selectedClass.savingThrows[savingThrow.id]);
+            const abilityScoreBonus = computeAbilityScoreModifier(
+              character.getAbilityScores()[savingThrow.abilityScore]
+            );
+            const otherBonus = bonuses.filter((b) => b.target === savingThrow.id).reduce((a, c) => a + c.value, 0);
+            const bonus = classBonus + abilityScoreBonus + otherBonus;
+            return (
+              <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">
+                <Badge bg={bonus > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                  {displayBonus(bonus)}
+                </Badge>
+              </ValueComponent>
+            );
+          })}
+        </Row>
+      </Card.Body>
       {modifiers.length > 0 && (
         <Card.Footer className="small">
           <Stack gap={2}>
@@ -272,7 +297,7 @@ export function Sheet({ character }: CharacterProps) {
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
           <CardKeyPoints />
-          <CardSavingThrows character={character} />
+          <CardSavingThrows data={data} character={character} />
           <CardArmorClass />
           <CardAttackBonus />
           <CardWeapons />

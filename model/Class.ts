@@ -13,6 +13,11 @@ export const Class = INamedModel.extend({
   classSkills: z.array(z.string()),
   armors: z.array(z.string()),
   weapons: z.array(z.string()),
+  savingThrows: z.object({
+    fortitude: z.enum(["low", "high"]),
+    reflex: z.enum(["low", "high"]),
+    will: z.enum(["low", "high"]),
+  }),
 }).strict();
 
 export type Class = z.infer<typeof Class>;

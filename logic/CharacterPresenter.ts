@@ -79,6 +79,21 @@ export function computeAbilityScoreModifier(abilityScore: number): number {
   return Math.floor((abilityScore - 10) / 2);
 }
 
+/**
+ * Computes the saving throw bonus provided by a class and based on a specific level.
+ *
+ * @param classLevel The level of the character in the specific class
+ * @param curve The curve to apply ('low' or 'high')
+ * @returns The bonus for the specific level and curve
+ */
+export function computeSavingThrowBonus(classLevel: number, curve: "high" | "low"): number {
+  if (curve === "low") {
+    return Math.floor(classLevel / 3);
+  } else {
+    return Math.floor(classLevel / 2) + 2;
+  }
+}
+
 export interface SkillPresenter {
   id: string;
   fullName: string;
