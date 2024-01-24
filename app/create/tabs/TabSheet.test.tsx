@@ -247,4 +247,31 @@ describe("TabSheet", () => {
     expect(within(view).queryByText("Avatar")).toBeVisible();
     expect(within(view).queryByRole('img', { name: "avatar"})).not.toBeNull();
   });
+
+  test("has Saving Throws initialized", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Profil" }));
+
+    const view = screen.getByTestId("savingThrows");
+    expect(within(view).queryByText("Pas de classe sélectionnée")).not.toBeNull();
+  });
+
+  test("has Saving Throws updated", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+
+    const view = screen.getByTestId("savingThrows");
+    expect(within(view).queryByText("Pas de classe sélectionnée")).toBeNull();
+    expect(within(view).queryByTestId("Vigueur")).not.toBeNull();
+    expect(within(within(view).getByTestId("Vigueur")).queryByText("+0")).not.toBeNull();
+    expect(within(view).queryByTestId("Réflexe")).not.toBeNull();
+    expect(within(within(view).getByTestId("Réflexe")).queryByText("+3")).not.toBeNull();
+    expect(within(view).queryByTestId("Volonté")).not.toBeNull();
+    expect(within(within(view).getByTestId("Volonté")).queryByText("+2")).not.toBeNull();
+  });
 });

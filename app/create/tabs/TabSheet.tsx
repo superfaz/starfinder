@@ -77,7 +77,11 @@ function CardAvatar({ character }: CharacterProps) {
       <Card.Header>
         <Badge bg="primary">Avatar</Badge>
       </Card.Header>
-      {!avatar && <Card.Body className="text-center text-em">Pas d&apos;avatar sélectionné</Card.Body>}
+      {!avatar && (
+        <Card.Body className="text-center text-muted">
+          <em>Pas d&apos;avatar sélectionné</em>
+        </Card.Body>
+      )}
       {avatar && (
         <picture>
           <img alt="avatar" src={"/" + avatar.image} className="img-fluid" />
@@ -179,32 +183,34 @@ function CardSavingThrows({ data, character }: SheetProps) {
   const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.savingThrow));
   const bonuses = character.getModifiers().filter(ofType(ModifierType.enum.savingThrowBonus));
 
-  if (!selectedClass) {
-    return null;
-  }
-
   return (
-    <Card>
+    <Card data-testid="savingThrows">
       <Card.Header>
         <Badge bg="primary">Jets de sauvegarde</Badge>
       </Card.Header>
       <Card.Body className="position-relative">
         <Row>
-          {data.savingThrows.map((savingThrow) => {
-            const classBonus = computeSavingThrowBonus(1, selectedClass.savingThrows[savingThrow.id]);
-            const abilityScoreBonus = computeAbilityScoreModifier(
-              character.getAbilityScores()[savingThrow.abilityScore]
-            );
-            const otherBonus = bonuses.filter((b) => b.target === savingThrow.id).reduce((a, c) => a + c.value, 0);
-            const bonus = classBonus + abilityScoreBonus + otherBonus;
-            return (
-              <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">
-                <Badge bg={bonus > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
-                  {displayBonus(bonus)}
-                </Badge>
-              </ValueComponent>
-            );
-          })}
+          {!selectedClass && (
+            <div className="text-center text-muted">
+              <em>Pas de classe sélectionnée</em>
+            </div>
+          )}
+          {selectedClass &&
+            data.savingThrows.map((savingThrow) => {
+              const classBonus = computeSavingThrowBonus(1, selectedClass.savingThrows[savingThrow.id]);
+              const abilityScoreBonus = computeAbilityScoreModifier(
+                character.getAbilityScores()[savingThrow.abilityScore]
+              );
+              const otherBonus = bonuses.filter((b) => b.target === savingThrow.id).reduce((a, c) => a + c.value, 0);
+              const bonus = classBonus + abilityScoreBonus + otherBonus;
+              return (
+                <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">
+                  <Badge bg={bonus > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                    {displayBonus(bonus)}
+                  </Badge>
+                </ValueComponent>
+              );
+            })}
         </Row>
       </Card.Body>
       {modifiers.length > 0 && (
