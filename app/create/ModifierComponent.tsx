@@ -16,6 +16,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   rankSkill: "Rang de compétence",
   resolve: "Points de persévérance",
   savingThrow: "Jets de sauvegarde",
+  savingThrowBonus: "Jets de sauvegarde",
   skill: "Compétence",
   speed: "Vitesse de déplacement",
   spell: "Sort",

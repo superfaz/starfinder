@@ -8,13 +8,13 @@ export const AbilityModifier = IModel.extend({
   level: z.number().optional(),
   name: z.string(),
   description: Description,
-});
+}).strict();
 
 export const ClassSkillModifier = IModel.extend({
   type: z.literal(ModifierType.enum.classSkill),
   level: z.number().optional(),
   target: z.string(),
-});
+}).strict();
 
 export const FeatModifier = IModel.extend({
   type: z.literal(ModifierType.enum.feat),
@@ -22,20 +22,27 @@ export const FeatModifier = IModel.extend({
   name: z.string(),
   target: z.string().optional(),
   extra: z.string().optional(),
-});
+}).strict();
 
 export const RankSkillModifier = IModel.extend({
   type: z.literal(ModifierType.enum.rankSkill),
   level: z.number().optional(),
   target: z.string(),
-});
+}).strict();
 
 export const SavingThrowModifier = IModel.extend({
   type: z.literal(ModifierType.enum.savingThrow),
   level: z.number().optional(),
   name: z.string(),
   description: Description,
-});
+}).strict();
+
+export const SavingThrowBonusModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.savingThrowBonus),
+  level: z.number().optional(),
+  target: z.string(),
+  value: z.number(),
+}).strict();
 
 export const SimpleModifier = IModel.extend({
   type: z.enum([
@@ -51,21 +58,21 @@ export const SimpleModifier = IModel.extend({
   ]),
   level: z.number().optional(),
   value: z.number(),
-});
+}).strict();
 
 export const SkillModifier = IModel.extend({
   type: z.literal(ModifierType.enum.skill),
   level: z.number().optional(),
   target: z.string(),
   value: z.number(),
-});
+}).strict();
 
 export const SpellModifier = IModel.extend({
   type: z.literal(ModifierType.enum.spell),
   level: z.number().optional(),
   target: z.string(),
   extra: z.string().optional(),
-});
+}).strict();
 
 export const Modifier = z.discriminatedUnion("type", [
   AbilityModifier,
@@ -74,6 +81,7 @@ export const Modifier = z.discriminatedUnion("type", [
   RankSkillModifier,
   SimpleModifier,
   SavingThrowModifier,
+  SavingThrowBonusModifier,
   SkillModifier,
   SpellModifier,
 ]);

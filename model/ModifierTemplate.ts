@@ -6,6 +6,7 @@ import {
   ClassSkillModifier,
   FeatModifier,
   RankSkillModifier,
+  SavingThrowBonusModifier,
   SavingThrowModifier,
   SpellModifier,
 } from "./Modifier";
@@ -40,6 +41,7 @@ export const ModifierTemplate = z.discriminatedUnion("type", [
   RankSkillModifier,
   SimpleModifierTemplate,
   SavingThrowModifier,
+  SavingThrowBonusModifier,
   SkillModifierTemplate,
   SpellModifier,
 ]);

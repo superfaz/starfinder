@@ -13,6 +13,7 @@ export const ModifierType = z.enum([
   "rankSkill",
   "resolve",
   "savingThrow",
+  "savingThrowBonus",
   "skill",
   "speed",
   "spell",
