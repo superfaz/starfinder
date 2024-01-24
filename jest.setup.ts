@@ -20,6 +20,7 @@ async function mockBuild(): Promise<IDataSet> {
     getClasses: async () => readFile("./mocks/classes.json"),
     getClassDetails: async (classId) => readFile(`./mocks/class-${classId}.json`),
     getRaces: async () => readFile("./mocks/races.json"),
+    getSavingThrows: async () => readFile("./mocks/saving-throws.json"),
     getSkills: async () => readFile("./mocks/skills.json"),
     getThemes: async () => readFile("./mocks/themes.json"),
     getThemeDetails: async () => readFile("./mocks/themes-details.json"),

@@ -1,4 +1,4 @@
-import { AbilityScore, Alignment, Avatar, Class, INamedModel, Race, SkillDefinition, Theme } from "model";
+import { AbilityScore, Alignment, Avatar, Class, INamedModel, Race, SavingThrow, SkillDefinition, Theme } from "model";
 
 export interface IClientDataSet {
   abilityScores: AbilityScore[];
@@ -6,6 +6,7 @@ export interface IClientDataSet {
   avatars: Avatar[];
   classes: Class[];
   races: Race[];
+  savingThrows: SavingThrow[];
   skills: SkillDefinition[];
   themes: Theme[];
   armors: INamedModel[];
@@ -18,6 +19,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   avatars: [],
   classes: [],
   races: [],
+  savingThrows: [],
   skills: [],
   themes: [],
   armors: [],

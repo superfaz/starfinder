@@ -87,6 +87,7 @@ export class DataSetBuilder {
       getRaces: cache("races", () => this.getNamed("races")),
       getThemes: cache("themes", () => this.getNamed("themes")),
       getThemeDetails: <T>(themeId: string) => this.getOne<T>("themes-details", themeId),
+      getSavingThrows: cache("saving-throws", () => this.getOrdered("saving-throws")),
       getSkills: cache("skills", () => this.getNamed("skills")),
       getArmors: cache("armors", () => this.getOrdered("armors")),
       getWeapons: cache("weapons", () => this.getOrdered("weapons")),

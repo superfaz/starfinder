@@ -1,0 +1,5 @@
+[
+  { "id": "fortitude", "name": "Constitution", "abilityScore": "con" },
+  { "id": "reflex", "name": "Réflexe", "abilityScore": "dex" },
+  { "id": "will", "name": "Volonté", "abilityScore": "wis" }
+]

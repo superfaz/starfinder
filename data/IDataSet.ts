@@ -1,4 +1,4 @@
-import { AbilityScore, Alignment, Avatar, Class, INamedModel, Race, SkillDefinition, Theme } from "model";
+import { AbilityScore, Alignment, Avatar, Class, INamedModel, Race, SavingThrow, SkillDefinition, Theme } from "model";
 
 export interface IDataSet {
   getAbilityScores(): Promise<AbilityScore[]>;
@@ -7,6 +7,7 @@ export interface IDataSet {
   getClasses(): Promise<Class[]>;
   getClassDetails(classId: string): Promise<unknown>;
   getRaces(): Promise<Race[]>;
+  getSavingThrows(): Promise<SavingThrow[]>;
   getSkills(): Promise<SkillDefinition[]>;
   getThemes(): Promise<Theme[]>;
   getThemeDetails(themeId: string): Promise<unknown>;
