@@ -18,6 +18,7 @@ export * from "./ModifierType";
 export * from "./Prerequisite";
 export * from "./PrerequisiteType";
 export * from "./Race";
+export * from "./SavingThrow";
 export * from "./SkillDefinition";
 export * from "./Theme";
 export * from "./ThemeScholar";
