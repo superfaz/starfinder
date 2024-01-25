@@ -3,6 +3,8 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
+const NO_CLASS = "Pas de classe sélectionnée";
+
 const races = [
   {
     id: "androids",
@@ -253,7 +255,7 @@ describe("TabSheet", () => {
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("savingThrows");
-    expect(within(view).queryByText("Pas de classe sélectionnée")).not.toBeNull();
+    expect(within(view).queryByText(NO_CLASS)).not.toBeNull();
   });
 
   test("has Saving Throws updated", async () => {
@@ -266,7 +268,7 @@ describe("TabSheet", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
 
     const view = screen.getByTestId("savingThrows");
-    expect(within(view).queryByText("Pas de classe sélectionnée")).toBeNull();
+    expect(within(view).queryByText(NO_CLASS)).toBeNull();
     expect(within(view).queryByTestId("Vigueur")).not.toBeNull();
     expect(within(within(view).getByTestId("Vigueur")).queryByText("+0")).not.toBeNull();
     expect(within(view).queryByTestId("Réflexe")).not.toBeNull();
@@ -280,7 +282,7 @@ describe("TabSheet", () => {
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("attackBonuses");
-    expect(within(view).queryByText("Pas de classe sélectionnée")).not.toBeNull();
+    expect(within(view).queryByText(NO_CLASS)).not.toBeNull();
   });
 
   const attackBonusTable = [
@@ -297,7 +299,7 @@ describe("TabSheet", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass);
 
     const view = screen.getByTestId("attackBonuses");
-    expect(within(view).queryByText("Pas de classe sélectionnée")).toBeNull();
+    expect(within(view).queryByText(NO_CLASS)).toBeNull();
     expect(within(view).queryByTestId("Bonus de base à l'attaque")).not.toBeNull();
     expect(within(within(view).getByTestId("Bonus de base à l'attaque")).queryByText(value)).not.toBeNull();
   });
