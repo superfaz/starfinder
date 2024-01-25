@@ -94,6 +94,14 @@ export function computeSavingThrowBonus(classLevel: number, curve: "high" | "low
   }
 }
 
+export function computeBaseAttackBonus(classLevel: number, curve: "high" | "low"): number {
+  if (curve === "low") {
+    return Math.floor((3 * classLevel) / 4);
+  } else {
+    return classLevel;
+  }
+}
+
 export interface SkillPresenter {
   id: string;
   fullName: string;
@@ -524,5 +532,17 @@ export class CharacterPresenter {
     } else {
       return findOrError(this.data.avatars, (a) => a.id === this.character.avatar);
     }
+  }
+
+  getAttackBonuses(): { baseAttack: number } | null {
+    const klass = this.getClass();
+    if (!klass) {
+      return null;
+    }
+
+    const baseAttack = computeBaseAttackBonus(this.character.level, klass.baseAttack);
+    return {
+      baseAttack,
+    };
   }
 }

@@ -245,12 +245,12 @@ describe("TabSheet", () => {
 
     const view = screen.getByTestId("avatar");
     expect(within(view).queryByText("Avatar")).toBeVisible();
-    expect(within(view).queryByRole('img', { name: "avatar"})).not.toBeNull();
+    expect(within(view).queryByRole("img", { name: "avatar" })).not.toBeNull();
   });
 
   test("has Saving Throws initialized", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Profil" }));
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("savingThrows");
     expect(within(view).queryByText("Pas de classe sélectionnée")).not.toBeNull();
@@ -273,5 +273,32 @@ describe("TabSheet", () => {
     expect(within(within(view).getByTestId("Réflexe")).queryByText("+3")).not.toBeNull();
     expect(within(view).queryByTestId("Volonté")).not.toBeNull();
     expect(within(within(view).getByTestId("Volonté")).queryByText("+2")).not.toBeNull();
+  });
+
+  test("has Attack Bonuses initialized", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const view = screen.getByTestId("attackBonuses");
+    expect(within(view).queryByText("Pas de classe sélectionnée")).not.toBeNull();
+  });
+
+  const attackBonusTable = [
+    { klass: "operative", value: "+0" },
+    { klass: "soldier", value: "+1" },
+  ];
+  test.each(attackBonusTable)("has Attack Bonuses updated for $klass", async ({ klass, value }) => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass);
+
+    const view = screen.getByTestId("attackBonuses");
+    expect(within(view).queryByText("Pas de classe sélectionnée")).toBeNull();
+    expect(within(view).queryByTestId("Bonus de base à l'attaque")).not.toBeNull();
+    expect(within(within(view).getByTestId("Bonus de base à l'attaque")).queryByText(value)).not.toBeNull();
   });
 });

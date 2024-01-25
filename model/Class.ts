@@ -13,6 +13,7 @@ export const Class = INamedModel.extend({
   classSkills: z.array(z.string()),
   armors: z.array(z.string()),
   weapons: z.array(z.string()),
+  baseAttack: z.enum(["low", "high"]),
   savingThrows: z.object({
     fortitude: z.enum(["low", "high"]),
     reflex: z.enum(["low", "high"]),

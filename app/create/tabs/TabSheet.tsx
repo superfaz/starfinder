@@ -240,13 +240,25 @@ function CardArmorClass() {
   );
 }
 
-function CardAttackBonus() {
+function CardAttackBonuses({ character }: CharacterProps) {
+  const attackBonuses = character.getAttackBonuses();
   return (
-    <Card>
+    <Card data-testid="attackBonuses">
       <Card.Header>
         <Badge bg="primary">Bonus d&apos;attaque</Badge>
       </Card.Header>
-      <Card.Body className="position-relative">test</Card.Body>
+      <Card.Body className="position-relative">
+        {!attackBonuses && <div className="text-center text-muted">Pas de classe sélectionnée</div>}
+        {attackBonuses && (
+          <Row>
+            <ValueComponent label="Bonus de base à l'attaque" className="col">
+              <Badge bg={attackBonuses.baseAttack > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                {displayBonus(attackBonuses.baseAttack)}
+              </Badge>
+            </ValueComponent>
+          </Row>
+        )}
+      </Card.Body>
     </Card>
   );
 }
@@ -305,7 +317,7 @@ export function Sheet({ character }: CharacterProps) {
           <CardKeyPoints />
           <CardSavingThrows data={data} character={character} />
           <CardArmorClass />
-          <CardAttackBonus />
+          <CardAttackBonuses character={character} />
           <CardWeapons />
         </Stack>
       </Col>
