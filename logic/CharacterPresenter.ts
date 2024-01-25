@@ -534,15 +534,20 @@ export class CharacterPresenter {
     }
   }
 
-  getAttackBonuses(): { baseAttack: number } | null {
+  getAttackBonuses(): { base: number, melee: number, ranged: number, thrown: number } | null {
     const klass = this.getClass();
     if (!klass) {
       return null;
     }
 
-    const baseAttack = computeBaseAttackBonus(this.character.level, klass.baseAttack);
+    const base = computeBaseAttackBonus(this.character.level, klass.baseAttack);
+    const str = computeAbilityScoreModifier(this.getAbilityScores()["str"]);
+    const dex = computeAbilityScoreModifier(this.getAbilityScores()["dex"]);
     return {
-      baseAttack,
+      base,
+      melee: base + str,
+      ranged: base + dex,
+      thrown: base + str,
     };
   }
 }

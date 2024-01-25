@@ -286,21 +286,27 @@ describe("TabSheet", () => {
   });
 
   const attackBonusTable = [
-    { klass: "operative", value: "+0" },
-    { klass: "soldier", value: "+1" },
+    { klass: "operative", base: "+0", melee: "+0", ranged: "+1", thrown: "+0" },
+    { klass: "soldier", base: "+1", melee: "+1", ranged: "+2", thrown: "+1" },
   ];
-  test.each(attackBonusTable)("has Attack Bonuses updated for $klass", async ({ klass, value }) => {
+  test.each(attackBonusTable)("has Attack Bonuses updated for $klass", async (dataset) => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
     await user.click(screen.getByRole("button", { name: "Thème" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
     await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass);
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), dataset.klass);
 
     const view = screen.getByTestId("attackBonuses");
     expect(within(view).queryByText(NO_CLASS)).toBeNull();
     expect(within(view).queryByTestId("Bonus de base à l'attaque")).not.toBeNull();
-    expect(within(within(view).getByTestId("Bonus de base à l'attaque")).queryByText(value)).not.toBeNull();
+    expect(within(within(view).getByTestId("Bonus de base à l'attaque")).queryByText(dataset.base)).not.toBeNull();
+    expect(within(view).queryByTestId("Attaque au corps à corps")).not.toBeNull();
+    expect(within(within(view).getByTestId("Attaque au corps à corps")).queryByText(dataset.melee)).not.toBeNull();
+    expect(within(view).queryByTestId("Attaque à distance")).not.toBeNull();
+    expect(within(within(view).getByTestId("Attaque à distance")).queryByText(dataset.ranged)).not.toBeNull();
+    expect(within(view).queryByTestId("Attaque de lancer")).not.toBeNull();
+    expect(within(within(view).getByTestId("Attaque de lancer")).queryByText(dataset.thrown)).not.toBeNull();
   });
 });

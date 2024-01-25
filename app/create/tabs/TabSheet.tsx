@@ -251,9 +251,24 @@ function CardAttackBonuses({ character }: CharacterProps) {
         {!attackBonuses && <div className="text-center text-muted">Pas de classe sélectionnée</div>}
         {attackBonuses && (
           <Row>
-            <ValueComponent label="Bonus de base à l'attaque" className="col">
-              <Badge bg={attackBonuses.baseAttack > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
-                {displayBonus(attackBonuses.baseAttack)}
+            <ValueComponent label="Bonus de base à l'attaque" className="col-12 mb-2">
+              <Badge bg={attackBonuses.base > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                {displayBonus(attackBonuses.base)}
+              </Badge>
+            </ValueComponent>
+            <ValueComponent label="Attaque au corps à corps" className="col">
+              <Badge bg={attackBonuses.melee > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                {displayBonus(attackBonuses.melee)}
+              </Badge>
+            </ValueComponent>
+            <ValueComponent label="Attaque à distance" className="col">
+              <Badge bg={attackBonuses.ranged > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                {displayBonus(attackBonuses.ranged)}
+              </Badge>
+            </ValueComponent>
+            <ValueComponent label="Attaque de lancer" className="col">
+              <Badge bg={attackBonuses.thrown > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                {displayBonus(attackBonuses.thrown)}
               </Badge>
             </ValueComponent>
           </Row>
