@@ -6,8 +6,6 @@ Race / Ajouter les races classiques du livre de règles
 
 Race : Androide / Traits secondaires : Androïde xénométrique / Choix de la race
 
-Race : Androide / Traits secondaires : Matrice d’imitation / Impact et prise en compte
-
 Race : Lashuntas / Traits : Etudiant / Choix des compétences
 
 Race : Shirrens / Traits secondaires : Obsession individuelle / Choix de la compétence
