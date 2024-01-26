@@ -26,24 +26,32 @@ const displayLabelsForType: Record<ModifierType, string> = {
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
   const data = useAppSelector((state) => state.data);
 
-  const skills = data.skills;
-  let skillName: string | undefined;
-  if (
-    modifier.type === "skill" ||
-    modifier.type === "classSkill" ||
-    modifier.type === "rankSkill" ||
-    modifier.type === "feat"
-  ) {
-    const target = modifier.target;
-    if (target === undefined) {
-      skillName = undefined;
-    } else if (target === "any") {
-      skillName = "Au choix";
-    } else if (target === "all") {
-      skillName = "Toutes";
-    } else {
-      skillName = findOrError(skills, (s) => s.id === target).name;
-    }
+  let targetName: string | undefined;
+  switch (modifier.type) {
+    case "skill":
+    case "classSkill":
+    case "rankSkill":
+    case "feat":
+      // Target is a skill
+      if (modifier.target === undefined) {
+        targetName = undefined;
+      } else if (modifier.target === "any") {
+        targetName = "Au choix";
+      } else if (modifier.target === "all") {
+        targetName = "Toutes";
+      } else {
+        const skills = data.skills;
+        targetName = findOrError(skills, (s) => s.id === modifier.target).name;
+      }
+      break;
+
+    case "spell":
+      // Target is a spell
+      targetName = modifier.target;
+      break;
+
+    default:
+    // Do nothing
   }
 
   return (
@@ -51,7 +59,7 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       <Badge bg="primary">{displayLabelsForType[modifier.type] ?? ""}</Badge>
       {modifier.level && modifier.level > 1 && <Badge bg="primary">Niveau {modifier.level}</Badge>}
       {hasName(modifier) && modifier.name && <strong className="me-2">{modifier.name}.</strong>}
-      {skillName && <strong className="me-2">{skillName}</strong>}
+      {targetName && <strong className="me-2">{targetName}</strong>}
       {hasValue(modifier) && modifier.value && <strong className="me-2">{displayBonus(modifier.value)}</strong>}
       {hasDescription(modifier) && modifier.description && (
         <span className="me-2 text-muted">{modifier.description}</span>
