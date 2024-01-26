@@ -1,10 +1,9 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
-import { prettyDOM, render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { waitForWithDump } from "app/test-helpers";
 import Page from "../page";
 import referential from "./TabSkills.test.json";
-import fs from "node:fs";
-import { dump, waitForWithDump } from "app/test-helpers";
 
 describe("TabSkills", () => {
   beforeEach(async () => {
