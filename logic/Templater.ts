@@ -6,6 +6,7 @@ export function cleanEvolutions(
   if (!evolutions) {
     return {};
   }
+
   const result: Record<string, Record<string, string | number>> = {};
   Object.entries(evolutions).forEach(([level, values]) => {
     result[level] = {};
@@ -17,6 +18,7 @@ export function cleanEvolutions(
       });
     }
   });
+
   return result;
 }
 

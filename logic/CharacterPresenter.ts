@@ -134,6 +134,18 @@ export class CharacterPresenter {
     this.character = character;
   }
 
+  private createTemplater(context: object = {}): Templater {
+    return new Templater({
+      race: this.character.race,
+      theme: this.character.theme,
+      class: this.character.class,
+      ...this.character.raceOptions,
+      ...this.character.themeOptions,
+      ...this.character.classOptions,
+      ...context,
+    });
+  }
+
   getCharacter(): Readonly<Character> {
     return this.character;
   }
@@ -175,7 +187,7 @@ export class CharacterPresenter {
       return [];
     }
 
-    const templater = new Templater({ race: this.character.race, ...this.character.raceOptions });
+    const templater = this.createTemplater();
     if (!this.cachedPrimaryRaceTraits) {
       this.cachedPrimaryRaceTraits = race.traits.map((t) => templater.convertFeature(t));
     }
@@ -189,7 +201,7 @@ export class CharacterPresenter {
       return [];
     }
 
-    const templater = new Templater({ race: this.character.race, ...this.character.raceOptions });
+    const templater = this.createTemplater();
     if (!this.cachedSecondaryRaceTraits) {
       this.cachedSecondaryRaceTraits = race.secondaryTraits.map((t) => templater.convertFeature(t));
     }
@@ -203,7 +215,7 @@ export class CharacterPresenter {
       return [];
     }
 
-    const templater = new Templater({ race: this.character.race, ...this.character.raceOptions });
+    const templater = this.createTemplater();
     if (!this.cachedSelectedRaceTraits) {
       this.cachedSelectedRaceTraits = [...race.traits, ...race.secondaryTraits]
         .filter((t) => this.character.traits.includes(t.id))
@@ -229,12 +241,7 @@ export class CharacterPresenter {
       return [];
     }
 
-    const templater = new Templater({
-      race: this.character.race,
-      theme: this.character.theme,
-      ...this.character.raceOptions,
-      ...this.character.themeOptions,
-    });
+    const templater = this.createTemplater();
     return theme.features.map((f) => templater.convertFeature(f));
   }
 
@@ -278,15 +285,6 @@ export class CharacterPresenter {
       return [];
     }
 
-    const context = {
-      race: this.character.race,
-      theme: this.character.theme,
-      class: this.character.class,
-      ...this.character.raceOptions,
-      ...this.character.themeOptions,
-      ...this.character.classOptions,
-    };
-
     // Retrieve the class details
     const classDetails = this.classesDetails[selectedClass.id];
     if (!classDetails) {
@@ -296,10 +294,7 @@ export class CharacterPresenter {
     if (classDetails.id === "envoy") {
       return (classDetails as ClassEnvoy).features.map((f) => {
         const level = f.level ?? 1;
-        const templater = new Templater({
-          ...context,
-          ...(cleanEvolutions(f.evolutions)[level] ?? {}),
-        });
+        const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
         return templater.convertFeature(f);
       });
     } else if (classDetails.id === "operative") {
@@ -308,20 +303,16 @@ export class CharacterPresenter {
       );
       return getOperativeFeatureTemplates(classDetails as ClassOperative, this).map((f) => {
         const level = f.level ?? 1;
-        const templater = new Templater({
-          ...context,
+        const templater = this.createTemplater({
           ...(selectedSpecialization?.variables ?? {}),
-          ...(cleanEvolutions(f.evolutions)[level] ?? {}),
+          ...cleanEvolutions(f.evolutions)[level],
         });
         return templater.convertFeature(f);
       });
     } else if (classDetails.id === "soldier") {
       return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {
         const level = f.level ?? 1;
-        const templater = new Templater({
-          ...context,
-          ...(cleanEvolutions(f.evolutions)[level] ?? {}),
-        });
+        const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
         return templater.convertFeature(f);
       });
     } else {
@@ -355,11 +346,7 @@ export class CharacterPresenter {
       return "";
     }
 
-    const templater = new Templater({
-      class: this.character.class,
-      ...this.character.classOptions,
-    });
-
+    const templater = this.createTemplater();
     return templater.convertString(selectedClass.primaryAbilityScore);
   }
 
@@ -369,11 +356,7 @@ export class CharacterPresenter {
       return [];
     }
 
-    const templater = new Templater({
-      race: this.character.race,
-      ...this.character.classOptions,
-    });
-
+    const templater = this.createTemplater();
     return selectedClass.secondaryAbilityScores.map((s) => templater.convertString(s));
   }
 
@@ -534,7 +517,7 @@ export class CharacterPresenter {
     }
   }
 
-  getAttackBonuses(): { base: number, melee: number, ranged: number, thrown: number } | null {
+  getAttackBonuses(): { base: number; melee: number; ranged: number; thrown: number } | null {
     const klass = this.getClass();
     if (!klass) {
       return null;
