@@ -20,3 +20,5 @@ coverage/
 
 # Sentry Config File
 .sentryclirc
+
+dump/
