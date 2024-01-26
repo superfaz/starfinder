@@ -27,7 +27,7 @@ export default function OperativeEditor({ character }: CharacterProps) {
 
   return (
     <>
-      <Form.FloatingLabel label="Spécialisation">
+      <Form.FloatingLabel controlId="operativeSpecialization" label="Spécialisation">
         <Form.Select value={character.getOperativeSpecialization() ?? ""} onChange={handleSpecializationChange}>
           {classDetails.specializations.map((specialization) => (
             <option key={specialization.id} value={specialization.id}>

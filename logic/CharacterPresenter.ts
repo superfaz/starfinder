@@ -430,23 +430,20 @@ export class CharacterPresenter {
     return [...this.data.skills]
       .sort((a, b) => a.name.localeCompare(b.name, "fr"))
       .map((s) => {
-        const ranks = this.character.skillRanks[s.id] ?? 0;
-        const isTrained = this.character.skillRanks[s.id] !== undefined;
-        const isClassSkill = this.getClassSkills().includes(s.id);
-        const rankForced = rankModifiers.some((m) => m.target === s.id);
-        const bonusDoubleClassSkill = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
-        const abilityScoreModifier = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
+        const rankForced: boolean = rankModifiers.some((m) => m.target === s.id);
+        const ranks: number = (this.character.skillRanks[s.id] ?? 0) + (rankForced ? this.character.level : 0);
+        const isTrained: boolean = ranks > 0;
+        const isClassSkill: boolean = this.getClassSkills().includes(s.id);
+        const bonusDoubleClassSkill: number = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
+        const abilityScoreModifier: number = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
 
         // TODO: Add bonus from modifiers
         const bonusFromSkillModifiers = skillModifiers
           .filter((m) => m.target === s.id || m.target === "all")
           .reduce((acc, m) => acc + m.value, 0);
 
-        const bonusFromRankModifiers = rankModifiers.filter((m) => m.target === s.id).length;
-
         function computeSkillBonus() {
-          const base =
-            ranks + abilityScoreModifier + bonusFromSkillModifiers + bonusFromRankModifiers + bonusDoubleClassSkill;
+          const base = ranks + abilityScoreModifier + bonusFromSkillModifiers + bonusDoubleClassSkill;
           if (isClassSkill && isTrained) {
             return base + 3;
           } else if (!isTrained && s.trainedOnly) {

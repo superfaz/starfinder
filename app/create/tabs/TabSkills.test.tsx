@@ -1,8 +1,10 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
-import { render, screen, within } from "@testing-library/react";
+import { prettyDOM, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 import referential from "./TabSkills.test.json";
+import fs from "node:fs";
+import { dump, waitForWithDump } from "app/test-helpers";
 
 describe("TabSkills", () => {
   beforeEach(async () => {
@@ -109,11 +111,30 @@ describe("TabSkills", () => {
     expect(control.value).toBe("9");
   });
 
-  test.each(["acro"])("applies 'rank' modifiers for '%s'", async (skill) => {
+  test.each(["acro", "athl"])("applies 'rank' modifiers for '%s'", async (skill) => {
     const view = within(screen.getByTestId(skill));
     const control = view.queryByRole("checkbox", { name: /compétence de classe/i });
     expect(control).not.toBeNull();
     expect(control).toBeChecked();
     expect(control).toBeDisabled();
+  });
+
+  test("enable skills with mandatory ranks", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+    await waitForWithDump(() => expect(screen.queryByRole("combobox", { name: "Spécialisation" })).not.toBeNull());
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "Spécialisation" }),
+      "7d74e198-2856-4496-8fff-4685a6187ed3"
+    );
+    await user.click(screen.getByRole("button", { name: referential.title }));
+
+    const view = within(screen.getByTestId("cult"));
+    const control = view.queryByRole("checkbox", { name: /culture \(int\)$/i });
+    expect(control).not.toBeNull();
+    expect(control).toBeChecked();
+    expect(control).toBeDisabled();
+    expect(view.getByText("+6")).not.toBeNull();
   });
 });
