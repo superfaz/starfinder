@@ -40,8 +40,11 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       } else if (modifier.target === "all") {
         targetName = "Toutes";
       } else {
-        const skills = data.skills;
-        targetName = findOrError(skills, (s) => s.id === modifier.target).name;
+        const skill = data.skills.find((s) => s.id === modifier.target);
+        if (!skill) {
+          console.error(`Skill ${modifier.target} not found`);
+        }
+        targetName = skill ? skill.name : modifier.target;
       }
       break;
 

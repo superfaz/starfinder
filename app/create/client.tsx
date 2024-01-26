@@ -124,6 +124,10 @@ function ClientComponentPresenter() {
           <Tab.SkillsModifiers character={presenter} />
         </Col>
 
+        <Col lg={12} hidden={navigation !== "feats"}>
+          <Tab.Feats character={presenter} />
+        </Col>
+
         <Col lg={12} hidden={navigation !== "sheet"}>
           <Tab.Sheet character={presenter} />
         </Col>

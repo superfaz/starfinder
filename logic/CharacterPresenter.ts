@@ -134,7 +134,7 @@ export class CharacterPresenter {
     this.character = character;
   }
 
-  private createTemplater(context: object = {}): Templater {
+  createTemplater(context: object = {}): Templater {
     return new Templater({
       shirrenObsessionSkill: "any",
       race: this.character.race,
