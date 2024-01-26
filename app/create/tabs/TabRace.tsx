@@ -5,6 +5,7 @@ import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Feature } from "model";
 import FeatureComponent from "../FeatureComponent";
 import type { CharacterProps } from "../Props";
+import RaceHumansEditor from "../races/RaceHumansEditor";
 
 export function RaceSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
@@ -21,11 +22,6 @@ export function RaceSelection({ character }: CharacterProps) {
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
     dispatch(mutators.updateRaceVariant(id));
-  }
-
-  function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    dispatch(mutators.updateHumanBonus(id));
   }
 
   return (
@@ -58,7 +54,7 @@ export function RaceSelection({ character }: CharacterProps) {
                   ))}
                 </Form.Select>
               </Form.FloatingLabel>
-              {!character.isHumanStandard() && (
+              {Object.entries(selectedVariant.abilityScores).length > 0 && (
                 <Stack direction="horizontal">
                   {Object.entries(selectedVariant.abilityScores).map(
                     ([key, value]) =>
@@ -71,23 +67,7 @@ export function RaceSelection({ character }: CharacterProps) {
                 </Stack>
               )}
               {character.isHumanStandard() && (
-                <>
-                  <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-                    <Form.Select value={character.getHumanStandardBonus() ?? ""} onChange={handleHumanBonusChange}>
-                      {data.abilityScores.map((abilityScore) => (
-                        <option key={abilityScore.id} value={abilityScore.id}>
-                          {abilityScore.name}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Form.FloatingLabel>
-                  <Stack direction="horizontal">
-                    <Badge bg="primary">
-                      {findOrError(data.abilityScores, (a) => a.id === character.getHumanStandardBonus()).code}
-                      {" +2"}
-                    </Badge>
-                  </Stack>
-                </>
+                <RaceHumansEditor character={character} />
               )}
               {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
             </>
