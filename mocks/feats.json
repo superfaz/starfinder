@@ -1,0 +1,54 @@
+[
+  {
+    "id": "1bfb3261-1dfb-4949-98dc-c9ea8ae02917",
+    "name": "Aisance",
+    "combatFeat": true,
+    "description": "Vous pouvez traverser un terrain semé d’obstacles avec aisance.",
+    "refs": ["base-154"],
+    "modifiers": [
+      {
+        "id": "43105c0d-cf3b-450d-b5fc-482d4da4d74d",
+        "type": "ability",
+        "name": "Aisance",
+        "description": "Vous pouvez traverser jusqu’à 6 mètres de terrain difficile par round comme s’il était normal."
+      },
+      {
+        "id": "1e4744f4-4735-4996-90cb-958173288290",
+        "type": "ability",
+        "name": "Aisance",
+        "description": "Effectuer un déplacement prudent sur un terrain difficile."
+      }
+    ],
+    "prerequisites": [
+      {
+        "id": "85b09b71-c379-4659-8686-54863c94a590",
+        "type": "abilityScore",
+        "target": "dex",
+        "value": 15
+      }
+    ]
+  },
+  {
+    "id": "971211bc-46cf-4b87-b445-d4765d07a006",
+    "name": "Arme de prédilection",
+    "combatFeat": true,
+    "target": "weaponProficiency",
+    "description": "Vous vous êtes davantage entraîné au maniement d’un type d’armes en particulier, ce qui vous permet de toucher plus facilement vos cibles.",
+    "refs": ["base-154"],
+    "modifiers": [
+      {
+        "id": "8ae7862b-51a9-440a-9f01-62fd82bd599b",
+        "type": "attack",
+        "proficiency": "<target>",
+        "value": 1
+      }
+    ],
+    "prerequisites": [
+      {
+        "id": "c4ebab35-ed29-46a2-8ae4-3d7265f586da",
+        "type": "weaponProficiency",
+        "target": "<target>"
+      }
+    ]
+  }
+]
