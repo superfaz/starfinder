@@ -1,10 +1,11 @@
-import { Card, Row } from "react-bootstrap";
+import { Card, Col, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { Prerequisite, PrerequisiteType } from "model";
+import { Feat, Prerequisite, PrerequisiteType, hasDescription } from "model";
 import { CharacterPresenter, useAppSelector } from "logic";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
 import { IClientDataSet } from "data";
+import { useState } from "react";
 
 function getText(data: IClientDataSet, prerequisite: Prerequisite) {
   switch (prerequisite.type) {
@@ -63,11 +64,87 @@ function PrerequisiteComponent({
 }
 
 export function Feats({ character }: CharacterProps) {
+  const [type, setType] = useState<"general" | "combat" | "all">("all");
+  const [prerequisite, setPrerequisite] = useState<"available" | "blocked" | "all">("available");
+  const [search, setSearch] = useState<string>("");
+
+  let typeFilter: (feat: Feat) => boolean;
+  if (type === "combat") {
+    typeFilter = (feat) => feat.combatFeat;
+  } else if (type === "general") {
+    typeFilter = (feat) => !feat.combatFeat;
+  } else {
+    typeFilter = () => true;
+  }
+
+  let prerequisiteFilter: (feat: Feat) => boolean;
+  if (prerequisite === "available") {
+    prerequisiteFilter = (feat) => feat.available;
+  } else if (prerequisite === "blocked") {
+    prerequisiteFilter = (feat) => !feat.available;
+  } else {
+    prerequisiteFilter = () => true;
+  }
+
+  let searchFilter: (feat: Feat) => boolean;
+  if (search.trim() === "") {
+    searchFilter = () => true;
+  } else {
+    const searchLower = search.trim().toLowerCase();
+    searchFilter = (feat) =>
+      feat.name.toLowerCase().includes(searchLower) ||
+      feat.description?.toLowerCase().includes(searchLower) ||
+      feat.modifiers.some(
+        (modifier) => hasDescription(modifier) && modifier.description.toLowerCase().includes(searchLower)
+      );
+  }
+
+  const displayedFeats = character.getAllFeats().filter(typeFilter).filter(prerequisiteFilter).filter(searchFilter);
+
   return (
     <>
       <h2>Dons disponibles</h2>
+      <Row className="mb-3 align-items-center">
+        <Col xs="auto" className="ms-3">
+          Filtres:
+        </Col>
+        <Col xs="auto">
+          <ToggleButtonGroup type="radio" name="type" value={type} onChange={setType}>
+            <ToggleButton id="type-general" value="general" variant="outline-secondary">
+              Dons généraux
+            </ToggleButton>
+            <ToggleButton id="type-all" value="all" variant="outline-secondary">
+              Tous
+            </ToggleButton>
+            <ToggleButton id="type-combat" value="combat" variant="outline-secondary">
+              Dons de combat
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Col>
+        <Col xs="auto">
+          <ToggleButtonGroup type="radio" name="prerequisite" value={prerequisite} onChange={setPrerequisite}>
+            <ToggleButton id="prerequisite-available" value="available" variant="outline-secondary">
+              Disponibles
+            </ToggleButton>
+            <ToggleButton id="prerequisite-all" value="all" variant="outline-secondary">
+              Tous
+            </ToggleButton>
+            <ToggleButton id="prerequisite-blocked" value="blocked" variant="outline-secondary">
+              Conditions non remplies
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Col>
+        <Col>
+          <FormControl
+            type="search"
+            placeholder="Rechercher"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </Col>
+      </Row>
       <Row>
-        {character.getAllFeats().map((feat) => (
+        {displayedFeats.map((feat) => (
           <div key={feat.id} className="col-4 mb-4">
             <Card key={feat.id}>
               <Card.Header className={feat.available ? undefined : "text-danger"}>
