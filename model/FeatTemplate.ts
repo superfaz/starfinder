@@ -4,7 +4,7 @@ import { Description } from "./helper";
 import { Prerequisite } from "./Prerequisite";
 import { ModifierTemplate } from "./ModifierTemplate";
 
-export const Feat = INamedModel.extend({
+export const FeatTemplate = INamedModel.extend({
   combatFeat: z.boolean(),
   multiple: z.boolean().default(false),
   target: z.string().optional(),
@@ -14,8 +14,8 @@ export const Feat = INamedModel.extend({
   prerequisites: z.array(Prerequisite).optional(),
 }).strict();
 
-export type Feat = z.infer<typeof Feat>;
+export type FeatTemplate = z.infer<typeof FeatTemplate>;
 
-export function isFeat(data: unknown): data is Feat {
-  return Feat.safeParse(data).success;
+export function isFeatTemplate(data: unknown): data is FeatTemplate {
+  return FeatTemplate.safeParse(data).success;
 }

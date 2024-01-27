@@ -3,7 +3,7 @@ import {
   Alignment,
   Avatar,
   Class,
-  Feat,
+  FeatTemplate,
   INamedModel,
   Race,
   SavingThrow,
@@ -16,7 +16,7 @@ export interface IClientDataSet {
   alignments: Alignment[];
   avatars: Avatar[];
   classes: Class[];
-  feats: Feat[];
+  feats: FeatTemplate[];
   races: Race[];
   savingThrows: SavingThrow[];
   skills: SkillDefinition[];
