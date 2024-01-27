@@ -4,6 +4,7 @@ import { Modifier } from "./Modifier";
 
 export const Feat = FeatTemplate.extend({
   modifiers: z.array(Modifier),
+  available: z.boolean(),
 });
 
 export type Feat = z.infer<typeof Feat>;

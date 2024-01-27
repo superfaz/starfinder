@@ -7,10 +7,13 @@ import {
   ClassEnvoy,
   ClassOperative,
   ClassSoldier,
+  Feat,
   Feature,
   IModel,
   Modifier,
   ModifierType,
+  Prerequisite,
+  PrerequisiteType,
   Race,
   SkillDefinition,
   Theme,
@@ -485,6 +488,57 @@ export class CharacterPresenter {
     const skillRanks = selectedClass.skillRank + computeAbilityScoreModifier(this.getAbilityScores().int) + ranks;
 
     return skillRanks - Object.values(this.character.skillRanks).reduce((acc, v) => acc + v, 0);
+  }
+
+  checkPrerequisite(prerequisite: Prerequisite): boolean {
+    switch (prerequisite.type) {
+      case PrerequisiteType.enum.abilityScore: {
+        const abilityScore = this.getAbilityScores()[prerequisite.target];
+        return abilityScore >= prerequisite.value;
+      }
+
+      case PrerequisiteType.enum.arms:
+        // TODO: Manage other cases
+        return this.character.race === "khasathas";
+
+      case PrerequisiteType.enum.baseAttack: {
+        const baseAttack = this.getAttackBonuses()?.base;
+        return baseAttack !== undefined && baseAttack >= prerequisite.value;
+      }
+      case PrerequisiteType.enum.class:
+        return this.character.class === prerequisite.target;
+
+      case PrerequisiteType.enum.combatFeatCount:
+      case PrerequisiteType.enum.feat:
+      case PrerequisiteType.enum.savingThrow:
+      case PrerequisiteType.enum.skillRank:
+      case PrerequisiteType.enum.spellCasterLevel:
+      case PrerequisiteType.enum.weaponProficiency:
+        // TODO
+        return true;
+
+      case PrerequisiteType.enum.level:
+        return this.character.level >= prerequisite.value;
+    }
+  }
+
+  checkPrerequisites(prerequisites: Prerequisite[] | undefined): boolean {
+    if (prerequisites === undefined) {
+      return true;
+    }
+
+    return prerequisites.every((p) => this.checkPrerequisite(p));
+  }
+
+  getAllFeats(): Feat[] {
+    const templater = this.createTemplater();
+    return this.data.feats.map((template) => {
+      return {
+        ...template,
+        modifiers: template.modifiers.map((m) => templater.convertModifier(m)),
+        available: this.checkPrerequisites(template.prerequisites),
+      };
+    });
   }
 
   getName(): string {
