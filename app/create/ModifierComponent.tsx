@@ -1,7 +1,7 @@
 import { Badge } from "react-bootstrap";
 import { displayBonus } from "app/helpers";
 import { useAppSelector } from "logic";
-import { Modifier, ModifierType } from "model";
+import { Modifier, ModifierType, hasDescription, hasExtra, hasName, hasValue } from "model";
 
 const displayLabelsForType: Record<ModifierType, string> = {
   attack: "Bonus de base à l’attaque",
@@ -70,28 +70,4 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       {hasExtra(modifier) && modifier.extra && <span className="me-2 text-muted">{modifier.extra}</span>}
     </p>
   );
-}
-
-type ModifierWithValue = Extract<Modifier, { value: number }>;
-
-function hasValue(modifier: Modifier): modifier is ModifierWithValue {
-  return Object.prototype.hasOwnProperty.call(modifier, "value");
-}
-
-type ModifierWithName = Extract<Modifier, { name: string }>;
-
-function hasName(modifier: Modifier): modifier is ModifierWithName {
-  return Object.prototype.hasOwnProperty.call(modifier, "name");
-}
-
-type ModifierWithDescription = Extract<Modifier, { description: string }>;
-
-function hasDescription(modifier: Modifier): modifier is ModifierWithDescription {
-  return Object.prototype.hasOwnProperty.call(modifier, "description");
-}
-
-type ModifierWithExtra = Extract<Modifier, { extra?: string }>;
-
-function hasExtra(modifier: Modifier): modifier is ModifierWithExtra {
-  return Object.prototype.hasOwnProperty.call(modifier, "extra");
 }

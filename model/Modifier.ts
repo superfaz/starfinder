@@ -95,3 +95,27 @@ export function isModifier(obj: unknown): obj is Modifier {
 export function ofType<V extends Modifier["type"]>(val: V) {
   return (obj: Modifier): obj is Extract<Modifier, { type: V }> => obj.type === val;
 }
+
+export type ModifierWithValue = Extract<Modifier, { value: number }>;
+
+export function hasValue(modifier: Modifier): modifier is ModifierWithValue {
+  return Object.prototype.hasOwnProperty.call(modifier, "value");
+}
+
+export type ModifierWithName = Extract<Modifier, { name: string }>;
+
+export function hasName(modifier: Modifier): modifier is ModifierWithName {
+  return Object.prototype.hasOwnProperty.call(modifier, "name");
+}
+
+export type ModifierWithDescription = Extract<Modifier, { description: string }>;
+
+export function hasDescription(modifier: Modifier): modifier is ModifierWithDescription {
+  return Object.prototype.hasOwnProperty.call(modifier, "description");
+}
+
+export type ModifierWithExtra = Extract<Modifier, { extra?: string }>;
+
+export function hasExtra(modifier: Modifier): modifier is ModifierWithExtra {
+  return Object.prototype.hasOwnProperty.call(modifier, "extra");
+}
