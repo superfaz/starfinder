@@ -508,17 +508,24 @@ export class CharacterPresenter {
       case PrerequisiteType.enum.class:
         return this.character.class === prerequisite.target;
 
+      case PrerequisiteType.enum.level:
+        return this.character.level >= prerequisite.value;
+
+      case PrerequisiteType.enum.skillRank: {
+        const skill = this.getSkills().find((s) => s.id === prerequisite.target);
+        return !!skill && skill.ranks >= prerequisite.value;
+      }
+
+      case PrerequisiteType.enum.weaponProficiency: {
+        const selectedClass = this.getClass();
+        return !!selectedClass && selectedClass.weapons.includes(prerequisite.target);
+      }
+
       case PrerequisiteType.enum.combatFeatCount:
       case PrerequisiteType.enum.feat:
       case PrerequisiteType.enum.savingThrow:
-      case PrerequisiteType.enum.skillRank:
       case PrerequisiteType.enum.spellCasterLevel:
-      case PrerequisiteType.enum.weaponProficiency:
-        // TODO
         return true;
-
-      case PrerequisiteType.enum.level:
-        return this.character.level >= prerequisite.value;
     }
   }
 

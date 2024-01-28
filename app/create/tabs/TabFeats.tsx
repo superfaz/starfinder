@@ -12,38 +12,58 @@ function getText(data: IClientDataSet, prerequisite: Prerequisite) {
     case PrerequisiteType.enum.abilityScore: {
       const target = prerequisite.target === "<primary>" ? "dex" : prerequisite.target;
       const abilityScore = findOrError(data.abilityScores, (e) => e.id === target).name;
-      return `${abilityScore} >= ${prerequisite.value}`;
+      return `${abilityScore} ${prerequisite.value}`;
     }
 
     case PrerequisiteType.enum.arms:
       return `${prerequisite.value} bras`;
 
     case PrerequisiteType.enum.baseAttack:
-      return `Bonus de base à l'attaque >= ${prerequisite.value}`;
+      return `Bonus de base à l'attaque +${prerequisite.value}`;
 
-    case PrerequisiteType.enum.class:
-      return `Classe ${prerequisite.target}`;
+    case PrerequisiteType.enum.class: {
+      if (prerequisite.target.startsWith("!")) {
+        const target = prerequisite.target.substring(1);
+        const name = data.classes.find((e) => e.id === target)?.name ?? target;
+        return `Pas de niveau de ${name}`;
+      } else {
+        const name = data.classes.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
+        return `${name} de niveau 1`;
+      }
+    }
 
     case PrerequisiteType.enum.combatFeatCount:
       return `${prerequisite.value} dons de combat`;
 
     case PrerequisiteType.enum.feat:
-      return `Don '${prerequisite.target}'`;
+      return `Don ${prerequisite.target}`;
 
     case PrerequisiteType.enum.level:
       return `Niveau ${prerequisite.value}`;
 
     case PrerequisiteType.enum.savingThrow:
-      return `Jet de sauvegarde ${prerequisite.target} >= ${prerequisite.value}`;
+      return `Jet de sauvegarde ${prerequisite.target} +${prerequisite.value}`;
 
-    case PrerequisiteType.enum.skillRank:
-      return `${prerequisite.value} rang(s) de compétence en '${prerequisite.target}'`;
+    case PrerequisiteType.enum.skillRank: {
+      const name = data.skills.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
+      if (prerequisite.value === 1) {
+        return `1 rang de compétence en ${name}`;
+      } else {
+        return `${prerequisite.value} rang(s) de compétence en ${name}`;
+      }
+    }
 
     case PrerequisiteType.enum.spellCasterLevel:
-      return `Niveau de lanceur de sorts >= ${prerequisite.value}`;
+      if (prerequisite.value === 0) {
+        return "Aucun niveau de lanceur de sorts";
+      } else {
+        return `Niveau de lanceur de sorts ${prerequisite.value}`;
+      }
 
-    case PrerequisiteType.enum.weaponProficiency:
-      return `Maîtrise des armes '${prerequisite.target}'`;
+    case PrerequisiteType.enum.weaponProficiency: {
+      const name = data.weapons.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
+      return `Maîtrise des ${name}`;
+    }
 
     default:
       return "Prérequis inconnu";
