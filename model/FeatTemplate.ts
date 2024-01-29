@@ -5,7 +5,12 @@ import { Prerequisite } from "./Prerequisite";
 import { ModifierTemplate } from "./ModifierTemplate";
 
 export const FeatTemplate = INamedModel.extend({
-  combatFeat: z.boolean(),
+  combatFeat: z.boolean().default(false),
+
+  /**
+   * If true, the feat will not be shown in the feat list.
+   */
+  hidden: z.boolean().default(false),
   multiple: z.boolean().default(false),
   target: z.string().optional(),
   description: Description,

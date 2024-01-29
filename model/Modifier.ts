@@ -2,6 +2,7 @@ import { z } from "zod";
 import { IModel } from "./IModel";
 import { ModifierType } from "./ModifierType";
 import { Description, Id } from "./helper";
+import { SavingThrowId } from "./SavingThrow";
 
 export const AbilityModifier = IModel.extend({
   type: z.literal(ModifierType.enum.ability),
@@ -40,7 +41,7 @@ export const SavingThrowModifier = IModel.extend({
 export const SavingThrowBonusModifier = IModel.extend({
   type: z.literal(ModifierType.enum.savingThrowBonus),
   level: z.number().optional(),
-  target: z.string(),
+  target: SavingThrowId,
   value: z.number(),
 }).strict();
 

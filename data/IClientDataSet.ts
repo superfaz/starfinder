@@ -1,14 +1,15 @@
 import {
   AbilityScore,
   Alignment,
+  Armor,
   Avatar,
   Class,
   FeatTemplate,
-  INamedModel,
   Race,
   SavingThrow,
   SkillDefinition,
   Theme,
+  Weapon,
 } from "model";
 
 export interface IClientDataSet {
@@ -21,8 +22,8 @@ export interface IClientDataSet {
   savingThrows: SavingThrow[];
   skills: SkillDefinition[];
   themes: Theme[];
-  armors: INamedModel[];
-  weapons: INamedModel[];
+  armors: Armor[];
+  weapons: Weapon[];
 }
 
 export const EmptyClientDataSet: IClientDataSet = {

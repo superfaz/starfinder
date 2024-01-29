@@ -1,4 +1,16 @@
-import { AbilityScore, Alignment, Avatar, Class, FeatTemplate, INamedModel, Race, SavingThrow, SkillDefinition, Theme } from "model";
+import {
+  AbilityScore,
+  Alignment,
+  Armor,
+  Avatar,
+  Class,
+  FeatTemplate,
+  Race,
+  SavingThrow,
+  SkillDefinition,
+  Theme,
+  Weapon,
+} from "model";
 
 export interface IDataSet {
   getAbilityScores(): Promise<AbilityScore[]>;
@@ -12,6 +24,6 @@ export interface IDataSet {
   getSkills(): Promise<SkillDefinition[]>;
   getThemes(): Promise<Theme[]>;
   getThemeDetails(themeId: string): Promise<unknown>;
-  getArmors(): Promise<INamedModel[]>;
-  getWeapons(): Promise<INamedModel[]>;
+  getArmors(): Promise<Armor[]>;
+  getWeapons(): Promise<Weapon[]>;
 }

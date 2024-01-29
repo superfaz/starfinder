@@ -1,5 +1,7 @@
+export * from "./helper";
 export * from "./AbilityScore";
 export * from "./Alignment";
+export * from "./Armor";
 export * from "./Avatar";
 export * from "./Character";
 export * from "./Class";
@@ -24,3 +26,4 @@ export * from "./SkillDefinition";
 export * from "./Theme";
 export * from "./ThemeScholar";
 export * from "./Variant";
+export * from "./Weapon";

@@ -68,6 +68,8 @@ Dons : Technomancien amateur / Choix des sorts
 
 Dons : Tir de repli / Gestion de la feinte offensive
 
+Dons : Nano-intégration / Réécriture complete
+
 ## Level increase
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
