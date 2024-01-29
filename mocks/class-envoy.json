@@ -1,4 +1,5 @@
 {
+  "id": "envoy",
   "skills": ["bluf", "comp", "cult", "dipl", "disg", "engi", "inti", "medi"],
   "features": [
     {
@@ -89,12 +90,12 @@
         {
           "id": "1e436bf1-2349-4b8f-817e-8f2ba6fcad88",
           "type": "feat",
-          "name": "Spécialisation martiale (armes de corps à corps)"
+          "feat": "weapon-specialization-basic"
         },
         {
           "id": "ebf79669-2820-423d-a7e2-131418f8dfcf",
           "type": "feat",
-          "name": "Spécialisation martiale (armes légères)"
+          "feat": "weapon-specialization-small"
         }
       ]
     },

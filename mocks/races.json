@@ -9,7 +9,6 @@
       {
         "id": "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
         "name": "Aucune",
-        "description": "",
         "abilityScores": { "dex": 2, "int": 2, "cha": -2 }
       }
     ],
@@ -157,13 +156,6 @@
         ]
       },
       {
-        "id": "19218a1a-73f2-4504-9f29-16a1fd9c5790",
-        "name": "Nano-amélioration",
-        "level": 1,
-        "replace": ["470b64bd-f308-4192-99fd-17656e9bc386"],
-        "modifiers": [{ "id": "4a9370f2-489c-4d12-abcd-43ca5d6709a1", "type": "feat", "name": "Nano-intégration" }]
-      },
-      {
         "id": "01ad5e2a-125e-4c06-a7ca-8cf49efb586f",
         "name": "Polyglotte",
         "level": 1,
@@ -190,7 +182,6 @@
       {
         "id": "humans-standard",
         "name": "Standard",
-        "description": "",
         "abilityScores": {}
       },
       {

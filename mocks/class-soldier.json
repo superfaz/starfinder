@@ -35,32 +35,32 @@
         {
           "id": "da571f27-2766-4b9d-9d0c-b2910183785e",
           "type": "feat",
-          "name": "Spécialisation martiale (armes de corps à corps simples)"
+          "feat": "weapon-specialization-basic"
         },
         {
           "id": "6b0a765c-7d17-4df9-a9f2-585cde524b1f",
           "type": "feat",
-          "name": "Spécialisation martiale (armes de corps à corps évoluées)"
+          "feat": "weapon-specialization-advanced"
         },
         {
           "id": "78368f02-6443-4a5e-8974-7b28b1410f12",
           "type": "feat",
-          "name": "Spécialisation martiale (armes légères)"
+          "feat": "weapon-specialization-small"
         },
         {
           "id": "bf3c9850-f96e-4c5a-85f6-4eebc4097fa2",
           "type": "feat",
-          "name": "Spécialisation martiale (armes longues)"
+          "feat": "weapon-specialization-long"
         },
         {
           "id": "79f93316-c71c-4979-9dbf-a5d6c13f9a97",
           "type": "feat",
-          "name": "Spécialisation martiale (armes lourdes)"
+          "feat": "weapon-specialization-heavy"
         },
         {
           "id": "c51389f9-9c59-4c04-8d5f-b2d9bb5f53b8",
           "type": "feat",
-          "name": "Spécialisation martiale (armes de précision)"
+          "feat": "weapon-specialization-sniper"
         }
       ]
     },
@@ -212,7 +212,7 @@
             {
               "id": "dfa6f532-97e4-4d52-8748-2271cccec912",
               "type": "feat",
-              "name": "Port des armures assistées"
+              "feat": "powered-armor-proficiency"
             }
           ]
         },
@@ -452,7 +452,7 @@
             {
               "id": "054017be-036f-417f-8be4-08d7ed5e516f",
               "type": "feat",
-              "name": "Port des armures assistées"
+              "feat": "powered-armor-proficiency"
             }
           ]
         },
@@ -514,7 +514,7 @@
             {
               "id": "71897d20-7c80-4a4b-9283-a434d4255abf",
               "type": "feat",
-              "name": "Première salve"
+              "feat": "opening-volley"
             },
             {
               "id": "6ffb7e55-90e3-44ed-8ea9-7e286def6018",

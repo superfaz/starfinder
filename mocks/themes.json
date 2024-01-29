@@ -87,7 +87,7 @@
             "id": "45d576a3-0ba0-434c-a71f-44e6211b2a23",
             "type": "ability",
             "name": "Chasseur de primes",
-            "description": "une fois par jour lorsque vous mettez votre cible en échec, vous récupérez 1 point de persévérance."
+            "description": "Une fois par jour lorsque vous mettez votre cible en échec, vous récupérez 1 point de persévérance."
           }
         ]
       }
@@ -137,13 +137,13 @@
         "id": "e759558a-c802-498d-81db-707320fa3bbb",
         "level": 12,
         "name": "Expert en recherches",
-        "description": "Vous pouvez effectuer des recherches bien plus rapidement que quiconque",
+        "description": "Vous pouvez effectuer des recherches bien plus rapidement que quiconque.",
         "modifiers": [
           {
             "id": "5940e577-9bdc-40af-94e8-713798b5f64a",
             "type": "ability",
             "name": "Erudit",
-            "description": "vous pouvez généralement faire 20 pour vous rappeler quelque chose en 5 rounds."
+            "description": "Vous pouvez généralement faire 20 pour vous rappeler quelque chose en 5 rounds."
           }
         ]
       },

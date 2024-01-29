@@ -107,7 +107,6 @@
   {
     "id": "prof",
     "name": "Profession",
-    "abilityScore": "",
     "trainedOnly": true,
     "armorCheckPenalty": false
   },
