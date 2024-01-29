@@ -438,7 +438,9 @@ export class CharacterPresenter {
         const isTrained: boolean = ranks > 0;
         const isClassSkill: boolean = this.getClassSkills().includes(s.id);
         const bonusDoubleClassSkill: number = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
-        const abilityScoreModifier: number = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
+        const abilityScoreModifier: number = !s.abilityScore
+          ? 0
+          : computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
 
         // TODO: Add bonus from modifiers
         const bonusFromSkillModifiers = skillModifiers

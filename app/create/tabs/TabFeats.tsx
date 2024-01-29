@@ -7,6 +7,7 @@ import { CharacterProps } from "../Props";
 import { IClientDataSet } from "data";
 import { useState } from "react";
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function getText(data: IClientDataSet, prerequisite: Prerequisite) {
   switch (prerequisite.type) {
     case PrerequisiteType.enum.abilityScore: {

@@ -2,6 +2,8 @@ import { z } from "zod";
 import { AbilityScoreId } from "./AbilityScore";
 import { IModel } from "./IModel";
 import { PrerequisiteType } from "./PrerequisiteType";
+import { WeaponId } from "./Weapon";
+import { Variable } from "./helper";
 
 export const AbilityScorePrerequisite = IModel.extend({
   type: z.literal(PrerequisiteType.enum.abilityScore),
@@ -45,7 +47,7 @@ export const SkillRankPrerequisite = IModel.extend({
 
 export const WeaponProficiencyPrerequisite = IModel.extend({
   type: z.literal(PrerequisiteType.enum.weaponProficiency),
-  target: z.string(),
+  target: z.union([WeaponId, Variable]),
 }).strict();
 
 export const Prerequisite = z.discriminatedUnion("type", [
