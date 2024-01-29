@@ -1,6 +1,6 @@
 import { Card, Col, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { Feat, Prerequisite, PrerequisiteType, hasDescription } from "model";
+import { Feat, ModifierType, Prerequisite, PrerequisiteType, hasDescription, ofType } from "model";
 import { CharacterPresenter, useAppSelector } from "logic";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
@@ -81,6 +81,52 @@ function PrerequisiteComponent({
   const text = getText(data, prerequisite);
   const valid = character.checkPrerequisite(prerequisite);
   return <li className={valid ? undefined : "text-danger"}>{text}</li>;
+}
+
+function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: Feat }) {
+  return (
+    <Card>
+      <Card.Header className={feat.available ? undefined : "text-danger"}>
+        {feat.name}
+        {feat.combatFeat ? " (combat)" : ""}
+      </Card.Header>
+      <Card.Body>
+        {feat.description && <p className="text-muted">{feat.description}</p>}
+        {feat.modifiers.map((modifier) => (
+          <ModifierComponent key={modifier.id} modifier={modifier} />
+        ))}
+        {feat.prerequisites !== undefined && (
+          <>
+            <hr />
+            <h6>Conditions</h6>
+            {feat.prerequisites.map((prerequisite) => (
+              <PrerequisiteComponent key={prerequisite.id} character={character} prerequisite={prerequisite} />
+            ))}
+          </>
+        )}
+      </Card.Body>
+    </Card>
+  );
+}
+
+export function AppliedFeats({ character }: CharacterProps) {
+  const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.feat));
+  const feats = modifiers.map((modifier) => {
+    try {
+      return findOrError(character.getAllFeats(), (e) => e.id === modifier.target);
+    } catch (error) {
+      console.log(modifier.target, error);
+    }
+  });
+
+  return (
+    <>
+      <h2>Dons appliqués</h2>
+      {feats.map((feat) => (
+        <FeatComponent key={feat.id} character={character} feat={feat} />
+      ))}
+    </>
+  );
 }
 
 export function Feats({ character }: CharacterProps) {
@@ -166,27 +212,7 @@ export function Feats({ character }: CharacterProps) {
       <Row>
         {displayedFeats.map((feat) => (
           <div key={feat.id} className="col-4 mb-4">
-            <Card key={feat.id}>
-              <Card.Header className={feat.available ? undefined : "text-danger"}>
-                {feat.name}
-                {feat.combatFeat ? " (combat)" : ""}
-              </Card.Header>
-              <Card.Body>
-                {feat.description && <p className="text-muted">{feat.description}</p>}
-                {feat.modifiers.map((modifier) => (
-                  <ModifierComponent key={modifier.id} modifier={modifier} />
-                ))}
-                {feat.prerequisites !== undefined && (
-                  <>
-                    <hr />
-                    <h6>Conditions</h6>
-                    {feat.prerequisites.map((prerequisite) => (
-                      <PrerequisiteComponent key={prerequisite.id} character={character} prerequisite={prerequisite} />
-                    ))}
-                  </>
-                )}
-              </Card.Body>
-            </Card>
+            <FeatComponent character={character} feat={feat} />
           </div>
         ))}
       </Row>

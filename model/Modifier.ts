@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { IModel } from "./IModel";
 import { ModifierType } from "./ModifierType";
-import { Description } from "./helper";
+import { Description, Id } from "./helper";
 
 export const AbilityModifier = IModel.extend({
   type: z.literal(ModifierType.enum.ability),
@@ -19,7 +19,7 @@ export const ClassSkillModifier = IModel.extend({
 export const FeatModifier = IModel.extend({
   type: z.literal(ModifierType.enum.feat),
   level: z.number().optional(),
-  name: z.string(),
+  feat: Id,
   target: z.string().optional(),
   extra: z.string().optional(),
 }).strict();
