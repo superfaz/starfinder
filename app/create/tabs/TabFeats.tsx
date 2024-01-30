@@ -143,9 +143,11 @@ function FeatComponent({
           <>
             <hr />
             <h6>Conditions</h6>
-            {feat.prerequisites.map((prerequisite) => (
-              <PrerequisiteComponent key={prerequisite.id} character={character} prerequisite={prerequisite} />
-            ))}
+            <ul>
+              {feat.prerequisites.map((prerequisite) => (
+                <PrerequisiteComponent key={prerequisite.id} character={character} prerequisite={prerequisite} />
+              ))}
+            </ul>
           </>
         )}
       </Card.Body>
