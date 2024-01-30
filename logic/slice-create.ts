@@ -105,6 +105,10 @@ const mainSlice = createSlice({
     addFeat(state, action: PayloadAction<string>) {
       state.character.feats.push({ id: action.payload });
     },
+
+    removeFeat(state, action: PayloadAction<string>) {
+      state.character.feats = state.character.feats.filter((f) => f.id !== action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {

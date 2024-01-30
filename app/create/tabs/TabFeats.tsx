@@ -9,6 +9,10 @@ import { CharacterProps } from "../Props";
 
 type FeatTemplateExtended = FeatTemplate & { available: boolean };
 
+function isExtended(feat: FeatTemplate | FeatTemplateExtended): feat is FeatTemplateExtended {
+  return "available" in feat;
+}
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
   switch (prerequisite.type) {
@@ -86,7 +90,15 @@ function PrerequisiteComponent({
   return <li className={valid ? undefined : "text-danger"}>{text}</li>;
 }
 
-function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: FeatTemplateExtended }) {
+function FeatComponent({
+  mode,
+  character,
+  feat,
+}: {
+  mode: "add" | "remove";
+  character: CharacterPresenter;
+  feat: FeatTemplate | FeatTemplateExtended;
+}) {
   const dispatch = useAppDispatch();
   const templater = character.createTemplater();
 
@@ -94,24 +106,30 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
     dispatch(mutators.addFeat(feat.id));
   }
 
+  function handleRemoveFeat() {
+    dispatch(mutators.removeFeat(feat.id));
+  }
+
   return (
     <Card>
-      <Card.Header className={feat.available ? undefined : "text-danger"}>
+      <Card.Header>
         <Row className="align-items-center">
-          <Col>
+          <Col className={isExtended(feat) && !feat.available ? "text-danger" : undefined}>
             {feat.name}
             {feat.combatFeat ? " (combat)" : ""}
           </Col>
           <Col xs="auto">
-            <Button
-              variant={feat.available ? undefined : "outline-danger"}
-              disabled={!feat.available}
-              className="ms-auto end-0"
-              size="sm"
-              onClick={handleAddFeat}
-            >
-              Ajouter
-            </Button>
+            {mode === "add" && (
+              <Button
+                variant={isExtended(feat) && !feat.available ? "outline-primary" : undefined}
+                disabled={isExtended(feat) && !feat.available}
+                size="sm"
+                onClick={handleAddFeat}
+              >
+                Ajouter
+              </Button>
+            )}
+            {mode === "remove" && <Button size="sm" onClick={handleRemoveFeat}>Enlever</Button>}
           </Col>
         </Row>
       </Card.Header>
@@ -134,7 +152,27 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
   );
 }
 
-export function Feats({ character }: CharacterProps) {
+export function FeatSelected({ character }: CharacterProps) {
+  const feats = character.getSelectedFeats();
+  if (feats.length === 0) {
+    return null;
+  } else {
+    return (
+      <>
+        <h2>Dons sélectionnés</h2>
+        <Row>
+          {character.getSelectedFeats().map((feat) => (
+            <Col xs="4" key={feat.id} className="mb-4">
+              <FeatComponent mode="remove" key={feat.id} character={character} feat={feat} />
+            </Col>
+          ))}
+        </Row>
+      </>
+    );
+  }
+}
+
+export function FeatSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
   const allFeats = useMemo(
     () =>
@@ -225,9 +263,9 @@ export function Feats({ character }: CharacterProps) {
       </Row>
       <Row>
         {displayedFeats.map((feat) => (
-          <div key={feat.id} className="col-4 mb-4">
-            <FeatComponent character={character} feat={feat} />
-          </div>
+          <Col xs="4" key={feat.id} className="mb-4">
+            <FeatComponent mode="add" character={character} feat={feat} />
+          </Col>
         ))}
       </Row>
     </>

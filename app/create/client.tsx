@@ -125,7 +125,11 @@ function ClientComponentPresenter() {
         </Col>
 
         <Col lg={12} hidden={navigation !== "feats"}>
-          <Tab.Feats character={presenter} />
+          <Tab.FeatSelected character={presenter} />
+        </Col>
+
+        <Col lg={12} hidden={navigation !== "feats"}>
+          <Tab.FeatSelection character={presenter} />
         </Col>
 
         <Col lg={12} hidden={navigation !== "sheet"}>

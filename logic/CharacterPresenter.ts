@@ -611,4 +611,10 @@ export class CharacterPresenter {
       thrown: base + str,
     };
   }
+
+  getSelectedFeats(): FeatTemplate[] {
+    return this.character.feats
+      .map((f) => this.data.feats.find((t) => t.id === f.id))
+      .filter((f) => f !== undefined) as FeatTemplate[];
+  }
 }
