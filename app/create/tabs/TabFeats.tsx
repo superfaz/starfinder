@@ -97,6 +97,7 @@ function FeatComponent({
 }) {
   const dispatch = useAppDispatch();
   const templater = character.createTemplater();
+  const featsCount = character.getSelectableFeatCount();
 
   function handleAddFeat() {
     dispatch(mutators.addFeat(feat.id));
@@ -118,7 +119,7 @@ function FeatComponent({
             {mode === "add" && (
               <Button
                 variant={!feat.available ? "outline-danger" : undefined}
-                disabled={!feat.available}
+                disabled={!feat.available || featsCount <= 0}
                 size="sm"
                 onClick={handleAddFeat}
               >
