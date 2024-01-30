@@ -2,7 +2,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 
 function nextConfig() {
   const standardConfig = {
-    eslint: { dirs: ["app", "data", "logic", "model"] },
+    eslint: { dirs: ["app", "data", "logic", "mocks", "model"] },
   };
 
   if (process.env.GITHUB_WORKFLOW) {

@@ -6,7 +6,7 @@ export function addFetchMock(url: string, data: object): void {
   cache[url] = data;
 }
 
-export function mockFetch(input: string | URL | Request, _: unknown): Promise<Response> {
+export function mockFetch(input: string | URL | Request): Promise<Response> {
   const url: string = input instanceof Request ? input.url : input instanceof URL ? input.toString() : input;
   if (cache[url]) {
     return Promise.resolve(new Response(JSON.stringify(cache[url])));
