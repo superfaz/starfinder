@@ -57,7 +57,7 @@ function ClientComponentPresenter() {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="feats" disabled={selectedClass === null}>
-            Don
+            Don(s)
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
