@@ -617,4 +617,8 @@ export class CharacterPresenter {
       .map((f) => this.data.feats.find((t) => t.id === f.id))
       .filter((f) => f !== undefined) as FeatTemplate[];
   }
+
+  hasFeat(feat: FeatTemplate): boolean {
+    return this.character.feats.some((f) => f.id === feat.id);
+  }
 }

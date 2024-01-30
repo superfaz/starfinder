@@ -9,10 +9,6 @@ import { CharacterProps } from "../Props";
 
 type FeatTemplateExtended = FeatTemplate & { available: boolean };
 
-function isExtended(feat: FeatTemplate | FeatTemplateExtended): feat is FeatTemplateExtended {
-  return "available" in feat;
-}
-
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
   switch (prerequisite.type) {
@@ -97,7 +93,7 @@ function FeatComponent({
 }: {
   mode: "add" | "remove";
   character: CharacterPresenter;
-  feat: FeatTemplate | FeatTemplateExtended;
+  feat: FeatTemplateExtended;
 }) {
   const dispatch = useAppDispatch();
   const templater = character.createTemplater();
@@ -114,22 +110,26 @@ function FeatComponent({
     <Card>
       <Card.Header>
         <Row className="align-items-center">
-          <Col className={isExtended(feat) && !feat.available ? "text-danger" : undefined}>
+          <Col className={!feat.available ? "text-danger" : undefined}>
             {feat.name}
             {feat.combatFeat ? " (combat)" : ""}
           </Col>
           <Col xs="auto">
             {mode === "add" && (
               <Button
-                variant={isExtended(feat) && !feat.available ? "outline-primary" : undefined}
-                disabled={isExtended(feat) && !feat.available}
+                variant={!feat.available ? "outline-danger" : undefined}
+                disabled={!feat.available}
                 size="sm"
                 onClick={handleAddFeat}
               >
                 Ajouter
               </Button>
             )}
-            {mode === "remove" && <Button size="sm" onClick={handleRemoveFeat}>Enlever</Button>}
+            {mode === "remove" && (
+              <Button size="sm" onClick={handleRemoveFeat}>
+                Enlever
+              </Button>
+            )}
           </Col>
         </Row>
       </Card.Header>
@@ -153,7 +153,7 @@ function FeatComponent({
 }
 
 export function FeatSelected({ character }: CharacterProps) {
-  const feats = character.getSelectedFeats();
+  const feats = character.getSelectedFeats().map((f) => ({ ...f, available: character.checkPrerequisites(f) }));
   if (feats.length === 0) {
     return null;
   } else {
@@ -161,7 +161,7 @@ export function FeatSelected({ character }: CharacterProps) {
       <>
         <h2>Dons sélectionnés</h2>
         <Row>
-          {character.getSelectedFeats().map((feat) => (
+          {feats.map((feat) => (
             <Col xs="4" key={feat.id} className="mb-4">
               <FeatComponent mode="remove" key={feat.id} character={character} feat={feat} />
             </Col>
@@ -178,6 +178,7 @@ export function FeatSelection({ character }: CharacterProps) {
     () =>
       data.feats
         .map((f) => ({ ...f, available: character.checkPrerequisites(f) }))
+        .filter((f) => !character.hasFeat(f))
         .filter((f) => !f.hidden && f.type === "simple"),
     [data.feats, character]
   );
