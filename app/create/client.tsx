@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
-import StoreProvider from "logic/StoreProvider";
+import StoreProvider from "../../logic/StoreProvider";
 import * as Tab from "./tabs";
 
 function ClientComponentPresenter() {

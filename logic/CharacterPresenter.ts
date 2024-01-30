@@ -7,7 +7,6 @@ import {
   ClassEnvoy,
   ClassOperative,
   ClassSoldier,
-  Feat,
   FeatTemplate,
   Feature,
   IModel,
@@ -19,6 +18,8 @@ import {
   SkillDefinition,
   Theme,
   Variant,
+  isVariable,
+  isWeaponId,
   ofType,
 } from "model";
 import { Templater, cleanEvolutions } from ".";
@@ -521,7 +522,21 @@ export class CharacterPresenter {
 
       case PrerequisiteType.enum.weaponProficiency: {
         const selectedClass = this.getClass();
-        return !!selectedClass && selectedClass.weapons.includes(prerequisite.target);
+        if (isVariable(prerequisite.target)) {
+          const target = this.createTemplater().convertString(prerequisite.target);
+          if (isWeaponId(target)) {
+            return !!selectedClass && selectedClass.weapons.includes(target);
+          } else {
+            console.error(
+              `Invalid weapon id: ${target} for prerequisite ${prerequisite.id} with value ${prerequisite.target}`
+            );
+            return false;
+          }
+        } else if (isWeaponId(prerequisite.target)) {
+          return !!selectedClass && selectedClass.weapons.includes(prerequisite.target);
+        } else {
+          return false;
+        }
       }
 
       case PrerequisiteType.enum.combatFeatCount:
@@ -537,23 +552,19 @@ export class CharacterPresenter {
       return true;
     }
 
-    if (template.type === "simple" || template.type === "targeted") {
+    if (template.type === "simple") {
       return template.prerequisites.every((p) => this.checkPrerequisite(p));
-    } else {
+    } else if (template.type === "targeted") {
+      // TODO: manage targeted
+      return false;
+    } else if (template.type === "multiple") {
       // TODO: manage multiple
-      return true;
+      return false;
+    } else {
+      // @ts-expect-error Will be called only if a new template type is added and not managed
+      console.error(`Invalid feat template type: ${template.type}`);
+      return false;
     }
-  }
-
-  getAllFeats(): Feat[] {
-    const templater = this.createTemplater();
-    return this.data.feats.map((template) => {
-      return {
-        ...template,
-        modifiers: template.modifiers.map((m) => templater.convertModifier(m)),
-        available: this.checkPrerequisites(template),
-      };
-    });
   }
 
   getName(): string {

@@ -1,11 +1,13 @@
+import { useMemo, useState } from "react";
 import { Card, Col, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { findOrError } from "app/helpers";
+import { IClientDataSet } from "data";
 import { FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
 import { CharacterPresenter, useAppSelector } from "logic";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
-import { IClientDataSet } from "data";
-import { useMemo, useState } from "react";
+
+type FeatTemplateExtended = FeatTemplate & { available: boolean };
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
@@ -84,7 +86,8 @@ function PrerequisiteComponent({
   return <li className={valid ? undefined : "text-danger"}>{text}</li>;
 }
 
-function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: Feat }) {
+function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: FeatTemplateExtended }) {
+  const templater = character.createTemplater();
   return (
     <Card>
       <Card.Header className={feat.available ? undefined : "text-danger"}>
@@ -94,7 +97,7 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
       <Card.Body>
         {feat.description && <p className="text-muted">{feat.description}</p>}
         {feat.modifiers.map((modifier) => (
-          <ModifierComponent key={modifier.id} modifier={modifier} />
+          <ModifierComponent key={modifier.id} modifier={templater.convertModifier(modifier)} />
         ))}
         {feat.prerequisites !== undefined && (
           <>
@@ -113,7 +116,10 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
 export function Feats({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
   const allFeats = useMemo(
-    () => data.feats.map((f) => ({ ...f, available: character.checkPrerequisites(f) })).filter((f) => !f.hidden),
+    () =>
+      data.feats
+        .map((f) => ({ ...f, available: character.checkPrerequisites(f) }))
+        .filter((f) => !f.hidden && f.type === "simple"),
     [data.feats, character]
   );
 
@@ -130,7 +136,7 @@ export function Feats({ character }: CharacterProps) {
     categoryFilter = () => true;
   }
 
-  let prerequisiteFilter: (feat: FeatTemplate) => boolean;
+  let prerequisiteFilter: (feat: FeatTemplateExtended) => boolean;
   if (prerequisite === "available") {
     prerequisiteFilter = (feat) => feat.available;
   } else if (prerequisite === "blocked") {

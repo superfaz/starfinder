@@ -63,7 +63,7 @@ const datasets = [
   {
     file: "feats.json",
     array: true,
-    schema: FeatTemplate.strict(),
+    schema: FeatTemplate,
   },
   {
     file: "races.json",
