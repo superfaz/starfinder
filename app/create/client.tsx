@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
+import StoreProvider from "logic/StoreProvider";
 import * as Tab from "./tabs";
-import StoreProvider from "../../logic/StoreProvider";
 
 function ClientComponentPresenter() {
   const data = useAppSelector((state) => state.data);
@@ -122,10 +122,6 @@ function ClientComponentPresenter() {
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>
           <Tab.SkillsModifiers character={presenter} />
-        </Col>
-
-        <Col lg={6} hidden={navigation !== "feats"}>
-          <Tab.AppliedFeats character={presenter} />
         </Col>
 
         <Col lg={12} hidden={navigation !== "feats"}>

@@ -8,7 +8,6 @@ export * from "./Class";
 export * from "./ClassEnvoy";
 export * from "./ClassOperative";
 export * from "./ClassSoldier";
-export * from "./Feat";
 export * from "./FeatTemplate";
 export * from "./Feature";
 export * from "./FeatureTemplate";

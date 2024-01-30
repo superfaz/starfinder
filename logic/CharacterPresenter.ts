@@ -8,6 +8,7 @@ import {
   ClassOperative,
   ClassSoldier,
   Feat,
+  FeatTemplate,
   Feature,
   IModel,
   Modifier,
@@ -531,12 +532,17 @@ export class CharacterPresenter {
     }
   }
 
-  checkPrerequisites(prerequisites: Prerequisite[] | undefined): boolean {
-    if (prerequisites === undefined) {
+  checkPrerequisites(template: FeatTemplate): boolean {
+    if (template.prerequisites === undefined) {
       return true;
     }
 
-    return prerequisites.every((p) => this.checkPrerequisite(p));
+    if (template.type === "simple" || template.type === "targeted") {
+      return template.prerequisites.every((p) => this.checkPrerequisite(p));
+    } else {
+      // TODO: manage multiple
+      return true;
+    }
   }
 
   getAllFeats(): Feat[] {
@@ -545,7 +551,7 @@ export class CharacterPresenter {
       return {
         ...template,
         modifiers: template.modifiers.map((m) => templater.convertModifier(m)),
-        available: this.checkPrerequisites(template.prerequisites),
+        available: this.checkPrerequisites(template),
       };
     });
   }

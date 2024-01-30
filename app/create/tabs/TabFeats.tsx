@@ -1,11 +1,11 @@
 import { Card, Col, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { Feat, ModifierType, Prerequisite, PrerequisiteType, hasDescription, ofType } from "model";
+import { FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
 import { CharacterPresenter, useAppSelector } from "logic";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
 import { IClientDataSet } from "data";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
@@ -110,35 +110,27 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
   );
 }
 
-export function AppliedFeats({ character }: CharacterProps) {
-  const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.feat));
-  const feats = modifiers.map((modifier) => findOrError(character.getAllFeats(), (e) => e.id === modifier.target));
-
-  return (
-    <>
-      <h2>Dons appliqués</h2>
-      {feats.map((feat) => (
-        <FeatComponent key={feat.id} character={character} feat={feat} />
-      ))}
-    </>
-  );
-}
-
 export function Feats({ character }: CharacterProps) {
-  const [type, setType] = useState<"general" | "combat" | "all">("all");
+  const data = useAppSelector((state) => state.data);
+  const allFeats = useMemo(
+    () => data.feats.map((f) => ({ ...f, available: character.checkPrerequisites(f) })).filter((f) => !f.hidden),
+    [data.feats, character]
+  );
+
+  const [category, setCategory] = useState<"general" | "combat" | "all">("all");
   const [prerequisite, setPrerequisite] = useState<"available" | "blocked" | "all">("available");
   const [search, setSearch] = useState<string>("");
 
-  let typeFilter: (feat: Feat) => boolean;
-  if (type === "combat") {
-    typeFilter = (feat) => feat.combatFeat;
-  } else if (type === "general") {
-    typeFilter = (feat) => !feat.combatFeat;
+  let categoryFilter: (feat: FeatTemplate) => boolean;
+  if (category === "combat") {
+    categoryFilter = (feat) => feat.combatFeat;
+  } else if (category === "general") {
+    categoryFilter = (feat) => !feat.combatFeat;
   } else {
-    typeFilter = () => true;
+    categoryFilter = () => true;
   }
 
-  let prerequisiteFilter: (feat: Feat) => boolean;
+  let prerequisiteFilter: (feat: FeatTemplate) => boolean;
   if (prerequisite === "available") {
     prerequisiteFilter = (feat) => feat.available;
   } else if (prerequisite === "blocked") {
@@ -147,7 +139,7 @@ export function Feats({ character }: CharacterProps) {
     prerequisiteFilter = () => true;
   }
 
-  let searchFilter: (feat: Feat) => boolean;
+  let searchFilter: (feat: FeatTemplate) => boolean;
   if (search.trim() === "") {
     searchFilter = () => true;
   } else {
@@ -160,12 +152,7 @@ export function Feats({ character }: CharacterProps) {
       );
   }
 
-  const displayedFeats = character
-    .getAllFeats()
-    .filter((f) => !f.hidden) // Hide feats that are never available for selection
-    .filter(typeFilter)
-    .filter(prerequisiteFilter)
-    .filter(searchFilter);
+  const displayedFeats = allFeats.filter(categoryFilter).filter(prerequisiteFilter).filter(searchFilter);
 
   return (
     <>
@@ -175,7 +162,7 @@ export function Feats({ character }: CharacterProps) {
           Filtres:
         </Col>
         <Col xs="auto">
-          <ToggleButtonGroup type="radio" name="type" value={type} onChange={setType}>
+          <ToggleButtonGroup type="radio" name="type" value={category} onChange={setCategory}>
             <ToggleButton id="type-general" value="general" variant="outline-secondary">
               Dons généraux
             </ToggleButton>
