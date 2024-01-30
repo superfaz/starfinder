@@ -2,6 +2,7 @@
   {
     "id": "1bfb3261-1dfb-4949-98dc-c9ea8ae02917",
     "name": "Aisance",
+    "type": "simple",
     "combatFeat": true,
     "description": "Vous pouvez traverser un terrain semé d’obstacles avec aisance.",
     "refs": ["base-154"],
@@ -31,8 +32,9 @@
   {
     "id": "971211bc-46cf-4b87-b445-d4765d07a006",
     "name": "Arme de prédilection",
+    "type": "targeted",
     "combatFeat": true,
-    "target": "weaponProficiency",
+    "targetType": "weaponProficiency",
     "description": "Vous vous êtes davantage entraîné au maniement d’un type d’armes en particulier, ce qui vous permet de toucher plus facilement vos cibles.",
     "refs": ["base-154"],
     "modifiers": [

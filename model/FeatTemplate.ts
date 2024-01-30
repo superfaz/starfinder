@@ -4,22 +4,57 @@ import { Description } from "./helper";
 import { Prerequisite } from "./Prerequisite";
 import { ModifierTemplate } from "./ModifierTemplate";
 
-export const FeatTemplate = INamedModel.extend({
-  combatFeat: z.boolean().default(false),
-
+const BaseFeatTemplate = INamedModel.extend({
   /**
    * If true, the feat will not be shown in the feat list.
    */
   hidden: z.boolean().default(false),
-  multiple: z.boolean().default(false),
-  target: z.string().optional(),
+  combatFeat: z.boolean().default(false),
   description: Description,
   refs: z.array(z.string()),
   modifiers: z.array(ModifierTemplate),
   prerequisites: z.array(Prerequisite).optional(),
+});
+
+export const MultipleFeatTemplate = BaseFeatTemplate.extend({
+  type: z.literal("multiple"),
+  targetType: z.string(),
 }).strict();
 
+export type MultipleFeatTemplate = z.infer<typeof MultipleFeatTemplate>;
+
+export const TargetedFeatTemplate = BaseFeatTemplate.extend({
+  type: z.literal("targeted"),
+  targetType: z.string(),
+}).strict();
+
+export type TargetedFeatTemplate = z.infer<typeof TargetedFeatTemplate>;
+
+export const SimpleFeatTemplate = BaseFeatTemplate.extend({
+  type: z.literal("simple"),
+}).strict();
+
+export type SimpleFeatTemplate = z.infer<typeof SimpleFeatTemplate>;
+
+export const FeatTemplate = z.discriminatedUnion("type", [
+  SimpleFeatTemplate,
+  TargetedFeatTemplate,
+  MultipleFeatTemplate,
+]);
+
 export type FeatTemplate = z.infer<typeof FeatTemplate>;
+
+export function isMultipleFeatTemplate(data: unknown): data is MultipleFeatTemplate {
+  return MultipleFeatTemplate.safeParse(data).success;
+}
+
+export function isTargetedFeatTemplate(data: unknown): data is TargetedFeatTemplate {
+  return TargetedFeatTemplate.safeParse(data).success;
+}
+
+export function isSimpleFeatTemplate(data: unknown): data is SimpleFeatTemplate {
+  return SimpleFeatTemplate.safeParse(data).success;
+}
 
 export function isFeatTemplate(data: unknown): data is FeatTemplate {
   return FeatTemplate.safeParse(data).success;
