@@ -25,6 +25,12 @@ export const FeatModifier = IModel.extend({
   extra: z.string().optional(),
 }).strict();
 
+export const FeatCountModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.featCount),
+  level: z.number().optional(),
+  value: z.number(),
+}).strict();
+
 export const RankSkillModifier = IModel.extend({
   type: z.literal(ModifierType.enum.rankSkill),
   level: z.number().optional(),
@@ -48,7 +54,6 @@ export const SavingThrowBonusModifier = IModel.extend({
 export const SimpleModifier = IModel.extend({
   type: z.enum([
     ModifierType.enum.attack,
-    ModifierType.enum.featCount,
     ModifierType.enum.hitPoints,
     ModifierType.enum.initiative,
     ModifierType.enum.languageCount,
@@ -79,6 +84,7 @@ export const Modifier = z.discriminatedUnion("type", [
   AbilityModifier,
   ClassSkillModifier,
   FeatModifier,
+  FeatCountModifier,
   RankSkillModifier,
   SimpleModifier,
   SavingThrowModifier,

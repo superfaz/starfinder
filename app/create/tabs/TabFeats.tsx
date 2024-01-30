@@ -183,6 +183,8 @@ export function FeatSelection({ character }: CharacterProps) {
     [data.feats, character]
   );
 
+  const featCount = character.getSelectableFeatCount();
+
   const [category, setCategory] = useState<"general" | "combat" | "all">("all");
   const [prerequisite, setPrerequisite] = useState<"available" | "blocked" | "all">("available");
   const [search, setSearch] = useState<string>("");
@@ -222,7 +224,17 @@ export function FeatSelection({ character }: CharacterProps) {
 
   return (
     <>
-      <h2>Dons disponibles</h2>
+      <Row className="mb-3 align-items-center">
+        <Col xs="auto">
+          <h2>Dons disponibles</h2>
+        </Col>
+        <Col>
+          <div className="text-muted">
+            <span className="rounded border bg-body-secondary py-2 px-3">{featCount}</span> à choisir
+          </div>
+        </Col>
+      </Row>
+
       <Row className="mb-3 align-items-center">
         <Col xs="auto" className="ms-3">
           Filtres:

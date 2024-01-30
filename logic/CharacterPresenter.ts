@@ -621,4 +621,12 @@ export class CharacterPresenter {
   hasFeat(feat: FeatTemplate): boolean {
     return this.character.feats.some((f) => f.id === feat.id);
   }
+
+  getSelectableFeatCount(): number {
+    const bonus = this.getModifiers()
+      .filter(ofType(ModifierType.enum.featCount))
+      .reduce((acc, m) => acc + m.value, 0);
+    const selected = this.character.feats.length;
+    return 1 + bonus - selected;
+  }
 }
