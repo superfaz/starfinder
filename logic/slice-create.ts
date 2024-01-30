@@ -101,6 +101,10 @@ const mainSlice = createSlice({
     updateAvatar(state, action: PayloadAction<string>) {
       state.character.avatar = action.payload;
     },
+
+    addFeat(state, action: PayloadAction<string>) {
+      state.character.feats.push({ id: action.payload });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {

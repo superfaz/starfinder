@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import { Card, Col, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { Button, Card, Col, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
-import { CharacterPresenter, useAppSelector } from "logic";
+import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
 
@@ -87,12 +87,33 @@ function PrerequisiteComponent({
 }
 
 function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: FeatTemplateExtended }) {
+  const dispatch = useAppDispatch();
   const templater = character.createTemplater();
+
+  function handleAddFeat() {
+    dispatch(mutators.addFeat(feat.id));
+  }
+
   return (
     <Card>
       <Card.Header className={feat.available ? undefined : "text-danger"}>
-        {feat.name}
-        {feat.combatFeat ? " (combat)" : ""}
+        <Row className="align-items-center">
+          <Col>
+            {feat.name}
+            {feat.combatFeat ? " (combat)" : ""}
+          </Col>
+          <Col xs="auto">
+            <Button
+              variant={feat.available ? undefined : "outline-danger"}
+              disabled={!feat.available}
+              className="ms-auto end-0"
+              size="sm"
+              onClick={handleAddFeat}
+            >
+              Ajouter
+            </Button>
+          </Col>
+        </Row>
       </Card.Header>
       <Card.Body>
         {feat.description && <p className="text-muted">{feat.description}</p>}
