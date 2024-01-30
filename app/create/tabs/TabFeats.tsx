@@ -8,7 +8,7 @@ import { IClientDataSet } from "data";
 import { useState } from "react";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
-function getText(data: IClientDataSet, prerequisite: Prerequisite) {
+function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
   switch (prerequisite.type) {
     case PrerequisiteType.enum.abilityScore: {
       const target = prerequisite.target === "<primary>" ? "dex" : prerequisite.target;
@@ -79,7 +79,7 @@ function PrerequisiteComponent({
   prerequisite: Prerequisite;
 }) {
   const data = useAppSelector((state) => state.data);
-  const text = getText(data, prerequisite);
+  const text = getPrerequisiteText(data, prerequisite);
   const valid = character.checkPrerequisite(prerequisite);
   return <li className={valid ? undefined : "text-danger"}>{text}</li>;
 }
@@ -112,13 +112,7 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
 
 export function AppliedFeats({ character }: CharacterProps) {
   const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.feat));
-  const feats = modifiers.map((modifier) => {
-    try {
-      return findOrError(character.getAllFeats(), (e) => e.id === modifier.target);
-    } catch (error) {
-      console.log(modifier.target, error);
-    }
-  });
+  const feats = modifiers.map((modifier) => findOrError(character.getAllFeats(), (e) => e.id === modifier.target));
 
   return (
     <>
@@ -166,7 +160,12 @@ export function Feats({ character }: CharacterProps) {
       );
   }
 
-  const displayedFeats = character.getAllFeats().filter(typeFilter).filter(prerequisiteFilter).filter(searchFilter);
+  const displayedFeats = character
+    .getAllFeats()
+    .filter((f) => !f.hidden) // Hide feats that are never available for selection
+    .filter(typeFilter)
+    .filter(prerequisiteFilter)
+    .filter(searchFilter);
 
   return (
     <>
