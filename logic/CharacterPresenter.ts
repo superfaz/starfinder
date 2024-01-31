@@ -526,11 +526,13 @@ export class CharacterPresenter {
         return this.getSelectedFeats().filter((f) => f.combatFeat).length >= prerequisite.value;
 
       case PrerequisiteType.enum.feat: {
-        const target = this.data.feats.find((f) => f.id === prerequisite.target);
-        if (target === undefined) {
-          console.error(`Invalid feat id: ${prerequisite.target} for prerequisite ${prerequisite.id}`);
-          return false;
+        if (prerequisite.target.startsWith("!")) {
+          const target = this.data.feats.find((f) => f.id === prerequisite.target.substring(1));
+          return !!target && !this.hasFeat(target);
+        } else if (prerequisite.target.startsWith("*")) {
+          return this.character.feats.some((f) => f.id.startsWith(prerequisite.target.substring(1)));
         } else {
+          const target = findOrError(this.data.feats, (f) => f.id === prerequisite.target);
           return this.hasFeat(target);
         }
       }
