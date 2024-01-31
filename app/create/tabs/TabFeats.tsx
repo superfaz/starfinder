@@ -18,6 +18,11 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
       return `${abilityScore} ${prerequisite.value}`;
     }
 
+    case PrerequisiteType.enum.armorProficiency: {
+      const name = data.armors.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
+      return `Formé au Ports des ${name}`;
+    }
+
     case PrerequisiteType.enum.arms:
       return `${prerequisite.value} bras`;
 
@@ -44,6 +49,9 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
     case PrerequisiteType.enum.level:
       return `Niveau ${prerequisite.value}`;
 
+    case PrerequisiteType.enum.notSpellCaster:
+      return "Incapacité à lancer des sorts ou à utiliser des pouvoirs magiques";
+
     case PrerequisiteType.enum.savingThrow:
       return `Jet de sauvegarde ${prerequisite.target} +${prerequisite.value}`;
 
@@ -56,16 +64,15 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
       }
     }
 
+    case PrerequisiteType.enum.spellCaster:
+      return "Aptitude d’incantation de sorts";
+
     case PrerequisiteType.enum.spellCasterLevel:
-      if (prerequisite.value === 0) {
-        return "Aucun niveau de lanceur de sorts";
-      } else {
-        return `Niveau de lanceur de sorts ${prerequisite.value}`;
-      }
+      return `Aptitude à lancer des sorts de niveau ${prerequisite.value}`;
 
     case PrerequisiteType.enum.weaponProficiency: {
       const name = data.weapons.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
-      return `Maîtrise des ${name}`;
+      return `Formé au Maniement des ${name}`;
     }
 
     default:

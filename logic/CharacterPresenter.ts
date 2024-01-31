@@ -502,6 +502,11 @@ export class CharacterPresenter {
         return abilityScore >= prerequisite.value;
       }
 
+      case PrerequisiteType.enum.armorProficiency: {
+        const selectedClass = this.getClass();
+        return !!selectedClass && selectedClass.armors.includes(prerequisite.target);
+      }
+
       case PrerequisiteType.enum.arms:
         // TODO: Manage other cases
         return this.character.race === "khasathas";
