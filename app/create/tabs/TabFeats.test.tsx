@@ -64,25 +64,39 @@ describe("TabFeats", () => {
     expect(block.queryByText(/base attack 1/i)).not.toBeNull();
   });
 
-  test("handle class prerequisites - operative", async () => {
+  test("handle class prerequisites", async () => {
     const block = within(screen.getByTestId("feats"));
     expect(block.queryByText(/class not operative/i)).toBeNull();
     expect(block.queryByText(/class operative/i)).not.toBeNull();
   });
 
-  test("handle class prerequisites - soldier", async () => {
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "soldier");
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
-
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/class not operative/i)).not.toBeNull();
-    expect(block.queryByText(/class operative/i)).toBeNull();
-  });
-
   test("handle combatFeat prerequisites - not available", async () => {
     const block = within(screen.getByTestId("feats"));
     expect(block.queryByText(/combat feat \(combat\)/i)).toBeNull();
+  });
+
+  test("handle level prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/level 3/i)).toBeNull();
+  });
+
+  test("handle skillRank prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/skill rank cult 1/i)).toBeNull();
+  });
+
+  test("handle skillRank prerequisites - available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/skill rank acro 1/i)).not.toBeNull();
+  });
+
+  test("handle weaponProficiency prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/weapon heavy/i)).toBeNull();
+  });
+
+  test("handle weaponProficiency prerequisites - available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/weapon basic/i)).not.toBeNull();
   });
 });

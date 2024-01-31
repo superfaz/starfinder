@@ -175,5 +175,82 @@
         "value": 1
       }
     ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f378",
+    "name": "Level 3",
+    "type": "simple",
+    "description": "Test le prerequis 'level'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "level",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f379",
+    "name": "Skill rank acro 1",
+    "type": "simple",
+    "description": "Test le prerequis 'skillRank'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "skillRank",
+        "target": "acro",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f380",
+    "name": "Skill rank cult 1",
+    "type": "simple",
+    "description": "Test le prerequis 'skillRank'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "skillRank",
+        "target": "cult",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f381",
+    "name": "Weapon basic",
+    "type": "simple",
+    "description": "Test le prerequis 'weaponProficiency'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "weaponProficiency",
+        "target": "basic"
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f382",
+    "name": "Weapon heavy",
+    "type": "simple",
+    "description": "Test le prerequis 'weaponProficiency'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "weaponProficiency",
+        "target": "heavy"
+      }
+    ]
   }
 ]
