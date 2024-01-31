@@ -52,5 +52,21 @@
         "target": "<target>"
       }
     ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f373",
+    "name": "Combat feat",
+    "type": "simple",
+    "combatFeat": true,
+    "description": "Test le prerequis 'combatFeatCount'.",
+    "refs": ["base-155"],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "combatFeatCount",
+        "value": 1
+      }
+    ]
   }
 ]

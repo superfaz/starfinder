@@ -540,6 +540,8 @@ export class CharacterPresenter {
       }
 
       case PrerequisiteType.enum.combatFeatCount:
+        return this.getSelectedFeats().filter((f) => f.combatFeat).length >= prerequisite.value;
+
       case PrerequisiteType.enum.feat:
       case PrerequisiteType.enum.savingThrow:
       case PrerequisiteType.enum.spellCasterLevel:
