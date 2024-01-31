@@ -28,6 +28,14 @@ export const SavingThrowPrerequisite = IModel.extend({
   value: z.number(),
 }).strict();
 
+export const SpellCasterPrerequisite = IModel.extend({
+  type: z.literal(PrerequisiteType.enum.spellCaster),
+}).strict();
+
+export const NotSpellCasterPrerequisite = IModel.extend({
+  type: z.literal(PrerequisiteType.enum.notSpellCaster),
+}).strict();
+
 export const SimplePrerequisite = IModel.extend({
   type: z.enum([
     PrerequisiteType.enum.arms,
@@ -54,9 +62,11 @@ export const Prerequisite = z.discriminatedUnion("type", [
   AbilityScorePrerequisite,
   ClassPrerequisite,
   FeatPrerequisite,
+  NotSpellCasterPrerequisite,
   SavingThrowPrerequisite,
   SimplePrerequisite,
   SkillRankPrerequisite,
+  SpellCasterPrerequisite,
   WeaponProficiencyPrerequisite,
 ]);
 

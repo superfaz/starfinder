@@ -10,6 +10,8 @@ export const PrerequisiteType = z.enum([
   "level",
   "savingThrow",
   "skillRank",
+  "spellCaster",
+  "notSpellCaster",
   "spellCasterLevel",
   "weaponProficiency",
 ]);

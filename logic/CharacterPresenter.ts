@@ -557,6 +557,8 @@ export class CharacterPresenter {
         }
       }
 
+      case PrerequisiteType.enum.notSpellCaster:
+      case PrerequisiteType.enum.spellCaster:
       case PrerequisiteType.enum.savingThrow:
       case PrerequisiteType.enum.spellCasterLevel:
         return true;
