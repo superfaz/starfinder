@@ -1,14 +1,21 @@
 import { z } from "zod";
+import { ArmorId } from "./Armor";
 import { AbilityScoreId } from "./AbilityScore";
 import { IModel } from "./IModel";
 import { PrerequisiteType } from "./PrerequisiteType";
 import { WeaponId } from "./Weapon";
 import { Variable } from "./helper";
+import { SavingThrowId } from "./SavingThrow";
 
 export const AbilityScorePrerequisite = IModel.extend({
   type: z.literal(PrerequisiteType.enum.abilityScore),
   target: z.union([AbilityScoreId, z.literal("<primary>")]),
   value: z.number(),
+}).strict();
+
+export const ArmorProficiencyPrerequisite = IModel.extend({
+  type: z.literal(PrerequisiteType.enum.armorProficiency),
+  target: ArmorId,
 }).strict();
 
 export const ClassPrerequisite = IModel.extend({
@@ -24,7 +31,7 @@ export const FeatPrerequisite = IModel.extend({
 
 export const SavingThrowPrerequisite = IModel.extend({
   type: z.literal(PrerequisiteType.enum.savingThrow),
-  target: z.string(),
+  target: SavingThrowId,
   value: z.number(),
 }).strict();
 
@@ -60,6 +67,7 @@ export const WeaponProficiencyPrerequisite = IModel.extend({
 
 export const Prerequisite = z.discriminatedUnion("type", [
   AbilityScorePrerequisite,
+  ArmorProficiencyPrerequisite,
   ClassPrerequisite,
   FeatPrerequisite,
   NotSpellCasterPrerequisite,
