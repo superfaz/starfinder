@@ -494,6 +494,7 @@ export class CharacterPresenter {
     return skillRanks - Object.values(this.character.skillRanks).reduce((acc, v) => acc + v, 0);
   }
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   checkPrerequisite(prerequisite: Prerequisite): boolean {
     switch (prerequisite.type) {
       case PrerequisiteType.enum.abilityScore: {
@@ -515,6 +516,9 @@ export class CharacterPresenter {
         } else {
           return this.character.class === prerequisite.target;
         }
+
+      case PrerequisiteType.enum.combatFeatCount:
+        return this.getSelectedFeats().filter((f) => f.combatFeat).length >= prerequisite.value;
 
       case PrerequisiteType.enum.level:
         return this.character.level >= prerequisite.value;
@@ -542,9 +546,6 @@ export class CharacterPresenter {
           return false;
         }
       }
-
-      case PrerequisiteType.enum.combatFeatCount:
-        return this.getSelectedFeats().filter((f) => f.combatFeat).length >= prerequisite.value;
 
       case PrerequisiteType.enum.feat:
       case PrerequisiteType.enum.savingThrow:
