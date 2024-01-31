@@ -510,7 +510,11 @@ export class CharacterPresenter {
         return baseAttack !== undefined && baseAttack >= prerequisite.value;
       }
       case PrerequisiteType.enum.class:
-        return this.character.class === prerequisite.target;
+        if (prerequisite.target.startsWith("!")) {
+          return this.character.class !== prerequisite.target.substring(1);
+        } else {
+          return this.character.class === prerequisite.target;
+        }
 
       case PrerequisiteType.enum.level:
         return this.character.level >= prerequisite.value;

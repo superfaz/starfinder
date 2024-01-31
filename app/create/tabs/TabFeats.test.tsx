@@ -34,8 +34,55 @@ describe("TabFeats", () => {
     expect(content.queryByRole("heading", { level: 2, name: "Dons disponibles" })).not.toBeNull();
   });
 
-  test("handle combat feat prerequisites - not available", async () => {
+  test("handle abilityScore prerequisites - not available", async () => {
     const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/Combat feat \(combat\)/i)).toBeNull();
+    expect(block.queryByText(/ability score 20/i)).toBeNull();
+  });
+
+  test("handle abilityScore prerequisites - available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/ability score 10/i)).not.toBeNull();
+  });
+
+  test("handle arms prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/arms/i)).toBeNull();
+  });
+
+  test("handle baseAttack prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/base attack 10/i)).toBeNull();
+  });
+
+  test("handle baseAttack prerequisites - available", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "soldier");
+    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/base attack 1/i)).not.toBeNull();
+  });
+
+  test("handle class prerequisites - operative", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/class not operative/i)).toBeNull();
+    expect(block.queryByText(/class operative/i)).not.toBeNull();
+  });
+
+  test("handle class prerequisites - soldier", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "soldier");
+    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/class not operative/i)).not.toBeNull();
+    expect(block.queryByText(/class operative/i)).toBeNull();
+  });
+
+  test("handle combatFeat prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/combat feat \(combat\)/i)).toBeNull();
   });
 });

@@ -54,12 +54,119 @@
     ]
   },
   {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f370",
+    "name": "Ability score 20",
+    "type": "simple",
+    "description": "Test le prerequis 'abilityScore'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "abilityScore",
+        "target": "dex",
+        "value": 20
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f371",
+    "name": "Ability score 10",
+    "type": "simple",
+    "description": "Test le prerequis 'abilityScore'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "abilityScore",
+        "target": "dex",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f372",
+    "name": "Arms",
+    "type": "simple",
+    "description": "Test le prerequis 'arms'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "arms",
+        "value": 4
+      }
+    ]
+  },
+  {
     "id": "c621ff61-8bd8-4550-b732-ee699f81f373",
+    "name": "Base Attack 10",
+    "type": "simple",
+    "description": "Test le prerequis 'baseAttack'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "baseAttack",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f374",
+    "name": "Base Attack 1",
+    "type": "simple",
+    "description": "Test le prerequis 'baseAttack'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "baseAttack",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f375",
+    "name": "Class operative",
+    "type": "simple",
+    "description": "Test le prerequis 'class'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "class",
+        "target": "operative"
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f376",
+    "name": "Class not operative",
+    "type": "simple",
+    "description": "Test le prerequis 'class'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [
+      {
+        "id": "af87aa2f-03e5-4204-a616-bcf4cabe15a8",
+        "type": "class",
+        "target": "!operative"
+      }
+    ]
+  },
+  {
+    "id": "c621ff61-8bd8-4550-b732-ee699f81f377",
     "name": "Combat feat",
     "type": "simple",
     "combatFeat": true,
     "description": "Test le prerequis 'combatFeatCount'.",
-    "refs": ["base-155"],
+    "refs": [],
     "modifiers": [],
     "prerequisites": [
       {
