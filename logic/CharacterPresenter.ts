@@ -520,6 +520,16 @@ export class CharacterPresenter {
       case PrerequisiteType.enum.combatFeatCount:
         return this.getSelectedFeats().filter((f) => f.combatFeat).length >= prerequisite.value;
 
+      case PrerequisiteType.enum.feat: {
+        const target = this.data.feats.find((f) => f.id === prerequisite.target);
+        if (target === undefined) {
+          console.error(`Invalid feat id: ${prerequisite.target} for prerequisite ${prerequisite.id}`);
+          return false;
+        } else {
+          return this.hasFeat(target);
+        }
+      }
+
       case PrerequisiteType.enum.level:
         return this.character.level >= prerequisite.value;
 
@@ -547,7 +557,6 @@ export class CharacterPresenter {
         }
       }
 
-      case PrerequisiteType.enum.feat:
       case PrerequisiteType.enum.savingThrow:
       case PrerequisiteType.enum.spellCasterLevel:
         return true;

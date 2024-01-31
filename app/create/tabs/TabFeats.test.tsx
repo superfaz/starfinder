@@ -99,4 +99,22 @@ describe("TabFeats", () => {
     const block = within(screen.getByTestId("feats"));
     expect(block.queryByText(/weapon basic/i)).not.toBeNull();
   });
+
+  test("handle feat prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/feat weapon basic/i)).toBeNull();
+  });
+
+  test("handle feat prerequisites - available", async () => {
+    const user = userEvent.setup();
+    const block = within(screen.getByTestId("feats"));
+
+    await user.click(
+      within(block.getByText(/weapon basic/i).parentElement as HTMLElement).getByRole("button", {
+        name: "Ajouter",
+      })
+    );
+
+    expect(block.queryByText(/feat weapon basic/i)).not.toBeNull();
+  });
 });
