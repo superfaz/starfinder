@@ -162,7 +162,7 @@ export function FeatSelected({ character }: CharacterProps) {
   } else {
     return (
       <>
-        <h2>Dons sélectionnés</h2>
+        <h2>Don(s) sélectionné(s)</h2>
         <Row>
           {feats.map((feat) => (
             <Col xs="4" key={feat.id} className="mb-4">
@@ -277,7 +277,8 @@ export function FeatSelection({ character }: CharacterProps) {
           />
         </Col>
       </Row>
-      <Row>
+
+      <Row data-testid="feats">
         {displayedFeats.map((feat) => (
           <Col xs="4" key={feat.id} className="mb-4">
             <FeatComponent mode="add" character={character} feat={feat} />
