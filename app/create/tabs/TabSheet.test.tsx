@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
@@ -33,7 +33,8 @@ const classes = [
 ];
 
 describe("TabSheet", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Fiche" }));
@@ -47,6 +48,7 @@ describe("TabSheet", () => {
 
 describe("TabSheet", () => {
   beforeEach(async () => {
+    cleanup();
     render(await Page());
   });
 
@@ -87,7 +89,7 @@ describe("TabSheet", () => {
     expect(within(view).queryByText(defaultValue)).not.toBeNull();
   });
 
-  test.each(races)("has Race updated for '$id'", async (race) => {
+  test.each(races)("has Race updated for $id", async (race) => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
@@ -162,7 +164,7 @@ describe("TabSheet", () => {
     expect(within(view).queryByText("Androïde.")).toBeNull();
   });
 
-  test.each(races)("has Abilities added by Race selection for '$id'", async (race) => {
+  test.each(races)("has Abilities added by Race selection for $id", async (race) => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
@@ -215,7 +217,7 @@ describe("TabSheet", () => {
     .map((race) => themes.map((theme) => classes.map((klass) => ({ race, theme, klass }))))
     .flat();
   test.each(classMatrix)(
-    "has Abilities added by Class selection for '$race.id', '$theme.id' and '$klass.id'",
+    "has Abilities added by Class selection for $race.id, $theme.id and $klass.id",
     async ({ race, theme, klass }) => {
       const user = userEvent.setup();
       await user.click(screen.getByRole("button", { name: "Race" }));

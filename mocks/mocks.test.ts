@@ -17,7 +17,7 @@ import {
   ThemeScholar,
   Weapon,
 } from "starfinder/model";
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "vitest";
 
 const datasets = [
   {

@@ -1,12 +1,13 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
-import { render, screen, within } from "@testing-library/react";
+import { describe, beforeAll, test, expect, beforeEach } from "vitest";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { waitForWithDump } from "app/test-helpers";
 import Page from "../page";
 import referential from "./TabSkills.test.json";
 
 describe("TabSkills", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: referential.title }));
@@ -20,7 +21,8 @@ describe("TabSkills", () => {
 });
 
 describe("TabSkills", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
@@ -29,6 +31,10 @@ describe("TabSkills", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
     await user.click(screen.getByRole("button", { name: "Classe" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+  });
+
+  beforeEach(async () => {
+    const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: referential.title }));
   });
 
@@ -47,26 +53,6 @@ describe("TabSkills", () => {
     expect(content.getByRole("spinbutton", { name: "Sagesse" })).toHaveProperty("value", "10");
     expect(content.getByRole("spinbutton", { name: "Charisme -2" })).toHaveProperty("value", "8");
   });
-
-  const matrix = referential.classes.flatMap((klass) => referential.themes.map((theme) => ({ klass, theme })));
-  test.each(matrix)(
-    "displays the class skills based on theme '$theme.id' and class '$klass.id'",
-    async ({ theme, klass }) => {
-      const user = userEvent.setup();
-      await user.click(screen.getByRole("button", { name: "Classe" }));
-      await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
-      await user.click(screen.getByRole("button", { name: "Thème" }));
-      await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
-      await user.click(screen.getByRole("button", { name: referential.title }));
-
-      for (const skill of [...klass.classSkills, ...theme.classSkills]) {
-        const control = screen.queryByRole("checkbox", { name: skill + " - Compétence de classe" });
-        expect(control).not.toBeNull();
-        expect(control).toBeChecked();
-        expect(control).toBeDisabled();
-      }
-    }
-  );
 
   test("displays modifiers", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
@@ -136,4 +122,34 @@ describe("TabSkills", () => {
     expect(control).toBeDisabled();
     expect(view.getByText("+6")).not.toBeNull();
   });
+});
+
+describe("TabSkills", () => {
+  beforeAll(async () => {
+    cleanup();
+    render(await Page());
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+  });
+
+  const matrix = referential.classes.flatMap((klass) => referential.themes.map((theme) => ({ klass, theme })));
+  test.each(matrix)(
+    "displays the class skills based on theme $theme.id and class $klass.id",
+    async ({ theme, klass }) => {
+      const user = userEvent.setup();
+      await user.click(screen.getByRole("button", { name: "Thème" }));
+      await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
+      await user.click(screen.getByRole("button", { name: "Classe" }));
+      await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
+      await user.click(screen.getByRole("button", { name: referential.title }));
+
+      for (const skill of [...klass.classSkills, ...theme.classSkills]) {
+        const control = screen.queryByRole("checkbox", { name: skill + " - Compétence de classe" });
+        expect(control).not.toBeNull();
+        expect(control).toBeChecked();
+        expect(control).toBeDisabled();
+      }
+    }
+  );
 });

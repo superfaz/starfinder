@@ -1,11 +1,5 @@
-import "@testing-library/jest-dom";
-import { beforeAll, jest } from "@jest/globals";
+import { beforeAll, vi } from "vitest";
 import { DataSetBuilder, IDataSet } from "data";
-import { addFetchMock, mockFetch } from "./mocks/fetch";
-import envoyDetails from "./mocks/class-envoy.json";
-import operativeDetails from "./mocks/class-operative.json";
-import scholarDetails from "./mocks/themes-details.json";
-import soldierDetails from "./mocks/class-soldier.json";
 import {
   AbilityScore,
   Alignment,
@@ -20,6 +14,13 @@ import {
   ThemeScholar,
   Weapon,
 } from "model";
+import { addFetchMock, mockFetch } from "./mocks/fetch";
+import envoyDetails from "./mocks/class-envoy.json";
+import operativeDetails from "./mocks/class-operative.json";
+import scholarDetails from "./mocks/themes-details.json";
+import soldierDetails from "./mocks/class-soldier.json";
+
+import "@testing-library/jest-dom/vitest";
 
 async function mockBuild(): Promise<IDataSet> {
   return {
@@ -40,10 +41,9 @@ async function mockBuild(): Promise<IDataSet> {
 }
 
 beforeAll(() => {
-  window.fetch = mockFetch;
+  vi.spyOn(DataSetBuilder.prototype, "build").mockImplementation(mockBuild);
 
-  jest.spyOn(DataSetBuilder.prototype, "build").mockImplementation(mockBuild);
-
+  vi.stubGlobal("fetch", mockFetch);
   addFetchMock("/api/classes/envoy/details", envoyDetails);
   addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/soldier/details", soldierDetails);

@@ -1,9 +1,10 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
-import { render, within } from "@testing-library/react";
+import { beforeAll, describe, expect, test } from "vitest";
+import { cleanup, render, within } from "@testing-library/react";
 import Page from "../page";
 
 describe("TabIntro", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
   });
 

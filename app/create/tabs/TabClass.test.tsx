@@ -1,10 +1,11 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
-import { render, screen, within } from "@testing-library/react";
+import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
 describe("TabClass", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Classe" }));
@@ -17,13 +18,18 @@ describe("TabClass", () => {
 });
 
 describe("TabClass", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
     await user.click(screen.getByRole("button", { name: "Thème" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
+  });
+
+  beforeEach(async () => {
+    const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Classe" }));
   });
 

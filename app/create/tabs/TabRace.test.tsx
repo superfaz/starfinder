@@ -1,10 +1,11 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
-import { render, screen, within } from "@testing-library/react";
+import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
 describe("TabRace", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
   });
 
@@ -15,8 +16,12 @@ describe("TabRace", () => {
 });
 
 describe("TabRace", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
+    cleanup();
     render(await Page());
+  });
+
+  beforeEach(async () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Race" }));
   });
