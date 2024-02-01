@@ -65,9 +65,16 @@ h1,
 /**
   * Customize card styles.
   * Remove background color to avoid conflicts.
+  * Allow two card-body with a border for separation.
   */
 .card {
-  background-color: transparent;
+  --bs-card-bg: transparent;
+}
+
+.card-body ~ .card-body {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: var(--bs-card-border-color);
 }
 
 /**

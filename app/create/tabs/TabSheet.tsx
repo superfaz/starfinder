@@ -140,9 +140,7 @@ function CardSkills({ data, character }: SheetProps) {
                 {!skill.isClassSkill && <i className="bi bi-empty me-1"></i>}
                 <span className="header me-1">{skill.definition.name}</span>
                 {skill.definition.abilityScore && (
-                  <span className="me-1">
-                    ({findOrError(data.abilityScores, skill.definition.abilityScore).code})
-                  </span>
+                  <span className="me-1">({findOrError(data.abilityScores, skill.definition.abilityScore).code})</span>
                 )}
                 {skill.definition.trainedOnly && (
                   <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
@@ -229,12 +227,17 @@ function CardSavingThrows({ data, character }: SheetProps) {
   );
 }
 
-function CardArmorClass() {
+function CardArmorClass({ data, character }: SheetProps) {
+  const proficiencies = character.getArmorProficiencies();
+  const texts = proficiencies.map((p) => findOrError(data.armors, p).name);
   return (
     <Card>
       <Card.Header>
         <Badge bg="primary">Classe d&apos;armure</Badge>
       </Card.Header>
+      <Card.Body className="position-relative small py-2">
+        {texts.length > 0 && <span>Formations: {texts.join(", ")}</span>}
+      </Card.Body>
       <Card.Body className="position-relative">test</Card.Body>
     </Card>
   );
@@ -278,12 +281,17 @@ function CardAttackBonuses({ character }: CharacterProps) {
   );
 }
 
-function CardWeapons() {
+function CardWeapons({ data, character }: SheetProps) {
+  const proficiencies = character.getWeaponProficiencies();
+  const texts = proficiencies.map((p) => findOrError(data.weapons, p).name);
   return (
     <Card>
       <Card.Header>
         <Badge bg="primary">Armes</Badge>
       </Card.Header>
+      <Card.Body className="position-relative small py-2">
+        {texts.length > 0 && <span>Formations: {texts.join(", ")}</span>}
+      </Card.Body>
       <Card.Body className="position-relative">test</Card.Body>
     </Card>
   );
@@ -331,9 +339,9 @@ export function Sheet({ character }: CharacterProps) {
         <Stack direction="vertical" gap={2}>
           <CardKeyPoints />
           <CardSavingThrows data={data} character={character} />
-          <CardArmorClass />
+          <CardArmorClass data={data} character={character} />
           <CardAttackBonuses character={character} />
-          <CardWeapons />
+          <CardWeapons data={data} character={character} />
         </Stack>
       </Col>
       <Col lg={3}>

@@ -1,6 +1,7 @@
 import { IClientDataSet } from "data";
 import {
   AbilityScore,
+  ArmorId,
   Avatar,
   Character,
   Class,
@@ -18,6 +19,7 @@ import {
   SkillDefinition,
   Theme,
   Variant,
+  WeaponId,
   isVariable,
   isWeaponId,
   ofType,
@@ -635,6 +637,24 @@ export class CharacterPresenter {
       ranged: base + dex,
       thrown: base + str,
     };
+  }
+
+  getArmorProficiencies(): ArmorId[] {
+    const selectedClass = this.getClass();
+    const modifiers = this.getModifiers()
+      .filter(ofType(ModifierType.enum.armorProficiency))
+      .map((m) => m.target);
+
+    return [...(selectedClass?.armors ?? []), ...modifiers];
+  }
+
+  getWeaponProficiencies(): WeaponId[] {
+    const selectedClass = this.getClass();
+    const modifiers = this.getModifiers()
+      .filter(ofType(ModifierType.enum.weaponProficiency))
+      .map((m) => m.target);
+
+    return [...(selectedClass?.weapons ?? []), ...modifiers];
   }
 
   getSelectedFeats(): FeatTemplate[] {

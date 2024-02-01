@@ -266,6 +266,7 @@ describe("TabSheet", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
     await user.click(screen.getByRole("button", { name: "Classe" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("savingThrows");
     expect(within(view).queryByText(NO_CLASS)).toBeNull();
@@ -297,6 +298,7 @@ describe("TabSheet", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
     await user.click(screen.getByRole("button", { name: "Classe" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), dataset.klass);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const view = screen.getByTestId("attackBonuses");
     expect(within(view).queryByText(NO_CLASS)).toBeNull();
@@ -308,5 +310,31 @@ describe("TabSheet", () => {
     expect(within(within(view).getByTestId("Attaque à distance")).queryByText(dataset.ranged)).not.toBeNull();
     expect(within(view).queryByTestId("Attaque de lancer")).not.toBeNull();
     expect(within(within(view).getByTestId("Attaque de lancer")).queryByText(dataset.thrown)).not.toBeNull();
+  });
+
+  test("displays weapons proficiencies", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    expect(screen.queryByText(/Formations: Armes de corps à corps simples.*/i)).not.toBeNull();
+  });
+
+  test("displays armors proficiencies", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    expect(screen.queryByText(/Formations: Armures légères.*/i)).not.toBeNull();
   });
 });
