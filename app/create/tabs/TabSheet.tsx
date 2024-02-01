@@ -231,7 +231,7 @@ function CardArmorClass({ data, character }: SheetProps) {
   const proficiencies = character.getArmorProficiencies();
   const texts = proficiencies.map((p) => findOrError(data.armors, p).name);
   return (
-    <Card>
+    <Card data-testid="armors">
       <Card.Header>
         <Badge bg="primary">Classe d&apos;armure</Badge>
       </Card.Header>
@@ -285,7 +285,7 @@ function CardWeapons({ data, character }: SheetProps) {
   const proficiencies = character.getWeaponProficiencies();
   const texts = proficiencies.map((p) => findOrError(data.weapons, p).name);
   return (
-    <Card>
+    <Card data-testid="weapons">
       <Card.Header>
         <Badge bg="primary">Armes</Badge>
       </Card.Header>

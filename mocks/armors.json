@@ -1,10 +1,10 @@
 [
   {
     "id": "light",
-    "name": "Légère"
+    "name": "Armures légères"
   },
   {
     "id": "heavy",
-    "name": "Lourde"
+    "name": "Armures lourdes"
   }
 ]

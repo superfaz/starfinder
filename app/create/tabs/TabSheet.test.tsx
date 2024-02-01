@@ -322,7 +322,8 @@ describe("TabSheet", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
-    expect(screen.queryByText(/Formations: Armes de corps à corps simples.*/i)).not.toBeNull();
+    const block = within(screen.getByTestId("weapons"));
+    expect(block.queryByText(/Formations: Armes de corps à corps simples.*/i)).not.toBeNull();
   });
 
   test("displays armors proficiencies", async () => {
@@ -335,6 +336,7 @@ describe("TabSheet", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
-    expect(screen.queryByText(/Formations: Armures légères.*/i)).not.toBeNull();
+    const block = within(screen.getByTestId("armors"));
+    expect(block.queryByText(/Formations: Armures légères.*/i)).not.toBeNull();
   });
 });
