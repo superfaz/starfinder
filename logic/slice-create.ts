@@ -142,7 +142,7 @@ export default mainSlice.reducer;
  * @returns The updated character
  */
 function updateRaceImpl(data: IClientDataSet, character: Character, raceId: string): Character {
-  const race = findOrError(data.races, (r) => r.id === raceId);
+  const race = findOrError(data.races, raceId);
 
   if (character.race === raceId) {
     // No change

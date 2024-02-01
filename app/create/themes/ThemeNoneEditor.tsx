@@ -26,7 +26,7 @@ export default function ThemeNoneEditor({ character }: CharacterProps) {
       </Form.FloatingLabel>
       <Stack direction="horizontal">
         <Badge bg={"primary"}>
-          {findOrError(data.abilityScores, (a) => a.id === character.getNoThemeAbilityScore()).code}
+          {findOrError(data.abilityScores, character.getNoThemeAbilityScore()).code}
           {" +1"}
         </Badge>
       </Stack>

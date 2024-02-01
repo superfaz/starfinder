@@ -26,7 +26,7 @@ export default function RaceHumansEditor({ character }: CharacterProps): JSX.Ele
       </Form.FloatingLabel>
       <Stack direction="horizontal">
         <Badge bg="primary">
-          {findOrError(data.abilityScores, (a) => a.id === character.getHumanStandardBonus()).code}
+          {findOrError(data.abilityScores, character.getHumanStandardBonus()).code}
           {" +2"}
         </Badge>
       </Stack>

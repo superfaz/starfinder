@@ -14,7 +14,7 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
   switch (prerequisite.type) {
     case PrerequisiteType.enum.abilityScore: {
       const target = prerequisite.target === "<primary>" ? "dex" : prerequisite.target;
-      const abilityScore = findOrError(data.abilityScores, (e) => e.id === target).name;
+      const abilityScore = findOrError(data.abilityScores, target).name;
       return `${abilityScore} ${prerequisite.value}`;
     }
 

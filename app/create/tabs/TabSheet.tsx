@@ -141,7 +141,7 @@ function CardSkills({ data, character }: SheetProps) {
                 <span className="header me-1">{skill.definition.name}</span>
                 {skill.definition.abilityScore && (
                   <span className="me-1">
-                    ({findOrError(data.abilityScores, (a) => a.id === skill.definition.abilityScore).code})
+                    ({findOrError(data.abilityScores, skill.definition.abilityScore).code})
                   </span>
                 )}
                 {skill.definition.trainedOnly && (

@@ -465,7 +465,7 @@ export class CharacterPresenter {
             return s.name;
           }
 
-          const abilityCode = findOrError(abilityScores, (a) => a.id === s.abilityScore).code;
+          const abilityCode = findOrError(abilityScores, s.abilityScore).code;
           return `${s.name} (${abilityCode})`;
         }
 
@@ -532,7 +532,7 @@ export class CharacterPresenter {
         } else if (prerequisite.target.startsWith("*")) {
           return this.character.feats.some((f) => f.id.startsWith(prerequisite.target.substring(1)));
         } else {
-          const target = findOrError(this.data.feats, (f) => f.id === prerequisite.target);
+          const target = findOrError(this.data.feats, prerequisite.target);
           return this.hasFeat(target);
         }
       }
@@ -616,7 +616,7 @@ export class CharacterPresenter {
     if (!this.character.avatar) {
       return null;
     } else {
-      return findOrError(this.data.avatars, (a) => a.id === this.character.avatar);
+      return findOrError(this.data.avatars, this.character.avatar);
     }
   }
 

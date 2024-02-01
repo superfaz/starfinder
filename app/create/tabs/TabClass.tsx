@@ -85,9 +85,7 @@ export function ClassSelection({ character }: CharacterProps) {
         <>
           <Stack direction="horizontal">
             {!character.isSoldier() && (
-              <Badge bg="primary">
-                {findOrError(data.abilityScores, (a) => a.id === selectedClass.primaryAbilityScore).code}
-              </Badge>
+              <Badge bg="primary">{findOrError(data.abilityScores, selectedClass.primaryAbilityScore).code}</Badge>
             )}
             <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
             <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
@@ -101,15 +99,13 @@ export function ClassSelection({ character }: CharacterProps) {
             <Form.Select value={character.getSoldierAbilityScore() ?? ""} onChange={handleSoldierAbilityScoreChange}>
               {[AbilityScoreIds.str, AbilityScoreIds.dex].map((id) => (
                 <option key={id} value={id}>
-                  {findOrError(data.abilityScores, (a) => a.id === id).name}
+                  {findOrError(data.abilityScores, id).name}
                 </option>
               ))}
             </Form.Select>
           </Form.FloatingLabel>
           <Stack direction="horizontal">
-            <Badge bg="primary">
-              {findOrError(data.abilityScores, (a) => a.id === character.getSoldierAbilityScore()).code}
-            </Badge>
+            <Badge bg="primary">{findOrError(data.abilityScores, character.getSoldierAbilityScore()).code}</Badge>
           </Stack>
         </>
       )}
@@ -121,11 +117,11 @@ export function ClassSelection({ character }: CharacterProps) {
           </div>
           <div>
             <Badge bg="primary">Armures</Badge>
-            {selectedClass.armors.map((a) => findOrError(data.armors, (e) => e.id === a).name).join(", ")}
+            {selectedClass.armors.map((a) => findOrError(data.armors, a).name).join(", ")}
           </div>
           <div>
             <Badge bg="primary">Armes</Badge>
-            {selectedClass.weapons.map((a) => findOrError(data.weapons, (e) => e.id === a).name).join(", ")}
+            {selectedClass.weapons.map((a) => findOrError(data.weapons, a).name).join(", ")}
           </div>
           <hr />
           <LazyClassEditor character={character} />
