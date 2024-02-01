@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
-      exclude: ["**/*.test.ts", "**/*.test.tsx"],
       reporter: ["lcovonly", "text"],
     },
     environment: "happy-dom",
