@@ -125,6 +125,24 @@ function CardAbilityScores({ data, character }: SheetProps) {
   );
 }
 
+function CardInitiative({ character }: CharacterProps) {
+  const initiative = character.getInitiative();
+  return (
+    <Card data-testid="initiative">
+      <Card.Header>
+        <Row>
+          <Col xs="auto">
+            <Badge bg="primary">Initiative</Badge>
+          </Col>
+          <Col className="text-end pe-1">
+            <Badge bg={initiative > 0 ? "primary" : "secondary"}>{displayBonus(initiative)}</Badge>
+          </Col>
+        </Row>
+      </Card.Header>
+    </Card>
+  );
+}
+
 function CardSkills({ data, character }: SheetProps) {
   return (
     <Card>
@@ -332,6 +350,7 @@ export function Sheet({ character }: CharacterProps) {
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
           <CardAbilityScores data={data} character={character} />
+          <CardInitiative character={character} />
           <CardSkills data={data} character={character} />
         </Stack>
       </Col>

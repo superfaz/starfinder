@@ -339,4 +339,18 @@ describe("TabSheet", () => {
     const block = within(screen.getByTestId("armors"));
     expect(block.queryByText(/Formations: Armures légères.*/i)).not.toBeNull();
   });
+
+  test("displays initiative bonus", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const block = within(screen.getByTestId("initiative"));
+    expect(block.queryByText("+2")).not.toBeNull();
+  });
 });

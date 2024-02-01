@@ -674,4 +674,12 @@ export class CharacterPresenter {
     const selected = this.character.feats.length;
     return 1 + bonus - selected;
   }
+
+  getInitiative(): number {
+    const dex = computeAbilityScoreModifier(this.getAbilityScores()["dex"]);
+    const modifiers = this.getModifiers()
+      .filter(ofType(ModifierType.enum.initiative))
+      .reduce((acc, m) => acc + m.value, 0);
+    return dex + modifiers;
+  }
 }
