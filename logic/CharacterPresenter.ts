@@ -1,6 +1,7 @@
 import { IClientDataSet } from "data";
 import {
   AbilityScore,
+  AbilityScoreIds,
   ArmorId,
   Avatar,
   Character,
@@ -676,10 +677,41 @@ export class CharacterPresenter {
   }
 
   getInitiative(): number {
-    const dex = computeAbilityScoreModifier(this.getAbilityScores()["dex"]);
+    const dex = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
     const modifiers = this.getModifiers()
       .filter(ofType(ModifierType.enum.initiative))
       .reduce((acc, m) => acc + m.value, 0);
     return dex + modifiers;
+  }
+
+  getStaminaPoints(): number {
+    const con = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.con]);
+    const klass = this.getClass()?.staminaPoints ?? 0;
+    const modifiers = this.getModifiers()
+      .filter(ofType(ModifierType.enum.stamina))
+      .reduce((acc, m) => acc + m.value, 0);
+
+    return Math.max(0, con + klass + modifiers);
+  }
+
+  getHitPoints(): number {
+    const race = this.getRace()?.hitPoints ?? 0;
+    const klass = this.getClass()?.hitPoints ?? 0;
+    const modifiers = this.getModifiers()
+      .filter(ofType(ModifierType.enum.hitPoints))
+      .reduce((acc, m) => acc + m.value, 0);
+
+    return Math.max(1, race + klass + modifiers);
+  }
+
+  getResolvePoints(): number {
+    const level = Math.max(1, Math.floor(this.character.level / 2));
+    const primaryAbilityScore = this.getPrimaryAbilityScore();
+    const primary = primaryAbilityScore ? computeAbilityScoreModifier(this.getAbilityScores()[primaryAbilityScore]) : 0;
+    const modifiers = this.getModifiers()
+      .filter(ofType(ModifierType.enum.resolve))
+      .reduce((acc, m) => acc + m.value, 0);
+
+    return level + primary + modifiers;
   }
 }

@@ -353,4 +353,23 @@ describe("TabSheet", () => {
     const block = within(screen.getByTestId("initiative"));
     expect(block.queryByText("+2")).not.toBeNull();
   });
+
+  test("displays stamina/health/resolve points", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const block = within(screen.getByTestId("keypoints"));
+    expect(block.queryByTestId(/points d'endurance/i)).not.toBeNull();
+    expect(within(block.getByTestId(/points d'endurance/i)).queryByText(6)).not.toBeNull();
+    expect(block.queryByTestId(/points de vie/i)).not.toBeNull();
+    expect(within(block.getByTestId(/points de vie/i)).queryByText(10)).not.toBeNull();
+    expect(block.queryByTestId(/points de persévérance/i)).not.toBeNull();
+    expect(within(block.getByTestId(/points de persévérance/i)).queryByText(2)).not.toBeNull();
+  });
 });

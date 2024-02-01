@@ -35,12 +35,6 @@ export const FeatModifier = IModel.extend({
 
 export type FeatModifier = z.infer<typeof FeatModifier>;
 
-export const FeatCountModifier = IModel.extend({
-  type: z.literal(ModifierType.enum.featCount),
-  level: z.number().optional(),
-  value: z.number(),
-}).strict();
-
 export const RankSkillModifier = IModel.extend({
   type: z.literal(ModifierType.enum.rankSkill),
   level: z.number().optional(),
@@ -64,16 +58,32 @@ export const SavingThrowBonusModifier = IModel.extend({
 export const SimpleModifier = IModel.extend({
   type: z.enum([
     ModifierType.enum.attack,
-    ModifierType.enum.hitPoints,
-    ModifierType.enum.initiative,
     ModifierType.enum.languageCount,
     ModifierType.enum.rank,
-    ModifierType.enum.resolve,
     ModifierType.enum.speed,
-    ModifierType.enum.stamina,
   ]),
   level: z.number().optional(),
   value: z.number(),
+}).strict();
+
+export const FeatCountModifier = SimpleModifier.extend({
+  type: z.literal(ModifierType.enum.featCount),
+}).strict();
+
+export const HitPointsModifier = SimpleModifier.extend({
+  type: z.literal(ModifierType.enum.hitPoints),
+}).strict();
+
+export const InitiativeModifier = SimpleModifier.extend({
+  type: z.literal(ModifierType.enum.initiative),
+}).strict();
+
+export const ResolveModifier = SimpleModifier.extend({
+  type: z.literal(ModifierType.enum.resolve),
+}).strict();
+
+export const StaminaModifier = SimpleModifier.extend({
+  type: z.literal(ModifierType.enum.stamina),
 }).strict();
 
 export const SkillModifier = IModel.extend({
@@ -102,12 +112,16 @@ export const Modifier = z.discriminatedUnion("type", [
   ClassSkillModifier,
   FeatModifier,
   FeatCountModifier,
+  HitPointsModifier,
+  InitiativeModifier,
   RankSkillModifier,
+  ResolveModifier,
   SimpleModifier,
   SavingThrowModifier,
   SavingThrowBonusModifier,
   SkillModifier,
   SpellModifier,
+  StaminaModifier,
   WeaponProficiencyModifier,
 ]);
 
