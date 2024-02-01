@@ -260,6 +260,11 @@ function CardSavingThrows({ data, character }: SheetProps) {
 function CardArmorClass({ data, character }: SheetProps) {
   const proficiencies = character.getArmorProficiencies();
   const texts = proficiencies.map((p) => findOrError(data.armors, p).name);
+  const armorClasses = {
+    energy: { value: character.getEnergyArmorClass(), label: "Classe d’armure énergétique" },
+    kinetic: { value: character.getKineticArmorClass(), label: "Classe d’armure cinétique" },
+    maneuvers: { value: character.getArmorClassAgainstCombatManeuvers(), label: "CA vs manoeuvres offensives" },
+  };
   return (
     <Card data-testid="armors">
       <Card.Header>
@@ -268,7 +273,16 @@ function CardArmorClass({ data, character }: SheetProps) {
       <Card.Body className="position-relative small py-2">
         {texts.length > 0 && <span>Formations: {texts.join(", ")}</span>}
       </Card.Body>
-      <Card.Body className="position-relative">test</Card.Body>
+      <Card.Body className="position-relative">
+        <Row>
+          {Object.entries(armorClasses).map(([key, { label, value }]) => (
+            <ValueComponent key={key} label={label} className="col" value={value} />
+          ))}
+        </Row>
+      </Card.Body>
+      <Card.Body className="small">
+        <span className="text-muted">Armure équipée :</span> aucune
+      </Card.Body>
     </Card>
   );
 }

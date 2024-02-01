@@ -714,4 +714,18 @@ export class CharacterPresenter {
 
     return level + primary + modifiers;
   }
+
+  getEnergyArmorClass(): number {
+    const dex = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
+    return 10 + dex;
+  }
+
+  getKineticArmorClass(): number {
+    const dex = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
+    return 10 + dex;
+  }
+
+  getArmorClassAgainstCombatManeuvers(): number {
+    return 8 + this.getKineticArmorClass();
+  }
 }

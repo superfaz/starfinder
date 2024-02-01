@@ -372,4 +372,23 @@ describe("TabSheet", () => {
     expect(block.queryByTestId(/points de persévérance/i)).not.toBeNull();
     expect(within(block.getByTestId(/points de persévérance/i)).queryByText(2)).not.toBeNull();
   });
+
+  test("displays armor classes", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const block = within(screen.getByTestId("armors"));
+    expect(block.queryByTestId(/énergétique/i)).not.toBeNull();
+    expect(within(block.getByTestId(/énergétique/i)).queryByText(11)).not.toBeNull();
+    expect(block.queryByTestId(/cinétique/i)).not.toBeNull();
+    expect(within(block.getByTestId(/cinétique/i)).queryByText(11)).not.toBeNull();
+    expect(block.queryByTestId(/manoeuvres/i)).not.toBeNull();
+    expect(within(block.getByTestId(/manoeuvres/i)).queryByText(19)).not.toBeNull();
+  });
 });
