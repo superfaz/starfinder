@@ -187,7 +187,7 @@ function CardKeyPoints() {
   return (
     <Card>
       <Card.Header>
-        <Badge bg="primary">Valeurs clefs</Badge>
+        <Badge bg="primary">Santé et persévérance</Badge>
       </Card.Header>
       <Card.Body className="position-relative">test</Card.Body>
     </Card>
