@@ -2,6 +2,7 @@ import { z } from "zod";
 import { IModel } from "./IModel";
 import { ModifierType } from "./ModifierType";
 import {
+  ArmorProficiencyModifier,
   AbilityModifier,
   ClassSkillModifier,
   FeatModifier,
@@ -9,6 +10,7 @@ import {
   SavingThrowBonusModifier,
   SavingThrowModifier,
   SpellModifier,
+  WeaponProficiencyModifier,
 } from "./Modifier";
 
 export const SimpleModifierTemplate = IModel.extend({
@@ -35,6 +37,7 @@ export const SkillModifierTemplate = IModel.extend({
 });
 
 export const ModifierTemplate = z.discriminatedUnion("type", [
+  ArmorProficiencyModifier,
   AbilityModifier,
   ClassSkillModifier,
   FeatModifier,
@@ -44,6 +47,7 @@ export const ModifierTemplate = z.discriminatedUnion("type", [
   SavingThrowBonusModifier,
   SkillModifierTemplate,
   SpellModifier,
+  WeaponProficiencyModifier,
 ]);
 
 export type ModifierTemplate = z.infer<typeof ModifierTemplate>;

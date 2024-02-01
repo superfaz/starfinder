@@ -16,16 +16,35 @@ const BaseFeatTemplate = INamedModel.extend({
   prerequisites: z.array(Prerequisite).optional(),
 });
 
+export const FeatTargetType = z.enum([
+  "armorProficiency",
+  "combatManeuver",
+  "energyDamageType",
+  "kineticDamageType",
+  "skill",
+  "specialMeleeWeapon",
+  "specialRangedWeapon",
+  "spell",
+  "spellLevel0",
+  "spellLevel1",
+  "spellLevel2",
+  "weaponProficiency",
+]);
+
+export type FeatTargetType = z.infer<typeof FeatTargetType>;
+
+export const FeatTargetTypes = FeatTargetType.enum;
+
 export const MultipleFeatTemplate = BaseFeatTemplate.extend({
   type: z.literal("multiple"),
-  targetType: z.string(),
+  targetType: FeatTargetType,
 }).strict();
 
 export type MultipleFeatTemplate = z.infer<typeof MultipleFeatTemplate>;
 
 export const TargetedFeatTemplate = BaseFeatTemplate.extend({
   type: z.literal("targeted"),
-  targetType: z.string(),
+  targetType: FeatTargetType,
 }).strict();
 
 export type TargetedFeatTemplate = z.infer<typeof TargetedFeatTemplate>;

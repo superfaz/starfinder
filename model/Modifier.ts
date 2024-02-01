@@ -1,14 +1,22 @@
 import { z } from "zod";
+import { ArmorId } from "./Armor";
 import { IModel } from "./IModel";
-import { ModifierType } from "./ModifierType";
 import { Description, Id } from "./helper";
+import { ModifierType } from "./ModifierType";
 import { SavingThrowId } from "./SavingThrow";
+import { WeaponId } from "./Weapon";
 
 export const AbilityModifier = IModel.extend({
   type: z.literal(ModifierType.enum.ability),
   level: z.number().optional(),
   name: z.string(),
   description: Description,
+}).strict();
+
+export const ArmorProficiencyModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.armorProficiency),
+  level: z.number().optional(),
+  target: ArmorId,
 }).strict();
 
 export const ClassSkillModifier = IModel.extend({
@@ -24,6 +32,8 @@ export const FeatModifier = IModel.extend({
   target: z.string().optional(),
   extra: z.string().optional(),
 }).strict();
+
+export type FeatModifier = z.infer<typeof FeatModifier>;
 
 export const FeatCountModifier = IModel.extend({
   type: z.literal(ModifierType.enum.featCount),
@@ -80,8 +90,15 @@ export const SpellModifier = IModel.extend({
   extra: z.string().optional(),
 }).strict();
 
+export const WeaponProficiencyModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.weaponProficiency),
+  level: z.number().optional(),
+  target: WeaponId,
+}).strict();
+
 export const Modifier = z.discriminatedUnion("type", [
   AbilityModifier,
+  ArmorProficiencyModifier,
   ClassSkillModifier,
   FeatModifier,
   FeatCountModifier,
@@ -91,6 +108,7 @@ export const Modifier = z.discriminatedUnion("type", [
   SavingThrowBonusModifier,
   SkillModifier,
   SpellModifier,
+  WeaponProficiencyModifier,
 ]);
 
 export type Modifier = z.infer<typeof Modifier>;

@@ -267,5 +267,61 @@
         "target": "c621ff61-8bd8-4550-b732-ee699f81f381"
       }
     ]
+  },
+  {
+    "id": "weapon-specialization-basic",
+    "name": "Weapon Specialization Basic",
+    "type": "simple",
+    "description": "Utiliser par les définitions de classe.",
+    "refs": [],
+    "modifiers": []
+  },
+  {
+    "id": "weapon-specialization-advanced",
+    "name": "Weapon Specialization Advanced",
+    "type": "simple",
+    "description": "Utiliser par les définitions de classe.",
+    "refs": [],
+    "modifiers": []
+  },
+  {
+    "id": "weapon-specialization-small",
+    "name": "Weapon Specialization Small",
+    "type": "simple",
+    "description": "Utiliser par les définitions de classe.",
+    "refs": [],
+    "modifiers": []
+  },
+  {
+    "id": "weapon-specialization-long",
+    "name": "Weapon Specialization Long",
+    "type": "simple",
+    "description": "Utiliser par les définitions de classe.",
+    "refs": [],
+    "modifiers": []
+  },
+  {
+    "id": "weapon-specialization-heavy",
+    "name": "Weapon Specialization Heavy",
+    "type": "simple",
+    "description": "Utiliser par les définitions de classe.",
+    "refs": [],
+    "modifiers": []
+  },
+  {
+    "id": "weapon-specialization-sniper",
+    "name": "Weapon Specialization Sniper",
+    "type": "simple",
+    "description": "Utiliser par les définitions de classe.",
+    "refs": [],
+    "modifiers": []
+  },
+  {
+    "id": "skill-focus",
+    "name": "Skill Focus",
+    "type": "simple",
+    "description": "Utiliser par les définitions de classe.",
+    "refs": [],
+    "modifiers": []
   }
 ]

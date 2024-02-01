@@ -1,10 +1,30 @@
 import { Badge } from "react-bootstrap";
-import { displayBonus } from "app/helpers";
+import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { useAppSelector } from "logic";
-import { Modifier, ModifierType, hasDescription, hasExtra, hasName, hasValue } from "model";
+import {
+  ArmorId,
+  FeatModifier,
+  FeatTargetTypes,
+  Modifier,
+  ModifierType,
+  hasDescription,
+  hasExtra,
+  hasName,
+  hasValue,
+} from "model";
+
+interface ModifierComponentElement {
+  level?: number;
+  name?: string;
+  description?: string;
+  value?: number;
+  targetName?: string;
+  extra?: string;
+}
 
 const displayLabelsForType: Record<ModifierType, string> = {
+  armorProficiency: "Port d’armure",
   attack: "Bonus de base à l’attaque",
   ability: "Pouvoir",
   classSkill: "Compétence de classe",
@@ -22,6 +42,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   speed: "Vitesse de déplacement",
   spell: "Sort",
   stamina: "Points d'endurance",
+  weaponProficiency: "Maniement d’arme",
 };
 
 function retrieveSkillName(data: IClientDataSet, target: string | undefined): string | undefined {
@@ -45,43 +66,60 @@ function retrieveSkillName(data: IClientDataSet, target: string | undefined): st
   return skill ? skill.name : target;
 }
 
+function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: ModifierComponentElement): void {
+  const feat = data.feats.find((f) => f.id === modifier.feat);
+  if (!feat) {
+    console.error(`Feat ${modifier.feat} not found`);
+    return;
+  }
+
+  element.name = feat.name;
+  element.description = feat.description;
+
+  if (feat.type === "targeted" || feat.type === "multiple") {
+    switch (feat.targetType) {
+      case FeatTargetTypes.armorProficiency:
+        element.targetName = findOrError(data.armors, modifier.target as ArmorId).name;
+        break;
+      case FeatTargetTypes.skill:
+        element.targetName = retrieveSkillName(data, modifier.target);
+        break;
+      case FeatTargetTypes.weaponProficiency:
+        element.targetName = findOrError(data.weapons, modifier.target as ArmorId).name;
+        break;
+      default:
+        //Do nothing
+        break;
+    }
+  }
+}
+
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
   const data = useAppSelector((state) => state.data);
 
-  let name: string | undefined = hasName(modifier) ? modifier.name : undefined;
-  let description: string | undefined = hasDescription(modifier) ? modifier.description : undefined;
-  let targetName: string | undefined;
+  const element: ModifierComponentElement = {
+    level: modifier.level && modifier.level > 1 ? modifier.level : undefined,
+    name: hasName(modifier) ? modifier.name : undefined,
+    description: hasDescription(modifier) ? modifier.description : undefined,
+    value: hasValue(modifier) ? modifier.value : undefined,
+    extra: hasExtra(modifier) ? modifier.extra : undefined,
+  };
+
   switch (modifier.type) {
     case ModifierType.enum.skill:
     case ModifierType.enum.classSkill:
     case ModifierType.enum.rankSkill:
       // Target is a skill
-      targetName = retrieveSkillName(data, modifier.target);
+      element.targetName = retrieveSkillName(data, modifier.target);
       break;
 
     case ModifierType.enum.feat: {
-      const feat = data.feats.find((f) => f.id === modifier.feat);
-      if (feat) {
-        name = feat.name;
-        description = feat.description;
-        if (feat.type === "targeted" || feat.type === "multiple") {
-          switch (feat.targetType) {
-            case "skill":
-              // Target is a skill
-              targetName = retrieveSkillName(data, modifier.target);
-              break;
-          }
-        }
-      } else {
-        console.error(`Feat ${modifier.feat} not found`);
-      }
-
+      adaptForFeat(data, modifier, element);
       break;
     }
 
     case "spell":
       // Target is a spell
-      targetName = modifier.target;
       break;
 
     default:
@@ -91,13 +129,13 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
   return (
     <p>
       <Badge bg="primary">{displayLabelsForType[modifier.type] ?? ""}</Badge>
-      {modifier.level && modifier.level > 1 && <Badge bg="primary">Niveau {modifier.level}</Badge>}
-      {name && <strong className="me-2">{name}.</strong>}
-      {targetName && <strong className="me-2">{targetName}</strong>}
-      {hasValue(modifier) && modifier.value && <strong className="me-2">{displayBonus(modifier.value)}</strong>}
+      {element.level && <Badge bg="primary">Niveau {element.level}</Badge>}
+      {element.name && <strong className="me-2">{element.name}.</strong>}
+      {element.targetName && <strong className="me-2">{element.targetName}</strong>}
+      {element.value && <strong className="me-2">{displayBonus(element.value)}</strong>}
       <br />
-      {description && <span className="me-2 text-muted">{description}</span>}
-      {hasExtra(modifier) && modifier.extra && <span className="me-2 text-muted">{modifier.extra}</span>}
+      {element.description && <span className="me-2 text-muted">{element.description}</span>}
+      {element.extra && <span className="me-2 text-muted">{element.extra}</span>}
     </p>
   );
 }
