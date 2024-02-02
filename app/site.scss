@@ -2,6 +2,36 @@
 
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+@import "react-bootstrap-typeahead/css/Typeahead.css";
+@import "react-bootstrap-typeahead/css/Typeahead.bs5.css";
+
+/**
+ * Extend Typeahead to support floating labels.
+ */
+.form-floating > .rbt {
+  .form-control {
+    height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+    min-height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+    line-height: 1.25;
+  }
+
+  .form-control:focus,
+  .form-control:not(:placeholder-shown) {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  &:has(.form-control:focus) ~ label,
+  &:has(.form-control:not(:placeholder-shown)) ~ label {
+    color: rgba(var(--bs-body-color-rgb), 0.65);
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+  }
+
+  &:has(.form-control:not(:focus):placeholder-shown) ~ label {
+    display: none;
+  }
+}
+
 /**
  * Extend bootstrap icons with an empty placeholder.
  */
