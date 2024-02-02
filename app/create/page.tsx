@@ -18,6 +18,7 @@ export default async function Page() {
     skills: await serverData.getSkills(),
     themes: await serverData.getThemes(),
     weapons: await serverData.getWeapons(),
+    professions: await serverData.getProfessions(),
   };
   return (
     <>

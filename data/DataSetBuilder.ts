@@ -92,6 +92,7 @@ export class DataSetBuilder {
       getSkills: cache("skills", () => this.getNamed("skills")),
       getArmors: cache("armors", () => this.getOrdered("armors")),
       getWeapons: cache("weapons", () => this.getOrdered("weapons")),
+      getProfessions: cache("professions", () => this.getNamed("professions")),
     };
 
     return data;

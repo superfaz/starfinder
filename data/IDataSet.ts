@@ -5,6 +5,7 @@ import {
   Avatar,
   Class,
   FeatTemplate,
+  Profession,
   Race,
   SavingThrow,
   SkillDefinition,
@@ -26,4 +27,5 @@ export interface IDataSet {
   getThemeDetails(themeId: string): Promise<unknown>;
   getArmors(): Promise<Armor[]>;
   getWeapons(): Promise<Weapon[]>;
+  getProfessions(): Promise<Profession[]>;
 }

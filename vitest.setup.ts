@@ -7,6 +7,7 @@ import {
   Avatar,
   Class,
   FeatTemplate,
+  Profession,
   Race,
   SavingThrow,
   SkillDefinition,
@@ -37,6 +38,7 @@ async function mockBuild(): Promise<IDataSet> {
     getSkills: async () => SkillDefinition.array().parse((await import("./mocks/skills.json")).default),
     getArmors: async () => Armor.array().parse((await import("./mocks/armors.json")).default),
     getWeapons: async () => Weapon.array().parse((await import("./mocks/weapons.json")).default),
+    getProfessions: async () => Profession.array().parse((await import("./mocks/professions.json")).default),
   };
 }
 

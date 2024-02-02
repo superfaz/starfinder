@@ -19,6 +19,7 @@ export * from "./ModifierTemplate";
 export * from "./ModifierType";
 export * from "./Prerequisite";
 export * from "./PrerequisiteType";
+export * from "./Profession";
 export * from "./Race";
 export * from "./SavingThrow";
 export * from "./SkillDefinition";

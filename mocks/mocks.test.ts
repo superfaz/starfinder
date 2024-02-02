@@ -16,6 +16,7 @@ import {
   Theme,
   ThemeScholar,
   Weapon,
+  Profession,
 } from "starfinder/model";
 import { describe, expect, test } from "vitest";
 
@@ -64,6 +65,11 @@ const datasets = [
     file: "feats.json",
     array: true,
     schema: FeatTemplate,
+  },
+  {
+    file: "professions.json",
+    array: true,
+    schema: Profession.strict(),
   },
   {
     file: "races.json",

@@ -1,0 +1,8 @@
+[
+  { "id": "actor", "name": "Acteur", "abilityScore": "cha" },
+  { "id": "artist", "name": "Artist", "abilityScore": "cha" },
+  { "id": "architect", "name": "Architecte", "abilityScore": "int" },
+  { "id": "lawyer", "name": "Avocat", "abilityScore": "int" },
+  { "id": "bounty-hunter", "name": "Chasseur de primes", "abilityScore": "wis" },
+  { "id": "merchant", "name": "Marchand", "abilityScore": "wis" }
+]

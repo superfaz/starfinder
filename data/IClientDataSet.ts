@@ -5,6 +5,7 @@ import {
   Avatar,
   Class,
   FeatTemplate,
+  Profession,
   Race,
   SavingThrow,
   SkillDefinition,
@@ -24,6 +25,7 @@ export interface IClientDataSet {
   themes: Theme[];
   armors: Armor[];
   weapons: Weapon[];
+  professions: Profession[];
 }
 
 export const EmptyClientDataSet: IClientDataSet = {
@@ -38,4 +40,5 @@ export const EmptyClientDataSet: IClientDataSet = {
   themes: [],
   armors: [],
   weapons: [],
+  professions: [],
 };
