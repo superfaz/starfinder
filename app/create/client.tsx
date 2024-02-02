@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Col, Nav, Row } from "react-bootstrap";
+import { Col, Nav, Row, Stack } from "react-bootstrap";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "../../logic/StoreProvider";
@@ -113,7 +113,10 @@ function ClientComponentPresenter() {
         </Col>
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>
-          <Tab.AbilityScores character={presenter} />
+          <Stack direction="vertical" gap={4}>
+            <Tab.AbilityScores character={presenter} />
+            <Tab.ProfessionSkills />
+          </Stack>
         </Col>
 
         <Col lg={4} hidden={navigation !== "abilityScores"}>

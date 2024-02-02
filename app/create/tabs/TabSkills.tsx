@@ -1,7 +1,8 @@
-import { ChangeEvent } from "react";
-import { Badge, Card, Col, Form, Row, Stack } from "react-bootstrap";
-import { displayBonus } from "app/helpers";
-import { SkillPresenter, mutators, useAppDispatch } from "logic";
+import { ChangeEvent, useMemo, useState } from "react";
+import { Badge, Button, Card, Col, Form, Row, Stack } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { displayBonus, findOrError } from "app/helpers";
+import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
 import ModifierComponent from "../ModifierComponent";
 
@@ -145,5 +146,48 @@ export function SkillsModifiers({ character }: CharacterProps) {
         </Card>
       ))}
     </Stack>
+  );
+}
+
+export function ProfessionSkills() {
+  const professions = useAppSelector((state) => state.data.professions);
+  const abilityScores = useAppSelector((state) => state.data.abilityScores);
+  const [abilityScore, setAbilityScore] = useState("cha");
+
+  const optionsForAbilityScores = useMemo(() => {
+    return ["cha", "int", "wis"]
+      .map((key) => findOrError(abilityScores, key))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [abilityScores]);
+
+  const optionsForProfessions = useMemo(() => {
+    return professions.filter((p) => p.abilityScore === abilityScore).sort((a, b) => a.name.localeCompare(b.name));
+  }, [abilityScore, professions]);
+
+  return (
+    <>
+      <Stack direction="vertical" gap={2}>
+        <h2>Compétences de profession</h2>
+        <Form.FloatingLabel controlId="profAbilityScore" label="Caractérisque de référence">
+          <Form.Select value={abilityScore} onChange={(e) => setAbilityScore(e.target.value)}>
+            {optionsForAbilityScores.map((abilityScore) => (
+              <option key={abilityScore.id} value={abilityScore.id}>
+                {abilityScore.name}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.FloatingLabel>
+        <Form.FloatingLabel controlId="profName" label="Nom de la profession" onChange={(e) => console.log(e)}>
+          <Typeahead
+            allowNew={true}
+            clearButton={true}
+            newSelectionPrefix="Ajouter une profession : "
+            labelKey="name"
+            options={optionsForProfessions}
+          />
+        </Form.FloatingLabel>
+        <Button variant="primary">Ajouter aux compétences</Button>
+      </Stack>
+    </>
   );
 }
