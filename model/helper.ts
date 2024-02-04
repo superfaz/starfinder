@@ -33,3 +33,19 @@ export type WithExtra<T> = Extract<T, { extra?: string }>;
 export function hasExtra<T>(obj: T): obj is WithExtra<T> {
   return Object.prototype.hasOwnProperty.call(obj, "extra");
 }
+
+/**
+ * Computes a simple hash of a string.
+ * @param s The string to hash
+ * @returns The hash
+ * @see https://stackoverflow.com/a/52171480
+ */
+export function simpleHash(s: string): string {
+  let h = 9;
+  for (let i = 0; i < s.length; ) {
+    h = Math.imul(h ^ s.charCodeAt(i++), 9 ** 9);
+  }
+
+  const hash = h ^ (h >>> 9);
+  return (hash >>> 0).toString(16);
+}

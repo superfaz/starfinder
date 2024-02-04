@@ -1,6 +1,6 @@
 import { findOrError } from "app/helpers";
 import { EmptyClientDataSet, IClientDataSet } from "data";
-import { AbilityScoreIds, Character, EmptyCharacter, Feature, IModel } from "model";
+import { AbilityScoreIds, Character, EmptyCharacter, Feature, IModel, Profession } from "model";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -72,6 +72,13 @@ const mainSlice = createSlice({
 
     updateAbilityScore(state, action: PayloadAction<{ id: string; delta: number }>) {
       state.character = updateAbilityScoreImpl(state.character, action.payload.id, action.payload.delta);
+    },
+
+    addProfessionSkill(state, action: PayloadAction<Profession>) {
+      state.character = {
+        ...state.character,
+        professionSkills: [...state.character.professionSkills, action.payload],
+      };
     },
 
     updateSkillRank(state, action: PayloadAction<{ id: string; delta: number }>) {

@@ -3,6 +3,8 @@ import { ICodedModel } from "./ICodedModel";
 
 export const AbilityScoreId = z.enum(["str", "dex", "con", "int", "wis", "cha"]);
 
+export type AbilityScoreId = z.infer<typeof AbilityScoreId>;
+
 export const AbilityScore = ICodedModel.extend({
   id: AbilityScoreId,
 });

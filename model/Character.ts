@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Profession } from "./Profession";
 
 export const Character = z
   .object({
@@ -13,6 +14,7 @@ export const Character = z
     traits: z.array(z.string()),
     traitsOptions: z.optional(z.record(z.string())),
     abilityScores: z.record(z.number()),
+    professionSkills: z.array(Profession),
     skillRanks: z.record(z.number()),
     name: z.string(),
     alignment: z.string(),
@@ -38,6 +40,7 @@ export const EmptyCharacter: Readonly<Character> = {
   class: "",
   traits: [],
   abilityScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+  professionSkills: [],
   skillRanks: {},
   name: "",
   alignment: "",
