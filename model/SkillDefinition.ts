@@ -8,7 +8,7 @@ export const SkillDefinition = INamedModel.extend({
   abilityScore: z.optional(AbilityScoreId),
   trainedOnly: z.boolean(),
   armorCheckPenalty: z.boolean(),
-}).strict();
+});
 
 export type SkillDefinition = z.infer<typeof SkillDefinition>;
 

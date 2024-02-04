@@ -4,7 +4,7 @@ import { INamedModel } from "./INamedModel";
 
 export const Profession = INamedModel.extend({
   abilityScore: AbilityScoreId,
-}).strict();
+});
 
 export type Profession = z.infer<typeof Profession>;
 

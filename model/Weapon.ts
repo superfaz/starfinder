@@ -7,7 +7,7 @@ export type WeaponId = z.infer<typeof WeaponId>;
 
 export const Weapon = INamedModel.extend({
   id: WeaponId,
-}).strict();
+});
 
 export type Weapon = z.infer<typeof Weapon>;
 

@@ -22,7 +22,7 @@ export const Class = INamedModel.extend({
     reflex: z.enum(["low", "high"]),
     will: z.enum(["low", "high"]),
   }),
-}).strict();
+});
 
 export type Class = z.infer<typeof Class>;
 

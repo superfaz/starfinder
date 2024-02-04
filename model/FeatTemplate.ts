@@ -38,20 +38,20 @@ export const FeatTargetTypes = FeatTargetType.enum;
 export const MultipleFeatTemplate = BaseFeatTemplate.extend({
   type: z.literal("multiple"),
   targetType: FeatTargetType,
-}).strict();
+});
 
 export type MultipleFeatTemplate = z.infer<typeof MultipleFeatTemplate>;
 
 export const TargetedFeatTemplate = BaseFeatTemplate.extend({
   type: z.literal("targeted"),
   targetType: FeatTargetType,
-}).strict();
+});
 
 export type TargetedFeatTemplate = z.infer<typeof TargetedFeatTemplate>;
 
 export const SimpleFeatTemplate = BaseFeatTemplate.extend({
   type: z.literal("simple"),
-}).strict();
+});
 
 export type SimpleFeatTemplate = z.infer<typeof SimpleFeatTemplate>;
 

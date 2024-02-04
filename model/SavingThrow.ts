@@ -7,7 +7,7 @@ export const SavingThrowId = z.enum(["fortitude", "reflex", "will"]);
 export const SavingThrow = INamedModel.extend({
   id: SavingThrowId,
   abilityScore: AbilityScoreId,
-}).strict();
+});
 
 export type SavingThrow = z.infer<typeof SavingThrow>;
 

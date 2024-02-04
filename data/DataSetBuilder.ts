@@ -1,5 +1,20 @@
 import { CosmosClient, Database } from "@azure/cosmos";
-import { IModel, INamedModel } from "model";
+import {
+  AbilityScore,
+  Alignment,
+  Armor,
+  Avatar,
+  Class,
+  FeatTemplate,
+  IModel,
+  INamedModel,
+  Profession,
+  Race,
+  SavingThrow,
+  SkillDefinition,
+  Theme,
+  Weapon,
+} from "model";
 import { IDataSet } from ".";
 
 const cached: Record<string, unknown> = {};
@@ -79,20 +94,24 @@ export class DataSetBuilder {
 
   async build(): Promise<IDataSet> {
     const data: IDataSet = {
-      getAbilityScores: cache("ability-scores", () => this.getOrdered("ability-scores")),
-      getAlignments: cache("alignments", () => this.getOrdered("alignments")),
-      getAvatars: cache("avatars", () => this.getAll("avatars")),
-      getClasses: cache("classes", () => this.getNamed("classes")),
+      getAbilityScores: cache("ability-scores", () =>
+        this.getOrdered("ability-scores").then((a) => AbilityScore.array().parse(a))
+      ),
+      getAlignments: cache("alignments", () => this.getOrdered("alignments").then((a) => Alignment.array().parse(a))),
+      getAvatars: cache("avatars", () => this.getAll("avatars").then((a) => Avatar.array().parse(a))),
+      getClasses: cache("classes", () => this.getNamed("classes").then((a) => Class.array().parse(a))),
       getClassDetails: <T>(classId: string) => this.getOne<T>("classes-details", classId),
-      getRaces: cache("races", () => this.getNamed("races")),
-      getFeats: cache("feats", () => this.getNamed("feats")),
-      getThemes: cache("themes", () => this.getNamed("themes")),
+      getRaces: cache("races", () => this.getNamed("races").then((a) => Race.array().parse(a))),
+      getFeats: cache("feats", () => this.getNamed("feats").then((a) => FeatTemplate.array().parse(a))),
+      getThemes: cache("themes", () => this.getNamed("themes").then((a) => Theme.array().parse(a))),
       getThemeDetails: <T>(themeId: string) => this.getOne<T>("themes-details", themeId),
-      getSavingThrows: cache("saving-throws", () => this.getOrdered("saving-throws")),
-      getSkills: cache("skills", () => this.getNamed("skills")),
-      getArmors: cache("armors", () => this.getOrdered("armors")),
-      getWeapons: cache("weapons", () => this.getOrdered("weapons")),
-      getProfessions: cache("professions", () => this.getNamed("professions")),
+      getSavingThrows: cache("saving-throws", () =>
+        this.getOrdered("saving-throws").then((a) => SavingThrow.array().parse(a))
+      ),
+      getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinition.array().parse(a))),
+      getArmors: cache("armors", () => this.getOrdered("armors").then((a) => Armor.array().parse(a))),
+      getWeapons: cache("weapons", () => this.getOrdered("weapons").then((a) => Weapon.array().parse(a))),
+      getProfessions: cache("professions", () => this.getNamed("professions").then((a) => Profession.array().parse(a))),
     };
 
     return data;

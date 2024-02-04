@@ -9,7 +9,7 @@ export const ArmorIds = ArmorId.enum;
 
 export const Armor = INamedModel.extend({
   id: ArmorId,
-}).strict();
+});
 
 export type Armor = z.infer<typeof Armor>;
 

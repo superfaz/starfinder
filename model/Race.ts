@@ -12,7 +12,7 @@ export const Race = INamedModel.extend({
   names: z.array(z.string()),
   traits: z.array(FeatureTemplate),
   secondaryTraits: z.array(FeatureTemplate),
-}).strict();
+});
 
 export type Race = z.infer<typeof Race>;
 
