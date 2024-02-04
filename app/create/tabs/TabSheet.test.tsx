@@ -195,7 +195,7 @@ describe("TabSheet", () => {
 
   const themeMatrix = races.map((race) => themes.map((theme) => ({ race, theme }))).flat();
   test.each(themeMatrix)(
-    "has Abilities added by Theme selection for '$race.id' and '$theme.id'",
+    "has Abilities added by Theme selection for $race.id and $theme.id",
     async ({ race, theme }) => {
       const user = userEvent.setup();
       await user.click(screen.getByRole("button", { name: "Race" }));
