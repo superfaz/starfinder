@@ -189,6 +189,7 @@ export function ProfessionSkills() {
     <>
       <Stack direction="vertical" gap={2}>
         <h2>Compétences de profession</h2>
+        <p className="text-muted">Ajouter une profession à la liste des compétences de ce personnage.</p>
         <Form.FloatingLabel controlId="profAbilityScore" label="Caractérisque de référence">
           <Form.Select value={abilityScore} onChange={(e) => setAbilityScore(e.target.value as AbilityScoreId)}>
             {optionsForAbilityScores.map((abilityScore) => (

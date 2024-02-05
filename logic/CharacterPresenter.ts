@@ -1,6 +1,6 @@
 import { IClientDataSet } from "data";
 import {
-  AbilityScore,
+  AbilityScoreId,
   AbilityScoreIds,
   ArmorId,
   Avatar,
@@ -113,6 +113,7 @@ export function computeBaseAttackBonus(classLevel: number, curve: "high" | "low"
 export interface SkillPresenter {
   id: string;
   fullName: string;
+  abilityScore: AbilityScoreId;
   definition: SkillDefinition;
   ranks: number;
   rankForced: boolean;
@@ -432,56 +433,82 @@ export class CharacterPresenter {
     return this.cachedClassSkills;
   }
 
-  getSkills(): SkillPresenter[] {
+  private prepareSkillPresenters(skills: SkillPresenter[]): SkillPresenter[] {
     const skillModifiers = this.getModifiers().filter(ofType(ModifierType.enum.skill));
     const rankModifiers = this.getModifiers().filter(ofType(ModifierType.enum.rankSkill));
-    return [...this.data.skills]
-      .sort((a, b) => a.name.localeCompare(b.name, "fr"))
-      .map((s) => {
-        const rankForced: boolean = rankModifiers.some((m) => m.target === s.id);
-        const ranks: number = (this.character.skillRanks[s.id] ?? 0) + (rankForced ? this.character.level : 0);
-        const isTrained: boolean = ranks > 0;
-        const isClassSkill: boolean = this.getClassSkills().includes(s.id);
-        const bonusDoubleClassSkill: number = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
-        const abilityScoreModifier: number = !s.abilityScore
-          ? 0
-          : computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
 
-        // TODO: Add bonus from modifiers
-        const bonusFromSkillModifiers = skillModifiers
-          .filter((m) => m.target === s.id || m.target === "all")
-          .reduce((acc, m) => acc + m.value, 0);
+    return skills.map((s) => {
+      const rankForced: boolean = rankModifiers.some((m) => m.target === s.id);
+      const ranks: number = (this.character.skillRanks[s.id] ?? 0) + (rankForced ? this.character.level : 0);
+      const isTrained: boolean = ranks > 0;
+      const bonusDoubleClassSkill: number = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
+      const abilityScoreModifier: number = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
+      const abilityCode = findOrError(this.data.abilityScores, s.abilityScore).code;
 
-        function computeSkillBonus() {
-          const base = ranks + abilityScoreModifier + bonusFromSkillModifiers + bonusDoubleClassSkill;
-          if (isClassSkill && isTrained) {
-            return base + 3;
-          } else if (!isTrained && s.trainedOnly) {
-            return undefined;
-          } else {
-            return base;
-          }
+      // TODO: Add bonus from modifiers
+      const bonusFromSkillModifiers = skillModifiers
+        .filter((m) => m.target === s.id || m.target === "all")
+        .reduce((acc, m) => acc + m.value, 0);
+
+      function computeSkillBonus() {
+        const base = ranks + abilityScoreModifier + bonusFromSkillModifiers + bonusDoubleClassSkill;
+        if (s.isClassSkill && isTrained) {
+          return base + 3;
+        } else if (!isTrained && s.definition.trainedOnly) {
+          return undefined;
+        } else {
+          return base;
         }
+      }
 
-        function computeFullName(abilityScores: AbilityScore[]) {
-          if (!s.abilityScore) {
-            return s.name;
-          }
+      s.fullName = `${s.fullName} (${abilityCode})`;
+      s.ranks = ranks;
+      s.rankForced = rankForced;
+      s.bonus = computeSkillBonus();
 
-          const abilityCode = findOrError(abilityScores, s.abilityScore).code;
-          return `${s.name} (${abilityCode})`;
-        }
+      return s;
+    });
+  }
 
-        return {
+  private getProfessionSkills(): SkillPresenter[] {
+    const professionSkills = this.character.professionSkills;
+    const profession = findOrError(this.data.skills, "prof");
+
+    return this.prepareSkillPresenters(
+      professionSkills.map((p) => ({
+        id: p.id,
+        fullName: `${profession.name} ${p.name}`,
+        definition: profession,
+        abilityScore: p.abilityScore,
+        ranks: 0,
+        isClassSkill: this.getClassSkills().includes(profession.id),
+        rankForced: false,
+        bonus: 0,
+      }))
+    );
+  }
+
+  private getGenericSkills(): SkillPresenter[] {
+    return this.prepareSkillPresenters(
+      this.data.skills
+        .filter((s) => s.abilityScore !== undefined)
+        .map((s) => ({
           id: s.id,
-          fullName: computeFullName(this.data.abilityScores),
+          fullName: s.name,
           definition: s,
-          ranks,
-          isClassSkill,
-          rankForced,
-          bonus: computeSkillBonus(),
-        };
-      });
+          abilityScore: s.abilityScore as AbilityScoreId,
+          ranks: 0,
+          isClassSkill: this.getClassSkills().includes(s.id),
+          rankForced: false,
+          bonus: 0,
+        }))
+    );
+  }
+
+  getSkills(): SkillPresenter[] {
+    return [...this.getGenericSkills(), ...this.getProfessionSkills()].sort((a, b) =>
+      a.fullName.localeCompare(b.fullName, "fr")
+    );
   }
 
   getRemainingSkillRanksPoints(): number {

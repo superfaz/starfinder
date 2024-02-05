@@ -17,7 +17,6 @@
         "Médecine (INT)",
         "Perception (SAG)",
         "Pilotage (DEX)",
-        "Profession",
         "Psychologie (SAG)",
         "Survie (SAG)"
       ]
@@ -31,7 +30,6 @@
         "Intimidation (CHA)",
         "Médecine (INT)",
         "Pilotage (DEX)",
-        "Profession",
         "Survie (SAG)"
       ]
     }

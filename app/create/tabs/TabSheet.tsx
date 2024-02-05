@@ -143,7 +143,7 @@ function CardInitiative({ character }: CharacterProps) {
   );
 }
 
-function CardSkills({ data, character }: SheetProps) {
+function CardSkills({ character }: CharacterProps) {
   return (
     <Card>
       <Card.Header>
@@ -153,28 +153,30 @@ function CardSkills({ data, character }: SheetProps) {
         <Stack direction="vertical" gap={2}>
           {character.getSkills().map((skill) => {
             return (
-              <div key={skill.id}>
-                {skill.isClassSkill && <i className="bi bi-star text-gold me-1" title="Compétence de classe"></i>}
-                {!skill.isClassSkill && <i className="bi bi-empty me-1"></i>}
-                <span className="header me-1">{skill.definition.name}</span>
-                {skill.definition.abilityScore && (
-                  <span className="me-1">({findOrError(data.abilityScores, skill.definition.abilityScore).code})</span>
-                )}
-                {skill.definition.trainedOnly && (
-                  <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
-                )}
-                {skill.definition.armorCheckPenalty && (
-                  <i
-                    className="bi bi-shield-shaded text-secondary me-1"
-                    title="Le malus d’armure aux tests s’applique"
-                  ></i>
-                )}
-                {skill.bonus !== undefined && (
-                  <Badge bg={skill.bonus > 0 ? "primary" : "secondary"} className="position-absolute end-0 me-3">
-                    {displayBonus(skill.bonus)}
-                  </Badge>
-                )}
-              </div>
+              <Row key={skill.id}>
+                <Col xs="auto" className="pe-0 me-0">
+                  {skill.isClassSkill && <i className="bi bi-star text-gold me-1" title="Compétence de classe"></i>}
+                </Col>
+                <Col className="px-0 mx-0">
+                  <span className="me-1">{skill.fullName}</span>
+                  {skill.definition.trainedOnly && (
+                    <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
+                  )}
+                  {skill.definition.armorCheckPenalty && (
+                    <i
+                      className="bi bi-shield-shaded text-secondary me-1"
+                      title="Le malus d’armure aux tests s’applique"
+                    ></i>
+                  )}
+                </Col>
+                <Col xs="1" className="ps-0 ms-0">
+                  {skill.bonus !== undefined && (
+                    <Badge bg={skill.bonus > 0 ? "primary" : "secondary"} className="position-absolute end-0 me-3">
+                      {displayBonus(skill.bonus)}
+                    </Badge>
+                  )}
+                </Col>
+              </Row>
             );
           })}
         </Stack>
@@ -377,7 +379,7 @@ export function Sheet({ character }: CharacterProps) {
         <Stack direction="vertical" gap={2}>
           <CardAbilityScores data={data} character={character} />
           <CardInitiative character={character} />
-          <CardSkills data={data} character={character} />
+          <CardSkills character={character} />
         </Stack>
       </Col>
       <Col lg={3}>
