@@ -58,16 +58,20 @@ const mainSlice = createSlice({
       state.character = updateClassImpl(state.data, state.character, action.payload);
     },
 
+    updateOperativeSpecialization(state, action: PayloadAction<string>) {
+      state.character = updateOperativeSpecializationImpl(state.character, action.payload);
+    },
+
+    updateMysticConnection(state, action: PayloadAction<string>) {
+      state.character = updateMysticConnectionImpl(state.character, action.payload);
+    },
+
     updateSoldierAbilityScore(state, action: PayloadAction<string>) {
       state.character = updateSoldierAbilityScoreImpl(state.character, action.payload);
     },
 
     updateSoldierPrimayStyle(state, action: PayloadAction<string>) {
       state.character = updateSoldierPrimaryStyleImpl(state.character, action.payload);
-    },
-
-    updateOperativeSpecialization(state, action: PayloadAction<string>) {
-      state.character = updateOperativeSpecializationImpl(state.character, action.payload);
     },
 
     updateAbilityScore(state, action: PayloadAction<{ id: string; delta: number }>) {
@@ -365,19 +369,56 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
   };
 
   // Special cases - prepare the associated options
-  if (classId === "soldier") {
+  if (classId === "mystic") {
+    // Class: Mystic
+    result.classOptions = { mysticConnection: "60ee0f41-3c5b-4aa4-93d8-f139f5b864b3" };
+  } else if (classId === "operative") {
+    // Class: Operative
+    result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
+  } else if (classId === "soldier") {
     // Class: Soldier
     result.classOptions = {
       soldierAbilityScore: AbilityScoreIds.str,
       soldierPrimaryStyle: "5103271c-c10e-4afc-8750-fb0e3e22c7d5",
     };
-  } else if (classId === "operative") {
-    // Class: Operative
-    result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
   return result;
+}
+
+/**
+ * Updates the specialization selected for an operative character.
+ *
+ * @param character The character to update
+ * @param specialization The selected operative specialization
+ * @returns The updated character
+ */
+function updateOperativeSpecializationImpl(character: Character, specialization: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      operativeSpecialization: specialization,
+    },
+  };
+}
+
+/**
+ * Updates the connection selected for a mystic character.
+ *
+ * @param character The character to update
+ * @param specialization The selected connection
+ * @returns The updated character
+ */
+function updateMysticConnectionImpl(character: Character, connection: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      mysticConnection: connection,
+    },
+  };
 }
 
 /**
@@ -410,23 +451,6 @@ function updateSoldierPrimaryStyleImpl(character: Character, styleId: string): C
     classOptions: {
       ...character.classOptions,
       soldierPrimaryStyle: styleId,
-    },
-  };
-}
-
-/**
- * Updates the specialization selected for an operative character.
- *
- * @param character The character to update
- * @param specialization The selected operative specialization
- * @returns The updated character
- */
-function updateOperativeSpecializationImpl(character: Character, specialization: string): Character {
-  return {
-    ...character,
-    classOptions: {
-      ...character.classOptions,
-      operativeSpecialization: specialization,
     },
   };
 }

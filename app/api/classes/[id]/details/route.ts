@@ -1,5 +1,5 @@
 import { IDataSet, DataSetBuilder } from "data";
-import { asClassEnvoy, asClassOperative, asClassSoldier, isIModel } from "model";
+import { asClassEnvoy, asClassMystic, asClassOperative, asClassSoldier, isIModel } from "model";
 import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +19,8 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
       return Response.json(asClassEnvoy(raw));
     case "operative":
       return Response.json(asClassOperative(raw));
+    case "mystic":
+      return Response.json(asClassMystic(raw));
     case "soldier":
       return Response.json(asClassSoldier(raw));
     default:

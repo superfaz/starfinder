@@ -7,6 +7,7 @@ import {
   Character,
   Class,
   ClassEnvoy,
+  ClassMystic,
   ClassOperative,
   ClassSoldier,
   FeatTemplate,
@@ -28,7 +29,7 @@ import {
   ofType,
 } from "model";
 import { Templater, cleanEvolutions } from ".";
-import { getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
+import { getMysticFeatureTemplates, getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
 import { findOrError } from "app/helpers";
 
 /**
@@ -303,33 +304,53 @@ export class CharacterPresenter {
       return [];
     }
 
-    if (classDetails.id === "envoy") {
-      return (classDetails as ClassEnvoy).features.map((f) => {
-        const level = f.level ?? 1;
-        const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
-        return templater.convertFeature(f);
-      });
-    } else if (classDetails.id === "operative") {
-      const selectedSpecialization = (classDetails as ClassOperative).specializations.find(
-        (s) => s.id === this.getOperativeSpecialization()
-      );
-      return getOperativeFeatureTemplates(classDetails as ClassOperative, this).map((f) => {
-        const level = f.level ?? 1;
-        const templater = this.createTemplater({
-          ...(selectedSpecialization?.variables ?? {}),
-          ...cleanEvolutions(f.evolutions)[level],
+    switch (classDetails.id) {
+      case "envoy":
+        return (classDetails as ClassEnvoy).features.map((f) => {
+          const level = f.level ?? 1;
+          const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
+          return templater.convertFeature(f);
         });
-        return templater.convertFeature(f);
-      });
-    } else if (classDetails.id === "soldier") {
-      return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {
-        const level = f.level ?? 1;
-        const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
-        return templater.convertFeature(f);
-      });
-    } else {
-      return [];
+
+      case "mystic":
+        return getMysticFeatureTemplates(classDetails as ClassMystic, this).map((f) => {
+          const level = f.level ?? 1;
+          const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
+          return templater.convertFeature(f);
+        });
+
+      case "operative": {
+        const selectedSpecialization = (classDetails as ClassOperative).specializations.find(
+          (s) => s.id === this.getOperativeSpecialization()
+        );
+        return getOperativeFeatureTemplates(classDetails as ClassOperative, this).map((f) => {
+          const level = f.level ?? 1;
+          const templater = this.createTemplater({
+            ...(selectedSpecialization?.variables ?? {}),
+            ...cleanEvolutions(f.evolutions)[level],
+          });
+          return templater.convertFeature(f);
+        });
+      }
+
+      case "soldier":
+        return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {
+          const level = f.level ?? 1;
+          const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
+          return templater.convertFeature(f);
+        });
+
+      default:
+        return [];
     }
+  }
+
+  getMysticConnection(): string | null {
+    return this.character.classOptions?.mysticConnection ?? null;
+  }
+
+  getOperativeSpecialization(): string | null {
+    return this.character.classOptions?.operativeSpecialization ?? null;
   }
 
   isSoldier(): boolean {
@@ -342,10 +363,6 @@ export class CharacterPresenter {
 
   getSoldierPrimaryStyle(): string | null {
     return this.character.classOptions?.soldierPrimaryStyle ?? null;
-  }
-
-  getOperativeSpecialization(): string | null {
-    return this.character.classOptions?.operativeSpecialization ?? null;
   }
 
   getAbilityScores(): Record<string, number> {

@@ -1,5 +1,19 @@
 import { CharacterPresenter } from "./CharacterPresenter";
-import { ClassOperative, ClassSoldier, FeatureTemplate } from "model";
+import { ClassMystic, ClassOperative, ClassSoldier, FeatureTemplate } from "model";
+
+export function getMysticFeatureTemplates(classDetails: ClassMystic, character: CharacterPresenter): FeatureTemplate[] {
+  const connection = character.getMysticConnection();
+  if (!connection) {
+    return [];
+  }
+
+  const selectedConnection = classDetails.connections.find((s) => s.id === connection);
+  const classFeatures: FeatureTemplate[] = classDetails.features;
+  const connectionFeatures: FeatureTemplate[] = selectedConnection?.features ?? [];
+  const features: FeatureTemplate[] = [...classFeatures, ...connectionFeatures];
+
+  return features;
+}
 
 export function getOperativeFeatureTemplates(
   operativeData: ClassOperative,

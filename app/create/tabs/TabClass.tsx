@@ -10,6 +10,7 @@ const LazyGenericClassDetails = dynamic(() => import("../classes/genericDetails"
 
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
+const LazyMysticClassEditor = dynamic(() => import("../classes/mysticEditor"));
 const LazySoldierClassEditor = dynamic(() => import("../classes/soldierEditor"));
 
 function LazyClassEditor({ character }: CharacterProps): JSX.Element | null {
@@ -25,6 +26,9 @@ function LazyClassEditor({ character }: CharacterProps): JSX.Element | null {
 
     case "operative":
       return <LazyOperativeClassEditor character={character} />;
+
+    case "mystic":
+      return <LazyMysticClassEditor character={character} />;
 
     case "soldier":
       return <LazySoldierClassEditor character={character} />;
@@ -44,6 +48,7 @@ function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
   switch (selectedClass.id) {
     case "envoy":
     case "operative":
+    case "mystic":
     case "soldier":
       return <LazyGenericClassDetails character={character} classId={selectedClass.id} />;
 
