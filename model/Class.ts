@@ -12,6 +12,7 @@ export const Class = INamedModel.extend({
   staminaPoints: z.number(),
   primaryAbilityScore: z.union([AbilityScoreId, Variable]),
   secondaryAbilityScores: z.array(AbilityScoreId),
+  spellCaster: z.optional(z.string()),
   skillRank: z.number(),
   classSkills: z.array(z.string()),
   armors: z.array(ArmorId),

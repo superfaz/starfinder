@@ -28,7 +28,9 @@ Classe : Emissaire / Abilité : Maîtrise de compétence / Choix de la compéten
 
 Classe : Mécano / Ajouter les détails de classe
 
-Classe : Mystique / Ajouter les détails de classe
+Classe : Mystique / Ajouter toutes les connections
+
+Classe : Mystique / Ajouter la gestion des sorts
 
 Classe : Solarien / Ajouter les détails de classe
 

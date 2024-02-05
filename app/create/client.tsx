@@ -60,6 +60,11 @@ function ClientComponentPresenter() {
             Don(s)
           </Nav.Link>
         </Nav.Item>
+        <Nav.Item hidden={selectedClass === null || !selectedClass.spellCaster}>
+          <Nav.Link eventKey="spells" disabled={selectedClass === null}>
+            Sorts
+          </Nav.Link>
+        </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="equipment" disabled={selectedClass === null}>
             Équipement
