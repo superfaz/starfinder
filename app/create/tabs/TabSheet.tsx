@@ -1,7 +1,7 @@
 import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { CharacterPresenter, computeAbilityScoreModifier, computeSavingThrowBonus, useAppSelector } from "logic";
+import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
 import { Alignment, ModifierType, ofType } from "model";
 import { CharacterProps } from "../Props";
 
@@ -211,7 +211,6 @@ function CardKeyPoints({ character }: CharacterProps) {
 function CardSavingThrows({ data, character }: SheetProps) {
   const selectedClass = character.getClass();
   const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.savingThrow));
-  const bonuses = character.getModifiers().filter(ofType(ModifierType.enum.savingThrowBonus));
 
   return (
     <Card data-testid="savingThrows">
@@ -227,18 +226,15 @@ function CardSavingThrows({ data, character }: SheetProps) {
           )}
           {selectedClass &&
             data.savingThrows.map((savingThrow) => {
-              const classBonus = computeSavingThrowBonus(1, selectedClass.savingThrows[savingThrow.id]);
-              const abilityScoreBonus = computeAbilityScoreModifier(
-                character.getAbilityScores()[savingThrow.abilityScore]
-              );
-              const otherBonus = bonuses.filter((b) => b.target === savingThrow.id).reduce((a, c) => a + c.value, 0);
-              const bonus = classBonus + abilityScoreBonus + otherBonus;
+              const bonus = character.getSavingThrowBonus(savingThrow);
               return (
-                <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">
-                  <Badge bg={bonus > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
-                    {displayBonus(bonus)}
-                  </Badge>
-                </ValueComponent>
+                bonus !== undefined && (
+                  <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">
+                    <Badge bg={bonus > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                      {displayBonus(bonus)}
+                    </Badge>
+                  </ValueComponent>
+                )
               );
             })}
         </Row>

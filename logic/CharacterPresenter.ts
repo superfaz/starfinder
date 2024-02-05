@@ -17,6 +17,8 @@ import {
   Prerequisite,
   PrerequisiteType,
   Race,
+  SavingThrow,
+  SavingThrowId,
   SkillDefinition,
   Theme,
   Variant,
@@ -594,9 +596,11 @@ export class CharacterPresenter {
         }
       }
 
+      case PrerequisiteType.enum.savingThrow:
+        return (this.getSavingThrowBonus(prerequisite.target) ?? 0) >= prerequisite.value;
+
       case PrerequisiteType.enum.notSpellCaster:
       case PrerequisiteType.enum.spellCaster:
-      case PrerequisiteType.enum.savingThrow:
       case PrerequisiteType.enum.spellCasterLevel:
         return true;
     }
@@ -754,5 +758,23 @@ export class CharacterPresenter {
 
   getArmorClassAgainstCombatManeuvers(): number {
     return 8 + this.getKineticArmorClass();
+  }
+
+  getSavingThrowBonus(savingThrowOrId: SavingThrow | SavingThrowId): number | undefined {
+    const selectedClass = this.getClass();
+    if (!selectedClass) {
+      return undefined;
+    }
+
+    const savingThrow =
+      typeof savingThrowOrId === "string" ? findOrError(this.data.savingThrows, savingThrowOrId) : savingThrowOrId;
+    const classBonus = computeSavingThrowBonus(1, selectedClass.savingThrows[savingThrow.id]);
+    const abilityScoreBonus = computeAbilityScoreModifier(this.getAbilityScores()[savingThrow.abilityScore]);
+    const otherBonus = this.getModifiers()
+      .filter(ofType(ModifierType.enum.savingThrowBonus))
+      .filter((b) => b.target === savingThrow.id)
+      .reduce((a, c) => a + c.value, 0);
+
+    return classBonus + abilityScoreBonus + otherBonus;
   }
 }

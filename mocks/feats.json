@@ -323,5 +323,33 @@
     "description": "Utiliser par les définitions de classe.",
     "refs": [],
     "modifiers": []
+  },
+  {
+    "id": "d112dccf-e126-464d-812c-98ca1251958b",
+    "name": "Feat savingThrow Fortitude 1",
+    "type": "simple",
+    "description": "Test le prerequis 'savingThrow'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [{
+      "id": "a32eb96e-9f85-4d65-9894-7630e07b7286",
+      "type": "savingThrow",
+      "target": "fortitude",
+      "value": 1
+    }]
+  },
+  {
+    "id": "64a03e2a-45e7-4733-a8bc-c1899d7eb56b",
+    "name": "Feat savingThrow Reflex 1",
+    "type": "simple",
+    "description": "Test le prerequis 'savingThrow'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": [{
+      "id": "d30a4589-0697-4edf-87d8-407964cc90a8",
+      "type": "savingThrow",
+      "target": "reflex",
+      "value": 1
+    }]
   }
 ]

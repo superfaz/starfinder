@@ -4,6 +4,8 @@ import { AbilityScoreId } from "./AbilityScore";
 
 export const SavingThrowId = z.enum(["fortitude", "reflex", "will"]);
 
+export type SavingThrowId = z.infer<typeof SavingThrowId>;
+
 export const SavingThrow = INamedModel.extend({
   id: SavingThrowId,
   abilityScore: AbilityScoreId,

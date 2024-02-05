@@ -113,6 +113,12 @@ describe("TabFeats with operative", () => {
 
     expect(block.queryByText(/feat weapon basic/i)).not.toBeNull();
   });
+
+  test("handle savingThrow prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/savingThrow fortitude 1/i)).toBeNull();
+    expect(block.queryByText(/savingThrow reflex 1/i)).not.toBeNull();
+  });
 });
 
 describe("TabFeats with soldier", () => {
