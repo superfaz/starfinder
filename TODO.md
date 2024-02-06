@@ -72,6 +72,10 @@ Dons : Tir de repli / Gestion de la feinte offensive
 
 Dons : Nano-intégration / Réécriture complete
 
+Sorts : Miracle / Ajouter à la liste
+
+Sorts : Souhait / Ajouter à la liste
+
 ## Level increase
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent

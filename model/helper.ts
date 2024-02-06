@@ -2,9 +2,14 @@ import { z } from "zod";
 
 export const Id = z.union([z.string().regex(/^([a-z]|[a-z][a-z0-9-]*[a-z0-9])$/), z.string().uuid()]);
 
-export const Description = z.string().regex(/^[\p{Lu}0-9+-].+\.$/u);
-
 export const Variable = z.string().regex(/^<[a-z][a-zA-Z]+>$/);
+
+export const Description = z.union([Variable, z.string().regex(/^[\p{Lu}0-9+-].+\.$/u)]);
+
+export const Evolutions = z.record(
+  z.string().regex(/[0-9]+/),
+  z.union([z.null(), z.record(z.union([z.number(), z.string()]))])
+);
 
 export function isVariable(value: string): boolean {
   return Variable.safeParse(value).success;
