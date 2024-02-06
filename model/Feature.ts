@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { Modifier } from "./Modifier";
-import { Description } from "./helper";
+import { Description, Evolutions } from "./helper";
 
 export const FeatureCategory = z.enum(["ex", "ma", "su"]);
 
@@ -17,7 +17,7 @@ export const Feature = INamedModel.extend({
   /**
    * The evolutions of the feature, indexed by level - for class features.
    */
-  evolutions: z.record(z.record(z.union([z.string(), z.number()]))),
+  evolutions: z.optional(Evolutions),
 
   /**
    * The IDs of the replaced racial traits - for secondary racial traits.

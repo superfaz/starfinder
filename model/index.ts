@@ -24,6 +24,7 @@ export * from "./Profession";
 export * from "./Race";
 export * from "./SavingThrow";
 export * from "./SkillDefinition";
+export * from "./Spell";
 export * from "./Theme";
 export * from "./ThemeScholar";
 export * from "./Variant";
