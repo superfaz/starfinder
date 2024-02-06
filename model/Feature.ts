@@ -17,7 +17,7 @@ export const Feature = INamedModel.extend({
   /**
    * The evolutions of the feature, indexed by level - for class features.
    */
-  evolutions: z.optional(Evolutions),
+  evolutions: Evolutions,
 
   /**
    * The IDs of the replaced racial traits - for secondary racial traits.

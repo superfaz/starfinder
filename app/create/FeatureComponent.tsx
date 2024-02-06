@@ -78,7 +78,7 @@ export default function FeatureComponent({
       {hasEvolutions && (
         <Card.Footer>
           {Object.entries(feature.evolutions).map(([level, values]) => {
-            if (Object.entries(values).length > 0) {
+            if (values && Object.entries(values).length > 0) {
               return (
                 <div key={level}>
                   <Badge bg="secondary">{level}</Badge> {values.name && <strong>{values.name}</strong>}{" "}
