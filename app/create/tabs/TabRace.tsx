@@ -39,7 +39,7 @@ export function RaceSelection({ character }: CharacterProps) {
       </Form.FloatingLabel>
       {selectedRace && (
         <>
-          <Stack direction="horizontal">
+          <Stack direction="horizontal" className="right">
             <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
           </Stack>
           <p className="text-muted">{selectedRace.description}</p>
@@ -55,7 +55,7 @@ export function RaceSelection({ character }: CharacterProps) {
                 </Form.Select>
               </Form.FloatingLabel>
               {Object.entries(selectedVariant.abilityScores).length > 0 && (
-                <Stack direction="horizontal">
+                <Stack direction="horizontal" className="right">
                   {Object.entries(selectedVariant.abilityScores).map(
                     ([key, value]) =>
                       value && (

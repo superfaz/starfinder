@@ -88,7 +88,7 @@ export function ClassSelection({ character }: CharacterProps) {
       </Form.FloatingLabel>
       {selectedClass && (
         <>
-          <Stack direction="horizontal">
+          <Stack direction="horizontal" className="right">
             {!character.isSoldier() && (
               <Badge bg="primary">{findOrError(data.abilityScores, selectedClass.primaryAbilityScore).code}</Badge>
             )}
@@ -109,7 +109,7 @@ export function ClassSelection({ character }: CharacterProps) {
               ))}
             </Form.Select>
           </Form.FloatingLabel>
-          <Stack direction="horizontal">
+          <Stack direction="horizontal" className="right">
             <Badge bg="primary">{findOrError(data.abilityScores, character.getSoldierAbilityScore()).code}</Badge>
           </Stack>
         </>

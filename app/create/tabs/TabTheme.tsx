@@ -35,7 +35,7 @@ export function ThemeSelection({ character }: CharacterProps) {
         </Form.Select>
       </Form.FloatingLabel>
       {selectedTheme && !character.hasNoTheme() && (
-        <Stack direction="horizontal">
+        <Stack direction="horizontal" className="right">
           {Object.entries(selectedTheme.abilityScores).map(
             ([key, value]) =>
               value && (
