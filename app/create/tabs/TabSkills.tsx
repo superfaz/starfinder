@@ -186,36 +186,34 @@ export function ProfessionSkills() {
   }
 
   return (
-    <>
-      <Stack direction="vertical" gap={2}>
-        <h2>Compétences de profession</h2>
-        <p className="text-muted">Ajouter une profession à la liste des compétences de ce personnage.</p>
-        <Form.FloatingLabel controlId="profAbilityScore" label="Caractérisque de référence">
-          <Form.Select value={abilityScore} onChange={(e) => setAbilityScore(e.target.value as AbilityScoreId)}>
-            {optionsForAbilityScores.map((abilityScore) => (
-              <option key={abilityScore.id} value={abilityScore.id}>
-                {abilityScore.name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.FloatingLabel>
-        <Form.FloatingLabel controlId="profName" label="Nom de la profession">
-          <Typeahead
-            id="profName"
-            allowNew={true}
-            clearButton={true}
-            newSelectionPrefix="Ajouter une profession : "
-            labelKey="name"
-            options={optionsForProfessions}
-            selected={selectedProfession}
-            onChange={(e) => setSelectedProfession(e as Profession[] | NewOption[])}
-          />
-        </Form.FloatingLabel>
-        <div></div>
-        <Button variant="primary ms-auto" onClick={handleAddProfession} disabled={selectedProfession.length == 0}>
-          Ajouter aux compétences
-        </Button>
-      </Stack>
-    </>
+    <Stack direction="vertical" gap={2}>
+      <h2>Compétences de profession</h2>
+      <p className="text-muted">Ajouter une profession à la liste des compétences de ce personnage.</p>
+      <Form.FloatingLabel controlId="profAbilityScore" label="Caractérisque de référence">
+        <Form.Select value={abilityScore} onChange={(e) => setAbilityScore(e.target.value as AbilityScoreId)}>
+          {optionsForAbilityScores.map((abilityScore) => (
+            <option key={abilityScore.id} value={abilityScore.id}>
+              {abilityScore.name}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.FloatingLabel>
+      <Form.FloatingLabel controlId="profName" label="Nom de la profession">
+        <Typeahead
+          id="profName"
+          allowNew={true}
+          clearButton={true}
+          newSelectionPrefix="Ajouter une profession : "
+          labelKey="name"
+          options={optionsForProfessions}
+          selected={selectedProfession}
+          onChange={(e) => setSelectedProfession(e as Profession[] | NewOption[])}
+        />
+      </Form.FloatingLabel>
+      <div></div>
+      <Button variant="primary ms-auto" onClick={handleAddProfession} disabled={selectedProfession.length == 0}>
+        Ajouter aux compétences
+      </Button>
+    </Stack>
   );
 }

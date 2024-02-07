@@ -60,8 +60,8 @@ function ClientComponentPresenter() {
             Don(s)
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item hidden={selectedClass === null || !selectedClass.spellCaster}>
-          <Nav.Link eventKey="spells" disabled={selectedClass === null}>
+        <Nav.Item>
+          <Nav.Link eventKey="spells" disabled={selectedClass === null || !selectedClass.spellCaster}>
             Sorts
           </Nav.Link>
         </Nav.Item>
@@ -138,6 +138,10 @@ function ClientComponentPresenter() {
 
         <Col lg={12} hidden={navigation !== "feats"}>
           <Tab.FeatSelection character={presenter} />
+        </Col>
+
+        <Col lg={12} hidden={navigation !== "spells"}>
+          <Tab.SpellsSelection character={presenter} />
         </Col>
 
         <Col lg={12} hidden={navigation !== "sheet"}>

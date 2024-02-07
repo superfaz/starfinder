@@ -9,6 +9,7 @@ import {
   Race,
   SavingThrow,
   SkillDefinition,
+  Spell,
   Theme,
   Weapon,
 } from "model";
@@ -22,6 +23,7 @@ export interface IClientDataSet {
   races: Race[];
   savingThrows: SavingThrow[];
   skills: SkillDefinition[];
+  spells: Spell[];
   themes: Theme[];
   armors: Armor[];
   weapons: Weapon[];
@@ -37,6 +39,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   races: [],
   savingThrows: [],
   skills: [],
+  spells: [],
   themes: [],
   armors: [],
   weapons: [],

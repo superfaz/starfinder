@@ -6,4 +6,5 @@ export * from "./TabProfile";
 export * from "./TabRace";
 export * from "./TabSheet";
 export * from "./TabSkills";
+export * from "./TabSpells";
 export * from "./TabTheme";

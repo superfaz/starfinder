@@ -16,6 +16,7 @@ export default async function Page() {
     races: await serverData.getRaces(),
     savingThrows: await serverData.getSavingThrows(),
     skills: await serverData.getSkills(),
+    spells: await serverData.getSpells(),
     themes: await serverData.getThemes(),
     weapons: await serverData.getWeapons(),
     professions: await serverData.getProfessions(),

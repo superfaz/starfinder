@@ -9,6 +9,7 @@ import {
   Race,
   SavingThrow,
   SkillDefinition,
+  Spell,
   Theme,
   Weapon,
 } from "model";
@@ -23,6 +24,7 @@ export interface IDataSet {
   getRaces(): Promise<Race[]>;
   getSavingThrows(): Promise<SavingThrow[]>;
   getSkills(): Promise<SkillDefinition[]>;
+  getSpells(): Promise<Spell[]>;
   getThemes(): Promise<Theme[]>;
   getThemeDetails(themeId: string): Promise<unknown>;
   getArmors(): Promise<Armor[]>;

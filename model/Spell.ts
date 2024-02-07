@@ -8,6 +8,10 @@ export type CasterId = z.infer<typeof CasterId>;
 
 export const CasterIds = CasterId.enum;
 
+export function isCasterId(obj: unknown): obj is CasterId {
+  return CasterId.safeParse(obj).success;
+}
+
 export const Range = z.object({ min: z.number(), max: z.number() });
 
 export const Spell = INamedModel.extend({
@@ -17,3 +21,9 @@ export const Spell = INamedModel.extend({
   resolve: z.boolean().default(false),
   evolutions: z.optional(Evolutions),
 });
+
+export type Spell = z.infer<typeof Spell>;
+
+export function isSpell(obj: unknown): obj is Spell {
+  return Spell.safeParse(obj).success;
+}
