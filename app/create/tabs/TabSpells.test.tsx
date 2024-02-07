@@ -57,12 +57,12 @@ describe("TabSpells", () => {
 
   test.each([2, 3, 4, 5, 6])("displays filtered ranged spells '%s'", async (level) => {
     const content = within(screen.getByTestId("spells-" + level));
-    expect(content.queryByText("Shared ranged " + level), "shared ranged not displayed").not.toBeNull();
-    expect(content.queryByText("Mystic ranged " + level), "mystic ranged not displayed").not.toBeNull();
-    expect(content.queryByText("Technomancer ranged " + level), "technomancer ranged displayed").toBeNull();
+    expect(content.queryByText("Shared ranged - niveau " + level), "shared ranged not displayed").not.toBeNull();
+    expect(content.queryByText("Mystic ranged - niveau " + level), "mystic ranged not displayed").not.toBeNull();
+    expect(content.queryByText("Technomancer ranged - niveau " + level), "technomancer ranged displayed").toBeNull();
   });
 
-  test.each([2, 3, 4, 5, 6])("displays evolutive spells", async (level) => {
+  test.each([2, 3, 4, 5, 6])("displays evolutive spells '%s'", async (level) => {
     const content = within(screen.getByTestId("spells-" + level));
     expect(content.getByText(`Spell level 2 to 6 with ${level * 2}d6.`), "template not applied").toBeDefined();
   });

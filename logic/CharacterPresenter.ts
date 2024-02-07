@@ -21,9 +21,11 @@ import {
   SavingThrow,
   SavingThrowId,
   SkillDefinition,
+  Spell,
   Theme,
   Variant,
   WeaponId,
+  isCasterId,
   isVariable,
   isWeaponId,
   ofType,
@@ -722,6 +724,34 @@ export class CharacterPresenter {
       .reduce((acc, m) => acc + m.value, 0);
     const selected = this.character.feats.length;
     return 1 + bonus - selected;
+  }
+
+  getSelectedSpells(): Record<string, Spell[]> {
+    const levels = Object.keys(this.character.spells);
+    const spells = levels.map((level) => [
+      level,
+      this.character.spells[level].map((s) => findOrError(this.data.spells, s)),
+    ]);
+    return Object.fromEntries(spells);
+  }
+
+  getSelectableSpellCount(spellLevel: number): number {
+    const low = [2, 3, 4, 4, 5];
+    const high = [2, 3, 4, 4, 4, 4, 5, 5, 5, 5];
+
+    let max: number;
+    if (!isCasterId(this.character.class)) {
+      max = 0;
+    } else if (spellLevel === 0) {
+      max = low[this.character.level + 2] ?? 6;
+    } else if (spellLevel === 6) {
+      max = this.character.level <= 15 ? 0 : low[this.character.level - 16] ?? 6;
+    } else {
+      const minLevel = (spellLevel - 1) * 3;
+      max = this.character.level <= minLevel ? 0 : high[this.character.level - minLevel - 1] ?? 6;
+    }
+
+    return max;
   }
 
   getInitiative(): number {

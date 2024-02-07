@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Profession } from "./Profession";
+import { Id } from "./helper";
 
 export const Character = z
   .object({
@@ -23,6 +24,7 @@ export const Character = z
     deity: z.string(),
     avatar: z.string(),
     feats: z.array(z.object({ id: z.string() })),
+    spells: z.record(z.string(), z.array(Id)),
   })
   .strict();
 
@@ -49,4 +51,5 @@ export const EmptyCharacter: Readonly<Character> = {
   deity: "",
   avatar: "",
   feats: [],
+  spells: {},
 };

@@ -120,6 +120,17 @@ const mainSlice = createSlice({
     removeFeat(state, action: PayloadAction<string>) {
       state.character.feats = state.character.feats.filter((f) => f.id !== action.payload);
     },
+
+    addSpell(state, action: PayloadAction<{ level: string; id: string }>) {
+      const spells = state.character.spells[action.payload.level] ?? [];
+      state.character.spells[action.payload.level] = [...spells, action.payload.id];
+    },
+
+    removeSpell(state, action: PayloadAction<{ level: string; id: string }>) {
+      state.character.spells[action.payload.level] = (state.character.spells[action.payload.level] ?? []).filter(
+        (s) => s !== action.payload.id
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {
