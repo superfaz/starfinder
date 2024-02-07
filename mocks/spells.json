@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "id": "3adbf187-3939-4eb7-9140-9e09c304c341",
+    "name": "Shared level 0",
+    "description": "Spell level 0.",
+    "refs": ["test-1"],
+    "levels": { "mystic": 0, "technomancer": 0 }
+  },
+  {
+    "id": "505cf18f-4ace-480e-a649-bd65c7d744e7",
+    "name": "Mystic level 0",
+    "description": "Spell level 0.",
+    "refs": ["test-1"],
+    "levels": { "mystic": 0 }
+  },
+  {
+    "id": "a1bf4462-ff50-49bd-8cd1-e4739c5acb17",
+    "name": "Technomancer level 0",
+    "description": "Spell level 0.",
+    "refs": ["test-1"],
+    "levels": { "technomancer": 0 }
+  },
+  {
+    "id": "e9281ab5-76de-4c72-870c-056bf0dfb5e3",
+    "name": "Shared level 1",
+    "description": "Spell level 1.",
+    "refs": ["test-1"],
+    "levels": { "mystic": 1, "technomancer": 1 }
+  },
+  {
+    "id": "1aecbb45-305d-4280-8c1f-2f5feca5b1a3",
+    "name": "Mystic level 1",
+    "description": "Spell level 1.",
+    "refs": ["test-1"],
+    "levels": { "mystic": 1 }
+  },
+  {
+    "id": "20035fe3-5463-44a0-a249-97442472b147",
+    "name": "Technomancer level 1",
+    "description": "Spell level 1.",
+    "refs": ["test-1"],
+    "levels": { "technomancer": 1 }
+  },
+  {
+    "id": "685ea24a-2bbb-4d24-bf3f-ad8aa8239505",
+    "name": "Shared ranged",
+    "description": "Spell level 2 to 6 with <damage>.",
+    "refs": ["test-1"],
+    "levels": { "mystic": { "min": 2, "max": 6 }, "technomancer": { "min": 2, "max": 6 } },
+    "evolutions": {
+      "2": { "damage": "4d6" },
+      "3": { "damage": "6d6" },
+      "4": { "damage": "8d6" },
+      "5": { "damage": "10d6" },
+      "6": { "damage": "12d6" }
+    }
+  },
+  {
+    "id": "cfdcc4c2-42c1-456d-9469-218ba474a0f2",
+    "name": "Mystic ranged",
+    "description": "Spell level 2 to 6.",
+    "refs": ["test-1"],
+    "levels": { "mystic": { "min": 2, "max": 6 } }
+  },
+  {
+    "id": "b83b4918-aff0-4feb-8753-4638c6e9205d",
+    "name": "Technomancer ranged",
+    "description": "Spell level 2 to 6.",
+    "refs": ["test-1"],
+    "levels": { "technomancer": { "min": 2, "max": 6 } }
+  }
+]
