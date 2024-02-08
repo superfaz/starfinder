@@ -43,8 +43,14 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
     case PrerequisiteType.enum.combatFeatCount:
       return `${prerequisite.value} dons de combat`;
 
-    case PrerequisiteType.enum.feat:
-      return `Don ${prerequisite.target}`;
+    case PrerequisiteType.enum.feat: {
+      if (prerequisite.target === "*weapon-specialization") {
+        return "Un don de type Spécialisation martiale";
+      } else {
+        const feat = data.feats.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
+        return `Don ${feat}`;
+      }
+    }
 
     case PrerequisiteType.enum.level:
       return `Niveau ${prerequisite.value}`;
