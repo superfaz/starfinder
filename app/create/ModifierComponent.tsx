@@ -118,9 +118,12 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       break;
     }
 
-    case "spell":
+    case "spell": {
       // Target is a spell
+      const spell = data.spells.find((s) => s.id === modifier.target);
+      element.targetName = spell?.name ?? modifier.target;
       break;
+    }
 
     default:
     // Do nothing
