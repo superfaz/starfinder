@@ -3,6 +3,18 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
+async function setup(klass: string = "operative") {
+  cleanup();
+  render(await Page());
+  const user = userEvent.setup();
+  await user.click(screen.getByRole("button", { name: "Race" }));
+  await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+  await user.click(screen.getByRole("button", { name: "Thème" }));
+  await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
+  await user.click(screen.getByRole("button", { name: "Classe" }));
+  await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass);
+}
+
 describe("TabFeats", () => {
   beforeAll(async () => {
     cleanup();
@@ -19,15 +31,7 @@ describe("TabFeats", () => {
 
 describe("TabFeats with operative", () => {
   beforeAll(async () => {
-    cleanup();
-    render(await Page());
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-    await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
+    await setup("operative");
   });
 
   beforeEach(async () => {
@@ -133,15 +137,7 @@ describe("TabFeats with operative", () => {
 
 describe("TabFeats with soldier", () => {
   beforeAll(async () => {
-    cleanup();
-    render(await Page());
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-    await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "soldier");
+    await setup("soldier");
   });
 
   beforeEach(async () => {
@@ -157,15 +153,7 @@ describe("TabFeats with soldier", () => {
 
 describe("TabFeats with mystic", () => {
   beforeAll(async () => {
-    cleanup();
-    render(await Page());
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-    await user.click(screen.getByRole("button", { name: "Thème" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await user.click(screen.getByRole("button", { name: "Classe" }));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "mystic");
+    await setup("mystic");
   });
 
   beforeEach(async () => {
