@@ -119,6 +119,16 @@ describe("TabFeats with operative", () => {
     expect(block.queryByText(/savingThrow fortitude 1/i)).toBeNull();
     expect(block.queryByText(/savingThrow reflex 1/i)).not.toBeNull();
   });
+
+  test("handle notSpellCaster prerequisites - available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.getByText(/Not spell caster/)).toBeDefined();
+  });
+
+  test("handle spellCaster prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/Spell caster/)).toBeNull();
+  });
 });
 
 describe("TabFeats with soldier", () => {
@@ -142,5 +152,34 @@ describe("TabFeats with soldier", () => {
   test("handle baseAttack prerequisites - available", async () => {
     const block = within(screen.getByTestId("feats"));
     expect(block.queryByText(/base attack 1/i)).not.toBeNull();
+  });
+});
+
+describe("TabFeats with mystic", () => {
+  beforeAll(async () => {
+    cleanup();
+    render(await Page());
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "mystic");
+  });
+
+  beforeEach(async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+  });
+
+  test("handle notSpellCaster prerequisites - not available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByText(/Not spell caster/)).toBeNull();
+  });
+
+  test("handle spellCaster prerequisites - available", async () => {
+    const block = within(screen.getByTestId("feats"));
+    expect(block.getByText(/Spell caster/)).toBeDefined();
   });
 });

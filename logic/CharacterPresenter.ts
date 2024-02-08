@@ -620,8 +620,13 @@ export class CharacterPresenter {
         return (this.getSavingThrowBonus(prerequisite.target) ?? 0) >= prerequisite.value;
 
       case PrerequisiteType.enum.notSpellCaster:
+        return !isCasterId(this.character.class);
+
       case PrerequisiteType.enum.spellCaster:
+        return isCasterId(this.character.class);
+
       case PrerequisiteType.enum.spellCasterLevel:
+        // TODO: Manage spell caster level
         return true;
     }
   }
