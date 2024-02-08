@@ -156,8 +156,9 @@ function CardSkills({ character }: CharacterProps) {
               <Row key={skill.id}>
                 <Col xs="auto" className="pe-0 me-0">
                   {skill.isClassSkill && <i className="bi bi-star text-gold me-1" title="Compétence de classe"></i>}
+                  {!skill.isClassSkill && <i className="bi bi-empty me-1"></i>}
                 </Col>
-                <Col className="px-0 mx-0">
+                <Col className="px-0 mx-0 pe-3">
                   <span className="me-1">{skill.fullName}</span>
                   {skill.definition.trainedOnly && (
                     <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
