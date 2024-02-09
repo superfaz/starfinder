@@ -22,3 +22,5 @@ coverage/
 .sentryclirc
 
 dump/
+
+.env.production
