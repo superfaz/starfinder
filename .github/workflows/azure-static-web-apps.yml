@@ -63,6 +63,10 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - run: yarn remove vite
+      - run: |-
+          mv public .next/standalone
+          mv .next/static .next/standalone
+          mv staticwebapp.config.json .next/standalone
       - name: Deploy
         id: deploy
         uses: Azure/static-web-apps-deploy@v1
