@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { ChangeEvent, useMemo } from "react";
 import { Card, Col, Form, Row, Stack } from "react-bootstrap";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
@@ -33,7 +34,7 @@ function SpellComponent({ character, spell, classId, level, selected, disabled }
 
   const def = spell.levels[classId];
   if (def === undefined) {
-    console.error("Spell can't be displayed - no level information");
+    Sentry.captureMessage(`Spell ${spell.id} can't be displayed - no level information`);
     return null;
   }
 

@@ -1,4 +1,5 @@
 import { CosmosClient, Database } from "@azure/cosmos";
+import * as Sentry from "@sentry/nextjs";
 import {
   AbilityScore,
   Alignment,
@@ -62,11 +63,7 @@ export class DataSetBuilder {
       const result = await preparedQuery.fetchAll();
       return result.resources as T[];
     } catch (e: unknown) {
-      if (e instanceof Error) {
-        console.error(e.message);
-      } else {
-        console.error(e);
-      }
+      Sentry.captureException(e);
       throw new Error(`Failed to get ${name}`, { cause: e });
     }
   }
@@ -77,12 +74,7 @@ export class DataSetBuilder {
       const result = await preparedQuery.read<IModel>();
       return result.resource as T;
     } catch (e: unknown) {
-      if (e instanceof Error) {
-        console.error(e.message);
-      } else {
-        console.error(e);
-      }
-
+      Sentry.captureException(e);
       throw new Error(`Failed to get ${name}/${id}`, { cause: e });
     }
   }

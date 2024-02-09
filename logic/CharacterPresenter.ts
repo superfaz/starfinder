@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { IClientDataSet } from "data";
 import {
   AbilityScoreId,
@@ -604,7 +605,7 @@ export class CharacterPresenter {
           if (isWeaponId(target)) {
             return !!selectedClass && selectedClass.weapons.includes(target);
           } else {
-            console.error(
+            Sentry.captureMessage(
               `Invalid weapon id: ${target} for prerequisite ${prerequisite.id} with value ${prerequisite.target}`
             );
             return false;
@@ -646,7 +647,7 @@ export class CharacterPresenter {
       return false;
     } else {
       // @ts-expect-error Will be called only if a new template type is added and not managed
-      console.error(`Invalid feat template type: ${template.type}`);
+      Sentry.captureMessage(`Invalid feat template type: ${template.type}`);
       return false;
     }
   }

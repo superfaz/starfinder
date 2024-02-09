@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { Badge } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
@@ -60,7 +61,7 @@ function retrieveSkillName(data: IClientDataSet, target: string | undefined): st
 
   const skill = data.skills.find((s) => s.id === target);
   if (!skill) {
-    console.error(`Skill ${target} not found`);
+    Sentry.captureMessage(`Skill ${target} not found`);
   }
 
   return skill ? skill.name : target;
@@ -69,7 +70,7 @@ function retrieveSkillName(data: IClientDataSet, target: string | undefined): st
 function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: ModifierComponentElement): void {
   const feat = data.feats.find((f) => f.id === modifier.feat);
   if (!feat) {
-    console.error(`Feat ${modifier.feat} not found`);
+    Sentry.captureMessage(`Feat ${modifier.feat} not found`);
     return;
   }
 
