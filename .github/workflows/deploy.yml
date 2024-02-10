@@ -43,6 +43,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
+      - name: Install dependencies
+        run: yarn install
+
       - name: Install Vercel CLI
         run: npm install --global vercel
 
