@@ -1,6 +1,6 @@
 # StarFinder
 
-[![Deployment](https://github.com/superfaz/starfinder/actions/workflows/azure-static-web-apps.yml/badge.svg)](https://github.com/superfaz/starfinder/actions/workflows/azure-static-web-apps.yml)
+[![Deployment](https://github.com/superfaz/starfinder/actions/workflows/deploy.yml/badge.svg)](https://github.com/superfaz/starfinder/actions/workflows/deploy.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=superfaz_starfinder&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=superfaz_starfinder)
 [![Code Coverage](https://codecov.io/gh/superfaz/starfinder/graph/badge.svg?token=QAIhyKpuAu)](https://codecov.io/gh/superfaz/starfinder)
 
@@ -10,7 +10,7 @@ Provides an easy-to-use online creation tool for StarFinder.
 
 This project is in **alpha mode** and supports only French language at the moment.
 
-You can have an overview of the current implementation here: TO BE PROVIDED
+You can have an overview of the current implementation here: https://starfinder.vercel.app
 
 ## Licenses
 
