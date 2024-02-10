@@ -16,5 +16,6 @@ export default defineConfig({
       logic: path.resolve(__dirname, "./logic"),
       model: path.resolve(__dirname, "./model"),
     },
+    exclude: ["e2e/*.*"],
   },
 });
