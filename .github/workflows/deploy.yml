@@ -139,7 +139,7 @@ jobs:
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Promote the Deployment
-        run: vercel promote ${{needs.deploy.outputs.deployUrl}} --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel promote ${{needs.deploy.outputs.deployUrl}} --scope=${{ secrets.VERCEL_ORG_ID }} --token=${{ secrets.VERCEL_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         if: always()
