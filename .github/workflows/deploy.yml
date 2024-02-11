@@ -103,6 +103,8 @@ jobs:
   promote:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.41.1-jammy
     needs: [test, deploy]
     steps:
       - name: Checkout
@@ -125,11 +127,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Install Playwright Browsers
-        run: yarn dlx playwright install --with-deps
-
       - name: Run Playwright tests
-        run: yarn dlx playwright test
+        run: yarn run playwright test
 
       - name: Install Vercel CLI
         run: yarn global add vercel
