@@ -133,7 +133,7 @@ jobs:
         run: yarn run playwright test
 
       - name: Install Vercel CLI
-        run: yarn global add vercel
+        run: npm install --global vercel
 
       - name: Promote the Deployment
         run: vercel promote ${{needs.deploy.outputs.deployUrl}} --token=${{ secrets.VERCEL_TOKEN }}
