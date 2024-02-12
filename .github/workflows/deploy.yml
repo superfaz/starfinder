@@ -119,7 +119,9 @@ jobs:
         run: yarn install
 
       - name: Run Playwright tests
-        run: yarn run playwright test
+        run: yarn test:e2e
+        env:
+          BASE_URL: ${{ needs.deploy.outputs.deployUrl }}
 
       - name: Install Vercel CLI
         run: npm install --global vercel

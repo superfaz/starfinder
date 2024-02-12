@@ -13,7 +13,7 @@
     "lint": "next lint",
     "test": "vitest",
     "test:e2e": "playwright test",
-    "test:e2e:production": "cross-env PLAYWRIGHT_BASE_URL=https://starfinder.vercel.app playwright test"
+    "test:e2e:production": "cross-env BASE_URL=https://starfinder.vercel.app playwright test"
   },
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
