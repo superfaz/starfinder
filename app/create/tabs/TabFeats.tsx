@@ -46,6 +46,9 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
     case PrerequisiteType.enum.feat: {
       if (prerequisite.target === "*weapon-specialization") {
         return "Un don de type Spécialisation martiale";
+      } else if (prerequisite.target.startsWith("!")) {
+        const feat = findOrError(data.feats, (e) => e.id === prerequisite.target.substring(1));
+        return `Ne pas avoir le don ${feat.name}`;
       } else {
         const feat = data.feats.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
         return `Don ${feat}`;
