@@ -12,8 +12,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "test:e2e": "playwright test",
-    "test:e2e:production": "cross-env BASE_URL=https://starfinder.vercel.app playwright test"
+    "test:e2e": "cross-env NODE_ENV=test playwright test",
+    "test:e2e:service": "cross-env NODE_ENV=test playwright test --config=playwright.service.config.js"
   },
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
@@ -50,6 +50,7 @@
     "@vitest/coverage-v8": "^1.2.2",
     "cross-env": "^7.0.3",
     "cross-fetch": "^4.0.0",
+    "dotenv": "^16.4.3",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "eslint-config-prettier": "^9.1.0",

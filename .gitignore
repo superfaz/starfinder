@@ -26,6 +26,7 @@ dump/
 # Vercel
 .vercel
 
+.env.*.local
 .env.production
 
 ## Playwright

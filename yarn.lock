@@ -2936,6 +2936,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.4.3":
+  version: 16.4.3
+  resolution: "dotenv@npm:16.4.3"
+  checksum: 10c0/c6a572b2dab5d71accb7064c90b38dfd4068c2487be859a0f053460fcaa685a7718e78db51d643b32e0736b318988c31f8c45cb4ab99cd620278f537177cb0ab
+  languageName: node
+  linkType: hard
+
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -6575,6 +6582,7 @@ __metadata:
     bootstrap-icons: "npm:^1.11.3"
     cross-env: "npm:^7.0.3"
     cross-fetch: "npm:^4.0.0"
+    dotenv: "npm:^16.4.3"
     eslint: "npm:^8.56.0"
     eslint-config-next: "npm:^14.1.0"
     eslint-config-prettier: "npm:^9.1.0"
