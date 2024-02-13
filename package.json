@@ -13,7 +13,7 @@
     "lint": "next lint",
     "test": "vitest",
     "test:e2e": "cross-env NODE_ENV=test playwright test",
-    "test:e2e:service": "cross-env NODE_ENV=test playwright test --config=playwright.service.config.js"
+    "test:e2e:service": "cross-env NODE_ENV=test playwright test --config=playwright.service.config.ts"
   },
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
