@@ -1,10 +1,12 @@
 import { test, expect } from "@playwright/test";
 
-test("can display Race tab", async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto("/create");
-
   await page.getByRole("button", { name: /Race/ }).click();
+  await expect(page.getByRole("heading", { name: /Race/, level: 2 })).toBeVisible();
+});
 
+test("can display Race tab", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Race/, level: 2 })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Traits raciaux/, level: 2 })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Traits alternatifs/, level: 2 })).toBeVisible();
@@ -20,12 +22,16 @@ const table = [
   { label: "Ysokis", expected: "Abajoues" },
 ];
 
+test("has expected race choices", async ({ page }) => {
+  const options = await page.getByRole("combobox", { name: /Race/ }).getByRole("option").all();
+  const optionTexts = await Promise.all(options.map(async (o) => await o.innerText()));
+
+  expect(options).not.toHaveLength(0);
+  expect(optionTexts).toEqual(["", ...table.map((context) => context.label)]);
+});
+
 for (const context of table) {
   test(`can display race choices for '${context.label}'`, async ({ page }) => {
-    await page.goto("/create");
-
-    await page.getByRole("button", { name: /Race/ }).click();
-    await expect(page.getByRole("heading", { name: /Race/, level: 2 })).toBeVisible();
     await page.getByRole("combobox", { name: /Race/ }).selectOption(context.label);
 
     await expect(page.getByText(context.expected, { exact: true })).toBeVisible();
