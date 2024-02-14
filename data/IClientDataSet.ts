@@ -4,6 +4,7 @@ import {
   Armor,
   Avatar,
   Class,
+  DamageType,
   FeatTemplate,
   Profession,
   Race,
@@ -18,33 +19,35 @@ import { IDataSet } from "./IDataSet";
 export interface IClientDataSet {
   abilityScores: AbilityScore[];
   alignments: Alignment[];
+  armors: Armor[];
   avatars: Avatar[];
   classes: Class[];
+  damageTypes: DamageType[];
   feats: FeatTemplate[];
+  professions: Profession[];
   races: Race[];
   savingThrows: SavingThrow[];
   skills: SkillDefinition[];
   spells: Spell[];
   themes: Theme[];
-  armors: Armor[];
   weapons: Weapon[];
-  professions: Profession[];
 }
 
 export const EmptyClientDataSet: IClientDataSet = {
   abilityScores: [],
   alignments: [],
+  armors: [],
   avatars: [],
   classes: [],
+  damageTypes: [],
   feats: [],
+  professions: [],
   races: [],
   savingThrows: [],
   skills: [],
   spells: [],
   themes: [],
-  armors: [],
   weapons: [],
-  professions: [],
 };
 
 export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
@@ -54,13 +57,14 @@ export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
     armors: await serverData.getArmors(),
     avatars: await serverData.getAvatars(),
     classes: await serverData.getClasses(),
+    damageTypes: await serverData.getDamageTypes(),
     feats: await serverData.getFeats(),
+    professions: await serverData.getProfessions(),
     races: await serverData.getRaces(),
     savingThrows: await serverData.getSavingThrows(),
     skills: await serverData.getSkills(),
     spells: await serverData.getSpells(),
     themes: await serverData.getThemes(),
     weapons: await serverData.getWeapons(),
-    professions: await serverData.getProfessions(),
   };
 }
