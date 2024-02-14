@@ -3,48 +3,48 @@
     "id": "bludgeoning",
     "code": "C",
     "name": "Contondant",
-    "type": "kinetic"
+    "category": "kinetic"
   },
   {
     "id": "piercing",
     "code": "P",
     "name": "Perforant",
-    "type": "kinetic"
+    "category": "kinetic"
   },
   {
     "id": "slashing",
     "code": "T",
     "name": "Tranchant",
-    "type": "kinetic"
+    "category": "kinetic"
   },
   {
     "id": "acid",
     "code": "A",
     "name": "Acide",
-    "type": "energy"
+    "category": "energy"
   },
   {
     "id": "cold",
     "code": "Fr",
     "name": "Froid",
-    "type": "energy"
+    "category": "energy"
   },
   {
     "id": "electricity",
     "code": "E",
     "name": "Électricité",
-    "type": "energy"
+    "category": "energy"
   },
   {
     "id": "fire",
     "code": "F",
     "name": "Feu",
-    "type": "energy"
+    "category": "energy"
   },
   {
     "id": "sonic",
     "code": "S",
     "name": "Son",
-    "type": "energy"
+    "category": "energy"
   }
 ]
