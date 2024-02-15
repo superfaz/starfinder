@@ -11,9 +11,11 @@ import {
   ClassMystic,
   ClassOperative,
   ClassSoldier,
+  Feat,
   FeatTemplate,
   Feature,
   IModel,
+  INamedModel,
   Modifier,
   ModifierType,
   Prerequisite,
@@ -31,7 +33,7 @@ import {
   isWeaponId,
   ofType,
 } from "model";
-import { Templater, cleanEvolutions } from ".";
+import { FeatPresenter, Templater, cleanEvolutions } from ".";
 import { getMysticFeatureTemplates, getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
 import { findOrError } from "app/helpers";
 
@@ -150,7 +152,7 @@ export class CharacterPresenter {
   }
 
   createTemplater(context: object = {}): Templater {
-    return new Templater({
+    const templater = new Templater({
       shirrenObsessionSkill: "any",
       level: this.character.level,
       race: this.character.race,
@@ -161,6 +163,13 @@ export class CharacterPresenter {
       ...this.character.classOptions,
       ...context,
     });
+
+    const klass = this.getClass();
+    if (klass) {
+      templater.addToContext("primary", klass.primaryAbilityScore);
+    }
+
+    return templater;
   }
 
   getCharacter(): Readonly<Character> {
@@ -632,16 +641,16 @@ export class CharacterPresenter {
     }
   }
 
-  checkPrerequisites(template: FeatTemplate): boolean {
-    if (template.prerequisites === undefined) {
+  checkPrerequisites(template: FeatTemplate, target?: INamedModel): boolean {
+    if (template.prerequisites === undefined || template.prerequisites.length === 0) {
       return true;
     }
 
     if (template.type === "simple") {
       return template.prerequisites.every((p) => this.checkPrerequisite(p));
     } else if (template.type === "targeted") {
-      // TODO: manage targeted
-      return false;
+      const feat = this.createTemplater().convertFeat(template, target);
+      return feat.prerequisites.every((p) => this.checkPrerequisite(p));
     } else if (template.type === "multiple") {
       // TODO: manage multiple
       return false;
@@ -715,10 +724,20 @@ export class CharacterPresenter {
     return [...(selectedClass?.weapons ?? []), ...modifiers];
   }
 
-  getSelectedFeats(): FeatTemplate[] {
-    return this.character.feats
-      .map((f) => this.data.feats.find((t) => t.id === f.id))
-      .filter((f) => f !== undefined) as FeatTemplate[];
+  getSelectedFeats(): Feat[] {
+    const templater = this.createTemplater();
+    const featPresenter = new FeatPresenter(this.data, this);
+
+    return this.character.feats.map((f) => {
+      const featTemplate = findOrError(this.data.feats, (t) => t.id === f.id);
+      if (f.target === undefined || featTemplate.type === "simple") {
+        return templater.convertFeat(featTemplate);
+      } else {
+        const options = featPresenter.retrieveOptions(featTemplate.targetType);
+        const target = findOrError(options, (o) => o.id === f.target);
+        return templater.convertFeat(featTemplate, target);
+      }
+    });
   }
 
   hasFeat(feat: FeatTemplate): boolean {

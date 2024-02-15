@@ -113,12 +113,12 @@ const mainSlice = createSlice({
       state.character.avatar = action.payload;
     },
 
-    addFeat(state, action: PayloadAction<string>) {
-      state.character.feats.push({ id: action.payload });
+    addFeat(state, action: PayloadAction<{ id: string; target?: string }>) {
+      state.character.feats.push(action.payload);
     },
 
-    removeFeat(state, action: PayloadAction<string>) {
-      state.character.feats = state.character.feats.filter((f) => f.id !== action.payload);
+    removeFeat(state, action: PayloadAction<{ id: string; target?: string }>) {
+      state.character.feats = state.character.feats.filter((f) => f.id !== action.payload.id);
     },
 
     addSpell(state, action: PayloadAction<{ level: string; id: string }>) {

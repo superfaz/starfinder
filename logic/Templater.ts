@@ -1,4 +1,19 @@
-import { Feature, FeatureTemplate, Modifier, ModifierTemplate, ModifierType, isModifierType } from "model";
+import {
+  AbilityScoreId,
+  ArmorId,
+  Feat,
+  FeatTemplate,
+  Feature,
+  FeatureTemplate,
+  INamedModel,
+  Modifier,
+  ModifierTemplate,
+  ModifierType,
+  Prerequisite,
+  SavingThrowId,
+  WeaponId,
+  isModifierType,
+} from "model";
 
 export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
@@ -29,6 +44,14 @@ export class Templater {
     this.context = context;
   }
 
+  addToContext(key: string, value: string | number): void {
+    if (typeof value === "string") {
+      this.context[key] = this.convertString(value);
+    } else {
+      this.context[key] = value;
+    }
+  }
+
   convertFeature(template: FeatureTemplate): Feature {
     const result: Feature = {
       ...template,
@@ -40,6 +63,35 @@ export class Templater {
       replace: template.replace ?? [],
     };
 
+    if (template.modifiers) {
+      result.modifiers = template.modifiers.map((m) => this.convertModifier(m));
+    }
+
+    return result;
+  }
+
+  convertFeat(template: FeatTemplate, target?: INamedModel): Feat {
+    if (target !== undefined) {
+      this.context.target = target.id;
+      this.context.targetName = target.name;
+    } else {
+      delete this.context.target;
+      delete this.context.targetName;
+    }
+
+    const result: Feat = {
+      ...template,
+      target: target?.id,
+      name: this.applyForString(template.name),
+      description: this.applyForString(template.description),
+      modifiers: [],
+      prerequisites: [],
+      refs: template.refs ?? [],
+    };
+
+    if (template.prerequisites) {
+      result.prerequisites = template.prerequisites.map((p) => this.convertPrerequisite(p));
+    }
     if (template.modifiers) {
       result.modifiers = template.modifiers.map((m) => this.convertModifier(m));
     }
@@ -89,6 +141,46 @@ export class Templater {
       default:
         return {
           ...template,
+        };
+    }
+  }
+
+  convertPrerequisite(prerequisite: Prerequisite): Prerequisite {
+    switch (prerequisite.type) {
+      case "abilityScore":
+        return {
+          ...prerequisite,
+          target: AbilityScoreId.parse(this.applyForString(prerequisite.target)),
+        };
+
+      case "armorProficiency":
+        return {
+          ...prerequisite,
+          target: ArmorId.parse(this.applyForString(prerequisite.target)),
+        };
+
+      case "savingThrow":
+        return {
+          ...prerequisite,
+          target: SavingThrowId.parse(this.applyForString(prerequisite.target)),
+        };
+
+      case "weaponProficiency":
+        return {
+          ...prerequisite,
+          target: WeaponId.parse(this.applyForString(prerequisite.target)),
+        };
+
+      case "class":
+      case "feat":
+        return {
+          ...prerequisite,
+          target: this.applyForString(prerequisite.target),
+        };
+
+      default:
+        return {
+          ...prerequisite,
         };
     }
   }

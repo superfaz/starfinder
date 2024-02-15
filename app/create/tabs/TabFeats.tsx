@@ -1,13 +1,18 @@
-import { useMemo, useState } from "react";
-import { Button, Card, Col, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Card, Col, Form, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
-import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
+import { Feat, FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
+import {
+  CharacterPresenter,
+  FeatPresenter,
+  FeatTemplateExtended,
+  mutators,
+  useAppDispatch,
+  useAppSelector,
+} from "logic";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
-
-type FeatTemplateExtended = FeatTemplate & { available: boolean };
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
@@ -102,77 +107,143 @@ function PrerequisiteComponent({
   return <li className={valid ? undefined : "text-danger"}>{text}</li>;
 }
 
-function FeatComponent({
-  mode,
-  character,
-  feat,
-}: {
-  mode: "add" | "remove";
-  character: CharacterPresenter;
-  feat: FeatTemplateExtended;
-}) {
-  const dispatch = useAppDispatch();
-  const templater = character.createTemplater();
-  const featsCount = character.getSelectableFeatCount();
+function FeatComponentBody({ character, feat }: { character: CharacterPresenter; feat: Feat }) {
+  return (
+    <Card.Body>
+      {feat.description && <p className="text-muted">{feat.description}</p>}
+      {feat.modifiers.map((modifier) => (
+        <ModifierComponent key={modifier.id} modifier={modifier} />
+      ))}
+      {feat.prerequisites !== undefined && (
+        <>
+          <hr />
+          <h6>Conditions</h6>
+          <ul>
+            {feat.prerequisites.map((prerequisite) => (
+              <PrerequisiteComponent key={prerequisite.id} character={character} prerequisite={prerequisite} />
+            ))}
+          </ul>
+        </>
+      )}
+    </Card.Body>
+  );
+}
 
-  function handleAddFeat() {
-    dispatch(mutators.addFeat(feat.id));
-  }
+function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: Feat }) {
+  const dispatch = useAppDispatch();
 
   function handleRemoveFeat() {
-    dispatch(mutators.removeFeat(feat.id));
+    dispatch(mutators.removeFeat({ id: feat.id, target: feat.target }));
   }
 
   return (
     <Card>
       <Card.Header>
         <Row className="align-items-center">
-          <Col className={!feat.available ? "text-danger" : undefined}>
+          <Col>
             {feat.name}
             {feat.combatFeat ? " (combat)" : ""}
           </Col>
           <Col xs="auto">
-            {mode === "add" && (
-              <Button
-                variant={!feat.available ? "outline-danger" : undefined}
-                disabled={!feat.available || featsCount <= 0}
-                size="sm"
-                onClick={handleAddFeat}
-              >
-                Ajouter
-              </Button>
-            )}
-            {mode === "remove" && (
-              <Button size="sm" onClick={handleRemoveFeat}>
-                Enlever
-              </Button>
-            )}
+            <Button size="sm" onClick={handleRemoveFeat}>
+              Enlever
+            </Button>
           </Col>
         </Row>
       </Card.Header>
-      <Card.Body>
-        {feat.description && <p className="text-muted">{feat.description}</p>}
-        {feat.modifiers.map((modifier) => (
-          <ModifierComponent key={modifier.id} modifier={templater.convertModifier(modifier)} />
-        ))}
-        {feat.prerequisites !== undefined && (
-          <>
-            <hr />
-            <h6>Conditions</h6>
-            <ul>
-              {feat.prerequisites.map((prerequisite) => (
-                <PrerequisiteComponent key={prerequisite.id} character={character} prerequisite={prerequisite} />
-              ))}
-            </ul>
-          </>
-        )}
-      </Card.Body>
+      <FeatComponentBody character={character} feat={feat} />
+    </Card>
+  );
+}
+
+function FeatTemplateComponent({
+  character,
+  template,
+}: {
+  character: CharacterPresenter;
+  template: FeatTemplateExtended;
+}) {
+  const dispatch = useAppDispatch();
+  const templater = character.createTemplater();
+  const featsCount = character.getSelectableFeatCount();
+
+  const availableOptions = template.options && template.options.filter((o) => o.available);
+  const unavailableOptions = template.options && template.options.filter((o) => !o.available);
+  const [selectedOptionId, setSelectedOptionId] = useState(availableOptions[0]?.id || unavailableOptions[0]?.id);
+  const selectedOption = template.options && template.options.find((o) => o.id === selectedOptionId);
+  const feat = templater.convertFeat(template, selectedOption);
+
+  function handleAddFeat(target?: string) {
+    dispatch(mutators.addFeat({ id: template.id, target }));
+  }
+
+  return (
+    <Card>
+      <Card.Header>
+        <Row className="align-items-center">
+          <Col className={!template.available ? "text-danger" : undefined}>
+            {feat.name}
+            {feat.combatFeat ? " (combat)" : ""}
+          </Col>
+          {template.type === "simple" && (
+            <Col xs="auto">
+              <Button
+                variant={!template.available ? "outline-danger" : undefined}
+                disabled={!template.available || featsCount <= 0}
+                size="sm"
+                onClick={() => handleAddFeat()}
+              >
+                Ajouter
+              </Button>
+            </Col>
+          )}
+        </Row>
+      </Card.Header>
+      {template.type === "targeted" && (
+        <Card.Body>
+          <Row className="align-items-center">
+            <Col>
+              <Form.Select value={selectedOptionId} onChange={(e) => setSelectedOptionId(e.target.value)}>
+                {availableOptions && (
+                  <optgroup label="Disponibles">
+                    {availableOptions.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+                {unavailableOptions && (
+                  <optgroup label="Non disponible" className="text-danger">
+                    {unavailableOptions.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+              </Form.Select>
+            </Col>
+            <Col xs="auto">
+              <Button
+                variant={!template.available ? "outline-danger" : undefined}
+                disabled={!template.available || featsCount <= 0}
+                size="sm"
+                onClick={() => handleAddFeat(selectedOptionId)}
+              >
+                Ajouter
+              </Button>
+            </Col>
+          </Row>
+        </Card.Body>
+      )}
+      <FeatComponentBody character={character} feat={feat} />
     </Card>
   );
 }
 
 export function FeatSelected({ character }: CharacterProps) {
-  const feats = character.getSelectedFeats().map((f) => ({ ...f, available: character.checkPrerequisites(f) }));
+  const feats = character.getSelectedFeats();
   if (feats.length === 0) {
     return null;
   } else {
@@ -182,7 +253,7 @@ export function FeatSelected({ character }: CharacterProps) {
         <Row>
           {feats.map((feat) => (
             <Col xs="4" key={feat.id} className="mb-4">
-              <FeatComponent mode="remove" key={feat.id} character={character} feat={feat} />
+              <FeatComponent key={feat.id} character={character} feat={feat} />
             </Col>
           ))}
         </Row>
@@ -193,14 +264,8 @@ export function FeatSelected({ character }: CharacterProps) {
 
 export function FeatSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
-  const allFeats = useMemo(
-    () =>
-      data.feats
-        .map((f) => ({ ...f, available: character.checkPrerequisites(f) }))
-        .filter((f) => !character.hasFeat(f))
-        .filter((f) => !f.hidden && f.type === "simple"),
-    [data.feats, character]
-  );
+  const presenter = new FeatPresenter(data, character);
+  const allFeats = presenter.getFeatTemplates();
 
   const featCount = character.getSelectableFeatCount();
 
@@ -239,7 +304,11 @@ export function FeatSelection({ character }: CharacterProps) {
       );
   }
 
-  const displayedFeats = allFeats.filter(categoryFilter).filter(prerequisiteFilter).filter(searchFilter);
+  const displayedFeats = allFeats
+    .filter((f) => f.visible)
+    .filter(categoryFilter)
+    .filter(prerequisiteFilter)
+    .filter(searchFilter);
 
   return (
     <>
@@ -295,9 +364,9 @@ export function FeatSelection({ character }: CharacterProps) {
       </Row>
 
       <Row data-testid="feats">
-        {displayedFeats.map((feat) => (
-          <Col xs="4" key={feat.id} className="mb-4">
-            <FeatComponent mode="add" character={character} feat={feat} />
+        {displayedFeats.map((template) => (
+          <Col xs="4" key={template.id} className="mb-4">
+            <FeatTemplateComponent character={character} template={template} />
           </Col>
         ))}
       </Row>

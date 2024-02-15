@@ -10,6 +10,7 @@ export * from "./ClassOperative";
 export * from "./ClassMystic";
 export * from "./ClassSoldier";
 export * from "./DamageType";
+export * from "./Feat";
 export * from "./FeatTemplate";
 export * from "./Feature";
 export * from "./FeatureTemplate";
