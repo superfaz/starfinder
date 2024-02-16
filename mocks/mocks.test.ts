@@ -17,7 +17,7 @@ import {
   ThemeScholar,
   Weapon,
   Profession,
-} from "starfinder/model";
+} from "model";
 import { describe, expect, test } from "vitest";
 
 const datasets = [

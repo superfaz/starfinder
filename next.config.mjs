@@ -2,7 +2,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 
 function nextConfig() {
   return {
-    eslint: { dirs: ["app", "data", "logic", "mocks", "model"] },
+    eslint: { dirs: ["src", "mocks"] },
   };
 }
 
