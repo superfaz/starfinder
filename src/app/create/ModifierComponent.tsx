@@ -7,13 +7,13 @@ import {
   ArmorId,
   FeatModifier,
   FeatTargetTypes,
-  Modifier,
   ModifierType,
   hasDescription,
   hasExtra,
   hasName,
   hasValue,
 } from "model";
+import { Modifier } from "view";
 
 interface ModifierComponentElement {
   level?: number;

@@ -1,17 +1,72 @@
 import { z } from "zod";
+import { ArmorId } from "./Armor";
+import { Description, Id } from "./helper";
 import { IModel } from "./IModel";
 import { ModifierType } from "./ModifierType";
-import {
-  ArmorProficiencyModifier,
-  AbilityModifier,
-  ClassSkillModifier,
-  FeatModifier,
-  RankSkillModifier,
-  SavingThrowBonusModifier,
-  SavingThrowModifier,
-  SpellModifier,
-  WeaponProficiencyModifier,
-} from "./Modifier";
+import { SavingThrowId } from "./SavingThrow";
+import { WeaponId } from "./Weapon";
+
+export const AbilityModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.ability),
+  level: z.number().optional(),
+  name: z.string(),
+  description: Description,
+}).strict();
+
+export const ArmorProficiencyModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.armorProficiency),
+  level: z.number().optional(),
+  target: ArmorId,
+}).strict();
+
+export const ClassSkillModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.classSkill),
+  level: z.number().optional(),
+  target: z.string(),
+}).strict();
+
+export const FeatModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.feat),
+  level: z.number().optional(),
+  feat: Id,
+  target: z.string().optional(),
+  extra: z.string().optional(),
+}).strict();
+
+export type FeatModifier = z.infer<typeof FeatModifier>;
+
+export const RankSkillModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.rankSkill),
+  level: z.number().optional(),
+  target: z.string(),
+}).strict();
+
+export const SavingThrowModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.savingThrow),
+  level: z.number().optional(),
+  name: z.string(),
+  description: Description,
+}).strict();
+
+export const SavingThrowBonusModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.savingThrowBonus),
+  level: z.number().optional(),
+  target: SavingThrowId,
+  value: z.number(),
+}).strict();
+
+export const SpellModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.spell),
+  level: z.number().optional(),
+  target: z.string(),
+  extra: z.string().optional(),
+}).strict();
+
+export const WeaponProficiencyModifier = IModel.extend({
+  type: z.literal(ModifierType.enum.weaponProficiency),
+  level: z.number().optional(),
+  target: WeaponId,
+}).strict();
 
 export const SimpleModifierTemplate = IModel.extend({
   type: z.enum([

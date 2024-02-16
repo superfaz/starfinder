@@ -1,12 +1,9 @@
 import {
   AbilityScoreId,
   ArmorId,
-  Feat,
   FeatTemplate,
-  Feature,
   FeatureTemplate,
   INamedModel,
-  Modifier,
   ModifierTemplate,
   ModifierType,
   Prerequisite,
@@ -14,6 +11,7 @@ import {
   WeaponId,
   isModifierType,
 } from "model";
+import { Feat, Feature, Modifier } from "view";
 
 export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined

@@ -1,7 +1,5 @@
 import { z } from "zod";
-import { INamedModel } from "./INamedModel";
-import { Description, Id } from "./helper";
-import { Prerequisite } from "./Prerequisite";
+import { Description, INamedModel, Id, Prerequisite } from "model";
 import { Modifier } from "./Modifier";
 
 const Feat = INamedModel.extend({

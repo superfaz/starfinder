@@ -1,9 +1,10 @@
 import { Badge, Card } from "react-bootstrap";
 import { CharacterPresenter } from "logic";
-import { Feature } from "model";
+import { FeatureCategory } from "model";
+import { Feature } from "view";
 import ModifierComponent from "./ModifierComponent";
 
-const categories: Record<string, string> = {
+const categories: Record<FeatureCategory, string> = {
   ex: "EXT",
   ma: "MAG",
   su: "SUR",

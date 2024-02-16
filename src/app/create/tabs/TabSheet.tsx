@@ -2,7 +2,8 @@ import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
-import { Alignment, ModifierType, ofType } from "model";
+import { Alignment, ModifierType } from "model";
+import { ofType } from "view";
 import { CharacterProps } from "../Props";
 
 interface IValueComponentProps {

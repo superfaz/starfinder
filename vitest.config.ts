@@ -15,6 +15,7 @@ export default defineConfig({
       data: path.resolve(__dirname, "./src/data"),
       logic: path.resolve(__dirname, "./src/logic"),
       model: path.resolve(__dirname, "./src/model"),
+      view: path.resolve(__dirname, "./src/view"),
     },
     exclude: ["e2e/*.*"],
   },

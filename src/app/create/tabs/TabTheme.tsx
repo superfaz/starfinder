@@ -3,7 +3,7 @@ import { ChangeEvent } from "react";
 import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { Feature } from "model";
+import { Feature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 

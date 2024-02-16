@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import {
   AbilityScoreId,
@@ -11,12 +12,9 @@ import {
   ClassMystic,
   ClassOperative,
   ClassSoldier,
-  Feat,
   FeatTemplate,
-  Feature,
   IModel,
   INamedModel,
-  Modifier,
   ModifierType,
   Prerequisite,
   PrerequisiteType,
@@ -31,11 +29,10 @@ import {
   isCasterId,
   isVariable,
   isWeaponId,
-  ofType,
 } from "model";
-import { FeatPresenter, Templater, cleanEvolutions } from ".";
+import { Feat, Feature, Modifier, ofType } from "view";
 import { getMysticFeatureTemplates, getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
-import { findOrError } from "app/helpers";
+import { FeatPresenter, Templater, cleanEvolutions } from ".";
 
 /**
  * Computes the minimal ability scores for a specific character.

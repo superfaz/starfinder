@@ -1,8 +1,9 @@
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { findOrError } from "app/helpers";
 import { EmptyClientDataSet, IClientDataSet } from "data";
-import { AbilityScoreIds, Character, EmptyCharacter, Feature, IModel, Profession } from "model";
+import { AbilityScoreIds, Character, EmptyCharacter, IModel, Profession } from "model";
+import { Feature } from "view";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   data: EmptyClientDataSet,

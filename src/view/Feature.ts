@@ -1,9 +1,6 @@
 import { z } from "zod";
-import { INamedModel } from "./INamedModel";
+import { Description, Evolutions, FeatureCategory, INamedModel } from "model";
 import { Modifier } from "./Modifier";
-import { Description, Evolutions } from "./helper";
-
-export const FeatureCategory = z.enum(["ex", "ma", "su"]);
 
 /**
  * Represents a racial trait as well as a thematic or a class feature that can be applied to a character.

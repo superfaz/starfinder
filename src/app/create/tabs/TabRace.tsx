@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { Feature } from "model";
+import { Feature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import type { CharacterProps } from "../Props";
 import RaceHumansEditor from "../races/RaceHumansEditor";

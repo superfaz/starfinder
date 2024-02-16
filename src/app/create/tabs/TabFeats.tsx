@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, Col, Form, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { Feat, FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
+import { FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
 import {
   CharacterPresenter,
   FeatPresenter,
@@ -11,6 +11,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "logic";
+import { Feat } from "view";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
 
