@@ -114,7 +114,7 @@ function FeatComponentBody({ character, feat }: { character: CharacterPresenter;
       {feat.modifiers.map((modifier) => (
         <ModifierComponent key={modifier.id} modifier={modifier} />
       ))}
-      {feat.prerequisites !== undefined && (
+      {feat.prerequisites.length > 0 && (
         <>
           <hr />
           <h6>Conditions</h6>
@@ -226,8 +226,8 @@ function FeatTemplateComponent({
             </Col>
             <Col xs="auto">
               <Button
-                variant={!template.available ? "outline-danger" : undefined}
-                disabled={!template.available || featsCount <= 0}
+                variant={!selectedOption!.available ? "outline-danger" : undefined}
+                disabled={!selectedOption!.available || featsCount <= 0}
                 size="sm"
                 onClick={() => handleAddFeat(selectedOptionId)}
               >

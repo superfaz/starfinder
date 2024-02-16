@@ -79,13 +79,10 @@ function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: Mod
 
   if (feat.type === "targeted" || feat.type === "multiple") {
     switch (feat.targetType) {
-      case FeatTargetTypes.armorProficiency:
-        element.targetName = findOrError(data.armors, modifier.target as ArmorId).name;
-        break;
       case FeatTargetTypes.skill:
         element.targetName = retrieveSkillName(data, modifier.target);
         break;
-      case FeatTargetTypes.weaponProficiency:
+      case FeatTargetTypes.weapon:
         element.targetName = findOrError(data.weapons, modifier.target as ArmorId).name;
         break;
       default:

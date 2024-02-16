@@ -17,7 +17,6 @@ const BaseFeatTemplate = INamedModel.extend({
 });
 
 export const FeatTargetType = z.enum([
-  "armorProficiency",
   "combatManeuver",
   "energyDamageType",
   "kineticDamageType",
@@ -28,7 +27,7 @@ export const FeatTargetType = z.enum([
   "spellLevel0",
   "spellLevel1",
   "spellLevel2",
-  "weaponProficiency",
+  "weapon",
 ]);
 
 export type FeatTargetType = z.infer<typeof FeatTargetType>;

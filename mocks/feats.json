@@ -34,7 +34,7 @@
     "name": "Arme de prédilection",
     "type": "targeted",
     "combatFeat": true,
-    "targetType": "weaponProficiency",
+    "targetType": "weapon",
     "description": "Vous vous êtes davantage entraîné au maniement d’un type d’armes en particulier, ce qui vous permet de toucher plus facilement vos cibles.",
     "refs": ["base-154"],
     "modifiers": [

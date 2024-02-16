@@ -26,7 +26,7 @@ export class FeatPresenter {
         return this.data.damageTypes.filter((d) => d.category === "energy");
       case "kineticDamageType":
         return this.data.damageTypes.filter((d) => d.category === "kinetic");
-      case "weaponProficiency":
+      case "weapon":
         return this.data.weapons;
       default:
         throw new Error(`Unknown target type: ${targetType}`);
