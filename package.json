@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:production": "cross-env NEXTJS_STANDALONE=true next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
