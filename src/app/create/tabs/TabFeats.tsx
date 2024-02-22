@@ -132,9 +132,17 @@ function FeatComponentBody({ character, feat }: { character: CharacterPresenter;
 
 function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: Feat }) {
   const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.data);
 
   function handleRemoveFeat() {
     dispatch(mutators.removeFeat({ id: feat.id, target: feat.target }));
+  }
+
+  let targetName: string | undefined;
+  if (feat.target !== undefined) {
+    const presenter = new FeatPresenter(data, character);
+    const template = presenter.getFeatTemplate(feat.id);
+    targetName = findOrError(template.options, (o) => o.id === feat.target).name;
   }
 
   return (
@@ -142,7 +150,7 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
       <Card.Header>
         <Row className="align-items-center">
           <Col>
-            {feat.name}
+            {feat.name} {targetName ? ` - ${targetName}` : ""}
             {feat.combatFeat ? " (combat)" : ""}
           </Col>
           <Col xs="auto">
@@ -200,7 +208,7 @@ function FeatTemplateComponent({
           )}
         </Row>
       </Card.Header>
-      {template.type === "targeted" && (
+      {(template.type === "targeted" || template.type === "multiple") && (
         <Card.Body>
           <Row className="align-items-center">
             <Col>

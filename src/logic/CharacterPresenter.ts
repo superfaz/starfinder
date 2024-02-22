@@ -645,12 +645,9 @@ export class CharacterPresenter {
 
     if (template.type === "simple") {
       return template.prerequisites.every((p) => this.checkPrerequisite(p));
-    } else if (template.type === "targeted") {
+    } else if (template.type === "targeted" || template.type === "multiple") {
       const feat = this.createTemplater().convertFeat(template, target);
       return feat.prerequisites.every((p) => this.checkPrerequisite(p));
-    } else if (template.type === "multiple") {
-      // TODO: manage multiple
-      return false;
     } else {
       // @ts-expect-error Will be called only if a new template type is added and not managed
       Sentry.captureMessage(`Invalid feat template type: ${template.type}`);
@@ -737,8 +734,12 @@ export class CharacterPresenter {
     });
   }
 
-  hasFeat(feat: FeatTemplate): boolean {
-    return this.character.feats.some((f) => f.id === feat.id);
+  hasFeat(feat: FeatTemplate, target?: string): boolean {
+    if (target === undefined) {
+      return this.character.feats.some((f) => f.id === feat.id);
+    } else {
+      return this.character.feats.some((f) => f.id === feat.id && f.target === target);
+    }
   }
 
   getSelectableFeatCount(): number {

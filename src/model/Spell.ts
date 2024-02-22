@@ -27,3 +27,9 @@ export type Spell = z.infer<typeof Spell>;
 export function isSpell(obj: unknown): obj is Spell {
   return Spell.safeParse(obj).success;
 }
+
+export function hasLevel(spell: Spell, level: number): boolean {
+  return Object.values(spell.levels).some((v) =>
+    typeof v === "number" ? v === level : v.min <= level && v.max >= level
+  );
+}
