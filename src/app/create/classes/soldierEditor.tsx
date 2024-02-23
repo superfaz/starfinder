@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect } from "react";
-import { Form } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import { CharacterProps } from "../Props";
 import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import { ClassSoldier } from "model";

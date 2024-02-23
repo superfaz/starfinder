@@ -39,7 +39,7 @@ describe("TabClass", () => {
   });
 
   const classes = [
-    { id: "operative", expected: "Avantage de l'agent (EXT)" },
+    { id: "operative", expected: "Spécialisation" },
     { id: "soldier", expected: "Don de combat" },
   ];
   test.each(classes)("displays details for class '$id'", async (klass) => {
@@ -52,6 +52,6 @@ describe("TabClass", () => {
       throw new Error("view is null");
     }
 
-    expect(within(view).queryByText(klass.expected)).not.toBeNull();
+    expect(within(view).getByRole("heading", { name: klass.expected })).not.toBeNull();
   });
 });

@@ -5939,7 +5939,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:^2.10.0":
+"react-bootstrap@npm:^2.10.1":
   version: 2.10.1
   resolution: "react-bootstrap@npm:2.10.1"
   dependencies:
@@ -6655,7 +6655,7 @@ __metadata:
     next: "npm:^14.1.0"
     prettier: "npm:^3.2.4"
     react: "npm:^18.2.0"
-    react-bootstrap: "npm:^2.10.0"
+    react-bootstrap: "npm:^2.10.1"
     react-bootstrap-typeahead: "npm:^6.3.2"
     react-dom: "npm:^18.2.0"
     react-redux: "npm:^9.1.0"

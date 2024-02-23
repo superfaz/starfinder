@@ -1,4 +1,5 @@
-import { Badge, Card } from "react-bootstrap";
+import Badge from "react-bootstrap/Badge";
+import Card from "react-bootstrap/Card";
 import { CharacterPresenter } from "logic";
 import { FeatureCategory } from "model";
 import { Feature } from "view";
@@ -62,7 +63,7 @@ export default function FeatureComponent({
   const hasEvolutions = Object.keys(feature.evolutions).length > 0;
   return (
     <Card className={className}>
-      <Card.Header>
+      <Card.Header role="heading">
         {children ?? feature.name}
         {feature.category && ` (${categories[feature.category]})`}
       </Card.Header>

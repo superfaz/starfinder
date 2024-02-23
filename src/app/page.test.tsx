@@ -9,11 +9,11 @@ describe("Page", () => {
   });
 
   test("Page is live", async () => {
-    expect(screen.getByRole("heading", { level: 1, name: "Bienvenue !" })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 1, name: /Bienvenue à toi/ })).toBeDefined();
   });
 
   test("Page has link to create character", async () => {
-    const link = screen.getByRole("link", { name: "Créer un personnage" });
+    const link = screen.getByRole("link", { name: /Démarrer la création/ });
     expect(link).toBeDefined();
     expect(link.attributes).toHaveProperty("href");
     expect(link.attributes.getNamedItem("href")).toBeDefined();

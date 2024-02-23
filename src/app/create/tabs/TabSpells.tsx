@@ -1,6 +1,10 @@
 import * as Sentry from "@sentry/nextjs";
 import { ChangeEvent, useMemo } from "react";
-import { Card, Col, Form, Row, Stack } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import { CasterId, Spell, isCasterId } from "model";
 import { CharacterProps } from "../Props";

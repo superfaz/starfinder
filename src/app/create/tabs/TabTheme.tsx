@@ -1,6 +1,10 @@
 import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
-import { Badge, Col, Form, Row, Stack } from "react-bootstrap";
+import Badge from "react-bootstrap/Badge";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Feature } from "view";

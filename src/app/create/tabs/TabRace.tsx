@@ -1,5 +1,8 @@
 import { ChangeEvent } from "react";
-import { Badge, Card, Form, Stack } from "react-bootstrap";
+import Badge from "react-bootstrap/Badge";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Feature } from "view";
@@ -66,9 +69,7 @@ export function RaceSelection({ character }: CharacterProps) {
                   )}
                 </Stack>
               )}
-              {character.isHumanStandard() && (
-                <RaceHumansEditor character={character} />
-              )}
+              {character.isHumanStandard() && <RaceHumansEditor character={character} />}
               {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
             </>
           )}

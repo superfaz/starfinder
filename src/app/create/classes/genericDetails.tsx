@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-import { Badge, Col, Row } from "react-bootstrap";
+import Badge from "react-bootstrap/Badge";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";

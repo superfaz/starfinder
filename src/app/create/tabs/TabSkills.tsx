@@ -1,5 +1,11 @@
 import { ChangeEvent, useMemo, useState } from "react";
-import { Badge, Button, Card, Col, Form, Row, Stack } from "react-bootstrap";
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { displayBonus, findOrError } from "app/helpers";
 import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic";

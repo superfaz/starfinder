@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Button, Card, Col, Form, FormControl, Row, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Row from "react-bootstrap/Row";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";

@@ -1,5 +1,9 @@
 import { ChangeEvent } from "react";
-import { Button, Card, Form, InputGroup, Stack } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
 

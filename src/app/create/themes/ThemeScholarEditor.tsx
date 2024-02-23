@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
 import { ThemeScholar } from "model";

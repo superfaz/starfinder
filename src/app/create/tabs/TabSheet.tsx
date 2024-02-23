@@ -1,4 +1,8 @@
-import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
+import Badge from "react-bootstrap/Badge";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
