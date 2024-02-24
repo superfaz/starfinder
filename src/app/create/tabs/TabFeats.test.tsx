@@ -41,7 +41,6 @@ describe("TabFeats feat types", () => {
     const block = screen.queryByTestId("feats-selected");
     if (block !== null) {
       const buttons = within(block).queryAllByRole("button");
-      console.log("# of buttons", buttons.length);
       await Promise.all(buttons.map(async (button) => await user.click(button)));
     }
   });
