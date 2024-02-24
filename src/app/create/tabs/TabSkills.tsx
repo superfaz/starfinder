@@ -19,11 +19,11 @@ const categories: Record<string, string> = {
   su: "SUR",
 };
 
-type SkillProps = {
+type SkillProps = Readonly<{
   skill: SkillPresenter;
   availableSkillRanks: number;
   onCheck: (event: ChangeEvent<HTMLInputElement>) => void;
-};
+}>;
 
 function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
   return (

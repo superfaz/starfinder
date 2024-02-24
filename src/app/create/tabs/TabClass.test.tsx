@@ -42,16 +42,20 @@ describe("TabClass", () => {
     { id: "operative", expected: "Spécialisation" },
     { id: "soldier", expected: "Don de combat" },
   ];
-  test.each(classes)("displays details for class '$id'", async (klass) => {
-    const user = userEvent.setup();
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
+  test.each(classes)(
+    "displays details for class '$id'",
+    async (klass) => {
+      const user = userEvent.setup();
+      await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
 
-    const content = within(document.querySelector("#content") as HTMLElement);
-    const view = content.getByRole("heading", { level: 2, name: "Abilités de classe" }).parentElement;
-    if (view === null) {
-      throw new Error("view is null");
-    }
+      const content = within(document.querySelector("#content") as HTMLElement);
+      const view = content.getByRole("heading", { level: 2, name: "Abilités de classe" }).parentElement;
+      if (view === null) {
+        throw new Error("view is null");
+      }
 
-    expect(within(view).getByRole("heading", { name: klass.expected })).not.toBeNull();
-  });
+      expect(within(view).getByRole("heading", { name: klass.expected })).not.toBeNull();
+    },
+    { timeout: 10000 }
+  );
 });

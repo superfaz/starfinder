@@ -105,17 +105,17 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
 function PrerequisiteComponent({
   character,
   prerequisite,
-}: {
+}: Readonly<{
   character: CharacterPresenter;
   prerequisite: Prerequisite;
-}) {
+}>) {
   const data = useAppSelector((state) => state.data);
   const text = getPrerequisiteText(data, prerequisite);
   const valid = character.checkPrerequisite(prerequisite);
   return <li className={valid ? undefined : "text-danger"}>{text}</li>;
 }
 
-function FeatComponentBody({ character, feat }: { character: CharacterPresenter; feat: Feat }) {
+function FeatComponentBody({ character, feat }: Readonly<{ character: CharacterPresenter; feat: Feat }>) {
   return (
     <Card.Body>
       {feat.description && <p className="text-muted">{feat.description}</p>}
@@ -137,7 +137,7 @@ function FeatComponentBody({ character, feat }: { character: CharacterPresenter;
   );
 }
 
-function FeatComponent({ character, feat }: { character: CharacterPresenter; feat: Feat }) {
+function FeatComponent({ character, feat }: Readonly<{ character: CharacterPresenter; feat: Feat }>) {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.data);
 
@@ -175,18 +175,18 @@ function FeatComponent({ character, feat }: { character: CharacterPresenter; fea
 function FeatTemplateComponent({
   character,
   template,
-}: {
+}: Readonly<{
   character: CharacterPresenter;
   template: FeatTemplateExtended;
-}) {
+}>) {
   const dispatch = useAppDispatch();
   const templater = character.createTemplater();
   const featsCount = character.getSelectableFeatCount();
 
-  const availableOptions = template.options && template.options.filter((o) => o.available);
-  const unavailableOptions = template.options && template.options.filter((o) => !o.available);
+  const availableOptions = template.options?.filter((o) => o.available);
+  const unavailableOptions = template.options?.filter((o) => !o.available);
   const [selectedOptionId, setSelectedOptionId] = useState(availableOptions[0]?.id || unavailableOptions[0]?.id);
-  const selectedOption = template.options && template.options.find((o) => o.id === selectedOptionId);
+  const selectedOption = template.options?.find((o) => o.id === selectedOptionId);
   const feat = templater.convertFeat(template, selectedOption);
 
   function handleAddFeat(target?: string) {
@@ -242,8 +242,8 @@ function FeatTemplateComponent({
             </Col>
             <Col xs="auto">
               <Button
-                variant={!selectedOption!.available ? "outline-danger" : undefined}
-                disabled={!selectedOption!.available || featsCount <= 0}
+                variant={!selectedOption?.available ? "outline-danger" : undefined}
+                disabled={!selectedOption?.available || featsCount <= 0}
                 size="sm"
                 onClick={() => handleAddFeat(selectedOptionId)}
               >

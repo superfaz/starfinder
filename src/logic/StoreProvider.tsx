@@ -6,6 +6,8 @@ import { makeStore, AppStore } from "./store";
 import { IClientDataSet } from "data";
 import { mutators } from "./slice-create";
 
+export type StoreProviderProps = Readonly<{ data: IClientDataSet; children: React.ReactNode }>;
+
 /**
  * Encapsulates the Redux store and provides it to the application.
  *
@@ -14,7 +16,7 @@ import { mutators } from "./slice-create";
  * @returns The application wrapped in a Redux store.
  * @see https://redux-toolkit.js.org/usage/nextjs
  */
-export default function StoreProvider({ data, children }: { data: IClientDataSet; children: React.ReactNode }) {
+export default function StoreProvider({ data, children }: StoreProviderProps) {
   const storeRef = useRef<AppStore>();
   if (!storeRef.current) {
     // Create the store instance the first time this renders

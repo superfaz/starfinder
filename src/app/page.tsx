@@ -50,8 +50,7 @@ export default function Page() {
                       href="/create"
                       className="mt-auto btn btn-outline-dark stretched-link text-light icon-link icon-link-hover"
                     >
-                      Démarrer la création
-                      <i className="bi bi-chevron-right mb-1"></i>
+                      Démarrer la création <i className="bi bi-chevron-right mb-1"></i>
                     </Link>
                   </CardBody>
                 </Card>
@@ -70,8 +69,7 @@ export default function Page() {
                       href="/create"
                       className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
                     >
-                      Démarrer la custo
-                      <i className="bi bi-chevron-right mb-1"></i>
+                      Démarrer la custo <i className="bi bi-chevron-right mb-1"></i>
                     </CardLink>
                   </CardBody>
                 </Card>
@@ -91,8 +89,7 @@ export default function Page() {
                       href="/create"
                       className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
                     >
-                      Sélection
-                      <i className="bi bi-chevron-right mb-1"></i>
+                      Sélection <i className="bi bi-chevron-right mb-1"></i>
                     </CardLink>
                   </CardBody>
                 </Card>

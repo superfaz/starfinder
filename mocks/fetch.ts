@@ -7,7 +7,15 @@ export function addFetchMock(url: string, data: object): void {
 }
 
 export function mockFetch(input: string | URL | Request): Promise<Response> {
-  const url: string = input instanceof Request ? input.url : input instanceof URL ? input.toString() : input;
+  let url: string;
+  if (input instanceof Request) {
+    url = input.url;
+  } else if (input instanceof URL) {
+    url = input.toString();
+  } else {
+    url = input;
+  }
+
   if (cache[url]) {
     return Promise.resolve(new Response(JSON.stringify(cache[url])));
   } else {

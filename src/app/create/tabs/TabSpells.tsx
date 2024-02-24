@@ -25,14 +25,14 @@ function filterOnLevelAndClass(classId: CasterId, level: number) {
   };
 }
 
-type SpellComponentProps = {
+type SpellComponentProps = Readonly<{
   character: CharacterPresenter;
   spell: Spell;
   classId: CasterId;
   level: number;
   selected: boolean;
   disabled: boolean;
-};
+}>;
 function SpellComponent({ character, spell, classId, level, selected, disabled }: SpellComponentProps) {
   const dispatch = useAppDispatch();
 
@@ -111,14 +111,13 @@ export function SpellsSelection({ character }: CharacterProps) {
             <h2>Sorts connus</h2>
             <div className="text-muted me-auto">max: {character.getSelectableSpellCount(level)}</div>
           </Stack>
-          {selectedSpells[level] &&
-            selectedSpells[level].sort(byName).map((spell) => (
-              <Col key={spell.id} className="mb-1">
-                <Card>
-                  <Card.Header>{spell.name}</Card.Header>
-                </Card>
-              </Col>
-            ))}
+          {selectedSpells[level]?.toSorted(byName).map((spell) => (
+            <Col key={spell.id} className="mb-1">
+              <Card>
+                <Card.Header>{spell.name}</Card.Header>
+              </Card>
+            </Col>
+          ))}
         </Stack>
       </Col>
       <Col>

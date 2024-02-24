@@ -9,7 +9,7 @@ if (process.env.NODE_ENV) {
 dotenv.config({ path: ".env" });
 
 export function isMainProcess() {
-  return process.argv[1] && /cli\.js$/.test(process.argv[1]);
+  return process.argv[1] && process.argv[1].endsWith("cli.js");
 }
 
 /* Base URL to use in actions like `await page.goto('/')`. */
