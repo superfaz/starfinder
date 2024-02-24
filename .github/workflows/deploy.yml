@@ -10,6 +10,37 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
+  build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - run: corepack enable
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Cache for Next
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-
+
+      - name: Validate build
+        run: yarn build
+
   test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -26,20 +57,14 @@ jobs:
           cache: yarn
           cache-dependency-path: yarn.lock
 
-      - name: Cache for Next
-        uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
-            ${{ runner.os }}-nextjs-
+      - name: Install dependencies
+        run: yarn install
 
-      - run: yarn install
-      - run: yarn build
-      - run: yarn test --coverage
+      - name: Run tests
+        run: yarn test --coverage
 
-      - uses: actions/upload-artifact@v4
+      - name: Store coverage results
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: coverage/
@@ -103,11 +128,6 @@ jobs:
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: coverage
-          path: coverage
-
       - run: corepack enable
 
       - name: Setup node.js
@@ -117,7 +137,13 @@ jobs:
           cache: yarn
           cache-dependency-path: yarn.lock
 
-      - run: yarn install
+      - name: Install dependencies
+        run: yarn install
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: coverage
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -133,6 +159,7 @@ jobs:
     env:
       HOME: /root
     needs:
+      - build
       - test
       - deploy
     steps:
