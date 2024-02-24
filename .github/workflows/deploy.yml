@@ -39,36 +39,16 @@ jobs:
       - run: yarn build
       - run: yarn test --coverage
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 1
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-  sonar:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-
-      - run: corepack enable
-
-      - name: Setup node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: package.json
-          cache: yarn
-          cache-dependency-path: yarn.lock
-
-      - run: yarn install
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy:
     timeout-minutes: 10
@@ -112,6 +92,39 @@ jobs:
           DEPLOY_URL=$(vercel deploy --prebuilt --prod --skip-domain --token=${{ secrets.VERCEL_TOKEN }})
           echo "deployUrl=$DEPLOY_URL" >> "$GITHUB_OUTPUT"
 
+  sonar:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: coverage
+          path: coverage/
+
+      - run: corepack enable
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - run: yarn install
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   promote:
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -119,7 +132,9 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.41.2
     env:
       HOME: /root
-    needs: [test, sonar, deploy]
+    needs:
+      - test
+      - deploy
     steps:
       - name: Checkout
         uses: actions/checkout@v4
