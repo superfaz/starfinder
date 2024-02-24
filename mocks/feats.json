@@ -383,5 +383,34 @@
         "type": "notSpellCaster"
       }
     ]
+  },
+  {
+    "id": "simple-feat",
+    "name": "Simple feat",
+    "type": "simple",
+    "description": "Test le type 'simple'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": []
+  },
+  {
+    "id": "targeted-feat",
+    "name": "Targeted feat",
+    "type": "targeted",
+    "targetType": "weapon",
+    "description": "Test le type 'target'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": []
+  },
+  {
+    "id": "multiple-feat",
+    "name": "Multiple feat",
+    "type": "multiple",
+    "targetType": "weapon",
+    "description": "Test le type 'multiple'.",
+    "refs": [],
+    "modifiers": [],
+    "prerequisites": []
   }
 ]

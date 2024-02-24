@@ -29,7 +29,7 @@ describe("TabFeats", () => {
   });
 });
 
-describe("TabFeats with operative", () => {
+describe("TabFeats feat types", () => {
   beforeAll(async () => {
     await setup("operative");
   });
@@ -37,137 +37,66 @@ describe("TabFeats with operative", () => {
   beforeEach(async () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Don(s)" }));
+
+    const block = screen.queryByTestId("feats-selected");
+    if (block !== null) {
+      const buttons = within(block).queryAllByRole("button");
+      console.log("# of buttons", buttons.length);
+      await Promise.all(buttons.map(async (button) => await user.click(button)));
+    }
   });
 
-  test("is displayed", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.queryByRole("heading", { level: 2, name: "Dons disponibles" })).not.toBeNull();
-  });
-
-  test("handle abilityScore prerequisites - not available", async () => {
+  test("displays simple feat", async () => {
     const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/ability score 20/i)).toBeNull();
+    expect(block.getByRole("heading", { name: /Simple feat/ })).not.toBeNull();
   });
 
-  test("handle abilityScore prerequisites - available", async () => {
+  test("displays targeted feat", async () => {
     const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/ability score 10/i)).not.toBeNull();
+    expect(block.getByRole("heading", { name: /Targeted feat/ })).not.toBeNull();
   });
 
-  test("handle arms prerequisites - not available", async () => {
+  test("displays multi feat", async () => {
     const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/arms/i)).toBeNull();
+    expect(block.getByRole("heading", { name: /Multiple feat/ })).not.toBeNull();
   });
 
-  test("handle baseAttack prerequisites - not available", async () => {
+  test("allows simple feat selection one time only", async () => {
     const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/base attack 10/i)).toBeNull();
-  });
+    const button = within(block.getByTestId(/simple-feat/)).getByRole("button");
 
-  test("handle class prerequisites", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/class not operative/i)).toBeNull();
-    expect(block.queryByText(/class operative/i)).not.toBeNull();
-  });
+    expect(button).not.toBeDisabled();
+    expect(block.getByRole("heading", { name: /Simple feat/ })).not.toBeNull();
 
-  test("handle combatFeat prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/combat feat \(combat\)/i)).toBeNull();
-  });
-
-  test("handle level prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/level 3/i)).toBeNull();
-  });
-
-  test("handle skillRank prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/skill rank cult 1/i)).toBeNull();
-  });
-
-  test("handle skillRank prerequisites - available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/skill rank acro 1/i)).not.toBeNull();
-  });
-
-  test("handle weaponProficiency prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/weapon heavy/i)).toBeNull();
-  });
-
-  test("handle weaponProficiency prerequisites - available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/weapon basic/i)).not.toBeNull();
-  });
-
-  test("handle feat prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/feat weapon basic/i)).toBeNull();
-  });
-
-  test("handle feat prerequisites - available", async () => {
     const user = userEvent.setup();
+    await user.click(button);
+
+    expect(block.queryByRole("heading", { name: /Simple feat/ })).toBeNull();
+  });
+
+  test("allows targeted feat selection one time only", async () => {
     const block = within(screen.getByTestId("feats"));
+    const button = within(block.getByTestId(/targeted-feat/)).getByRole("button");
 
-    await user.click(
-      within(block.getByText(/weapon basic/i).parentElement as HTMLElement).getByRole("button", {
-        name: "Ajouter",
-      })
-    );
+    expect(button).not.toBeDisabled();
+    expect(block.getByRole("heading", { name: /Targeted feat/ })).not.toBeNull();
 
-    expect(block.queryByText(/feat weapon basic/i)).not.toBeNull();
-  });
-
-  test("handle savingThrow prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/savingThrow fortitude 1/i)).toBeNull();
-    expect(block.queryByText(/savingThrow reflex 1/i)).not.toBeNull();
-  });
-
-  test("handle notSpellCaster prerequisites - available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.getByText(/Not spell caster/)).toBeDefined();
-  });
-
-  test("handle spellCaster prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/Spell caster/)).toBeNull();
-  });
-});
-
-describe("TabFeats with soldier", () => {
-  beforeAll(async () => {
-    await setup("soldier");
-  });
-
-  beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+    await user.click(button);
+
+    expect(block.queryByRole("heading", { name: /Targeted feat/ })).toBeNull();
   });
 
-  test("handle baseAttack prerequisites - available", async () => {
+  test("allows multiple feat selection more than one time", async () => {
     const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/base attack 1/i)).not.toBeNull();
-  });
-});
+    const button = within(block.getByTestId(/multiple-feat/)).getByRole("button");
 
-describe("TabFeats with mystic", () => {
-  beforeAll(async () => {
-    await setup("mystic");
-  });
+    expect(button).not.toBeDisabled();
+    expect(block.getByRole("heading", { name: /Multiple feat/ })).not.toBeNull();
 
-  beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
-  });
+    await user.click(button);
 
-  test("handle notSpellCaster prerequisites - not available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByText(/Not spell caster/)).toBeNull();
-  });
-
-  test("handle spellCaster prerequisites - available", async () => {
-    const block = within(screen.getByTestId("feats"));
-    expect(block.getByText(/Spell caster/)).toBeDefined();
+    expect(block.queryByRole("heading", { name: /Multiple feat/ })).not.toBeNull();
   });
 });

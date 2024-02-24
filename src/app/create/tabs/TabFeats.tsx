@@ -194,8 +194,8 @@ function FeatTemplateComponent({
   }
 
   return (
-    <Card>
-      <Card.Header>
+    <Card data-testid={feat.id}>
+      <Card.Header role="heading">
         <Row className="align-items-center">
           <Col className={!template.available ? "text-danger" : undefined}>
             {feat.name}
@@ -266,7 +266,7 @@ export function FeatSelected({ character }: CharacterProps) {
     return (
       <>
         <h2>Don(s) sélectionné(s)</h2>
-        <Row>
+        <Row data-testid="feats-selected">
           {feats.map((feat) => (
             <Col xs="4" key={feat.id} className="mb-4">
               <FeatComponent key={feat.id} character={character} feat={feat} />
