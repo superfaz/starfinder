@@ -3,7 +3,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 
-async function setup(klass: string = "operative") {
+export async function setup(klass: string = "operative") {
   cleanup();
   render(await Page());
   const user = userEvent.setup();
