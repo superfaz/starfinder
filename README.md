@@ -10,7 +10,7 @@ Provides an easy-to-use online creation tool for StarFinder.
 
 This project is in **alpha mode** and supports only French language at the moment.
 
-You can have an overview of the current implementation here: https://starfinder.vercel.app
+You can have an overview of the current implementation here: https://starfinder.monperso.fr
 
 ## Licenses
 
@@ -30,25 +30,22 @@ The data provided by this application are available under Black Book Editions an
 ](https://yarnpkg.com)
 [![bootstrap](https://img.shields.io/badge/bootstrap-white?logo=bootstrap&logoColor=%237952B3)
 ](https://getbootstrap.com)
-[![jest](https://img.shields.io/badge/jest-white?logo=jest&logoColor=%23C21325)
-](https://jestjs.io)
+[![vitest](https://img.shields.io/badge/vitest-white?logo=vitest&logoColor=%236E9F18)
+](https://vitest.dev)
+[![lpaywright](https://img.shields.io/badge/playwright-white?logo=playwright&logoColor=%232EAD33)
+](https://playwright.dev)
 
 This project is build with next.js and the standard commands apply:
 
 - `yarn` to download all the required libraries
 - `yarn dev` to start a local environment
 - `yarn lint` for automated code review based on eslint
-- `yarn test` to run all tests in watch mode
+- `yarn build` to validate and prepare a static release
+- `yarn test` to run all vitest tests in watch mode
 
-To prepare a release, the following commands can be used:
+Other scripts available :
 
-- `yarn build` to prepare a static release
-
-> **To be noted:** the _build_ action has been prepared to manage Azure deployment with a special configuration (see [`next.config.mjs`](./next.config.mjs)).
-
-Finally a special command has been created for code coverage needs:
-
-- `yarn test:ci` to run all the tests once and provide coverage reports (on-screen and lcov formats)
+- `yarn test:e2e` to run all e2e tests based on playwright. Used before as part of the release process to validate a deployment before its promotion to production.
 
 ### Yarn and IDE
 
