@@ -29,6 +29,23 @@ describe("TabFeats", () => {
   });
 });
 
+describe("TabFeats", () => {
+  beforeAll(async () => {
+    await setup("operative");
+  });
+
+  beforeEach(async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+  });
+
+  test("is displayed", async () => {
+    const content = within(document.querySelector("#content") as HTMLElement);
+    expect(content.getByRole("heading", { level: 2, name: "Dons disponibles" })).not.toBeNull();
+    expect(content.getByRole("heading", { level: 2, name: "Don(s) obtenu(s)" })).not.toBeNull();
+  });
+});
+
 describe("TabFeats feat types", () => {
   beforeAll(async () => {
     await setup("operative");

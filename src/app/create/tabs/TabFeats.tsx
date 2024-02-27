@@ -137,7 +137,11 @@ function FeatComponentBody({ character, feat }: Readonly<{ character: CharacterP
   );
 }
 
-function FeatComponent({ character, feat }: Readonly<{ character: CharacterPresenter; feat: Feat }>) {
+function FeatComponent({
+  character,
+  feat,
+  noAction = false,
+}: Readonly<{ character: CharacterPresenter; feat: Feat; noAction?: boolean }>) {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.data);
 
@@ -160,11 +164,13 @@ function FeatComponent({ character, feat }: Readonly<{ character: CharacterPrese
             {feat.name} {targetName ? ` - ${targetName}` : ""}
             {feat.combatFeat ? " (combat)" : ""}
           </Col>
-          <Col xs="auto">
-            <Button size="sm" onClick={handleRemoveFeat}>
-              Enlever
-            </Button>
-          </Col>
+          {!noAction && (
+            <Col xs="auto">
+              <Button size="sm" onClick={handleRemoveFeat}>
+                Enlever
+              </Button>
+            </Col>
+          )}
         </Row>
       </Card.Header>
       <FeatComponentBody character={character} feat={feat} />
@@ -258,7 +264,27 @@ function FeatTemplateComponent({
   );
 }
 
-export function FeatSelected({ character }: CharacterProps) {
+export function FeatsInherited({ character }: CharacterProps) {
+  const feats = character.getInheritedFeats();
+  if (feats.length === 0) {
+    return null;
+  } else {
+    return (
+      <>
+        <h2>Don(s) obtenu(s)</h2>
+        <Row data-testid="feats-inherited">
+          {feats.map((feat) => (
+            <Col xs="4" key={`${feat.id}-${feat.target}`} className="mb-4">
+              <FeatComponent key={feat.id} character={character} feat={feat} noAction />
+            </Col>
+          ))}
+        </Row>
+      </>
+    );
+  }
+}
+
+export function FeatsSelected({ character }: CharacterProps) {
   const feats = character.getSelectedFeats();
   if (feats.length === 0) {
     return null;
@@ -278,7 +304,7 @@ export function FeatSelected({ character }: CharacterProps) {
   }
 }
 
-export function FeatSelection({ character }: CharacterProps) {
+export function FeatsSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
   const presenter = new FeatPresenter(data, character);
   const allFeats = presenter.getFeatTemplates();

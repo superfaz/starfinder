@@ -156,11 +156,15 @@ function ClientComponentPresenter() {
           </Col>
 
           <Col lg={12} hidden={navigation !== "feats"}>
-            <Tab.FeatSelected character={presenter} />
+            <Tab.FeatsInherited character={presenter} />
           </Col>
 
           <Col lg={12} hidden={navigation !== "feats"}>
-            <Tab.FeatSelection character={presenter} />
+            <Tab.FeatsSelected character={presenter} />
+          </Col>
+
+          <Col lg={12} hidden={navigation !== "feats"}>
+            <Tab.FeatsSelection character={presenter} />
           </Col>
 
           <Col lg={12} hidden={navigation !== "spells"}>

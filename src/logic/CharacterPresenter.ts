@@ -425,13 +425,12 @@ export class CharacterPresenter {
   }
 
   /**
-   * Retrieves all the modifiers for the current character based on its race, theme, class and level.
-   *
+   * Retrieves all the modifiers for the current character based on its race, theme, class, level and choices.
    * The provided modifier list is updated to ensure that all templates are managed.
    *
    * @returns The list of modifiers that apply to the character.
    */
-  getModifiers(): Modifier[] {
+  getInheritedModifiers(): Modifier[] {
     const selectedRaceTraits = this.getSelectedRaceTraits();
     const themeFeatures = this.getThemeFeatures();
     const classFeatures = this.getClassFeatures();
@@ -442,6 +441,19 @@ export class CharacterPresenter {
       .map((t) => t.modifiers)
       .flat()
       .filter((t) => t && (t.level === undefined || t.level <= this.character.level));
+  }
+
+  /**
+   * Retrieves all the modifiers for the current character based on its race, theme, class, level and choices.
+   * The provided modifier list is updated to ensure that all templates are managed.
+   *
+   * @returns The list of modifiers that apply to the character.
+   */
+  getModifiers(): Modifier[] {
+    const feats = this.getFeats();
+    const featModifiers = feats.map((f) => f.modifiers).flat();
+
+    return [...this.getInheritedModifiers(), ...featModifiers];
   }
 
   getClassSkills(): string[] {
@@ -718,27 +730,52 @@ export class CharacterPresenter {
     return [...(selectedClass?.weapons ?? []), ...modifiers];
   }
 
+  /**
+   * Retrieves the feats that are inherited (and not removeable) from the current race, theme or class.
+   * @returns The list of inherited feats.
+   */
+  getInheritedFeats(): Feat[] {
+    const modifiers = this.getInheritedModifiers().filter(ofType(ModifierType.enum.feat));
+    const templater = this.createTemplater();
+
+    return modifiers.map((m) => {
+      const template = findOrError(this.data.feats, (f) => f.id === m.feat);
+      if (m.target === undefined || template.type === "simple") {
+        return templater.convertFeat(template);
+      } else {
+        const options = new FeatPresenter(this.data, this).retrieveOptions(template.targetType);
+        const target = findOrError(options, (o) => o.id === m.target);
+        return templater.convertFeat(template, target);
+      }
+    });
+  }
+
   getSelectedFeats(): Feat[] {
     const templater = this.createTemplater();
     const featPresenter = new FeatPresenter(this.data, this);
 
     return this.character.feats.map((f) => {
-      const featTemplate = findOrError(this.data.feats, (t) => t.id === f.id);
-      if (f.target === undefined || featTemplate.type === "simple") {
-        return templater.convertFeat(featTemplate);
+      const template = findOrError(this.data.feats, (t) => t.id === f.id);
+      if (f.target === undefined || template.type === "simple") {
+        return templater.convertFeat(template);
       } else {
-        const options = featPresenter.retrieveOptions(featTemplate.targetType);
+        const options = featPresenter.retrieveOptions(template.targetType);
         const target = findOrError(options, (o) => o.id === f.target);
-        return templater.convertFeat(featTemplate, target);
+        return templater.convertFeat(template, target);
       }
     });
   }
 
+  getFeats(): Feat[] {
+    return [...this.getInheritedFeats(), ...this.getSelectedFeats()];
+  }
+
   hasFeat(feat: FeatTemplate, target?: string): boolean {
+    const feats = this.getFeats();
     if (target === undefined) {
-      return this.character.feats.some((f) => f.id === feat.id);
+      return feats.some((f) => f.id === feat.id);
     } else {
-      return this.character.feats.some((f) => f.id === feat.id && f.target === target);
+      return feats.some((f) => f.id === feat.id && f.target === target);
     }
   }
 

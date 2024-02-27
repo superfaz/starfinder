@@ -319,7 +319,8 @@
   {
     "id": "skill-focus",
     "name": "Skill Focus",
-    "type": "simple",
+    "type": "targeted",
+    "targetType": "skill",
     "description": "Utiliser par les définitions de classe.",
     "refs": [],
     "modifiers": []

@@ -13,11 +13,6 @@ describe("TabFeats prerequisites with operative", () => {
     await user.click(screen.getByRole("button", { name: "Don(s)" }));
   });
 
-  test("is displayed", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.queryByRole("heading", { level: 2, name: "Dons disponibles" })).not.toBeNull();
-  });
-
   test("handle abilityScore prerequisites - not available", async () => {
     const block = within(screen.getByTestId("feats"));
     expect(block.queryByText(/ability score 20/i)).toBeNull();
