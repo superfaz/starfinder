@@ -11,9 +11,9 @@ export type StoreProviderProps = Readonly<{ data: IClientDataSet; children: Reac
 /**
  * Encapsulates the Redux store and provides it to the application.
  *
- * @param data The data set to initialize the store with.
- * @param children The application to render.
- * @returns The application wrapped in a Redux store.
+ * @param data - the data set to initialize the store with
+ * @param children - the application to render
+ * @returns The application wrapped in a Redux store
  * @see https://redux-toolkit.js.org/usage/nextjs
  */
 export default function StoreProvider({ data, children }: StoreProviderProps) {

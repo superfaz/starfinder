@@ -12,5 +12,6 @@ module.exports = {
   parserOptions: { project: "./tsconfig.json" },
   rules: {
     "@next/next/no-page-custom-font": "off",
+    "tsdoc/syntax": "warn",
   },
 };

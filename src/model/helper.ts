@@ -41,7 +41,7 @@ export function hasExtra<T>(obj: T): obj is WithExtra<T> {
 
 /**
  * Computes a simple hash of a string.
- * @param s The string to hash
+ * @param s - the string to hash
  * @returns The hash
  * @see https://stackoverflow.com/a/52171480
  */

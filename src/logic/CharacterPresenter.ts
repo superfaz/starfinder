@@ -37,8 +37,8 @@ import { FeatPresenter, Templater, cleanEvolutions } from ".";
 /**
  * Computes the minimal ability scores for a specific character.
  *
- * @param data The data set
- * @param character The reference character
+ * @param data - the data set
+ * @param character - the reference character
  * @returns The minimal ability scores for the specified character
  */
 export function computeMinimalAbilityScores(data: IClientDataSet, character: Character): Record<string, number> {
@@ -85,7 +85,7 @@ export function computeMinimalAbilityScores(data: IClientDataSet, character: Cha
 /**
  * Computes the ability score modifier for a specific ability score value.
  *
- * @param abilityScore The ability score value
+ * @param abilityScore - the ability score value
  * @returns The ability score modifier
  */
 export function computeAbilityScoreModifier(abilityScore: number): number {
@@ -95,8 +95,8 @@ export function computeAbilityScoreModifier(abilityScore: number): number {
 /**
  * Computes the saving throw bonus provided by a class and based on a specific level.
  *
- * @param classLevel The level of the character in the specific class
- * @param curve The curve to apply ('low' or 'high')
+ * @param classLevel - the level of the character in the specific class
+ * @param curve - the curve to apply ('low' or 'high')
  * @returns The bonus for the specific level and curve
  */
 export function computeSavingThrowBonus(classLevel: number, curve: "high" | "low"): number {

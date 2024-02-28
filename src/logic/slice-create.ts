@@ -142,7 +142,7 @@ const mainSlice = createSlice({
 
 /**
  * Redux action to retrieve class details using the API.
- * @param classId The ID of the class to retrieve.
+ * @param classId - the ID of the class to retrieve.
  */
 export const retrieveClassDetails = createAsyncThunk<IModel, string>("classesDetails/retrieve", async (classId) => {
   const response = await fetch(`/api/classes/${classId}/details`);
@@ -159,9 +159,9 @@ export default mainSlice.reducer;
  *
  * Ensure that the variant, options, traits and ability scores are reset.
  *
- * @param data The data set
- * @param character The character to update
- * @param raceId The identifier of its new race
+ * @param data - the data set
+ * @param character - the character to update
+ * @param raceId - the identifier of its new race
  * @returns The updated character
  */
 function updateRaceImpl(data: IClientDataSet, character: Character, raceId: string): Character {
@@ -194,9 +194,9 @@ function updateRaceImpl(data: IClientDataSet, character: Character, raceId: stri
  *
  * Ensure that the options and ability scores are reset.
  *
- * @param data The data set
- * @param character The character to update
- * @param variantId The identifier of its new race variant
+ * @param data - the data set
+ * @param character - the character to update
+ * @param variantId - the identifier of its new race variant
  * @returns The updated character
  */
 function updateRaceVariantImpl(data: IClientDataSet, character: Character, variantId: string): Character {
@@ -225,9 +225,9 @@ function updateRaceVariantImpl(data: IClientDataSet, character: Character, varia
  *
  * Ensure that the ability scores are reset.
  *
- * @param data The data set
- * @param character The character to update
- * @param abilityScoreId The identifier of the selected ability score
+ * @param data - the data set
+ * @param character - the character to update
+ * @param abilityScoreId - the identifier of the selected ability score
  * @returns The updated character
  */
 function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
@@ -245,8 +245,8 @@ function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilit
  *
  * Ensure that the associated primary traits are disabled.
  *
- * @param character The character to update
- * @param trait The enabled secondary trait
+ * @param character - the character to update
+ * @param trait - the enabled secondary trait
  * @returns The updated character
  */
 function enableSecondaryTraitImpl(character: Character, trait: RaceFeature): Character {
@@ -259,8 +259,8 @@ function enableSecondaryTraitImpl(character: Character, trait: RaceFeature): Cha
  *
  * Ensure that the associated primary traits are enabled.
  *
- * @param character The character to update
- * @param trait The disabled secondary trait
+ * @param character - the character to update
+ * @param trait - the disabled secondary trait
  * @returns The updated character
  */
 function disableSecondaryTraitImpl(character: Character, trait: RaceFeature): Character {
@@ -272,9 +272,9 @@ function disableSecondaryTraitImpl(character: Character, trait: RaceFeature): Ch
  *
  * Ensure that the theme options and ability scores are reset.
  *
- * @param data The data set
- * @param character The character to update
- * @param themeId The identifier of its new theme
+ * @param data - the data set
+ * @param character - the character to update
+ * @param themeId - the identifier of its new theme
  * @returns The updated character
  */
 function updateThemeImpl(data: IClientDataSet, character: Character, themeId: string): Character {
@@ -303,9 +303,9 @@ function updateThemeImpl(data: IClientDataSet, character: Character, themeId: st
 /**
  * Updates the ability score selected as a bonus for a character with 'no theme'.
  *
- * @param data The data set
- * @param character The character to update
- * @param abilityScoreId The identifier of the selected ability score
+ * @param data - the data set
+ * @param character - the character to update
+ * @param abilityScoreId - the identifier of the selected ability score
  * @returns The updated character
  */
 function updateNoThemeAbilityScoreImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
@@ -325,9 +325,9 @@ function updateNoThemeAbilityScoreImpl(data: IClientDataSet, character: Characte
  *
  * Ensure that the scholar specialization is reset.
  *
- * @param data The data set
- * @param character The character to update
- * @param skillId The identifier of the selected scholar skill
+ * @param data - the data set
+ * @param character - the character to update
+ * @param skillId - the identifier of the selected scholar skill
  * @returns The updated character
  */
 function updateScholarSkillImpl(data: IClientDataSet, character: Character, skillId: string): Character {
@@ -344,8 +344,8 @@ function updateScholarSkillImpl(data: IClientDataSet, character: Character, skil
 /**
  * Updates the scholar specialization selected for a character.
  *
- * @param character The character to update
- * @param specialization The selected scholar specialization or its label
+ * @param character - the character to update
+ * @param specialization - the selected scholar specialization or its label
  * @returns The updated character
  */
 function updateScholarSpecializationImpl(character: Character, specialization: string): Character {
@@ -363,9 +363,9 @@ function updateScholarSpecializationImpl(character: Character, specialization: s
  *
  * Ensure that the class options and ability scores are reset.
  *
- * @param data The data set
- * @param character The character to update
- * @param classId The identifier of its new class
+ * @param data - the data set
+ * @param character - the character to update
+ * @param classId - the identifier of its new class
  * @returns The updated character
  */
 function updateClassImpl(data: IClientDataSet, character: Character, classId: string): Character {
@@ -402,8 +402,8 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
 /**
  * Updates the specialization selected for an operative character.
  *
- * @param character The character to update
- * @param specialization The selected operative specialization
+ * @param character - the character to update
+ * @param specialization - the selected operative specialization
  * @returns The updated character
  */
 function updateOperativeSpecializationImpl(character: Character, specialization: string): Character {
@@ -419,8 +419,8 @@ function updateOperativeSpecializationImpl(character: Character, specialization:
 /**
  * Updates the connection selected for a mystic character.
  *
- * @param character The character to update
- * @param specialization The selected connection
+ * @param character - the character to update
+ * @param specialization - the selected connection
  * @returns The updated character
  */
 function updateMysticConnectionImpl(character: Character, connection: string): Character {
@@ -436,8 +436,8 @@ function updateMysticConnectionImpl(character: Character, connection: string): C
 /**
  * Updates the primary ability score selected for a soldier character.
  *
- * @param character The character to update
- * @param abilityScoreId The identifier of the selected ability score
+ * @param character - the character to update
+ * @param abilityScoreId - the identifier of the selected ability score
  * @returns The updated character
  */
 function updateSoldierAbilityScoreImpl(character: Character, abilityScoreId: string): Character {
@@ -453,8 +453,8 @@ function updateSoldierAbilityScoreImpl(character: Character, abilityScoreId: str
 /**
  * Updates the primary fightying style selected for a soldier character.
  *
- * @param character The character to update
- * @param styleId The identifier of the selected style
+ * @param character - the character to update
+ * @param styleId - the identifier of the selected style
  * @returns The updated character
  */
 function updateSoldierPrimaryStyleImpl(character: Character, styleId: string): Character {
@@ -470,9 +470,9 @@ function updateSoldierPrimaryStyleImpl(character: Character, styleId: string): C
 /**
  * Updates one of the ability score associated with a character.
  *
- * @param character The character to update
- * @param abilityScoreId The identifier of the ability score to update
- * @param delta The delta to apply to the ability score
+ * @param character - the character to update
+ * @param abilityScoreId - the identifier of the ability score to update
+ * @param delta - the delta to apply to the ability score
  * @returns The updated character
  */
 function updateAbilityScoreImpl(character: Character, abilityScoreId: string, delta: number): Character {
@@ -488,9 +488,9 @@ function updateAbilityScoreImpl(character: Character, abilityScoreId: string, de
  *
  * If the new skill rank is zero or less, the skill rank will be removed.
  *
- * @param character The character to update
- * @param skillId The identifier of the skill to update
- * @param delta The delta to apply to the skill rank
+ * @param character - the character to update
+ * @param skillId - the identifier of the skill to update
+ * @param delta - the delta to apply to the skill rank
  * @returns The updated character
  */
 function updateSkillRankImpl(character: Character, skillId: string, delta: number): Character {

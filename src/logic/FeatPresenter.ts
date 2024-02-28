@@ -18,7 +18,7 @@ export class FeatPresenter {
   /**
    * Retrieves the options for a specific target type.
    *
-   * @param targetType The target type.
+   * @param targetType - the target type.
    * @returns The options for the target type.
    */
   public retrieveOptions(targetType: string): INamedModel[] {

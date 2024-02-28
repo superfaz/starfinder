@@ -20,10 +20,10 @@ const evolutionLabels: Record<string, string> = {
 };
 
 /**
- * Converts a list of replace ids to a list of trait names
+ * Converts a list of replace ids to a list of trait names.
  *
- * @param character The character
- * @param replace the list of replace ids
+ * @param character - the character presenter
+ * @param replace - the list of replace ids
  * @returns the list of trait names
  */
 function convertReplaceToText(character: CharacterPresenter, replace: string[]): string[] {
