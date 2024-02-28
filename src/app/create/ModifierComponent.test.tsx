@@ -1,9 +1,9 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import ModifierComponent from "./ModifierComponent";
-import { Modifier } from "model";
 import StoreProvider from "logic/StoreProvider";
 import { DataSetBuilder, IClientDataSet, convert } from "data";
+import { Modifier } from "view";
 
 describe("ModifierComponent", () => {
   test("should adapt for spell", async () => {
