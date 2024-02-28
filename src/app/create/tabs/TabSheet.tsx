@@ -366,6 +366,26 @@ function CardAbilities({ character }: CharacterProps) {
   );
 }
 
+function CardFeats({ character }: CharacterProps) {
+  const feats = character.getFeats();
+  return (
+    <Card data-testid="feats">
+      <Card.Header>
+        <Badge bg="primary">Dons</Badge>
+      </Card.Header>
+      <Card.Body className="small">
+        <Stack gap={2}>
+          {feats.map((feat) => (
+            <div key={feat.target ? `${feat.id}-${feat.target}` : feat.id}>
+              <strong className="me-2">{feat.name}</strong>
+            </div>
+          ))}
+        </Stack>
+      </Card.Body>
+    </Card>
+  );
+}
+
 export function Sheet({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
 
@@ -396,6 +416,7 @@ export function Sheet({ character }: CharacterProps) {
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
           <CardAbilities character={character} />
+          <CardFeats character={character} />
         </Stack>
       </Col>
     </Row>

@@ -393,4 +393,18 @@ describe("TabSheet", () => {
     expect(block.queryByTestId(/manoeuvres/i)).not.toBeNull();
     expect(within(block.getByTestId(/manoeuvres/i)).queryByText(19)).not.toBeNull();
   });
+
+  test("displays feats", async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Race" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
+    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
+    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
+    const block = within(screen.getByTestId("feats"));
+    expect(block.queryByTestId(/Talent - Acrobaties/i)).not.toBeNull();
+  });
 });
