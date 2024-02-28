@@ -1,5 +1,6 @@
 module.exports = {
   env: { es6: true, node: true },
+  plugins: ["@typescript-eslint", "sonarjs", "eslint-plugin-tsdoc"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -9,7 +10,6 @@ module.exports = {
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: { project: "./tsconfig.json" },
-  plugins: ["@typescript-eslint", "sonarjs"],
   rules: {
     "@next/next/no-page-custom-font": "off",
   },
