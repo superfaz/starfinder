@@ -143,17 +143,9 @@ function FeatComponent({
   noAction = false,
 }: Readonly<{ character: CharacterPresenter; feat: Feat; noAction?: boolean }>) {
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.data);
 
   function handleRemoveFeat() {
     dispatch(mutators.removeFeat({ id: feat.id, target: feat.target }));
-  }
-
-  let targetName: string | undefined;
-  if (feat.target !== undefined) {
-    const presenter = new FeatPresenter(data, character);
-    const template = presenter.getFeatTemplate(feat.id);
-    targetName = findOrError(template.options, (o) => o.id === feat.target).name;
   }
 
   return (
@@ -161,7 +153,7 @@ function FeatComponent({
       <Card.Header>
         <Row className="align-items-center">
           <Col>
-            {feat.name} {targetName ? ` - ${targetName}` : ""}
+            {feat.name}
             {feat.combatFeat ? " (combat)" : ""}
           </Col>
           {!noAction && (

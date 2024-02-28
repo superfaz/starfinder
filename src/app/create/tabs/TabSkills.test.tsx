@@ -1,7 +1,6 @@
 import { describe, beforeAll, test, expect, beforeEach } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { waitForWithDump } from "app/test-helpers";
 import Page from "../page";
 import referential from "./TabSkills.test.json";
 
@@ -59,7 +58,8 @@ describe("TabSkills", () => {
     expect(content.getByRole("heading", { name: "Modificateurs", level: 2 })).not.toBeNull();
     const section = content.getByRole("heading", { name: "Modificateurs", level: 2 }).parentElement;
     if (section !== null) {
-      expect(within(section).getByText("Emotions contrôlées")).toBeVisible();
+      expect(within(section).getByText("Emotions contrôlées"), "Can't display modifiers from race").toBeVisible();
+      expect(within(section).getByText("Skill Focus - Acrobaties"), "Can't display modifiers from feats").toBeVisible();
     } else {
       expect(true).toBeFalsy();
     }
@@ -108,7 +108,7 @@ describe("TabSkills", () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: "Classe" }));
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
-    await waitForWithDump(() => expect(screen.queryByRole("combobox", { name: "Spécialisation" })).not.toBeNull());
+    await waitFor(() => expect(screen.queryByRole("combobox", { name: "Spécialisation" })).not.toBeNull());
     await user.selectOptions(
       screen.getByRole("combobox", { name: "Spécialisation" }),
       "7d74e198-2856-4496-8fff-4685a6187ed3"
@@ -120,7 +120,7 @@ describe("TabSkills", () => {
     expect(control).not.toBeNull();
     expect(control).toBeChecked();
     expect(control).toBeDisabled();
-    expect(view.getByText("+6")).not.toBeNull();
+    expect(view.getByText("+9")).not.toBeNull();
   });
 });
 

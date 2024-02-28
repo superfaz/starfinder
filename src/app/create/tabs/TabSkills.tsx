@@ -12,6 +12,7 @@ import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic"
 import { AbilityScoreId, Profession, isProfession, simpleHash } from "model";
 import { CharacterProps } from "../Props";
 import ModifierComponent from "../ModifierComponent";
+import { isFeat } from "view";
 
 const categories: Record<string, string> = {
   ex: "EXT",
@@ -134,14 +135,16 @@ export function SkillsModifiers({ character }: CharacterProps) {
     ...character.getSelectedRaceTraits().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
     ...character.getThemeFeatures().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
     ...character.getClassFeatures().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
+    ...character.getFeats().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
   ];
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Modificateurs</h2>
       {features.map((feature) => (
-        <Card key={feature.id}>
+        <Card key={isFeat(feature) ? feature.id + "-" + feature.target : feature.id}>
           <Card.Header>
-            {feature.name} {feature.category && ` (${categories[feature.category]})`}
+            {feature.name}
+            {!isFeat(feature) && feature.category && ` (${categories[feature.category]})`}
           </Card.Header>
           <Card.Body>
             {feature.modifiers

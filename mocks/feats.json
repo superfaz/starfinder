@@ -323,7 +323,14 @@
     "targetType": "skill",
     "description": "Utiliser par les définitions de classe.",
     "refs": [],
-    "modifiers": []
+    "modifiers": [
+      {
+        "id": "43105c0d-cf3b-450d-b5fc-482d4da4d74e",
+        "type": "skill",
+        "target": "<target>",
+        "value": 3
+      }
+    ]
   },
   {
     "id": "d112dccf-e126-464d-812c-98ca1251958b",

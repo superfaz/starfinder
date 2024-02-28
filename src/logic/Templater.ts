@@ -104,6 +104,10 @@ export class Templater {
       refs: template.refs ?? [],
     };
 
+    if (target !== undefined) {
+      result.name += " - " + target.name;
+    }
+
     if (template.prerequisites) {
       result.prerequisites = template.prerequisites.map((p) => this.convertPrerequisite(p));
     }
