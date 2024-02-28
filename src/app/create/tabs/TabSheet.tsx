@@ -84,7 +84,7 @@ function CardAvatar({ character }: CharacterProps) {
       </Card.Header>
       {!avatar && (
         <Card.Body className="text-center text-muted">
-          <em>Pas d&apos;avatar sélectionné</em>
+          <em>Pas de race sélectionnée</em>
         </Card.Body>
       )}
       {avatar && (
