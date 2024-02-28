@@ -30,7 +30,7 @@ import {
   isVariable,
   isWeaponId,
 } from "model";
-import { Feat, Feature, Modifier, ofType } from "view";
+import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofType } from "view";
 import { getMysticFeatureTemplates, getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
 import { FeatPresenter, Templater, cleanEvolutions } from ".";
 
@@ -133,9 +133,9 @@ export class CharacterPresenter {
 
   private cachedRace: Race | null = null;
   private cachedRaceVariant: Variant | null = null;
-  private cachedPrimaryRaceTraits: Feature[] | null = null;
-  private cachedSecondaryRaceTraits: Feature[] | null = null;
-  private cachedSelectedRaceTraits: Feature[] | null = null;
+  private cachedPrimaryRaceTraits: RaceFeature[] | null = null;
+  private cachedSecondaryRaceTraits: RaceFeature[] | null = null;
+  private cachedSelectedRaceTraits: RaceFeature[] | null = null;
   private cachedTheme: Theme | null = null;
   private cachedClass: Class | null = null;
   private cachedMinimalAbilityScores: Record<string, number> | null = null;
@@ -204,7 +204,7 @@ export class CharacterPresenter {
     return this.character.raceOptions?.humanBonus ?? null;
   }
 
-  getPrimaryRaceTraits(): Feature[] {
+  getPrimaryRaceTraits(): RaceFeature[] {
     const race = this.getRace();
     if (!race) {
       return [];
@@ -212,13 +212,13 @@ export class CharacterPresenter {
 
     const templater = this.createTemplater();
     if (!this.cachedPrimaryRaceTraits) {
-      this.cachedPrimaryRaceTraits = race.traits.map((t) => templater.convertFeature(t));
+      this.cachedPrimaryRaceTraits = race.traits.map((t) => templater.convertRaceFeature(t));
     }
 
     return this.cachedPrimaryRaceTraits;
   }
 
-  getSecondaryRaceTraits(): Feature[] {
+  getSecondaryRaceTraits(): RaceFeature[] {
     const race = this.getRace();
     if (!race) {
       return [];
@@ -226,7 +226,7 @@ export class CharacterPresenter {
 
     const templater = this.createTemplater();
     if (!this.cachedSecondaryRaceTraits) {
-      this.cachedSecondaryRaceTraits = race.secondaryTraits.map((t) => templater.convertFeature(t));
+      this.cachedSecondaryRaceTraits = race.secondaryTraits.map((t) => templater.convertRaceFeature(t));
     }
 
     return this.cachedSecondaryRaceTraits;
@@ -242,7 +242,7 @@ export class CharacterPresenter {
     if (!this.cachedSelectedRaceTraits) {
       this.cachedSelectedRaceTraits = [...race.traits, ...race.secondaryTraits]
         .filter((t) => this.character.traits.includes(t.id))
-        .map((t) => templater.convertFeature(t));
+        .map((t) => templater.convertRaceFeature(t));
     }
 
     return this.cachedSelectedRaceTraits;
@@ -258,14 +258,14 @@ export class CharacterPresenter {
     return this.cachedTheme;
   }
 
-  getThemeFeatures(): Feature[] {
+  getThemeFeatures(): ThemeFeature[] {
     const theme = this.getTheme();
     if (!theme) {
       return [];
     }
 
     const templater = this.createTemplater();
-    return theme.features.map((f) => templater.convertFeature(f));
+    return theme.features.map((f) => templater.convertThemeFeature(f));
   }
 
   hasNoTheme(): boolean {
@@ -302,7 +302,7 @@ export class CharacterPresenter {
     return this.cachedClass;
   }
 
-  getClassFeatures(): Feature[] {
+  getClassFeatures(): ClassFeature[] {
     const selectedClass = this.getClass();
     if (!selectedClass) {
       return [];
@@ -319,14 +319,14 @@ export class CharacterPresenter {
         return (classDetails as ClassEnvoy).features.map((f) => {
           const level = f.level ?? 1;
           const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
-          return templater.convertFeature(f);
+          return templater.convertClassFeature(f);
         });
 
       case "mystic":
         return getMysticFeatureTemplates(classDetails as ClassMystic, this).map((f) => {
           const level = f.level ?? 1;
           const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
-          return templater.convertFeature(f);
+          return templater.convertClassFeature(f);
         });
 
       case "operative": {
@@ -339,7 +339,7 @@ export class CharacterPresenter {
             ...(selectedSpecialization?.variables ?? {}),
             ...cleanEvolutions(f.evolutions)[level],
           });
-          return templater.convertFeature(f);
+          return templater.convertClassFeature(f);
         });
       }
 
@@ -347,7 +347,7 @@ export class CharacterPresenter {
         return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {
           const level = f.level ?? 1;
           const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
-          return templater.convertFeature(f);
+          return templater.convertClassFeature(f);
         });
 
       default:

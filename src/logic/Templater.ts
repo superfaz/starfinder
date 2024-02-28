@@ -11,7 +11,7 @@ import {
   WeaponId,
   isModifierType,
 } from "model";
-import { Feat, Feature, Modifier } from "view";
+import { ClassFeature, Feat, Modifier, RaceFeature, ThemeFeature } from "view";
 
 export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
@@ -50,22 +50,39 @@ export class Templater {
     }
   }
 
-  convertFeature(template: FeatureTemplate): Feature {
-    const result: Feature = {
+  convertRaceFeature(template: FeatureTemplate): RaceFeature {
+    return {
       ...template,
+      source: "race",
       name: this.applyForString(template.name) ?? "",
       description: template.description ? this.applyForString(template.description) : undefined,
-      modifiers: [],
+      category: template.category,
+      replace: template.replace ?? [],
+      modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
+    };
+  }
+
+  convertThemeFeature(template: FeatureTemplate): ThemeFeature {
+    return {
+      ...template,
+      source: "theme",
+      name: this.applyForString(template.name) ?? "",
+      description: template.description ? this.applyForString(template.description) : undefined,
+      category: template.category,
+      modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
+    };
+  }
+
+  convertClassFeature(template: FeatureTemplate): ClassFeature {
+    return {
+      ...template,
+      source: "class",
+      name: this.applyForString(template.name) ?? "",
+      description: template.description ? this.applyForString(template.description) : undefined,
       category: template.category,
       evolutions: cleanEvolutions(template.evolutions) ?? {},
-      replace: template.replace ?? [],
+      modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
     };
-
-    if (template.modifiers) {
-      result.modifiers = template.modifiers.map((m) => this.convertModifier(m));
-    }
-
-    return result;
   }
 
   convertFeat(template: FeatTemplate, target?: INamedModel): Feat {

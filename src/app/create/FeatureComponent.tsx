@@ -60,7 +60,7 @@ export default function FeatureComponent({
   className,
   children,
 }: Readonly<FeatureComponentProps>): JSX.Element {
-  const hasEvolutions = Object.keys(feature.evolutions).length > 0;
+  const hasEvolutions = feature.source === "class" && Object.keys(feature.evolutions).length > 0;
   return (
     <Card className={className}>
       <Card.Header role="heading">
@@ -68,7 +68,7 @@ export default function FeatureComponent({
         {feature.category && ` (${categories[feature.category]})`}
       </Card.Header>
       <Card.Body>
-        {feature.replace.length > 0 && (
+        {feature.source === "race" && feature.replace.length > 0 && (
           <p>
             <span>Remplace : </span>
             {convertReplaceToText(character, feature.replace).join(", ")}

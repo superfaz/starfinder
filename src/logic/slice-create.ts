@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { findOrError } from "app/helpers";
 import { EmptyClientDataSet, IClientDataSet } from "data";
 import { AbilityScoreIds, Character, EmptyCharacter, IModel, Profession } from "model";
-import { Feature } from "view";
+import { RaceFeature } from "view";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 const initialState = {
@@ -31,11 +31,11 @@ const mainSlice = createSlice({
       state.character = updateHumanBonusImpl(state.data, state.character, action.payload);
     },
 
-    enableSecondaryTrait(state, action: PayloadAction<Feature>) {
+    enableSecondaryTrait(state, action: PayloadAction<RaceFeature>) {
       state.character = enableSecondaryTraitImpl(state.character, action.payload);
     },
 
-    disableSecondaryTrait(state, action: PayloadAction<Feature>) {
+    disableSecondaryTrait(state, action: PayloadAction<RaceFeature>) {
       state.character = disableSecondaryTraitImpl(state.character, action.payload);
     },
 
@@ -249,7 +249,7 @@ function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilit
  * @param trait The enabled secondary trait
  * @returns The updated character
  */
-function enableSecondaryTraitImpl(character: Character, trait: Feature): Character {
+function enableSecondaryTraitImpl(character: Character, trait: RaceFeature): Character {
   const traits = character.traits.filter((t) => !trait.replace.includes(t));
   return { ...character, traits: [...traits, trait.id] };
 }
@@ -263,7 +263,7 @@ function enableSecondaryTraitImpl(character: Character, trait: Feature): Charact
  * @param trait The disabled secondary trait
  * @returns The updated character
  */
-function disableSecondaryTraitImpl(character: Character, trait: Feature): Character {
+function disableSecondaryTraitImpl(character: Character, trait: RaceFeature): Character {
   return { ...character, traits: [...character.traits.filter((t) => t !== trait.id), ...trait.replace] };
 }
 

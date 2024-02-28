@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { Feature } from "view";
+import { RaceFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import type { CharacterProps } from "../Props";
 import RaceHumansEditor from "../races/RaceHumansEditor";
@@ -112,7 +112,7 @@ export function RaceTraits({ character }: CharacterProps) {
 export function RaceAlternateTraits({ character }: CharacterProps) {
   const dispatch = useAppDispatch();
 
-  function handleTraitEnabled(trait: Feature, e: ChangeEvent<HTMLInputElement>): void {
+  function handleTraitEnabled(trait: RaceFeature, e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.checked) {
       dispatch(mutators.enableSecondaryTrait(trait));
     } else {

@@ -7,6 +7,8 @@ export const FeatureCategory = z.enum(["ex", "ma", "su"]);
 
 export type FeatureCategory = z.infer<typeof FeatureCategory>;
 
+export const FeatureCategories = FeatureCategory.enum;
+
 /**
  * Represents a racial trait or a thematic or a class feature that can be applied to a character.
  */
