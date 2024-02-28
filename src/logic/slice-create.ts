@@ -186,6 +186,9 @@ function updateRaceImpl(data: IClientDataSet, character: Character, raceId: stri
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
+
+  result.avatar = data.avatars.filter((avatar) => avatar.tags.includes(raceId))[0].id;
+
   return result;
 }
 
