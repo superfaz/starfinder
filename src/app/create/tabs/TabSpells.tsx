@@ -135,7 +135,7 @@ export function SpellsSelection({ character }: CharacterProps) {
                     classId={classId}
                     level={level}
                     selected={isSelected(spell, level)}
-                    disabled={selectedSpells[level]?.length >= character.getSelectableSpellCount(level)}
+                    disabled={(selectedSpells[level]?.length ?? 0) >= character.getSelectableSpellCount(level)}
                   />
                 </Col>
               ))}
