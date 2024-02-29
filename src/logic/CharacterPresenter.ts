@@ -687,6 +687,10 @@ export class CharacterPresenter {
     return this.character.deity;
   }
 
+  getDescription(): string {
+    return this.character.description;
+  }
+
   getAvatar(): Avatar | null {
     if (!this.character.avatar) {
       return null;

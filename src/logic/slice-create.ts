@@ -110,6 +110,10 @@ const mainSlice = createSlice({
       state.character.deity = action.payload;
     },
 
+    updateDescription(state, action: PayloadAction<string>) {
+      state.character.description = action.payload;
+    },
+
     updateAvatar(state, action: PayloadAction<string>) {
       state.character.avatar = action.payload;
     },

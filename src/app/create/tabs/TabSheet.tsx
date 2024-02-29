@@ -96,6 +96,21 @@ function CardAvatar({ character }: CharacterProps) {
   );
 }
 
+function CardDescription({ character }: CharacterProps) {
+  const description = character.getDescription();
+  return (
+    <Card data-testid="description">
+      <Card.Header>
+        <Badge bg="primary">Biographie</Badge>
+      </Card.Header>
+      <Card.Body>
+        {description}
+        {!description && <em>Pas de description pour ce personnage</em>}
+      </Card.Body>
+    </Card>
+  );
+}
+
 function CardAbilityScores({ data, character }: SheetProps) {
   return (
     <Card>
@@ -395,6 +410,7 @@ export function Sheet({ character }: CharacterProps) {
         <Stack direction="vertical" gap={2}>
           <CardProfile data={data} character={character} />
           <CardAvatar character={character} />
+          <CardDescription character={character} />
         </Stack>
       </Col>
       <Col lg={3}>

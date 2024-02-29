@@ -22,6 +22,7 @@ export const Character = z
     sex: z.string(),
     homeWorld: z.string(),
     deity: z.string(),
+    description: z.string(),
     avatar: z.string(),
     feats: z.array(z.object({ id: Id, target: z.optional(Id) })),
     spells: z.record(z.string(), z.array(Id)),
@@ -50,6 +51,7 @@ export const EmptyCharacter: Readonly<Character> = {
   homeWorld: "",
   deity: "",
   avatar: "",
+  description: "",
   feats: [],
   spells: {},
 };

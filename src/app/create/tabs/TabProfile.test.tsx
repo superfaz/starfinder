@@ -94,4 +94,15 @@ describe("TabProfile", () => {
     await user.click(screen.getByRole("button", { name: "Fiche" }));
     expect(content.queryByText("Desna")).not.toBeNull();
   });
+
+  test("can be used to modify the description", async () => {
+    const user = userEvent.setup();
+    const content = within(document.querySelector("#content") as HTMLElement);
+
+    await user.type(content.getByRole("textbox", { name: "Biographie" }), "Biographie de Bob");
+    expect(content.getByRole<HTMLInputElement>("textbox", { name: "Biographie" }).value).toBe("Biographie de Bob");
+
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    expect(content.queryByText(/Biographie de Bob/)).not.toBeNull();
+  });
 });
