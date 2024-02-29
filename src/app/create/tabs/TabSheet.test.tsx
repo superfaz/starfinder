@@ -405,6 +405,6 @@ describe("TabSheet", () => {
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
     const block = within(screen.getByTestId("feats"));
-    expect(block.queryByTestId(/Talent - Acrobaties/i)).not.toBeNull();
+    expect(block.queryByTestId(/SKill Focus - Acrobaties/i)).not.toBeNull();
   });
 });
