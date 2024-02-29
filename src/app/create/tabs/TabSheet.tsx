@@ -369,7 +369,7 @@ function CardAbilities({ character }: CharacterProps) {
 function CardFeats({ character }: CharacterProps) {
   const feats = character.getFeats();
   return (
-    <Card data-testid="feats">
+    <Card>
       <Card.Header>
         <Badge bg="primary">Dons</Badge>
       </Card.Header>
