@@ -103,6 +103,6 @@ describe("TabProfile", () => {
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Biographie" }).value).toBe("Biographie de Bob");
 
     await user.click(screen.getByRole("button", { name: "Fiche" }));
-    expect(content.queryByText(/Biographie de Bob/)).not.toBeNull();
+    expect(within(screen.getByTestId("description")).queryByText(/Biographie de Bob/)).not.toBeNull();
   });
 });
