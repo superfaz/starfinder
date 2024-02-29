@@ -404,7 +404,7 @@ describe("TabSheet", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
     await user.click(screen.getByRole("button", { name: "Fiche" }));
 
-    const block = within(screen.getByTestId("feats"));
-    expect(block.queryByTestId(/SKill Focus - Acrobaties/i)).not.toBeNull();
+    const block = within(screen.getByTestId("sheet-feats"));
+    expect(block.getByText(/SKill Focus - Acrobaties/i)).toBeVisible();
   });
 });
