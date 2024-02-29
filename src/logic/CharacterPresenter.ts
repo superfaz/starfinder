@@ -141,6 +141,8 @@ export class CharacterPresenter {
   private cachedMinimalAbilityScores: Record<string, number> | null = null;
   private cachedRemainingAbilityScoresPoints: number | null = null;
   private cachedClassSkills: string[] | null = null;
+  private cachedModifiers: Modifier[] | null = null;
+  private cachedFeats: Feat[] | null = null;
 
   constructor(data: IClientDataSet, classesDetails: Record<string, IModel>, character: Character) {
     this.data = data;
@@ -238,8 +240,8 @@ export class CharacterPresenter {
       return [];
     }
 
-    const templater = this.createTemplater();
     if (!this.cachedSelectedRaceTraits) {
+      const templater = this.createTemplater();
       this.cachedSelectedRaceTraits = [...race.traits, ...race.secondaryTraits]
         .filter((t) => this.character.traits.includes(t.id))
         .map((t) => templater.convertRaceFeature(t));
@@ -450,10 +452,14 @@ export class CharacterPresenter {
    * @returns The list of modifiers that apply to the character.
    */
   getModifiers(): Modifier[] {
-    const feats = this.getFeats();
-    const featModifiers = feats.map((f) => f.modifiers).flat();
+    if (this.cachedModifiers === null) {
+      const featModifiers = this.getFeats()
+        .map((f) => f.modifiers)
+        .flat();
+      this.cachedModifiers = [...this.getInheritedModifiers(), ...featModifiers];
+    }
 
-    return [...this.getInheritedModifiers(), ...featModifiers];
+    return this.cachedModifiers;
   }
 
   getClassSkills(): string[] {
@@ -771,7 +777,10 @@ export class CharacterPresenter {
   }
 
   getFeats(): Feat[] {
-    return [...this.getInheritedFeats(), ...this.getSelectedFeats()];
+    if (this.cachedFeats === null) {
+      this.cachedFeats = [...this.getInheritedFeats(), ...this.getSelectedFeats()];
+    }
+    return this.cachedFeats;
   }
 
   hasFeat(feat: FeatTemplate, target?: string): boolean {
