@@ -72,6 +72,9 @@ describe("TabSheet", () => {
   ];
 
   test.each(emptyByDefault)("has %s empty by default", async (_, label) => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
     const view = screen.getByTestId(label);
     expect(within(view).queryByText(label)).not.toBeNull();
     expect(within(view).queryByText("-")).not.toBeNull();
@@ -84,6 +87,9 @@ describe("TabSheet", () => {
   ];
 
   test.each(fixedValueByDefault)("has %s has its default value", async (_, label, defaultValue) => {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Fiche" }));
+
     const view = screen.getByTestId(label);
     expect(within(view).queryByText(label)).not.toBeNull();
     expect(within(view).queryByText(defaultValue)).not.toBeNull();

@@ -101,84 +101,107 @@ function ClientComponentPresenter() {
           </Nav.Item>
         </Nav>
         <Row id="content">
-          <Col lg={6} hidden={navigation !== "intro"}>
-            <Tab.Intro />
-          </Col>
-          <Col lg={3} hidden={navigation !== "race"}>
-            <Tab.RaceSelection character={presenter} />
-          </Col>
+          {navigation === "intro" && (
+            <Col lg={6}>
+              <Tab.Intro />
+            </Col>
+          )}
 
-          <Col hidden={navigation !== "race"}>
-            <Tab.RaceTraits character={presenter} />
-          </Col>
+          {navigation === "race" && (
+            <>
+              <Col lg={3}>
+                <Tab.RaceSelection character={presenter} />
+              </Col>
+              <Col>
+                <Tab.RaceTraits character={presenter} />
+              </Col>
+              <Col>
+                <Tab.RaceAlternateTraits character={presenter} />
+              </Col>
+            </>
+          )}
 
-          <Col hidden={navigation !== "race"}>
-            <Tab.RaceAlternateTraits character={presenter} />
-          </Col>
+          {navigation === "theme" && (
+            <>
+              <Col lg={3}>
+                <Tab.ThemeSelection character={presenter} />
+              </Col>
+              <Col>
+                <Tab.ThemeTraits character={presenter} />
+              </Col>
+            </>
+          )}
 
-          <Col lg={3} hidden={navigation !== "theme"}>
-            <Tab.ThemeSelection character={presenter} />
-          </Col>
+          {navigation === "class" && (
+            <>
+              <Col lg={3}>
+                <Tab.ClassSelection character={presenter} />
+              </Col>
+              <Col>
+                <Tab.ClassDetails character={presenter} />
+              </Col>
+            </>
+          )}
 
-          <Col hidden={navigation !== "theme"}>
-            <Tab.ThemeTraits character={presenter} />
-          </Col>
+          {navigation === "profile" && (
+            <>
+              <Col lg={3}>
+                <Tab.Profile character={presenter} />
+              </Col>
+              <Col lg={3}>
+                <Tab.Avatar character={presenter} />
+              </Col>
+            </>
+          )}
+          {navigation === "abilityScores" && (
+            <>
+              <Col lg={4}>
+                <Stack direction="vertical" gap={4}>
+                  <Tab.AbilityScores character={presenter} />
+                  <Tab.ProfessionSkills />
+                </Stack>
+              </Col>
+              <Col lg={4}>
+                <Tab.Skills character={presenter} />
+              </Col>
+              <Col lg={4}>
+                <Tab.SkillsModifiers character={presenter} />
+              </Col>
+            </>
+          )}
 
-          <Col lg={3} hidden={navigation !== "class"}>
-            <Tab.ClassSelection character={presenter} />
-          </Col>
+          {navigation === "feats" && (
+            <>
+              <Col lg={12}>
+                <Tab.FeatsInherited character={presenter} />
+              </Col>
+              <Col lg={12}>
+                <Tab.FeatsSelected character={presenter} />
+              </Col>
+              <Col lg={12}>
+                <Tab.FeatsSelection character={presenter} />
+              </Col>
+            </>
+          )}
 
-          <Col hidden={navigation !== "class"}>
-            <Tab.ClassDetails character={presenter} />
-          </Col>
+          {navigation === "spells" && (
+            <Col lg={12}>
+              <Tab.SpellsSelection character={presenter} />
+            </Col>
+          )}
 
-          <Col lg={3} hidden={navigation !== "profile"}>
-            <Tab.Profile character={presenter} />
-          </Col>
+          {navigation === "sheet" && (
+            <Col lg={12}>
+              <Tab.Sheet character={presenter} />
+            </Col>
+          )}
 
-          <Col lg={3} hidden={navigation !== "profile"}>
-            <Tab.Avatar character={presenter} />
-          </Col>
-
-          <Col lg={4} hidden={navigation !== "abilityScores"}>
-            <Stack direction="vertical" gap={4}>
-              <Tab.AbilityScores character={presenter} />
-              <Tab.ProfessionSkills />
-            </Stack>
-          </Col>
-
-          <Col lg={4} hidden={navigation !== "abilityScores"}>
-            <Tab.Skills character={presenter} />
-          </Col>
-
-          <Col lg={4} hidden={navigation !== "abilityScores"}>
-            <Tab.SkillsModifiers character={presenter} />
-          </Col>
-
-          <Col lg={12} hidden={navigation !== "feats"}>
-            <Tab.FeatsInherited character={presenter} />
-          </Col>
-
-          <Col lg={12} hidden={navigation !== "feats"}>
-            <Tab.FeatsSelected character={presenter} />
-          </Col>
-
-          <Col lg={12} hidden={navigation !== "feats"}>
-            <Tab.FeatsSelection character={presenter} />
-          </Col>
-
-          <Col lg={12} hidden={navigation !== "spells"}>
-            <Tab.SpellsSelection character={presenter} />
-          </Col>
-
-          <Col lg={12} hidden={navigation !== "sheet"}>
-            <Tab.Sheet character={presenter} />
-          </Col>
-
-          <Col lg={12} hidden={navigation !== "debug"}>
-            <h5>Character</h5>
-            <pre>{JSON.stringify(character, null, 2)}</pre>
-          </Col>
+          {navigation === "debug" && (
+            <Col lg={12}>
+              <h5>Character</h5>
+              <pre>{JSON.stringify(character, null, 2)}</pre>
+            </Col>
+          )}
         </Row>
       </Container>
     </>
