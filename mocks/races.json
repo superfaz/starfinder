@@ -3,7 +3,7 @@
     "id": "androids",
     "name": "Androïdes",
     "description": "Personnes artificielles composées d’éléments mécaniques, autrefois construites pour en faire des serviteurs mais à présent reconnues comme citoyens à part entière.",
-    "refs": ["base-42"],
+    "reference": { "book": "base", "page": 1 },
     "hitPoints": 4,
     "variants": [
       {
@@ -176,7 +176,7 @@
     "id": "humans",
     "name": "Humains",
     "description": "Race extrêmement polyvalente et capable de s’adapter dont les membres n’ont de cesse d’explorer et de se répandre.",
-    "refs": ["base-44"],
+    "reference": { "book": "base", "page": 1 },
     "hitPoints": 4,
     "variants": [
       {

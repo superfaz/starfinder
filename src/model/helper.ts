@@ -6,6 +6,11 @@ export const Variable = z.string().regex(/^<[a-z][a-zA-Z]+>$/);
 
 export const Description = z.union([Variable, z.string().regex(/^[\p{Lu}0-9+-].+\.$/u)]);
 
+export const Reference = z.object({
+  book: z.string(),
+  page: z.number(),
+});
+
 export const Evolutions = z.record(
   z.string().regex(/\d+/),
   z.union([z.null(), z.record(z.union([z.number(), z.string()]))])

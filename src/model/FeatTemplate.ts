@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
-import { Description } from "./helper";
+import { Description, Reference } from "./helper";
 import { Prerequisite } from "./Prerequisite";
 import { ModifierTemplate } from "./ModifierTemplate";
 
@@ -11,7 +11,7 @@ const BaseFeatTemplate = INamedModel.extend({
   hidden: z.boolean().default(false),
   combatFeat: z.boolean().default(false),
   description: Description,
-  refs: z.array(z.string()),
+  reference: Reference,
   modifiers: z.array(ModifierTemplate),
   prerequisites: z.array(Prerequisite).optional(),
 });

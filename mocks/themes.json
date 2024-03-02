@@ -3,7 +3,7 @@
     "id": "bounty-hunter",
     "name": "Chasseur de primes",
     "description": "Rien ou presque ne peut vous empêcher de traquer vos proies et de les ramener mortes ou vives.",
-    "refs": ["base-29"],
+    "reference": { "book": "base", "page": 1 },
     "abilityScores": { "con": 1 },
     "features": [
       {
@@ -97,7 +97,7 @@
     "id": "scholar",
     "name": "Erudit",
     "description": "En tant qu’universitaire, vous avez assimilé une solide base de connaissances diverses et vous êtes toujours avide d’en savoir plus.",
-    "refs": ["base-30"],
+    "reference": { "book": "base", "page": 1 },
     "abilityScores": { "int": 1 },
     "features": [
       {
@@ -167,7 +167,7 @@
     "id": "themeless",
     "name": "Sans thème",
     "description": "Aucune des catégories décrites ci-dessus ne vous convient vraiment ou vous vous voyez comme une page blanche.",
-    "refs": ["base-28"],
+    "reference": { "book": "base", "page": 1 },
     "abilityScores": { "any": 1 },
     "features": [
       {

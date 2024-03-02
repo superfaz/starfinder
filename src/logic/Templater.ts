@@ -101,7 +101,6 @@ export class Templater {
       description: this.applyForString(template.description),
       modifiers: [],
       prerequisites: [],
-      refs: template.refs ?? [],
     };
 
     if (target !== undefined) {

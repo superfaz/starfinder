@@ -5,7 +5,7 @@
     "type": "simple",
     "combatFeat": true,
     "description": "Vous pouvez traverser un terrain semé d’obstacles avec aisance.",
-    "refs": ["base-154"],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [
       {
         "id": "43105c0d-cf3b-450d-b5fc-482d4da4d74d",
@@ -36,7 +36,7 @@
     "combatFeat": true,
     "targetType": "weapon",
     "description": "Vous vous êtes davantage entraîné au maniement d’un type d’armes en particulier, ce qui vous permet de toucher plus facilement vos cibles.",
-    "refs": ["base-154"],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [
       {
         "id": "8ae7862b-51a9-440a-9f01-62fd82bd599b",
@@ -58,7 +58,7 @@
     "name": "Ability score 20",
     "type": "simple",
     "description": "Test le prerequis 'abilityScore'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -74,7 +74,7 @@
     "name": "Ability score 10",
     "type": "simple",
     "description": "Test le prerequis 'abilityScore'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -90,7 +90,7 @@
     "name": "Arms",
     "type": "simple",
     "description": "Test le prerequis 'arms'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -105,7 +105,7 @@
     "name": "Base Attack 10",
     "type": "simple",
     "description": "Test le prerequis 'baseAttack'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -120,7 +120,7 @@
     "name": "Base Attack 1",
     "type": "simple",
     "description": "Test le prerequis 'baseAttack'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -135,7 +135,7 @@
     "name": "Class operative",
     "type": "simple",
     "description": "Test le prerequis 'class'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -150,7 +150,7 @@
     "name": "Class not operative",
     "type": "simple",
     "description": "Test le prerequis 'class'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -166,7 +166,7 @@
     "type": "simple",
     "combatFeat": true,
     "description": "Test le prerequis 'combatFeatCount'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -181,7 +181,7 @@
     "name": "Level 3",
     "type": "simple",
     "description": "Test le prerequis 'level'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -196,7 +196,7 @@
     "name": "Skill rank acro 1",
     "type": "simple",
     "description": "Test le prerequis 'skillRank'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -212,7 +212,7 @@
     "name": "Skill rank cult 1",
     "type": "simple",
     "description": "Test le prerequis 'skillRank'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -228,7 +228,7 @@
     "name": "Weapon basic",
     "type": "simple",
     "description": "Test le prerequis 'weaponProficiency'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -243,7 +243,7 @@
     "name": "Weapon heavy",
     "type": "simple",
     "description": "Test le prerequis 'weaponProficiency'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -258,7 +258,7 @@
     "name": "feat weapon basic",
     "type": "simple",
     "description": "Test le prerequis 'feat'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -273,7 +273,7 @@
     "name": "Weapon Specialization Basic",
     "type": "simple",
     "description": "Utiliser par les définitions de classe.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": []
   },
   {
@@ -281,7 +281,7 @@
     "name": "Weapon Specialization Advanced",
     "type": "simple",
     "description": "Utiliser par les définitions de classe.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": []
   },
   {
@@ -289,7 +289,7 @@
     "name": "Weapon Specialization Small",
     "type": "simple",
     "description": "Utiliser par les définitions de classe.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": []
   },
   {
@@ -297,7 +297,7 @@
     "name": "Weapon Specialization Long",
     "type": "simple",
     "description": "Utiliser par les définitions de classe.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": []
   },
   {
@@ -305,7 +305,7 @@
     "name": "Weapon Specialization Heavy",
     "type": "simple",
     "description": "Utiliser par les définitions de classe.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": []
   },
   {
@@ -313,7 +313,7 @@
     "name": "Weapon Specialization Sniper",
     "type": "simple",
     "description": "Utiliser par les définitions de classe.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": []
   },
   {
@@ -322,7 +322,7 @@
     "type": "targeted",
     "targetType": "skill",
     "description": "Utiliser par les définitions de classe.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [
       {
         "id": "43105c0d-cf3b-450d-b5fc-482d4da4d74e",
@@ -337,7 +337,7 @@
     "name": "Feat savingThrow Fortitude 1",
     "type": "simple",
     "description": "Test le prerequis 'savingThrow'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -353,7 +353,7 @@
     "name": "Feat savingThrow Reflex 1",
     "type": "simple",
     "description": "Test le prerequis 'savingThrow'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -369,7 +369,7 @@
     "name": "Spell caster",
     "type": "simple",
     "description": "Test le prerequis 'spellCaster'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -383,7 +383,7 @@
     "name": "Not spell caster",
     "type": "simple",
     "description": "Test le prerequis 'spellCaster'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": [
       {
@@ -397,7 +397,7 @@
     "name": "Simple feat",
     "type": "simple",
     "description": "Test le type 'simple'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": []
   },
@@ -407,7 +407,7 @@
     "type": "targeted",
     "targetType": "weapon",
     "description": "Test le type 'target'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": []
   },
@@ -417,7 +417,7 @@
     "type": "multiple",
     "targetType": "weapon",
     "description": "Test le type 'multiple'.",
-    "refs": [],
+    "reference": { "book": "base", "page": 1 },
     "modifiers": [],
     "prerequisites": []
   }
