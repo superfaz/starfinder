@@ -5,6 +5,7 @@ import {
   Alignment,
   Armor,
   Avatar,
+  Book,
   Class,
   DamageType,
   FeatTemplate,
@@ -100,6 +101,7 @@ export class DataSetBuilder {
       getAlignments: cache("alignments", () => this.getOrdered("alignments").then((a) => Alignment.array().parse(a))),
       getArmors: cache("armors", () => this.getOrdered("armors").then((a) => Armor.array().parse(a))),
       getAvatars: cache("avatars", () => this.getAll("avatars").then((a) => Avatar.array().parse(a))),
+      getBooks: cache("books", () => this.getAll("books").then((a) => Book.array().parse(a))),
       getClasses: cache("classes", () => this.getNamed("classes").then((a) => Class.array().parse(a))),
       getClassDetails: <T>(classId: string) => this.getOne<T>("classes-details", classId),
       getDamageTypes: cache("damage-types", () =>

@@ -2,21 +2,22 @@ import * as fs from "node:fs/promises";
 import {
   AbilityScore,
   Alignment,
-  Avatar,
   Armor,
+  Avatar,
+  Book,
   Class,
   ClassEnvoy,
   ClassOperative,
   ClassSoldier,
   FeatTemplate,
   IModel,
+  Profession,
   Race,
   SavingThrow,
   SkillDefinition,
   Theme,
   ThemeScholar,
   Weapon,
-  Profession,
 } from "model";
 import { describe, expect, test } from "vitest";
 
@@ -35,6 +36,11 @@ const datasets = [
     file: "armors.json",
     array: true,
     schema: Armor.strict(),
+  },
+  {
+    file: "books.json",
+    array: true,
+    schema: Book.strict(),
   },
   {
     file: "avatars.json",

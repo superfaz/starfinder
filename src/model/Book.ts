@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { ICodedModel } from "./ICodedModel";
 import { INamedModel } from "./INamedModel";
 
 export const Chapter = INamedModel.extend({
@@ -10,7 +9,7 @@ export const Chapter = INamedModel.extend({
 
 export type Chapter = z.infer<typeof Chapter>;
 
-export const Book = ICodedModel.extend({
+export const Book = INamedModel.extend({
   chapters: z.array(Chapter),
 });
 

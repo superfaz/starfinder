@@ -3,6 +3,7 @@ import {
   Alignment,
   Armor,
   Avatar,
+  Book,
   Class,
   DamageType,
   FeatTemplate,
@@ -20,6 +21,7 @@ export interface IDataSet {
   getAlignments(): Promise<Alignment[]>;
   getArmors(): Promise<Armor[]>;
   getAvatars(): Promise<Avatar[]>;
+  getBooks(): Promise<Book[]>;
   getClasses(): Promise<Class[]>;
   getClassDetails(classId: string): Promise<unknown>;
   getDamageTypes(): Promise<DamageType[]>;

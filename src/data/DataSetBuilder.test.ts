@@ -17,6 +17,7 @@ describe("DataSetBuilder", () => {
     "getAbilityScores",
     "getAlignments",
     "getAvatars",
+    "getBooks",
     "getClasses",
     "getClassDetails",
     "getRaces",
