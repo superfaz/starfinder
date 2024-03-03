@@ -3,6 +3,7 @@ export * from "./AbilityScore";
 export * from "./Alignment";
 export * from "./Armor";
 export * from "./Avatar";
+export * from "./Book";
 export * from "./Character";
 export * from "./Class";
 export * from "./ClassEnvoy";
