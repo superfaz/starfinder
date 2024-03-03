@@ -397,9 +397,7 @@ function CardFeats({ character }: CharacterProps) {
         <Stack gap={2}>
           {feats.length === 0 && <em>Pas de don sélectionné</em>}
           {feats.map((feat) => (
-            <div key={feat.target ? `${feat.id}-${feat.target}` : feat.id}>
-              <strong className="me-2">{feat.name}</strong>
-            </div>
+            <div key={feat.target ? `${feat.id}-${feat.target}` : feat.id}>{feat.name}</div>
           ))}
         </Stack>
       </Card.Body>
