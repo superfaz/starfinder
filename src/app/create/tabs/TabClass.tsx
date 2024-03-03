@@ -7,9 +7,9 @@ import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
 import { AbilityScoreIds } from "model";
+import { ReferenceComponent } from "../ReferenceComponent";
 
 const LazyGenericClassDetails = dynamic(() => import("../classes/genericDetails"));
-
 const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
 const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
 const LazyMysticClassEditor = dynamic(() => import("../classes/mysticEditor"));
@@ -97,12 +97,13 @@ export function ClassSelection({ character }: CharacterProps) {
             <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
             <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
           </Stack>
-          <p className="text-muted">{selectedClass.description}</p>
+          <div className="text-muted">{selectedClass.description}</div>
+          <ReferenceComponent reference={selectedClass.reference} />
         </>
       )}
       {character.isSoldier() && (
         <>
-          <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe">
+          <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe" className="mt-3">
             <Form.Select value={character.getSoldierAbilityScore() ?? ""} onChange={handleSoldierAbilityScoreChange}>
               {[AbilityScoreIds.str, AbilityScoreIds.dex].map((id) => (
                 <option key={id} value={id}>

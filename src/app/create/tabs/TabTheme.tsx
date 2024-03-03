@@ -10,6 +10,7 @@ import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Feature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
+import { ReferenceComponent } from "../ReferenceComponent";
 
 const LazyThemeNoneEditor = dynamic(() => import("../themes/ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("../themes/ThemeScholarEditor"));
@@ -51,9 +52,16 @@ export function ThemeSelection({ character }: CharacterProps) {
           )}
         </Stack>
       )}
-      {selectedTheme && <p className="text-muted">{selectedTheme.description}</p>}
-      {character.hasNoTheme() && <LazyThemeNoneEditor character={character} />}
-      {character.isScholar() && <LazyThemeScholarEditor character={character} />}
+      {selectedTheme && (
+        <>
+          <div className="text-muted">{selectedTheme.description}</div>
+          <ReferenceComponent reference={selectedTheme.reference} />
+        </>
+      )}
+      <div className="mt-3">
+        {character.hasNoTheme() && <LazyThemeNoneEditor character={character} />}
+        {character.isScholar() && <LazyThemeScholarEditor character={character} />}
+      </div>
     </Stack>
   );
 }
