@@ -9,6 +9,7 @@ import { RaceFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import type { CharacterProps } from "../Props";
 import RaceHumansEditor from "../races/RaceHumansEditor";
+import { ReferenceComponent } from "../ReferenceComponent";
 
 export function RaceSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
@@ -45,34 +46,36 @@ export function RaceSelection({ character }: CharacterProps) {
           <Stack direction="horizontal" className="right">
             <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
           </Stack>
-          <p className="text-muted">{selectedRace.description}</p>
-          {selectedRace.variants && selectedVariant && (
-            <>
-              <Form.FloatingLabel controlId="variant" label="Variante">
-                <Form.Select value={selectedVariant?.id ?? ""} onChange={handleVariantChange}>
-                  {selectedRace.variants.map((variant) => (
-                    <option key={variant.id} value={variant.id}>
-                      {variant.name}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.FloatingLabel>
-              {Object.entries(selectedVariant.abilityScores).length > 0 && (
-                <Stack direction="horizontal" className="right">
-                  {Object.entries(selectedVariant.abilityScores).map(
-                    ([key, value]) =>
-                      value && (
-                        <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                          {findOrError(data.abilityScores, key).code} {displayBonus(value)}
-                        </Badge>
-                      )
-                  )}
-                </Stack>
+          <div className="text-muted">{selectedRace.description}</div>
+          <ReferenceComponent reference={selectedRace.reference} />
+        </>
+      )}
+
+      {selectedRace && selectedVariant && (
+        <>
+          <Form.FloatingLabel controlId="variant" label="Variante" className="mt-3">
+            <Form.Select value={selectedVariant?.id ?? ""} onChange={handleVariantChange}>
+              {selectedRace.variants.map((variant) => (
+                <option key={variant.id} value={variant.id}>
+                  {variant.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+          {Object.entries(selectedVariant.abilityScores).length > 0 && (
+            <Stack direction="horizontal" className="right">
+              {Object.entries(selectedVariant.abilityScores).map(
+                ([key, value]) =>
+                  value && (
+                    <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                      {findOrError(data.abilityScores, key).code} {displayBonus(value)}
+                    </Badge>
+                  )
               )}
-              {character.isHumanStandard() && <RaceHumansEditor character={character} />}
-              {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
-            </>
+            </Stack>
           )}
+          {character.isHumanStandard() && <RaceHumansEditor character={character} />}
+          {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
         </>
       )}
 

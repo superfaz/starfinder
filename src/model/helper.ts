@@ -11,6 +11,8 @@ export const Reference = z.object({
   page: z.number(),
 });
 
+export type Reference = z.infer<typeof Reference>;
+
 export const Evolutions = z.record(
   z.string().regex(/\d+/),
   z.union([z.null(), z.record(z.union([z.number(), z.string()]))])

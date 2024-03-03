@@ -182,12 +182,30 @@ input[type="number"] {
 /**
  * Custom elements.
  */
-.ref {
-  margin-top: 0.25em;
-  display: inline-block;
-}
+.reference {
+  overflow: hidden;
+  display: flex;
+  align-items: left;
+  width: calc(2em + 4px);
+  transition: all 0.5s ease 0.2s;
+  cursor: default;
 
-.ref::before {
-  border: 1px solid #eee;
-  background-color: transparent;
+  &:hover {
+    width: 100%;
+  }
+
+  .bi {
+    background: var(--bs-dark);
+    padding-top: 2px;
+    padding-left: 1em;
+    padding-right: 0.6em;
+    margin-left: -1em;
+  }
+
+  .text {
+    padding-top: 2px;
+    display: inline-block;
+    white-space: nowrap;
+    margin-left: 0.5em;
+  }
 }
