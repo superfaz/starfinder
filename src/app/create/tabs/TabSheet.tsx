@@ -83,7 +83,7 @@ function CardAvatar({ character }: CharacterProps) {
         <Badge bg="primary">Avatar</Badge>
       </Card.Header>
       {!avatar && (
-        <Card.Body className="text-center text-muted">
+        <Card.Body className="small">
           <em>Pas de race sélectionnée</em>
         </Card.Body>
       )}
@@ -103,9 +103,9 @@ function CardDescription({ character }: CharacterProps) {
       <Card.Header>
         <Badge bg="primary">Biographie</Badge>
       </Card.Header>
-      <Card.Body>
+      <Card.Body className="small">
         {description}
-        {!description && <em>Pas de description pour ce personnage</em>}
+        {!description && <em>Pas de description définie</em>}
       </Card.Body>
     </Card>
   );
@@ -241,7 +241,7 @@ function CardSavingThrows({ data, character }: SheetProps) {
       <Card.Body className="position-relative">
         <Row>
           {!selectedClass && (
-            <div className="text-center text-muted">
+            <div className="small">
               <em>Pas de classe sélectionnée</em>
             </div>
           )}
@@ -314,7 +314,11 @@ function CardAttackBonuses({ character }: CharacterProps) {
         <Badge bg="primary">Bonus d&apos;attaque</Badge>
       </Card.Header>
       <Card.Body className="position-relative">
-        {!attackBonuses && <div className="text-center text-muted">Pas de classe sélectionnée</div>}
+        {!attackBonuses && (
+          <div className="small">
+            <em>Pas de classe sélectionnée</em>
+          </div>
+        )}
         {attackBonuses && (
           <Row>
             <ValueComponent label="Bonus de base à l'attaque" className="col-12 mb-2">
@@ -369,6 +373,7 @@ function CardAbilities({ character }: CharacterProps) {
       </Card.Header>
       <Card.Body className="small">
         <Stack gap={2}>
+          {modifiers.length === 0 && <em>Pas de pouvoir défini</em>}
           {modifiers.map((modifier) => (
             <div key={modifier.id}>
               <strong className="me-2">{modifier.name}.</strong>
@@ -390,6 +395,7 @@ function CardFeats({ character }: CharacterProps) {
       </Card.Header>
       <Card.Body className="small">
         <Stack gap={2}>
+          {feats.length === 0 && <em>Pas de don sélectionné</em>}
           {feats.map((feat) => (
             <div key={feat.target ? `${feat.id}-${feat.target}` : feat.id}>
               <strong className="me-2">{feat.name}</strong>
