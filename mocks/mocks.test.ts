@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises";
 import {
   AbilityScoreSchema,
   AlignmentSchema,
-  Armor,
+  ArmorSchema,
   Avatar,
   Book,
   Class,
@@ -35,7 +35,7 @@ const datasets = [
   {
     file: "armors.json",
     array: true,
-    schema: Armor.strict(),
+    schema: ArmorSchema.strict(),
   },
   {
     file: "books.json",

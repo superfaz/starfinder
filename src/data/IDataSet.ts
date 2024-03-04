@@ -1,6 +1,6 @@
-import {
-  type AbilityScore,
-  type Alignment,
+import type {
+  AbilityScore,
+  Alignment,
   Armor,
   Avatar,
   Book,

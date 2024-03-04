@@ -1,6 +1,6 @@
 import {
   AbilityScoreIdSchema,
-  ArmorId,
+  ArmorIdSchema,
   FeatTemplate,
   FeatureTemplate,
   INamedModel,
@@ -174,7 +174,7 @@ export class Templater {
       case "armorProficiency":
         return {
           ...prerequisite,
-          target: ArmorId.parse(this.applyForString(prerequisite.target)),
+          target: ArmorIdSchema.parse(this.applyForString(prerequisite.target)),
         };
 
       case "savingThrow":

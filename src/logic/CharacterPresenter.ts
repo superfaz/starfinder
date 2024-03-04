@@ -4,7 +4,7 @@ import { IClientDataSet } from "data";
 import {
   type AbilityScoreId,
   AbilityScoreIds,
-  ArmorId,
+  type ArmorId,
   Avatar,
   Character,
   Class,

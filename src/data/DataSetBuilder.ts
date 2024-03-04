@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 import {
   AbilityScoreSchema,
   AlignmentSchema,
-  Armor,
+  ArmorSchema,
   Avatar,
   Book,
   Class,
@@ -99,7 +99,7 @@ export class DataSetBuilder {
         this.getOrdered("ability-scores").then((a) => AbilityScoreSchema.array().parse(a))
       ),
       getAlignments: cache("alignments", () => this.getOrdered("alignments").then((a) => AlignmentSchema.array().parse(a))),
-      getArmors: cache("armors", () => this.getOrdered("armors").then((a) => Armor.array().parse(a))),
+      getArmors: cache("armors", () => this.getOrdered("armors").then((a) => ArmorSchema.array().parse(a))),
       getAvatars: cache("avatars", () => this.getAll("avatars").then((a) => Avatar.array().parse(a))),
       getBooks: cache("books", () => this.getAll("books").then((a) => Book.array().parse(a))),
       getClasses: cache("classes", () => this.getNamed("classes").then((a) => Class.array().parse(a))),

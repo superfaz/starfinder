@@ -4,7 +4,6 @@ import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { useAppSelector } from "logic";
 import {
-  ArmorId,
   FeatModifier,
   FeatTargetTypes,
   ModifierType,
@@ -84,7 +83,7 @@ function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: Mod
         element.targetName = retrieveSkillName(data, modifier.target);
         break;
       case FeatTargetTypes.weapon:
-        element.targetName = findOrError(data.weapons, modifier.target as ArmorId).name;
+        element.targetName = findOrError(data.weapons, modifier.target).name;
         break;
       default:
         //Do nothing

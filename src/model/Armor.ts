@@ -1,18 +1,18 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 
-export const ArmorId = z.enum(["light", "heavy", "powered"]);
+export const ArmorIdSchema = z.enum(["light", "heavy", "powered"]);
 
-export type ArmorId = z.infer<typeof ArmorId>;
+export type ArmorId = z.infer<typeof ArmorIdSchema>;
 
-export const ArmorIds = ArmorId.enum;
+export const ArmorIds = ArmorIdSchema.enum;
 
-export const Armor = INamedModel.extend({
-  id: ArmorId,
+export const ArmorSchema = INamedModel.extend({
+  id: ArmorIdSchema,
 });
 
-export type Armor = z.infer<typeof Armor>;
+export type Armor = z.infer<typeof ArmorSchema>;
 
 export function isArmor(obj: unknown): obj is Armor {
-  return Armor.safeParse(obj).success;
+  return ArmorSchema.safeParse(obj).success;
 }
