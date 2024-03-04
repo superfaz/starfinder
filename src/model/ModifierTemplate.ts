@@ -6,26 +6,26 @@ import { ModifierTypes } from "./ModifierType";
 import { SavingThrowId } from "./SavingThrow";
 import { WeaponId } from "./Weapon";
 
-export const AbilityModifier = IModelSchema.extend({
+export const AbilityModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.ability),
   level: z.number().optional(),
   name: z.string(),
   description: DescriptionSchema,
 }).strict();
 
-export const ArmorProficiencyModifier = IModelSchema.extend({
+export const ArmorProficiencyModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.armorProficiency),
   level: z.number().optional(),
   target: ArmorIdSchema,
 }).strict();
 
-export const ClassSkillModifier = IModelSchema.extend({
+export const ClassSkillModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.classSkill),
   level: z.number().optional(),
   target: z.string(),
 }).strict();
 
-export const FeatModifier = IModelSchema.extend({
+export const FeatModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.feat),
   level: z.number().optional(),
   feat: IdSchema,
@@ -33,42 +33,42 @@ export const FeatModifier = IModelSchema.extend({
   extra: z.string().optional(),
 }).strict();
 
-export type FeatModifier = z.infer<typeof FeatModifier>;
+export type FeatModifier = z.infer<typeof FeatModifierSchema>;
 
-export const RankSkillModifier = IModelSchema.extend({
+export const RankSkillModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.rankSkill),
   level: z.number().optional(),
   target: z.string(),
 }).strict();
 
-export const SavingThrowModifier = IModelSchema.extend({
+export const SavingThrowModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.savingThrow),
   level: z.number().optional(),
   name: z.string(),
   description: DescriptionSchema,
 }).strict();
 
-export const SavingThrowBonusModifier = IModelSchema.extend({
+export const SavingThrowBonusModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.savingThrowBonus),
   level: z.number().optional(),
   target: SavingThrowId,
   value: z.number(),
 }).strict();
 
-export const SpellModifier = IModelSchema.extend({
+export const SpellModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.spell),
   level: z.number().optional(),
   target: z.string(),
   extra: z.string().optional(),
 }).strict();
 
-export const WeaponProficiencyModifier = IModelSchema.extend({
+export const WeaponProficiencyModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.weaponProficiency),
   level: z.number().optional(),
   target: WeaponId,
 }).strict();
 
-export const SimpleModifierTemplate = IModelSchema.extend({
+export const SimpleModifierTemplateSchema = IModelSchema.extend({
   type: z.enum([
     ModifierTypes.attack,
     ModifierTypes.featCount,
@@ -84,29 +84,29 @@ export const SimpleModifierTemplate = IModelSchema.extend({
   value: z.union([z.string(), z.number()]),
 });
 
-export const SkillModifierTemplate = IModelSchema.extend({
+export const SkillModifierTemplateSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.skill),
   level: z.number().optional(),
   target: z.string(),
   value: z.union([z.string(), z.number()]),
 });
 
-export const ModifierTemplate = z.discriminatedUnion("type", [
-  ArmorProficiencyModifier,
-  AbilityModifier,
-  ClassSkillModifier,
-  FeatModifier,
-  RankSkillModifier,
-  SimpleModifierTemplate,
-  SavingThrowModifier,
-  SavingThrowBonusModifier,
-  SkillModifierTemplate,
-  SpellModifier,
-  WeaponProficiencyModifier,
+export const ModifierTemplateSchema = z.discriminatedUnion("type", [
+  ArmorProficiencyModifierSchema,
+  AbilityModifierSchema,
+  ClassSkillModifierSchema,
+  FeatModifierSchema,
+  RankSkillModifierSchema,
+  SimpleModifierTemplateSchema,
+  SavingThrowModifierSchema,
+  SavingThrowBonusModifierSchema,
+  SkillModifierTemplateSchema,
+  SpellModifierSchema,
+  WeaponProficiencyModifierSchema,
 ]);
 
-export type ModifierTemplate = z.infer<typeof ModifierTemplate>;
+export type ModifierTemplate = z.infer<typeof ModifierTemplateSchema>;
 
 export function isModifierTemplate(obj: unknown): obj is ModifierTemplate {
-  return ModifierTemplate.safeParse(obj).success;
+  return ModifierTemplateSchema.safeParse(obj).success;
 }

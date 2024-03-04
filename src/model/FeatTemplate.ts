@@ -2,7 +2,7 @@ import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
 import { Prerequisite } from "./Prerequisite";
-import { ModifierTemplate } from "./ModifierTemplate";
+import { ModifierTemplateSchema } from "./ModifierTemplate";
 
 const BaseFeatTemplateSchema = INamedModelSchema.extend({
   /**
@@ -12,7 +12,7 @@ const BaseFeatTemplateSchema = INamedModelSchema.extend({
   combatFeat: z.boolean().default(false),
   description: DescriptionSchema,
   reference: ReferenceSchema,
-  modifiers: z.array(ModifierTemplate),
+  modifiers: z.array(ModifierTemplateSchema),
   prerequisites: z.array(Prerequisite).optional(),
 });
 

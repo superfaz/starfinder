@@ -1,15 +1,15 @@
 import {
-  AbilityModifier,
-  ArmorProficiencyModifier,
-  ClassSkillModifier,
-  FeatModifier,
+  AbilityModifierSchema,
+  ArmorProficiencyModifierSchema,
+  ClassSkillModifierSchema,
+  FeatModifierSchema,
   IModelSchema,
   ModifierTypes,
-  RankSkillModifier,
-  SavingThrowBonusModifier,
-  SavingThrowModifier,
-  SpellModifier,
-  WeaponProficiencyModifier,
+  RankSkillModifierSchema,
+  SavingThrowBonusModifierSchema,
+  SavingThrowModifierSchema,
+  SpellModifierSchema,
+  WeaponProficiencyModifierSchema,
 } from "model";
 import { z } from "zod";
 
@@ -47,22 +47,22 @@ export const SkillModifier = IModelSchema.extend({
 }).strict();
 
 export const Modifier = z.discriminatedUnion("type", [
-  AbilityModifier,
-  ArmorProficiencyModifier,
-  ClassSkillModifier,
-  FeatModifier,
+  AbilityModifierSchema,
+  ArmorProficiencyModifierSchema,
+  ClassSkillModifierSchema,
+  FeatModifierSchema,
   FeatCountModifier,
   HitPointsModifier,
   InitiativeModifier,
-  RankSkillModifier,
+  RankSkillModifierSchema,
   ResolveModifier,
   SimpleModifier,
-  SavingThrowModifier,
-  SavingThrowBonusModifier,
+  SavingThrowModifierSchema,
+  SavingThrowBonusModifierSchema,
   SkillModifier,
-  SpellModifier,
+  SpellModifierSchema,
   StaminaModifier,
-  WeaponProficiencyModifier,
+  WeaponProficiencyModifierSchema,
 ]);
 
 export type Modifier = z.infer<typeof Modifier>;

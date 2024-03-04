@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
-import { ModifierTemplate } from "./ModifierTemplate";
+import { ModifierTemplateSchema } from "./ModifierTemplate";
 import { DescriptionSchema, EvolutionsSchema } from "./helper";
 
 export const FeatureCategorySchema = z.enum(["ex", "ma", "su"]);
@@ -14,7 +14,7 @@ export const FeatureCategories = FeatureCategorySchema.enum;
  */
 export const FeatureTemplateSchema = INamedModelSchema.extend({
   description: z.optional(DescriptionSchema),
-  modifiers: z.optional(z.array(ModifierTemplate)),
+  modifiers: z.optional(z.array(ModifierTemplateSchema)),
   level: z.number(),
 
   /**

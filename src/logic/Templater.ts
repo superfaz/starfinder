@@ -4,7 +4,7 @@ import {
   type FeatTemplate,
   type FeatureTemplate,
   type INamedModel,
-  ModifierTemplate,
+  type ModifierTemplate,
   ModifierTypes,
   Prerequisite,
   SavingThrowId,
