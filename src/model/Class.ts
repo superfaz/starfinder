@@ -3,7 +3,7 @@ import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, ReferenceSchema, VariableSchema } from "./helper";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ArmorIdSchema } from "./Armor";
-import { WeaponId } from "./Weapon";
+import { WeaponIdSchema } from "./Weapon";
 
 export const ClassSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
@@ -16,7 +16,7 @@ export const ClassSchema = INamedModelSchema.extend({
   skillRank: z.number(),
   classSkills: z.array(z.string()),
   armors: z.array(ArmorIdSchema),
-  weapons: z.array(WeaponId),
+  weapons: z.array(WeaponIdSchema),
   baseAttack: z.enum(["low", "high"]),
   savingThrows: z.object({
     fortitude: z.enum(["low", "high"]),

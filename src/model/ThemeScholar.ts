@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { IModelSchema } from "./IModel";
 
-export const ThemeScholar = IModelSchema.extend({
+export const ThemeScholarSchema = IModelSchema.extend({
   values: z.record(z.array(z.string())),
 });
 
-export type ThemeScholar = z.infer<typeof ThemeScholar>;
+export type ThemeScholar = z.infer<typeof ThemeScholarSchema>;
 
 export function isThemeScholar(obj: unknown): obj is ThemeScholar {
-  return ThemeScholar.safeParse(obj).success;
+  return ThemeScholarSchema.safeParse(obj).success;
 }

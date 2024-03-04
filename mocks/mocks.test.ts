@@ -15,9 +15,9 @@ import {
   RaceSchema,
   SavingThrowSchema,
   SkillDefinitionSchema,
-  Theme,
-  ThemeScholar,
-  Weapon,
+  ThemeSchema,
+  ThemeScholarSchema,
+  WeaponSchema,
 } from "model";
 import { describe, expect, test } from "vitest";
 
@@ -95,17 +95,17 @@ const datasets = [
   {
     file: "themes-details.json",
     array: true,
-    schema: ThemeScholar.strict(),
+    schema: ThemeScholarSchema.strict(),
   },
   {
     file: "themes.json",
     array: true,
-    schema: Theme.strict(),
+    schema: ThemeSchema.strict(),
   },
   {
     file: "weapons.json",
     array: true,
-    schema: Weapon.strict(),
+    schema: WeaponSchema.strict(),
   },
 ];
 

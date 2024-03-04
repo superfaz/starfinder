@@ -14,9 +14,9 @@ import {
   SavingThrowSchema,
   SkillDefinitionSchema,
   SpellSchema,
-  Theme,
-  ThemeScholar,
-  Weapon,
+  ThemeSchema,
+  ThemeScholarSchema,
+  WeaponSchema,
 } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import envoyDetails from "./mocks/class-envoy.json";
@@ -45,11 +45,11 @@ async function mockBuild(): Promise<IDataSet> {
     getProfessions: async () => ProfessionSchema.array().parse((await import("./mocks/professions.json")).default),
     getRaces: async () => RaceSchema.array().parse((await import("./mocks/races.json")).default),
     getSpells: async () => SpellSchema.array().parse((await import("./mocks/spells.json")).default),
-    getThemes: async () => Theme.array().parse((await import("./mocks/themes.json")).default),
-    getThemeDetails: async () => ThemeScholar.parse((await import("./mocks/themes-details.json")).default),
+    getThemes: async () => ThemeSchema.array().parse((await import("./mocks/themes.json")).default),
+    getThemeDetails: async () => ThemeScholarSchema.parse((await import("./mocks/themes-details.json")).default),
     getSavingThrows: async () => SavingThrowSchema.array().parse((await import("./mocks/saving-throws.json")).default),
     getSkills: async () => SkillDefinitionSchema.array().parse((await import("./mocks/skills.json")).default),
-    getWeapons: async () => Weapon.array().parse((await import("./mocks/weapons.json")).default),
+    getWeapons: async () => WeaponSchema.array().parse((await import("./mocks/weapons.json")).default),
   };
 }
 

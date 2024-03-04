@@ -1,22 +1,22 @@
 import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
 
-export const WeaponId = z.enum(["natural", "basic", "advanced", "small", "long", "heavy", "sniper", "grenade"]);
+export const WeaponIdSchema = z.enum(["natural", "basic", "advanced", "small", "long", "heavy", "sniper", "grenade"]);
 
-export type WeaponId = z.infer<typeof WeaponId>;
+export type WeaponId = z.infer<typeof WeaponIdSchema>;
 
-export const Weapon = INamedModelSchema.extend({
-  id: WeaponId,
+export const WeaponSchema = INamedModelSchema.extend({
+  id: WeaponIdSchema,
 });
 
-export type Weapon = z.infer<typeof Weapon>;
+export type Weapon = z.infer<typeof WeaponSchema>;
 
-export const WeaponIds = WeaponId.enum;
+export const WeaponIds = WeaponIdSchema.enum;
 
 export function isWeapon(obj: unknown): obj is Weapon {
-  return Weapon.safeParse(obj).success;
+  return WeaponSchema.safeParse(obj).success;
 }
 
 export function isWeaponId(obj: unknown): obj is WeaponId {
-  return WeaponId.safeParse(obj).success;
+  return WeaponIdSchema.safeParse(obj).success;
 }
