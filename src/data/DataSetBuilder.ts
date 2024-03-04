@@ -6,7 +6,7 @@ import {
   ArmorSchema,
   AvatarSchema,
   BookSchema,
-  Class,
+  ClassSchema,
   DamageType,
   FeatTemplate,
   IModel,
@@ -102,7 +102,7 @@ export class DataSetBuilder {
       getArmors: cache("armors", () => this.getOrdered("armors").then((a) => ArmorSchema.array().parse(a))),
       getAvatars: cache("avatars", () => this.getAll("avatars").then((a) => AvatarSchema.array().parse(a))),
       getBooks: cache("books", () => this.getAll("books").then((a) => BookSchema.array().parse(a))),
-      getClasses: cache("classes", () => this.getNamed("classes").then((a) => Class.array().parse(a))),
+      getClasses: cache("classes", () => this.getNamed("classes").then((a) => ClassSchema.array().parse(a))),
       getClassDetails: <T>(classId: string) => this.getOne<T>("classes-details", classId),
       getDamageTypes: cache("damage-types", () =>
         this.getNamed("damage-types").then((a) => DamageType.array().parse(a))

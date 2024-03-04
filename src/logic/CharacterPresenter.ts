@@ -1,12 +1,11 @@
 import * as Sentry from "@sentry/nextjs";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import {
-  type AbilityScoreId,
-  AbilityScoreIds,
-  type ArmorId,
-  type Avatar,
-  type Character,
+import type {
+  AbilityScoreId,
+  ArmorId,
+  Avatar,
+  Character,
   Class,
   ClassEnvoy,
   ClassMystic,
@@ -15,9 +14,7 @@ import {
   FeatTemplate,
   IModel,
   INamedModel,
-  ModifierTypes,
   Prerequisite,
-  PrerequisiteTypes,
   Race,
   SavingThrow,
   SavingThrowId,
@@ -26,10 +23,8 @@ import {
   Theme,
   Variant,
   WeaponId,
-  isCasterId,
-  isVariable,
-  isWeaponId,
 } from "model";
+import { AbilityScoreIds, ModifierTypes, PrerequisiteTypes, isCasterId, isVariable, isWeaponId } from "model";
 import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofType } from "view";
 import { getMysticFeatureTemplates, getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
 import { FeatPresenter, Templater, cleanEvolutions } from ".";

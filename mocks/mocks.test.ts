@@ -5,7 +5,7 @@ import {
   ArmorSchema,
   AvatarSchema,
   BookSchema,
-  Class,
+  ClassSchema,
   ClassEnvoy,
   ClassOperative,
   ClassSoldier,
@@ -65,7 +65,7 @@ const datasets = [
   {
     file: "classes.json",
     array: true,
-    schema: Class.strict(),
+    schema: ClassSchema.strict(),
   },
   {
     file: "feats.json",

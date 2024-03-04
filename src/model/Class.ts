@@ -5,7 +5,7 @@ import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ArmorIdSchema } from "./Armor";
 import { WeaponId } from "./Weapon";
 
-export const Class = INamedModel.extend({
+export const ClassSchema = INamedModel.extend({
   description: Description,
   reference: Reference,
   hitPoints: z.number(),
@@ -25,8 +25,8 @@ export const Class = INamedModel.extend({
   }),
 });
 
-export type Class = z.infer<typeof Class>;
+export type Class = z.infer<typeof ClassSchema>;
 
 export function isClass(data: unknown): data is Class {
-  return Class.safeParse(data).success;
+  return ClassSchema.safeParse(data).success;
 }
