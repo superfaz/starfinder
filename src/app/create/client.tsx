@@ -193,6 +193,17 @@ function ClientComponentPresenter({ debug }: { debug: boolean }) {
             </Col>
           )}
 
+          {navigation === "equipment" && (
+            <>
+              <Col lg={3}>
+                <Tab.EquipmentSelected />
+              </Col>
+              <Col>
+                <Tab.EquipmentSelection />
+              </Col>
+            </>
+          )}
+
           {navigation === "sheet" && (
             <Col lg={12}>
               <Tab.Sheet character={presenter} />

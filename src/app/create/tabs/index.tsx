@@ -1,5 +1,6 @@
 export * from "./TabAbilityScores";
 export * from "./TabClass";
+export * from "./TabEquipment";
 export * from "./TabFeats";
 export * from "./TabIntro";
 export * from "./TabProfile";
