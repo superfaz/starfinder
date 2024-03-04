@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { AbilityScoreIdSchema } from "./AbilityScore";
-import { INamedModel } from "./INamedModel";
+import { INamedModelSchema } from "./INamedModel";
 
-export const Profession = INamedModel.extend({
+export const Profession = INamedModelSchema.extend({
   abilityScore: AbilityScoreIdSchema,
 });
 

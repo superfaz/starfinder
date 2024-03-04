@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { INamedModel } from "./INamedModel";
+import { INamedModelSchema } from "./INamedModel";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 
 export const SavingThrowId = z.enum(["fortitude", "reflex", "will"]);
 
 export type SavingThrowId = z.infer<typeof SavingThrowId>;
 
-export const SavingThrow = INamedModel.extend({
+export const SavingThrow = INamedModelSchema.extend({
   id: SavingThrowId,
   abilityScore: AbilityScoreIdSchema,
 });

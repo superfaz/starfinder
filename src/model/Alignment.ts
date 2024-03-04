@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { ICodedModel } from "./ICodedModel";
+import { ICodedModelSchema } from "./ICodedModel";
 
 const AlignmentIdSchema = z.enum(["lg", "ng", "cg", "ln", "n", "cn", "le", "ne", "ce"]);
 
-export const AlignmentSchema = ICodedModel.extend({
+export const AlignmentSchema = ICodedModelSchema.extend({
   id: AlignmentIdSchema,
 });
 

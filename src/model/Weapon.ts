@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { INamedModel } from "./INamedModel";
+import { INamedModelSchema } from "./INamedModel";
 
 export const WeaponId = z.enum(["natural", "basic", "advanced", "small", "long", "heavy", "sniper", "grenade"]);
 
 export type WeaponId = z.infer<typeof WeaponId>;
 
-export const Weapon = INamedModel.extend({
+export const Weapon = INamedModelSchema.extend({
   id: WeaponId,
 });
 

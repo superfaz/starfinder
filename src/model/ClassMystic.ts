@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { IModel } from "./IModel";
+import { IModelSchema } from "./IModel";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
-import { INamedModel } from "./INamedModel";
+import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema } from "./helper";
 
-export const ClassMysticConnectionSchema = INamedModel.extend({
+export const ClassMysticConnectionSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
   deities: z.array(z.string()),
   features: z.array(FeatureTemplateSchema),
@@ -12,7 +12,7 @@ export const ClassMysticConnectionSchema = INamedModel.extend({
 
 export type ClassMysticConnection = z.infer<typeof ClassMysticConnectionSchema>;
 
-export const ClassMysticSchema = IModel.extend({
+export const ClassMysticSchema = IModelSchema.extend({
   id: z.literal("mystic"),
   features: z.array(FeatureTemplateSchema),
   connections: z.array(ClassMysticConnectionSchema),

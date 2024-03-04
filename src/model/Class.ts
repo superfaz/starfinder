@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { INamedModel } from "./INamedModel";
+import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, ReferenceSchema, VariableSchema } from "./helper";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ArmorIdSchema } from "./Armor";
 import { WeaponId } from "./Weapon";
 
-export const ClassSchema = INamedModel.extend({
+export const ClassSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
   reference: ReferenceSchema,
   hitPoints: z.number(),

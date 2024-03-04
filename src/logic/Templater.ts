@@ -3,7 +3,7 @@ import {
   ArmorIdSchema,
   type FeatTemplate,
   type FeatureTemplate,
-  INamedModel,
+  type INamedModel,
   ModifierTemplate,
   ModifierTypes,
   Prerequisite,

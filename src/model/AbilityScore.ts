@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { ICodedModel } from "./ICodedModel";
+import { ICodedModelSchema } from "./ICodedModel";
 
 export const AbilityScoreIdSchema = z.enum(["str", "dex", "con", "int", "wis", "cha"]);
 
 export type AbilityScoreId = z.infer<typeof AbilityScoreIdSchema>;
 
-export const AbilityScoreSchema = ICodedModel.extend({
+export const AbilityScoreSchema = ICodedModelSchema.extend({
   id: AbilityScoreIdSchema,
 });
 

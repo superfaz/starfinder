@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { IModel } from "./IModel";
+import { IModelSchema } from "./IModel";
 
-export const AvatarSchema = IModel.extend({
+export const AvatarSchema = IModelSchema.extend({
   image: z.string(),
   tags: z.array(z.string()),
 });

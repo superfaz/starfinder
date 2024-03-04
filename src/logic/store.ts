@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
-import { IModel } from "model";
+import type { IModel } from "model";
 import sliceCreate from "./slice-create";
 
 export function makeStore() {

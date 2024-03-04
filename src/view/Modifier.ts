@@ -3,7 +3,7 @@ import {
   ArmorProficiencyModifier,
   ClassSkillModifier,
   FeatModifier,
-  IModel,
+  IModelSchema,
   ModifierTypes,
   RankSkillModifier,
   SavingThrowBonusModifier,
@@ -13,7 +13,7 @@ import {
 } from "model";
 import { z } from "zod";
 
-export const SimpleModifier = IModel.extend({
+export const SimpleModifier = IModelSchema.extend({
   type: z.enum([ModifierTypes.attack, ModifierTypes.languageCount, ModifierTypes.rank, ModifierTypes.speed]),
   level: z.number().optional(),
   value: z.number(),
@@ -39,7 +39,7 @@ export const StaminaModifier = SimpleModifier.extend({
   type: z.literal(ModifierTypes.stamina),
 }).strict();
 
-export const SkillModifier = IModel.extend({
+export const SkillModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.skill),
   level: z.number().optional(),
   target: z.string(),

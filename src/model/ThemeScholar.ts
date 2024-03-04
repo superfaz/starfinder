@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { IModel } from "./IModel";
+import { IModelSchema } from "./IModel";
 
-export const ThemeScholar = IModel.extend({
+export const ThemeScholar = IModelSchema.extend({
   values: z.record(z.array(z.string())),
 });
 

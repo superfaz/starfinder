@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { DescriptionSchema, EvolutionsSchema, FeatureCategorySchema, INamedModel } from "model";
+import { DescriptionSchema, EvolutionsSchema, FeatureCategorySchema, INamedModelSchema } from "model";
 import { Modifier } from "./Modifier";
 
-const BaseFeature = INamedModel.extend({
+const BaseFeature = INamedModelSchema.extend({
   description: z.optional(DescriptionSchema),
   modifiers: z.array(Modifier),
   level: z.number(),

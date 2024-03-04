@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { IModel } from "./IModel";
+import { IModelSchema } from "./IModel";
 
-export const INamedModel = IModel.extend({
+export const INamedModelSchema = IModelSchema.extend({
   name: z.string(),
 });
 
-export type INamedModel = z.infer<typeof INamedModel>;
+export type INamedModel = z.infer<typeof INamedModelSchema>;
 
 export function isNamedModel(obj: unknown): obj is INamedModel {
-  return INamedModel.safeParse(obj).success;
+  return INamedModelSchema.safeParse(obj).success;
 }

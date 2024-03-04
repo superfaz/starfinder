@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { IModel, isIModel } from "./IModel";
+import { IModelSchema, isIModel } from "./IModel";
 
 describe("isIModel", () => {
   const accepted = ["operative", "class-operative", "66a6de23-2791-4b6f-a67f-83fedd2a0759"];
@@ -20,10 +20,10 @@ describe("isIModel", () => {
 
 describe("IModel", () => {
   test("is reducing object after parsing", () => {
-    const actual = IModel.safeParse({ id: "tested-id", name: "tested name" });
+    const actual = IModelSchema.safeParse({ id: "tested-id", name: "tested name" });
     expect(actual.success).toBe(true);
     if (actual.success) {
-      expect(IModel.strict().safeParse(actual.data).success).toBe(true);
+      expect(IModelSchema.strict().safeParse(actual.data).success).toBe(true);
     }
   });
 });

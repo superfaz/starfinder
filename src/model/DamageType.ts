@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ICodedModel } from "./ICodedModel";
+import { ICodedModelSchema } from "./ICodedModel";
 
 export const DamageTypeIdSchema = z.enum([
   "bludgeoning",
@@ -14,7 +14,7 @@ export const DamageTypeIdSchema = z.enum([
 
 export type DamageTypeId = z.infer<typeof DamageTypeIdSchema>;
 
-export const DamageTypeSchema = ICodedModel.extend({
+export const DamageTypeSchema = ICodedModelSchema.extend({
   id: DamageTypeIdSchema,
   category: z.enum(["kinetic", "energy"]),
 });

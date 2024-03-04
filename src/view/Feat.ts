@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { DescriptionSchema, INamedModel, IdSchema, Prerequisite, ReferenceSchema } from "model";
+import { DescriptionSchema, INamedModelSchema, IdSchema, Prerequisite, ReferenceSchema } from "model";
 import { Modifier } from "./Modifier";
 
-const Feat = INamedModel.extend({
+const Feat = INamedModelSchema.extend({
   target: z.optional(IdSchema),
   combatFeat: z.boolean().default(false),
   description: DescriptionSchema,

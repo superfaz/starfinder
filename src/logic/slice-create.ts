@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { findOrError } from "app/helpers";
 import { EmptyClientDataSet, IClientDataSet } from "data";
-import { AbilityScoreIds, type Character, EmptyCharacter, IModel, Profession } from "model";
+import { AbilityScoreIds, type Character, EmptyCharacter, type IModel, Profession } from "model";
 import { RaceFeature } from "view";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 

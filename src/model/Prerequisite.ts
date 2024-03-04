@@ -1,49 +1,49 @@
 import { z } from "zod";
 import { ArmorIdSchema } from "./Armor";
 import { AbilityScoreIdSchema } from "./AbilityScore";
-import { IModel } from "./IModel";
+import { IModelSchema } from "./IModel";
 import { PrerequisiteTypes } from "./PrerequisiteType";
 import { WeaponId } from "./Weapon";
 import { VariableSchema } from "./helper";
 import { SavingThrowId } from "./SavingThrow";
 
-export const AbilityScorePrerequisite = IModel.extend({
+export const AbilityScorePrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.abilityScore),
   target: z.union([AbilityScoreIdSchema, z.literal("<primary>")]),
   value: z.number(),
 }).strict();
 
-export const ArmorProficiencyPrerequisite = IModel.extend({
+export const ArmorProficiencyPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.armorProficiency),
   target: ArmorIdSchema,
 }).strict();
 
-export const ClassPrerequisite = IModel.extend({
+export const ClassPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.class),
   target: z.string(),
   specialization: z.string().optional(),
 }).strict();
 
-export const FeatPrerequisite = IModel.extend({
+export const FeatPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.feat),
   target: z.string(),
 }).strict();
 
-export const SavingThrowPrerequisite = IModel.extend({
+export const SavingThrowPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.savingThrow),
   target: SavingThrowId,
   value: z.number(),
 }).strict();
 
-export const SpellCasterPrerequisite = IModel.extend({
+export const SpellCasterPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.spellCaster),
 }).strict();
 
-export const NotSpellCasterPrerequisite = IModel.extend({
+export const NotSpellCasterPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.notSpellCaster),
 }).strict();
 
-export const SimplePrerequisite = IModel.extend({
+export const SimplePrerequisite = IModelSchema.extend({
   type: z.enum([
     PrerequisiteTypes.arms,
     PrerequisiteTypes.baseAttack,
@@ -54,13 +54,13 @@ export const SimplePrerequisite = IModel.extend({
   value: z.number(),
 }).strict();
 
-export const SkillRankPrerequisite = IModel.extend({
+export const SkillRankPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.skillRank),
   target: z.string(),
   value: z.number(),
 }).strict();
 
-export const WeaponProficiencyPrerequisite = IModel.extend({
+export const WeaponProficiencyPrerequisite = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.weaponProficiency),
   target: z.union([WeaponId, VariableSchema]),
 }).strict();

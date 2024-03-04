@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { INamedModel } from "./INamedModel";
+import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
 import { Prerequisite } from "./Prerequisite";
 import { ModifierTemplate } from "./ModifierTemplate";
 
-const BaseFeatTemplateSchema = INamedModel.extend({
+const BaseFeatTemplateSchema = INamedModelSchema.extend({
   /**
    * If true, the feat will not be shown in the feat list.
    */

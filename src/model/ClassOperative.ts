@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
-import { IModel } from "./IModel";
-import { INamedModel } from "./INamedModel";
+import { IModelSchema } from "./IModel";
+import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema } from "./helper";
 
-export const ClassOperativeSpecializationSchema = INamedModel.extend({
+export const ClassOperativeSpecializationSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
   variables: z.record(z.union([z.string(), z.number()])),
   features: z.array(FeatureTemplateSchema),
@@ -12,7 +12,7 @@ export const ClassOperativeSpecializationSchema = INamedModel.extend({
 
 export type ClassOperativeSpecialization = z.infer<typeof ClassOperativeSpecializationSchema>;
 
-export const ClassOperativeSchema = IModel.extend({
+export const ClassOperativeSchema = IModelSchema.extend({
   id: z.string(),
   specializations: z.array(ClassOperativeSpecializationSchema),
   features: z.array(FeatureTemplateSchema),

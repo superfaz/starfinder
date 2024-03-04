@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { INamedModel } from "./INamedModel";
+import { INamedModelSchema } from "./INamedModel";
 import { ModifierTemplate } from "./ModifierTemplate";
 import { DescriptionSchema, EvolutionsSchema } from "./helper";
 
@@ -12,7 +12,7 @@ export const FeatureCategories = FeatureCategorySchema.enum;
 /**
  * Represents a racial trait or a thematic or a class feature that can be applied to a character.
  */
-export const FeatureTemplateSchema = INamedModel.extend({
+export const FeatureTemplateSchema = INamedModelSchema.extend({
   description: z.optional(DescriptionSchema),
   modifiers: z.optional(z.array(ModifierTemplate)),
   level: z.number(),

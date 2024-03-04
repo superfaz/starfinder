@@ -10,7 +10,7 @@ import {
   ClassOperativeSchema,
   ClassSoldierSchema,
   FeatTemplateSchema,
-  IModel,
+  IModelSchema,
   Profession,
   Race,
   SavingThrow,
@@ -125,7 +125,7 @@ describe.each(datasets)("$file", (dataset) => {
 
     if (dataset.array && data instanceof Array) {
       for (const element of data) {
-        expect(() => IModel.parse(element)).not.toThrow();
+        expect(() => IModelSchema.parse(element)).not.toThrow();
         expect(() => dataset.schema.parse(element)).not.toThrow();
       }
     } else {

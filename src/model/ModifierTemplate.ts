@@ -1,31 +1,31 @@
 import { z } from "zod";
 import { ArmorIdSchema } from "./Armor";
 import { DescriptionSchema, IdSchema } from "./helper";
-import { IModel } from "./IModel";
+import { IModelSchema } from "./IModel";
 import { ModifierTypes } from "./ModifierType";
 import { SavingThrowId } from "./SavingThrow";
 import { WeaponId } from "./Weapon";
 
-export const AbilityModifier = IModel.extend({
+export const AbilityModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.ability),
   level: z.number().optional(),
   name: z.string(),
   description: DescriptionSchema,
 }).strict();
 
-export const ArmorProficiencyModifier = IModel.extend({
+export const ArmorProficiencyModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.armorProficiency),
   level: z.number().optional(),
   target: ArmorIdSchema,
 }).strict();
 
-export const ClassSkillModifier = IModel.extend({
+export const ClassSkillModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.classSkill),
   level: z.number().optional(),
   target: z.string(),
 }).strict();
 
-export const FeatModifier = IModel.extend({
+export const FeatModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.feat),
   level: z.number().optional(),
   feat: IdSchema,
@@ -35,40 +35,40 @@ export const FeatModifier = IModel.extend({
 
 export type FeatModifier = z.infer<typeof FeatModifier>;
 
-export const RankSkillModifier = IModel.extend({
+export const RankSkillModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.rankSkill),
   level: z.number().optional(),
   target: z.string(),
 }).strict();
 
-export const SavingThrowModifier = IModel.extend({
+export const SavingThrowModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.savingThrow),
   level: z.number().optional(),
   name: z.string(),
   description: DescriptionSchema,
 }).strict();
 
-export const SavingThrowBonusModifier = IModel.extend({
+export const SavingThrowBonusModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.savingThrowBonus),
   level: z.number().optional(),
   target: SavingThrowId,
   value: z.number(),
 }).strict();
 
-export const SpellModifier = IModel.extend({
+export const SpellModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.spell),
   level: z.number().optional(),
   target: z.string(),
   extra: z.string().optional(),
 }).strict();
 
-export const WeaponProficiencyModifier = IModel.extend({
+export const WeaponProficiencyModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.weaponProficiency),
   level: z.number().optional(),
   target: WeaponId,
 }).strict();
 
-export const SimpleModifierTemplate = IModel.extend({
+export const SimpleModifierTemplate = IModelSchema.extend({
   type: z.enum([
     ModifierTypes.attack,
     ModifierTypes.featCount,
@@ -84,7 +84,7 @@ export const SimpleModifierTemplate = IModel.extend({
   value: z.union([z.string(), z.number()]),
 });
 
-export const SkillModifierTemplate = IModel.extend({
+export const SkillModifierTemplate = IModelSchema.extend({
   type: z.literal(ModifierTypes.skill),
   level: z.number().optional(),
   target: z.string(),
