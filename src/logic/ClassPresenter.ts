@@ -1,5 +1,5 @@
 import { CharacterPresenter } from "./CharacterPresenter";
-import { ClassMystic, ClassOperative, ClassSoldier, FeatureTemplate } from "model";
+import type { ClassMystic, ClassOperative, ClassSoldier, FeatureTemplate } from "model";
 
 export function getMysticFeatureTemplates(classDetails: ClassMystic, character: CharacterPresenter): FeatureTemplate[] {
   const connection = character.getMysticConnection();

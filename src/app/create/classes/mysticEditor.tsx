@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { CharacterProps } from "../Props";
 import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
-import { ClassMystic } from "model";
+import type { ClassMystic } from "model";
 
 export default function MysticEditor({ character }: CharacterProps) {
   const classDetails = useClassDetails<ClassMystic>("mystic");
