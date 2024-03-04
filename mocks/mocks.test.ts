@@ -14,7 +14,7 @@ import {
   ProfessionSchema,
   RaceSchema,
   SavingThrowSchema,
-  SkillDefinition,
+  SkillDefinitionSchema,
   Theme,
   ThemeScholar,
   Weapon,
@@ -90,7 +90,7 @@ const datasets = [
   {
     file: "skills.json",
     array: true,
-    schema: SkillDefinition.strict(),
+    schema: SkillDefinitionSchema.strict(),
   },
   {
     file: "themes-details.json",

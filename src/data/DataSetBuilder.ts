@@ -14,7 +14,7 @@ import {
   ProfessionSchema,
   RaceSchema,
   SavingThrowSchema,
-  SkillDefinition,
+  SkillDefinitionSchema,
   Spell,
   Theme,
   Weapon,
@@ -116,7 +116,7 @@ export class DataSetBuilder {
       getSavingThrows: cache("saving-throws", () =>
         this.getOrdered("saving-throws").then((a) => SavingThrowSchema.array().parse(a))
       ),
-      getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinition.array().parse(a))),
+      getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinitionSchema.array().parse(a))),
       getWeapons: cache("weapons", () => this.getOrdered("weapons").then((a) => Weapon.array().parse(a))),
     };
 
