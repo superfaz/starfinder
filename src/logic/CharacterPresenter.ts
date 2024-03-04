@@ -6,7 +6,7 @@ import {
   AbilityScoreIds,
   type ArmorId,
   type Avatar,
-  Character,
+  type Character,
   Class,
   ClassEnvoy,
   ClassMystic,

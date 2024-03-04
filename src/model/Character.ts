@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Profession } from "./Profession";
 import { Id } from "./helper";
 
-export const Character = z
+export const CharacterSchema = z
   .object({
     level: z.number(),
     race: z.string(),
@@ -29,10 +29,10 @@ export const Character = z
   })
   .strict();
 
-export type Character = z.infer<typeof Character>;
+export type Character = z.infer<typeof CharacterSchema>;
 
 export function isCharacter(obj: unknown): obj is Character {
-  return Character.safeParse(obj).success;
+  return CharacterSchema.safeParse(obj).success;
 }
 
 export const EmptyCharacter: Readonly<Character> = {
