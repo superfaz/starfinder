@@ -9,7 +9,7 @@ import Stack from "react-bootstrap/Stack";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { displayBonus, findOrError } from "app/helpers";
 import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
-import { AbilityScoreId, Profession, isProfession, simpleHash } from "model";
+import { AbilityScoreId, AbilityScoreIds, Profession, isProfession, simpleHash } from "model";
 import { CharacterProps } from "../Props";
 import ModifierComponent from "../ModifierComponent";
 import { isFeat } from "view";
@@ -165,11 +165,11 @@ export function ProfessionSkills() {
   const professions = useAppSelector((state) => state.data.professions);
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   const dispatch = useAppDispatch();
-  const [abilityScore, setAbilityScore] = useState<AbilityScoreId>("cha");
+  const [abilityScore, setAbilityScore] = useState<AbilityScoreId>(AbilityScoreIds.cha);
   const [selectedProfession, setSelectedProfession] = useState<Array<Profession | NewOption>>([]);
 
   const optionsForAbilityScores = useMemo(() => {
-    return ["cha", "int", "wis"]
+    return [AbilityScoreIds.cha, AbilityScoreIds.int, AbilityScoreIds.wis]
       .map((key) => findOrError(abilityScores, key))
       .sort((a, b) => a.name.localeCompare(b.name));
   }, [abilityScores]);

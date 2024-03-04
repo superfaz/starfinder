@@ -712,8 +712,8 @@ export class CharacterPresenter {
     }
 
     const base = computeBaseAttackBonus(this.character.level, klass.baseAttack);
-    const str = computeAbilityScoreModifier(this.getAbilityScores()["str"]);
-    const dex = computeAbilityScoreModifier(this.getAbilityScores()["dex"]);
+    const str = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.str]);
+    const dex = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
     return {
       base,
       melee: base + str,
