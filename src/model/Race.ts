@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { Variant } from "./Variant";
-import { FeatureTemplate } from "./FeatureTemplate";
+import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { Description, Reference } from "./helper";
 
 export const Race = INamedModel.extend({
@@ -10,8 +10,8 @@ export const Race = INamedModel.extend({
   hitPoints: z.number(),
   variants: z.array(Variant),
   names: z.array(z.string()),
-  traits: z.array(FeatureTemplate),
-  secondaryTraits: z.array(FeatureTemplate),
+  traits: z.array(FeatureTemplateSchema),
+  secondaryTraits: z.array(FeatureTemplateSchema),
 });
 
 export type Race = z.infer<typeof Race>;

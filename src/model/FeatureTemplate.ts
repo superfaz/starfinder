@@ -3,16 +3,16 @@ import { INamedModel } from "./INamedModel";
 import { ModifierTemplate } from "./ModifierTemplate";
 import { Description, Evolutions } from "./helper";
 
-export const FeatureCategory = z.enum(["ex", "ma", "su"]);
+export const FeatureCategorySchema = z.enum(["ex", "ma", "su"]);
 
-export type FeatureCategory = z.infer<typeof FeatureCategory>;
+export type FeatureCategory = z.infer<typeof FeatureCategorySchema>;
 
-export const FeatureCategories = FeatureCategory.enum;
+export const FeatureCategories = FeatureCategorySchema.enum;
 
 /**
  * Represents a racial trait or a thematic or a class feature that can be applied to a character.
  */
-export const FeatureTemplate = INamedModel.extend({
+export const FeatureTemplateSchema = INamedModel.extend({
   description: z.optional(Description),
   modifiers: z.optional(z.array(ModifierTemplate)),
   level: z.number(),
@@ -20,7 +20,7 @@ export const FeatureTemplate = INamedModel.extend({
   /**
    * The type of feature.
    */
-  category: z.optional(FeatureCategory),
+  category: z.optional(FeatureCategorySchema),
 
   /**
    * The evolutions of the feature, indexed by level - for class features.
@@ -33,8 +33,8 @@ export const FeatureTemplate = INamedModel.extend({
   replace: z.optional(z.array(z.string())),
 }).strict();
 
-export type FeatureTemplate = z.infer<typeof FeatureTemplate>;
+export type FeatureTemplate = z.infer<typeof FeatureTemplateSchema>;
 
 export function isFeatureTemplate(data: unknown): data is FeatureTemplate {
-  return FeatureTemplate.safeParse(data).success;
+  return FeatureTemplateSchema.safeParse(data).success;
 }

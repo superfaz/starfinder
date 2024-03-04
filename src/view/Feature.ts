@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { Description, Evolutions, FeatureCategory, INamedModel } from "model";
+import { Description, Evolutions, FeatureCategorySchema, INamedModel } from "model";
 import { Modifier } from "./Modifier";
 
 const BaseFeature = INamedModel.extend({
   description: z.optional(Description),
   modifiers: z.array(Modifier),
   level: z.number(),
-  category: z.optional(FeatureCategory),
+  category: z.optional(FeatureCategorySchema),
 });
 
 export const RaceFeature = BaseFeature.extend({

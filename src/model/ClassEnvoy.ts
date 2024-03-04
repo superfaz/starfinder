@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { IModel } from "./IModel";
-import { FeatureTemplate } from "./FeatureTemplate";
+import { FeatureTemplateSchema } from "./FeatureTemplate";
 
 export const ClassEnvoySchema = IModel.extend({
   id: z.literal("envoy"),
   skills: z.array(z.string()),
-  features: z.array(FeatureTemplate),
+  features: z.array(FeatureTemplateSchema),
 });
 
 export type ClassEnvoy = z.infer<typeof ClassEnvoySchema>;

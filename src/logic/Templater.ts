@@ -2,7 +2,7 @@ import {
   AbilityScoreIdSchema,
   ArmorIdSchema,
   type FeatTemplate,
-  FeatureTemplate,
+  type FeatureTemplate,
   INamedModel,
   ModifierTemplate,
   ModifierTypes,

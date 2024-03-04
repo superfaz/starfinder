@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
-import { FeatureTemplate } from "./FeatureTemplate";
+import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { Description, Reference } from "./helper";
 
 export const Theme = INamedModel.extend({
   description: Description,
   reference: Reference,
   abilityScores: z.record(z.union([z.undefined(), z.number()])),
-  features: z.array(FeatureTemplate),
+  features: z.array(FeatureTemplateSchema),
 });
 
 export type Theme = z.infer<typeof Theme>;

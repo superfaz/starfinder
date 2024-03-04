@@ -1,19 +1,19 @@
 import { z } from "zod";
-import { FeatureTemplate } from "./FeatureTemplate";
+import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { IModel } from "./IModel";
 import { INamedModel } from "./INamedModel";
 import { Description } from "./helper";
 
 export const ClassSoldierStyleSchema = INamedModel.extend({
   description: Description,
-  features: z.array(FeatureTemplate),
+  features: z.array(FeatureTemplateSchema),
 });
 
 export type ClassSoldierStyle = z.infer<typeof ClassSoldierStyleSchema>;
 
 export const ClassSoldierSchema = IModel.extend({
   id: z.string(),
-  features: z.array(FeatureTemplate),
+  features: z.array(FeatureTemplateSchema),
   styles: z.array(ClassSoldierStyleSchema),
 });
 
