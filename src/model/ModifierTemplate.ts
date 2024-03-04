@@ -3,7 +3,7 @@ import { ArmorIdSchema } from "./Armor";
 import { DescriptionSchema, IdSchema } from "./helper";
 import { IModelSchema } from "./IModel";
 import { ModifierTypes } from "./ModifierType";
-import { SavingThrowId } from "./SavingThrow";
+import { SavingThrowIdSchema } from "./SavingThrow";
 import { WeaponId } from "./Weapon";
 
 export const AbilityModifierSchema = IModelSchema.extend({
@@ -51,7 +51,7 @@ export const SavingThrowModifierSchema = IModelSchema.extend({
 export const SavingThrowBonusModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.savingThrowBonus),
   level: z.number().optional(),
-  target: SavingThrowId,
+  target: SavingThrowIdSchema,
   value: z.number(),
 }).strict();
 

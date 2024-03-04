@@ -11,7 +11,7 @@ import {
   FeatTemplateSchema,
   ProfessionSchema,
   RaceSchema,
-  SavingThrow,
+  SavingThrowSchema,
   SkillDefinition,
   Spell,
   Theme,
@@ -47,7 +47,7 @@ async function mockBuild(): Promise<IDataSet> {
     getSpells: async () => Spell.array().parse((await import("./mocks/spells.json")).default),
     getThemes: async () => Theme.array().parse((await import("./mocks/themes.json")).default),
     getThemeDetails: async () => ThemeScholar.parse((await import("./mocks/themes-details.json")).default),
-    getSavingThrows: async () => SavingThrow.array().parse((await import("./mocks/saving-throws.json")).default),
+    getSavingThrows: async () => SavingThrowSchema.array().parse((await import("./mocks/saving-throws.json")).default),
     getSkills: async () => SkillDefinition.array().parse((await import("./mocks/skills.json")).default),
     getWeapons: async () => Weapon.array().parse((await import("./mocks/weapons.json")).default),
   };

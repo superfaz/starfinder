@@ -7,7 +7,7 @@ import {
   type ModifierTemplate,
   ModifierTypes,
   type Prerequisite,
-  SavingThrowId,
+  SavingThrowIdSchema,
   WeaponId,
   isModifierType,
 } from "model";
@@ -180,7 +180,7 @@ export class Templater {
       case "savingThrow":
         return {
           ...prerequisite,
-          target: SavingThrowId.parse(this.applyForString(prerequisite.target)),
+          target: SavingThrowIdSchema.parse(this.applyForString(prerequisite.target)),
         };
 
       case "weaponProficiency":

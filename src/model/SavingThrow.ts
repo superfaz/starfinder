@@ -2,19 +2,19 @@ import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 
-export const SavingThrowId = z.enum(["fortitude", "reflex", "will"]);
+export const SavingThrowIdSchema = z.enum(["fortitude", "reflex", "will"]);
 
-export type SavingThrowId = z.infer<typeof SavingThrowId>;
+export type SavingThrowId = z.infer<typeof SavingThrowIdSchema>;
 
-export const SavingThrow = INamedModelSchema.extend({
-  id: SavingThrowId,
+export const SavingThrowSchema = INamedModelSchema.extend({
+  id: SavingThrowIdSchema,
   abilityScore: AbilityScoreIdSchema,
 });
 
-export type SavingThrow = z.infer<typeof SavingThrow>;
+export type SavingThrow = z.infer<typeof SavingThrowSchema>;
 
 export function isSavingThrow(obj: unknown): obj is SavingThrow {
-  return SavingThrow.safeParse(obj).success;
+  return SavingThrowSchema.safeParse(obj).success;
 }
 
-export const SavingThrowIds = SavingThrowId.enum;
+export const SavingThrowIds = SavingThrowIdSchema.enum;

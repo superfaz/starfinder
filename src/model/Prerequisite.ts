@@ -5,7 +5,7 @@ import { IModelSchema } from "./IModel";
 import { PrerequisiteTypes } from "./PrerequisiteType";
 import { WeaponId } from "./Weapon";
 import { VariableSchema } from "./helper";
-import { SavingThrowId } from "./SavingThrow";
+import { SavingThrowIdSchema } from "./SavingThrow";
 
 export const AbilityScorePrerequisiteSchema = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.abilityScore),
@@ -31,7 +31,7 @@ export const FeatPrerequisiteSchema = IModelSchema.extend({
 
 export const SavingThrowPrerequisiteSchema = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.savingThrow),
-  target: SavingThrowId,
+  target: SavingThrowIdSchema,
   value: z.number(),
 }).strict();
 

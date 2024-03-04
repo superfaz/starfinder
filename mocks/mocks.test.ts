@@ -13,7 +13,7 @@ import {
   IModelSchema,
   ProfessionSchema,
   RaceSchema,
-  SavingThrow,
+  SavingThrowSchema,
   SkillDefinition,
   Theme,
   ThemeScholar,
@@ -85,7 +85,7 @@ const datasets = [
   {
     file: "saving-throws.json",
     array: true,
-    schema: SavingThrow.strict(),
+    schema: SavingThrowSchema.strict(),
   },
   {
     file: "skills.json",

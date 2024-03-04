@@ -13,7 +13,7 @@ import {
   type INamedModel,
   ProfessionSchema,
   RaceSchema,
-  SavingThrow,
+  SavingThrowSchema,
   SkillDefinition,
   Spell,
   Theme,
@@ -114,7 +114,7 @@ export class DataSetBuilder {
       getThemes: cache("themes", () => this.getNamed("themes").then((a) => Theme.array().parse(a))),
       getThemeDetails: <T>(themeId: string) => this.getOne<T>("themes-details", themeId),
       getSavingThrows: cache("saving-throws", () =>
-        this.getOrdered("saving-throws").then((a) => SavingThrow.array().parse(a))
+        this.getOrdered("saving-throws").then((a) => SavingThrowSchema.array().parse(a))
       ),
       getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinition.array().parse(a))),
       getWeapons: cache("weapons", () => this.getOrdered("weapons").then((a) => Weapon.array().parse(a))),
