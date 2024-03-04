@@ -4,26 +4,26 @@ import { IModel } from "./IModel";
 import { INamedModel } from "./INamedModel";
 import { Description } from "./helper";
 
-export const ClassOperativeSpecialization = INamedModel.extend({
+export const ClassOperativeSpecializationSchema = INamedModel.extend({
   description: Description,
   variables: z.record(z.union([z.string(), z.number()])),
   features: z.array(FeatureTemplate),
 });
 
-export type ClassOperativeSpecialization = z.infer<typeof ClassOperativeSpecialization>;
+export type ClassOperativeSpecialization = z.infer<typeof ClassOperativeSpecializationSchema>;
 
-export const ClassOperative = IModel.extend({
+export const ClassOperativeSchema = IModel.extend({
   id: z.string(),
-  specializations: z.array(ClassOperativeSpecialization),
+  specializations: z.array(ClassOperativeSpecializationSchema),
   features: z.array(FeatureTemplate),
 });
 
-export type ClassOperative = z.infer<typeof ClassOperative>;
+export type ClassOperative = z.infer<typeof ClassOperativeSchema>;
 
 export function isClassOperative(data: unknown): data is ClassOperative {
-  return ClassOperative.safeParse(data).success;
+  return ClassOperativeSchema.safeParse(data).success;
 }
 
 export function asClassOperative(data: unknown): ClassOperative {
-  return ClassOperative.parse(data);
+  return ClassOperativeSchema.parse(data);
 }

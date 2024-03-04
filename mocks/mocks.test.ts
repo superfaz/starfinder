@@ -7,8 +7,8 @@ import {
   BookSchema,
   ClassSchema,
   ClassEnvoySchema,
-  ClassOperative,
-  ClassSoldier,
+  ClassOperativeSchema,
+  ClassSoldierSchema,
   FeatTemplate,
   IModel,
   Profession,
@@ -55,12 +55,12 @@ const datasets = [
   {
     file: "class-operative.json",
     array: false,
-    schema: ClassOperative.strict(),
+    schema: ClassOperativeSchema.strict(),
   },
   {
     file: "class-soldier.json",
     array: false,
-    schema: ClassSoldier.strict(),
+    schema: ClassSoldierSchema.strict(),
   },
   {
     file: "classes.json",

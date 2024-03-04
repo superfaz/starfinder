@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { CharacterProps } from "../Props";
 import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
-import { ClassSoldier } from "model";
+import type { ClassSoldier } from "model";
 
 export default function SoldierEditor({ character }: CharacterProps) {
   const classDetails = useClassDetails<ClassSoldier>("soldier");

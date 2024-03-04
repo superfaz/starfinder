@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { CharacterProps } from "../Props";
 import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
-import { ClassOperative } from "model";
+import type { ClassOperative } from "model";
 
 export default function OperativeEditor({ character }: CharacterProps) {
   const classDetails = useClassDetails<ClassOperative>("operative");
