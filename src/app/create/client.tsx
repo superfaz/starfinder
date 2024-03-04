@@ -13,7 +13,7 @@ import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "../../logic/StoreProvider";
 import * as Tab from "./tabs";
 
-function ClientComponentPresenter() {
+function ClientComponentPresenter({ debug }: { debug: boolean }) {
   const data = useAppSelector((state) => state.data);
   const character = useAppSelector((state) => state.character);
   const classesDetails = useAppSelector((state) => state.classesDetails);
@@ -96,9 +96,11 @@ function ClientComponentPresenter() {
           <Nav.Item>
             <Nav.Link eventKey="sheet">Fiche</Nav.Link>
           </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="debug">Debug</Nav.Link>
-          </Nav.Item>
+          {debug && (
+            <Nav.Item>
+              <Nav.Link eventKey="debug">Debug</Nav.Link>
+            </Nav.Item>
+          )}
         </Nav>
         <Row id="content">
           {navigation === "intro" && (
@@ -199,7 +201,7 @@ function ClientComponentPresenter() {
             </Col>
           )}
 
-          {navigation === "debug" && (
+          {debug && navigation === "debug" && (
             <Col lg={12}>
               <h5>Character</h5>
               <pre>{JSON.stringify(character, null, 2)}</pre>
@@ -211,10 +213,10 @@ function ClientComponentPresenter() {
   );
 }
 
-export function ClientComponent({ data }: Readonly<{ data: IClientDataSet }>) {
+export function ClientComponent({ data, debug }: Readonly<{ data: IClientDataSet; debug: boolean }>) {
   return (
     <StoreProvider data={data}>
-      <ClientComponentPresenter />
+      <ClientComponentPresenter debug={debug} />
     </StoreProvider>
   );
 }

@@ -7,5 +7,5 @@ export default async function Page() {
   const builder = new DataSetBuilder();
   const serverData: IDataSet = await builder.build();
   const clientData: IClientDataSet = await convert(serverData);
-  return <ClientComponent data={clientData} />;
+  return <ClientComponent data={clientData} debug={process.env.STARFINDER_DEBUG === "true"} />;
 }
