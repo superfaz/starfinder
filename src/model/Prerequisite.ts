@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ArmorId } from "./Armor";
-import { AbilityScoreId } from "./AbilityScore";
+import { AbilityScoreIdSchema } from "./AbilityScore";
 import { IModel } from "./IModel";
 import { PrerequisiteTypes } from "./PrerequisiteType";
 import { WeaponId } from "./Weapon";
@@ -9,7 +9,7 @@ import { SavingThrowId } from "./SavingThrow";
 
 export const AbilityScorePrerequisite = IModel.extend({
   type: z.literal(PrerequisiteTypes.abilityScore),
-  target: z.union([AbilityScoreId, z.literal("<primary>")]),
+  target: z.union([AbilityScoreIdSchema, z.literal("<primary>")]),
   value: z.number(),
 }).strict();
 

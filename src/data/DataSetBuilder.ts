@@ -1,7 +1,7 @@
 import { CosmosClient, Database } from "@azure/cosmos";
 import * as Sentry from "@sentry/nextjs";
 import {
-  AbilityScore,
+  AbilityScoreSchema,
   Alignment,
   Armor,
   Avatar,
@@ -96,7 +96,7 @@ export class DataSetBuilder {
   async build(): Promise<IDataSet> {
     const data: IDataSet = {
       getAbilityScores: cache("ability-scores", () =>
-        this.getOrdered("ability-scores").then((a) => AbilityScore.array().parse(a))
+        this.getOrdered("ability-scores").then((a) => AbilityScoreSchema.array().parse(a))
       ),
       getAlignments: cache("alignments", () => this.getOrdered("alignments").then((a) => Alignment.array().parse(a))),
       getArmors: cache("armors", () => this.getOrdered("armors").then((a) => Armor.array().parse(a))),

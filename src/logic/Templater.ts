@@ -1,5 +1,5 @@
 import {
-  AbilityScoreId,
+  AbilityScoreIdSchema,
   ArmorId,
   FeatTemplate,
   FeatureTemplate,
@@ -168,7 +168,7 @@ export class Templater {
       case "abilityScore":
         return {
           ...prerequisite,
-          target: AbilityScoreId.parse(this.applyForString(prerequisite.target)),
+          target: AbilityScoreIdSchema.parse(this.applyForString(prerequisite.target)),
         };
 
       case "armorProficiency":

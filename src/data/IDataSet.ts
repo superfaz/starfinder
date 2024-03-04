@@ -1,5 +1,5 @@
 import {
-  AbilityScore,
+  type AbilityScore,
   Alignment,
   Armor,
   Avatar,

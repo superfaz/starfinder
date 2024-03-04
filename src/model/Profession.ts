@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { AbilityScoreId } from "./AbilityScore";
+import { AbilityScoreIdSchema } from "./AbilityScore";
 import { INamedModel } from "./INamedModel";
 
 export const Profession = INamedModel.extend({
-  abilityScore: AbilityScoreId,
+  abilityScore: AbilityScoreIdSchema,
 });
 
 export type Profession = z.infer<typeof Profession>;

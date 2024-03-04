@@ -9,7 +9,7 @@ import Stack from "react-bootstrap/Stack";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { displayBonus, findOrError } from "app/helpers";
 import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
-import { AbilityScoreId, AbilityScoreIds, Profession, isProfession, simpleHash } from "model";
+import { type AbilityScoreId, AbilityScoreIds, Profession, isProfession, simpleHash } from "model";
 import { CharacterProps } from "../Props";
 import ModifierComponent from "../ModifierComponent";
 import { isFeat } from "view";

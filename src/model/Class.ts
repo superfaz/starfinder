@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { Description, Reference, Variable } from "./helper";
-import { AbilityScoreId } from "./AbilityScore";
+import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ArmorId } from "./Armor";
 import { WeaponId } from "./Weapon";
 
@@ -10,8 +10,8 @@ export const Class = INamedModel.extend({
   reference: Reference,
   hitPoints: z.number(),
   staminaPoints: z.number(),
-  primaryAbilityScore: z.union([AbilityScoreId, Variable]),
-  secondaryAbilityScores: z.array(AbilityScoreId),
+  primaryAbilityScore: z.union([AbilityScoreIdSchema, Variable]),
+  secondaryAbilityScores: z.array(AbilityScoreIdSchema),
   spellCaster: z.boolean().default(false),
   skillRank: z.number(),
   classSkills: z.array(z.string()),

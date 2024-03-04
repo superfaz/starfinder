@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import {
-  AbilityScoreId,
+  type AbilityScoreId,
   AbilityScoreIds,
   ArmorId,
   Avatar,

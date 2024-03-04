@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { AbilityScoreId } from "./AbilityScore";
+import { AbilityScoreIdSchema } from "./AbilityScore";
 import { INamedModel } from "./INamedModel";
 
 export const SkillDefinition = INamedModel.extend({
   id: z.string(),
   name: z.string(),
-  abilityScore: z.optional(AbilityScoreId),
+  abilityScore: z.optional(AbilityScoreIdSchema),
   trainedOnly: z.boolean(),
   armorCheckPenalty: z.boolean(),
 });

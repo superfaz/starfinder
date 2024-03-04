@@ -1,7 +1,7 @@
 import { beforeAll, vi } from "vitest";
 import { DataSetBuilder, IDataSet } from "data";
 import {
-  AbilityScore,
+  AbilityScoreSchema,
   Alignment,
   Armor,
   Avatar,
@@ -33,7 +33,7 @@ process.env.STARFINDER_COSMOS_DATABASE = "starfinder";
 
 async function mockBuild(): Promise<IDataSet> {
   return {
-    getAbilityScores: async () => AbilityScore.array().parse((await import("./mocks/ability-scores.json")).default),
+    getAbilityScores: async () => AbilityScoreSchema.array().parse((await import("./mocks/ability-scores.json")).default),
     getAlignments: async () => Alignment.array().parse((await import("./mocks/alignments.json")).default),
     getArmors: async () => Armor.array().parse((await import("./mocks/armors.json")).default),
     getBooks: async () => Book.array().parse((await import("./mocks/books.json")).default),
