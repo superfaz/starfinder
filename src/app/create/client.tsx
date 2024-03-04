@@ -151,6 +151,9 @@ function ClientComponentPresenter() {
               <Col lg={3}>
                 <Tab.Avatar character={presenter} />
               </Col>
+              <Col lg={6}>
+                <Tab.Description character={presenter} />
+              </Col>
             </>
           )}
           {navigation === "abilityScores" && (

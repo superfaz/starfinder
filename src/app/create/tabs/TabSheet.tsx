@@ -101,11 +101,11 @@ function CardDescription({ character }: CharacterProps) {
   return (
     <Card data-testid="description">
       <Card.Header>
-        <Badge bg="primary">Biographie</Badge>
+        <Badge bg="primary">Biographie & Description</Badge>
       </Card.Header>
       <Card.Body className="small">
-        {description}
         {!description && <em>Pas de description définie</em>}
+        {description}
       </Card.Body>
     </Card>
   );

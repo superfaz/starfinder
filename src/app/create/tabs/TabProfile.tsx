@@ -42,10 +42,6 @@ export function Profile({ character }: CharacterProps) {
     dispatch(mutators.updateDeity(e.target.value));
   }
 
-  function handleDescriptionChange(e: ChangeEvent<HTMLTextAreaElement>): void {
-    dispatch(mutators.updateDescription(e.target.value));
-  }
-
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Profil</h2>
@@ -79,10 +75,6 @@ export function Profile({ character }: CharacterProps) {
 
       <Form.FloatingLabel controlId="deity" label="Divinité">
         <Form.Control type="text" value={character.getDeity()} onChange={handleDeityChange} />
-      </Form.FloatingLabel>
-
-      <Form.FloatingLabel controlId="description" label="Biographie">
-        <Form.Control as="textarea" rows={10} value={character.getDescription()} onChange={handleDescriptionChange} />
       </Form.FloatingLabel>
     </Stack>
   );
@@ -129,6 +121,27 @@ export function Avatar({ character }: CharacterProps) {
           />
         </Card.Body>
       </Card>
+    </Stack>
+  );
+}
+
+export function Description({ character }: CharacterProps) {
+  const dispatch = useAppDispatch();
+
+  function handleDescriptionChange(e: ChangeEvent<HTMLTextAreaElement>): void {
+    dispatch(mutators.updateDescription(e.target.value));
+  }
+
+  return (
+    <Stack direction="vertical" gap={2}>
+      <h2>Biographie & description</h2>
+      <Form.Control
+        as="textarea"
+        aria-label="Biographie & description"
+        value={character.getDescription()}
+        onChange={handleDescriptionChange}
+        style={{ height: "20em" }}
+      />
     </Stack>
   );
 }
