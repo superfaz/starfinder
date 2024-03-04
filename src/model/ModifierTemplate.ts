@@ -4,7 +4,7 @@ import { DescriptionSchema, IdSchema } from "./helper";
 import { IModelSchema } from "./IModel";
 import { ModifierTypes } from "./ModifierType";
 import { SavingThrowIdSchema } from "./SavingThrow";
-import { WeaponIdSchema } from "./Weapon";
+import { WeaponTypeIdSchema } from "./WeaponType";
 
 export const AbilityModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.ability),
@@ -65,7 +65,7 @@ export const SpellModifierSchema = IModelSchema.extend({
 export const WeaponProficiencyModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.weaponProficiency),
   level: z.number().optional(),
-  target: WeaponIdSchema,
+  target: WeaponTypeIdSchema,
 }).strict();
 
 export const SimpleModifierTemplateSchema = IModelSchema.extend({

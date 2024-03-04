@@ -17,7 +17,7 @@ import {
   SkillDefinitionSchema,
   ThemeSchema,
   ThemeScholarSchema,
-  WeaponSchema,
+  WeaponTypeSchema,
 } from "model";
 import { describe, expect, test } from "vitest";
 
@@ -105,7 +105,7 @@ const datasets = [
   {
     file: "weapons.json",
     array: true,
-    schema: WeaponSchema.strict(),
+    schema: WeaponTypeSchema.strict(),
   },
 ];
 

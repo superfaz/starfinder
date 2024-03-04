@@ -95,7 +95,7 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
       return `Aptitude à lancer des sorts de niveau ${prerequisite.value}`;
 
     case PrerequisiteTypes.weaponProficiency: {
-      const name = data.weapons.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
+      const name = data.weaponTypes.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
       return `Formé au Maniement des ${name}`;
     }
 

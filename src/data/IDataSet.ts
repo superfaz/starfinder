@@ -13,7 +13,7 @@ import type {
   SkillDefinition,
   Spell,
   Theme,
-  Weapon,
+  WeaponType,
 } from "model";
 
 export interface IDataSet {
@@ -33,5 +33,5 @@ export interface IDataSet {
   getSpells(): Promise<Spell[]>;
   getThemes(): Promise<Theme[]>;
   getThemeDetails(themeId: string): Promise<unknown>;
-  getWeapons(): Promise<Weapon[]>;
+  getWeaponTypes(): Promise<WeaponType[]>;
 }

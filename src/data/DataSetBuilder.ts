@@ -17,7 +17,7 @@ import {
   SkillDefinitionSchema,
   SpellSchema,
   ThemeSchema,
-  WeaponSchema,
+  WeaponTypeSchema,
 } from "model";
 import { IDataSet } from ".";
 
@@ -117,7 +117,7 @@ export class DataSetBuilder {
         this.getOrdered("saving-throws").then((a) => SavingThrowSchema.array().parse(a))
       ),
       getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinitionSchema.array().parse(a))),
-      getWeapons: cache("weapons", () => this.getOrdered("weapons").then((a) => WeaponSchema.array().parse(a))),
+      getWeaponTypes: cache("weapons", () => this.getOrdered("weapons").then((a) => WeaponTypeSchema.array().parse(a))),
     };
 
     return data;

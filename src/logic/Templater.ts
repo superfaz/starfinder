@@ -8,7 +8,7 @@ import {
   ModifierTypes,
   type Prerequisite,
   SavingThrowIdSchema,
-  WeaponIdSchema,
+  WeaponTypeIdSchema,
   isModifierType,
 } from "model";
 import { ClassFeature, Feat, Modifier, RaceFeature, ThemeFeature } from "view";
@@ -186,7 +186,7 @@ export class Templater {
       case "weaponProficiency":
         return {
           ...prerequisite,
-          target: WeaponIdSchema.parse(this.applyForString(prerequisite.target)),
+          target: WeaponTypeIdSchema.parse(this.applyForString(prerequisite.target)),
         };
 
       case "class":

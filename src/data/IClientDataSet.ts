@@ -13,7 +13,7 @@ import type {
   SkillDefinition,
   Spell,
   Theme,
-  Weapon,
+  WeaponType,
 } from "model";
 import { IDataSet } from "./IDataSet";
 
@@ -32,7 +32,7 @@ export interface IClientDataSet {
   skills: SkillDefinition[];
   spells: Spell[];
   themes: Theme[];
-  weapons: Weapon[];
+  weaponTypes: WeaponType[];
 }
 
 export const EmptyClientDataSet: IClientDataSet = {
@@ -50,7 +50,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   skills: [],
   spells: [],
   themes: [],
-  weapons: [],
+  weaponTypes: [],
 };
 
 export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
@@ -69,6 +69,6 @@ export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
     skills: await serverData.getSkills(),
     spells: await serverData.getSpells(),
     themes: await serverData.getThemes(),
-    weapons: await serverData.getWeapons(),
+    weaponTypes: await serverData.getWeaponTypes(),
   };
 }

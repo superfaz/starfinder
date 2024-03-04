@@ -24,7 +24,7 @@ import type {
   Variant,
   WeaponId,
 } from "model";
-import { AbilityScoreIds, ModifierTypes, PrerequisiteTypes, isCasterId, isVariable, isWeaponId } from "model";
+import { AbilityScoreIds, ModifierTypes, PrerequisiteTypes, isCasterId, isVariable, isWeaponTypeId } from "model";
 import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofType } from "view";
 import { getMysticFeatureTemplates, getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
 import { FeatPresenter, Templater, cleanEvolutions } from ".";
@@ -621,15 +621,15 @@ export class CharacterPresenter {
         const selectedClass = this.getClass();
         if (isVariable(prerequisite.target)) {
           const target = this.createTemplater().convertString(prerequisite.target);
-          if (isWeaponId(target)) {
+          if (isWeaponTypeId(target)) {
             return !!selectedClass && selectedClass.weapons.includes(target);
           } else {
             Sentry.captureMessage(
-              `Invalid weapon id: ${target} for prerequisite ${prerequisite.id} with value ${prerequisite.target}`
+              `Invalid weapon type id: ${target} for prerequisite ${prerequisite.id} with value ${prerequisite.target}`
             );
             return false;
           }
-        } else if (isWeaponId(prerequisite.target)) {
+        } else if (isWeaponTypeId(prerequisite.target)) {
           return !!selectedClass && selectedClass.weapons.includes(prerequisite.target);
         } else {
           return false;

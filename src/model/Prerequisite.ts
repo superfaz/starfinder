@@ -3,7 +3,7 @@ import { ArmorIdSchema } from "./Armor";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { IModelSchema } from "./IModel";
 import { PrerequisiteTypes } from "./PrerequisiteType";
-import { WeaponIdSchema } from "./Weapon";
+import { WeaponTypeIdSchema } from "./WeaponType";
 import { VariableSchema } from "./helper";
 import { SavingThrowIdSchema } from "./SavingThrow";
 
@@ -62,7 +62,7 @@ export const SkillRankPrerequisiteSchema = IModelSchema.extend({
 
 export const WeaponProficiencyPrerequisiteSchema = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.weaponProficiency),
-  target: z.union([WeaponIdSchema, VariableSchema]),
+  target: z.union([WeaponTypeIdSchema, VariableSchema]),
 }).strict();
 
 export const PrerequisiteSchema = z.discriminatedUnion("type", [

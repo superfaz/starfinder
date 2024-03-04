@@ -83,7 +83,7 @@ function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: Mod
         element.targetName = retrieveSkillName(data, modifier.target);
         break;
       case FeatTargetTypes.weapon:
-        element.targetName = findOrError(data.weapons, modifier.target).name;
+        element.targetName = findOrError(data.weaponTypes, modifier.target).name;
         break;
       default:
         //Do nothing

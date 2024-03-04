@@ -28,7 +28,7 @@ export class FeatPresenter {
       case "kineticDamageType":
         return this.data.damageTypes.filter((d) => d.category === "kinetic");
       case "weapon":
-        return this.data.weapons;
+        return this.data.weaponTypes;
       case "skill":
         return this.data.skills;
       case "specialRangedWeapon":

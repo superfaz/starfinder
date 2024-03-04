@@ -16,7 +16,7 @@ import {
   SpellSchema,
   ThemeSchema,
   ThemeScholarSchema,
-  WeaponSchema,
+  WeaponTypeSchema,
 } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import envoyDetails from "./mocks/class-envoy.json";
@@ -49,7 +49,7 @@ async function mockBuild(): Promise<IDataSet> {
     getThemeDetails: async () => ThemeScholarSchema.parse((await import("./mocks/themes-details.json")).default),
     getSavingThrows: async () => SavingThrowSchema.array().parse((await import("./mocks/saving-throws.json")).default),
     getSkills: async () => SkillDefinitionSchema.array().parse((await import("./mocks/skills.json")).default),
-    getWeapons: async () => WeaponSchema.array().parse((await import("./mocks/weapons.json")).default),
+    getWeaponTypes: async () => WeaponTypeSchema.array().parse((await import("./mocks/weapons.json")).default),
   };
 }
 

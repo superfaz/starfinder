@@ -129,7 +129,7 @@ export function ClassSelection({ character }: CharacterProps) {
           </div>
           <div>
             <Badge bg="primary">Armes</Badge>
-            {selectedClass.weapons.map((a) => findOrError(data.weapons, a).name).join(", ")}
+            {selectedClass.weapons.map((a) => findOrError(data.weaponTypes, a).name).join(", ")}
           </div>
           <hr />
           <LazyClassEditor character={character} />

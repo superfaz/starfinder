@@ -350,7 +350,7 @@ function CardAttackBonuses({ character }: CharacterProps) {
 
 function CardWeapons({ data, character }: SheetProps) {
   const proficiencies = character.getWeaponProficiencies();
-  const texts = proficiencies.map((p) => findOrError(data.weapons, p).name);
+  const texts = proficiencies.map((p) => findOrError(data.weaponTypes, p).name);
   return (
     <Card data-testid="weapons">
       <Card.Header>
