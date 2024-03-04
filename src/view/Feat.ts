@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DescriptionSchema, INamedModelSchema, IdSchema, Prerequisite, ReferenceSchema } from "model";
+import { DescriptionSchema, INamedModelSchema, IdSchema, PrerequisiteSchema, ReferenceSchema } from "model";
 import { Modifier } from "./Modifier";
 
 const Feat = INamedModelSchema.extend({
@@ -8,7 +8,7 @@ const Feat = INamedModelSchema.extend({
   description: DescriptionSchema,
   reference: ReferenceSchema,
   modifiers: z.array(Modifier),
-  prerequisites: z.array(Prerequisite),
+  prerequisites: z.array(PrerequisiteSchema),
 });
 
 export type Feat = z.infer<typeof Feat>;

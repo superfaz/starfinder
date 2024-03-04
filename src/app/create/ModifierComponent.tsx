@@ -6,7 +6,7 @@ import { useAppSelector } from "logic";
 import {
   type FeatModifier,
   FeatTargetTypes,
-  ModifierType,
+  type ModifierType,
   ModifierTypes,
   hasDescription,
   hasExtra,

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ModifierType = z.enum([
+export const ModifierTypeSchema = z.enum([
   "ability",
   "attack",
   "armorProficiency",
@@ -22,10 +22,10 @@ export const ModifierType = z.enum([
   "weaponProficiency",
 ]);
 
-export type ModifierType = z.infer<typeof ModifierType>;
+export type ModifierType = z.infer<typeof ModifierTypeSchema>;
 
-export const ModifierTypes = ModifierType.enum;
+export const ModifierTypes = ModifierTypeSchema.enum;
 
 export function isModifierType(value: unknown): value is ModifierType {
-  return ModifierType.safeParse(value).success;
+  return ModifierTypeSchema.safeParse(value).success;
 }

@@ -6,7 +6,7 @@ import {
   type INamedModel,
   type ModifierTemplate,
   ModifierTypes,
-  Prerequisite,
+  type Prerequisite,
   SavingThrowId,
   WeaponId,
   isModifierType,
