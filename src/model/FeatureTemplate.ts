@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { ModifierTemplate } from "./ModifierTemplate";
-import { Description, Evolutions } from "./helper";
+import { DescriptionSchema, EvolutionsSchema } from "./helper";
 
 export const FeatureCategorySchema = z.enum(["ex", "ma", "su"]);
 
@@ -13,7 +13,7 @@ export const FeatureCategories = FeatureCategorySchema.enum;
  * Represents a racial trait or a thematic or a class feature that can be applied to a character.
  */
 export const FeatureTemplateSchema = INamedModel.extend({
-  description: z.optional(Description),
+  description: z.optional(DescriptionSchema),
   modifiers: z.optional(z.array(ModifierTemplate)),
   level: z.number(),
 
@@ -25,7 +25,7 @@ export const FeatureTemplateSchema = INamedModel.extend({
   /**
    * The evolutions of the feature, indexed by level - for class features.
    */
-  evolutions: z.optional(Evolutions),
+  evolutions: z.optional(EvolutionsSchema),
 
   /**
    * The IDs of the replaced racial traits - for secondary racial traits.

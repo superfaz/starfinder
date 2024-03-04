@@ -4,7 +4,7 @@ import { AbilityScoreIdSchema } from "./AbilityScore";
 import { IModel } from "./IModel";
 import { PrerequisiteTypes } from "./PrerequisiteType";
 import { WeaponId } from "./Weapon";
-import { Variable } from "./helper";
+import { VariableSchema } from "./helper";
 import { SavingThrowId } from "./SavingThrow";
 
 export const AbilityScorePrerequisite = IModel.extend({
@@ -62,7 +62,7 @@ export const SkillRankPrerequisite = IModel.extend({
 
 export const WeaponProficiencyPrerequisite = IModel.extend({
   type: z.literal(PrerequisiteTypes.weaponProficiency),
-  target: z.union([WeaponId, Variable]),
+  target: z.union([WeaponId, VariableSchema]),
 }).strict();
 
 export const Prerequisite = z.discriminatedUnion("type", [

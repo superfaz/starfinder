@@ -2,10 +2,10 @@ import { z } from "zod";
 import { IModel } from "./IModel";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { INamedModel } from "./INamedModel";
-import { Description } from "./helper";
+import { DescriptionSchema } from "./helper";
 
 export const ClassMysticConnectionSchema = INamedModel.extend({
-  description: Description,
+  description: DescriptionSchema,
   deities: z.array(z.string()),
   features: z.array(FeatureTemplateSchema),
 }).strict();

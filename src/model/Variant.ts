@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { INamedModel } from "./INamedModel";
-import { Description } from "./helper";
+import { DescriptionSchema } from "./helper";
 
 export const Variant = INamedModel.extend({
-  description: z.optional(Description),
+  description: z.optional(DescriptionSchema),
   abilityScores: z.record(AbilityScoreIdSchema, z.number()),
 });
 

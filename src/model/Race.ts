@@ -2,11 +2,11 @@ import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 import { Variant } from "./Variant";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
-import { Description, Reference } from "./helper";
+import { DescriptionSchema, ReferenceSchema } from "./helper";
 
 export const Race = INamedModel.extend({
-  description: Description,
-  reference: Reference,
+  description: DescriptionSchema,
+  reference: ReferenceSchema,
   hitPoints: z.number(),
   variants: z.array(Variant),
   names: z.array(z.string()),

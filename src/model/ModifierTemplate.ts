@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ArmorIdSchema } from "./Armor";
-import { Description, Id } from "./helper";
+import { DescriptionSchema, IdSchema } from "./helper";
 import { IModel } from "./IModel";
 import { ModifierTypes } from "./ModifierType";
 import { SavingThrowId } from "./SavingThrow";
@@ -10,7 +10,7 @@ export const AbilityModifier = IModel.extend({
   type: z.literal(ModifierTypes.ability),
   level: z.number().optional(),
   name: z.string(),
-  description: Description,
+  description: DescriptionSchema,
 }).strict();
 
 export const ArmorProficiencyModifier = IModel.extend({
@@ -28,7 +28,7 @@ export const ClassSkillModifier = IModel.extend({
 export const FeatModifier = IModel.extend({
   type: z.literal(ModifierTypes.feat),
   level: z.number().optional(),
-  feat: Id,
+  feat: IdSchema,
   target: z.string().optional(),
   extra: z.string().optional(),
 }).strict();
@@ -45,7 +45,7 @@ export const SavingThrowModifier = IModel.extend({
   type: z.literal(ModifierTypes.savingThrow),
   level: z.number().optional(),
   name: z.string(),
-  description: Description,
+  description: DescriptionSchema,
 }).strict();
 
 export const SavingThrowBonusModifier = IModel.extend({

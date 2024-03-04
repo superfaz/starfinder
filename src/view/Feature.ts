@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { Description, Evolutions, FeatureCategorySchema, INamedModel } from "model";
+import { DescriptionSchema, EvolutionsSchema, FeatureCategorySchema, INamedModel } from "model";
 import { Modifier } from "./Modifier";
 
 const BaseFeature = INamedModel.extend({
-  description: z.optional(Description),
+  description: z.optional(DescriptionSchema),
   modifiers: z.array(Modifier),
   level: z.number(),
   category: z.optional(FeatureCategorySchema),
@@ -32,7 +32,7 @@ export const ClassFeature = BaseFeature.extend({
   /**
    * The evolutions of the feature, indexed by level - for class features.
    */
-  evolutions: Evolutions,
+  evolutions: EvolutionsSchema,
 }).strict();
 
 export type ClassFeature = z.infer<typeof ClassFeature>;

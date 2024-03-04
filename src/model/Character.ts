@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Profession } from "./Profession";
-import { Id } from "./helper";
+import { IdSchema } from "./helper";
 
 export const CharacterSchema = z
   .object({
@@ -24,8 +24,8 @@ export const CharacterSchema = z
     deity: z.string(),
     description: z.string(),
     avatar: z.string(),
-    feats: z.array(z.object({ id: Id, target: z.optional(Id) })),
-    spells: z.record(z.string(), z.array(Id)),
+    feats: z.array(z.object({ id: IdSchema, target: z.optional(IdSchema) })),
+    spells: z.record(z.string(), z.array(IdSchema)),
   })
   .strict();
 

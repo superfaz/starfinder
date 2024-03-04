@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { Description, INamedModel, Id, Prerequisite, Reference } from "model";
+import { DescriptionSchema, INamedModel, IdSchema, Prerequisite, ReferenceSchema } from "model";
 import { Modifier } from "./Modifier";
 
 const Feat = INamedModel.extend({
-  target: z.optional(Id),
+  target: z.optional(IdSchema),
   combatFeat: z.boolean().default(false),
-  description: Description,
-  reference: Reference,
+  description: DescriptionSchema,
+  reference: ReferenceSchema,
   modifiers: z.array(Modifier),
   prerequisites: z.array(Prerequisite),
 });

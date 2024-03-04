@@ -1,25 +1,25 @@
 import { z } from "zod";
 
-export const Id = z.union([z.string().regex(/^([a-z]|[a-z][a-z0-9-]*[a-z0-9])$/), z.string().uuid()]);
+export const IdSchema = z.union([z.string().regex(/^([a-z]|[a-z][a-z0-9-]*[a-z0-9])$/), z.string().uuid()]);
 
-export const Variable = z.string().regex(/^<[a-z][a-zA-Z]+>$/);
+export const VariableSchema = z.string().regex(/^<[a-z][a-zA-Z]+>$/);
 
-export const Description = z.union([Variable, z.string().regex(/^[\p{Lu}0-9+-].+\.$/u)]);
+export const DescriptionSchema = z.union([VariableSchema, z.string().regex(/^[\p{Lu}0-9+-].+\.$/u)]);
 
-export const Reference = z.object({
+export const ReferenceSchema = z.object({
   book: z.string(),
   page: z.number(),
 });
 
-export type Reference = z.infer<typeof Reference>;
+export type Reference = z.infer<typeof ReferenceSchema>;
 
-export const Evolutions = z.record(
+export const EvolutionsSchema = z.record(
   z.string().regex(/\d+/),
   z.union([z.null(), z.record(z.union([z.number(), z.string()]))])
 );
 
 export function isVariable(value: string): boolean {
-  return Variable.safeParse(value).success;
+  return VariableSchema.safeParse(value).success;
 }
 
 export type WithValue<T> = Extract<T, { value: number }>;

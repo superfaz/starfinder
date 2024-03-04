@@ -1,5 +1,5 @@
 import { useAppSelector } from "logic";
-import { Reference } from "model";
+import type { Reference } from "model";
 
 export function ReferenceComponent({ reference }: { reference: Reference }) {
   const data = useAppSelector((state) => state.data);
