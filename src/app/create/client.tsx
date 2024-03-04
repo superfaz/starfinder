@@ -177,13 +177,11 @@ function ClientComponentPresenter({ debug }: { debug: boolean }) {
 
           {navigation === "feats" && (
             <>
-              <Col lg={12}>
+              <Col lg={3}>
                 <Tab.FeatsInherited character={presenter} />
-              </Col>
-              <Col lg={12}>
                 <Tab.FeatsSelected character={presenter} />
               </Col>
-              <Col lg={12}>
+              <Col>
                 <Tab.FeatsSelection character={presenter} />
               </Col>
             </>

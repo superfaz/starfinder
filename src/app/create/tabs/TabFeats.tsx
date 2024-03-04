@@ -21,6 +21,7 @@ import {
 import { Feat } from "view";
 import ModifierComponent from "../ModifierComponent";
 import { CharacterProps } from "../Props";
+import { Stack } from "react-bootstrap";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
@@ -263,14 +264,14 @@ export function FeatsInherited({ character }: CharacterProps) {
   } else {
     return (
       <>
-        <h2>Don(s) obtenu(s)</h2>
-        <Row data-testid="feats-inherited">
+        <h2>Don(s) acqui(s)</h2>
+        <Stack direction="vertical" gap={2} className="mb-4" data-testid="feats-inherited">
           {feats.map((feat) => (
-            <Col xs="4" key={`${feat.id}-${feat.target}`} className="mb-4">
-              <FeatComponent key={feat.id} character={character} feat={feat} noAction />
-            </Col>
+            <div key={`${feat.id}-${feat.target}`}>
+              <FeatComponent character={character} feat={feat} noAction />
+            </div>
           ))}
-        </Row>
+        </Stack>
       </>
     );
   }
@@ -278,30 +279,29 @@ export function FeatsInherited({ character }: CharacterProps) {
 
 export function FeatsSelected({ character }: CharacterProps) {
   const feats = character.getSelectedFeats();
-  if (feats.length === 0) {
-    return null;
-  } else {
-    return (
-      <>
-        <h2>Don(s) sélectionné(s)</h2>
-        <Row data-testid="feats-selected">
-          {feats.map((feat) => (
-            <Col xs="4" key={feat.id} className="mb-4">
-              <FeatComponent key={feat.id} character={character} feat={feat} />
-            </Col>
-          ))}
-        </Row>
-      </>
-    );
-  }
+  const featCount = character.getSelectableFeatCount();
+
+  return (
+    <Stack direction="vertical" gap={2}>
+      <h2>Don(s) sélectionné(s)</h2>
+      <div className="text-muted mb-3">
+        <span className="rounded border bg-body-secondary py-2 px-3">{featCount}</span> à choisir
+      </div>
+      <Stack direction="vertical" gap={2} className="mb-4" data-testid="feats-selected">
+        {feats.map((feat) => (
+          <div key={feat.id}>
+            <FeatComponent character={character} feat={feat} />
+          </div>
+        ))}
+      </Stack>
+    </Stack>
+  );
 }
 
 export function FeatsSelection({ character }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
   const presenter = new FeatPresenter(data, character);
   const allFeats = presenter.getFeatTemplates();
-
-  const featCount = character.getSelectableFeatCount();
 
   const [category, setCategory] = useState<"general" | "combat" | "all">("all");
   const [prerequisite, setPrerequisite] = useState<"available" | "blocked" | "all">("available");
@@ -346,16 +346,7 @@ export function FeatsSelection({ character }: CharacterProps) {
 
   return (
     <>
-      <Row className="mb-3 align-items-center">
-        <Col xs="auto">
-          <h2>Dons disponibles</h2>
-        </Col>
-        <Col>
-          <div className="text-muted">
-            <span className="rounded border bg-body-secondary py-2 px-3">{featCount}</span> à choisir
-          </div>
-        </Col>
-      </Row>
+      <h2>Dons disponibles</h2>
 
       <Row className="mb-3 align-items-center">
         <Col xs="auto" className="ms-3">
