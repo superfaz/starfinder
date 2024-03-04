@@ -1,15 +1,15 @@
 import { z } from "zod";
 import { ICodedModel } from "./ICodedModel";
 
-const AlignmentId = z.enum(["lg", "ng", "cg", "ln", "n", "cn", "le", "ne", "ce"]);
+const AlignmentIdSchema = z.enum(["lg", "ng", "cg", "ln", "n", "cn", "le", "ne", "ce"]);
 
 export const AlignmentSchema = ICodedModel.extend({
-  id: AlignmentId,
+  id: AlignmentIdSchema,
 });
 
 export type Alignment = z.infer<typeof AlignmentSchema>;
 
-export const AlignmentIds = AlignmentId.enum;
+export const AlignmentIds = AlignmentIdSchema.enum;
 
 export function isAlignment(obj: unknown): obj is Alignment {
   return AlignmentSchema.safeParse(obj).success;
