@@ -2,30 +2,30 @@ import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, EvolutionsSchema, ReferenceSchema } from "./helper";
 
-export const CasterId = z.enum(["mystic", "technomancer"]);
+export const CasterIdSchema = z.enum(["mystic", "technomancer"]);
 
-export type CasterId = z.infer<typeof CasterId>;
+export type CasterId = z.infer<typeof CasterIdSchema>;
 
-export const CasterIds = CasterId.enum;
+export const CasterIds = CasterIdSchema.enum;
 
 export function isCasterId(obj: unknown): obj is CasterId {
-  return CasterId.safeParse(obj).success;
+  return CasterIdSchema.safeParse(obj).success;
 }
 
-export const Range = z.object({ min: z.number(), max: z.number() });
+export const RangeSchema = z.object({ min: z.number(), max: z.number() });
 
-export const Spell = INamedModelSchema.extend({
+export const SpellSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
   reference: ReferenceSchema,
-  levels: z.record(CasterId, z.union([z.number(), Range])),
+  levels: z.record(CasterIdSchema, z.union([z.number(), RangeSchema])),
   resolve: z.boolean().default(false),
   evolutions: z.optional(EvolutionsSchema),
 });
 
-export type Spell = z.infer<typeof Spell>;
+export type Spell = z.infer<typeof SpellSchema>;
 
 export function isSpell(obj: unknown): obj is Spell {
-  return Spell.safeParse(obj).success;
+  return SpellSchema.safeParse(obj).success;
 }
 
 export function hasLevel(spell: Spell, level: number): boolean {

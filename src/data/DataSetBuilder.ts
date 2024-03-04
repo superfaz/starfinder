@@ -15,7 +15,7 @@ import {
   RaceSchema,
   SavingThrowSchema,
   SkillDefinitionSchema,
-  Spell,
+  SpellSchema,
   Theme,
   Weapon,
 } from "model";
@@ -110,7 +110,7 @@ export class DataSetBuilder {
       getFeats: cache("feats", () => this.getNamed("feats").then((a) => FeatTemplateSchema.array().parse(a))),
       getProfessions: cache("professions", () => this.getNamed("professions").then((a) => ProfessionSchema.array().parse(a))),
       getRaces: cache("races", () => this.getNamed("races").then((a) => RaceSchema.array().parse(a))),
-      getSpells: cache("spells", () => this.getNamed("spells").then((a) => Spell.array().parse(a))),
+      getSpells: cache("spells", () => this.getNamed("spells").then((a) => SpellSchema.array().parse(a))),
       getThemes: cache("themes", () => this.getNamed("themes").then((a) => Theme.array().parse(a))),
       getThemeDetails: <T>(themeId: string) => this.getOne<T>("themes-details", themeId),
       getSavingThrows: cache("saving-throws", () =>

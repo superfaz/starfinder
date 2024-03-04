@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
-import { CasterId, Spell, isCasterId } from "model";
+import { type CasterId, type Spell, isCasterId } from "model";
 import { CharacterProps } from "../Props";
 
 function filterOnLevelAndClass(classId: CasterId, level: number) {
