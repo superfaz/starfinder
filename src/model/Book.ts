@@ -1,16 +1,16 @@
 import { z } from "zod";
 import { INamedModel } from "./INamedModel";
 
-export const Chapter = INamedModel.extend({
+export const ChapterSchema = INamedModel.extend({
   number: z.number(),
   start: z.number(),
   end: z.number(),
 });
 
-export type Chapter = z.infer<typeof Chapter>;
+export type Chapter = z.infer<typeof ChapterSchema>;
 
-export const Book = INamedModel.extend({
-  chapters: z.array(Chapter),
+export const BookSchema = INamedModel.extend({
+  chapters: z.array(ChapterSchema),
 });
 
-export type Book = z.infer<typeof Book>;
+export type Book = z.infer<typeof BookSchema>;

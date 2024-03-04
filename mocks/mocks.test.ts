@@ -4,7 +4,7 @@ import {
   AlignmentSchema,
   ArmorSchema,
   AvatarSchema,
-  Book,
+  BookSchema,
   Class,
   ClassEnvoy,
   ClassOperative,
@@ -40,7 +40,7 @@ const datasets = [
   {
     file: "books.json",
     array: true,
-    schema: Book.strict(),
+    schema: BookSchema.strict(),
   },
   {
     file: "avatars.json",
