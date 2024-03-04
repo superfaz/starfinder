@@ -6,7 +6,7 @@ import {
   AvatarSchema,
   BookSchema,
   ClassSchema,
-  ClassEnvoy,
+  ClassEnvoySchema,
   ClassOperative,
   ClassSoldier,
   FeatTemplate,
@@ -50,7 +50,7 @@ const datasets = [
   {
     file: "class-envoy.json",
     array: false,
-    schema: ClassEnvoy.strict(),
+    schema: ClassEnvoySchema.strict(),
   },
   {
     file: "class-operative.json",
