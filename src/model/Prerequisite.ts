@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ArmorIdSchema } from "./Armor";
+import { ArmorTypeIdSchema } from "./ArmorType";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { IModelSchema } from "./IModel";
 import { PrerequisiteTypes } from "./PrerequisiteType";
@@ -15,7 +15,7 @@ export const AbilityScorePrerequisiteSchema = IModelSchema.extend({
 
 export const ArmorProficiencyPrerequisiteSchema = IModelSchema.extend({
   type: z.literal(PrerequisiteTypes.armorProficiency),
-  target: ArmorIdSchema,
+  target: ArmorTypeIdSchema,
 }).strict();
 
 export const ClassPrerequisiteSchema = IModelSchema.extend({

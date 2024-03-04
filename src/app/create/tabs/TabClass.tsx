@@ -125,7 +125,7 @@ export function ClassSelection({ character }: CharacterProps) {
           </div>
           <div>
             <Badge bg="primary">Armures</Badge>
-            {selectedClass.armors.map((a) => findOrError(data.armors, a).name).join(", ")}
+            {selectedClass.armors.map((a) => findOrError(data.armorTypes, a).name).join(", ")}
           </div>
           <div>
             <Badge bg="primary">Armes</Badge>

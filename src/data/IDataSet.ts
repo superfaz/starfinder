@@ -1,7 +1,7 @@
 import type {
   AbilityScore,
   Alignment,
-  Armor,
+  ArmorType,
   Avatar,
   Book,
   Class,
@@ -19,7 +19,7 @@ import type {
 export interface IDataSet {
   getAbilityScores(): Promise<AbilityScore[]>;
   getAlignments(): Promise<Alignment[]>;
-  getArmors(): Promise<Armor[]>;
+  getArmorTypes(): Promise<ArmorType[]>;
   getAvatars(): Promise<Avatar[]>;
   getBooks(): Promise<Book[]>;
   getClasses(): Promise<Class[]>;

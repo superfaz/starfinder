@@ -278,7 +278,7 @@ function CardSavingThrows({ data, character }: SheetProps) {
 
 function CardArmorClass({ data, character }: SheetProps) {
   const proficiencies = character.getArmorProficiencies();
-  const texts = proficiencies.map((p) => findOrError(data.armors, p).name);
+  const texts = proficiencies.map((p) => findOrError(data.armorTypes, p).name);
   const armorClasses = {
     energy: { value: character.getEnergyArmorClass(), label: "Classe d’armure énergétique" },
     kinetic: { value: character.getKineticArmorClass(), label: "Classe d’armure cinétique" },

@@ -34,7 +34,7 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
     }
 
     case PrerequisiteTypes.armorProficiency: {
-      const name = data.armors.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
+      const name = data.armorTypes.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
       return `Formé au Ports des ${name}`;
     }
 

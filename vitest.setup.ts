@@ -3,7 +3,7 @@ import { DataSetBuilder, IDataSet } from "data";
 import {
   AbilityScoreSchema,
   AlignmentSchema,
-  ArmorSchema,
+  ArmorTypeSchema,
   AvatarSchema,
   BookSchema,
   ClassSchema,
@@ -35,7 +35,7 @@ async function mockBuild(): Promise<IDataSet> {
   return {
     getAbilityScores: async () => AbilityScoreSchema.array().parse((await import("./mocks/ability-scores.json")).default),
     getAlignments: async () => AlignmentSchema.array().parse((await import("./mocks/alignments.json")).default),
-    getArmors: async () => ArmorSchema.array().parse((await import("./mocks/armors.json")).default),
+    getArmorTypes: async () => ArmorTypeSchema.array().parse((await import("./mocks/armors.json")).default),
     getBooks: async () => BookSchema.array().parse((await import("./mocks/books.json")).default),
     getAvatars: async () => AvatarSchema.array().parse((await import("./mocks/avatars.json")).default),
     getClasses: async () => ClassSchema.array().parse((await import("./mocks/classes.json")).default),

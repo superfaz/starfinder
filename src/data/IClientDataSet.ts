@@ -1,7 +1,7 @@
 import type {
   AbilityScore,
   Alignment,
-  Armor,
+  ArmorType,
   Avatar,
   Book,
   Class,
@@ -20,7 +20,7 @@ import { IDataSet } from "./IDataSet";
 export interface IClientDataSet {
   abilityScores: AbilityScore[];
   alignments: Alignment[];
-  armors: Armor[];
+  armorTypes: ArmorType[];
   avatars: Avatar[];
   books: Book[];
   classes: Class[];
@@ -38,7 +38,7 @@ export interface IClientDataSet {
 export const EmptyClientDataSet: IClientDataSet = {
   abilityScores: [],
   alignments: [],
-  armors: [],
+  armorTypes: [],
   avatars: [],
   books: [],
   classes: [],
@@ -57,7 +57,7 @@ export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
   return {
     abilityScores: await serverData.getAbilityScores(),
     alignments: await serverData.getAlignments(),
-    armors: await serverData.getArmors(),
+    armorTypes: await serverData.getArmorTypes(),
     avatars: await serverData.getAvatars(),
     books: await serverData.getBooks(),
     classes: await serverData.getClasses(),

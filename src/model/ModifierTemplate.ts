@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ArmorIdSchema } from "./Armor";
+import { ArmorTypeIdSchema } from "./ArmorType";
 import { DescriptionSchema, IdSchema } from "./helper";
 import { IModelSchema } from "./IModel";
 import { ModifierTypes } from "./ModifierType";
@@ -16,7 +16,7 @@ export const AbilityModifierSchema = IModelSchema.extend({
 export const ArmorProficiencyModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.armorProficiency),
   level: z.number().optional(),
-  target: ArmorIdSchema,
+  target: ArmorTypeIdSchema,
 }).strict();
 
 export const ClassSkillModifierSchema = IModelSchema.extend({

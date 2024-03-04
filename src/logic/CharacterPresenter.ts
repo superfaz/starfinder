@@ -3,7 +3,7 @@ import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import type {
   AbilityScoreId,
-  ArmorId,
+  ArmorTypeId,
   Avatar,
   Character,
   Class,
@@ -717,7 +717,7 @@ export class CharacterPresenter {
     };
   }
 
-  getArmorProficiencies(): ArmorId[] {
+  getArmorProficiencies(): ArmorTypeId[] {
     const selectedClass = this.getClass();
     const modifiers = this.getModifiers()
       .filter(ofType(ModifierTypes.armorProficiency))
