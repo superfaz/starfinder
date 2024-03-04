@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const PrerequisiteType = z.enum([
+export const PrerequisiteTypeSchema = z.enum([
   "abilityScore",
   "armorProficiency",
   "arms",
@@ -17,10 +17,10 @@ export const PrerequisiteType = z.enum([
   "weaponProficiency",
 ]);
 
-export type PrerequisiteType = z.infer<typeof PrerequisiteType>;
+export type PrerequisiteType = z.infer<typeof PrerequisiteTypeSchema>;
 
-export const PrerequisiteTypes = PrerequisiteType.enum;
+export const PrerequisiteTypes = PrerequisiteTypeSchema.enum;
 
 export function isPrerequisiteType(value: unknown): value is PrerequisiteType {
-  return PrerequisiteType.safeParse(value).success;
+  return PrerequisiteTypeSchema.safeParse(value).success;
 }
