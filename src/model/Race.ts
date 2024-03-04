@@ -4,7 +4,7 @@ import { Variant } from "./Variant";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
 
-export const Race = INamedModelSchema.extend({
+export const RaceSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
   reference: ReferenceSchema,
   hitPoints: z.number(),
@@ -14,8 +14,8 @@ export const Race = INamedModelSchema.extend({
   secondaryTraits: z.array(FeatureTemplateSchema),
 });
 
-export type Race = z.infer<typeof Race>;
+export type Race = z.infer<typeof RaceSchema>;
 
 export function isRace(obj: unknown): obj is Race {
-  return Race.safeParse(obj).success;
+  return RaceSchema.safeParse(obj).success;
 }

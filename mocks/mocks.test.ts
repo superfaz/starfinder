@@ -11,8 +11,8 @@ import {
   ClassSoldierSchema,
   FeatTemplateSchema,
   IModelSchema,
-  Profession,
-  Race,
+  ProfessionSchema,
+  RaceSchema,
   SavingThrow,
   SkillDefinition,
   Theme,
@@ -75,12 +75,12 @@ const datasets = [
   {
     file: "professions.json",
     array: true,
-    schema: Profession.strict(),
+    schema: ProfessionSchema.strict(),
   },
   {
     file: "races.json",
     array: true,
-    schema: Race.strict(),
+    schema: RaceSchema.strict(),
   },
   {
     file: "saving-throws.json",

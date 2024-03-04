@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Profession } from "./Profession";
+import { ProfessionSchema } from "./Profession";
 import { IdSchema } from "./helper";
 
 export const CharacterSchema = z
@@ -15,7 +15,7 @@ export const CharacterSchema = z
     traits: z.array(z.string()),
     traitsOptions: z.optional(z.record(z.string())),
     abilityScores: z.record(z.number()),
-    professionSkills: z.array(Profession),
+    professionSkills: z.array(ProfessionSchema),
     skillRanks: z.record(z.number()),
     name: z.string(),
     alignment: z.string(),
