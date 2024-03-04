@@ -1,5 +1,5 @@
 import { IClientDataSet } from "data";
-import { FeatTemplate, INamedModel, hasLevel } from "model";
+import { type FeatTemplate, type INamedModel, hasLevel } from "model";
 import { CharacterPresenter } from "./CharacterPresenter";
 import { findOrError } from "app/helpers";
 

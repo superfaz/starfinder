@@ -8,7 +8,7 @@ import {
   BookSchema,
   ClassSchema,
   DamageTypeSchema,
-  FeatTemplate,
+  FeatTemplateSchema,
   IModel,
   INamedModel,
   Profession,
@@ -107,7 +107,7 @@ export class DataSetBuilder {
       getDamageTypes: cache("damage-types", () =>
         this.getNamed("damage-types").then((a) => DamageTypeSchema.array().parse(a))
       ),
-      getFeats: cache("feats", () => this.getNamed("feats").then((a) => FeatTemplate.array().parse(a))),
+      getFeats: cache("feats", () => this.getNamed("feats").then((a) => FeatTemplateSchema.array().parse(a))),
       getProfessions: cache("professions", () => this.getNamed("professions").then((a) => Profession.array().parse(a))),
       getRaces: cache("races", () => this.getNamed("races").then((a) => Race.array().parse(a))),
       getSpells: cache("spells", () => this.getNamed("spells").then((a) => Spell.array().parse(a))),

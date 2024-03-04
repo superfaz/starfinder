@@ -4,7 +4,7 @@ import { Description, Reference } from "./helper";
 import { Prerequisite } from "./Prerequisite";
 import { ModifierTemplate } from "./ModifierTemplate";
 
-const BaseFeatTemplate = INamedModel.extend({
+const BaseFeatTemplateSchema = INamedModel.extend({
   /**
    * If true, the feat will not be shown in the feat list.
    */
@@ -34,46 +34,46 @@ export type FeatTargetType = z.infer<typeof FeatTargetType>;
 
 export const FeatTargetTypes = FeatTargetType.enum;
 
-export const MultipleFeatTemplate = BaseFeatTemplate.extend({
+export const MultipleFeatTemplateSchema = BaseFeatTemplateSchema.extend({
   type: z.literal("multiple"),
   targetType: FeatTargetType,
 });
 
-export type MultipleFeatTemplate = z.infer<typeof MultipleFeatTemplate>;
+export type MultipleFeatTemplate = z.infer<typeof MultipleFeatTemplateSchema>;
 
-export const TargetedFeatTemplate = BaseFeatTemplate.extend({
+export const TargetedFeatTemplateSchema = BaseFeatTemplateSchema.extend({
   type: z.literal("targeted"),
   targetType: FeatTargetType,
 });
 
-export type TargetedFeatTemplate = z.infer<typeof TargetedFeatTemplate>;
+export type TargetedFeatTemplate = z.infer<typeof TargetedFeatTemplateSchema>;
 
-export const SimpleFeatTemplate = BaseFeatTemplate.extend({
+export const SimpleFeatTemplateSchema = BaseFeatTemplateSchema.extend({
   type: z.literal("simple"),
 });
 
-export type SimpleFeatTemplate = z.infer<typeof SimpleFeatTemplate>;
+export type SimpleFeatTemplate = z.infer<typeof SimpleFeatTemplateSchema>;
 
-export const FeatTemplate = z.discriminatedUnion("type", [
-  SimpleFeatTemplate,
-  TargetedFeatTemplate,
-  MultipleFeatTemplate,
+export const FeatTemplateSchema = z.discriminatedUnion("type", [
+  SimpleFeatTemplateSchema,
+  TargetedFeatTemplateSchema,
+  MultipleFeatTemplateSchema,
 ]);
 
-export type FeatTemplate = z.infer<typeof FeatTemplate>;
+export type FeatTemplate = z.infer<typeof FeatTemplateSchema>;
 
 export function isMultipleFeatTemplate(data: unknown): data is MultipleFeatTemplate {
-  return MultipleFeatTemplate.safeParse(data).success;
+  return MultipleFeatTemplateSchema.safeParse(data).success;
 }
 
 export function isTargetedFeatTemplate(data: unknown): data is TargetedFeatTemplate {
-  return TargetedFeatTemplate.safeParse(data).success;
+  return TargetedFeatTemplateSchema.safeParse(data).success;
 }
 
 export function isSimpleFeatTemplate(data: unknown): data is SimpleFeatTemplate {
-  return SimpleFeatTemplate.safeParse(data).success;
+  return SimpleFeatTemplateSchema.safeParse(data).success;
 }
 
 export function isFeatTemplate(data: unknown): data is FeatTemplate {
-  return FeatTemplate.safeParse(data).success;
+  return FeatTemplateSchema.safeParse(data).success;
 }

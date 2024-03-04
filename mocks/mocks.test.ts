@@ -9,7 +9,7 @@ import {
   ClassEnvoySchema,
   ClassOperativeSchema,
   ClassSoldierSchema,
-  FeatTemplate,
+  FeatTemplateSchema,
   IModel,
   Profession,
   Race,
@@ -70,7 +70,7 @@ const datasets = [
   {
     file: "feats.json",
     array: true,
-    schema: FeatTemplate,
+    schema: FeatTemplateSchema,
   },
   {
     file: "professions.json",

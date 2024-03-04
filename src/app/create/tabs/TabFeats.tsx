@@ -9,7 +9,8 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { FeatTemplate, Prerequisite, PrerequisiteTypes, hasDescription } from "model";
+import type { FeatTemplate, Prerequisite } from "model";
+import { PrerequisiteTypes, hasDescription } from "model";
 import {
   CharacterPresenter,
   FeatPresenter,
