@@ -6,7 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
-import { Alignment, ModifierTypes } from "model";
+import { type Alignment, ModifierTypes } from "model";
 import { ofType } from "view";
 import { CharacterProps } from "../Props";
 

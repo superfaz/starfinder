@@ -1,6 +1,6 @@
 import {
   type AbilityScore,
-  Alignment,
+  type Alignment,
   Armor,
   Avatar,
   Book,
