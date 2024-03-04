@@ -6,7 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
-import { Alignment, ModifierType } from "model";
+import { Alignment, ModifierTypes } from "model";
 import { ofType } from "view";
 import { CharacterProps } from "../Props";
 
@@ -231,7 +231,7 @@ function CardKeyPoints({ character }: CharacterProps) {
 
 function CardSavingThrows({ data, character }: SheetProps) {
   const selectedClass = character.getClass();
-  const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.savingThrow));
+  const modifiers = character.getModifiers().filter(ofType(ModifierTypes.savingThrow));
 
   return (
     <Card data-testid="savingThrows">
@@ -365,7 +365,7 @@ function CardWeapons({ data, character }: SheetProps) {
 }
 
 function CardAbilities({ character }: CharacterProps) {
-  const modifiers = character.getModifiers().filter(ofType(ModifierType.enum.ability));
+  const modifiers = character.getModifiers().filter(ofType(ModifierTypes.ability));
   return (
     <Card data-testid="abilities">
       <Card.Header>

@@ -4,7 +4,7 @@ import {
   ClassSkillModifier,
   FeatModifier,
   IModel,
-  ModifierType,
+  ModifierTypes,
   RankSkillModifier,
   SavingThrowBonusModifier,
   SavingThrowModifier,
@@ -14,38 +14,33 @@ import {
 import { z } from "zod";
 
 export const SimpleModifier = IModel.extend({
-  type: z.enum([
-    ModifierType.enum.attack,
-    ModifierType.enum.languageCount,
-    ModifierType.enum.rank,
-    ModifierType.enum.speed,
-  ]),
+  type: z.enum([ModifierTypes.attack, ModifierTypes.languageCount, ModifierTypes.rank, ModifierTypes.speed]),
   level: z.number().optional(),
   value: z.number(),
 }).strict();
 
 export const FeatCountModifier = SimpleModifier.extend({
-  type: z.literal(ModifierType.enum.featCount),
+  type: z.literal(ModifierTypes.featCount),
 }).strict();
 
 export const HitPointsModifier = SimpleModifier.extend({
-  type: z.literal(ModifierType.enum.hitPoints),
+  type: z.literal(ModifierTypes.hitPoints),
 }).strict();
 
 export const InitiativeModifier = SimpleModifier.extend({
-  type: z.literal(ModifierType.enum.initiative),
+  type: z.literal(ModifierTypes.initiative),
 }).strict();
 
 export const ResolveModifier = SimpleModifier.extend({
-  type: z.literal(ModifierType.enum.resolve),
+  type: z.literal(ModifierTypes.resolve),
 }).strict();
 
 export const StaminaModifier = SimpleModifier.extend({
-  type: z.literal(ModifierType.enum.stamina),
+  type: z.literal(ModifierTypes.stamina),
 }).strict();
 
 export const SkillModifier = IModel.extend({
-  type: z.literal(ModifierType.enum.skill),
+  type: z.literal(ModifierTypes.skill),
   level: z.number().optional(),
   target: z.string(),
   value: z.number(),

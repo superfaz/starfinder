@@ -9,7 +9,7 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { FeatTemplate, Prerequisite, PrerequisiteType, hasDescription } from "model";
+import { FeatTemplate, Prerequisite, PrerequisiteTypes, hasDescription } from "model";
 import {
   CharacterPresenter,
   FeatPresenter,
@@ -26,24 +26,24 @@ import { Stack } from "react-bootstrap";
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
   switch (prerequisite.type) {
-    case PrerequisiteType.enum.abilityScore: {
+    case PrerequisiteTypes.abilityScore: {
       const target = prerequisite.target === "<primary>" ? "dex" : prerequisite.target;
       const abilityScore = findOrError(data.abilityScores, target).name;
       return `${abilityScore} ${prerequisite.value}`;
     }
 
-    case PrerequisiteType.enum.armorProficiency: {
+    case PrerequisiteTypes.armorProficiency: {
       const name = data.armors.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
       return `Formé au Ports des ${name}`;
     }
 
-    case PrerequisiteType.enum.arms:
+    case PrerequisiteTypes.arms:
       return `${prerequisite.value} bras`;
 
-    case PrerequisiteType.enum.baseAttack:
+    case PrerequisiteTypes.baseAttack:
       return `Bonus de base à l'attaque +${prerequisite.value}`;
 
-    case PrerequisiteType.enum.class: {
+    case PrerequisiteTypes.class: {
       if (prerequisite.target.startsWith("!")) {
         const target = prerequisite.target.substring(1);
         const name = data.classes.find((e) => e.id === target)?.name ?? target;
@@ -54,10 +54,10 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
       }
     }
 
-    case PrerequisiteType.enum.combatFeatCount:
+    case PrerequisiteTypes.combatFeatCount:
       return `${prerequisite.value} dons de combat`;
 
-    case PrerequisiteType.enum.feat: {
+    case PrerequisiteTypes.feat: {
       if (prerequisite.target === "*weapon-specialization") {
         return "Un don de type Spécialisation martiale";
       } else if (prerequisite.target.startsWith("!")) {
@@ -69,16 +69,16 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
       }
     }
 
-    case PrerequisiteType.enum.level:
+    case PrerequisiteTypes.level:
       return `Niveau ${prerequisite.value}`;
 
-    case PrerequisiteType.enum.notSpellCaster:
+    case PrerequisiteTypes.notSpellCaster:
       return "Incapacité à lancer des sorts ou à utiliser des pouvoirs magiques";
 
-    case PrerequisiteType.enum.savingThrow:
+    case PrerequisiteTypes.savingThrow:
       return `Jet de sauvegarde ${prerequisite.target} +${prerequisite.value}`;
 
-    case PrerequisiteType.enum.skillRank: {
+    case PrerequisiteTypes.skillRank: {
       const name = data.skills.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
       if (prerequisite.value === 1) {
         return `1 rang de compétence en ${name}`;
@@ -87,13 +87,13 @@ function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {
       }
     }
 
-    case PrerequisiteType.enum.spellCaster:
+    case PrerequisiteTypes.spellCaster:
       return "Aptitude d’incantation de sorts";
 
-    case PrerequisiteType.enum.spellCasterLevel:
+    case PrerequisiteTypes.spellCasterLevel:
       return `Aptitude à lancer des sorts de niveau ${prerequisite.value}`;
 
-    case PrerequisiteType.enum.weaponProficiency: {
+    case PrerequisiteTypes.weaponProficiency: {
       const name = data.weapons.find((e) => e.id === prerequisite.target)?.name ?? prerequisite.target;
       return `Formé au Maniement des ${name}`;
     }

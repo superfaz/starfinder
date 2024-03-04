@@ -15,9 +15,9 @@ import {
   FeatTemplate,
   IModel,
   INamedModel,
-  ModifierType,
+  ModifierTypes,
   Prerequisite,
-  PrerequisiteType,
+  PrerequisiteTypes,
   Race,
   SavingThrow,
   SavingThrowId,
@@ -472,7 +472,7 @@ export class CharacterPresenter {
       const modifiers = this.getModifiers();
 
       const classSkillsFromModifiers = modifiers
-        .filter(ofType(ModifierType.enum.classSkill))
+        .filter(ofType(ModifierTypes.classSkill))
         .map((m) => m.target) as string[];
       this.cachedClassSkills = [...classSkillsFromModifiers, ...selectedClass.classSkills];
     }
@@ -481,8 +481,8 @@ export class CharacterPresenter {
   }
 
   private prepareSkillPresenters(skills: SkillPresenter[]): SkillPresenter[] {
-    const skillModifiers = this.getModifiers().filter(ofType(ModifierType.enum.skill));
-    const rankModifiers = this.getModifiers().filter(ofType(ModifierType.enum.rankSkill));
+    const skillModifiers = this.getModifiers().filter(ofType(ModifierTypes.skill));
+    const rankModifiers = this.getModifiers().filter(ofType(ModifierTypes.rankSkill));
 
     return skills.map((s) => {
       const rankForced: boolean = rankModifiers.some((m) => m.target === s.id);
@@ -565,7 +565,7 @@ export class CharacterPresenter {
     }
 
     // TODO: Check rank calculation
-    const ranks = this.getModifiers().filter(ofType(ModifierType.enum.rank)).length;
+    const ranks = this.getModifiers().filter(ofType(ModifierTypes.rank)).length;
     const skillRanks = selectedClass.skillRank + computeAbilityScoreModifier(this.getAbilityScores().int) + ranks;
 
     return skillRanks - Object.values(this.character.skillRanks).reduce((acc, v) => acc + v, 0);
@@ -574,35 +574,35 @@ export class CharacterPresenter {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   checkPrerequisite(prerequisite: Prerequisite): boolean {
     switch (prerequisite.type) {
-      case PrerequisiteType.enum.abilityScore: {
+      case PrerequisiteTypes.abilityScore: {
         const abilityScore = this.getAbilityScores()[prerequisite.target];
         return abilityScore >= prerequisite.value;
       }
 
-      case PrerequisiteType.enum.armorProficiency: {
+      case PrerequisiteTypes.armorProficiency: {
         const selectedClass = this.getClass();
         return !!selectedClass && selectedClass.armors.includes(prerequisite.target);
       }
 
-      case PrerequisiteType.enum.arms:
+      case PrerequisiteTypes.arms:
         // TODO: Manage other cases
         return this.character.race === "khasathas";
 
-      case PrerequisiteType.enum.baseAttack: {
+      case PrerequisiteTypes.baseAttack: {
         const baseAttack = this.getAttackBonuses()?.base;
         return baseAttack !== undefined && baseAttack >= prerequisite.value;
       }
-      case PrerequisiteType.enum.class:
+      case PrerequisiteTypes.class:
         if (prerequisite.target.startsWith("!")) {
           return this.character.class !== prerequisite.target.substring(1);
         } else {
           return this.character.class === prerequisite.target;
         }
 
-      case PrerequisiteType.enum.combatFeatCount:
+      case PrerequisiteTypes.combatFeatCount:
         return this.getSelectedFeats().filter((f) => f.combatFeat).length >= prerequisite.value;
 
-      case PrerequisiteType.enum.feat: {
+      case PrerequisiteTypes.feat: {
         if (prerequisite.target.startsWith("!")) {
           const target = this.data.feats.find((f) => f.id === prerequisite.target.substring(1));
           return !!target && !this.hasFeat(target);
@@ -614,15 +614,15 @@ export class CharacterPresenter {
         }
       }
 
-      case PrerequisiteType.enum.level:
+      case PrerequisiteTypes.level:
         return this.character.level >= prerequisite.value;
 
-      case PrerequisiteType.enum.skillRank: {
+      case PrerequisiteTypes.skillRank: {
         const skill = this.getSkills().find((s) => s.id === prerequisite.target);
         return !!skill && skill.ranks >= prerequisite.value;
       }
 
-      case PrerequisiteType.enum.weaponProficiency: {
+      case PrerequisiteTypes.weaponProficiency: {
         const selectedClass = this.getClass();
         if (isVariable(prerequisite.target)) {
           const target = this.createTemplater().convertString(prerequisite.target);
@@ -641,16 +641,16 @@ export class CharacterPresenter {
         }
       }
 
-      case PrerequisiteType.enum.savingThrow:
+      case PrerequisiteTypes.savingThrow:
         return (this.getSavingThrowBonus(prerequisite.target) ?? 0) >= prerequisite.value;
 
-      case PrerequisiteType.enum.notSpellCaster:
+      case PrerequisiteTypes.notSpellCaster:
         return !isCasterId(this.character.class);
 
-      case PrerequisiteType.enum.spellCaster:
+      case PrerequisiteTypes.spellCaster:
         return isCasterId(this.character.class);
 
-      case PrerequisiteType.enum.spellCasterLevel:
+      case PrerequisiteTypes.spellCasterLevel:
         // TODO: Manage spell caster level
         return true;
     }
@@ -725,7 +725,7 @@ export class CharacterPresenter {
   getArmorProficiencies(): ArmorId[] {
     const selectedClass = this.getClass();
     const modifiers = this.getModifiers()
-      .filter(ofType(ModifierType.enum.armorProficiency))
+      .filter(ofType(ModifierTypes.armorProficiency))
       .map((m) => m.target);
 
     return [...(selectedClass?.armors ?? []), ...modifiers];
@@ -734,7 +734,7 @@ export class CharacterPresenter {
   getWeaponProficiencies(): WeaponId[] {
     const selectedClass = this.getClass();
     const modifiers = this.getModifiers()
-      .filter(ofType(ModifierType.enum.weaponProficiency))
+      .filter(ofType(ModifierTypes.weaponProficiency))
       .map((m) => m.target);
 
     return [...(selectedClass?.weapons ?? []), ...modifiers];
@@ -745,7 +745,7 @@ export class CharacterPresenter {
    * @returns The list of inherited feats.
    */
   getInheritedFeats(): Feat[] {
-    const modifiers = this.getInheritedModifiers().filter(ofType(ModifierType.enum.feat));
+    const modifiers = this.getInheritedModifiers().filter(ofType(ModifierTypes.feat));
     const templater = this.createTemplater();
 
     return modifiers.map((m) => {
@@ -794,7 +794,7 @@ export class CharacterPresenter {
 
   getSelectableFeatCount(): number {
     const bonus = this.getModifiers()
-      .filter(ofType(ModifierType.enum.featCount))
+      .filter(ofType(ModifierTypes.featCount))
       .reduce((acc, m) => acc + m.value, 0);
     const selected = this.character.feats.length;
     return 1 + bonus - selected;
@@ -831,7 +831,7 @@ export class CharacterPresenter {
   getInitiative(): number {
     const dex = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
     const modifiers = this.getModifiers()
-      .filter(ofType(ModifierType.enum.initiative))
+      .filter(ofType(ModifierTypes.initiative))
       .reduce((acc, m) => acc + m.value, 0);
     return dex + modifiers;
   }
@@ -840,7 +840,7 @@ export class CharacterPresenter {
     const con = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.con]);
     const klass = this.getClass()?.staminaPoints ?? 0;
     const modifiers = this.getModifiers()
-      .filter(ofType(ModifierType.enum.stamina))
+      .filter(ofType(ModifierTypes.stamina))
       .reduce((acc, m) => acc + m.value, 0);
 
     return Math.max(0, con + klass + modifiers);
@@ -850,7 +850,7 @@ export class CharacterPresenter {
     const race = this.getRace()?.hitPoints ?? 0;
     const klass = this.getClass()?.hitPoints ?? 0;
     const modifiers = this.getModifiers()
-      .filter(ofType(ModifierType.enum.hitPoints))
+      .filter(ofType(ModifierTypes.hitPoints))
       .reduce((acc, m) => acc + m.value, 0);
 
     return Math.max(1, race + klass + modifiers);
@@ -861,7 +861,7 @@ export class CharacterPresenter {
     const primaryAbilityScore = this.getPrimaryAbilityScore();
     const primary = primaryAbilityScore ? computeAbilityScoreModifier(this.getAbilityScores()[primaryAbilityScore]) : 0;
     const modifiers = this.getModifiers()
-      .filter(ofType(ModifierType.enum.resolve))
+      .filter(ofType(ModifierTypes.resolve))
       .reduce((acc, m) => acc + m.value, 0);
 
     return level + primary + modifiers;
@@ -892,7 +892,7 @@ export class CharacterPresenter {
     const classBonus = computeSavingThrowBonus(1, selectedClass.savingThrows[savingThrow.id]);
     const abilityScoreBonus = computeAbilityScoreModifier(this.getAbilityScores()[savingThrow.abilityScore]);
     const otherBonus = this.getModifiers()
-      .filter(ofType(ModifierType.enum.savingThrowBonus))
+      .filter(ofType(ModifierTypes.savingThrowBonus))
       .filter((b) => b.target === savingThrow.id)
       .reduce((a, c) => a + c.value, 0);
 

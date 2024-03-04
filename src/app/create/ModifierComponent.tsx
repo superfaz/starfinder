@@ -8,6 +8,7 @@ import {
   FeatModifier,
   FeatTargetTypes,
   ModifierType,
+  ModifierTypes,
   hasDescription,
   hasExtra,
   hasName,
@@ -104,14 +105,14 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
   };
 
   switch (modifier.type) {
-    case ModifierType.enum.skill:
-    case ModifierType.enum.classSkill:
-    case ModifierType.enum.rankSkill:
+    case ModifierTypes.skill:
+    case ModifierTypes.classSkill:
+    case ModifierTypes.rankSkill:
       // Target is a skill
       element.targetName = retrieveSkillName(data, modifier.target);
       break;
 
-    case ModifierType.enum.feat: {
+    case ModifierTypes.feat: {
       adaptForFeat(data, modifier, element);
       break;
     }

@@ -24,6 +24,8 @@ export const ModifierType = z.enum([
 
 export type ModifierType = z.infer<typeof ModifierType>;
 
+export const ModifierTypes = ModifierType.enum;
+
 export function isModifierType(value: unknown): value is ModifierType {
   return ModifierType.safeParse(value).success;
 }

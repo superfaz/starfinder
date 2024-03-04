@@ -2,66 +2,66 @@ import { z } from "zod";
 import { ArmorId } from "./Armor";
 import { AbilityScoreId } from "./AbilityScore";
 import { IModel } from "./IModel";
-import { PrerequisiteType } from "./PrerequisiteType";
+import { PrerequisiteTypes } from "./PrerequisiteType";
 import { WeaponId } from "./Weapon";
 import { Variable } from "./helper";
 import { SavingThrowId } from "./SavingThrow";
 
 export const AbilityScorePrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.abilityScore),
+  type: z.literal(PrerequisiteTypes.abilityScore),
   target: z.union([AbilityScoreId, z.literal("<primary>")]),
   value: z.number(),
 }).strict();
 
 export const ArmorProficiencyPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.armorProficiency),
+  type: z.literal(PrerequisiteTypes.armorProficiency),
   target: ArmorId,
 }).strict();
 
 export const ClassPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.class),
+  type: z.literal(PrerequisiteTypes.class),
   target: z.string(),
   specialization: z.string().optional(),
 }).strict();
 
 export const FeatPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.feat),
+  type: z.literal(PrerequisiteTypes.feat),
   target: z.string(),
 }).strict();
 
 export const SavingThrowPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.savingThrow),
+  type: z.literal(PrerequisiteTypes.savingThrow),
   target: SavingThrowId,
   value: z.number(),
 }).strict();
 
 export const SpellCasterPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.spellCaster),
+  type: z.literal(PrerequisiteTypes.spellCaster),
 }).strict();
 
 export const NotSpellCasterPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.notSpellCaster),
+  type: z.literal(PrerequisiteTypes.notSpellCaster),
 }).strict();
 
 export const SimplePrerequisite = IModel.extend({
   type: z.enum([
-    PrerequisiteType.enum.arms,
-    PrerequisiteType.enum.baseAttack,
-    PrerequisiteType.enum.combatFeatCount,
-    PrerequisiteType.enum.level,
-    PrerequisiteType.enum.spellCasterLevel,
+    PrerequisiteTypes.arms,
+    PrerequisiteTypes.baseAttack,
+    PrerequisiteTypes.combatFeatCount,
+    PrerequisiteTypes.level,
+    PrerequisiteTypes.spellCasterLevel,
   ]),
   value: z.number(),
 }).strict();
 
 export const SkillRankPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.skillRank),
+  type: z.literal(PrerequisiteTypes.skillRank),
   target: z.string(),
   value: z.number(),
 }).strict();
 
 export const WeaponProficiencyPrerequisite = IModel.extend({
-  type: z.literal(PrerequisiteType.enum.weaponProficiency),
+  type: z.literal(PrerequisiteTypes.weaponProficiency),
   target: z.union([WeaponId, Variable]),
 }).strict();
 

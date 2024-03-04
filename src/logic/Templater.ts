@@ -5,7 +5,7 @@ import {
   FeatureTemplate,
   INamedModel,
   ModifierTemplate,
-  ModifierType,
+  ModifierTypes,
   Prerequisite,
   SavingThrowId,
   WeaponId,
@@ -123,39 +123,39 @@ export class Templater {
     }
 
     switch (template.type) {
-      case ModifierType.enum.ability:
-      case ModifierType.enum.savingThrow:
+      case ModifierTypes.ability:
+      case ModifierTypes.savingThrow:
         return {
           ...template,
           description: this.applyForString(template.description),
         };
-      case ModifierType.enum.classSkill:
-      case ModifierType.enum.rankSkill:
+      case ModifierTypes.classSkill:
+      case ModifierTypes.rankSkill:
         return {
           ...template,
           target: this.applyForString(template.target),
         };
-      case ModifierType.enum.attack:
-      case ModifierType.enum.featCount:
-      case ModifierType.enum.hitPoints:
-      case ModifierType.enum.initiative:
-      case ModifierType.enum.languageCount:
-      case ModifierType.enum.rank:
-      case ModifierType.enum.resolve:
-      case ModifierType.enum.speed:
-      case ModifierType.enum.stamina:
+      case ModifierTypes.attack:
+      case ModifierTypes.featCount:
+      case ModifierTypes.hitPoints:
+      case ModifierTypes.initiative:
+      case ModifierTypes.languageCount:
+      case ModifierTypes.rank:
+      case ModifierTypes.resolve:
+      case ModifierTypes.speed:
+      case ModifierTypes.stamina:
         return {
           ...template,
           value: this.applyForNumber(template.value),
         };
-      case ModifierType.enum.skill:
+      case ModifierTypes.skill:
         return {
           ...template,
           target: this.applyForString(template.target),
           value: this.applyForNumber(template.value),
         };
-      case ModifierType.enum.spell:
-      case ModifierType.enum.feat:
+      case ModifierTypes.spell:
+      case ModifierTypes.feat:
       default:
         return {
           ...template,
