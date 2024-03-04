@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { IModel } from "./IModel";
 
-export const Avatar = IModel.extend({
+export const AvatarSchema = IModel.extend({
   image: z.string(),
   tags: z.array(z.string()),
 });
 
-export type Avatar = z.infer<typeof Avatar>;
+export type Avatar = z.infer<typeof AvatarSchema>;
 
 export function isAvatar(data: unknown): data is Avatar {
-  return Avatar.safeParse(data).success;
+  return AvatarSchema.safeParse(data).success;
 }

@@ -3,7 +3,7 @@ import {
   AbilityScoreSchema,
   AlignmentSchema,
   ArmorSchema,
-  Avatar,
+  AvatarSchema,
   Book,
   Class,
   ClassEnvoy,
@@ -45,7 +45,7 @@ const datasets = [
   {
     file: "avatars.json",
     array: true,
-    schema: Avatar.strict(),
+    schema: AvatarSchema.strict(),
   },
   {
     file: "class-envoy.json",
