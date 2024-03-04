@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ICodedModel } from "./ICodedModel";
 
-export const DamageTypeId = z.enum([
+export const DamageTypeIdSchema = z.enum([
   "bludgeoning",
   "piercing",
   "slashing",
@@ -12,21 +12,21 @@ export const DamageTypeId = z.enum([
   "sonic",
 ]);
 
-export type DamageTypeId = z.infer<typeof DamageTypeId>;
+export type DamageTypeId = z.infer<typeof DamageTypeIdSchema>;
 
-export const DamageType = ICodedModel.extend({
-  id: DamageTypeId,
+export const DamageTypeSchema = ICodedModel.extend({
+  id: DamageTypeIdSchema,
   category: z.enum(["kinetic", "energy"]),
 });
 
-export type DamageType = z.infer<typeof DamageType>;
+export type DamageType = z.infer<typeof DamageTypeSchema>;
 
-export const DamageTypeIds = DamageTypeId.enum;
+export const DamageTypeIds = DamageTypeIdSchema.enum;
 
 export function isDamageType(obj: unknown): obj is DamageType {
-  return DamageType.safeParse(obj).success;
+  return DamageTypeSchema.safeParse(obj).success;
 }
 
 export function isDamageTypeId(obj: unknown): obj is DamageTypeId {
-  return DamageTypeId.safeParse(obj).success;
+  return DamageTypeIdSchema.safeParse(obj).success;
 }
