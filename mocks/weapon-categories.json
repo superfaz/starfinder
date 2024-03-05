@@ -1,0 +1,9 @@
+[
+  { "id": "cryo", "name": "Cryogénique" },
+  { "id": "flame", "name": "Incendiaire" },
+  { "id": "laser", "name": "Laser" },
+  { "id": "plasma", "name": "Plasma" },
+  { "id": "projectile", "name": "Projectile" },
+  { "id": "shock", "name": "Choc" },
+  { "id": "sonic", "name": "Sonique" }
+]

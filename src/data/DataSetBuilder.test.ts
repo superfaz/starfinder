@@ -16,6 +16,7 @@ describe("DataSetBuilder", () => {
   const cases: Array<keyof IDataSet> = [
     "getAbilityScores",
     "getAlignments",
+    "getArmorTypes",
     "getAvatars",
     "getBooks",
     "getClasses",
@@ -24,8 +25,8 @@ describe("DataSetBuilder", () => {
     "getSkills",
     "getThemes",
     "getThemeDetails",
-    "getArmors",
-    "getWeapons",
+    "getWeaponCategories",
+    "getWeaponTypes",
   ];
 
   test.each(cases)("%s()", async (method: keyof IDataSet) => {

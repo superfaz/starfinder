@@ -17,6 +17,7 @@ import {
   SkillDefinitionSchema,
   SpellSchema,
   ThemeSchema,
+  WeaponCategorySchema,
   WeaponTypeSchema,
 } from "model";
 import { IDataSet } from ".";
@@ -98,7 +99,9 @@ export class DataSetBuilder {
       getAbilityScores: cache("ability-scores", () =>
         this.getOrdered("ability-scores").then((a) => AbilityScoreSchema.array().parse(a))
       ),
-      getAlignments: cache("alignments", () => this.getOrdered("alignments").then((a) => AlignmentSchema.array().parse(a))),
+      getAlignments: cache("alignments", () =>
+        this.getOrdered("alignments").then((a) => AlignmentSchema.array().parse(a))
+      ),
       getArmorTypes: cache("armors", () => this.getOrdered("armors").then((a) => ArmorTypeSchema.array().parse(a))),
       getAvatars: cache("avatars", () => this.getAll("avatars").then((a) => AvatarSchema.array().parse(a))),
       getBooks: cache("books", () => this.getAll("books").then((a) => BookSchema.array().parse(a))),
@@ -108,7 +111,9 @@ export class DataSetBuilder {
         this.getNamed("damage-types").then((a) => DamageTypeSchema.array().parse(a))
       ),
       getFeats: cache("feats", () => this.getNamed("feats").then((a) => FeatTemplateSchema.array().parse(a))),
-      getProfessions: cache("professions", () => this.getNamed("professions").then((a) => ProfessionSchema.array().parse(a))),
+      getProfessions: cache("professions", () =>
+        this.getNamed("professions").then((a) => ProfessionSchema.array().parse(a))
+      ),
       getRaces: cache("races", () => this.getNamed("races").then((a) => RaceSchema.array().parse(a))),
       getSpells: cache("spells", () => this.getNamed("spells").then((a) => SpellSchema.array().parse(a))),
       getThemes: cache("themes", () => this.getNamed("themes").then((a) => ThemeSchema.array().parse(a))),
@@ -117,6 +122,9 @@ export class DataSetBuilder {
         this.getOrdered("saving-throws").then((a) => SavingThrowSchema.array().parse(a))
       ),
       getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinitionSchema.array().parse(a))),
+      getWeaponCategories: cache("weapon-categories", () =>
+        this.getOrdered("weapon-categories").then((a) => WeaponCategorySchema.array().parse(a))
+      ),
       getWeaponTypes: cache("weapons", () => this.getOrdered("weapons").then((a) => WeaponTypeSchema.array().parse(a))),
     };
 

@@ -16,6 +16,7 @@ import {
   SpellSchema,
   ThemeSchema,
   ThemeScholarSchema,
+  WeaponCategorySchema,
   WeaponTypeSchema,
 } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
@@ -33,7 +34,8 @@ process.env.STARFINDER_COSMOS_DATABASE = "starfinder";
 
 async function mockBuild(): Promise<IDataSet> {
   return {
-    getAbilityScores: async () => AbilityScoreSchema.array().parse((await import("./mocks/ability-scores.json")).default),
+    getAbilityScores: async () =>
+      AbilityScoreSchema.array().parse((await import("./mocks/ability-scores.json")).default),
     getAlignments: async () => AlignmentSchema.array().parse((await import("./mocks/alignments.json")).default),
     getArmorTypes: async () => ArmorTypeSchema.array().parse((await import("./mocks/armors.json")).default),
     getBooks: async () => BookSchema.array().parse((await import("./mocks/books.json")).default),
@@ -49,6 +51,8 @@ async function mockBuild(): Promise<IDataSet> {
     getThemeDetails: async () => ThemeScholarSchema.parse((await import("./mocks/themes-details.json")).default),
     getSavingThrows: async () => SavingThrowSchema.array().parse((await import("./mocks/saving-throws.json")).default),
     getSkills: async () => SkillDefinitionSchema.array().parse((await import("./mocks/skills.json")).default),
+    getWeaponCategories: async () =>
+      WeaponCategorySchema.array().parse((await import("./mocks/weapon-categories.json")).default),
     getWeaponTypes: async () => WeaponTypeSchema.array().parse((await import("./mocks/weapons.json")).default),
   };
 }
