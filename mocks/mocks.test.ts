@@ -33,7 +33,7 @@ const datasets = [
     schema: AlignmentSchema.strict(),
   },
   {
-    file: "armors.json",
+    file: "armor-types.json",
     array: true,
     schema: ArmorTypeSchema.strict(),
   },
@@ -103,7 +103,7 @@ const datasets = [
     schema: ThemeSchema.strict(),
   },
   {
-    file: "weapons.json",
+    file: "weapon-types.json",
     array: true,
     schema: WeaponTypeSchema.strict(),
   },

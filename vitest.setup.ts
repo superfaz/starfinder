@@ -37,7 +37,7 @@ async function mockBuild(): Promise<IDataSet> {
     getAbilityScores: async () =>
       AbilityScoreSchema.array().parse((await import("./mocks/ability-scores.json")).default),
     getAlignments: async () => AlignmentSchema.array().parse((await import("./mocks/alignments.json")).default),
-    getArmorTypes: async () => ArmorTypeSchema.array().parse((await import("./mocks/armors.json")).default),
+    getArmorTypes: async () => ArmorTypeSchema.array().parse((await import("./mocks/armor-types.json")).default),
     getBooks: async () => BookSchema.array().parse((await import("./mocks/books.json")).default),
     getAvatars: async () => AvatarSchema.array().parse((await import("./mocks/avatars.json")).default),
     getClasses: async () => ClassSchema.array().parse((await import("./mocks/classes.json")).default),
@@ -53,7 +53,7 @@ async function mockBuild(): Promise<IDataSet> {
     getSkills: async () => SkillDefinitionSchema.array().parse((await import("./mocks/skills.json")).default),
     getWeaponCategories: async () =>
       WeaponCategorySchema.array().parse((await import("./mocks/weapon-categories.json")).default),
-    getWeaponTypes: async () => WeaponTypeSchema.array().parse((await import("./mocks/weapons.json")).default),
+    getWeaponTypes: async () => WeaponTypeSchema.array().parse((await import("./mocks/weapon-types.json")).default),
   };
 }
 

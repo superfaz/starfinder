@@ -102,7 +102,7 @@ export class DataSetBuilder {
       getAlignments: cache("alignments", () =>
         this.getOrdered("alignments").then((a) => AlignmentSchema.array().parse(a))
       ),
-      getArmorTypes: cache("armors", () => this.getOrdered("armors").then((a) => ArmorTypeSchema.array().parse(a))),
+      getArmorTypes: cache("armor-types", () => this.getOrdered("armor-types").then((a) => ArmorTypeSchema.array().parse(a))),
       getAvatars: cache("avatars", () => this.getAll("avatars").then((a) => AvatarSchema.array().parse(a))),
       getBooks: cache("books", () => this.getAll("books").then((a) => BookSchema.array().parse(a))),
       getClasses: cache("classes", () => this.getNamed("classes").then((a) => ClassSchema.array().parse(a))),
@@ -125,7 +125,7 @@ export class DataSetBuilder {
       getWeaponCategories: cache("weapon-categories", () =>
         this.getOrdered("weapon-categories").then((a) => WeaponCategorySchema.array().parse(a))
       ),
-      getWeaponTypes: cache("weapons", () => this.getOrdered("weapons").then((a) => WeaponTypeSchema.array().parse(a))),
+      getWeaponTypes: cache("weapon-types", () => this.getOrdered("weapon-types").then((a) => WeaponTypeSchema.array().parse(a))),
     };
 
     return data;
