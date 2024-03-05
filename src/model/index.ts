@@ -28,4 +28,5 @@ export * from "./Spell";
 export * from "./Theme";
 export * from "./ThemeScholar";
 export * from "./Variant";
+export * from "./WeaponCategory";
 export * from "./WeaponType";
