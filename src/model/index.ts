@@ -30,4 +30,5 @@ export * from "./Theme";
 export * from "./ThemeScholar";
 export * from "./Variant";
 export * from "./WeaponCategory";
+export * from "./WeaponSpecialProperty";
 export * from "./WeaponType";

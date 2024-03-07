@@ -1,8 +1,9 @@
 import { INamedModelSchema } from "./INamedModel";
-import { DescriptionSchema } from "./helper";
+import { DescriptionSchema, ReferenceSchema } from "./helper";
 
-export const CriticalHitEffect = INamedModelSchema.extend({
+export const CriticalHitEffectSchema = INamedModelSchema.extend({
+  reference: ReferenceSchema,
   description: DescriptionSchema,
 });
 
-export type CriticalHitEffect = Zod.infer<typeof CriticalHitEffect>;
+export type CriticalHitEffect = Zod.infer<typeof CriticalHitEffectSchema>;
