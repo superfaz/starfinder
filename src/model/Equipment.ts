@@ -16,7 +16,7 @@ export const EquipmentWeaponMeleeSchema = INamedModelSchema.extend({
     roll: z.string().regex(/^\d+d\d+$/),
     types: DamageTypeIdSchema.array(),
   }),
-  critical: IdSchema.optional(),
+  critical: z.object({ id: IdSchema, value: z.string().optional() }).optional(),
   weight: z.union([z.literal("F"), z.number().positive()]),
   specials: z
     .object({
