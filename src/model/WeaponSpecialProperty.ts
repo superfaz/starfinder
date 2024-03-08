@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
-import { DescriptionSchema } from "./helper";
+import { DescriptionSchema, ReferenceSchema } from "./helper";
 
 export const WeaponSpecialPropertySchema = INamedModelSchema.extend({
+  reference: ReferenceSchema,
   description: DescriptionSchema,
 });
 

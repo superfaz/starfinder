@@ -12,6 +12,7 @@ export * from "./ClassMystic";
 export * from "./ClassSoldier";
 export * from "./CriticalHitEffect";
 export * from "./DamageType";
+export * from "./Equipment";
 export * from "./FeatTemplate";
 export * from "./FeatureTemplate";
 export * from "./ICodedModel";

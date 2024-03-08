@@ -6,9 +6,11 @@ export const VariableSchema = z.string().regex(/^<[a-z][a-zA-Z]+>$/);
 
 export const DescriptionSchema = z.union([VariableSchema, z.string().regex(/^[\p{Lu}0-9+-].+\.$/u)]);
 
+export const LevelSchema = z.number().int().min(0).max(20);
+
 export const ReferenceSchema = z.object({
   book: z.string(),
-  page: z.number(),
+  page: z.number().positive(),
 });
 
 export type Reference = z.infer<typeof ReferenceSchema>;
