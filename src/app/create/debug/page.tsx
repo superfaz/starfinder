@@ -31,9 +31,5 @@ function Client() {
 }
 
 export default function Page() {
-  return (
-    <CookiesProvider defaultSetOptions={{ path: "/", sameSite: "strict" }}>
-      <Client />
-    </CookiesProvider>
-  );
+  return <Client />;
 }

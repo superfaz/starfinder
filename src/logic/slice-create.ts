@@ -7,6 +7,7 @@ import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 const initialState = {
   data: EmptyClientDataSet,
+  navigation: "intro",
   character: EmptyCharacter,
   classesDetails: {} as Record<string, IModel>,
 };
@@ -17,6 +18,10 @@ const mainSlice = createSlice({
   reducers: {
     initializeData(state, action: PayloadAction<IClientDataSet>) {
       state.data = action.payload;
+    },
+
+    updateNavigation(state, action: PayloadAction<string>) {
+      state.navigation = action.payload;
     },
 
     updateRace(state, action: PayloadAction<string>) {
