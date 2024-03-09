@@ -6,5 +6,11 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
   const builder = new DataSetBuilder();
   const serverData: IDataSet = await builder.build();
   const clientData: IClientDataSet = await convert(serverData);
-  return <LayoutClient data={clientData}>{children}</LayoutClient>;
+  const debug = process.env.STARFINDER_DEBUG === "true";
+
+  return (
+    <LayoutClient debug={debug} data={clientData}>
+      {children}
+    </LayoutClient>
+  );
 }

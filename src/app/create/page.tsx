@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { useCookies } from "react-cookie";
 import { CharacterPresenter, useAppSelector } from "logic";
@@ -18,17 +17,13 @@ export default function Page() {
     [data, classesDetails, character]
   );
 
-  const selectedRace = presenter.getRace();
-  const selectedTheme = presenter.getTheme();
-  const selectedClass = presenter.getClass();
-
   const [, setCookie] = useCookies(["character"]);
   useEffect(() => {
     setCookie("character", JSON.stringify(character));
   }, [character, setCookie]);
 
   return (
-    <Row id="content">
+    <>
       {navigation === "intro" && (
         <Col lg={6}>
           <Tab.Intro />
@@ -135,13 +130,6 @@ export default function Page() {
           <Tab.Sheet character={presenter} />
         </Col>
       )}
-
-      {navigation === "debug" && (
-        <Col lg={12}>
-          <h5>Character</h5>
-          <pre>{JSON.stringify(character, null, 2)}</pre>
-        </Col>
-      )}
-    </Row>
+    </>
   );
 }

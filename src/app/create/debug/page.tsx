@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
-import { CookiesProvider, useCookies } from "react-cookie";
+import { Col } from "react-bootstrap";
+import { useCookies } from "react-cookie";
 import { Character, CharacterSchema } from "model";
 
 export const dynamic = "force-dynamic";
 
-function Client() {
+export default function Page() {
   const [cookies] = useCookies(["character"]);
   const [character, setCharacter] = useState<Character | undefined>();
 
@@ -21,15 +21,9 @@ function Client() {
   }, [cookies, cookies.character]);
 
   return (
-    <Row>
-      <Col lg={12}>
-        <h5>Character</h5>
-        <pre>{JSON.stringify(character, null, 2)}</pre>
-      </Col>
-    </Row>
+    <Col lg={12}>
+      <h5>Character</h5>
+      <pre>{JSON.stringify(character, null, 2)}</pre>
+    </Col>
   );
-}
-
-export default function Page() {
-  return <Client />;
 }

@@ -1,28 +1,35 @@
 "use client";
 
-import { ReactNode, useMemo, useState } from "react";
-import { Container, Nav, NavLink, Navbar } from "react-bootstrap";
+import { clsx } from "clsx";
+import { ReactNode, useMemo } from "react";
+import { Container, Navbar, Row } from "react-bootstrap";
 import { CookiesProvider } from "react-cookie";
+import Link from "next/link";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import StoreProvider from "logic/StoreProvider";
+import { usePathname } from "next/navigation";
+import { Nav } from "app/components/Nav";
 
-export default function LayoutClient({ data, children }: Readonly<{ data: IClientDataSet; children: ReactNode }>) {
+export default function LayoutClient({
+  data,
+  debug,
+  children,
+}: Readonly<{ data: IClientDataSet; debug: boolean; children: ReactNode }>) {
   return (
     <StoreProvider data={data}>
       <CookiesProvider defaultSetOptions={{ path: "/", sameSite: "strict" }}>
-        <LayoutClientPresenter>{children}</LayoutClientPresenter>
+        <LayoutClientPresenter debug={debug}>{children}</LayoutClientPresenter>
       </CookiesProvider>
     </StoreProvider>
   );
 }
 
-function LayoutClientPresenter({ children }: Readonly<{ children: ReactNode }>) {
-  const debug = process.env.STARFINDER_DEBUG === "true";
-
+function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; children: ReactNode }>) {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.data);
   const navigation = useAppSelector((state) => state.navigation);
+  const pathname = usePathname();
   const character = useAppSelector((state) => state.character);
   const classesDetails = useAppSelector((state) => state.classesDetails);
   const presenter = useMemo(
@@ -38,75 +45,108 @@ function LayoutClientPresenter({ children }: Readonly<{ children: ReactNode }>) 
     dispatch(mutators.updateNavigation(eventKey ?? ""));
   }
 
+  function NavLink({
+    children,
+    href,
+    eventKey,
+    disabled,
+  }: {
+    children: ReactNode;
+    href: string;
+    eventKey: string;
+    disabled?: boolean;
+  }) {
+    return (
+      <Link
+        href={href}
+        className={clsx("nav-link", pathname === href && navigation === eventKey && "active", disabled && "disabled")}
+        onClick={() => handleNavigation(eventKey)}
+      >
+        {children}
+      </Link>
+    );
+  }
   return (
     <>
       <Navbar className="sticky-top" bg="body-secondary">
         <Container fluid>
           <Navbar.Brand>monperso StarFinder</Navbar.Brand>
-          <Nav className="me-auto">
-            <NavLink href="/">Home</NavLink>
+          <Nav className="navbar-nav me-auto">
+            <Link className="nav-link" href="/">
+              Home
+            </Link>
           </Nav>
           <Navbar.Text className="header active" role="heading" aria-level={1}>
             Création de personnage
           </Navbar.Text>
-          <Nav className="ms-auto">
-            <NavLink href="https://github.com/superfaz/starfinder">
+          <Nav className="navbar-nav ms-auto">
+            <a className="nav-link" href="https://github.com/superfaz/starfinder">
               <i className="bi bi-github" aria-label="github" title="github"></i>
-            </NavLink>
+            </a>
           </Nav>
         </Container>
       </Navbar>
       <Container className="mt-3" style={{ width: "1600px", minWidth: "1600px" }}>
-        <Nav variant="underline" className="mb-3" activeKey={navigation} onSelect={handleNavigation}>
+        <Nav variant="underline" className="mb-3">
           <Nav.Item>
-            <Nav.Link eventKey="intro">Introduction</Nav.Link>
+            <NavLink href="/create" eventKey="intro">
+              Introduction
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="race">Race</Nav.Link>
+            <NavLink href="/create" eventKey="race">
+              Race
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="theme" disabled={selectedRace === null}>
+            <NavLink href="/create" eventKey="theme" disabled={selectedRace === null}>
               Thème
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="class" disabled={selectedTheme === null}>
+            <NavLink href="/create" eventKey="class" disabled={selectedTheme === null}>
               Classe
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="profile" disabled={selectedClass === null}>
+            <NavLink href="/create" eventKey="profile" disabled={selectedClass === null}>
               Profil
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="abilityScores" disabled={selectedClass === null}>
+            <NavLink href="/create" eventKey="abilityScores" disabled={selectedClass === null}>
               Caractéristiques & Compétences
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="feats" disabled={selectedClass === null}>
+            <NavLink href="/create" eventKey="feats" disabled={selectedClass === null}>
               Don(s)
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="spells" disabled={selectedClass === null || !selectedClass.spellCaster}>
+            <NavLink href="/create" eventKey="spells" disabled={selectedClass === null || !selectedClass.spellCaster}>
               Sorts
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="equipment" disabled={selectedClass === null}>
+            <NavLink href="/create" eventKey="equipment" disabled={selectedClass === null}>
               Équipement
-            </Nav.Link>
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="sheet">Fiche</Nav.Link>
+            <NavLink href="/create" eventKey="sheet">
+              Fiche
+            </NavLink>
           </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="debug">Debug</Nav.Link>
-          </Nav.Item>
+          {debug && (
+            <Nav.Item>
+              <Link href="/create/debug" className={clsx("nav-link", { active: pathname === "/create/debug" })}>
+                Debug
+              </Link>
+            </Nav.Item>
+          )}
         </Nav>
-        {children}
+        <Row id="content">{children}</Row>
       </Container>
     </>
   );
