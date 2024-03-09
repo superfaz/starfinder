@@ -123,7 +123,7 @@ export class DataSetBuilder {
       ),
       getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinitionSchema.array().parse(a))),
       getWeaponCategories: cache("weapon-categories", () =>
-        this.getOrdered("weapon-categories").then((a) => WeaponCategorySchema.array().parse(a))
+        this.getNamed("weapon-categories").then((a) => WeaponCategorySchema.array().parse(a))
       ),
       getWeaponTypes: cache("weapon-types", () => this.getOrdered("weapon-types").then((a) => WeaponTypeSchema.array().parse(a))),
     };
