@@ -26,8 +26,8 @@ The data provided by this application are available under Black Book Editions an
 
 [![next.js](https://img.shields.io/badge/next.js-white?logo=next.js&logoColor=%23000000)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/typescript-white?logo=typescript&logoColor=%233178C6)](https://typescriptlang.org/)
-[![yarn](https://img.shields.io/badge/yarn-white?logo=yarn&logoColor=%232C8EBB)
-](https://yarnpkg.com)
+[![pnpm](https://img.shields.io/badge/pnpm-white?logo=pnpm&logoColor=%23F69220)
+](https://pnpm.io/)
 [![bootstrap](https://img.shields.io/badge/bootstrap-white?logo=bootstrap&logoColor=%237952B3)
 ](https://getbootstrap.com)
 [![vitest](https://img.shields.io/badge/vitest-white?logo=vitest&logoColor=%236E9F18)
@@ -37,21 +37,17 @@ The data provided by this application are available under Black Book Editions an
 
 This project is build with next.js and the standard commands apply:
 
-- `yarn` to download all the required libraries
-- `yarn dev` to start a local environment
-- `yarn lint` for automated code review based on eslint
-- `yarn build` to validate and prepare a static release
-- `yarn test` to run all vitest tests in watch mode
+- `pnpm install` to download all the required libraries
+- `pnpm run dev` to start a local environment
+- `pnpm run lint` for automated code review based on eslint
+- `pnpm run build` to validate and prepare a static release
+- `pnpm run test` to run all vitest tests in watch mode
+- `pnpm run test --ui` to run all vitest tests in watch mode with vitest-ui enabled
 
 Other scripts available :
 
-- `yarn test:e2e` to run all e2e tests based on playwright. Used before as part of the release process to validate a deployment before its promotion to production.
-
-### Yarn and IDE
-
-The integration of yarn with your IDE could require some extra steps. Please take a look at the official documentation: [Yarn | Editor SDKs](https://yarnpkg.com/getting-started/editor-sdks)
-
-For Visual Studio Code, you will need to enable the typescript version used by the workspace (`ctrl + shift + P` > **Select TypeScript Version** > **Use Workspace Version**).
+- `pnpm run test:e2e` to run all e2e tests based on playwright. Used before as part of the release process to validate a deployment before its promotion to production. Before running those tests locally, playwright browsers needs to be installed via `pnpm exec playwright install`.
+- `pnpm run start` to start a local environment based on the build execution. Useful to connect to the production database after having created a `.env.production` file.
 
 ### Monitoring via Sentry
 

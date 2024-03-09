@@ -17,6 +17,6 @@ export default defineConfig({
       model: path.resolve(__dirname, "./src/model"),
       view: path.resolve(__dirname, "./src/view"),
     },
-    exclude: ["e2e/*.*"],
+    exclude: ["e2e/*.*", "node_modules"],
   },
 });
