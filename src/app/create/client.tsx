@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -8,6 +8,7 @@ import NavLink from "react-bootstrap/NavLink";
 import Navbar from "react-bootstrap/Navbar";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
+import { CookiesProvider, useCookies } from "react-cookie";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "../../logic/StoreProvider";
@@ -27,6 +28,11 @@ function ClientComponentPresenter({ debug }: { debug: boolean }) {
   const selectedRace = presenter.getRace();
   const selectedTheme = presenter.getTheme();
   const selectedClass = presenter.getClass();
+
+  const [, setCookie] = useCookies(["character"]);
+  useEffect(() => {
+    setCookie("character", JSON.stringify(character));
+  }, [character]);
 
   function handleNavigation(eventKey: string | null): void {
     setNavigation(eventKey ?? "");
@@ -225,7 +231,9 @@ function ClientComponentPresenter({ debug }: { debug: boolean }) {
 export function ClientComponent({ data, debug }: Readonly<{ data: IClientDataSet; debug: boolean }>) {
   return (
     <StoreProvider data={data}>
-      <ClientComponentPresenter debug={debug} />
+      <CookiesProvider defaultSetOptions={{ path: "/", sameSite: "strict" }}>
+        <ClientComponentPresenter debug={debug} />
+      </CookiesProvider>
     </StoreProvider>
   );
 }
