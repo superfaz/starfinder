@@ -1,12 +1,14 @@
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
+import Layout from "../layout";
+import { navigateToTab } from "./test-helpers";
 
 describe("TabRace", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
   });
 
   test("is not displayed by default", async () => {
@@ -18,12 +20,12 @@ describe("TabRace", () => {
 describe("TabRace", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
   });
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
   });
 
   test("displays RaceSelection", async () => {

@@ -60,12 +60,13 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
       <Link
         href={href}
         className={clsx("nav-link", pathname === href && navigation === eventKey && "active", disabled && "disabled")}
-        onClick={() => handleNavigation(eventKey)}
+        onClick={() => !disabled && handleNavigation(eventKey)}
       >
         {children}
       </Link>
     );
   }
+
   return (
     <>
       <Navbar className="sticky-top" bg="body-secondary">
@@ -87,7 +88,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
         </Container>
       </Navbar>
       <Container className="mt-3" style={{ width: "1600px", minWidth: "1600px" }}>
-        <Nav variant="underline" className="mb-3">
+        <Nav variant="underline" className="mb-3" data-testid="tabs">
           <Nav.Item>
             <NavLink href="/create" eventKey="intro">
               Introduction

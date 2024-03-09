@@ -2,6 +2,7 @@ import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { setup } from "./TabFeats.test";
+import { navigateToTab } from "./test-helpers";
 
 describe("TabFeats prerequisites with operative", () => {
   beforeAll(async () => {
@@ -10,7 +11,7 @@ describe("TabFeats prerequisites with operative", () => {
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+    await navigateToTab(user, "Don(s)");
   });
 
   test("handle abilityScore prerequisites - not available", async () => {
@@ -111,7 +112,7 @@ describe("TabFeats prerequisites with soldier", () => {
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+    await navigateToTab(user, "Don(s)");
   });
 
   test("handle baseAttack prerequisites - available", async () => {
@@ -127,7 +128,7 @@ describe("TabFeats prerequisites with mystic", () => {
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+    await navigateToTab(user, "Don(s)");
   });
 
   test("handle notSpellCaster prerequisites - not available", async () => {

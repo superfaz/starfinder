@@ -2,25 +2,27 @@ import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
+import Layout from "../layout";
+import { navigateToTab } from "./test-helpers";
 
 export async function setup(klass: string = "operative") {
   cleanup();
-  render(await Page());
+  render(await Layout({ children: <Page /> }));
   const user = userEvent.setup();
-  await user.click(screen.getByRole("button", { name: "Race" }));
+  await navigateToTab(user, "Race");
   await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-  await user.click(screen.getByRole("button", { name: "Thème" }));
+  await navigateToTab(user, "Thème");
   await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-  await user.click(screen.getByRole("button", { name: "Classe" }));
+  await navigateToTab(user, "Classe");
   await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass);
 }
 
 describe("TabFeats", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+    await navigateToTab(user, "Don(s)");
   });
 
   test("is not displayed", async () => {
@@ -36,7 +38,7 @@ describe("TabFeats", () => {
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+    await navigateToTab(user, "Don(s)");
   });
 
   test("is displayed", async () => {
@@ -53,7 +55,7 @@ describe("TabFeats feat types", () => {
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Don(s)" }));
+    await navigateToTab(user, "Don(s)");
 
     const block = screen.queryByTestId("feats-selected");
     if (block !== null) {

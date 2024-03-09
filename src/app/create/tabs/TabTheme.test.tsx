@@ -2,13 +2,15 @@ import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
+import Layout from "../layout";
+import { navigateToTab } from "./test-helpers";
 
 describe("TabTheme", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
   });
 
   test("is not displayed by default", async () => {
@@ -20,15 +22,15 @@ describe("TabTheme", () => {
 describe("TabTheme", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
   });
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
   });
 
   test("displays ThemeSelection", async () => {

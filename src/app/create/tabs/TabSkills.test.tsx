@@ -3,13 +3,15 @@ import { cleanup, render, screen, waitFor, within } from "@testing-library/react
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 import referential from "./TabSkills.test.json";
+import Layout from "../layout";
+import { navigateToTab } from "./test-helpers";
 
 describe("TabSkills", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: referential.title }));
+    await navigateToTab(user, referential.title);
   });
 
   test("is not displayed", async () => {
@@ -22,19 +24,19 @@ describe("TabSkills", () => {
 describe("TabSkills", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
   });
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: referential.title }));
+    await navigateToTab(user, referential.title);
   });
 
   test("is displayed", async () => {
@@ -106,14 +108,14 @@ describe("TabSkills", () => {
 
   test("enable skills with mandatory ranks", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
     await waitFor(() => expect(screen.queryByRole("combobox", { name: "Spécialisation" })).not.toBeNull());
     await user.selectOptions(
       screen.getByRole("combobox", { name: "Spécialisation" }),
       "7d74e198-2856-4496-8fff-4685a6187ed3"
     );
-    await user.click(screen.getByRole("button", { name: referential.title }));
+    await navigateToTab(user, referential.title);
 
     const view = within(screen.getByTestId("cult"));
     const control = view.queryByRole("checkbox", { name: /culture \(int\)$/i });
@@ -127,9 +129,9 @@ describe("TabSkills", () => {
 describe("TabSkills", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
   });
 
@@ -138,11 +140,11 @@ describe("TabSkills", () => {
     "displays the class skills based on theme $theme.id and class $klass.id",
     async ({ theme, klass }) => {
       const user = userEvent.setup();
-      await user.click(screen.getByRole("button", { name: "Thème" }));
+      await navigateToTab(user, "Thème");
       await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
-      await user.click(screen.getByRole("button", { name: "Classe" }));
+      await navigateToTab(user, "Classe");
       await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
-      await user.click(screen.getByRole("button", { name: referential.title }));
+      await navigateToTab(user, referential.title);
 
       for (const skill of [...klass.classSkills, ...theme.classSkills]) {
         const control = screen.queryByRole("checkbox", { name: skill + " - Compétence de classe" });

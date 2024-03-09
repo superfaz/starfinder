@@ -2,13 +2,15 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import Page from "../page";
+import Layout from "../layout";
+import { navigateToTab } from "./test-helpers";
 
 describe("TabProfile", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Profil" }));
+    await navigateToTab(user, "Profil");
   });
 
   test("is not displayed", async () => {
@@ -20,19 +22,19 @@ describe("TabProfile", () => {
 describe("TabProfile", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
   });
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Profil" }));
+    await navigateToTab(user, "Profil");
   });
 
   test("is displayed", async () => {
@@ -47,7 +49,7 @@ describe("TabProfile", () => {
     await user.type(content.getByRole("textbox", { name: "Nom du personnage" }), "Bob");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Nom du personnage" }).value).toBe("Bob");
 
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
     expect(content.queryByText("Bob")).not.toBeNull();
   });
 
@@ -58,7 +60,7 @@ describe("TabProfile", () => {
     await user.selectOptions(content.getByRole("combobox", { name: "Alignement" }), "cn");
     expect(content.getByRole<HTMLInputElement>("combobox", { name: "Alignement" }).value).toBe("cn");
 
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
     expect(content.queryByText("CN")).not.toBeNull();
   });
 
@@ -69,7 +71,7 @@ describe("TabProfile", () => {
     await user.type(content.getByRole("textbox", { name: "Sexe" }), "F");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Sexe" }).value).toBe("F");
 
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
     expect(content.queryByText("F")).not.toBeNull();
   });
 
@@ -80,7 +82,7 @@ describe("TabProfile", () => {
     await user.type(content.getByRole("textbox", { name: "Monde natal" }), "Abraxar");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Monde natal" }).value).toBe("Abraxar");
 
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
     expect(content.queryByText("Abraxar")).not.toBeNull();
   });
 
@@ -91,7 +93,7 @@ describe("TabProfile", () => {
     await user.type(content.getByRole("textbox", { name: "Divinité" }), "Desna");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Divinité" }).value).toBe("Desna");
 
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
     expect(content.queryByText("Desna")).not.toBeNull();
   });
 
@@ -104,7 +106,7 @@ describe("TabProfile", () => {
       "Biographie de Bob"
     );
 
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
     expect(within(screen.getByTestId("description")).queryByText(/Biographie de Bob/)).not.toBeNull();
   });
 });

@@ -2,6 +2,8 @@ import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
+import Layout from "../layout";
+import { navigateToTab } from "./test-helpers";
 
 const NO_CLASS = "Pas de classe sélectionnée";
 
@@ -35,9 +37,9 @@ const classes = [
 describe("TabSheet", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
   });
 
   test("is not displayed", async () => {
@@ -49,12 +51,12 @@ describe("TabSheet", () => {
 describe("TabSheet", () => {
   beforeEach(async () => {
     cleanup();
-    render(await Page());
+    render(await Layout({ children: <Page /> }));
   });
 
   test("is displayed", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
     const content = within(document.querySelector("#content") as HTMLElement);
 
     expect(content.getByTestId("Race")).toBeVisible();
@@ -73,7 +75,7 @@ describe("TabSheet", () => {
 
   test.each(emptyByDefault)("has %s empty by default", async (_, label) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId(label);
     expect(within(view).queryByText(label)).not.toBeNull();
@@ -88,7 +90,7 @@ describe("TabSheet", () => {
 
   test.each(fixedValueByDefault)("has %s has its default value", async (_, label, defaultValue) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId(label);
     expect(within(view).queryByText(label)).not.toBeNull();
@@ -97,9 +99,9 @@ describe("TabSheet", () => {
 
   test.each(races)("has Race updated for $id", async (race) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("Race");
     expect(within(view).queryByText("Race")).toBeVisible();
@@ -109,11 +111,11 @@ describe("TabSheet", () => {
 
   test.each(themes)("has Theme updated for '$id'", async (theme) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("Thème");
     expect(within(view).queryByText("Thème")).toBeVisible();
@@ -123,13 +125,13 @@ describe("TabSheet", () => {
 
   test.each(classes)("has Class updated for '$id'", async (klass) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("Classe");
     expect(within(view).queryByText("Classe")).toBeVisible();
@@ -145,15 +147,15 @@ describe("TabSheet", () => {
   ];
   test.each(profileTexts)("has %s updated", async (_, label, value) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Profil" }));
+    await navigateToTab(user, "Profil");
     await user.type(screen.getByRole("textbox", { name: label }), value);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId(label);
     expect(within(view).queryByText(label)).toBeVisible();
@@ -163,7 +165,7 @@ describe("TabSheet", () => {
 
   test("has Abilities empty by default", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("abilities");
     expect(within(view).queryByText("Pouvoirs")).toBeVisible();
@@ -172,9 +174,9 @@ describe("TabSheet", () => {
 
   test.each(races)("has Abilities added by Race selection for $id", async (race) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("abilities");
     expect(within(view).queryByText("Pouvoirs")).toBeVisible();
@@ -185,11 +187,11 @@ describe("TabSheet", () => {
 
   test("has Abilities added by Race selection with alternate traits", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
     await user.click(screen.getByRole("switch", { name: "Augmentations facilitées" }));
     await user.click(screen.getByRole("switch", { name: "Intégration à l’infosphère" }));
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("abilities");
     expect(within(view).queryByText("Pouvoirs")).toBeVisible();
@@ -204,11 +206,11 @@ describe("TabSheet", () => {
     "has Abilities added by Theme selection for $race.id and $theme.id",
     async ({ race, theme }) => {
       const user = userEvent.setup();
-      await user.click(screen.getByRole("button", { name: "Race" }));
+      await navigateToTab(user, "Race");
       await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
-      await user.click(screen.getByRole("button", { name: "Thème" }));
+      await navigateToTab(user, "Thème");
       await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
-      await user.click(screen.getByRole("button", { name: "Fiche" }));
+      await navigateToTab(user, "Fiche");
 
       const view = screen.getByTestId("abilities");
 
@@ -226,13 +228,13 @@ describe("TabSheet", () => {
     "has Abilities added by Class selection for $race.id, $theme.id and $klass.id",
     async ({ race, theme, klass }) => {
       const user = userEvent.setup();
-      await user.click(screen.getByRole("button", { name: "Race" }));
+      await navigateToTab(user, "Race");
       await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), race.id);
-      await user.click(screen.getByRole("button", { name: "Thème" }));
+      await navigateToTab(user, "Thème");
       await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
-      await user.click(screen.getByRole("button", { name: "Classe" }));
+      await navigateToTab(user, "Classe");
       await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
-      await user.click(screen.getByRole("button", { name: "Fiche" }));
+      await navigateToTab(user, "Fiche");
 
       const view = screen.getByTestId("abilities");
       for (const ability of [...race.abilities, ...theme.abilities, ...klass.abilities]) {
@@ -243,15 +245,15 @@ describe("TabSheet", () => {
 
   test("has Avatar updated", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Profil" }));
+    await navigateToTab(user, "Profil");
     fireEvent.change(screen.getByRole("slider", { name: "Avatar" }), { target: { value: 1 } });
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("avatar");
     expect(within(view).queryByText("Avatar")).toBeVisible();
@@ -260,7 +262,7 @@ describe("TabSheet", () => {
 
   test("has Saving Throws initialized", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("savingThrows");
     expect(within(view).queryByText(NO_CLASS)).not.toBeNull();
@@ -268,13 +270,13 @@ describe("TabSheet", () => {
 
   test("has Saving Throws updated", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("savingThrows");
     expect(within(view).queryByText(NO_CLASS)).toBeNull();
@@ -288,7 +290,7 @@ describe("TabSheet", () => {
 
   test("has Attack Bonuses initialized", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("attackBonuses");
     expect(within(view).queryByText(NO_CLASS)).not.toBeNull();
@@ -300,13 +302,13 @@ describe("TabSheet", () => {
   ];
   test.each(attackBonusTable)("has Attack Bonuses updated for $klass", async (dataset) => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), dataset.klass);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const view = screen.getByTestId("attackBonuses");
     expect(within(view).queryByText(NO_CLASS)).toBeNull();
@@ -322,13 +324,13 @@ describe("TabSheet", () => {
 
   test("displays weapons proficiencies", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const block = within(screen.getByTestId("weapons"));
     expect(block.queryByText(/Formations: Armes de corps à corps simples.*/i)).not.toBeNull();
@@ -336,13 +338,13 @@ describe("TabSheet", () => {
 
   test("displays armors proficiencies", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const block = within(screen.getByTestId("armors"));
     expect(block.queryByText(/Formations: Armures légères.*/i)).not.toBeNull();
@@ -350,13 +352,13 @@ describe("TabSheet", () => {
 
   test("displays initiative bonus", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const block = within(screen.getByTestId("initiative"));
     expect(block.queryByText("+2")).not.toBeNull();
@@ -364,13 +366,13 @@ describe("TabSheet", () => {
 
   test("displays stamina/health/resolve points", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const block = within(screen.getByTestId("keypoints"));
     expect(block.queryByTestId(/points d'endurance/i)).not.toBeNull();
@@ -383,13 +385,13 @@ describe("TabSheet", () => {
 
   test("displays armor classes", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const block = within(screen.getByTestId("armors"));
     expect(block.queryByTestId(/énergétique/i)).not.toBeNull();
@@ -402,13 +404,13 @@ describe("TabSheet", () => {
 
   test("displays feats", async () => {
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Race" }));
+    await navigateToTab(user, "Race");
     await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), races[0].id);
-    await user.click(screen.getByRole("button", { name: "Thème" }));
+    await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), themes[0].id);
-    await user.click(screen.getByRole("button", { name: "Classe" }));
+    await navigateToTab(user, "Classe");
     await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), classes[0].id);
-    await user.click(screen.getByRole("button", { name: "Fiche" }));
+    await navigateToTab(user, "Fiche");
 
     const block = within(screen.getByTestId("sheet-feats"));
     expect(block.getByText(/SKill Focus - Acrobaties/i)).toBeVisible();
