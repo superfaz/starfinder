@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { CookiesProvider, useCookies } from "react-cookie";
-import { Character, CharacterSchema, EmptyCharacter } from "model";
+import { Character, CharacterSchema } from "model";
 
 export const dynamic = "force-dynamic";
 

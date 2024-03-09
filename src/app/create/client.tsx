@@ -32,7 +32,7 @@ function ClientComponentPresenter({ debug }: { debug: boolean }) {
   const [, setCookie] = useCookies(["character"]);
   useEffect(() => {
     setCookie("character", JSON.stringify(character));
-  }, [character]);
+  }, [character, setCookie]);
 
   function handleNavigation(eventKey: string | null): void {
     setNavigation(eventKey ?? "");
