@@ -1,19 +1,20 @@
 node_modules/
 
-.next/
-
 coverage/
+
+dump/
+
+# Next.js
+.next/
+.env
+.env.*
+!.env.development
 
 # Sentry Config File
 .sentryclirc
 
-dump/
-
 # Vercel
 .vercel
-
-.env.*.local
-.env.production
 
 ## Playwright
 /test-results/
