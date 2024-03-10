@@ -20,6 +20,10 @@ const mainSlice = createSlice({
       state.data = action.payload;
     },
 
+    initializeCharacter(state, action: PayloadAction<Character>) {
+      state.character = action.payload;
+    },
+
     updateNavigation(state, action: PayloadAction<string>) {
       state.navigation = action.payload;
     },

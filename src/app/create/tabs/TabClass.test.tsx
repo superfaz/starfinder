@@ -2,8 +2,9 @@ import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
-import Layout from "../layout";
+import Layout, { LayoutServer } from "../layout";
 import { navigateToTab } from "./test-helpers";
+import { Character, EmptyCharacter } from "model";
 
 describe("TabClass", () => {
   beforeAll(async () => {
@@ -22,10 +23,13 @@ describe("TabClass", () => {
 describe("TabClass", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    const character: Character = {
+      ...EmptyCharacter,
+      race: "androids",
+      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
+    };
+    render(await LayoutServer({ children: <Page />, character }));
     const user = userEvent.setup();
-    await navigateToTab(user, "Race");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
     await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
   });
@@ -49,7 +53,6 @@ describe("TabClass", () => {
     async (klass) => {
       const user = userEvent.setup();
       await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
-
       const content = within(document.querySelector("#content") as HTMLElement);
       const view = content.getByRole("heading", { level: 2, name: "Abilités de classe" }).parentElement;
       if (view === null) {

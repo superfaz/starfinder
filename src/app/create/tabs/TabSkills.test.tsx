@@ -3,8 +3,9 @@ import { cleanup, render, screen, waitFor, within } from "@testing-library/react
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 import referential from "./TabSkills.test.json";
-import Layout from "../layout";
+import Layout, { LayoutServer } from "../layout";
 import { navigateToTab } from "./test-helpers";
+import { Character, EmptyCharacter } from "model";
 
 describe("TabSkills", () => {
   beforeAll(async () => {
@@ -24,10 +25,20 @@ describe("TabSkills", () => {
 describe("TabSkills", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    const character: Character = {
+      ...EmptyCharacter,
+      race: "androids",
+      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
+      traits: [
+        "62551516-da4e-4adb-9d4e-af52ade0d7fa",
+        "1653ddac-b66e-4da0-9a97-35dfcd5a71e3",
+        "07b883eb-4568-4e24-bec4-293ced40adc2",
+        "470b64bd-f308-4192-99fd-17656e9bc386",
+      ],
+    };
+
+    render(await LayoutServer({ children: <Page />, character }));
     const user = userEvent.setup();
-    await navigateToTab(user, "Race");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
     await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
     await navigateToTab(user, "Classe");
@@ -129,10 +140,18 @@ describe("TabSkills", () => {
 describe("TabSkills", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Race");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
+    const character: Character = {
+      ...EmptyCharacter,
+      race: "androids",
+      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
+      traits: [
+        "62551516-da4e-4adb-9d4e-af52ade0d7fa",
+        "1653ddac-b66e-4da0-9a97-35dfcd5a71e3",
+        "07b883eb-4568-4e24-bec4-293ced40adc2",
+        "470b64bd-f308-4192-99fd-17656e9bc386",
+      ],
+    };
+    render(await LayoutServer({ children: <Page />, character }));
   });
 
   const matrix = referential.classes.flatMap((klass) => referential.themes.map((theme) => ({ klass, theme })));

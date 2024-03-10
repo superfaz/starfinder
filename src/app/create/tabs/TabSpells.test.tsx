@@ -2,8 +2,9 @@ import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
-import Layout from "../layout";
+import Layout, { LayoutServer } from "../layout";
 import { navigateToTab } from "./test-helpers";
+import { Character, EmptyCharacter } from "model";
 
 describe("TabSpells", () => {
   beforeAll(async () => {
@@ -16,11 +17,24 @@ describe("TabSpells", () => {
   test("is not displayed", async () => {
     expect(screen.queryByRole("heading", { level: 2, name: /Sorts de niveau 0/ })).toBeNull();
   });
+});
+
+describe("TabSpells", () => {
+  beforeAll(async () => {
+    cleanup();
+    const character: Character = {
+      ...EmptyCharacter,
+      race: "androids",
+      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
+    };
+
+    render(await LayoutServer({ children: <Page />, character }));
+    const user = userEvent.setup();
+    await navigateToTab(user, "Sorts");
+  });
 
   test("is not displayed for soldier", async () => {
     const user = userEvent.setup();
-    await navigateToTab(user, "Race");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
     await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
     await navigateToTab(user, "Classe");
@@ -34,11 +48,15 @@ describe("TabSpells", () => {
 describe("TabSpells", () => {
   beforeEach(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    const character: Character = {
+      ...EmptyCharacter,
+      race: "androids",
+      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
+    };
+
+    render(await LayoutServer({ children: <Page />, character }));
 
     const user = userEvent.setup();
-    await navigateToTab(user, "Race");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Race" }), "androids");
     await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
     await navigateToTab(user, "Classe");
