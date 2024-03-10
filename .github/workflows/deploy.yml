@@ -38,11 +38,12 @@ jobs:
             ${{ runner.os }}-nextjs-
 
       - name: Validate build
-        run: |
-          cp .env.test .env.production
-          pnpm run build
+        run: pnpm run build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          STARFINDER_COSMOS_ENDPOINT: ${{ secrets.LOCAL_STARFINDER_COSMOS_ENDPOINT }}
+          STARFINDER_COSMOS_KEY: ${{ secrets.LOCAL_STARFINDER_COSMOS_KEY }}
+          STARFINDER_COSMOS_DATABASE: ${{ secrets.LOCAL_STARFINDER_COSMOS_DATABASE }}
 
   test:
     timeout-minutes: 10
