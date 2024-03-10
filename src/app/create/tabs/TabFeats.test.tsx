@@ -13,7 +13,8 @@ export async function setup(klass: string = "operative") {
     race: "androids",
     raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
   };
-render(await LayoutServer({ children: <Page />, character }));
+
+  render(await LayoutServer({ children: <Page />, character }));
   const user = userEvent.setup();
   await navigateToTab(user, "Thème");
   await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
