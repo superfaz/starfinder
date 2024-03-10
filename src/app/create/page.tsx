@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import Col from "react-bootstrap/Col";
 import Stack from "react-bootstrap/Stack";
-import { useCookies } from "react-cookie";
 import { CharacterPresenter, useAppSelector } from "logic";
 import * as Tab from "./tabs";
 
@@ -17,31 +16,12 @@ export default function Page() {
     [data, classesDetails, character]
   );
 
-  const [, setCookie] = useCookies(["character"]);
-  useEffect(() => {
-    setCookie("character", JSON.stringify(character));
-  }, [character, setCookie]);
-
   return (
     <>
       {navigation === "intro" && (
         <Col lg={6}>
           <Tab.Intro />
         </Col>
-      )}
-
-      {navigation === "race" && (
-        <>
-          <Col lg={3}>
-            <Tab.RaceSelection character={presenter} />
-          </Col>
-          <Col>
-            <Tab.RaceTraits character={presenter} />
-          </Col>
-          <Col>
-            <Tab.RaceAlternateTraits character={presenter} />
-          </Col>
-        </>
       )}
 
       {navigation === "theme" && (

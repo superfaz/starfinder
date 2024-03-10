@@ -1,23 +1,11 @@
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
-import { cleanup, render, within } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Page from "../page";
+import Page from "./page";
 import Layout from "../layout";
-import { navigateToTab } from "./test-helpers";
+import { navigateToTab } from "../tabs/test-helpers";
 
-describe("TabRace", () => {
-  beforeAll(async () => {
-    cleanup();
-    render(await Layout({ children: <Page /> }));
-  });
-
-  test("is not displayed by default", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.queryByRole("heading", { level: 2, name: "Race" })).toBeNull();
-  });
-});
-
-describe("TabRace", () => {
+describe("/create/race", () => {
   beforeAll(async () => {
     cleanup();
     render(await Layout({ children: <Page /> }));
@@ -29,8 +17,7 @@ describe("TabRace", () => {
   });
 
   test("displays RaceSelection", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.getByRole("heading", { level: 2, name: "Race" })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 2, name: "Race" })).toBeDefined();
   });
 
   test("displays RaceTraits", async () => {

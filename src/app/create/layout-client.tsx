@@ -1,9 +1,9 @@
 "use client";
 
 import { clsx } from "clsx";
-import { ReactNode, useMemo } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { Container, Navbar, Row } from "react-bootstrap";
-import { CookiesProvider } from "react-cookie";
+import { CookiesProvider, useCookies } from "react-cookie";
 import Link from "next/link";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
@@ -36,6 +36,11 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
     () => new CharacterPresenter(data, classesDetails, character),
     [data, classesDetails, character]
   );
+
+  const [, setCookie] = useCookies(["character"]);
+  useEffect(() => {
+    setCookie("character", JSON.stringify(character));
+  }, [character, setCookie]);
 
   const selectedRace = presenter.getRace();
   const selectedTheme = presenter.getTheme();
@@ -95,9 +100,9 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="race">
+            <Link href="/create/race" className={clsx("nav-link", { active: pathname === "/create/race" })}>
               Race
-            </NavLink>
+            </Link>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create" eventKey="theme" disabled={selectedRace === null}>
