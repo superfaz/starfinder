@@ -1,8 +1,8 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
-import { setup } from "./TabFeats.test";
-import { navigateToTab } from "./test-helpers";
+import { setup } from "./page.test";
+import { navigateToTab } from "../tabs/test-helpers";
 
 describe("TabFeats prerequisites with operative", () => {
   beforeAll(async () => {

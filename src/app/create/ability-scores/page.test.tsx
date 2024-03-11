@@ -2,9 +2,9 @@ import { describe, beforeAll, test, expect, beforeEach } from "vitest";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
-import referential from "./TabSkills.test.json";
+import referential from "./page.test.json";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "./test-helpers";
+import { navigateToTab } from "../tabs/test-helpers";
 import { Character, EmptyCharacter } from "model";
 
 describe("TabSkills", () => {

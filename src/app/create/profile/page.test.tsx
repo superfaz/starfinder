@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import Page from "../page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "./test-helpers";
+import { navigateToTab } from "../tabs/test-helpers";
 import { Character, EmptyCharacter } from "model";
 
 describe("TabProfile", () => {

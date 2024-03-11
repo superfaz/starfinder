@@ -3,7 +3,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "./test-helpers";
+import { navigateToTab } from "../tabs/test-helpers";
 import { Character, EmptyCharacter } from "model";
 
 describe("TabSpells", () => {

@@ -6,7 +6,7 @@ import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 
-export default function EnvoyClassDetails({ character, classId }: CharacterProps & { classId: string }) {
+export default function ClassDetailsGeneric({ character, classId }: CharacterProps & { classId: string }) {
   const classDetails = useClassDetails(classId);
   const dispatch = useAppDispatch();
   useEffect(() => {

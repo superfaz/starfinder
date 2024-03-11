@@ -1,17 +1,15 @@
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Page from "../page";
+import Page from "./page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "./test-helpers";
+import { navigateToTab } from "../tabs/test-helpers";
 import { Character, EmptyCharacter } from "model";
 
-describe("TabClass", () => {
+describe("/create/class", () => {
   beforeAll(async () => {
     cleanup();
     render(await Layout({ children: <Page /> }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Classe");
   });
 
   test("is not displayed", async () => {
@@ -20,7 +18,7 @@ describe("TabClass", () => {
   });
 });
 
-describe("TabClass", () => {
+describe("/create/class", () => {
   beforeAll(async () => {
     cleanup();
     const character: Character = {
@@ -32,11 +30,6 @@ describe("TabClass", () => {
     const user = userEvent.setup();
     await navigateToTab(user, "Thème");
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Classe");
   });
 
   test("is displayed", async () => {

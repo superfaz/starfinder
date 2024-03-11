@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
@@ -5,16 +7,6 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-
-export function EquipmentSelected() {
-  return (
-    <Stack direction="vertical" gap={2}>
-      <h2>Armes</h2>
-      <h2>Armures</h2>
-      <h2>Autres</h2>
-    </Stack>
-  );
-}
 
 export function EquipmentSelection() {
   const [search, setSearch] = useState("");

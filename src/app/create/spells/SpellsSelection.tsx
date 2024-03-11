@@ -1,3 +1,5 @@
+"use client";
+
 import * as Sentry from "@sentry/nextjs";
 import { ChangeEvent, useMemo } from "react";
 import Card from "react-bootstrap/Card";
@@ -7,7 +9,7 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import { type CasterId, type Spell, isCasterId } from "model";
-import { CharacterProps } from "../Props";
+import { useCharacterPresenter } from "../helpers";
 
 function filterOnLevelAndClass(classId: CasterId, level: number) {
   return (spell: Spell) => {
@@ -83,11 +85,12 @@ function byName(a: Spell, b: Spell) {
   return a.name.localeCompare(b.name, "fr");
 }
 
-export function SpellsSelection({ character }: CharacterProps) {
+export function SpellsSelection() {
+  const presenter = useCharacterPresenter();
   const data = useAppSelector((state) => state.data);
-  const classId = character.getClass()?.id;
+  const classId = presenter.getClass()?.id;
 
-  const selectedSpells = character.getSelectedSpells();
+  const selectedSpells = presenter.getSelectedSpells();
   const availableSpells = useMemo(
     () => (isCasterId(classId) ? data.spells.filter((s) => s.levels[classId] !== undefined) : []),
     [data, classId]
@@ -109,7 +112,7 @@ export function SpellsSelection({ character }: CharacterProps) {
         <Stack direction="vertical" gap={2}>
           <Stack direction="horizontal" gap={2}>
             <h2>Sorts connus</h2>
-            <div className="text-muted me-auto">max: {character.getSelectableSpellCount(level)}</div>
+            <div className="text-muted me-auto">max: {presenter.getSelectableSpellCount(level)}</div>
           </Stack>
           {selectedSpells[level]?.toSorted(byName).map((spell) => (
             <Col key={spell.id} className="mb-1">
@@ -130,12 +133,12 @@ export function SpellsSelection({ character }: CharacterProps) {
               .map((spell) => (
                 <Col key={spell.id} lg={4} className="mb-3">
                   <SpellComponent
-                    character={character}
+                    character={presenter}
                     spell={spell}
                     classId={classId}
                     level={level}
                     selected={isSelected(spell, level)}
-                    disabled={(selectedSpells[level]?.length ?? 0) >= character.getSelectableSpellCount(level)}
+                    disabled={(selectedSpells[level]?.length ?? 0) >= presenter.getSelectableSpellCount(level)}
                   />
                 </Col>
               ))}

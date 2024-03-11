@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import userEvent from "@testing-library/user-event";
 import Page from "../page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "./test-helpers";
+import { navigateToTab } from "../tabs/test-helpers";
 import { Character, EmptyCharacter } from "model";
 
 const NO_CLASS = "Pas de classe sélectionnée";

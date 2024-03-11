@@ -1,3 +1,5 @@
+"use client";
+
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -7,9 +9,10 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { displayBonus } from "app/helpers";
 import { computeAbilityScoreModifier, mutators, useAppDispatch, useAppSelector } from "logic";
-import { CharacterProps } from "../Props";
+import { useCharacterPresenter } from "../helpers";
 
-export function AbilityScores({ character }: CharacterProps) {
+export function AbilityScores() {
+  const presenter = useCharacterPresenter();
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
@@ -17,12 +20,12 @@ export function AbilityScores({ character }: CharacterProps) {
     return <div>Loading...</div>;
   }
 
-  const points = character.getRemainingAbilityScoresPoints();
-  const abilityScores = character.getAbilityScores();
-  const minimalAbilityScores = character.getMinimalAbilityScores();
+  const points = presenter.getRemainingAbilityScoresPoints();
+  const abilityScores = presenter.getAbilityScores();
+  const minimalAbilityScores = presenter.getMinimalAbilityScores();
 
-  const primaryAbilityScore = character.getPrimaryAbilityScore();
-  const secondaryAbilityScores = character.getSecondaryAbilityScores();
+  const primaryAbilityScore = presenter.getPrimaryAbilityScore();
+  const secondaryAbilityScores = presenter.getSecondaryAbilityScores();
 
   function handleAbilityScoreClick(abilityScoreId: string, delta: number): void {
     dispatch(mutators.updateAbilityScore({ id: abilityScoreId, delta }));

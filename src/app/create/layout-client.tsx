@@ -6,7 +6,7 @@ import { Container, Navbar, Row } from "react-bootstrap";
 import { CookiesProvider, useCookies } from "react-cookie";
 import Link from "next/link";
 import { IClientDataSet } from "data";
-import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "logic/StoreProvider";
 import { usePathname } from "next/navigation";
 import { Nav } from "app/components/Nav";
@@ -28,9 +28,7 @@ export default function LayoutClient({
 }
 
 function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; children: ReactNode }>) {
-  const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.data);
-  const navigation = useAppSelector((state) => state.navigation);
   const pathname = usePathname();
   const character = useAppSelector((state) => state.character);
   const classesDetails = useAppSelector((state) => state.classesDetails);
@@ -48,27 +46,9 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
   const selectedTheme = presenter.getTheme();
   const selectedClass = presenter.getClass();
 
-  function handleNavigation(eventKey: string | null): void {
-    dispatch(mutators.updateNavigation(eventKey ?? ""));
-  }
-
-  function NavLink({
-    children,
-    href,
-    eventKey,
-    disabled,
-  }: {
-    children: ReactNode;
-    href: string;
-    eventKey: string;
-    disabled?: boolean;
-  }) {
+  function NavLink({ children, href, disabled }: { children: ReactNode; href: string; disabled?: boolean }) {
     return (
-      <Link
-        href={href}
-        className={clsx("nav-link", pathname === href && navigation === eventKey && "active", disabled && "disabled")}
-        onClick={() => !disabled && handleNavigation(eventKey)}
-      >
+      <Link href={href} className={clsx("nav-link", pathname === href && "active", disabled && "disabled")}>
         {children}
       </Link>
     );
@@ -97,63 +77,52 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
       <Container className="mt-3" style={{ width: "1600px", minWidth: "1600px" }}>
         <Nav variant="underline" className="mb-3" data-testid="tabs">
           <Nav.Item>
-            <NavLink href="/create" eventKey="intro">
-              Introduction
+            <NavLink href="/create">Introduction</NavLink>
+          </Nav.Item>
+          <Nav.Item>
+            <NavLink href="/create/race">Race</NavLink>
+          </Nav.Item>
+          <Nav.Item>
+            <NavLink href="/create/theme" disabled={selectedRace === null}>
+              Thème
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <Link href="/create/race" className={clsx("nav-link", { active: pathname === "/create/race" })}>
-              Race
-            </Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Link
-              href="/create/theme"
-              className={clsx("nav-link", { active: pathname === "/create/theme", disabled: selectedRace === null })}
-            >
-              Thème
-            </Link>
-          </Nav.Item>
-          <Nav.Item>
-            <NavLink href="/create" eventKey="class" disabled={selectedTheme === null}>
+            <NavLink href="/create/class" disabled={selectedTheme === null}>
               Classe
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="profile" disabled={selectedClass === null}>
+            <NavLink href="/create/profile" disabled={selectedClass === null}>
               Profil
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="abilityScores" disabled={selectedClass === null}>
+            <NavLink href="/create/ability-scores" disabled={selectedClass === null}>
               Caractéristiques & Compétences
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="feats" disabled={selectedClass === null}>
+            <NavLink href="/create/feats" disabled={selectedClass === null}>
               Don(s)
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="spells" disabled={selectedClass === null || !selectedClass.spellCaster}>
+            <NavLink href="/create/spells" disabled={selectedClass === null || !selectedClass.spellCaster}>
               Sorts
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="equipment" disabled={selectedClass === null}>
+            <NavLink href="/create/equipment" disabled={selectedClass === null}>
               Équipement
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="sheet">
-              Fiche
-            </NavLink>
+            <NavLink href="/create/sheet">Fiche</NavLink>
           </Nav.Item>
           {debug && (
             <Nav.Item>
-              <Link href="/create/debug" className={clsx("nav-link", { active: pathname === "/create/debug" })}>
-                Debug
-              </Link>
+              <NavLink href="/create/debug">Debug</NavLink>
             </Nav.Item>
           )}
         </Nav>

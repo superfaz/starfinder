@@ -7,7 +7,6 @@ import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 const initialState = {
   data: EmptyClientDataSet,
-  navigation: "intro",
   character: EmptyCharacter,
   classesDetails: {} as Record<string, IModel>,
 };
@@ -22,10 +21,6 @@ const mainSlice = createSlice({
 
     initializeCharacter(state, action: PayloadAction<Character>) {
       state.character = action.payload;
-    },
-
-    updateNavigation(state, action: PayloadAction<string>) {
-      state.navigation = action.payload;
     },
 
     updateRace(state, action: PayloadAction<string>) {

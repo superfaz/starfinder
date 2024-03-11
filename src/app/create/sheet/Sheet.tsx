@@ -1,3 +1,5 @@
+"use client";
+
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -9,6 +11,7 @@ import { CharacterPresenter, computeAbilityScoreModifier, useAppSelector } from 
 import { type Alignment, ModifierTypes } from "model";
 import { ofType } from "view";
 import { CharacterProps } from "../Props";
+import { useCharacterPresenter } from "../helpers";
 
 interface IValueComponentProps {
   label: string;
@@ -442,39 +445,40 @@ function CardSpells({ character }: CharacterProps) {
   );
 }
 
-export function Sheet({ character }: CharacterProps) {
+export function Sheet() {
+  const presenter = useCharacterPresenter();
   const data = useAppSelector((state) => state.data);
 
   return (
     <Row>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
-          <CardProfile data={data} character={character} />
-          <CardAvatar character={character} />
-          <CardDescription character={character} />
+          <CardProfile data={data} character={presenter} />
+          <CardAvatar character={presenter} />
+          <CardDescription character={presenter} />
         </Stack>
       </Col>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
-          <CardAbilityScores data={data} character={character} />
-          <CardInitiative character={character} />
-          <CardSkills character={character} />
+          <CardAbilityScores data={data} character={presenter} />
+          <CardInitiative character={presenter} />
+          <CardSkills character={presenter} />
         </Stack>
       </Col>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
-          <CardKeyPoints character={character} />
-          <CardSavingThrows data={data} character={character} />
-          <CardArmorClass data={data} character={character} />
-          <CardAttackBonuses character={character} />
-          <CardWeapons data={data} character={character} />
+          <CardKeyPoints character={presenter} />
+          <CardSavingThrows data={data} character={presenter} />
+          <CardArmorClass data={data} character={presenter} />
+          <CardAttackBonuses character={presenter} />
+          <CardWeapons data={data} character={presenter} />
         </Stack>
       </Col>
       <Col lg={3}>
         <Stack direction="vertical" gap={2}>
-          <CardAbilities character={character} />
-          <CardFeats character={character} />
-          <CardSpells character={character} />
+          <CardAbilities character={presenter} />
+          <CardFeats character={presenter} />
+          <CardSpells character={presenter} />
         </Stack>
       </Col>
     </Row>

@@ -1,47 +1,22 @@
-import dynamic from "next/dynamic";
-import { ChangeEvent } from "react";
-import Badge from "react-bootstrap/Badge";
-import Form from "react-bootstrap/Form";
-import Stack from "react-bootstrap/Stack";
-import { findOrError } from "app/helpers";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { CharacterProps } from "../Props";
-import { AbilityScoreIds } from "model";
+"use client";
+
+import { Badge, Form, Stack } from "react-bootstrap";
 import { ReferenceComponent } from "../ReferenceComponent";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { ChangeEvent } from "react";
+import { findOrError } from "app/helpers";
+import { AbilityScoreIds } from "model";
+import { useCharacterPresenter } from "../helpers";
+import dynamic from "next/dynamic";
 
-const LazyGenericClassDetails = dynamic(() => import("../classes/genericDetails"));
-const LazyEnvoyClassEditor = dynamic(() => import("../classes/envoyEditor"));
-const LazyOperativeClassEditor = dynamic(() => import("../classes/operativeEditor"));
-const LazyMysticClassEditor = dynamic(() => import("../classes/mysticEditor"));
-const LazySoldierClassEditor = dynamic(() => import("../classes/soldierEditor"));
+const LazyEditorEnvoy = dynamic(() => import("./ClassEditorEnvoy"));
+const LazyEditorOperative = dynamic(() => import("./ClassEditorOperative"));
+const LazyEditorMystic = dynamic(() => import("./ClassEditorMystic"));
+const LazyEditorSoldier = dynamic(() => import("./ClassEditorSoldier"));
 
-function LazyClassEditor({ character }: CharacterProps): JSX.Element | null {
-  const selectedClass = character.getClass();
-
-  if (!selectedClass) {
-    return null;
-  }
-
-  switch (selectedClass.id) {
-    case "envoy":
-      return <LazyEnvoyClassEditor />;
-
-    case "operative":
-      return <LazyOperativeClassEditor character={character} />;
-
-    case "mystic":
-      return <LazyMysticClassEditor character={character} />;
-
-    case "soldier":
-      return <LazySoldierClassEditor character={character} />;
-
-    default:
-      return null;
-  }
-}
-
-function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
-  const selectedClass = character.getClass();
+export function LazyClassEditor(): JSX.Element | null {
+  const presenter = useCharacterPresenter();
+  const selectedClass = presenter.getClass();
 
   if (!selectedClass) {
     return null;
@@ -49,21 +24,28 @@ function LazyClassDetails({ character }: CharacterProps): JSX.Element | null {
 
   switch (selectedClass.id) {
     case "envoy":
+      return <LazyEditorEnvoy />;
+
     case "operative":
+      return <LazyEditorOperative character={presenter} />;
+
     case "mystic":
+      return <LazyEditorMystic character={presenter} />;
+
     case "soldier":
-      return <LazyGenericClassDetails character={character} classId={selectedClass.id} />;
+      return <LazyEditorSoldier character={presenter} />;
 
     default:
       return null;
   }
 }
 
-export function ClassSelection({ character }: CharacterProps) {
+export function ClassSelection() {
   const data = useAppSelector((state) => state.data);
+  const presenter = useCharacterPresenter();
   const dispatch = useAppDispatch();
 
-  const selectedClass = character.getClass();
+  const selectedClass = presenter.getClass();
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
@@ -91,7 +73,7 @@ export function ClassSelection({ character }: CharacterProps) {
       {selectedClass && (
         <>
           <Stack direction="horizontal" className="right">
-            {!character.isSoldier() && (
+            {!presenter.isSoldier() && (
               <Badge bg="primary">{findOrError(data.abilityScores, selectedClass.primaryAbilityScore).code}</Badge>
             )}
             <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
@@ -101,10 +83,10 @@ export function ClassSelection({ character }: CharacterProps) {
           <ReferenceComponent reference={selectedClass.reference} />
         </>
       )}
-      {character.isSoldier() && (
+      {presenter.isSoldier() && (
         <>
           <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe" className="mt-3">
-            <Form.Select value={character.getSoldierAbilityScore() ?? ""} onChange={handleSoldierAbilityScoreChange}>
+            <Form.Select value={presenter.getSoldierAbilityScore() ?? ""} onChange={handleSoldierAbilityScoreChange}>
               {[AbilityScoreIds.str, AbilityScoreIds.dex].map((id) => (
                 <option key={id} value={id}>
                   {findOrError(data.abilityScores, id).name}
@@ -113,7 +95,7 @@ export function ClassSelection({ character }: CharacterProps) {
             </Form.Select>
           </Form.FloatingLabel>
           <Stack direction="horizontal" className="right">
-            <Badge bg="primary">{findOrError(data.abilityScores, character.getSoldierAbilityScore()).code}</Badge>
+            <Badge bg="primary">{findOrError(data.abilityScores, presenter.getSoldierAbilityScore()).code}</Badge>
           </Stack>
         </>
       )}
@@ -132,18 +114,9 @@ export function ClassSelection({ character }: CharacterProps) {
             {selectedClass.weapons.map((a) => findOrError(data.weaponTypes, a).name).join(", ")}
           </div>
           <hr />
-          <LazyClassEditor character={character} />
+          <LazyClassEditor />
         </>
       )}
-    </Stack>
-  );
-}
-
-export function ClassDetails({ character }: CharacterProps) {
-  return (
-    <Stack direction="vertical" gap={2}>
-      <h2>Abilités de classe</h2>
-      <LazyClassDetails character={character} />
     </Stack>
   );
 }
