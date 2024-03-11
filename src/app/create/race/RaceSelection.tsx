@@ -2,7 +2,7 @@
 
 import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { ReferenceComponent } from "../ReferenceComponent";
-import RaceHumansEditor from "../races/RaceHumansEditor";
+import RaceHumansEditor from "./RaceHumansEditor";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { ChangeEvent } from "react";
 import { displayBonus, findOrError } from "app/helpers";
