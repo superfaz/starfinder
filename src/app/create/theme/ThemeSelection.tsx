@@ -1,25 +1,26 @@
-import dynamic from "next/dynamic";
-import { ChangeEvent } from "react";
-import Badge from "react-bootstrap/Badge";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Stack from "react-bootstrap/Stack";
-import { displayBonus, findOrError } from "app/helpers";
+"use client";
+
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { Feature } from "view";
-import FeatureComponent from "../FeatureComponent";
-import { CharacterProps } from "../Props";
+import { ChangeEvent } from "react";
+import { Badge, Form, Stack } from "react-bootstrap";
+import { displayBonus, findOrError } from "app/helpers";
 import { ReferenceComponent } from "../ReferenceComponent";
+import dynamic from "next/dynamic";
+import { useCharacterPresenter } from "../helpers";
 
-const LazyThemeNoneEditor = dynamic(() => import("../themes/ThemeNoneEditor"));
-const LazyThemeScholarEditor = dynamic(() => import("../themes/ThemeScholarEditor"));
+const LazyThemeNoneEditor = dynamic(() => import("./ThemeNoneEditor"));
+const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"));
 
-export function ThemeSelection({ character }: CharacterProps) {
+export function ThemeSelection() {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
+  const presenter = useCharacterPresenter();
 
-  const selectedTheme = character.getTheme();
+  if (presenter.getRace() === null) {
+    return null;
+  }
+
+  const selectedTheme = presenter.getTheme();
 
   function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
@@ -39,7 +40,7 @@ export function ThemeSelection({ character }: CharacterProps) {
           ))}
         </Form.Select>
       </Form.FloatingLabel>
-      {selectedTheme && !character.hasNoTheme() && (
+      {selectedTheme && !presenter.hasNoTheme() && (
         <Stack direction="horizontal" className="right">
           {Object.entries(selectedTheme.abilityScores).map(
             ([key, value]) =>
@@ -59,29 +60,9 @@ export function ThemeSelection({ character }: CharacterProps) {
         </>
       )}
       <div className="mt-3">
-        {character.hasNoTheme() && <LazyThemeNoneEditor character={character} />}
-        {character.isScholar() && <LazyThemeScholarEditor character={character} />}
+        {presenter.hasNoTheme() && <LazyThemeNoneEditor character={presenter} />}
+        {presenter.isScholar() && <LazyThemeScholarEditor character={presenter} />}
       </div>
-    </Stack>
-  );
-}
-
-export function ThemeTraits({ character }: CharacterProps) {
-  const features: Feature[] = character.getThemeFeatures();
-
-  return (
-    <Stack direction="vertical" gap={2}>
-      <h2>Traits thématiques</h2>
-      {features.map((feature) => (
-        <Row key={feature.id}>
-          <Col lg={1}>
-            <Badge bg="secondary">Niv. {feature.level}</Badge>
-          </Col>
-          <Col>
-            <FeatureComponent character={character} feature={feature} />
-          </Col>
-        </Row>
-      ))}
     </Stack>
   );
 }

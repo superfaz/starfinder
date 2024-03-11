@@ -107,9 +107,12 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
             </Link>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create" eventKey="theme" disabled={selectedRace === null}>
+            <Link
+              href="/create/theme"
+              className={clsx("nav-link", { active: pathname === "/create/theme", disabled: selectedRace === null })}
+            >
               Thème
-            </NavLink>
+            </Link>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create" eventKey="class" disabled={selectedTheme === null}>

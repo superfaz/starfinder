@@ -24,17 +24,6 @@ export default function Page() {
         </Col>
       )}
 
-      {navigation === "theme" && (
-        <>
-          <Col lg={3}>
-            <Tab.ThemeSelection character={presenter} />
-          </Col>
-          <Col>
-            <Tab.ThemeTraits character={presenter} />
-          </Col>
-        </>
-      )}
-
       {navigation === "class" && (
         <>
           <Col lg={3}>
