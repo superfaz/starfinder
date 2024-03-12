@@ -1,67 +1,36 @@
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import Page from "../page";
+import Page from "./page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "../tabs/test-helpers";
-import { Character, EmptyCharacter } from "model";
+import { createCharacter } from "../helpers-test";
 
-describe("TabSpells", () => {
-  beforeAll(async () => {
+describe("/create/spells", () => {
+  test("is not available per default", async () => {
     cleanup();
     render(await Layout({ children: <Page /> }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Sorts");
-  });
-
-  test("is not displayed", async () => {
     expect(screen.queryByRole("heading", { level: 2, name: /Sorts de niveau 0/ })).toBeNull();
-  });
-});
-
-describe("TabSpells", () => {
-  beforeAll(async () => {
-    cleanup();
-    const character: Character = {
-      ...EmptyCharacter,
-      race: "androids",
-      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
-    };
-
-    render(await LayoutServer({ children: <Page />, character }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Sorts");
   });
 
   test("is not displayed for soldier", async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Thème");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await navigateToTab(user, "Classe");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "soldier");
-    await navigateToTab(user, "Sorts");
-
+    cleanup();
+    const character = createCharacter()
+      .updateRace("androids")
+      .updateTheme("bounty-hunter")
+      .updateClass("soldier").character;
+    render(await LayoutServer({ children: <Page />, character }));
     expect(screen.queryByRole("heading", { level: 2, name: /Sorts de niveau 0/ })).toBeNull();
   });
 });
 
-describe("TabSpells", () => {
-  beforeEach(async () => {
+describe("/create/spells", () => {
+  beforeAll(async () => {
     cleanup();
-    const character: Character = {
-      ...EmptyCharacter,
-      race: "androids",
-      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
-    };
+    const character = createCharacter()
+      .updateRace("androids")
+      .updateTheme("bounty-hunter")
+      .updateClass("mystic").character;
 
     render(await LayoutServer({ children: <Page />, character }));
-
-    const user = userEvent.setup();
-    await navigateToTab(user, "Thème");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await navigateToTab(user, "Classe");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "mystic");
-    await navigateToTab(user, "Sorts");
   });
 
   test("is displayed", async () => {

@@ -251,6 +251,11 @@ function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilit
   return result;
 }
 
+type SubsetRaceFeature = {
+  id: string;
+  replace: string[];
+};
+
 /**
  * Enables a secondary trait for a character.
  *
@@ -260,7 +265,7 @@ function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilit
  * @param trait - the enabled secondary trait
  * @returns The updated character
  */
-function enableSecondaryTraitImpl(character: Character, trait: RaceFeature): Character {
+function enableSecondaryTraitImpl(character: Character, trait: SubsetRaceFeature): Character {
   const traits = character.traits.filter((t) => !trait.replace.includes(t));
   return { ...character, traits: [...traits, trait.id] };
 }
@@ -274,7 +279,7 @@ function enableSecondaryTraitImpl(character: Character, trait: RaceFeature): Cha
  * @param trait - the disabled secondary trait
  * @returns The updated character
  */
-function disableSecondaryTraitImpl(character: Character, trait: RaceFeature): Character {
+function disableSecondaryTraitImpl(character: Character, trait: SubsetRaceFeature): Character {
   return { ...character, traits: [...character.traits.filter((t) => t !== trait.id), ...trait.replace] };
 }
 
@@ -528,3 +533,124 @@ function updateSkillRankImpl(character: Character, skillId: string, delta: numbe
     };
   }
 }
+
+class Updators {
+  private _character: Character;
+
+  private data: IClientDataSet;
+
+  constructor(data: IClientDataSet, character: Character) {
+    this.data = data;
+    this._character = { ...character };
+  }
+
+  public get character() {
+    return this._character;
+  }
+
+  updateRace(raceId: string) {
+    this._character = updateRaceImpl(this.data, this._character, raceId);
+    return this;
+  }
+
+  updateRaceVariant(variantId: string) {
+    this._character = updateRaceVariantImpl(this.data, this._character, variantId);
+    return this;
+  }
+
+  updateHumanBonus(abilityScoreId: string) {
+    this._character = updateHumanBonusImpl(this.data, this._character, abilityScoreId);
+    return this;
+  }
+
+  enableSecondaryTrait(traitId: string) {
+    const race = findOrError(this.data.races, this._character.race);
+    const trait = findOrError(race.secondaryTraits, traitId);
+    this._character = enableSecondaryTraitImpl(this._character, { id: trait.id, replace: trait.replace ?? [] });
+    return this;
+  }
+
+  disableSecondaryTrait(traitId: string) {
+    const race = findOrError(this.data.races, this._character.race);
+    const trait = findOrError(race.secondaryTraits, traitId);
+    this._character = disableSecondaryTraitImpl(this._character, { id: trait.id, replace: trait.replace ?? [] });
+    return this;
+  }
+
+  updateTheme(themeId: string) {
+    this._character = updateThemeImpl(this.data, this._character, themeId);
+    return this;
+  }
+
+  updateNoThemeAbilityScore(abilityScoreId: string) {
+    this._character = updateNoThemeAbilityScoreImpl(this.data, this._character, abilityScoreId);
+    return this;
+  }
+
+  updateScholarSkill(skillId: string) {
+    this._character = updateScholarSkillImpl(this.data, this._character, skillId);
+    return this;
+  }
+
+  updateScholarSpecialization(specialization: string) {
+    this._character = updateScholarSpecializationImpl(this._character, specialization);
+    return this;
+  }
+
+  updateClass(classId: string) {
+    this._character = updateClassImpl(this.data, this._character, classId);
+    return this;
+  }
+
+  updateOperativeSpecialization(specialization: string) {
+    this._character = updateOperativeSpecializationImpl(this._character, specialization);
+    return this;
+  }
+
+  updateMysticConnection(connection: string) {
+    this._character = updateMysticConnectionImpl(this._character, connection);
+    return this;
+  }
+
+  updateSoldierAbilityScore(abilityScoreId: string) {
+    this._character = updateSoldierAbilityScoreImpl(this._character, abilityScoreId);
+    return this;
+  }
+
+  updateSoldierPrimaryStyle(styleId: string) {
+    this._character = updateSoldierPrimaryStyleImpl(this._character, styleId);
+    return this;
+  }
+
+  updateAbilityScore(abilityScoreId: string, delta: number) {
+    this._character = updateAbilityScoreImpl(this._character, abilityScoreId, delta);
+    return this;
+  }
+
+  updateSkillRank(skillId: string, delta: number) {
+    this._character = updateSkillRankImpl(this._character, skillId, delta);
+    return this;
+  }
+
+  updateName(name: string) {
+    this._character = { ...this._character, name };
+    return this;
+  }
+
+  updateSex(sex: string) {
+    this._character = { ...this._character, sex };
+    return this;
+  }
+
+  updateHomeWorld(homeWorld: string) {
+    this._character = { ...this._character, homeWorld };
+    return this;
+  }
+
+  updateDeity(deity: string) {
+    this._character = { ...this._character, deity };
+    return this;
+  }
+}
+
+export const updators = (data: IClientDataSet, character: Character) => new Updators(data, character);

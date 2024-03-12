@@ -1,19 +1,13 @@
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "./page";
 import Layout from "../layout";
-import { navigateToTab } from "../tabs/test-helpers";
 
 describe("/create/race", () => {
   beforeAll(async () => {
     cleanup();
     render(await Layout({ children: <Page /> }));
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Race");
   });
 
   test("displays RaceSelection", async () => {

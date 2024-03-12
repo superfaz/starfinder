@@ -1,67 +1,39 @@
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Page from "../page";
+import Page from "./page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "../tabs/test-helpers";
-import { Character, EmptyCharacter } from "model";
+import { createCharacter } from "../helpers-test";
 
 export async function setup(klass: string = "operative") {
   cleanup();
-  const character: Character = {
-    ...EmptyCharacter,
-    race: "androids",
-    raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
-  };
-
+  const character = createCharacter().updateRace("androids").updateTheme("bounty-hunter").updateClass(klass).character;
   render(await LayoutServer({ children: <Page />, character }));
-  const user = userEvent.setup();
-  await navigateToTab(user, "Thème");
-  await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-  await navigateToTab(user, "Classe");
-  await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass);
 }
 
-describe("TabFeats", () => {
-  beforeAll(async () => {
+describe("/create/feats", () => {
+  test("is not displayed", async () => {
     cleanup();
     render(await Layout({ children: <Page /> }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Don(s)");
-  });
-
-  test("is not displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Dons disponibles" })).toBeNull();
   });
-});
-
-describe("TabFeats", () => {
-  beforeAll(async () => {
-    await setup("operative");
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Don(s)");
-  });
 
   test("is displayed", async () => {
+    await setup("operative");
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.getByRole("heading", { level: 2, name: "Dons disponibles" })).not.toBeNull();
     expect(content.getByRole("heading", { level: 2, name: "Don(s) acqui(s)" })).not.toBeNull();
   });
 });
 
-describe("TabFeats feat types", () => {
+describe("/create/feats feat types", () => {
   beforeAll(async () => {
     await setup("operative");
   });
 
   beforeEach(async () => {
     const user = userEvent.setup();
-    await navigateToTab(user, "Don(s)");
-
     const block = screen.queryByTestId("feats-selected");
     if (block !== null) {
       const buttons = within(block).queryAllByRole("button");

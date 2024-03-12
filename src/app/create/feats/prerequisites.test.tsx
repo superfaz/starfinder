@@ -1,17 +1,11 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import { setup } from "./page.test";
-import { navigateToTab } from "../tabs/test-helpers";
 
 describe("TabFeats prerequisites with operative", () => {
   beforeAll(async () => {
     await setup("operative");
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Don(s)");
   });
 
   test("handle abilityScore prerequisites - not available", async () => {
@@ -110,11 +104,6 @@ describe("TabFeats prerequisites with soldier", () => {
     await setup("soldier");
   });
 
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Don(s)");
-  });
-
   test("handle baseAttack prerequisites - available", async () => {
     const block = within(screen.getByTestId("feats"));
     expect(block.queryByText(/base attack 1/i)).not.toBeNull();
@@ -124,11 +113,6 @@ describe("TabFeats prerequisites with soldier", () => {
 describe("TabFeats prerequisites with mystic", () => {
   beforeAll(async () => {
     await setup("mystic");
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Don(s)");
   });
 
   test("handle notSpellCaster prerequisites - not available", async () => {

@@ -3,8 +3,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "./page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "../tabs/test-helpers";
-import { Character, EmptyCharacter } from "model";
+import { createCharacter } from "../helpers-test";
 
 describe("/create/class", () => {
   beforeAll(async () => {
@@ -21,15 +20,8 @@ describe("/create/class", () => {
 describe("/create/class", () => {
   beforeAll(async () => {
     cleanup();
-    const character: Character = {
-      ...EmptyCharacter,
-      race: "androids",
-      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
-    };
+    const character = createCharacter().updateRace("androids").updateTheme("bounty-hunter").character;
     render(await LayoutServer({ children: <Page />, character }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Thème");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
   });
 
   test("is displayed", async () => {

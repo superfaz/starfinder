@@ -1,17 +1,14 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
-import Page from "../page";
+import { beforeAll, describe, expect, test } from "vitest";
+import Page from "./page";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "../tabs/test-helpers";
-import { Character, EmptyCharacter } from "model";
+import { createCharacter } from "../helpers-test";
 
-describe("TabProfile", () => {
+describe("/create/profile", () => {
   beforeAll(async () => {
     cleanup();
     render(await Layout({ children: <Page /> }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Profil");
   });
 
   test("is not displayed", async () => {
@@ -20,26 +17,14 @@ describe("TabProfile", () => {
   });
 });
 
-describe("TabProfile", () => {
+describe("/create/profile", () => {
   beforeAll(async () => {
     cleanup();
-    const character: Character = {
-      ...EmptyCharacter,
-      race: "androids",
-      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
-    };
-
+    const character = createCharacter()
+      .updateRace("androids")
+      .updateTheme("bounty-hunter")
+      .updateClass("operative").character;
     render(await LayoutServer({ children: <Page />, character }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Thème");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await navigateToTab(user, "Classe");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Profil");
   });
 
   test("is displayed", async () => {
@@ -53,9 +38,6 @@ describe("TabProfile", () => {
 
     await user.type(content.getByRole("textbox", { name: "Nom du personnage" }), "Bob");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Nom du personnage" }).value).toBe("Bob");
-
-    await navigateToTab(user, "Fiche");
-    expect(content.queryByText("Bob")).not.toBeNull();
   });
 
   test("can be used to modify the alignment", async () => {
@@ -64,9 +46,6 @@ describe("TabProfile", () => {
 
     await user.selectOptions(content.getByRole("combobox", { name: "Alignement" }), "cn");
     expect(content.getByRole<HTMLInputElement>("combobox", { name: "Alignement" }).value).toBe("cn");
-
-    await navigateToTab(user, "Fiche");
-    expect(content.queryByText("CN")).not.toBeNull();
   });
 
   test("can be used to modify the character sex", async () => {
@@ -75,9 +54,6 @@ describe("TabProfile", () => {
 
     await user.type(content.getByRole("textbox", { name: "Sexe" }), "F");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Sexe" }).value).toBe("F");
-
-    await navigateToTab(user, "Fiche");
-    expect(content.queryByText("F")).not.toBeNull();
   });
 
   test("can be used to modify the home world", async () => {
@@ -86,9 +62,6 @@ describe("TabProfile", () => {
 
     await user.type(content.getByRole("textbox", { name: "Monde natal" }), "Abraxar");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Monde natal" }).value).toBe("Abraxar");
-
-    await navigateToTab(user, "Fiche");
-    expect(content.queryByText("Abraxar")).not.toBeNull();
   });
 
   test("can be used to modify the deity", async () => {
@@ -97,9 +70,6 @@ describe("TabProfile", () => {
 
     await user.type(content.getByRole("textbox", { name: "Divinité" }), "Desna");
     expect(content.getByRole<HTMLInputElement>("textbox", { name: "Divinité" }).value).toBe("Desna");
-
-    await navigateToTab(user, "Fiche");
-    expect(content.queryByText("Desna")).not.toBeNull();
   });
 
   test("can be used to modify the description", async () => {
@@ -110,8 +80,5 @@ describe("TabProfile", () => {
     expect(content.getByRole<HTMLInputElement>("textbox", { name: /Biographie & description/ }).value).toBe(
       "Biographie de Bob"
     );
-
-    await navigateToTab(user, "Fiche");
-    expect(within(screen.getByTestId("description")).queryByText(/Biographie de Bob/)).not.toBeNull();
   });
 });

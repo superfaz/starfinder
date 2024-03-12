@@ -1,53 +1,18 @@
 import { describe, beforeAll, test, expect, beforeEach } from "vitest";
-import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import Page from "../page";
+import { cleanup, render, screen, within } from "@testing-library/react";
+import Page from "./page";
 import referential from "./page.test.json";
 import Layout, { LayoutServer } from "../layout";
-import { navigateToTab } from "../tabs/test-helpers";
-import { Character, EmptyCharacter } from "model";
+import { createCharacter } from "../helpers-test";
 
-describe("TabSkills", () => {
+describe("/create/skills", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
-    const user = userEvent.setup();
-    await navigateToTab(user, referential.title);
-  });
-
-  test("is not displayed", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.queryByRole("heading", { level: 2, name: "Caractéristiques" })).toBeNull();
-    expect(content.queryByRole("heading", { level: 2, name: "Compétences" })).toBeNull();
-  });
-});
-
-describe("TabSkills", () => {
-  beforeAll(async () => {
-    cleanup();
-    const character: Character = {
-      ...EmptyCharacter,
-      race: "androids",
-      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
-      traits: [
-        "62551516-da4e-4adb-9d4e-af52ade0d7fa",
-        "1653ddac-b66e-4da0-9a97-35dfcd5a71e3",
-        "07b883eb-4568-4e24-bec4-293ced40adc2",
-        "470b64bd-f308-4192-99fd-17656e9bc386",
-      ],
-    };
-
+    const character = createCharacter()
+      .updateRace("androids")
+      .updateTheme("bounty-hunter")
+      .updateClass("operative").character;
     render(await LayoutServer({ children: <Page />, character }));
-    const user = userEvent.setup();
-    await navigateToTab(user, "Thème");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "bounty-hunter");
-    await navigateToTab(user, "Classe");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, referential.title);
   });
 
   test("is displayed", async () => {
@@ -116,54 +81,26 @@ describe("TabSkills", () => {
     expect(control).toBeChecked();
     expect(control).toBeDisabled();
   });
-
-  test("enable skills with mandatory ranks", async () => {
-    const user = userEvent.setup();
-    await navigateToTab(user, "Classe");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), "operative");
-    await waitFor(() => expect(screen.queryByRole("combobox", { name: "Spécialisation" })).not.toBeNull());
-    await user.selectOptions(
-      screen.getByRole("combobox", { name: "Spécialisation" }),
-      "7d74e198-2856-4496-8fff-4685a6187ed3"
-    );
-    await navigateToTab(user, referential.title);
-
-    const view = within(screen.getByTestId("cult"));
-    const control = view.queryByRole("checkbox", { name: /culture \(int\)$/i });
-    expect(control).not.toBeNull();
-    expect(control).toBeChecked();
-    expect(control).toBeDisabled();
-    expect(view.getByText("+9")).not.toBeNull();
-  });
 });
 
-describe("TabSkills", () => {
-  beforeAll(async () => {
+describe("/create/skills", () => {
+  beforeEach(async () => {
     cleanup();
-    const character: Character = {
-      ...EmptyCharacter,
-      race: "androids",
-      raceVariant: "4a7b68dd-8d74-4b5f-9c9b-4a5c208d2fb7",
-      traits: [
-        "62551516-da4e-4adb-9d4e-af52ade0d7fa",
-        "1653ddac-b66e-4da0-9a97-35dfcd5a71e3",
-        "07b883eb-4568-4e24-bec4-293ced40adc2",
-        "470b64bd-f308-4192-99fd-17656e9bc386",
-      ],
-    };
-    render(await LayoutServer({ children: <Page />, character }));
+  });
+
+  test("is not displayed", async () => {
+    render(await Layout({ children: <Page /> }));
+    const content = within(document.querySelector("#content") as HTMLElement);
+    expect(content.queryByRole("heading", { level: 2, name: "Caractéristiques" })).toBeNull();
+    expect(content.queryByRole("heading", { level: 2, name: "Compétences" })).toBeNull();
   });
 
   const matrix = referential.classes.flatMap((klass) => referential.themes.map((theme) => ({ klass, theme })));
   test.each(matrix)(
     "displays the class skills based on theme $theme.id and class $klass.id",
     async ({ theme, klass }) => {
-      const user = userEvent.setup();
-      await navigateToTab(user, "Thème");
-      await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), theme.id);
-      await navigateToTab(user, "Classe");
-      await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
-      await navigateToTab(user, referential.title);
+      const character = createCharacter().updateRace("androids").updateTheme(theme.id).updateClass(klass.id).character;
+      render(await LayoutServer({ children: <Page />, character }));
 
       for (const skill of [...klass.classSkills, ...theme.classSkills]) {
         const control = screen.queryByRole("checkbox", { name: skill + " - Compétence de classe" });
