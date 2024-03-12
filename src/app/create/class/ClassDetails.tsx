@@ -11,7 +11,6 @@ function LazyClassDetails(): JSX.Element | null {
   const selectedClass = presenter.getClass();
 
   if (!selectedClass) {
-    console.log("selectedClass.id", "none selected");
     return null;
   }
 
@@ -20,7 +19,6 @@ function LazyClassDetails(): JSX.Element | null {
     case "operative":
     case "mystic":
     case "soldier":
-      console.log("selectedClass.id", selectedClass.id);
       return <LazyClassDetailsGeneric character={presenter} classId={selectedClass.id} />;
 
     default:

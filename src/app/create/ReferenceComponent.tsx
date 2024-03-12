@@ -12,7 +12,6 @@ export function ReferenceComponent({ reference }: { reference: Reference }) {
 
   const chapter = book.chapters.find((chapter) => chapter.start <= reference.page && chapter.end >= reference.page);
   if (!chapter) {
-    console.log(book);
     console.error(`Chapter for page ${reference.page}, on book ${reference.book} not found`);
     return null;
   }
