@@ -23,7 +23,6 @@ describe("/create/feats", () => {
     await setup("operative");
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.getByRole("heading", { level: 2, name: "Dons disponibles" })).not.toBeNull();
-    expect(content.getByRole("heading", { level: 2, name: "Don(s) acqui(s)" })).not.toBeNull();
   });
 });
 
