@@ -1,8 +1,7 @@
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, screen, within } from "@testing-library/react";
 import Page from "./page";
-import { LayoutServer } from "../layout";
-import { Updator, createCharacter } from "../helpers-test";
+import { Updator, createCharacter, renderWithData } from "../helpers-test";
 
 const NO_CLASS = "Pas de classe sélectionnée";
 
@@ -37,7 +36,7 @@ describe("/create/sheet - default", () => {
   beforeAll(async () => {
     cleanup();
     const character = createCharacter().character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
   });
 
   test("is displayed", async () => {
@@ -98,7 +97,7 @@ describe("/create/sheet with race/theme/class", () => {
       .updateRace("androids")
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
   });
 
   test("displays weapons proficiencies", async () => {
@@ -166,7 +165,7 @@ describe("/create/sheet - variations", () => {
 
   test.each(races)("has Race updated for $id", async (race) => {
     const character = createCharacter().updateRace(race.id).character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
 
     const view = screen.getByTestId("Race");
     expect(within(view).queryByText("Race")).toBeVisible();
@@ -176,7 +175,7 @@ describe("/create/sheet - variations", () => {
 
   test.each(races)("has Abilities added by Race selection for $id", async (race) => {
     const character = createCharacter().updateRace(race.id).character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
 
     const view = screen.getByTestId("abilities");
     expect(within(view).queryByText("Pouvoirs")).toBeVisible();
@@ -190,7 +189,7 @@ describe("/create/sheet - variations", () => {
       .updateRace("androids")
       .enableSecondaryTrait("382dc7bb-b245-4e28-81bb-4a3d852ae2d5")
       .enableSecondaryTrait("2937ca64-e195-4531-a8bf-6706c05be83e").character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
 
     const view = screen.getByTestId("abilities");
     expect(within(view).queryByText("Pouvoirs")).toBeVisible();
@@ -202,7 +201,7 @@ describe("/create/sheet - variations", () => {
 
   test.each(themes)("has Theme updated for '$id'", async (theme) => {
     const character = createCharacter().updateRace(races[0].id).updateTheme(theme.id).character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
 
     const view = screen.getByTestId("Thème");
     expect(within(view).queryByText("Thème")).toBeVisible();
@@ -215,7 +214,7 @@ describe("/create/sheet - variations", () => {
       .updateRace(races[0].id)
       .updateTheme(themes[0].id)
       .updateClass(klass.id).character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
 
     const view = screen.getByTestId("Classe");
     expect(within(view).queryByText("Classe")).toBeVisible();
@@ -238,7 +237,7 @@ describe("/create/sheet - variations", () => {
     const character = update(
       createCharacter().updateRace(races[0].id).updateTheme(themes[0].id).updateClass(classes[0].id)
     ).character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
 
     const view = screen.getByTestId(label);
     expect(within(view).queryByText(label)).toBeVisible();
@@ -251,7 +250,7 @@ describe("/create/sheet - variations", () => {
     "has Abilities added by Theme selection for $race.id and $theme.id",
     async ({ race, theme }) => {
       const character = createCharacter().updateRace(race.id).updateTheme(theme.id).character;
-      render(await LayoutServer({ children: <Page />, character }));
+      await renderWithData(<Page />, character);
 
       const view = screen.getByTestId("abilities");
       expect(within(view).queryByText("Pouvoirs")).toBeVisible();
@@ -268,7 +267,7 @@ describe("/create/sheet - variations", () => {
     "has Abilities added by Class selection for $race.id, $theme.id and $klass.id",
     async ({ race, theme, klass }) => {
       const character = createCharacter().updateRace(race.id).updateTheme(theme.id).updateClass(klass.id).character;
-      render(await LayoutServer({ children: <Page />, character }));
+      await renderWithData(<Page />, character);
 
       const view = screen.getByTestId("abilities");
       for (const ability of [...race.abilities, ...theme.abilities, ...klass.abilities]) {
@@ -286,7 +285,7 @@ describe("/create/sheet - variations", () => {
       .updateRace(races[0].id)
       .updateTheme(themes[0].id)
       .updateClass(dataset.klass).character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
 
     const view = screen.getByTestId("attackBonuses");
     expect(within(view).queryByText(NO_CLASS)).toBeNull();

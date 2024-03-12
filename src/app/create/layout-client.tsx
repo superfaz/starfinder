@@ -10,16 +10,23 @@ import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "logic/StoreProvider";
 import { usePathname } from "next/navigation";
 import { Nav } from "app/components/Nav";
-import { Character } from "model";
+import { Character, IModel } from "model";
 
 export default function LayoutClient({
   data,
   debug,
   character,
+  classesDetails,
   children,
-}: Readonly<{ data: IClientDataSet; debug: boolean; character?: Character; children: ReactNode }>) {
+}: Readonly<{
+  data: IClientDataSet;
+  debug: boolean;
+  character?: Character;
+  classesDetails?: Record<string, IModel>;
+  children: ReactNode;
+}>) {
   return (
-    <StoreProvider data={data} character={character}>
+    <StoreProvider data={data} character={character} classesDetails={classesDetails}>
       <CookiesProvider defaultSetOptions={{ path: "/", sameSite: "strict" }}>
         <LayoutClientPresenter debug={debug}>{children}</LayoutClientPresenter>
       </CookiesProvider>

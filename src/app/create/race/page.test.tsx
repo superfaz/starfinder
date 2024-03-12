@@ -1,13 +1,13 @@
 import { beforeAll, describe, expect, test } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "./page";
-import Layout from "../layout";
+import { renderWithData } from "../helpers-test";
 
 describe("/create/race", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    await renderWithData(<Page />);
   });
 
   test("displays RaceSelection", async () => {

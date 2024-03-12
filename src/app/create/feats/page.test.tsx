@@ -1,20 +1,19 @@
 import { beforeAll, beforeEach, describe, expect, test } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "./page";
-import Layout, { LayoutServer } from "../layout";
-import { createCharacter } from "../helpers-test";
+import { createCharacter, renderWithData } from "../helpers-test";
 
 export async function setup(klass: string = "operative") {
   cleanup();
   const character = createCharacter().updateRace("androids").updateTheme("bounty-hunter").updateClass(klass).character;
-  render(await LayoutServer({ children: <Page />, character }));
+  await renderWithData(<Page />, character);
 }
 
 describe("/create/feats", () => {
   test("is not displayed", async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    await renderWithData(<Page />);
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Dons disponibles" })).toBeNull();
   });

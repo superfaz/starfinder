@@ -308,6 +308,7 @@ export class CharacterPresenter {
     // Retrieve the class details
     const classDetails = this.classesDetails[selectedClass.id];
     if (!classDetails) {
+      console.error("missing class details for " + selectedClass.id); // eslint-disable-line no-console
       return [];
     }
 

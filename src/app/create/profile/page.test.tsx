@@ -1,14 +1,13 @@
-import { cleanup, render, within } from "@testing-library/react";
+import { cleanup, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, test } from "vitest";
 import Page from "./page";
-import Layout, { LayoutServer } from "../layout";
-import { createCharacter } from "../helpers-test";
+import { createCharacter, renderWithData } from "../helpers-test";
 
 describe("/create/profile", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    await renderWithData(<Page />);
   });
 
   test("is not displayed", async () => {
@@ -24,7 +23,7 @@ describe("/create/profile", () => {
       .updateRace("androids")
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
   });
 
   test("is displayed", async () => {

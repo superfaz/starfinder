@@ -1,9 +1,8 @@
 import { describe, beforeAll, test, expect, beforeEach } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, screen, within } from "@testing-library/react";
 import Page from "./page";
 import referential from "./page.test.json";
-import Layout, { LayoutServer } from "../layout";
-import { createCharacter } from "../helpers-test";
+import { createCharacter, renderWithData } from "../helpers-test";
 
 describe("/create/skills", () => {
   beforeAll(async () => {
@@ -12,7 +11,7 @@ describe("/create/skills", () => {
       .updateRace("androids")
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
   });
 
   test("is displayed", async () => {
@@ -89,7 +88,7 @@ describe("/create/skills", () => {
   });
 
   test("is not displayed", async () => {
-    render(await Layout({ children: <Page /> }));
+    await renderWithData(<Page />);
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Caractéristiques" })).toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Compétences" })).toBeNull();
@@ -100,7 +99,7 @@ describe("/create/skills", () => {
     "displays the class skills based on theme $theme.id and class $klass.id",
     async ({ theme, klass }) => {
       const character = createCharacter().updateRace("androids").updateTheme(theme.id).updateClass(klass.id).character;
-      render(await LayoutServer({ children: <Page />, character }));
+      await renderWithData(<Page />, character);
 
       for (const skill of [...klass.classSkills, ...theme.classSkills]) {
         const control = screen.queryByRole("checkbox", { name: skill + " - Compétence de classe" });

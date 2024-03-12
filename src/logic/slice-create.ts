@@ -23,6 +23,10 @@ const mainSlice = createSlice({
       state.character = action.payload;
     },
 
+    initializeClassesDetails(state, action: PayloadAction<Record<string, IModel>>) {
+      state.classesDetails = action.payload;
+    },
+
     updateRace(state, action: PayloadAction<string>) {
       state.character = updateRaceImpl(state.data, state.character, action.payload);
     },

@@ -6,10 +6,12 @@ import {
   ArmorTypeSchema,
   AvatarSchema,
   BookSchema,
+  Character,
   ClassSchema,
   DamageTypeSchema,
   EmptyCharacter,
   FeatTemplateSchema,
+  IModel,
   ProfessionSchema,
   RaceSchema,
   SavingThrowSchema,
@@ -36,6 +38,11 @@ import savingThrows from "../../../mocks/saving-throws.json";
 import skills from "../../../mocks/skills.json";
 import weaponCategories from "../../../mocks/weapon-categories.json";
 import weaponTypes from "../../../mocks/weapon-types.json";
+import { LayoutServer } from "./layout";
+import { render } from "@testing-library/react";
+import envoyClassDetails from "../../../mocks/class-envoy.json";
+import operativeClassDetails from "../../../mocks/class-operative.json";
+import soldierClassDetails from "../../../mocks/class-soldier.json";
 
 const data: IClientDataSet = {
   abilityScores: AbilityScoreSchema.array().parse(abilityScores),
@@ -56,8 +63,18 @@ const data: IClientDataSet = {
   weaponTypes: WeaponTypeSchema.array().parse(weaponTypes),
 };
 
+const classesDetails: Record<string, IModel> = {
+  envoy: envoyClassDetails,
+  operative: operativeClassDetails,
+  soldier: soldierClassDetails,
+};
+
 export function createCharacter() {
   return updators(data, EmptyCharacter);
 }
 
 export type Updator = ReturnType<typeof createCharacter>;
+
+export async function renderWithData(children: React.ReactNode, character?: Character) {
+  return render(await LayoutServer({ children, character, classesDetails }));
+}

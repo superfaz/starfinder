@@ -1,14 +1,13 @@
 import { beforeAll, describe, expect, test } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "./page";
-import Layout, { LayoutServer } from "../layout";
-import { createCharacter } from "../helpers-test";
+import { createCharacter, renderWithData } from "../helpers-test";
 
 describe("/create/class", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    await renderWithData(<Page />);
   });
 
   test("is not displayed", async () => {
@@ -21,7 +20,7 @@ describe("/create/class", () => {
   beforeAll(async () => {
     cleanup();
     const character = createCharacter().updateRace("androids").updateTheme("bounty-hunter").character;
-    render(await LayoutServer({ children: <Page />, character }));
+    await renderWithData(<Page />, character);
   });
 
   test("is displayed", async () => {
@@ -33,19 +32,17 @@ describe("/create/class", () => {
     { id: "operative", expected: "Spécialisation" },
     { id: "soldier", expected: "Don de combat" },
   ];
-  test.each(classes)(
-    "displays details for class '$id'",
-    async (klass) => {
-      const user = userEvent.setup();
-      await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
-      const content = within(document.querySelector("#content") as HTMLElement);
-      const view = content.getByRole("heading", { level: 2, name: "Abilités de classe" }).parentElement;
-      if (view === null) {
-        throw new Error("view is null");
-      }
+  test.each(classes)("displays details for class '$id'", async (klass) => {
+    const user = userEvent.setup();
+    await user.selectOptions(screen.getByRole("combobox", { name: "Classe" }), klass.id);
 
-      expect(within(view).getByRole("heading", { name: klass.expected })).not.toBeNull();
-    },
-    { timeout: 10000 }
-  );
+    const content = within(document.querySelector("#content") as HTMLElement);
+    const view = content.getByRole("heading", { level: 2, name: "Abilités de classe" }).parentElement;
+    if (view === null) {
+      throw new Error("view is null");
+    }
+
+    await waitFor(() => within(view).getByRole("heading", { name: klass.expected }), { timeout: 1000 });
+    expect(within(view).getByRole("heading", { name: klass.expected })).not.toBeNull();
+  });
 });

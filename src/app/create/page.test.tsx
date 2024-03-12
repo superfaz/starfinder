@@ -1,12 +1,12 @@
 import { beforeAll, describe, expect, test } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import Page from "./page";
-import Layout from "./layout";
+import { renderWithData } from "./helpers-test";
 
 describe("Page", () => {
   beforeAll(async () => {
     cleanup();
-    render(await Layout({ children: <Page /> }));
+    await renderWithData(<Page />);
   });
 
   test("Page is live", async () => {
