@@ -1,16 +1,119 @@
 "use client";
 
-import { useState } from "react";
+import { findOrError } from "app/helpers";
+import { useAppSelector } from "logic";
+import { Critical, Damage, EquipmentWeaponMelee, INamedModel, Special, WeaponTypeId, WeaponTypeIds } from "model";
+import { useEffect, useState } from "react";
+import { Form, Table } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+
+function DisplayDamage({ damage }: { damage: Damage }) {
+  const damageTypes = useAppSelector((state) => state.data.damageTypes);
+  return (
+    <span>
+      {damage.roll} {damage.types.map((d) => findOrError(damageTypes, d).code).join(" & ")}
+    </span>
+  );
+}
+
+function DisplayCritical({ critical }: { critical: Critical | undefined }) {
+  const criticalHitEffects = useAppSelector((state) => state.data.criticalHitEffects);
+  if (!critical) {
+    return "-";
+  }
+
+  const instance = findOrError(criticalHitEffects, critical.id);
+  if (!critical.value) {
+    return instance.name;
+  } else {
+    return instance.name + " " + critical.value;
+  }
+}
+
+function DisplaySpecials({ specials }: { specials: Special[] }) {
+  const weaponSpecialProperties = useAppSelector((state) => state.data.weaponSpecialProperties);
+
+  return specials
+    .map((special) => {
+      const name = findOrError(weaponSpecialProperties, special.id).name;
+      return special.value ? `${name} (${special.value})` : name;
+    })
+    .join(", ");
+}
+
+function equipmentSort(a: EquipmentWeaponMelee, b: EquipmentWeaponMelee): number {
+  if (a.level !== b.level) {
+    return a.level - b.level;
+  } else {
+    return a.name < b.name ? -1 : 1;
+  }
+}
+
+function WeaponMeleeTable({ equipments }: { equipments: INamedModel[] }) {
+  const casted = (equipments as EquipmentWeaponMelee[]).toSorted(equipmentSort);
+
+  return (
+    <Table hover>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Niveau</th>
+          <th>Coût</th>
+          <th>Dégâts</th>
+          <th>Critique</th>
+          <th>Volume</th>
+          <th>Spécial</th>
+        </tr>
+      </thead>
+      {casted.length === 0 && (
+        <tbody className="table-group-divider">
+          <tr>
+            <td colSpan={9}>
+              <em>En cours de chargement...</em>
+            </td>
+          </tr>
+        </tbody>
+      )}
+      <tbody className="table-group-divider">
+        {casted.map((equipment) => (
+          <tr key={equipment.id}>
+            <td>{equipment.name}</td>
+            <td>{equipment.level}</td>
+            <td>{equipment.cost}</td>
+            <td>
+              <DisplayDamage damage={equipment.damage} />
+            </td>
+            <td>
+              <DisplayCritical critical={equipment.critical} />
+            </td>
+            <td>{equipment.weight}</td>
+            <td>
+              <DisplaySpecials specials={equipment.specials} />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+}
 
 export function EquipmentSelection() {
+  const weaponTypes = useAppSelector((state) => state.data.weaponTypes);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("weapon");
+  const [equipmentType, setEquipmentType] = useState("weapon");
+  const [weaponType, setWeaponType] = useState<WeaponTypeId>(WeaponTypeIds.basic);
+  const [equipments, setEquipments] = useState<INamedModel[]>([]);
+
+  useEffect(() => {
+    fetch(`/api/equipments/${equipmentType}/${weaponType}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setEquipments(data);
+      });
+  }, [equipmentType, weaponType]);
 
   return (
     <Stack direction="vertical" gap={2}>
@@ -20,18 +123,31 @@ export function EquipmentSelection() {
           Filtres:
         </Col>
         <Col xs="auto">
-          <ToggleButtonGroup type="radio" name="type" value={category} onChange={setCategory}>
-            <ToggleButton id="category-general" value="weapon" variant="outline-secondary">
-              Armes
-            </ToggleButton>
-            <ToggleButton id="category-all" value="armor" variant="outline-secondary">
+          <Form.Select id="equipment-type" value={equipmentType} onChange={(e) => setEquipmentType(e.target.value)}>
+            <option value="weapon">Armes</option>
+            <option value="armor" disabled>
               Armures
-            </ToggleButton>
-            <ToggleButton id="category-combat" value="other" variant="outline-secondary">
+            </option>
+            <option value="other" disabled>
               Autres
-            </ToggleButton>
-          </ToggleButtonGroup>
+            </option>
+          </Form.Select>
         </Col>
+        {equipmentType === "weapon" && (
+          <Col xs="auto">
+            <Form.Select
+              id="weapon-type"
+              value={weaponType}
+              onChange={(e) => setWeaponType(e.target.value as WeaponTypeId)}
+            >
+              {weaponTypes.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Col>
+        )}
         <Col>
           <FormControl
             type="search"
@@ -41,6 +157,7 @@ export function EquipmentSelection() {
           />
         </Col>
       </Row>
+      {equipmentType === "weapon" && weaponType === "basic" && <WeaponMeleeTable equipments={equipments} />}
     </Stack>
   );
 }
