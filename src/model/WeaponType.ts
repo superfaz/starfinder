@@ -12,7 +12,7 @@ export const WeaponTypeIdSchema = z.enum([
   "grenade",
 ]);
 
-export type WeaponId = z.infer<typeof WeaponTypeIdSchema>;
+export type WeaponTypeId = z.infer<typeof WeaponTypeIdSchema>;
 
 export const WeaponTypeSchema = INamedModelSchema.extend({
   id: WeaponTypeIdSchema,
@@ -26,6 +26,6 @@ export function isWeaponType(obj: unknown): obj is WeaponType {
   return WeaponTypeSchema.safeParse(obj).success;
 }
 
-export function isWeaponTypeId(obj: unknown): obj is WeaponId {
+export function isWeaponTypeId(obj: unknown): obj is WeaponTypeId {
   return WeaponTypeIdSchema.safeParse(obj).success;
 }

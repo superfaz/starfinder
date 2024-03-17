@@ -5,6 +5,21 @@ import { WeaponCategoryIdSchema } from "./WeaponCategory";
 import { WeaponTypeIdSchema } from "./WeaponType";
 import { IdSchema, LevelSchema, ReferenceSchema } from "./helper";
 
+export const DamageSchema = z.object({
+  roll: z.string().regex(/^\d+d\d+$/),
+  types: DamageTypeIdSchema.array(),
+});
+
+export type Damage = z.infer<typeof DamageSchema>;
+
+export const CriticalSchema = z.object({ id: IdSchema, value: z.string().optional() });
+
+export type Critical = z.infer<typeof CriticalSchema>;
+
+export const SpecialSchema = z.object({ id: IdSchema, value: z.string().optional() });
+
+export type Special = z.infer<typeof SpecialSchema>;
+
 export const EquipmentWeaponMeleeSchema = INamedModelSchema.extend({
   reference: ReferenceSchema,
   weaponType: WeaponTypeIdSchema,
@@ -12,18 +27,10 @@ export const EquipmentWeaponMeleeSchema = INamedModelSchema.extend({
   weaponCategory: WeaponCategoryIdSchema.optional(),
   level: LevelSchema,
   cost: z.number().int().positive().optional(),
-  damage: z.object({
-    roll: z.string().regex(/^\d+d\d+$/),
-    types: DamageTypeIdSchema.array(),
-  }),
-  critical: z.object({ id: IdSchema, value: z.string().optional() }).optional(),
+  damage: DamageSchema,
+  critical: CriticalSchema.optional(),
   weight: z.union([z.literal("F"), z.number().positive()]),
-  specials: z
-    .object({
-      id: IdSchema,
-      value: z.string().optional(),
-    })
-    .array(),
+  specials: SpecialSchema.array(),
 });
 
 export type EquipmentWeaponMelee = z.infer<typeof EquipmentWeaponMeleeSchema>;

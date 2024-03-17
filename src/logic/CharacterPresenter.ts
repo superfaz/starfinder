@@ -22,7 +22,7 @@ import type {
   Spell,
   Theme,
   Variant,
-  WeaponId,
+  WeaponTypeId,
 } from "model";
 import { AbilityScoreIds, ModifierTypes, PrerequisiteTypes, isCasterId, isVariable, isWeaponTypeId } from "model";
 import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofType } from "view";
@@ -727,7 +727,7 @@ export class CharacterPresenter {
     return [...(selectedClass?.armors ?? []), ...modifiers];
   }
 
-  getWeaponProficiencies(): WeaponId[] {
+  getWeaponProficiencies(): WeaponTypeId[] {
     const selectedClass = this.getClass();
     const modifiers = this.getModifiers()
       .filter(ofType(ModifierTypes.weaponProficiency))

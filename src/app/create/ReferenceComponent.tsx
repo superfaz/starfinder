@@ -1,7 +1,7 @@
 import { useAppSelector } from "logic";
 import type { Reference } from "model";
 
-export function ReferenceComponent({ reference }: { reference: Reference }) {
+export function ReferenceComponent({ reference }: Readonly<{ reference: Reference }>) {
   const data = useAppSelector((state) => state.data);
   const book = data.books.find((book) => book.id === reference.book);
 

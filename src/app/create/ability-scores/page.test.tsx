@@ -65,9 +65,9 @@ describe("/create/skills", () => {
     // skill rank points is expected to be 9:
     //   Class: Operative --> +8
     //   Intelligence: 12 --> +1
-    const control = screen.getByRole("textbox", {
+    const control = screen.getByRole<HTMLInputElement>("textbox", {
       name: /rangs de compétence à distribuer/i,
-    }) as HTMLInputElement;
+    });
 
     expect(control).not.toBeNull();
     expect(control.value).toBe("9");
