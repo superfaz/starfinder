@@ -5,6 +5,7 @@ import type {
   Avatar,
   Book,
   Class,
+  CriticalHitEffect,
   DamageType,
   FeatTemplate,
   Profession,
@@ -14,6 +15,7 @@ import type {
   Spell,
   Theme,
   WeaponCategory,
+  WeaponSpecialProperty,
   WeaponType,
 } from "model";
 import { IDataSet } from "./IDataSet";
@@ -25,6 +27,7 @@ export interface IClientDataSet {
   avatars: Avatar[];
   books: Book[];
   classes: Class[];
+  criticalHitEffects: CriticalHitEffect[];
   damageTypes: DamageType[];
   feats: FeatTemplate[];
   professions: Profession[];
@@ -34,6 +37,7 @@ export interface IClientDataSet {
   spells: Spell[];
   themes: Theme[];
   weaponCategories: WeaponCategory[];
+  weaponSpecialProperties: WeaponSpecialProperty[];
   weaponTypes: WeaponType[];
 }
 
@@ -44,6 +48,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   avatars: [],
   books: [],
   classes: [],
+  criticalHitEffects: [],
   damageTypes: [],
   feats: [],
   professions: [],
@@ -53,6 +58,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   spells: [],
   themes: [],
   weaponCategories: [],
+  weaponSpecialProperties: [],
   weaponTypes: [],
 };
 
@@ -64,6 +70,7 @@ export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
     avatars: await serverData.getAvatars(),
     books: await serverData.getBooks(),
     classes: await serverData.getClasses(),
+    criticalHitEffects: await serverData.getCriticalHitEffects(),
     damageTypes: await serverData.getDamageTypes(),
     feats: await serverData.getFeats(),
     professions: await serverData.getProfessions(),
@@ -73,6 +80,7 @@ export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
     spells: await serverData.getSpells(),
     themes: await serverData.getThemes(),
     weaponCategories: await serverData.getWeaponCategories(),
+    weaponSpecialProperties: await serverData.getWeaponSpecialProperties(),
     weaponTypes: await serverData.getWeaponTypes(),
   };
 }

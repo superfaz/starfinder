@@ -1,0 +1,11 @@
+[
+  {
+    "id": "bleed",
+    "name": "Hémorragie",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "La cible est sujette à l’état hémorragie."
+  }
+]

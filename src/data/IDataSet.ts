@@ -5,7 +5,9 @@ import type {
   Avatar,
   Book,
   Class,
+  CriticalHitEffect,
   DamageType,
+  EquipmentWeaponMelee,
   FeatTemplate,
   Profession,
   Race,
@@ -14,6 +16,7 @@ import type {
   Spell,
   Theme,
   WeaponCategory,
+  WeaponSpecialProperty,
   WeaponType,
 } from "model";
 
@@ -25,7 +28,9 @@ export interface IDataSet {
   getBooks(): Promise<Book[]>;
   getClasses(): Promise<Class[]>;
   getClassDetails(classId: string): Promise<unknown>;
+  getCriticalHitEffects(): Promise<CriticalHitEffect[]>;
   getDamageTypes(): Promise<DamageType[]>;
+  getEquipmentWeaponMelee(): Promise<EquipmentWeaponMelee[]>;
   getFeats(): Promise<FeatTemplate[]>;
   getProfessions(): Promise<Profession[]>;
   getRaces(): Promise<Race[]>;
@@ -35,5 +40,6 @@ export interface IDataSet {
   getThemes(): Promise<Theme[]>;
   getThemeDetails(themeId: string): Promise<unknown>;
   getWeaponCategories(): Promise<WeaponCategory[]>;
+  getWeaponSpecialProperties(): Promise<WeaponSpecialProperty[]>;
   getWeaponTypes(): Promise<WeaponType[]>;
 }

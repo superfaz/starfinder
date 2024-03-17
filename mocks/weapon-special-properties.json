@@ -1,0 +1,11 @@
+[
+  {
+    "id": "operative",
+    "name": "Agent",
+    "reference": {
+      "book": "base",
+      "page": 180
+    },
+    "description": "Un agent peut utiliser son aptitude de classe feinte offensive avec une arme dotée de cette propriété spéciale."
+  }
+]

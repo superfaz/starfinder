@@ -7,7 +7,9 @@ import {
   AvatarSchema,
   BookSchema,
   ClassSchema,
+  CriticalHitEffectSchema,
   DamageTypeSchema,
+  EquipmentWeaponMeleeSchema,
   FeatTemplateSchema,
   ProfessionSchema,
   RaceSchema,
@@ -17,6 +19,7 @@ import {
   ThemeSchema,
   ThemeScholarSchema,
   WeaponCategorySchema,
+  WeaponSpecialPropertySchema,
   WeaponTypeSchema,
 } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
@@ -42,7 +45,11 @@ async function mockBuild(): Promise<IDataSet> {
     getAvatars: async () => AvatarSchema.array().parse((await import("./mocks/avatars.json")).default),
     getClasses: async () => ClassSchema.array().parse((await import("./mocks/classes.json")).default),
     getClassDetails: async (classId) => (await import(`./mocks/class-${classId}.json`)).default,
+    getCriticalHitEffects: async () =>
+      CriticalHitEffectSchema.array().parse((await import("./mocks/critical-hit-effects.json")).default),
     getDamageTypes: async () => DamageTypeSchema.array().parse((await import("./mocks/damage-types.json")).default),
+    getEquipmentWeaponMelee: async () =>
+      EquipmentWeaponMeleeSchema.array().parse((await import("./mocks/equipment-weapon-melee.json")).default),
     getFeats: async () => FeatTemplateSchema.array().parse((await import("./mocks/feats.json")).default),
     getProfessions: async () => ProfessionSchema.array().parse((await import("./mocks/professions.json")).default),
     getRaces: async () => RaceSchema.array().parse((await import("./mocks/races.json")).default),
@@ -53,6 +60,8 @@ async function mockBuild(): Promise<IDataSet> {
     getSkills: async () => SkillDefinitionSchema.array().parse((await import("./mocks/skills.json")).default),
     getWeaponCategories: async () =>
       WeaponCategorySchema.array().parse((await import("./mocks/weapon-categories.json")).default),
+    getWeaponSpecialProperties: async () =>
+      WeaponSpecialPropertySchema.array().parse((await import("./mocks/weapon-special-properties.json")).default),
     getWeaponTypes: async () => WeaponTypeSchema.array().parse((await import("./mocks/weapon-types.json")).default),
   };
 }
