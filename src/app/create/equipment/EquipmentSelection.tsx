@@ -2,9 +2,9 @@
 
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
-import { Critical, Damage, EquipmentWeaponMelee, INamedModel, Special, WeaponTypeId, WeaponTypeIds } from "model";
+import { Critical, Damage, EquipmentBase, EquipmentWeaponMelee, Special, WeaponTypeId, WeaponTypeIds } from "model";
 import { useEffect, useState } from "react";
-import { Form, Table } from "react-bootstrap";
+import { Form, Table, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
 import Row from "react-bootstrap/Row";
@@ -44,7 +44,7 @@ function DisplaySpecials({ specials }: { specials: Special[] }) {
     .join(", ");
 }
 
-function equipmentSort(a: EquipmentWeaponMelee, b: EquipmentWeaponMelee): number {
+function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {
     return a.level - b.level;
   } else {
@@ -52,8 +52,8 @@ function equipmentSort(a: EquipmentWeaponMelee, b: EquipmentWeaponMelee): number
   }
 }
 
-function WeaponMeleeTable({ equipments }: { equipments: INamedModel[] }) {
-  const casted = (equipments as EquipmentWeaponMelee[]).toSorted(equipmentSort);
+function WeaponMeleeTable({ equipments }: { equipments: EquipmentBase[] }) {
+  const casted = equipments as EquipmentWeaponMelee[];
 
   return (
     <Table hover>
@@ -105,13 +105,18 @@ export function EquipmentSelection() {
   const [search, setSearch] = useState("");
   const [equipmentType, setEquipmentType] = useState("weapon");
   const [weaponType, setWeaponType] = useState<WeaponTypeId>(WeaponTypeIds.basic);
-  const [equipments, setEquipments] = useState<INamedModel[]>([]);
+  const [levelFilter, setLevelFilter] = useState<boolean>(true);
+  const [equipments, setEquipments] = useState<EquipmentBase[]>([]);
+
+  const filtered = equipments
+    .filter((e) => search === "" || e.name.toLowerCase().includes(search.toLowerCase()))
+    .filter((e) => !levelFilter || e.level <= 2);
 
   useEffect(() => {
     fetch(`/api/equipments/${equipmentType}/${weaponType}`)
       .then((res) => res.json())
-      .then((data) => {
-        setEquipments(data);
+      .then((data: EquipmentBase[]) => {
+        setEquipments(data.toSorted(equipmentSort));
       });
   }, [equipmentType, weaponType]);
 
@@ -148,6 +153,21 @@ export function EquipmentSelection() {
             </Form.Select>
           </Col>
         )}
+        <Col xs="auto">
+          <ToggleButtonGroup
+            type="radio"
+            name="levelFilter"
+            value={levelFilter.toString()}
+            onChange={(v) => setLevelFilter(v === "true")}
+          >
+            <ToggleButton id="levelFilter-true" value="true" variant="outline-secondary">
+              Mon niveau (+1)
+            </ToggleButton>
+            <ToggleButton id="levelFilter-false" value="false" variant="outline-secondary">
+              Tous
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Col>
         <Col>
           <FormControl
             type="search"
@@ -157,7 +177,7 @@ export function EquipmentSelection() {
           />
         </Col>
       </Row>
-      {equipmentType === "weapon" && weaponType === "basic" && <WeaponMeleeTable equipments={equipments} />}
+      {equipmentType === "weapon" && weaponType === "basic" && <WeaponMeleeTable equipments={filtered} />}
     </Stack>
   );
 }

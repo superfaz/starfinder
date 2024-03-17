@@ -20,16 +20,21 @@ export const SpecialSchema = z.object({ id: IdSchema, value: z.string().optional
 
 export type Special = z.infer<typeof SpecialSchema>;
 
-export const EquipmentWeaponMeleeSchema = INamedModelSchema.extend({
+export const EquipmentBaseSchema = INamedModelSchema.extend({
   reference: ReferenceSchema,
+  level: LevelSchema,
+  cost: z.number().int().positive().optional(),
+  weight: z.union([z.literal("F"), z.number().positive()]),
+});
+
+export type EquipmentBase = z.infer<typeof EquipmentBaseSchema>;
+
+export const EquipmentWeaponMeleeSchema = EquipmentBaseSchema.extend({
   weaponType: WeaponTypeIdSchema,
   hands: z.union([z.literal(1), z.literal(2)]),
   weaponCategory: WeaponCategoryIdSchema.optional(),
-  level: LevelSchema,
-  cost: z.number().int().positive().optional(),
   damage: DamageSchema,
   critical: CriticalSchema.optional(),
-  weight: z.union([z.literal("F"), z.number().positive()]),
   specials: SpecialSchema.array(),
 });
 
