@@ -27,6 +27,7 @@ import envoyDetails from "./mocks/class-envoy.json";
 import operativeDetails from "./mocks/class-operative.json";
 import scholarDetails from "./mocks/themes-details.json";
 import soldierDetails from "./mocks/class-soldier.json";
+import equipmentWeaponMelee from "./mocks/equipment-weapon-melee.json";
 
 import "@testing-library/jest-dom/vitest";
 
@@ -73,5 +74,6 @@ beforeAll(() => {
   addFetchMock("/api/classes/envoy/details", envoyDetails);
   addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/soldier/details", soldierDetails);
+  addFetchMock("/api/equipments/weapon/basic", equipmentWeaponMelee);
   addFetchMock("/api/themes/scholar", scholarDetails);
 });

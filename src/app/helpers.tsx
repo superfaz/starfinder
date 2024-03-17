@@ -26,3 +26,14 @@ export function findOrError<T extends IModel>(
 export function displayBonus(bonus: number): string {
   return bonus >= 0 ? `+${bonus}` : `${bonus}`;
 }
+
+// https://stackoverflow.com/a/62765924
+export function groupBy<T, K extends keyof unknown>(arr: T[], key: (i: T) => K) {
+  return arr.reduce(
+    (groups, item) => {
+      (groups[key(item)] ||= []).push(item);
+      return groups;
+    },
+    {} as Record<K, T[]>
+  );
+}
