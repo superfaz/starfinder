@@ -1,10 +1,10 @@
 "use client";
 
-import { findOrError } from "app/helpers";
+import { findOrError, groupBy } from "app/helpers";
 import { useAppSelector } from "logic";
 import { Critical, Damage, EquipmentBase, EquipmentWeaponMelee, Special, WeaponTypeId, WeaponTypeIds } from "model";
 import { useEffect, useState } from "react";
-import { Form, Table, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { Badge, Form, Table, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
 import Row from "react-bootstrap/Row";
@@ -52,8 +52,45 @@ function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   }
 }
 
+function WeaponMeleeTableCategory({ equipments }: { equipments: EquipmentWeaponMelee[] }) {
+  const weaponCategories = useAppSelector((state) => state.data.weaponCategories);
+  const groupedByCategory = groupBy(
+    equipments,
+    (e) => weaponCategories.find((c) => c.id === e.weaponCategory)?.name ?? ""
+  );
+
+  const keys = Object.keys(groupedByCategory).toSorted();
+  return keys.map((category) => (
+    <>
+      <tr key={category}>
+        <td colSpan={9} className="bg-transparent">
+          <Badge bg="secondary">{category === "" ? "Sans catégorie" : category}</Badge>
+        </td>
+      </tr>
+      {groupedByCategory[category].map((equipment) => (
+        <tr key={equipment.id}>
+          <td>{equipment.name}</td>
+          <td>{equipment.level}</td>
+          <td>{equipment.cost}</td>
+          <td>
+            <DisplayDamage damage={equipment.damage} />
+          </td>
+          <td>
+            <DisplayCritical critical={equipment.critical} />
+          </td>
+          <td>{equipment.weight}</td>
+          <td>
+            <DisplaySpecials specials={equipment.specials} />
+          </td>
+        </tr>
+      ))}
+    </>
+  ));
+}
+
 function WeaponMeleeTable({ equipments }: { equipments: EquipmentBase[] }) {
   const casted = equipments as EquipmentWeaponMelee[];
+  const groupedByHands = groupBy(casted, (e) => e.hands);
 
   return (
     <Table hover>
@@ -77,25 +114,27 @@ function WeaponMeleeTable({ equipments }: { equipments: EquipmentBase[] }) {
           </tr>
         </tbody>
       )}
-      <tbody className="table-group-divider">
-        {casted.map((equipment) => (
-          <tr key={equipment.id}>
-            <td>{equipment.name}</td>
-            <td>{equipment.level}</td>
-            <td>{equipment.cost}</td>
-            <td>
-              <DisplayDamage damage={equipment.damage} />
-            </td>
-            <td>
-              <DisplayCritical critical={equipment.critical} />
-            </td>
-            <td>{equipment.weight}</td>
-            <td>
-              <DisplaySpecials specials={equipment.specials} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
+      {[1, 2].map((hands) => {
+        if (hands !== 1 && hands !== 2) {
+          return null;
+        }
+        if (groupedByHands[hands] === undefined) {
+          return null;
+        }
+
+        return (
+          <tbody key={hands} className="table-group-divider">
+            <tr>
+              <td colSpan={9} className="bg-primary">
+                <em>
+                  Armes à {hands} {hands > 1 ? "mains" : "main"}
+                </em>
+              </td>
+            </tr>
+            <WeaponMeleeTableCategory equipments={groupedByHands[hands]} />
+          </tbody>
+        );
+      })}
     </Table>
   );
 }
@@ -178,6 +217,7 @@ export function EquipmentSelection() {
         </Col>
       </Row>
       {equipmentType === "weapon" && weaponType === "basic" && <WeaponMeleeTable equipments={filtered} />}
+      {equipmentType === "weapon" && weaponType === "advanced" && <WeaponMeleeTable equipments={filtered} />}
     </Stack>
   );
 }

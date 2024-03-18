@@ -28,7 +28,7 @@ export function displayBonus(bonus: number): string {
 }
 
 // https://stackoverflow.com/a/62765924
-export function groupBy<T, K extends keyof unknown>(arr: T[], key: (i: T) => K) {
+export function groupBy<T, K extends string | number | symbol>(arr: T[], key: (i: T) => K) {
   return arr.reduce(
     (groups, item) => {
       (groups[key(item)] ||= []).push(item);
