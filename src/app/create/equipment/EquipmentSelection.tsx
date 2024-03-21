@@ -1,10 +1,10 @@
 "use client";
 
 import { findOrError, groupBy } from "app/helpers";
-import { useAppSelector } from "logic";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Critical, Damage, EquipmentBase, EquipmentWeaponMelee, Special, WeaponTypeId, WeaponTypeIds } from "model";
 import { useEffect, useState } from "react";
-import { Badge, Form, Table, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { Badge, Button, Form, Table, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
 import Row from "react-bootstrap/Row";
@@ -52,23 +52,39 @@ function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   }
 }
 
-function WeaponMeleeTableCategory({ equipments }: { equipments: EquipmentWeaponMelee[] }) {
+function WeaponMeleeTableCategory({
+  weaponType,
+  equipments,
+}: {
+  weaponType: WeaponTypeId;
+  equipments: EquipmentWeaponMelee[];
+}) {
+  const dispatch = useAppDispatch();
   const weaponCategories = useAppSelector((state) => state.data.weaponCategories);
   const groupedByCategory = groupBy(
     equipments,
     (e) => weaponCategories.find((c) => c.id === e.weaponCategory)?.name ?? ""
   );
 
+  function handleAdd(id: string) {
+    dispatch(mutators.addEquipment({ type1: "weapon", type2: weaponType, id }));
+  }
+
   const keys = Object.keys(groupedByCategory).toSorted();
   return keys.map((category) => (
     <>
       <tr key={category}>
-        <td colSpan={9} className="bg-transparent">
+        <td colSpan={10} className="bg-transparent">
           <Badge bg="secondary">{category === "" ? "Sans catégorie" : category}</Badge>
         </td>
       </tr>
       {groupedByCategory[category].map((equipment) => (
         <tr key={equipment.id}>
+          <td className="p-0">
+            <Button variant="link" onClick={() => handleAdd(equipment.id)}>
+              <i className="bi bi-cart-plus" />
+            </Button>
+          </td>
           <td>{equipment.name}</td>
           <td>{equipment.level}</td>
           <td>{equipment.cost}</td>
@@ -88,7 +104,7 @@ function WeaponMeleeTableCategory({ equipments }: { equipments: EquipmentWeaponM
   ));
 }
 
-function WeaponMeleeTable({ equipments }: { equipments: EquipmentBase[] }) {
+function WeaponMeleeTable({ weaponType, equipments }: { weaponType: WeaponTypeId; equipments: EquipmentBase[] }) {
   const casted = equipments as EquipmentWeaponMelee[];
   const groupedByHands = groupBy(casted, (e) => e.hands);
 
@@ -96,6 +112,7 @@ function WeaponMeleeTable({ equipments }: { equipments: EquipmentBase[] }) {
     <Table hover>
       <thead>
         <tr>
+          <th></th>
           <th>Nom</th>
           <th>Niveau</th>
           <th>Coût</th>
@@ -108,7 +125,7 @@ function WeaponMeleeTable({ equipments }: { equipments: EquipmentBase[] }) {
       {casted.length === 0 && (
         <tbody className="table-group-divider">
           <tr>
-            <td colSpan={9}>
+            <td colSpan={10}>
               <em>En cours de chargement...</em>
             </td>
           </tr>
@@ -125,13 +142,13 @@ function WeaponMeleeTable({ equipments }: { equipments: EquipmentBase[] }) {
         return (
           <tbody key={hands} className="table-group-divider">
             <tr>
-              <td colSpan={9} className="bg-primary">
+              <td colSpan={10} className="bg-primary">
                 <em>
                   Armes à {hands} {hands > 1 ? "mains" : "main"}
                 </em>
               </td>
             </tr>
-            <WeaponMeleeTableCategory equipments={groupedByHands[hands]} />
+            <WeaponMeleeTableCategory weaponType={weaponType} equipments={groupedByHands[hands]} />
           </tbody>
         );
       })}
@@ -216,8 +233,12 @@ export function EquipmentSelection() {
           />
         </Col>
       </Row>
-      {equipmentType === "weapon" && weaponType === "basic" && <WeaponMeleeTable equipments={filtered} />}
-      {equipmentType === "weapon" && weaponType === "advanced" && <WeaponMeleeTable equipments={filtered} />}
+      {equipmentType === "weapon" && weaponType === "basic" && (
+        <WeaponMeleeTable weaponType="basic" equipments={filtered} />
+      )}
+      {equipmentType === "weapon" && weaponType === "advanced" && (
+        <WeaponMeleeTable weaponType="advanced" equipments={filtered} />
+      )}
     </Stack>
   );
 }

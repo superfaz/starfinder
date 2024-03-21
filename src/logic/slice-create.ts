@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { findOrError } from "app/helpers";
 import { EmptyClientDataSet, IClientDataSet } from "data";
-import { AbilityScoreIds, type Character, EmptyCharacter, type IModel, type Profession } from "model";
+import { AbilityScoreIds, type Character, EmptyCharacter, type IModel, type Profession, EquipmentType } from "model";
 import { RaceFeature } from "view";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
@@ -143,6 +143,15 @@ const mainSlice = createSlice({
       state.character.spells[action.payload.level] = (state.character.spells[action.payload.level] ?? []).filter(
         (s) => s !== action.payload.id
       );
+    },
+
+    addEquipment(state, action: PayloadAction<{ type1: EquipmentType; type2: string; id: string }>) {
+      state.character.equipment.push({
+        type: action.payload.type1,
+        secondaryType: action.payload.type2,
+        id: action.payload.id,
+        quantity: 1,
+      });
     },
   },
   extraReducers: (builder) => {

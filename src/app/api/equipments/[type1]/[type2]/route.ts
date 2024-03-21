@@ -1,9 +1,6 @@
 import { IDataSet, DataSetBuilder } from "data";
-import { WeaponTypeIdSchema } from "model";
+import { EquipmentTypeSchema, WeaponTypeIdSchema } from "model";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-const EquipmentTypeSchema = z.union([z.literal("weapon"), z.literal("armor"), z.literal("other")]);
 
 export async function GET(_: NextRequest, { params }: { params: { type1: string; type2: string } }) {
   const builder: DataSetBuilder = new DataSetBuilder();

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { ProfessionSchema } from "./Profession";
 import { IdSchema } from "./helper";
+import { EquipmentTypeSchema } from "./Equipment";
 
 export const CharacterSchema = z
   .object({
@@ -26,6 +27,9 @@ export const CharacterSchema = z
     avatar: z.string(),
     feats: z.array(z.object({ id: IdSchema, target: z.optional(IdSchema) })),
     spells: z.record(z.string(), z.array(IdSchema)),
+    equipment: z.array(
+      z.object({ type: EquipmentTypeSchema, secondaryType: IdSchema, id: IdSchema, quantity: z.number() })
+    ),
   })
   .strict();
 
@@ -54,4 +58,5 @@ export const EmptyCharacter: Readonly<Character> = {
   description: "",
   feats: [],
   spells: {},
+  equipment: [],
 };

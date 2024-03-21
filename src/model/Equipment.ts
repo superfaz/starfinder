@@ -5,6 +5,10 @@ import { WeaponCategoryIdSchema } from "./WeaponCategory";
 import { WeaponTypeIdSchema } from "./WeaponType";
 import { IdSchema, LevelSchema, ReferenceSchema } from "./helper";
 
+export const EquipmentTypeSchema = z.union([z.literal("weapon"), z.literal("armor"), z.literal("other")]);
+
+export type EquipmentType = z.infer<typeof EquipmentTypeSchema>;
+
 export const DamageSchema = z.object({
   roll: z.string().regex(/^\d+d\d+$/),
   types: DamageTypeIdSchema.array(),
