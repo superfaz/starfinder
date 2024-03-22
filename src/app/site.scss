@@ -5,6 +5,11 @@
 @import "react-bootstrap-typeahead/css/Typeahead.css";
 @import "react-bootstrap-typeahead/css/Typeahead.bs5.css";
 
+$sf-red: #cc381b;
+$sf-blue: #245883;
+$sf-darkred: #a71916;
+$sf-darkblue: #080f1b;
+
 /**
  * Extend Typeahead to support floating labels.
  */
@@ -161,14 +166,14 @@ input[type="number"] {
 .badge.bg-primary {
   --bs-bg-opacity: 0;
   &::before {
-    background-color: #cc381b;
+    background-color: $sf-red;
   }
 }
 
 .badge.bg-secondary {
   --bs-bg-opacity: 0;
   &::before {
-    background-color: #245883;
+    background-color: $sf-blue;
   }
 }
 
@@ -207,5 +212,41 @@ input[type="number"] {
     display: inline-block;
     white-space: nowrap;
     margin-left: 0.5em;
+  }
+}
+
+.nav-create {
+  width: auto;
+  gap: 2pt;
+  align-items: stretch;
+  background-color: $sf-darkblue;
+  --bs-nav-link-disabled-color: rgba(222, 226, 230, 0.5);
+
+  .nav-item {
+    display: flex;
+
+    .nav-link {
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      &.disabled {
+        color: var(--bs-nav-link-disabled-color);
+      }
+
+      .label:has(+ .selected) {
+        font-size: 0.85em;
+        color: var(--bs-nav-link-disabled-color);
+      }
+
+      &.active {
+        background-color: $sf-darkred;
+      }
+
+      &:hover {
+        background-color: $sf-red;
+      }
+    }
   }
 }

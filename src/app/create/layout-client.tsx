@@ -82,21 +82,26 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
         </Container>
       </Navbar>
       <Container className="mt-3" style={{ width: "1600px", minWidth: "1600px" }}>
-        <Nav variant="underline" className="mb-3" data-testid="tabs">
+        <Nav className="mb-3 nav-create" data-testid="tabs">
           <Nav.Item>
-            <NavLink href="/create">Introduction</NavLink>
+            <NavLink href="/create">Intro</NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink href="/create/race">Race</NavLink>
+            <NavLink href="/create/race">
+              <span className="label">Race</span>
+              {selectedRace && <span className="selected">{selectedRace.name}</span>}
+            </NavLink>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create/theme" disabled={selectedRace === null}>
-              Thème
+              <span className="label">Thème</span>
+              {selectedTheme && <span className="selected">{selectedTheme.name}</span>}
             </NavLink>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create/class" disabled={selectedTheme === null}>
-              Classe
+              <span className="label">Classe</span>
+              {selectedClass && <span className="selected">{selectedClass.name}</span>}
             </NavLink>
           </Nav.Item>
           <Nav.Item>
