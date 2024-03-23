@@ -894,4 +894,12 @@ export class CharacterPresenter {
 
     return classBonus + abilityScoreBonus + otherBonus;
   }
+
+  getInitialCapital() {
+    return this.character.initialCapital;
+  }
+
+  getCredits() {
+    return this.character.credits;
+  }
 }

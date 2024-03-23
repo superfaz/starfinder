@@ -28,8 +28,15 @@ describe("/create/equipment", () => {
   test("is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Équipement disponible" })).not.toBeNull();
+    expect(content.queryByRole("heading", { level: 2, name: "Crédits" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Armes" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Armures" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Autres" })).not.toBeNull();
+  });
+
+  test("has 1000 credits", async () => {
+    const content = within(document.querySelector("#content") as HTMLElement);
+    expect(content.getByLabelText("Capital initial")).toHaveValue("1000");
+    expect(content.getByLabelText("Restant")).toHaveValue("1000");
   });
 });

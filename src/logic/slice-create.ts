@@ -145,6 +145,15 @@ const mainSlice = createSlice({
       );
     },
 
+    updateInitialCapital(state, action: PayloadAction<number>) {
+      state.character.credits += action.payload - state.character.initialCapital;
+      state.character.initialCapital = action.payload;
+    },
+
+    updateCredits(state, action: PayloadAction<number>) {
+      state.character.credits = action.payload;
+    },
+
     addEquipment(state, action: PayloadAction<{ type1: EquipmentType; type2: string; id: string }>) {
       state.character.equipment.push({
         type: action.payload.type1,

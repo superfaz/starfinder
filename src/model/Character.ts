@@ -27,6 +27,8 @@ export const CharacterSchema = z
     avatar: z.string(),
     feats: z.array(z.object({ id: IdSchema, target: z.optional(IdSchema) })),
     spells: z.record(z.string(), z.array(IdSchema)),
+    initialCapital: z.number(),
+    credits: z.number(),
     equipment: z.array(
       z.object({ type: EquipmentTypeSchema, secondaryType: IdSchema, id: IdSchema, quantity: z.number() })
     ),
@@ -58,5 +60,7 @@ export const EmptyCharacter: Readonly<Character> = {
   description: "",
   feats: [],
   spells: {},
+  initialCapital: 1000,
+  credits: 1000,
   equipment: [],
 };
