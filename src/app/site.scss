@@ -222,6 +222,8 @@ input[type="number"] {
   background-color: $sf-darkblue;
   --bs-nav-link-disabled-color: rgba(222, 226, 230, 0.5);
 
+  min-height: calc(1.85em + 2rem);
+
   .nav-item {
     display: flex;
 
@@ -235,17 +237,24 @@ input[type="number"] {
         color: var(--bs-nav-link-disabled-color);
       }
 
-      .label:has(+ .selected) {
-        font-size: 0.85em;
-        color: var(--bs-nav-link-disabled-color);
-      }
-
       &.active {
         background-color: $sf-darkred;
       }
 
       &:hover {
         background-color: $sf-red;
+      }
+
+      .label:has(+ .selected) {
+        font-size: 0.85em;
+        color: var(--bs-nav-link-disabled-color);
+      }
+
+      .selected {
+        max-width: 10em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

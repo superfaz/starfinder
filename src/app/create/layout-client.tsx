@@ -106,27 +106,28 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create/profile" disabled={selectedClass === null}>
-              Profil
+              <span className="label">Profil</span>
+              {character.name && <span className="selected">{character.name}</span>}
             </NavLink>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create/ability-scores" disabled={selectedClass === null}>
-              Caractéristiques & Compétences
+              <span className="label">Caractéristiques & Compétences</span>
             </NavLink>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create/feats" disabled={selectedClass === null}>
-              Don(s)
+              <span className="label">Don(s)</span>
             </NavLink>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create/spells" disabled={selectedClass === null || !selectedClass.spellCaster}>
-              Sorts
+              <span className="label">Sorts</span>
             </NavLink>
           </Nav.Item>
           <Nav.Item>
             <NavLink href="/create/equipment" disabled={selectedClass === null}>
-              Équipement
+              <span className="label">Équipement</span>
             </NavLink>
           </Nav.Item>
           <Nav.Item>
