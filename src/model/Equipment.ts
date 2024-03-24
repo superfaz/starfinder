@@ -48,7 +48,7 @@ export const EquipmentWeaponMeleeSchema = EquipmentBaseSchema.extend({
   weaponCategory: WeaponCategoryIdSchema.optional(),
   damage: DamageSchema,
   critical: CriticalSchema.optional(),
-  specials: SpecialSchema.array(),
+  specials: z.string(),
 });
 
 export type EquipmentWeaponMelee = z.infer<typeof EquipmentWeaponMeleeSchema>;
