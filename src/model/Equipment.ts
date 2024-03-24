@@ -37,7 +37,7 @@ export const EquipmentAmmunitionSchema = EquipmentBaseSchema.extend({
   type: z.literal("ammunition"),
   category: z.literal("special").optional(),
   capacity: z.number().int().positive(),
-  specials: SpecialSchema.array(),
+  specials: z.string(),
 });
 
 export type EquipmentAmmunition = z.infer<typeof EquipmentAmmunitionSchema>;
@@ -48,7 +48,7 @@ export const EquipmentWeaponMeleeSchema = EquipmentBaseSchema.extend({
   weaponCategory: WeaponCategoryIdSchema.optional(),
   damage: DamageSchema,
   critical: CriticalSchema.optional(),
-  specials: z.string(),
+  specials: SpecialSchema.array(),
 });
 
 export type EquipmentWeaponMelee = z.infer<typeof EquipmentWeaponMeleeSchema>;
