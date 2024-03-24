@@ -28,7 +28,7 @@ export const EquipmentBaseSchema = INamedModelSchema.extend({
   reference: ReferenceSchema,
   level: LevelSchema,
   cost: z.number().int().positive().optional(),
-  weight: z.union([z.literal("F"), z.number().positive()]),
+  weight: z.union([z.literal("F"), z.number().positive()]).optional(),
 });
 
 export type EquipmentBase = z.infer<typeof EquipmentBaseSchema>;
