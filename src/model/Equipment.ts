@@ -37,7 +37,7 @@ export const EquipmentAmmunitionSchema = EquipmentBaseSchema.extend({
   type: z.literal("ammunition"),
   category: z.literal("special").optional(),
   capacity: z.number().int().positive(),
-  specials: z.string(),
+  specials: z.string().optional(),
 });
 
 export type EquipmentAmmunition = z.infer<typeof EquipmentAmmunitionSchema>;
