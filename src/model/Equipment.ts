@@ -2,7 +2,7 @@ import { z } from "zod";
 import { DamageTypeIdSchema } from "./DamageType";
 import { INamedModelSchema } from "./INamedModel";
 import { WeaponCategoryIdSchema } from "./WeaponCategory";
-import { WeaponTypeIdSchema } from "./WeaponType";
+import { WeaponTypeIds } from "./WeaponType";
 import { IdSchema, LevelSchema, ReferenceSchema } from "./helper";
 
 export const EquipmentTypeSchema = z.union([z.literal("weapon"), z.literal("armor"), z.literal("other")]);
@@ -33,8 +33,16 @@ export const EquipmentBaseSchema = INamedModelSchema.extend({
 
 export type EquipmentBase = z.infer<typeof EquipmentBaseSchema>;
 
+export const EquipmentAmmunitionSchema = EquipmentBaseSchema.extend({
+  type: z.literal("ammunition"),
+  capacity: z.number().int().positive(),
+  specials: SpecialSchema.array(),
+});
+
+export type EquipmentAmmunition = z.infer<typeof EquipmentAmmunitionSchema>;
+
 export const EquipmentWeaponMeleeSchema = EquipmentBaseSchema.extend({
-  weaponType: WeaponTypeIdSchema,
+  weaponType: z.enum([WeaponTypeIds.basic, WeaponTypeIds.advanced]),
   hands: z.union([z.literal(1), z.literal(2)]),
   weaponCategory: WeaponCategoryIdSchema.optional(),
   damage: DamageSchema,
@@ -43,3 +51,27 @@ export const EquipmentWeaponMeleeSchema = EquipmentBaseSchema.extend({
 });
 
 export type EquipmentWeaponMelee = z.infer<typeof EquipmentWeaponMeleeSchema>;
+
+export const EquipmentWeaponRangedSchema = EquipmentBaseSchema.extend({
+  weaponType: z.enum([WeaponTypeIds.small, WeaponTypeIds.long, WeaponTypeIds.heavy, WeaponTypeIds.sniper]),
+  hands: z.union([z.literal(1), z.literal(2)]),
+  weaponCategory: WeaponCategoryIdSchema.optional(),
+  damage: DamageSchema,
+  range: z.number().int().positive(),
+  critical: CriticalSchema.optional(),
+  ammunition: z.object({
+    type: z.string(),
+    capacity: z.number().int().positive(),
+    usage: z.number().int().positive(),
+  }),
+  specials: SpecialSchema.array(),
+});
+
+export type EquipmentWeaponRanged = z.infer<typeof EquipmentWeaponRangedSchema>;
+
+export const EquipmentWeaponGrenade = EquipmentBaseSchema.extend({
+  weaponType: z.enum([WeaponTypeIds.grenade]),
+  range: z.number().int().positive(),
+  capacity: z.string(),
+  specials: SpecialSchema.array(),
+});
