@@ -45,7 +45,7 @@ export type EquipmentAmmunition = z.infer<typeof EquipmentAmmunitionSchema>;
 export const EquipmentWeaponSchema = EquipmentBaseSchema.extend({
   hands: z.union([z.literal(1), z.literal(2)]),
   weaponCategory: WeaponCategoryIdSchema.optional(),
-  damage: DamageSchema,
+  damage: DamageSchema.optional(),
   critical: CriticalSchema.optional(),
   specials: SpecialSchema.array(),
 });
