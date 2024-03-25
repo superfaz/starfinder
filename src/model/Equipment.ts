@@ -42,8 +42,7 @@ export const EquipmentAmmunitionSchema = EquipmentBaseSchema.extend({
 
 export type EquipmentAmmunition = z.infer<typeof EquipmentAmmunitionSchema>;
 
-export const EquipmentWeaponMeleeSchema = EquipmentBaseSchema.extend({
-  weaponType: z.enum([WeaponTypeIds.basic, WeaponTypeIds.advanced]),
+export const EquipmentWeaponSchema = EquipmentBaseSchema.extend({
   hands: z.union([z.literal(1), z.literal(2)]),
   weaponCategory: WeaponCategoryIdSchema.optional(),
   damage: DamageSchema,
@@ -51,21 +50,22 @@ export const EquipmentWeaponMeleeSchema = EquipmentBaseSchema.extend({
   specials: SpecialSchema.array(),
 });
 
+export type EquipmentWeapon = z.infer<typeof EquipmentWeaponSchema>;
+
+export const EquipmentWeaponMeleeSchema = EquipmentWeaponSchema.extend({
+  weaponType: z.enum([WeaponTypeIds.basic, WeaponTypeIds.advanced]),
+});
+
 export type EquipmentWeaponMelee = z.infer<typeof EquipmentWeaponMeleeSchema>;
 
-export const EquipmentWeaponRangedSchema = EquipmentBaseSchema.extend({
+export const EquipmentWeaponRangedSchema = EquipmentWeaponSchema.extend({
   weaponType: z.enum([WeaponTypeIds.small, WeaponTypeIds.long, WeaponTypeIds.heavy, WeaponTypeIds.sniper]),
-  hands: z.union([z.literal(1), z.literal(2)]),
-  weaponCategory: WeaponCategoryIdSchema.optional(),
-  damage: DamageSchema,
   range: z.number().int().positive(),
-  critical: CriticalSchema.optional(),
   ammunition: z.object({
     type: z.string(),
     capacity: z.number().int().positive(),
     usage: z.number().int().positive(),
   }),
-  specials: SpecialSchema.array(),
 });
 
 export type EquipmentWeaponRanged = z.infer<typeof EquipmentWeaponRangedSchema>;
