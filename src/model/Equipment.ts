@@ -16,6 +16,13 @@ export const DamageSchema = z.object({
 
 export type Damage = z.infer<typeof DamageSchema>;
 
+export const DamageBonusSchema = z.object({
+  roll: z.string().regex(/^\+\d+d\d+$/),
+  types: DamageTypeIdSchema.array(),
+});
+
+export type DamageBonus = z.infer<typeof DamageBonusSchema>;
+
 export const CriticalSchema = z.object({ id: IdSchema, value: z.string().optional() });
 
 export type Critical = z.infer<typeof CriticalSchema>;
@@ -41,6 +48,12 @@ export const EquipmentAmmunitionSchema = EquipmentBaseSchema.extend({
 });
 
 export type EquipmentAmmunition = z.infer<typeof EquipmentAmmunitionSchema>;
+
+export const EquipmentSolarianSchema = EquipmentBaseSchema.extend({
+  type: z.literal("solarian"),
+  damage: DamageBonusSchema.optional(),
+  critical: CriticalSchema.optional(),
+});
 
 export const EquipmentWeaponSchema = EquipmentBaseSchema.extend({
   hands: z.union([z.literal(1), z.literal(2)]),
@@ -70,9 +83,11 @@ export const EquipmentWeaponRangedSchema = EquipmentWeaponSchema.extend({
 
 export type EquipmentWeaponRanged = z.infer<typeof EquipmentWeaponRangedSchema>;
 
-export const EquipmentWeaponGrenade = EquipmentBaseSchema.extend({
+export const EquipmentWeaponGrenadeSchema = EquipmentBaseSchema.extend({
   weaponType: z.enum([WeaponTypeIds.grenade]),
   range: z.number().int().positive(),
   capacity: z.string(),
   specials: SpecialSchema.array(),
 });
+
+export type EquipmentWeaponGrenade = z.infer<typeof EquipmentWeaponGrenadeSchema>;
