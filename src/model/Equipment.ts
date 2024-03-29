@@ -5,9 +5,19 @@ import { WeaponCategoryIdSchema } from "./WeaponCategory";
 import { WeaponTypeIds } from "./WeaponType";
 import { IdSchema, LevelSchema, ReferenceSchema } from "./helper";
 
-export const EquipmentTypeSchema = z.union([z.literal("weapon"), z.literal("armor"), z.literal("other")]);
+export const EquipmentTypeSchema = z.enum([
+  "weaponAmmunition",
+  "weaponSolarian",
+  "weaponMelee",
+  "weaponRanged",
+  "weaponGrenade",
+  "armor",
+  "other",
+]);
 
 export type EquipmentType = z.infer<typeof EquipmentTypeSchema>;
+
+export const EquipmentTypes = EquipmentTypeSchema.enum;
 
 export const DamageSchema = z.object({
   roll: z.string().regex(/^\d+d\d+$/),
@@ -41,7 +51,7 @@ export const EquipmentBaseSchema = INamedModelSchema.extend({
 export type EquipmentBase = z.infer<typeof EquipmentBaseSchema>;
 
 export const EquipmentAmmunitionSchema = EquipmentBaseSchema.extend({
-  type: z.literal("ammunition"),
+  type: z.literal(EquipmentTypes.weaponAmmunition),
   category: z.literal("special").optional(),
   capacity: z.number().int().positive(),
   specials: z.string().optional(),
@@ -50,7 +60,7 @@ export const EquipmentAmmunitionSchema = EquipmentBaseSchema.extend({
 export type EquipmentAmmunition = z.infer<typeof EquipmentAmmunitionSchema>;
 
 export const EquipmentSolarianSchema = EquipmentBaseSchema.extend({
-  type: z.literal("solarian"),
+  type: z.literal(EquipmentTypes.weaponSolarian),
   damage: DamageBonusSchema.optional(),
   critical: CriticalSchema.optional(),
 });
@@ -66,12 +76,14 @@ export const EquipmentWeaponSchema = EquipmentBaseSchema.extend({
 export type EquipmentWeapon = z.infer<typeof EquipmentWeaponSchema>;
 
 export const EquipmentWeaponMeleeSchema = EquipmentWeaponSchema.extend({
+  type: z.literal(EquipmentTypes.weaponMelee),
   weaponType: z.enum([WeaponTypeIds.basic, WeaponTypeIds.advanced]),
 });
 
 export type EquipmentWeaponMelee = z.infer<typeof EquipmentWeaponMeleeSchema>;
 
 export const EquipmentWeaponRangedSchema = EquipmentWeaponSchema.extend({
+  type: z.literal(EquipmentTypes.weaponRanged),
   weaponType: z.enum([WeaponTypeIds.small, WeaponTypeIds.long, WeaponTypeIds.heavy, WeaponTypeIds.sniper]),
   range: z.number().int().positive(),
   ammunition: z.object({
@@ -84,6 +96,7 @@ export const EquipmentWeaponRangedSchema = EquipmentWeaponSchema.extend({
 export type EquipmentWeaponRanged = z.infer<typeof EquipmentWeaponRangedSchema>;
 
 export const EquipmentWeaponGrenadeSchema = EquipmentBaseSchema.extend({
+  type: z.literal(EquipmentTypes.weaponGrenade),
   weaponType: z.enum([WeaponTypeIds.grenade]),
   range: z.number().int().positive(),
   capacity: z.string(),
@@ -91,3 +104,13 @@ export const EquipmentWeaponGrenadeSchema = EquipmentBaseSchema.extend({
 });
 
 export type EquipmentWeaponGrenade = z.infer<typeof EquipmentWeaponGrenadeSchema>;
+
+export const EquipementSchema = z.discriminatedUnion("type", [
+  EquipmentAmmunitionSchema,
+  EquipmentSolarianSchema,
+  EquipmentWeaponMeleeSchema,
+  EquipmentWeaponRangedSchema,
+  EquipmentWeaponGrenadeSchema,
+]);
+
+export type Equipment = z.infer<typeof EquipementSchema>;
