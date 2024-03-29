@@ -24,24 +24,7 @@ import {
   WeaponSpecialPropertySchema,
 } from "model";
 import { IDataSet } from ".";
-
-const cached: Record<string, unknown> = {};
-
-function cache<T>(key: string, fn: () => Promise<T>): () => Promise<T> {
-  return async () => {
-    if (cached[key]) {
-      return cached[key] as T;
-    } else {
-      const result = await fn();
-      cached[key] = result;
-      return result;
-    }
-  };
-}
-
-export function clearCache() {
-  Object.keys(cached).forEach((key) => delete cached[key]);
-}
+import { cache } from "react";
 
 export class DataSetBuilder {
   private readonly client: CosmosClient;
@@ -99,49 +82,47 @@ export class DataSetBuilder {
 
   async build(): Promise<IDataSet> {
     const data: IDataSet = {
-      getAbilityScores: cache("ability-scores", () =>
-        this.getOrdered("ability-scores").then((a) => AbilityScoreSchema.array().parse(a))
-      ),
-      getAlignments: cache("alignments", () =>
-        this.getOrdered("alignments").then((a) => AlignmentSchema.array().parse(a))
-      ),
-      getArmorTypes: cache("armor-types", () =>
-        this.getOrdered("armor-types").then((a) => ArmorTypeSchema.array().parse(a))
-      ),
-      getAvatars: cache("avatars", () => this.getAll("avatars").then((a) => AvatarSchema.array().parse(a))),
-      getBooks: cache("books", () => this.getAll("books").then((a) => BookSchema.array().parse(a))),
-      getClasses: cache("classes", () => this.getNamed("classes").then((a) => ClassSchema.array().parse(a))),
+      /*get: function <T>(descriptor: Descriptor<T>): Promise<T> {
+        switch (descriptor.type) {
+          case "simple":
+            return cache(() => this.getAll(descriptor.name).then((a) => descriptor.schema.array().parse(a)));
+          case "named":
+            return this.getNamed(descriptor.name).then((a) => descriptor.schema.array().parse(a));
+          case "ordered":
+            return this.getOrdered(descriptor.name).then((a) => descriptor.schema.array().parse(a));
+          default:
+            throw new Error("Method not implemented.");
+        }
+      },*/
+      getAbilityScores: cache(() => this.getOrdered("ability-scores").then((a) => AbilityScoreSchema.array().parse(a))),
+      getAlignments: cache(() => this.getOrdered("alignments").then((a) => AlignmentSchema.array().parse(a))),
+      getArmorTypes: cache(() => this.getOrdered("armor-types").then((a) => ArmorTypeSchema.array().parse(a))),
+      getAvatars: cache(() => this.getAll("avatars").then((a) => AvatarSchema.array().parse(a))),
+      getBooks: cache(() => this.getAll("books").then((a) => BookSchema.array().parse(a))),
+      getClasses: cache(() => this.getNamed("classes").then((a) => ClassSchema.array().parse(a))),
       getClassDetails: <T>(classId: string) => this.getOne<T>("classes-details", classId),
-      getCriticalHitEffects: cache("critical-hit-effects", () =>
+      getCriticalHitEffects: cache(() =>
         this.getNamed("critical-hit-effects").then((a) => CriticalHitEffectSchema.array().parse(a))
       ),
-      getDamageTypes: cache("damage-types", () =>
-        this.getNamed("damage-types").then((a) => DamageTypeSchema.array().parse(a))
-      ),
-      getEquipmentWeaponMelee: cache("equipment-weapon-melee", () =>
+      getDamageTypes: cache(() => this.getNamed("damage-types").then((a) => DamageTypeSchema.array().parse(a))),
+      getEquipmentWeaponMelee: cache(() =>
         this.getAll("equipment-weapon-melee").then((a) => EquipmentWeaponMeleeSchema.array().parse(a))
       ),
-      getFeats: cache("feats", () => this.getNamed("feats").then((a) => FeatTemplateSchema.array().parse(a))),
-      getProfessions: cache("professions", () =>
-        this.getNamed("professions").then((a) => ProfessionSchema.array().parse(a))
-      ),
-      getRaces: cache("races", () => this.getNamed("races").then((a) => RaceSchema.array().parse(a))),
-      getSpells: cache("spells", () => this.getNamed("spells").then((a) => SpellSchema.array().parse(a))),
-      getThemes: cache("themes", () => this.getNamed("themes").then((a) => ThemeSchema.array().parse(a))),
+      getFeats: cache(() => this.getNamed("feats").then((a) => FeatTemplateSchema.array().parse(a))),
+      getProfessions: cache(() => this.getNamed("professions").then((a) => ProfessionSchema.array().parse(a))),
+      getRaces: cache(() => this.getNamed("races").then((a) => RaceSchema.array().parse(a))),
+      getSpells: cache(() => this.getNamed("spells").then((a) => SpellSchema.array().parse(a))),
+      getThemes: cache(() => this.getNamed("themes").then((a) => ThemeSchema.array().parse(a))),
       getThemeDetails: <T>(themeId: string) => this.getOne<T>("themes-details", themeId),
-      getSavingThrows: cache("saving-throws", () =>
-        this.getOrdered("saving-throws").then((a) => SavingThrowSchema.array().parse(a))
-      ),
-      getSkills: cache("skills", () => this.getNamed("skills").then((a) => SkillDefinitionSchema.array().parse(a))),
-      getWeaponCategories: cache("weapon-categories", () =>
+      getSavingThrows: cache(() => this.getOrdered("saving-throws").then((a) => SavingThrowSchema.array().parse(a))),
+      getSkills: cache(() => this.getNamed("skills").then((a) => SkillDefinitionSchema.array().parse(a))),
+      getWeaponCategories: cache(() =>
         this.getNamed("weapon-categories").then((a) => WeaponCategorySchema.array().parse(a))
       ),
-      getWeaponSpecialProperties: cache("weapon-special-properties", () =>
+      getWeaponSpecialProperties: cache(() =>
         this.getNamed("weapon-special-properties").then((a) => WeaponSpecialPropertySchema.array().parse(a))
       ),
-      getWeaponTypes: cache("weapon-types", () =>
-        this.getOrdered("weapon-types").then((a) => WeaponTypeSchema.array().parse(a))
-      ),
+      getWeaponTypes: cache(() => this.getOrdered("weapon-types").then((a) => WeaponTypeSchema.array().parse(a))),
     };
 
     return data;
