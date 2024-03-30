@@ -36,7 +36,7 @@ describe("/create/equipment", () => {
 
   test("has 1000 credits", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.getByLabelText("Capital initial")).toHaveValue("1000");
-    expect(content.getByLabelText("Restant")).toHaveValue("1000");
+    expect(content.getByLabelText("Capital initial")).toHaveValue(1000);
+    expect(content.getByLabelText("Restant")).toHaveValue(1000);
   });
 });

@@ -10,8 +10,13 @@ import FormControl from "react-bootstrap/FormControl";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 
-function DisplayDamage({ damage }: { damage: Damage }) {
+function DisplayDamage({ damage }: { damage: Damage | undefined }) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
+
+  if (damage === undefined) {
+    return null;
+  }
+
   return (
     <span>
       {damage.roll} {damage.types.map((d) => findOrError(damageTypes, d).code).join(" & ")}
