@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { DataSetBuilder, IClientDataSet, IDataSet, convert } from "data";
-import LayoutClient from "./layout-client";
+import { DataSource, IDataSource, convert } from "data";
 import { Character, IModel } from "model";
+import LayoutClient from "./layout-client";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +10,8 @@ export async function LayoutServer({
   character,
   classesDetails,
 }: Readonly<{ children: ReactNode; character?: Character; classesDetails?: Record<string, IModel> }>) {
-  const builder = new DataSetBuilder();
-  const serverData: IDataSet = await builder.build();
-  const clientData: IClientDataSet = await convert(serverData);
+  const dataSource: IDataSource = new DataSource();
+  const clientData = await convert(dataSource);
   const debug = process.env.STARFINDER_DEBUG === "true";
 
   return (

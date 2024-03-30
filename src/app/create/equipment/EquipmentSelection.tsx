@@ -72,7 +72,7 @@ function WeaponMeleeTableCategory({
   );
 
   function handleAdd(id: string) {
-    dispatch(mutators.addEquipment({ type1: "weapon", type2: weaponType, id }));
+    dispatch(mutators.addEquipment({ type1: "weaponMelee", type2: weaponType, id }));
   }
 
   const keys = Object.keys(groupedByCategory).toSorted();

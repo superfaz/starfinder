@@ -1,14 +1,14 @@
-import { IDataSet, DataSetBuilder } from "data";
+import { DataSource, IDataSource, DataSets } from "data";
 import { asClassEnvoy, asClassMystic, asClassOperative, asClassSoldier, isIModel } from "model";
 import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  const builder: DataSetBuilder = new DataSetBuilder();
-  const data: IDataSet = await builder.build();
+  const dataSource: IDataSource = new DataSource();
+  const dataset = await dataSource.get(DataSets.ClassDetails);
 
-  const raw: unknown = await data.getClassDetails(params.id);
+  const raw: unknown = await dataset.getOne(params.id);
 
   if (!isIModel(raw)) {
     throw new Error("Not a valid response");

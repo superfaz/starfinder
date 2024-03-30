@@ -1,9 +1,10 @@
-import { IDataSet, DataSetBuilder } from "data";
+import { DataSets, DataSource } from "data";
 import { NextRequest } from "next/server";
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  const builder: DataSetBuilder = new DataSetBuilder();
-  const data: IDataSet = await builder.build();
+  const dataSource = new DataSource();
+  const dataset = await dataSource.get(DataSets.ThemeDetails);
 
-  return Response.json(await data.getThemeDetails(params.id));
+  console.log("/themes/[id]: params.id", params.id);
+  return Response.json(await dataset.getOne(params.id));
 }

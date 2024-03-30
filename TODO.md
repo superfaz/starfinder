@@ -76,6 +76,8 @@ Sorts : Miracle / Ajouter à la liste
 
 Sorts : Souhait / Ajouter à la liste
 
+Equipement : Armes / Ajouter les armes spéciales
+
 ## Level increase
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent

@@ -18,7 +18,8 @@ import type {
   WeaponSpecialProperty,
   WeaponType,
 } from "model";
-import { IDataSet } from "./IDataSet";
+import { IDataSource } from "./interfaces";
+import { DataSets } from "./DataSets";
 
 export interface IClientDataSet {
   abilityScores: AbilityScore[];
@@ -62,25 +63,25 @@ export const EmptyClientDataSet: IClientDataSet = {
   weaponTypes: [],
 };
 
-export async function convert(serverData: IDataSet): Promise<IClientDataSet> {
+export async function convert(dataSource: IDataSource): Promise<IClientDataSet> {
   return {
-    abilityScores: await serverData.getAbilityScores(),
-    alignments: await serverData.getAlignments(),
-    armorTypes: await serverData.getArmorTypes(),
-    avatars: await serverData.getAvatars(),
-    books: await serverData.getBooks(),
-    classes: await serverData.getClasses(),
-    criticalHitEffects: await serverData.getCriticalHitEffects(),
-    damageTypes: await serverData.getDamageTypes(),
-    feats: await serverData.getFeats(),
-    professions: await serverData.getProfessions(),
-    races: await serverData.getRaces(),
-    savingThrows: await serverData.getSavingThrows(),
-    skills: await serverData.getSkills(),
-    spells: await serverData.getSpells(),
-    themes: await serverData.getThemes(),
-    weaponCategories: await serverData.getWeaponCategories(),
-    weaponSpecialProperties: await serverData.getWeaponSpecialProperties(),
-    weaponTypes: await serverData.getWeaponTypes(),
+    abilityScores: await dataSource.get(DataSets.AbilityScore).then((d) => d.getAll()),
+    alignments: await dataSource.get(DataSets.Alignment).then((d) => d.getAll()),
+    armorTypes: await dataSource.get(DataSets.ArmorType).then((d) => d.getAll()),
+    avatars: await dataSource.get(DataSets.Avatar).then((d) => d.getAll()),
+    books: await dataSource.get(DataSets.Book).then((d) => d.getAll()),
+    classes: await dataSource.get(DataSets.Class).then((d) => d.getAll()),
+    criticalHitEffects: await dataSource.get(DataSets.CriticalHitEffect).then((d) => d.getAll()),
+    damageTypes: await dataSource.get(DataSets.DamageType).then((d) => d.getAll()),
+    feats: await dataSource.get(DataSets.Feat).then((d) => d.getAll()),
+    professions: await dataSource.get(DataSets.Profession).then((d) => d.getAll()),
+    races: await dataSource.get(DataSets.Races).then((d) => d.getAll()),
+    savingThrows: await dataSource.get(DataSets.SavingThrows).then((d) => d.getAll()),
+    skills: await dataSource.get(DataSets.Skills).then((d) => d.getAll()),
+    spells: await dataSource.get(DataSets.Spells).then((d) => d.getAll()),
+    themes: await dataSource.get(DataSets.Themes).then((d) => d.getAll()),
+    weaponCategories: await dataSource.get(DataSets.WeaponCategories).then((d) => d.getAll()),
+    weaponSpecialProperties: await dataSource.get(DataSets.WeaponSpecialProperties).then((d) => d.getAll()),
+    weaponTypes: await dataSource.get(DataSets.WeaponTypes).then((d) => d.getAll()),
   };
 }

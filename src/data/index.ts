@@ -1,3 +1,4 @@
+export * from "./interfaces";
 export * from "./IClientDataSet";
-export * from "./IDataSet";
-export * from "./DataSetBuilder";
+export * from "./DataSets";
+export * from "./DataSource";
