@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(_: NextRequest, { params }: { params: { type1: string; type2: string } }) {
   const dataSource: IDataSource = new DataSource();
-  const data = await dataSource.get(DataSets.EquipmentWeaponMelee);
+  const data = dataSource.get(DataSets.EquipmentWeaponMelee);
 
   const type1 = EquipmentTypeSchema.parse(params.type1);
   switch (type1) {

@@ -11,7 +11,10 @@ describe("DataSource", () => {
 
   test.each(cases)("get(DataSets.%s)", async (datasetKey) => {
     const dataSource = new DataSource();
-    const promise = dataSource.get(DataSets[datasetKey as keyof typeof DataSets]);
-    await expect(promise).resolves.toBeDefined();
+    const dataSet = dataSource.get(DataSets[datasetKey as keyof typeof DataSets]);
+    expect(dataSet).toBeDefined();
+
+    const documents = await dataSet.getAll();
+    expect(documents.length).toBeGreaterThan(0);
   });
 });

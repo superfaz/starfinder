@@ -1,6 +1,7 @@
 [
   {
     "id": "f52931ac-8aea-4894-b4fe-d8d1cbff4072",
+    "type": "weaponMelee",
     "name": "Gourdin",
     "reference": {
       "book": "base",
@@ -18,6 +19,7 @@
   },
   {
     "id": "2b7340aa-9a60-4715-9246-8e910b5868dc",
+    "type": "weaponMelee",
     "name": "Couteau, survie",
     "reference": {
       "book": "base",

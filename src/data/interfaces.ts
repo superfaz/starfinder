@@ -13,5 +13,5 @@ export interface IDataSet<T extends IModel> {
 }
 
 export interface IDataSource {
-  get<T extends IModel>(descriptor: IDescriptor<T>): Promise<IDataSet<T>>;
+  get<T extends IModel>(descriptor: IDescriptor<T>): IDataSet<T>;
 }

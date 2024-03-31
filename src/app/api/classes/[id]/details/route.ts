@@ -6,8 +6,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const dataSource: IDataSource = new DataSource();
-  const dataset = await dataSource.get(DataSets.ClassDetails);
-
+  const dataset = dataSource.get(DataSets.ClassDetails);
   const raw: unknown = await dataset.getOne(params.id);
 
   if (!isIModel(raw)) {

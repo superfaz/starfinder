@@ -10,26 +10,33 @@ import equipmentWeaponMelee from "./mocks/equipment-weapon-melee.json";
 
 import "@testing-library/jest-dom/vitest";
 
-process.env.STARFINDER_COSMOS_ENDPOINT = "https://localhost:8081";
-process.env.STARFINDER_COSMOS_KEY =
-  "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
-process.env.STARFINDER_COSMOS_DATABASE = "starfinder";
-
-class MockedDataSource implements IDataSource {
-  async get<T extends IModel>(descriptor: IDescriptor<T>): Promise<IDataSet<T>> {
-    return {
-      getAll: async () => descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
-      getOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
-    };
-  }
-}
-
 beforeAll(() => {
   vi.mock("data", async (importOriginal) => {
     const mod = await importOriginal<typeof import("data")>();
     return {
       ...mod,
-      DataSource: MockedDataSource,
+      DataSource: class MockedDataSource implements IDataSource {
+        async get<T extends IModel>(descriptor: IDescriptor<T>): Promise<IDataSet<T>> {
+          if (descriptor.name === "classes-details") {
+            return {
+              getAll: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
+              getOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
+            };
+          }
+          if (descriptor.name === "themes-details") {
+            return {
+              getAll: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
+              getOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
+            };
+          } else {
+            return {
+              getAll: async () =>
+                descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
+              getOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
+            };
+          }
+        }
+      },
     };
   });
 
