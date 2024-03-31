@@ -3,7 +3,7 @@
 import { findOrError, groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Critical, Damage, EquipmentBase, EquipmentWeaponMelee, Special, WeaponTypeId, WeaponTypeIds } from "model";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Badge, Button, Form, Table, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
@@ -77,8 +77,8 @@ function WeaponMeleeTableCategory({
 
   const keys = Object.keys(groupedByCategory).toSorted();
   return keys.map((category) => (
-    <>
-      <tr key={category}>
+    <Fragment key={category}>
+      <tr>
         <td colSpan={10} className="bg-transparent">
           <Badge bg="secondary">{category === "" ? "Sans catégorie" : category}</Badge>
         </td>
@@ -105,7 +105,7 @@ function WeaponMeleeTableCategory({
           </td>
         </tr>
       ))}
-    </>
+    </Fragment>
   ));
 }
 

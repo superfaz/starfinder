@@ -16,7 +16,7 @@ beforeAll(() => {
     return {
       ...mod,
       DataSource: class MockedDataSource implements IDataSource {
-        async get<T extends IModel>(descriptor: IDescriptor<T>): Promise<IDataSet<T>> {
+        get<T extends IModel>(descriptor: IDescriptor<T>): IDataSet<T> {
           if (descriptor.name === "classes-details") {
             return {
               getAll: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
