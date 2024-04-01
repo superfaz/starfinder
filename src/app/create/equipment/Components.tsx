@@ -8,7 +8,7 @@ export function DisplayDamage({ damage }: { damage?: Damage }) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
 
   if (damage === undefined) {
-    return null;
+    return "-";
   }
 
   return (

@@ -11,6 +11,9 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { useCharacterPresenter } from "../helpers";
 import { WeaponMeleeTable } from "./WeaponMeleeTable";
+import { WeaponRangedTable } from "./WeaponRangedTable";
+import { WeaponGrenadeTable } from "./WeaponGrenadeTable";
+import { WeaponAmmunitionTable } from "./WeaponAmmunitionTable";
 
 function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {
@@ -177,6 +180,12 @@ export function EquipmentSelection() {
       {equipmentType === "weapon" && (subType === "basic" || subType === "advanced") && (
         <WeaponMeleeTable weaponType={subType} equipments={filtered} />
       )}
+      {equipmentType === "weapon" &&
+        (subType === "small" || subType === "long" || subType === "heavy" || subType === "sniper") && (
+          <WeaponRangedTable weaponType={subType} equipments={filtered} />
+        )}
+      {equipmentType === "weapon" && subType === "grenade" && <WeaponGrenadeTable equipments={filtered} />}
+      {equipmentType === "weapon" && subType === "ammunition" && <WeaponAmmunitionTable equipments={filtered} />}
     </Stack>
   );
 }

@@ -2,15 +2,15 @@ import { Fragment } from "react";
 import { Badge, Button, Table } from "react-bootstrap";
 import { groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { EquipmentBase, EquipmentWeaponMelee, WeaponTypeId } from "model";
+import { EquipmentBase, EquipmentWeaponRanged, WeaponTypeId } from "model";
 import { DisplayCritical, DisplayDamage, DisplaySpecials } from "./Components";
 
-function WeaponMeleeTableCategory({
+function WeaponRangedTableCategory({
   weaponType,
   equipments,
 }: {
   weaponType: WeaponTypeId;
-  equipments: EquipmentWeaponMelee[];
+  equipments: EquipmentWeaponRanged[];
 }) {
   const dispatch = useAppDispatch();
   const weaponCategories = useAppSelector((state) => state.data.weaponCategories);
@@ -27,7 +27,7 @@ function WeaponMeleeTableCategory({
   return keys.map((category) => (
     <Fragment key={category}>
       <tr>
-        <td colSpan={8} className="bg-transparent">
+        <td colSpan={11} className="bg-transparent">
           <Badge bg="secondary">{category === "" ? "Sans catégorie" : category}</Badge>
         </td>
       </tr>
@@ -44,9 +44,12 @@ function WeaponMeleeTableCategory({
           <td>
             <DisplayDamage damage={equipment.damage} />
           </td>
+          <td>{equipment.range * 1.5} m</td>
           <td>
             <DisplayCritical critical={equipment.critical} />
           </td>
+          <td>{equipment.ammunition && `${equipment.ammunition.type} - ${equipment.ammunition.capacity}`}</td>
+          <td>{equipment.ammunition && equipment.ammunition.usage}</td>
           <td>{equipment.weight}</td>
           <td>
             <DisplaySpecials specials={equipment.specials} />
@@ -57,14 +60,14 @@ function WeaponMeleeTableCategory({
   ));
 }
 
-export function WeaponMeleeTable({
+export function WeaponRangedTable({
   weaponType,
   equipments,
 }: {
   weaponType: WeaponTypeId;
   equipments: EquipmentBase[];
 }) {
-  const casted = equipments as EquipmentWeaponMelee[];
+  const casted = equipments as EquipmentWeaponRanged[];
   const groupedByHands = groupBy(casted, (e) => e.hands);
 
   return (
@@ -76,7 +79,10 @@ export function WeaponMeleeTable({
           <th>Niveau</th>
           <th>Prix</th>
           <th>Dégâts</th>
+          <th>Portée</th>
           <th>Critique</th>
+          <th>Capacité</th>
+          <th>Consommation</th>
           <th>Volume</th>
           <th>Spécial</th>
         </tr>
@@ -84,7 +90,7 @@ export function WeaponMeleeTable({
       {casted.length === 0 && (
         <tbody className="table-group-divider">
           <tr>
-            <td colSpan={8}>
+            <td colSpan={11}>
               <em>En cours de chargement...</em>
             </td>
           </tr>
@@ -101,13 +107,13 @@ export function WeaponMeleeTable({
         return (
           <tbody key={hands} className="table-group-divider">
             <tr>
-              <td colSpan={8} className="bg-primary">
+              <td colSpan={11} className="bg-primary">
                 <em>
                   Armes à {hands} {hands > 1 ? "mains" : "main"}
                 </em>
               </td>
             </tr>
-            <WeaponMeleeTableCategory weaponType={weaponType} equipments={groupedByHands[hands]} />
+            <WeaponRangedTableCategory weaponType={weaponType} equipments={groupedByHands[hands]} />
           </tbody>
         );
       })}
