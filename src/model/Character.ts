@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ProfessionSchema } from "./Profession";
 import { IdSchema } from "./helper";
-import { EquipmentTypeSchema } from "./Equipment";
+import { EquipmentTypeSchema } from "./EquipmentBase";
 
 export const CharacterSchema = z
   .object({

@@ -39,6 +39,14 @@ import {
   WeaponType,
   IModelSchema,
   IModel,
+  EquipmentWeaponRangedSchema,
+  EquipmentWeaponRanged,
+  EquipmentWeaponGrenadeSchema,
+  EquipmentWeaponGrenade,
+  EquipmentWeaponSolarian,
+  EquipmentWeaponSolarianSchema,
+  EquipmentWeaponAmmunition,
+  EquipmentWeaponAmmunitionSchema,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -56,11 +64,51 @@ export const DataSets = {
     schema: CriticalHitEffectSchema,
   } as IDescriptor<CriticalHitEffect>,
   DamageType: { type: "named", name: "damage-types", schema: DamageTypeSchema } as IDescriptor<DamageType>,
-  EquipmentWeaponMelee: {
+  EquipmentWeaponBasic: {
     type: "simple",
-    name: "equipment-weapon-melee",
+    name: "equipment-weapon-basic",
     schema: EquipmentWeaponMeleeSchema,
   } as IDescriptor<EquipmentWeaponMelee>,
+  EquipmentWeaponAdvanced: {
+    type: "simple",
+    name: "equipment-weapon-advanced",
+    schema: EquipmentWeaponMeleeSchema,
+  } as IDescriptor<EquipmentWeaponMelee>,
+  EquipmentWeaponSmall: {
+    type: "simple",
+    name: "equipment-weapon-small",
+    schema: EquipmentWeaponRangedSchema,
+  } as IDescriptor<EquipmentWeaponRanged>,
+  EquipmentWeaponLong: {
+    type: "simple",
+    name: "equipment-weapon-long",
+    schema: EquipmentWeaponRangedSchema,
+  } as IDescriptor<EquipmentWeaponRanged>,
+  EquipmentWeaponHeavy: {
+    type: "simple",
+    name: "equipment-weapon-heavy",
+    schema: EquipmentWeaponRangedSchema,
+  } as IDescriptor<EquipmentWeaponRanged>,
+  EquipmentWeaponSniper: {
+    type: "simple",
+    name: "equipment-weapon-sniper",
+    schema: EquipmentWeaponRangedSchema,
+  } as IDescriptor<EquipmentWeaponRanged>,
+  EquipmentWeaponGrenade: {
+    type: "simple",
+    name: "equipment-weapon-grenade",
+    schema: EquipmentWeaponGrenadeSchema,
+  } as IDescriptor<EquipmentWeaponGrenade>,
+  EquipmentWeaponSolarian: {
+    type: "simple",
+    name: "equipment-weapon-solarian",
+    schema: EquipmentWeaponSolarianSchema,
+  } as IDescriptor<EquipmentWeaponSolarian>,
+  EquipmentWeaponAmmunition: {
+    type: "simple",
+    name: "equipment-weapon-ammunition",
+    schema: EquipmentWeaponAmmunitionSchema,
+  } as IDescriptor<EquipmentWeaponAmmunition>,
   Feat: { type: "named", name: "feats", schema: FeatTemplateSchema } as IDescriptor<FeatTemplate>,
   Profession: { type: "named", name: "professions", schema: ProfessionSchema } as IDescriptor<Profession>,
   Races: { type: "named", name: "races", schema: RaceSchema } as IDescriptor<Race>,

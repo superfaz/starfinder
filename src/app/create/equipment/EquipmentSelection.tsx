@@ -3,7 +3,7 @@
 import { findOrError, groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { Critical, Damage, EquipmentBase, EquipmentWeaponMelee, Special, WeaponTypeId, WeaponTypeIds } from "model";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Badge, Button, Form, Table, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
@@ -161,25 +161,92 @@ function WeaponMeleeTable({ weaponType, equipments }: { weaponType: WeaponTypeId
   );
 }
 
+const menu = [
+  {
+    id: "weapon",
+    name: "Armes",
+    disabled: false,
+    submenu: [
+      {
+        id: "basic",
+        name: "Armes de corps à corps simples",
+        uri: "/api/equipments/weapon/basic",
+      },
+      {
+        id: "advanced",
+        name: "Armes de corps à corps évoluées",
+        uri: "/api/equipments/weapon/advanced",
+      },
+      {
+        id: "small",
+        name: "Armes légères",
+        uri: "/api/equipments/weapon/small",
+      },
+      {
+        id: "long",
+        name: "Armes longues",
+        uri: "/api/equipments/weapon/long",
+      },
+      {
+        id: "heavy",
+        name: "Armes lourdes",
+        uri: "/api/equipments/weapon/heavy",
+      },
+      {
+        id: "sniper",
+        name: "Armes de précision",
+        uri: "/api/equipments/weapon/sniper",
+      },
+      {
+        id: "grenade",
+        name: "Grenades",
+        uri: "/api/equipments/weapon/grenade",
+      },
+      {
+        id: "ammunition",
+        name: "Munitions",
+        uri: "/api/equipments/weapon/ammunition",
+      },
+    ],
+  },
+  {
+    id: "armor",
+    name: "Armures",
+    disabled: true,
+    submenu: [],
+  },
+  {
+    id: "other",
+    name: "Autres",
+    disabled: true,
+    submenu: [],
+  },
+];
 export function EquipmentSelection() {
-  const weaponTypes = useAppSelector((state) => state.data.weaponTypes);
   const [search, setSearch] = useState("");
   const [equipmentType, setEquipmentType] = useState("weapon");
-  const [weaponType, setWeaponType] = useState<WeaponTypeId>(WeaponTypeIds.basic);
+  const [subType, setSubType] = useState<string>(WeaponTypeIds.basic);
   const [levelFilter, setLevelFilter] = useState<boolean>(true);
   const [equipments, setEquipments] = useState<EquipmentBase[]>([]);
+
+  const subMenu = useMemo(() => findOrError(menu, equipmentType).submenu, [equipmentType]);
+
+  const subMenuEntry = useMemo(
+    () => findOrError(findOrError(menu, equipmentType).submenu, subType),
+    [equipmentType, subType]
+  );
 
   const filtered = equipments
     .filter((e) => search === "" || e.name.toLowerCase().includes(search.toLowerCase()))
     .filter((e) => !levelFilter || e.level <= 2);
 
   useEffect(() => {
-    fetch(`/api/equipments/${equipmentType}/${weaponType}`)
+    fetch(subMenuEntry.uri)
       .then((res) => res.json())
       .then((data: EquipmentBase[]) => {
         setEquipments(data.toSorted(equipmentSort));
       });
-  }, [equipmentType, weaponType]);
+  }, [subMenuEntry]);
 
   return (
     <Stack direction="vertical" gap={2}>
@@ -190,30 +257,22 @@ export function EquipmentSelection() {
         </Col>
         <Col xs="auto">
           <Form.Select id="equipment-type" value={equipmentType} onChange={(e) => setEquipmentType(e.target.value)}>
-            <option value="weapon">Armes</option>
-            <option value="armor" disabled>
-              Armures
-            </option>
-            <option value="other" disabled>
-              Autres
-            </option>
+            {menu.map((item) => (
+              <option key={item.id} value={item.id} disabled={item.disabled}>
+                {item.name}
+              </option>
+            ))}
           </Form.Select>
         </Col>
-        {equipmentType === "weapon" && (
-          <Col xs="auto">
-            <Form.Select
-              id="weapon-type"
-              value={weaponType}
-              onChange={(e) => setWeaponType(e.target.value as WeaponTypeId)}
-            >
-              {weaponTypes.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Col>
-        )}
+        <Col xs="auto">
+          <Form.Select id="sub-type" value={subType} onChange={(e) => setSubType(e.target.value)}>
+            {subMenu.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.name}
+              </option>
+            ))}
+          </Form.Select>
+        </Col>
         <Col xs="auto">
           <ToggleButtonGroup
             type="radio"
@@ -238,10 +297,10 @@ export function EquipmentSelection() {
           />
         </Col>
       </Row>
-      {equipmentType === "weapon" && weaponType === "basic" && (
+      {equipmentType === "weapon" && subType === "basic" && (
         <WeaponMeleeTable weaponType="basic" equipments={filtered} />
       )}
-      {equipmentType === "weapon" && weaponType === "advanced" && (
+      {equipmentType === "weapon" && subType === "advanced" && (
         <WeaponMeleeTable weaponType="advanced" equipments={filtered} />
       )}
     </Stack>
