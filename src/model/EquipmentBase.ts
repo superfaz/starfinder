@@ -2,6 +2,12 @@ import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
 import { LevelSchema, ReferenceSchema } from "./helper";
 
+export const EquipmentCategorySchema = z.enum(["weapon", "armor", "other"]);
+
+export type EquipmentCategory = z.infer<typeof EquipmentCategorySchema>;
+
+export const EquipmentCategories = EquipmentCategorySchema.enum;
+
 export const EquipmentTypeSchema = z.enum([
   "weaponAmmunition",
   "weaponSolarian",

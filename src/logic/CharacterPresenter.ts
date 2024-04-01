@@ -11,6 +11,7 @@ import type {
   ClassMystic,
   ClassOperative,
   ClassSoldier,
+  EquipmentDescriptor,
   FeatTemplate,
   IModel,
   INamedModel,
@@ -895,11 +896,15 @@ export class CharacterPresenter {
     return classBonus + abilityScoreBonus + otherBonus;
   }
 
-  getInitialCapital() {
+  getInitialCapital(): number {
     return this.character.initialCapital;
   }
 
-  getCredits() {
+  getCredits(): number {
     return this.character.credits;
+  }
+
+  getWeapons(): EquipmentDescriptor[] {
+    return this.character.equipment.filter((e) => e.category === "weapon");
   }
 }

@@ -6,14 +6,16 @@ import { DisplaySpecials } from "./Components";
 function WeaponGrenadeTableCategory({ equipments }: { equipments: EquipmentWeaponGrenade[] }) {
   const dispatch = useAppDispatch();
 
-  function handleAdd(id: string) {
-    dispatch(mutators.addEquipment({ type1: "weaponGrenade", type2: "grenade", id }));
+  function handleAdd(equipment: EquipmentBase) {
+    dispatch(
+      mutators.addEquipment({ category: "weapon", type: "grenade", id: equipment.id, cost: equipment.cost ?? 0 })
+    );
   }
 
   return equipments.map((equipment) => (
     <tr key={equipment.id}>
       <td className="p-0">
-        <Button variant="link" onClick={() => handleAdd(equipment.id)}>
+        <Button variant="link" onClick={() => handleAdd(equipment)}>
           <i className="bi bi-cart-plus" />
         </Button>
       </td>

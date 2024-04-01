@@ -19,8 +19,10 @@ function WeaponRangedTableCategory({
     (e) => weaponCategories.find((c) => c.id === e.weaponCategory)?.name ?? ""
   );
 
-  function handleAdd(id: string) {
-    dispatch(mutators.addEquipment({ type1: "weaponMelee", type2: weaponType, id }));
+  function handleAdd(equipment: EquipmentBase) {
+    dispatch(
+      mutators.addEquipment({ category: "weapon", type: weaponType, id: equipment.id, cost: equipment.cost ?? 0 })
+    );
   }
 
   const keys = Object.keys(groupedByCategory).toSorted();
@@ -34,7 +36,7 @@ function WeaponRangedTableCategory({
       {groupedByCategory[category].map((equipment) => (
         <tr key={equipment.id}>
           <td className="p-0">
-            <Button variant="link" onClick={() => handleAdd(equipment.id)}>
+            <Button variant="link" onClick={() => handleAdd(equipment)}>
               <i className="bi bi-cart-plus" />
             </Button>
           </td>

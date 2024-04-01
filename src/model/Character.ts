@@ -1,7 +1,17 @@
 import { z } from "zod";
 import { ProfessionSchema } from "./Profession";
 import { IdSchema } from "./helper";
-import { EquipmentTypeSchema } from "./EquipmentBase";
+import { EquipmentCategorySchema } from "./EquipmentBase";
+
+export const EquipmentDescriptorSchema = z.object({
+  category: EquipmentCategorySchema,
+  secondaryType: IdSchema,
+  id: IdSchema,
+  quantity: z.number(),
+  unitaryCost: z.number(),
+});
+
+export type EquipmentDescriptor = z.infer<typeof EquipmentDescriptorSchema>;
 
 export const CharacterSchema = z
   .object({
@@ -29,9 +39,7 @@ export const CharacterSchema = z
     spells: z.record(z.string(), z.array(IdSchema)),
     initialCapital: z.number(),
     credits: z.number(),
-    equipment: z.array(
-      z.object({ type: EquipmentTypeSchema, secondaryType: IdSchema, id: IdSchema, quantity: z.number() })
-    ),
+    equipment: z.array(EquipmentDescriptorSchema),
   })
   .strict();
 

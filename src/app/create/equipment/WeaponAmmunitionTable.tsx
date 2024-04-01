@@ -5,14 +5,16 @@ import { EquipmentBase, EquipmentWeaponAmmunition } from "model";
 function WeaponAmmunitionTableCategory({ equipments }: { equipments: EquipmentWeaponAmmunition[] }) {
   const dispatch = useAppDispatch();
 
-  function handleAdd(id: string) {
-    dispatch(mutators.addEquipment({ type1: "weaponAmmunition", type2: "ammunition", id }));
+  function handleAdd(equipment: EquipmentBase) {
+    dispatch(
+      mutators.addEquipment({ category: "weapon", type: "ammunition", id: equipment.id, cost: equipment.cost ?? 0 })
+    );
   }
 
   return equipments.map((equipment) => (
     <tr key={equipment.id}>
       <td className="p-0">
-        <Button variant="link" onClick={() => handleAdd(equipment.id)}>
+        <Button variant="link" onClick={() => handleAdd(equipment)}>
           <i className="bi bi-cart-plus" />
         </Button>
       </td>

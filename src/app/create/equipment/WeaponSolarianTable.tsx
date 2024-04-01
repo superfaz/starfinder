@@ -6,14 +6,16 @@ import { DisplayCritical, DisplayDamage } from "./Components";
 function WeaponSolarianTableCategory({ equipments }: { equipments: EquipmentWeaponSolarian[] }) {
   const dispatch = useAppDispatch();
 
-  function handleAdd(id: string) {
-    dispatch(mutators.addEquipment({ type1: "weaponSolarian", type2: "solarian", id }));
+  function handleAdd(equipment: EquipmentBase) {
+    dispatch(
+      mutators.addEquipment({ category: "weapon", type: "solarian", id: equipment.id, cost: equipment.cost ?? 0 })
+    );
   }
 
   return equipments.map((equipment) => (
     <tr key={equipment.id}>
       <td className="p-0">
-        <Button variant="link" onClick={() => handleAdd(equipment.id)}>
+        <Button variant="link" onClick={() => handleAdd(equipment)}>
           <i className="bi bi-cart-plus" />
         </Button>
       </td>
