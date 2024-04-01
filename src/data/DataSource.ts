@@ -43,13 +43,18 @@ export class DataSource implements IDataSource {
   }
 
   private async getOne<T extends IModel>(descriptor: IDescriptor<T>, id: string): Promise<T> {
+    const isT = (obj: unknown): obj is T => descriptor.schema.safeParse(obj).success;
     const result = await this.database.collection(descriptor.name).findOne({ id });
 
     if (result === null) {
       throw new Error(`Failed to get ${descriptor.name}/${id}`);
     }
 
-    return descriptor.schema.parse(result);
+    if (!isT(result)) {
+      throw new Error(`Failed to parse ${descriptor.name}/${id}`);
+    }
+
+    return result;
   }
 
   get<T extends IModel>(descriptor: IDescriptor<T>): IDataSet<T> {
