@@ -14,6 +14,7 @@ import { WeaponMeleeTable } from "./WeaponMeleeTable";
 import { WeaponRangedTable } from "./WeaponRangedTable";
 import { WeaponGrenadeTable } from "./WeaponGrenadeTable";
 import { WeaponAmmunitionTable } from "./WeaponAmmunitionTable";
+import { WeaponSolarianTable } from "./WeaponSolarianTable";
 
 function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {
@@ -77,6 +78,12 @@ function createMenu(presenter: CharacterPresenter) {
           name: "Munitions",
           uri: "/api/equipment/weapons/ammunition",
           proficient: true,
+        },
+        {
+          id: "solarian",
+          name: "Cristaux de combat solariens",
+          uri: "/api/equipment/weapons/solarian",
+          proficient: presenter.getClass()?.id === "solarian",
         },
       ],
     },
@@ -186,6 +193,7 @@ export function EquipmentSelection() {
         )}
       {equipmentType === "weapon" && subType === "grenade" && <WeaponGrenadeTable equipments={filtered} />}
       {equipmentType === "weapon" && subType === "ammunition" && <WeaponAmmunitionTable equipments={filtered} />}
+      {equipmentType === "weapon" && subType === "solarian" && <WeaponSolarianTable equipments={filtered} />}
     </Stack>
   );
 }

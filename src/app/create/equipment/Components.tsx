@@ -35,6 +35,10 @@ export function DisplayCritical({ critical }: { critical?: Critical }) {
 export function DisplaySpecials({ specials }: { specials: Special[] }) {
   const weaponSpecialProperties = useAppSelector((state) => state.data.weaponSpecialProperties);
 
+  if (specials === undefined || specials.length === 0) {
+    return "-";
+  }
+
   return specials
     .map((special) => {
       const name = findOrError(weaponSpecialProperties, special.id).name;
