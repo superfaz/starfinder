@@ -47,6 +47,7 @@ import weaponTypes from "../../../mocks/weapon-types.json";
 import envoyClassDetails from "../../../mocks/class-envoy.json";
 import operativeClassDetails from "../../../mocks/class-operative.json";
 import soldierClassDetails from "../../../mocks/class-soldier.json";
+import mysticClassDetails from "../../../mocks/class-mystic.json";
 
 const data: IClientDataSet = {
   abilityScores: AbilityScoreSchema.array().parse(abilityScores),
@@ -73,6 +74,7 @@ const classesDetails: Record<string, IModel> = {
   envoy: envoyClassDetails,
   operative: operativeClassDetails,
   soldier: soldierClassDetails,
+  mystic: mysticClassDetails,
 };
 
 export function createCharacter() {
