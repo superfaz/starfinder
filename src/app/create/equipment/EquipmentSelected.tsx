@@ -4,31 +4,53 @@ import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Card, Col, Form, Row, Stack } from "react-bootstrap";
 import { useCharacterPresenter } from "../helpers";
-import { EquipmentDescriptor, EquipmentWeaponMelee } from "model";
+import { Critical, Damage, EquipmentDescriptor, EquipmentWeaponMelee, Special } from "model";
 import { findOrError } from "app/helpers";
 
-interface IValueComponentProps {
-  label: string;
-  value?: string | number;
-  title?: string;
-  className?: string;
-  children?: JSX.Element[] | JSX.Element;
+export function EquipmentDamage({ damage, critical }: { damage: Damage; critical: Critical | undefined }) {
+  const data = useAppSelector((state) => state.data);
+
+  const roll = damage.roll;
+  const types = damage.types.map((t) => findOrError(data.damageTypes, t).name).join(" & ");
+
+  if (!critical) {
+    return (
+      <div>
+        {roll} {types}
+      </div>
+    );
+  }
+
+  const criticalHitEffect = findOrError(data.criticalHitEffects, critical.id);
+  if (!critical.value) {
+    return (
+      <div>
+        {roll} {types} - {criticalHitEffect.name}
+      </div>
+    );
+  } else {
+    <div>
+      {roll} {types} - {criticalHitEffect.name} ({critical.value})
+    </div>;
+  }
 }
 
-type ValueComponentProps = Readonly<IValueComponentProps>;
+export function EquipmentSpecials({ specials }: { specials: Special[] }) {
+  const data = useAppSelector((state) => state.data);
 
-function ValueComponent({ label, value, title, className, children }: ValueComponentProps) {
-  return (
-    <div className={className} title={title} data-testid={label}>
-      {children && <div>{children}</div>}
-      {!children && <div>{value === undefined || value === "" ? "-" : value}</div>}
-      <div className="small text-muted border-top border-secondary">{label}</div>
-    </div>
-  );
+  if (specials.length === 0) {
+    return null;
+  }
+
+  const specialTexts = specials.map((s) => {
+    const special = findOrError(data.weaponSpecialProperties, s.id);
+    return s.value ? `${special.name} (${s.value})` : special.name;
+  });
+
+  return <div className="text-muted">{specialTexts.join(", ")}</div>;
 }
 
 export function EquipmentDescriptorMeleeDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
-  const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentWeaponMelee | null>(null);
 
   useEffect(() => {
@@ -44,34 +66,16 @@ export function EquipmentDescriptorMeleeDisplay({ descriptor }: { descriptor: Eq
     return null;
   }
 
-  const critical = equipment.critical ? findOrError(data.criticalHitEffects, equipment.critical.id) : null;
-  const criticalText = critical
-    ? equipment.critical?.value
-      ? `${critical.name} (${equipment.critical.value})`
-      : critical.name
-    : "-";
   return (
-    <Card className="placeholder-glow">
+    <Card>
       <Card.Body>
-        <Row>
-          <Col>
-            <ValueComponent label="Nom (Niveau)" value={equipment.name + " (" + equipment.level + ")"} />
-          </Col>
-          <Col xs="auto">
-            <ValueComponent label="Prix" value={descriptor.unitaryCost} />
-          </Col>
-          <Col xs="auto">
-            <ValueComponent label="Quantité" value={descriptor.quantity} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <ValueComponent label="Dégâts" value={equipment.damage?.roll} />
-          </Col>
-          <Col>
-            <ValueComponent label="Critique" value={criticalText} />
-          </Col>
-        </Row>
+        <div>
+          <strong>
+            {equipment.name} (niv. {equipment.level})
+          </strong>
+        </div>
+        {equipment.damage && <EquipmentDamage damage={equipment.damage} critical={equipment.critical} />}
+        <EquipmentSpecials specials={equipment.specials} />
       </Card.Body>
     </Card>
   );

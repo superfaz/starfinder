@@ -11,7 +11,7 @@ export function findOrError<T extends IModel>(
   if (typeof predicateOrId === "string") {
     const result = array.find((element) => element.id === predicateOrId);
     if (result === undefined) {
-      throw new Error("Can't find element in array");
+      throw new Error(`Can't find element ${predicateOrId} in array`);
     }
     return result;
   } else {
