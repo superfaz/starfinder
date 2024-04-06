@@ -4,7 +4,7 @@ import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Card, Col, Form, Row, Stack } from "react-bootstrap";
 import { useCharacterPresenter } from "../helpers";
-import { Critical, Damage, EquipmentDescriptor, EquipmentWeaponMelee, Special } from "model";
+import { Critical, Damage, EquipmentDescriptor, EquipmentWeaponMelee, EquipmentWeaponRanged, Special } from "model";
 import { findOrError } from "app/helpers";
 
 export function EquipmentDamage({ damage, critical }: { damage: Damage; critical: Critical | undefined }) {
@@ -14,24 +14,14 @@ export function EquipmentDamage({ damage, critical }: { damage: Damage; critical
   const types = damage.types.map((t) => findOrError(data.damageTypes, t).name).join(" & ");
 
   if (!critical) {
-    return (
-      <div>
-        {roll} {types}
-      </div>
-    );
+    return `${roll} ${types}`;
   }
 
   const criticalHitEffect = findOrError(data.criticalHitEffects, critical.id);
   if (!critical.value) {
-    return (
-      <div>
-        {roll} {types} - {criticalHitEffect.name}
-      </div>
-    );
+    return `${roll} ${types} - ${criticalHitEffect.name}`;
   } else {
-    <div>
-      {roll} {types} - {criticalHitEffect.name} ({critical.value})
-    </div>;
+    return `${roll} ${types} - ${criticalHitEffect.name} ${critical.value}`;
   }
 }
 
@@ -51,6 +41,7 @@ export function EquipmentSpecials({ specials }: { specials: Special[] }) {
 }
 
 export function EquipmentDescriptorMeleeDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+  const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentWeaponMelee | null>(null);
 
   useEffect(() => {
@@ -74,8 +65,58 @@ export function EquipmentDescriptorMeleeDisplay({ descriptor }: { descriptor: Eq
             {equipment.name} (niv. {equipment.level})
           </strong>
         </div>
-        {equipment.damage && <EquipmentDamage damage={equipment.damage} critical={equipment.critical} />}
+        <div className="mb-2 small">
+          {findOrError(data.weaponTypes, equipment.weaponType).name}{" "}
+          {equipment.hands === 2 ? "à deux mains" : "à une main"}
+        </div>
+        {equipment.damage && (
+          <div>
+            <EquipmentDamage damage={equipment.damage} critical={equipment.critical} />
+          </div>
+        )}
         <EquipmentSpecials specials={equipment.specials} />
+      </Card.Body>
+    </Card>
+  );
+}
+
+export function EquipmentDescriptorRangedDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+  const data = useAppSelector((state) => state.data);
+  const [equipment, setEquipment] = useState<EquipmentWeaponRanged | null>(null);
+
+  useEffect(() => {
+    fetch(`/api/equipment/weapons/${descriptor.secondaryType}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const equipments = data as EquipmentWeaponRanged[];
+        setEquipment(findOrError(equipments, (e) => e.id === descriptor.id));
+      });
+  });
+
+  if (!equipment) {
+    return null;
+  }
+
+  return (
+    <Card>
+      <Card.Body>
+        <div>
+          <strong>
+            {equipment.name} (niv. {equipment.level})
+          </strong>
+        </div>
+        <div className="mb-2 small">
+          {findOrError(data.weaponTypes, equipment.weaponType).name}{" "}
+          {equipment.hands === 2 ? "à deux mains" : "à une main"}
+        </div>
+        <div>
+          {equipment.range * 1.5}m -{" "}
+          {equipment.damage && <EquipmentDamage damage={equipment.damage} critical={equipment.critical} />}
+        </div>
+        <EquipmentSpecials specials={equipment.specials} />
+        <div>
+          {equipment.ammunition.type} ({equipment.ammunition.usage}/{equipment.ammunition.capacity})
+        </div>
       </Card.Body>
     </Card>
   );
@@ -88,6 +129,10 @@ export function EquipmentDescriptorDisplay({ descriptor }: { descriptor: Equipme
       case "advanced":
         return <EquipmentDescriptorMeleeDisplay descriptor={descriptor} />;
       case "small":
+      case "long":
+      case "heavy":
+      case "sniper":
+        return <EquipmentDescriptorRangedDisplay descriptor={descriptor} />;
       default:
         return null;
     }
