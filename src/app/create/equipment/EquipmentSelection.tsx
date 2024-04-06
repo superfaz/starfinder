@@ -3,7 +3,7 @@
 import { findOrError } from "app/helpers";
 import { CharacterPresenter } from "logic";
 import { EquipmentBase, WeaponTypeIds } from "model";
-import { useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { Alert, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
@@ -130,6 +130,16 @@ export function EquipmentSelection() {
       });
   }, [subMenuEntry]);
 
+  function handleEquipmentTypeChange(event: ChangeEvent<HTMLSelectElement>) {
+    setEquipments([]);
+    setEquipmentType(event.target.value);
+  }
+
+  function handleSubTypeChange(event: ChangeEvent<HTMLSelectElement>) {
+    setEquipments([]);
+    setSubType(event.target.value);
+  }
+
   return (
     <Stack direction="vertical" gap={2}>
       <h2>Équipement disponible</h2>
@@ -138,7 +148,7 @@ export function EquipmentSelection() {
           Filtres:
         </Col>
         <Col xs="auto">
-          <Form.Select id="equipment-type" value={equipmentType} onChange={(e) => setEquipmentType(e.target.value)}>
+          <Form.Select id="equipment-type" value={equipmentType} onChange={handleEquipmentTypeChange}>
             {menu.map((item) => (
               <option key={item.id} value={item.id} disabled={item.disabled}>
                 {item.name}
@@ -147,7 +157,7 @@ export function EquipmentSelection() {
           </Form.Select>
         </Col>
         <Col xs="auto">
-          <Form.Select id="sub-type" value={subType} onChange={(e) => setSubType(e.target.value)}>
+          <Form.Select id="sub-type" value={subType} onChange={handleSubTypeChange}>
             {subMenu.map((type) => (
               <option key={type.id} value={type.id} className={type.proficient ? undefined : "text-danger"}>
                 {type.name}
