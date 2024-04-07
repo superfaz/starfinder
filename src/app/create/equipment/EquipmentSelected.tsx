@@ -40,7 +40,7 @@ export function EquipmentSpecials({ specials }: { specials: Special[] }) {
   return <div className="text-muted">{specialTexts.join(", ")}</div>;
 }
 
-export function EquipmentDescriptorMeleeDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function WeaponMeleeDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentWeaponMelee | null>(null);
 
@@ -80,7 +80,7 @@ export function EquipmentDescriptorMeleeDisplay({ descriptor }: { descriptor: Eq
   );
 }
 
-export function EquipmentDescriptorRangedDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function WeaponRangedDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentWeaponRanged | null>(null);
 
@@ -122,17 +122,17 @@ export function EquipmentDescriptorRangedDisplay({ descriptor }: { descriptor: E
   );
 }
 
-export function EquipmentDescriptorDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   if (descriptor.category === "weapon") {
     switch (descriptor.secondaryType) {
       case "basic":
       case "advanced":
-        return <EquipmentDescriptorMeleeDisplay descriptor={descriptor} />;
+        return <WeaponMeleeDisplay descriptor={descriptor} />;
       case "small":
       case "long":
       case "heavy":
       case "sniper":
-        return <EquipmentDescriptorRangedDisplay descriptor={descriptor} />;
+        return <WeaponRangedDisplay descriptor={descriptor} />;
       default:
         return null;
     }
@@ -166,7 +166,7 @@ export function EquipmentSelected() {
       <h2>Armes</h2>
       {presenter.getWeapons().length === 0 && <em>Pas d&apos;armes possédées</em>}
       {presenter.getWeapons().map((weapon) => (
-        <EquipmentDescriptorDisplay key={weapon.id} descriptor={weapon} />
+        <EquipmentDisplay key={weapon.id} descriptor={weapon} />
       ))}
       <h2>Armures</h2>
       <h2>Autres</h2>
