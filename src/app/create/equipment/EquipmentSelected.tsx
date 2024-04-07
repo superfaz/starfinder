@@ -7,10 +7,15 @@ import { EquipmentDescriptor } from "model";
 import { useCharacterPresenter } from "../helpers";
 import { WeaponMeleeDisplay } from "./WeaponMeleeDisplay";
 import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
+import { WeaponGrenadeDisplay } from "./WeaponGrenadeDisplay";
+import { WeaponAmmunitionDisplay } from "./WeaponAmmunitionDisplay";
+import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
 
 export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   if (descriptor.category === "weapon") {
     switch (descriptor.secondaryType) {
+      case "ammunition":
+        return <WeaponAmmunitionDisplay descriptor={descriptor} />;
       case "basic":
       case "advanced":
         return <WeaponMeleeDisplay descriptor={descriptor} />;
@@ -19,6 +24,10 @@ export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescript
       case "heavy":
       case "sniper":
         return <WeaponRangedDisplay descriptor={descriptor} />;
+      case "grenade":
+        return <WeaponGrenadeDisplay descriptor={descriptor} />;
+      case "solarian":
+        return <WeaponSolarianDisplay descriptor={descriptor} />;
       default:
         return null;
     }

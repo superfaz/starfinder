@@ -54,3 +54,11 @@ export function DisplaySpecials({ specials }: { specials: Special[] }) {
     })
     .join(", ");
 }
+
+export function Credits({ value }: { value?: number }) {
+  if (value === undefined || value === 0) {
+    return "- Cr";
+  } else {
+    return value + " Cr";
+  }
+}

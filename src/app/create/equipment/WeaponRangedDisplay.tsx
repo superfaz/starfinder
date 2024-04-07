@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeaponRanged } from "model";
 import { DisplayCritical, DisplayDamageLong, DisplaySpecials } from "./Components";
+import { EquipmentDisplay } from "./EquipmentDisplay";
 
 export function WeaponRangedDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   const data = useAppSelector((state) => state.data);
@@ -24,42 +24,34 @@ export function WeaponRangedDisplay({ descriptor }: { descriptor: EquipmentDescr
     return null;
   }
 
+  const subtitle =
+    findOrError(data.weaponTypes, equipment.weaponType).name +
+    (equipment.hands === 2 ? " à deux mains" : " à une main");
   return (
-    <Card>
-      <Card.Body>
-        <div>
-          <strong>
-            {equipment.name} (niv. {equipment.level})
-          </strong>
-        </div>
-        <div className="mb-2 small">
-          {findOrError(data.weaponTypes, equipment.weaponType).name}{" "}
-          {equipment.hands === 2 ? "à deux mains" : "à une main"}
-        </div>
-        <div>
-          {equipment.range * 1.5}m
-          {equipment.damage && (
-            <span>
-              {" - "}
-              <DisplayDamageLong damage={equipment.damage} />
-            </span>
-          )}
-          {equipment.critical && (
-            <span>
-              {" - "}
-              <DisplayCritical critical={equipment.critical} />
-            </span>
-          )}
-        </div>
-        {equipment.specials.length > 0 && (
-          <div>
-            <DisplaySpecials specials={equipment.specials} />
-          </div>
+    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle}>
+      <div>
+        {equipment.range * 1.5}m
+        {equipment.damage && (
+          <span>
+            {" - "}
+            <DisplayDamageLong damage={equipment.damage} />
+          </span>
         )}
+        {equipment.critical && (
+          <span>
+            {" - "}
+            <DisplayCritical critical={equipment.critical} />
+          </span>
+        )}
+      </div>
+      {equipment.specials.length > 0 && (
         <div>
-          {equipment.ammunition.type} ({equipment.ammunition.usage}/{equipment.ammunition.capacity})
+          <DisplaySpecials specials={equipment.specials} />
         </div>
-      </Card.Body>
-    </Card>
+      )}
+      <div>
+        {equipment.ammunition.type} ({equipment.ammunition.usage}/{equipment.ammunition.capacity})
+      </div>
+    </EquipmentDisplay>
   );
 }
