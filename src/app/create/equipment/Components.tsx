@@ -4,18 +4,26 @@ import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { Critical, Damage, Special } from "model";
 
-export function DisplayDamage({ damage }: { damage?: Damage }) {
+export function DisplayDamageShort({ damage }: { damage?: Damage }) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
 
   if (damage === undefined) {
     return "-";
   }
 
-  return (
-    <span>
-      {damage.roll} {damage.types.map((d) => findOrError(damageTypes, d).code).join(" & ")}
-    </span>
-  );
+  const types = damage.types.map((t) => findOrError(damageTypes, t).code).join(" & ");
+  return `${damage.roll} ${types}`;
+}
+
+export function DisplayDamageLong({ damage }: { damage?: Damage }) {
+  const damageTypes = useAppSelector((state) => state.data.damageTypes);
+
+  if (damage === undefined) {
+    return "pas de dégâts";
+  }
+
+  const types = damage.types.map((t) => findOrError(damageTypes, t).name).join(" & ");
+  return `${damage.roll} ${types}`;
 }
 
 export function DisplayCritical({ critical }: { critical?: Critical }) {

@@ -3,7 +3,7 @@ import { Badge, Button, Table } from "react-bootstrap";
 import { groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { EquipmentBase, EquipmentWeaponRanged, WeaponTypeId } from "model";
-import { DisplayCritical, DisplayDamage, DisplaySpecials } from "./Components";
+import { DisplayCritical, DisplayDamageShort, DisplaySpecials } from "./Components";
 
 function WeaponRangedTableCategory({
   weaponType,
@@ -44,7 +44,7 @@ function WeaponRangedTableCategory({
           <td>{equipment.level}</td>
           <td>{equipment.cost}</td>
           <td>
-            <DisplayDamage damage={equipment.damage} />
+            <DisplayDamageShort damage={equipment.damage} />
           </td>
           <td>{equipment.range * 1.5} m</td>
           <td>
