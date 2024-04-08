@@ -174,6 +174,18 @@ const mainSlice = createSlice({
       });
       state.character.credits -= action.payload.cost;
     },
+
+    updateEquipmentQuantity(state, action: PayloadAction<{ id: string; delta: number }>) {
+      const equipment = state.character.equipment.find((e) => e.id === action.payload.id);
+      if (equipment) {
+        equipment.quantity += action.payload.delta;
+        state.character.credits -= equipment.unitaryCost * action.payload.delta;
+
+        if (equipment.quantity <= 0) {
+          state.character.equipment = state.character.equipment.filter((e) => e.id !== action.payload.id);
+        }
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {

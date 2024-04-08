@@ -4,6 +4,7 @@ import { EquipmentBase, EquipmentDescriptor } from "model";
 import { useState } from "react";
 import { Button, Card, Col, Collapse, FormControl, InputGroup, Row } from "react-bootstrap";
 import { Credits } from "./Components";
+import { mutators, useAppDispatch } from "logic";
 
 export function EquipmentDisplay({
   descriptor,
@@ -17,9 +18,15 @@ export function EquipmentDisplay({
   children?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const dispatch = useAppDispatch();
 
-  function handleDecreaseClick() {}
-  function handleIncreaseClick() {}
+  function handleDecreaseClick() {
+    dispatch(mutators.updateEquipmentQuantity({ id: descriptor.id, delta: -1 }));
+  }
+
+  function handleIncreaseClick() {
+    dispatch(mutators.updateEquipmentQuantity({ id: descriptor.id, delta: 1 }));
+  }
 
   return (
     <Card>
