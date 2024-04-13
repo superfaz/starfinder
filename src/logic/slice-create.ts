@@ -7,7 +7,7 @@ import {
   EmptyCharacter,
   type IModel,
   type Profession,
-  type EquipmentCategory,
+  EquipmentDescriptor,
 } from "model";
 import { RaceFeature } from "view";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
@@ -161,18 +161,8 @@ const mainSlice = createSlice({
       state.character.credits = action.payload;
     },
 
-    addEquipment(
-      state,
-      action: PayloadAction<{ category: EquipmentCategory; type: string; id: string; cost: number }>
-    ) {
-      state.character.equipment.push({
-        category: action.payload.category,
-        secondaryType: action.payload.type,
-        id: action.payload.id,
-        quantity: 1,
-        unitaryCost: action.payload.cost,
-      });
-      state.character.credits -= action.payload.cost;
+    addEquipment(state, action: PayloadAction<EquipmentDescriptor>) {
+      state.character = addEquipmentImpl(state.character, action.payload);
     },
 
     updateEquipmentQuantity(state, action: PayloadAction<{ id: string; delta: number }>) {
@@ -578,6 +568,12 @@ function updateSkillRankImpl(character: Character, skillId: string, delta: numbe
       skillRanks: { ...character.skillRanks, [skillId]: newRank },
     };
   }
+}
+
+function addEquipmentImpl(character: Character, descriptor: EquipmentDescriptor) {
+  character.equipment.push(descriptor);
+  character.credits -= descriptor.unitaryCost;
+  return character;
 }
 
 class Updators {

@@ -1,5 +1,8 @@
+"use client";
+
 import { Fragment } from "react";
 import { Badge, Button, Table } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 import { groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { EquipmentBase, EquipmentWeaponMelee, WeaponTypeId } from "model";
@@ -21,7 +24,15 @@ function WeaponMeleeTableCategory({
 
   function handleAdd(equipment: EquipmentBase) {
     dispatch(
-      mutators.addEquipment({ category: "weapon", type: weaponType, id: equipment.id, cost: equipment.cost ?? 0 })
+      mutators.addEquipment({
+        id: uuidv4(),
+        type: "unique",
+        category: "weapon",
+        secondaryType: weaponType,
+        equipmentId: equipment.id,
+        quantity: 1,
+        unitaryCost: equipment.cost ?? 0,
+      })
     );
   }
 

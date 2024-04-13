@@ -16,7 +16,7 @@ export function WeaponRangedDisplay({ descriptor }: { descriptor: EquipmentDescr
       .then((res) => res.json())
       .then((data) => {
         const equipments = data as EquipmentWeaponRanged[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.id));
+        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
   });
 

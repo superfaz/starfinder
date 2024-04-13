@@ -16,7 +16,7 @@ export function WeaponMeleeDisplay({ descriptor }: { descriptor: EquipmentDescri
       .then((res) => res.json())
       .then((data) => {
         const equipments = data as EquipmentWeaponMelee[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.id));
+        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
   });
 

@@ -1,4 +1,7 @@
+"use client";
+
 import { Button, Table } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponSolarian } from "model";
 import { DisplayCritical, DisplayDamageShort } from "./Components";
@@ -8,7 +11,15 @@ function WeaponSolarianTableCategory({ equipments }: { equipments: EquipmentWeap
 
   function handleAdd(equipment: EquipmentBase) {
     dispatch(
-      mutators.addEquipment({ category: "weapon", type: "solarian", id: equipment.id, cost: equipment.cost ?? 0 })
+      mutators.addEquipment({
+        id: uuidv4(),
+        type: "unique",
+        category: "weapon",
+        secondaryType: "solarian",
+        equipmentId: equipment.id,
+        quantity: 1,
+        unitaryCost: equipment.cost ?? 0,
+      })
     );
   }
 

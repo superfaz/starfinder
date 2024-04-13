@@ -13,7 +13,7 @@ export function WeaponAmmunitionDisplay({ descriptor }: { descriptor: EquipmentD
       .then((res) => res.json())
       .then((data) => {
         const equipments = data as EquipmentWeaponAmmunition[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.id));
+        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
   });
 

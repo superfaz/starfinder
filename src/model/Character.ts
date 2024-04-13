@@ -3,13 +3,34 @@ import { ProfessionSchema } from "./Profession";
 import { IdSchema } from "./helper";
 import { EquipmentCategorySchema } from "./EquipmentBase";
 
-export const EquipmentDescriptorSchema = z.object({
+export const ConsumableEquipmentDescriptorSchema = z.object({
+  id: IdSchema,
+  type: z.literal("consumable"),
   category: EquipmentCategorySchema,
   secondaryType: IdSchema,
-  id: IdSchema,
+  equipmentId: IdSchema,
   quantity: z.number(),
   unitaryCost: z.number(),
 });
+
+export type ConsumableEquipmentDescriptor = z.infer<typeof ConsumableEquipmentDescriptorSchema>;
+
+export const UniqueEquipmentDescriptorSchema = z.object({
+  id: IdSchema,
+  type: z.literal("unique"),
+  category: EquipmentCategorySchema,
+  secondaryType: IdSchema,
+  equipmentId: IdSchema,
+  quantity: z.literal(1),
+  unitaryCost: z.number(),
+});
+
+export type UniqueEquipmentDescriptor = z.infer<typeof UniqueEquipmentDescriptorSchema>;
+
+export const EquipmentDescriptorSchema = z.discriminatedUnion("type", [
+  ConsumableEquipmentDescriptorSchema,
+  UniqueEquipmentDescriptorSchema,
+]);
 
 export type EquipmentDescriptor = z.infer<typeof EquipmentDescriptorSchema>;
 

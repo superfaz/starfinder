@@ -1,4 +1,7 @@
+"use client";
+
 import { Button, Table } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponAmmunition } from "model";
 
@@ -7,7 +10,15 @@ function WeaponAmmunitionTableCategory({ equipments }: { equipments: EquipmentWe
 
   function handleAdd(equipment: EquipmentBase) {
     dispatch(
-      mutators.addEquipment({ category: "weapon", type: "ammunition", id: equipment.id, cost: equipment.cost ?? 0 })
+      mutators.addEquipment({
+        id: uuidv4(),
+        type: "consumable",
+        category: "weapon",
+        secondaryType: "ammunition",
+        equipmentId: equipment.id,
+        quantity: 1,
+        unitaryCost: equipment.cost ?? 0,
+      })
     );
   }
 

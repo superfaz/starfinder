@@ -38,11 +38,13 @@ export function EquipmentDisplay({
             </div>
             {subtitle && <div className="small">{subtitle}</div>}
           </Col>
-          <Collapse in={!open} dimension="width">
-            <Col xs="auto" style={{ textWrap: "nowrap" }}>
-              x {descriptor.quantity}
-            </Col>
-          </Collapse>
+          {descriptor.type === "consumable" && (
+            <Collapse in={!open} dimension="width">
+              <Col xs="auto" style={{ textWrap: "nowrap" }}>
+                x {descriptor.quantity}
+              </Col>
+            </Collapse>
+          )}
         </Row>
       </Card.Header>
       <Collapse in={open}>
@@ -55,21 +57,23 @@ export function EquipmentDisplay({
               <Credits value={descriptor.unitaryCost} />
             </Col>
             <Col>
-              <InputGroup>
-                <Button variant="outline-secondary" onClick={handleDecreaseClick}>
-                  <i className="bi-dash-lg"></i>
-                </Button>
-                <FormControl
-                  type="number"
-                  min={0}
-                  className="text-center"
-                  value={descriptor.quantity}
-                  disabled={true}
-                />
-                <Button variant="outline-secondary" onClick={handleIncreaseClick}>
-                  <i className="bi-plus-lg"></i>
-                </Button>
-              </InputGroup>
+              {descriptor.type === "consumable" && (
+                <InputGroup>
+                  <Button variant="outline-secondary" onClick={handleDecreaseClick}>
+                    <i className="bi-dash-lg"></i>
+                  </Button>
+                  <FormControl
+                    type="number"
+                    min={0}
+                    className="text-center"
+                    value={descriptor.quantity}
+                    disabled={true}
+                  />
+                  <Button variant="outline-secondary" onClick={handleIncreaseClick}>
+                    <i className="bi-plus-lg"></i>
+                  </Button>
+                </InputGroup>
+              )}
             </Col>
           </Row>
         </Card.Footer>

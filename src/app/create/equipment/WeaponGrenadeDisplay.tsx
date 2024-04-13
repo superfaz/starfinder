@@ -16,7 +16,7 @@ export function WeaponGrenadeDisplay({ descriptor }: { descriptor: EquipmentDesc
       .then((res) => res.json())
       .then((data) => {
         const equipments = data as EquipmentWeaponGrenade[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.id));
+        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
   });
 
