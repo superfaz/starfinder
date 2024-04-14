@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "783b4983-c4ef-43e1-a36a-8dca35305947",
+    "type": "weaponAmmunition",
+    "name": "Balles, arme légère",
+    "reference": {
+      "book": "base",
+      "page": 179
+    },
+    "level": 1,
+    "cost": 40,
+    "capacity": 30,
+    "weight": "F"
+  }
+]

@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "74b929fc-b4a7-4e96-a30d-e6ee8b8b54d3",
+    "name": "Fusil pulseur",
+    "reference": {
+      "book": "base",
+      "page": 176
+    },
+    "hands": 2,
+    "weaponCategory": "shock",
+    "level": 1,
+    "cost": 100,
+    "weight": 1,
+    "specials": [
+      {
+        "id": "nonlethal"
+      }
+    ],
+    "damage": {
+      "roll": "1d6",
+      "types": ["electricity"]
+    },
+    "type": "weaponRanged",
+    "weaponType": "long",
+    "range": 10,
+    "ammunition": {
+      "type": "battery",
+      "capacity": 20,
+      "usage": 1
+    }
+  }
+]

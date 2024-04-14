@@ -7,5 +7,23 @@
       "page": 182
     },
     "description": "La cible est sujette à l’état hémorragie."
+  },
+  {
+    "id": "knockdown",
+    "name": "Renversement",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "La cible tombe."
+  },
+  {
+    "id": "burn",
+    "name": "Combustion",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "La cible est sujette à l’état enflammé."
   }
 ]

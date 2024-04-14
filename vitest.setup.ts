@@ -1,17 +1,16 @@
 import { beforeAll, vi } from "vitest";
 import { IDataSource, IDataSet, IDescriptor } from "data";
-import { IModel } from "model";
+import { EquipmentWeaponIds, IModel } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import envoyDetails from "./mocks/class-envoy.json";
 import mysticDetails from "./mocks/class-mystic.json";
 import operativeDetails from "./mocks/class-operative.json";
 import scholarDetails from "./mocks/themes-details.json";
 import soldierDetails from "./mocks/class-soldier.json";
-import equipmentWeaponsBasic from "./mocks/equipment-weapons-basic.json";
 
 import "@testing-library/jest-dom/vitest";
 
-beforeAll(() => {
+beforeAll(async () => {
   vi.mock("data", async (importOriginal) => {
     const mod = await importOriginal<typeof import("data")>();
     return {
@@ -46,6 +45,11 @@ beforeAll(() => {
   addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/soldier/details", soldierDetails);
   addFetchMock("/api/classes/mystic/details", mysticDetails);
-  addFetchMock("/api/equipment/weapons/basic", equipmentWeaponsBasic);
   addFetchMock("/api/themes/scholar", scholarDetails);
+  for (const weaponType in EquipmentWeaponIds) {
+    addFetchMock(
+      `/api/equipment/weapons/${weaponType}`,
+      (await import(`./mocks/equipment-weapons-${weaponType}.json`)).default
+    );
+  }
 });

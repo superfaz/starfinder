@@ -1,1 +1,39 @@
-[]
+[
+  {
+    "id": "39be97e5-e678-4a78-b0b3-0d262b35d096",
+    "name": "Fusil oeil de shirren, tactique",
+    "reference": {
+      "book": "base",
+      "page": 178
+    },
+    "hands": 2,
+    "weaponCategory": "projectile",
+    "level": 2,
+    "cost": 755,
+    "weight": 1,
+    "specials": [
+      {
+        "id": "analog"
+      },
+      {
+        "id": "sniper",
+        "value": "76 m"
+      },
+      {
+        "id": "unwieldy"
+      }
+    ],
+    "damage": {
+      "roll": "1d10",
+      "types": ["piercing"]
+    },
+    "type": "weaponRanged",
+    "weaponType": "sniper",
+    "range": 14,
+    "ammunition": {
+      "type": "balle",
+      "capacity": 1,
+      "usage": 1
+    }
+  }
+]

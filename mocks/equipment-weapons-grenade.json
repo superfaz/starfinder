@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "743aaf63-88a0-489e-be28-9bfbbed95254",
+    "type": "weaponGrenade",
+    "name": "Grenade fumigène",
+    "reference": {
+      "book": "base",
+      "page": 178
+    },
+    "weaponType": "grenade",
+    "level": 1,
+    "cost": 40,
+    "range": 4,
+    "capacity": "Armée",
+    "weight": "F",
+    "specials": [
+      {
+        "id": "explode",
+        "value": "nuage de fumée 1 minute, 6 m"
+      }
+    ]
+  }
+]

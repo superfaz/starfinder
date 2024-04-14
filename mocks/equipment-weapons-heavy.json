@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "id": "d6366816-29bf-4dd5-be10-df77b2063f75",
+    "name": "Lance-flammes, ifrit",
+    "reference": {
+      "book": "base",
+      "page": 177
+    },
+    "hands": 2,
+    "weaponCategory": "flame",
+    "level": 2,
+    "cost": 780,
+    "weight": 2,
+    "specials": [
+      {
+        "id": "analog"
+      },
+      {
+        "id": "blast"
+      },
+      {
+        "id": "unwieldy"
+      }
+    ],
+    "damage": {
+      "roll": "1d6",
+      "types": ["fire"]
+    },
+    "critical": {
+      "id": "burn",
+      "value": "1d6"
+    },
+    "type": "weaponRanged",
+    "weaponType": "heavy",
+    "range": 3,
+    "ammunition": {
+      "type": "essence",
+      "capacity": 20,
+      "usage": 4
+    }
+  }
+]

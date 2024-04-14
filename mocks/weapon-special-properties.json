@@ -6,6 +6,204 @@
       "book": "base",
       "page": 180
     },
-    "description": "Un agent peut utiliser son aptitude de classe feinte offensive avec une arme dotée de cette propriété spéciale."
+    "description": "Un agent peut utiliser son aptitude de classe feinte offensive avec une arme dotée de cette propriété spéciale. Avec ces armes, n’importe quel personnage peut ajouter son modificateur de Dextérité au lieu de celui de Force pour ses jets d’attaque au corps à corps."
+  },
+  {
+    "id": "powered",
+    "name": "Alimentée",
+    "reference": {
+      "book": "base",
+      "page": 180
+    },
+    "description": "Une arme de corps à corps avec une batterie intégrée qui doit être chargée pour fonctionner est dotée de la propriété spéciale alimentée. Cette propriété indique la capacité de cette arme et sa consommation. Contrairement aux armes de tir, la consommation est indiquée pour 1 minute d’utilisation et non pour une seule attaque. Cependant, on consomme tout de même 1 minute de charges même si la durée d’utilisation de l’arme est inférieure à 1 minute. Le nombre de charges dépensées est égal à la consommation : le nombre de minutes pendant lesquelles on utilise l’arme arrondi à la minute supérieure. Activer votre arme fait partie de l’action d’attaque et elle se désactive automatiquement au bout d’une minute. Comme pour les armes de tir, vous pouvez recharger la batterie d’une arme de corps à corps alimentée en utilisant un générateur ou une station de recharge. Vous pouvez également acheter de nouvelles batteries. Si vous tentez d’attaquer avec une arme de corps à corps dont la batterie est épuisée, elle est considérée comme une arme improvisée."
+  },
+  {
+    "id": "reach",
+    "name": "Allonge",
+    "reference": {
+      "book": "base",
+      "page": 180
+    },
+    "description": "Seules les armes de corps à corps peuvent être dotées de la propriété spéciale allonge. Manier une telle arme vous confère une allonge de 3 mètres pour vos attaques."
+  },
+  {
+    "id": "boost",
+    "name": "Amplification",
+    "reference": {
+      "book": "base",
+      "page": 180
+    },
+    "description": "En tant qu’action de mouvement, vous pouvez amplifier l’effet d’une arme dotée de cette capacité. Quand vous le faites, vous augmentez du montant indiqué les dégâts que vous infligez avec cette arme lors de votre prochaine attaque. L’amplification consomme un nombre de charges égal à sa valeur de consommation. Cela augmente les dégâts de l’arme qui seront multipliés en cas de coup critique. Amplifier une arme plus d’une fois avant de faire feu n’a aucun autre effet. Les charges supplémentaires utilisées se dissipent si l’arme n’est pas utilisée avant la fin de votre prochain tour."
+  },
+  {
+    "id": "analog",
+    "name": "Analogique",
+    "reference": {
+      "book": "base",
+      "page": 180
+    },
+    "description": "L’arme n’est équipée d’aucun système électronique moderne, d’aucun système informatique et d’aucune source d’alimentation électrique. Elle est insensible aux aptitudes qui affectent la technologie. Bien que l’utilisation du mot « analogique » soit techniquement incorrecte quand on fait référence à ce type de technologie, à travers les Mondes du Pacte, ce terme est souvent employé dans ce sens pour désigner tout ce qui n’est pas moderne."
+  },
+  {
+    "id": "archaic",
+    "name": "Archaïque",
+    "reference": {
+      "book": "base",
+      "page": 180
+    },
+    "description": "Cette arme inflige 5 points de dégâts de moins sauf si la cible ne porte aucune armure ou une armure archaïque. Les armes archaïques sont constituées de matériaux primitifs comme le bois ou l’acier commun."
+  },
+  {
+    "id": "automatic",
+    "name": "Automatique",
+    "reference": {
+      "book": "base",
+      "page": 180
+    },
+    "description": "En plus de pouvoir effectuer une attaque à distance normalement, une arme avec cette propriété spéciale peut tirer en mode automatique. Aucune action n’est requise pour passer du mode coup par coup au mode automatique. Quand vous effectuez une attaque à outrance avec une arme en mode automatique, vous pouvez attaquer dans un cône avec une portée égale à la moitié du facteur de portée de l’arme. Cela consomme toutes les munitions restantes. Effectuez un jet d’attaque contre toutes les cibles situées dans le cône, en commençant par les plus proches de vous. Les attaques effectuées avec une arme en mode automatique ne peuvent obtenir de résultats critiques. Ne lancez les dégâts qu’une seule fois et appliquez-les à toutes les cibles touchées. Chaque attaque contre une créature située dans le cône consomme le même nombre de munitions ou de charges nécessaires pour effectuer deux tirs. Et une fois que vous n’avez plus assez de munitions pour une autre cible, vous ne pouvez plus attaquer. Par exemple, si vous utilisez un fusil à générateur X tactique avec 27 balles encore disponibles, vous pouvez prendre pour cibles les 6 créatures les plus proches dans le cône et consommer les 27 balles. Si au moins deux créatures sont à égale distance et que vous n’avez plus assez de munitions pour toutes les affecter, déterminez aléatoirement celles que vous ciblez. Vous ne pouvez éviter de tirer sur des alliés situés dans le cône et vous ne pouvez tirer plus d’une fois sur la même créature même si vous avez plus de munitions qu’il ne vous en faut pour toucher toutes les cibles. Les attaques en mode automatique subissent les mêmes malus que les autres attaques à outrance."
+  },
+  {
+    "id": "trip",
+    "name": "Croc-en-jambe",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Quand vous tentez une manoeuvre offensive de croc-en-jambe avec une arme dotée de cette propriété spéciale, vous bénéficiez d’un bonus de +2 à votre jet d’attaque."
+  },
+  {
+    "id": "disarm",
+    "name": "Désarmement",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Quand vous tentez une manoeuvre offensive de désarmement avec une arme dotée de cette propriété spéciale, vous bénéficiez d’un bonus de +2 au jet d’attaque."
+  },
+  {
+    "id": "blast",
+    "name": "Dispersion",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Cette arme affecte un cône qui s’étend sur tout son premier facteur de portée. Vous ne pouvez l’utiliser pour affecter des cibles situées au-delà. Pour chaque attaque avec une arme ayant la capacité spéciale dispersion, effectuez une attaque contre toutes les cibles situées dans le cône en commençant par celles qui sont les plus proches. Chaque attaque subit un malus de –2 en plus des autres malus tels que ceux des attaques à outrance. Déterminez une seule fois les dégâts pour toutes les cibles. Si vous obtenez au moins un résultat critique, ne déterminez les dégâts supplémentaires qu’une seule fois (ou tout autre effet spécial provoqué par un coup critique qui nécessite que vous effectuiez un jet) et appliquez le résultat contre toutes les cibles qui subissent un coup critique. Vous ne pouvez éviter de tirer sur des alliés situés dans le cône et vous ne pouvez tirer plus d’une fois sur la même créature. Les attaques avec des armes de dispersion ignorent le camouflage. Une arme de dispersion ne peut bénéficier de dons ou de capacités qui augmentent les dégâts infligés par une seule attaque (comme la feinte offensive de l’agent). Les munitions de ces armes sont spécialement conçues pour des attaques de dispersion aussi vous ne consommez qu’une seule fois le montant indiqué pour toutes les attaques affectant le cône."
+  },
+  {
+    "id": "entangle",
+    "name": "Enchevêtrement",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Une créature touchée par une arme dotée de cette propriété spéciale est enchevêtrée jusqu’à ce qu’elle se dégage avec un test d’Acrobaties (DD = 10 + niveau d’objet de l’arme + modificateur de Dextérité de l’attaquant) ou un test de Force (DD = 15 + niveau d’objet de l’arme + modificateur de Dextérité de l’attaquant). Une créature enchevêtrée peut tenter ce test par une action de mouvement. Pour certaines armes (comme les grenade collantes) la durée de l’effet est limitée."
+  },
+  {
+    "id": "stun",
+    "name": "Étourdissant",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "En tant qu’action de mouvement, vous pouvez régler une arme dotée de cette propriété spéciale en mode étourdissant (ou la régler en mode normal). Tant qu’elle est en mode étourdissant, tous les dégâts infligés par cette arme sont non létaux."
+  },
+  {
+    "id": "explode",
+    "name": "Explosion",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Les explosifs ont la propriété spéciale explosion pour laquelle sont indiqués les dégâts infligés, leur type, les effets spéciaux (avec une durée si nécessaire) et son rayon d’action. Quand vous attaquez avec ce type d’armes ou de munitions, visez une intersection entre des cases de la grille. Chaque créature prise dans le rayon d’action de l’explosion subit les dégâts indiqués mais peut tenter un jet de Réflexes pour les réduire de moitié. Si l’explosion entraîne des effets particuliers en plus des dégâts, on peut s’en prémunir en réussissant un jet de sauvegarde. Certaines armes explosives, comme les grenades fumigènes, n’infligeant pas de dégâts, ils ne sont donc pas indiqués."
+  },
+  {
+    "id": "block",
+    "name": "Garde",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Seules les armes de corps à corps peuvent avoir la capacité spéciale garde qui représente une garde ou une pièce transversale qui vous protège d’un adversaire que vous combattez au corps à corps. Quand vous touchez une cible au corps à corps avec une de ces armes, vous bénéficiez d’un bonus d’altération de +1 à votre CA pendant 1 round contre toutes les attaques au corps à corps de cette cible."
+  },
+  {
+    "id": "bright",
+    "name": "Illumination",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Les attaques avec des armes à illumination éclairent une zone de 6 mètres autour de vous et de votre cible pendant 1 round après l’attaque. Cela augmente la luminosité d’un niveau jusqu’à une lumière normale au maximum."
+  },
+  {
+    "id": "injection",
+    "name": "Injection",
+    "reference": {
+      "book": "base",
+      "page": 181
+    },
+    "description": "Cette arme, ou cette munition, peut être remplie avec une drogue, un poison ou un produit médicinal. Avec une attaque réussie (soit la première attaque si c’est une arme de corps à corps ou une attaque avec la bonne munition si c’est une attaque à distance), l’arme injecte automatiquement le produit dans la cible. Remplir l’arme avec une nouvelle substance revient à la recharger et il s’agit d’une action de mouvement. Chaque substance injectable différente doit être achetée séparément et peut être utilisée dans n’importe quelle arme avec cette propriété spéciale."
+  },
+  {
+    "id": "thrown",
+    "name": "Lancée",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "Les armes à distance qui doivent être lancées, et celles de corps à corps qui peuvent l’être en tant qu’attaque à distance, ont la propriété spéciale lancée. Vous utilisez votre modificateur de Force aux jets de dégâts des armes lancées. Une fois que vous avez lancé votre arme, elle atterrit près de votre cible et vous devez aller la récupérer si vous voulez la réutiliser."
+  },
+  {
+    "id": "line",
+    "name": "Ligne",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "Cette arme tire un projectile en ligne droite qui traverse plusieurs cibles ou obstacles. Quand vous utilisez une telle arme, n’effectuez qu’un seul jet d’attaque et comparez le résultat à la CA concernée de tous les objets et créatures sur la même ligne jusqu’à une distance égale au facteur de portée de l’arme. L’attaque frappe toutes les cibles ayant une CA inférieure ou égale au jet. Cependant, si une attaque n’inflige aucun dégât à une créature ou à un obstacle touché (généralement à cause d’une réduction des dégâts ou de la solidité) la ligne est interrompue et l’attaque n’affecte pas les cibles suivantes. Une arme de ligne ne peut endommager des cibles situées au-delà de sa portée. Si vous infligez un coup critique, cet effet ne s’applique qu’à la première cible touchée et vous déterminez les dégâts critiques séparément. Si plusieurs créatures sont à la même distance, vous choisissez celle qui subit le coup critique. Une arme de ligne ne peut bénéficier des dons et aptitudes qui augmentent les dégâts d’une seule attaque (comme la feinte offensive de l’agent)."
+  },
+  {
+    "id": "nonlethal",
+    "name": "Non létale",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "Une telle arme inflige des dégâts non létaux."
+  },
+  {
+    "id": "penetrating",
+    "name": "Pénétrante",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "Une arme pénétrante est conçue pour traverser les couches externes des obstacles les plus grands afin de les endommager. Une arme pénétrante ignore un nombre de points de solidité égal au niveau de l’arme."
+  },
+  {
+    "id": "unwieldy",
+    "name": "Peu maniable",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "Les armes dotées de la propriété spéciale peu maniable sont encombrantes et délicates à manier, ne peuvent être utilisées tant qu’elles n’ont pas refroidi ou sont difficiles à utiliser pour enchaîner plusieurs attaques. Vous ne pouvez pas vous en servir pour une attaque à outrance (ou toute autre action qui vous autorise plusieurs attaques), pour effectuer plus d’une attaque par round ou pour effectuer une attaque d’opportunité."
+  },
+  {
+    "id": "sniper",
+    "name": "Précision",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "Les armes dotées de la propriété spéciale précision peuvent être efficaces à très longue portée si on les utilise correctement. Si vous visez avec une telle arme par une action de mouvement puis que vous tirez au cours du même tour, utilisez la valeur indiquée avec cette propriété spéciale pour son facteur de portée. Vous avez toujours la possibilité d’utiliser une arme de précision normalement mais uniquement sur la distance indiquée dans la colonne portée."
+  },
+  {
+    "id": "quick-reload",
+    "name": "Rechargement rapide",
+    "reference": {
+      "book": "base",
+      "page": 182
+    },
+    "description": "Vous pouvez recharger votre arme en même temps que votre action d’attaque au lieu de devoir utiliser une action de mouvement."
   }
 ]

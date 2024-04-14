@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "70c9e827-d25b-47c6-8ffe-c8101129bf5b",
+    "name": "Pistolet pulseur",
+    "reference": {
+      "book": "base",
+      "page": 173
+    },
+    "hands": 1,
+    "weaponCategory": "shock",
+    "level": 1,
+    "cost": 250,
+    "weight": "F",
+    "specials": [
+      {
+        "id": "nonlethal"
+      }
+    ],
+    "damage": {
+      "roll": "1d4",
+      "types": ["electricity"]
+    },
+    "type": "weaponRanged",
+    "weaponType": "small",
+    "range": 6,
+    "ammunition": {
+      "type": "battery",
+      "capacity": 20,
+      "usage": 1
+    }
+  }
+]

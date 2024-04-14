@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "id": "835589fe-9d52-4e37-8e82-5cde18aed3ed",
+    "type": "weaponSolarian",
+    "name": "Faux cristal",
+    "reference": {
+      "book": "base",
+      "page": 179
+    },
+    "level": 1,
+    "cost": 3050,
+    "damage": {
+      "roll": "+1d4",
+      "types": []
+    },
+    "critical": {
+      "id": "bleed",
+      "value": "1d6"
+    }
+  }
+]

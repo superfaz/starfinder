@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "id": "2ee717f8-a4f4-4919-86fd-9136caba11b6",
+    "name": "Gantelet pulseur, tonnerre",
+    "reference": {
+      "book": "base",
+      "page": 171
+    },
+    "hands": 1,
+    "weaponCategory": "sonic",
+    "level": 2,
+    "cost": 475,
+    "weight": 1,
+    "specials": [
+      {
+        "id": "powered",
+        "value": "capacité 20, consommation 1"
+      }
+    ],
+    "damage": {
+      "roll": "1d6",
+      "types": ["bludgeoning"]
+    },
+    "critical": {
+      "id": "knockdown"
+    },
+    "type": "weaponMelee",
+    "weaponType": "advanced"
+  }
+]

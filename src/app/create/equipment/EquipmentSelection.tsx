@@ -148,7 +148,12 @@ export function EquipmentSelection() {
           Filtres:
         </Col>
         <Col xs="auto">
-          <Form.Select id="equipment-type" value={equipmentType} onChange={handleEquipmentTypeChange}>
+          <Form.Select
+            id="equipment-type"
+            value={equipmentType}
+            onChange={handleEquipmentTypeChange}
+            aria-label="Catégorie"
+          >
             {menu.map((item) => (
               <option key={item.id} value={item.id} disabled={item.disabled}>
                 {item.name}
@@ -157,7 +162,7 @@ export function EquipmentSelection() {
           </Form.Select>
         </Col>
         <Col xs="auto">
-          <Form.Select id="sub-type" value={subType} onChange={handleSubTypeChange}>
+          <Form.Select id="sub-type" value={subType} onChange={handleSubTypeChange} aria-label="Sous-catégorie">
             {subMenu.map((type) => (
               <option key={type.id} value={type.id} className={type.proficient ? undefined : "text-danger"}>
                 {type.name}
