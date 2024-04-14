@@ -12,6 +12,7 @@ export * from "./ClassMystic";
 export * from "./ClassSoldier";
 export * from "./CriticalHitEffect";
 export * from "./DamageType";
+export * from "./EquipmentArmor";
 export * from "./EquipmentBase";
 export * from "./EquipmentWeapon";
 export * from "./FeatTemplate";

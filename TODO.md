@@ -78,6 +78,12 @@ Sorts : Souhait / Ajouter à la liste
 
 Equipement : Armes / Ajouter les armes spéciales
 
+Equipement : Armes / Ajouter les matériaux
+
+Equipement : Armes / Ajouter les accessoires
+
+Equipement : Armes / Ajouter les fusions
+
 ## Level increase
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
