@@ -10,6 +10,7 @@ import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
 import { WeaponGrenadeDisplay } from "./WeaponGrenadeDisplay";
 import { WeaponAmmunitionDisplay } from "./WeaponAmmunitionDisplay";
 import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
+import { ArmorDisplay } from "./ArmorDisplay";
 
 export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   if (descriptor.category === "weapon") {
@@ -31,6 +32,10 @@ export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescript
       default:
         return null;
     }
+  } else if (descriptor.category === "armor") {
+    return <ArmorDisplay descriptor={descriptor} />;
+  } else {
+    return null;
   }
 }
 
@@ -64,6 +69,10 @@ export function EquipmentSelected() {
         <EquipmentDisplay key={weapon.id} descriptor={weapon} />
       ))}
       <h2>Armures</h2>
+      {presenter.getArmors().length === 0 && <em>Pas d&apos;armures possédées</em>}
+      {presenter.getArmors().map((armor) => (
+        <EquipmentDisplay key={armor.id} descriptor={armor} />
+      ))}
       <h2>Autres</h2>
     </Stack>
   );

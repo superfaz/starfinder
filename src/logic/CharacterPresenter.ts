@@ -907,4 +907,8 @@ export class CharacterPresenter {
   getWeapons(): EquipmentDescriptor[] {
     return this.character.equipment.filter((e) => e.category === "weapon");
   }
+
+  getArmors(): EquipmentDescriptor[] {
+    return this.character.equipment.filter((e) => e.category === "armor");
+  }
 }
