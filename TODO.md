@@ -84,6 +84,10 @@ Equipement : Armes / Ajouter les accessoires
 
 Equipement : Armes / Ajouter les fusions
 
+Equipement : Armures / Ajouter les armures assistées
+
+Equipement : Armures / Ajouter les améliorations d'armure
+
 ## Level increase
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent

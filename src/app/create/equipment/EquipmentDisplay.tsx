@@ -48,7 +48,11 @@ export function EquipmentDisplay({
         </Row>
       </Card.Header>
       <Collapse in={open}>
-        <Card.Body>{children}</Card.Body>
+        <Card.Body>
+          {children}
+          <hr />
+          <div className="small text-muted">{equipment.description}</div>
+        </Card.Body>
       </Collapse>
       <Collapse in={open}>
         <Card.Footer>
