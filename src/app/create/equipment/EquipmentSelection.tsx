@@ -2,7 +2,7 @@
 
 import { findOrError } from "app/helpers";
 import { CharacterPresenter } from "logic";
-import { EquipmentBase, WeaponTypeIds } from "model";
+import { ArmorTypeIds, EquipmentBase, WeaponTypeIds } from "model";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { Alert, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
@@ -15,6 +15,7 @@ import { WeaponRangedTable } from "./WeaponRangedTable";
 import { WeaponGrenadeTable } from "./WeaponGrenadeTable";
 import { WeaponAmmunitionTable } from "./WeaponAmmunitionTable";
 import { WeaponSolarianTable } from "./WeaponSolarianTable";
+import { ArmorTable } from "./ArmorTable";
 
 function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {
@@ -90,8 +91,21 @@ function createMenu(presenter: CharacterPresenter) {
     {
       id: "armor",
       name: "Armures",
-      disabled: true,
-      submenu: [],
+      disabled: false,
+      submenu: [
+        {
+          id: "light",
+          name: "Armures légères",
+          uri: "/api/equipment/armors/light",
+          proficient: presenter.getArmorProficiencies().includes(ArmorTypeIds.light),
+        },
+        {
+          id: "heavy",
+          name: "Armures lourdes",
+          uri: "/api/equipment/armors/heavy",
+          proficient: presenter.getArmorProficiencies().includes(ArmorTypeIds.heavy),
+        },
+      ],
     },
     {
       id: "other",
@@ -133,6 +147,7 @@ export function EquipmentSelection() {
   function handleEquipmentTypeChange(event: ChangeEvent<HTMLSelectElement>) {
     setEquipments([]);
     setEquipmentType(event.target.value);
+    setSubType(findOrError(menu, event.target.value).submenu[0].id);
   }
 
   function handleSubTypeChange(event: ChangeEvent<HTMLSelectElement>) {
@@ -209,6 +224,15 @@ export function EquipmentSelection() {
       {equipmentType === "weapon" && subType === "grenade" && <WeaponGrenadeTable equipments={filtered} />}
       {equipmentType === "weapon" && subType === "ammunition" && <WeaponAmmunitionTable equipments={filtered} />}
       {equipmentType === "weapon" && subType === "solarian" && <WeaponSolarianTable equipments={filtered} />}
+
+      {equipmentType === "armor" && !subMenuEntry.proficient && (
+        <Alert variant="warning">
+          <strong>Attention : </strong> Vous n&apos;êtes pas formé à l&apos;usage des {subMenuEntry.name}.
+        </Alert>
+      )}
+      {equipmentType === "armor" && (subType === "light" || subType === "heavy") && (
+        <ArmorTable armorType={subType} equipments={filtered} />
+      )}
     </Stack>
   );
 }

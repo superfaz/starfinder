@@ -47,6 +47,8 @@ import {
   EquipmentWeaponSolarianSchema,
   EquipmentWeaponAmmunition,
   EquipmentWeaponAmmunitionSchema,
+  EquipmentArmorSchema,
+  EquipmentArmor,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -64,6 +66,16 @@ export const DataSets = {
     schema: CriticalHitEffectSchema,
   } as IDescriptor<CriticalHitEffect>,
   DamageType: { type: "named", name: "damage-types", schema: DamageTypeSchema } as IDescriptor<DamageType>,
+  EquipmentArmorLight: {
+    type: "simple",
+    name: "equipment-armors-light",
+    schema: EquipmentArmorSchema,
+  } as IDescriptor<EquipmentArmor>,
+  EquipmentArmorHeavy: {
+    type: "simple",
+    name: "equipment-armors-heavy",
+    schema: EquipmentArmorSchema,
+  } as IDescriptor<EquipmentArmor>,
   EquipmentWeaponBasic: {
     type: "simple",
     name: "equipment-weapons-basic",

@@ -1,11 +1,11 @@
 import { DataSets, DataSource, IDataSource } from "data";
-import { EquipmentWeaponIdSchema, EquipmentWeaponIds } from "model";
+import { EquipmentWeaponId, EquipmentWeaponIdSchema, EquipmentWeaponIds } from "model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(_: NextRequest, { params }: { params: { weaponType: string } }) {
   const dataSource: IDataSource = new DataSource();
 
-  const weaponType: string = EquipmentWeaponIdSchema.parse(params.weaponType);
+  const weaponType: EquipmentWeaponId = EquipmentWeaponIdSchema.parse(params.weaponType);
   switch (weaponType) {
     case EquipmentWeaponIds.basic:
       return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponBasic).getAll());

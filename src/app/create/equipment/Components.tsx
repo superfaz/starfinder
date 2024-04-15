@@ -62,3 +62,21 @@ export function Credits({ value }: { value?: number }) {
     return value + " Cr";
   }
 }
+
+export function DisplayModifier({ value }: { value?: number }) {
+  if (value === undefined || value === 0) {
+    return "-";
+  } else if (value > 0) {
+    return "+" + value;
+  } else {
+    return value;
+  }
+}
+
+export function DisplayRange({ value }: { value?: number }) {
+  if (value === undefined || value === 0) {
+    return "-";
+  } else {
+    return value * 1.5 + " m";
+  }
+}

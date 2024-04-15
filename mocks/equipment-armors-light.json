@@ -1,0 +1,20 @@
+[
+  {
+    "id": "e112c40b-bc1f-4c23-8e42-adb4c95547d9",
+    "type": "light",
+    "name": "Combinaison estex I",
+    "reference": {
+      "book": "base",
+      "page": 197
+    },
+    "level": 1,
+    "cost": 410,
+    "eacBonus": 0,
+    "kacBonus": 1,
+    "maxDexBonus": 5,
+    "armorCheckPenalty": -1,
+    "speedAdjustment": 0,
+    "upgradeSlots": 2,
+    "weight": 1
+  }
+]

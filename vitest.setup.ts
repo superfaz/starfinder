@@ -1,6 +1,6 @@
 import { beforeAll, vi } from "vitest";
 import { IDataSource, IDataSet, IDescriptor } from "data";
-import { EquipmentWeaponIds, IModel } from "model";
+import { ArmorTypeIds, EquipmentWeaponIds, IModel } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import envoyDetails from "./mocks/class-envoy.json";
 import mysticDetails from "./mocks/class-mystic.json";
@@ -41,11 +41,20 @@ beforeAll(async () => {
   });
 
   vi.stubGlobal("fetch", mockFetch);
+
   addFetchMock("/api/classes/envoy/details", envoyDetails);
   addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/soldier/details", soldierDetails);
   addFetchMock("/api/classes/mystic/details", mysticDetails);
   addFetchMock("/api/themes/scholar", scholarDetails);
+
+  for (const armorType in ArmorTypeIds) {
+    addFetchMock(
+      `/api/equipment/armors/${armorType}`,
+      (await import(`./mocks/equipment-armors-${armorType}.json`)).default
+    );
+  }
+
   for (const weaponType in EquipmentWeaponIds) {
     addFetchMock(
       `/api/equipment/weapons/${weaponType}`,

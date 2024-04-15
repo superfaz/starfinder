@@ -1,0 +1,20 @@
+[
+  {
+    "id": "8ac531d1-616c-44cc-af4d-ff26d7b807bb",
+    "type": "heavy",
+    "name": "Armure annelée lashunta I",
+    "reference": {
+      "book": "base",
+      "page": 197
+    },
+    "level": 1,
+    "cost": 415,
+    "eacBonus": 2,
+    "kacBonus": 4,
+    "maxDexBonus": 2,
+    "armorCheckPenalty": -2,
+    "speedAdjustment": -1,
+    "upgradeSlots": 0,
+    "weight": 2
+  }
+]

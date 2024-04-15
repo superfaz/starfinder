@@ -18,6 +18,14 @@ import {
   ThemeSchema,
   ThemeScholarSchema,
   WeaponTypeSchema,
+  CriticalHitEffectSchema,
+  DamageTypeSchema,
+  EquipmentArmorSchema,
+  EquipmentWeaponMeleeSchema,
+  EquipmentWeaponAmmunitionSchema,
+  EquipmentWeaponGrenadeSchema,
+  EquipmentWeaponRangedSchema,
+  EquipmentWeaponSolarianSchema,
 } from "model";
 import { describe, expect, test } from "vitest";
 
@@ -66,6 +74,71 @@ const datasets = [
     file: "classes.json",
     array: true,
     schema: ClassSchema.strict(),
+  },
+  {
+    file: "critical-hit-effects.json",
+    array: true,
+    schema: CriticalHitEffectSchema.strict(),
+  },
+  {
+    file: "damage-types.json",
+    array: true,
+    schema: DamageTypeSchema.strict(),
+  },
+  {
+    file: "equipment-armors-heavy.json",
+    array: true,
+    schema: EquipmentArmorSchema.strict(),
+  },
+  {
+    file: "equipment-armors-light.json",
+    array: true,
+    schema: EquipmentArmorSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-advanced.json",
+    array: true,
+    schema: EquipmentWeaponMeleeSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-ammunition.json",
+    array: true,
+    schema: EquipmentWeaponAmmunitionSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-basic.json",
+    array: true,
+    schema: EquipmentWeaponMeleeSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-grenade.json",
+    array: true,
+    schema: EquipmentWeaponGrenadeSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-heavy.json",
+    array: true,
+    schema: EquipmentWeaponRangedSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-long.json",
+    array: true,
+    schema: EquipmentWeaponRangedSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-small.json",
+    array: true,
+    schema: EquipmentWeaponRangedSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-sniper.json",
+    array: true,
+    schema: EquipmentWeaponRangedSchema.strict(),
+  },
+  {
+    file: "equipment-weapons-solarian.json",
+    array: true,
+    schema: EquipmentWeaponSolarianSchema.strict(),
   },
   {
     file: "feats.json",
