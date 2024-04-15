@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
-import { LevelSchema, ReferenceSchema } from "./helper";
+import { DescriptionSchema, LevelSchema, ReferenceSchema } from "./helper";
 
 export const EquipmentCategorySchema = z.enum(["weapon", "armor", "other"]);
 
@@ -27,6 +27,7 @@ export const EquipmentBaseSchema = INamedModelSchema.extend({
   level: LevelSchema,
   cost: z.number().int().positive().optional(),
   weight: z.union([z.literal("F"), z.number().positive()]).optional(),
+  description: DescriptionSchema.optional(),
 });
 
 export type EquipmentBase = z.infer<typeof EquipmentBaseSchema>;
