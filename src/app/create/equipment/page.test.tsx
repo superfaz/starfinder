@@ -1,5 +1,5 @@
 import { cleanup, screen, within } from "@testing-library/react";
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import { createCharacter, renderWithData } from "../helpers-test";
 import Page from "./page";
 import userEvent from "@testing-library/user-event";
@@ -24,11 +24,6 @@ describe("/create/equipment", () => {
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
     await renderWithData(<Page />, character);
-  });
-
-  beforeEach(async () => {
-    const user = userEvent.setup();
-    await user.selectOptions(screen.getByRole("combobox", { name: "Catégorie" }), "weapon");
   });
 
   test("is displayed", async () => {
@@ -60,7 +55,9 @@ describe("/create/equipment", () => {
   test.each(weapons)("proposes weapons and ammunitions ($category)", async ({ category, expected }) => {
     const user = userEvent.setup();
     await user.selectOptions(screen.getByRole("combobox", { name: "Catégorie" }), "weapon");
-    await user.selectOptions(screen.getByRole("combobox", { name: "Sous-catégorie" }), category);
+    if (category !== "basic") {
+      await user.selectOptions(screen.getByRole("combobox", { name: "Sous-catégorie" }), category);
+    }
 
     const equipmentTable = within(screen.getByRole("table"));
     expect(equipmentTable.getByText(expected)).toBeInTheDocument();
