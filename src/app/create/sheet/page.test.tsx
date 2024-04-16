@@ -102,12 +102,12 @@ describe("/create/sheet with race/theme/class", () => {
 
   test("displays weapons proficiencies", async () => {
     const block = within(screen.getByTestId("weapons"));
-    expect(block.queryByText(/Formations: Armes de corps à corps simples.*/i)).not.toBeNull();
+    expect(block.queryByText(/Formations : Armes de corps à corps simples.*/i)).not.toBeNull();
   });
 
   test("displays armors proficiencies", async () => {
     const block = within(screen.getByTestId("armors"));
-    expect(block.queryByText(/Formations: Armures légères.*/i)).not.toBeNull();
+    expect(block.queryByText(/Formations : Armures légères.*/i)).not.toBeNull();
   });
 
   test("displays initiative bonus", async () => {

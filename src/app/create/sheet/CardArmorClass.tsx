@@ -19,7 +19,7 @@ export function CardArmorClass({ character }: CharacterProps) {
         <Badge bg="primary">Classe d&apos;armure</Badge>
       </Card.Header>
       <Card.Body className="position-relative small py-2">
-        {texts.length > 0 && <span>Formations: {texts.join(", ")}</span>}
+        {texts.length > 0 && <span>Formations : {texts.join(", ")}</span>}
       </Card.Body>
       <Card.Body className="position-relative">
         <Row>

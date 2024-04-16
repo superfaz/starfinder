@@ -52,7 +52,7 @@ export const EquipmentWeaponAmmunitionSchema = EquipmentBaseSchema.extend({
 
 export type EquipmentWeaponAmmunition = z.infer<typeof EquipmentWeaponAmmunitionSchema>;
 
-export const EquipmentWeaponSchema = EquipmentBaseSchema.extend({
+export const EquipmentWeaponBaseSchema = EquipmentBaseSchema.extend({
   hands: z.union([z.literal(1), z.literal(2)]),
   weaponCategory: WeaponCategoryIdSchema.optional(),
   damage: DamageSchema.optional(),
@@ -60,7 +60,7 @@ export const EquipmentWeaponSchema = EquipmentBaseSchema.extend({
   specials: SpecialSchema.array(),
 });
 
-export type EquipmentWeapon = z.infer<typeof EquipmentWeaponSchema>;
+export type EquipmentWeaponBase = z.infer<typeof EquipmentWeaponBaseSchema>;
 
 export const EquipmentWeaponGrenadeSchema = EquipmentBaseSchema.extend({
   type: z.literal(EquipmentTypes.weaponGrenade),
@@ -72,14 +72,14 @@ export const EquipmentWeaponGrenadeSchema = EquipmentBaseSchema.extend({
 
 export type EquipmentWeaponGrenade = z.infer<typeof EquipmentWeaponGrenadeSchema>;
 
-export const EquipmentWeaponMeleeSchema = EquipmentWeaponSchema.extend({
+export const EquipmentWeaponMeleeSchema = EquipmentWeaponBaseSchema.extend({
   type: z.literal(EquipmentTypes.weaponMelee),
   weaponType: z.enum([WeaponTypeIds.basic, WeaponTypeIds.advanced]),
 });
 
 export type EquipmentWeaponMelee = z.infer<typeof EquipmentWeaponMeleeSchema>;
 
-export const EquipmentWeaponRangedSchema = EquipmentWeaponSchema.extend({
+export const EquipmentWeaponRangedSchema = EquipmentWeaponBaseSchema.extend({
   type: z.literal(EquipmentTypes.weaponRanged),
   weaponType: z.enum([WeaponTypeIds.small, WeaponTypeIds.long, WeaponTypeIds.heavy, WeaponTypeIds.sniper]),
   range: z.number().int().positive(),
@@ -99,3 +99,13 @@ export const EquipmentWeaponSolarianSchema = EquipmentBaseSchema.extend({
 });
 
 export type EquipmentWeaponSolarian = z.infer<typeof EquipmentWeaponSolarianSchema>;
+
+export const EquipmentWeaponSchema = z.discriminatedUnion("type", [
+  EquipmentWeaponAmmunitionSchema,
+  EquipmentWeaponGrenadeSchema,
+  EquipmentWeaponMeleeSchema,
+  EquipmentWeaponRangedSchema,
+  EquipmentWeaponSolarianSchema,
+]);
+
+export type EquipmentWeapon = z.infer<typeof EquipmentWeaponSchema>;

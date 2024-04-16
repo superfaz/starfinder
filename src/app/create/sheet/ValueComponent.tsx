@@ -3,7 +3,7 @@ interface IValueComponentProps {
   value?: string | number;
   title?: string;
   className?: string;
-  children?: JSX.Element[] | JSX.Element;
+  children?: JSX.Element[] | JSX.Element | false;
 }
 
 type ValueComponentProps = Readonly<IValueComponentProps>;
