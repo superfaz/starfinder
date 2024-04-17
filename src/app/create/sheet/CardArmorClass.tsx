@@ -1,8 +1,48 @@
 import { useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
-import { findOrError } from "app/helpers";
+import { displayBonus, findOrError } from "app/helpers";
 import { ValueComponent } from "./ValueComponent";
-import { Badge, Card, Row } from "react-bootstrap";
+import { Badge, Card, Col, Row } from "react-bootstrap";
+import { EquipmentArmor, EquipmentDescriptor } from "model";
+import { useEffect, useState } from "react";
+
+async function getArmor(descriptor: EquipmentDescriptor): Promise<EquipmentArmor> {
+  return fetch(`/api/equipment/armors/${descriptor.secondaryType}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const equipments = data as EquipmentArmor[];
+      return findOrError(equipments, (e) => e.id === descriptor.equipmentId);
+    });
+}
+
+function CardArmor({ descriptor }: { descriptor: EquipmentDescriptor }) {
+  const armorTypes = useAppSelector((state) => state.data.armorTypes);
+  const [armor, setArmor] = useState<EquipmentArmor | undefined>(undefined);
+
+  useEffect(() => {
+    getArmor(descriptor).then(setArmor);
+  }, [descriptor]);
+
+  if (armor === undefined) {
+    return null;
+  }
+
+  return (
+    <Card.Body className="small py-2">
+      <Row>
+        <Col>
+          <ValueComponent label={findOrError(armorTypes, armor.type).name} value={armor.name} />
+        </Col>
+        <Col xs="auto">
+          <ValueComponent label="CAE" value={displayBonus(armor.eacBonus)} />
+        </Col>
+        <Col xs="auto">
+          <ValueComponent label="CAC" value={displayBonus(armor.kacBonus)} />
+        </Col>
+      </Row>
+    </Card.Body>
+  );
+}
 
 export function CardArmorClass({ character }: CharacterProps) {
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
@@ -28,9 +68,9 @@ export function CardArmorClass({ character }: CharacterProps) {
           ))}
         </Row>
       </Card.Body>
-      <Card.Body className="small">
-        <span className="text-muted">Armure équipée :</span> aucune
-      </Card.Body>
+      {character.getArmors().map((descriptor) => (
+        <CardArmor key={descriptor.id} descriptor={descriptor} />
+      ))}
     </Card>
   );
 }
