@@ -561,7 +561,6 @@ export class CharacterPresenter {
       return 0;
     }
 
-    // TODO: Check rank calculation
     const ranks = this.getModifiers().filter(ofType(ModifierTypes.rank)).length;
     const skillRanks = selectedClass.skillRank + computeAbilityScoreModifier(this.getAbilityScores().int) + ranks;
 
