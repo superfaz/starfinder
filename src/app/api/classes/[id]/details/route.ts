@@ -1,5 +1,5 @@
 import { DataSource, IDataSource, DataSets } from "data";
-import { asClassEnvoy, asClassMystic, asClassOperative, asClassSoldier, isIModel } from "model";
+import { asClassEnvoy, asClassMystic, asClassOperative, asClassSoldier, asClassTechnomancer, isIModel } from "model";
 import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +22,8 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
       return Response.json(asClassMystic(raw));
     case "soldier":
       return Response.json(asClassSoldier(raw));
+    case "technomancer":
+      return Response.json(asClassTechnomancer(raw));
     default:
       throw new Error("Not implemented");
   }

@@ -11,6 +11,7 @@ import type {
   ClassMystic,
   ClassOperative,
   ClassSoldier,
+  ClassTechnomancer,
   EquipmentDescriptor,
   FeatTemplate,
   IModel,
@@ -27,7 +28,12 @@ import type {
 } from "model";
 import { AbilityScoreIds, ModifierTypes, PrerequisiteTypes, isCasterId, isVariable, isWeaponTypeId } from "model";
 import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofType } from "view";
-import { getMysticFeatureTemplates, getOperativeFeatureTemplates, getSoldierFeatureTemplates } from "./ClassPresenter";
+import {
+  getMysticFeatureTemplates,
+  getOperativeFeatureTemplates,
+  getSoldierFeatureTemplates,
+  getTechnomancerFeatureTemplates,
+} from "./ClassPresenter";
 import { FeatPresenter, Templater, cleanEvolutions } from ".";
 
 /**
@@ -344,6 +350,13 @@ export class CharacterPresenter {
 
       case "soldier":
         return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {
+          const level = f.level ?? 1;
+          const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
+          return templater.convertClassFeature(f);
+        });
+
+      case "technomancer":
+        return getTechnomancerFeatureTemplates(classDetails as ClassTechnomancer).map((f) => {
           const level = f.level ?? 1;
           const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
           return templater.convertClassFeature(f);

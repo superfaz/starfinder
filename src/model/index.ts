@@ -10,6 +10,7 @@ export * from "./ClassEnvoy";
 export * from "./ClassOperative";
 export * from "./ClassMystic";
 export * from "./ClassSoldier";
+export * from "./ClassTechnomancer";
 export * from "./CriticalHitEffect";
 export * from "./DamageType";
 export * from "./EquipmentArmor";

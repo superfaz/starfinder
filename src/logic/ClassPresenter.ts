@@ -1,5 +1,5 @@
 import { CharacterPresenter } from "./CharacterPresenter";
-import type { ClassMystic, ClassOperative, ClassSoldier, FeatureTemplate } from "model";
+import type { ClassMystic, ClassOperative, ClassSoldier, ClassTechnomancer, FeatureTemplate } from "model";
 
 export function getMysticFeatureTemplates(classDetails: ClassMystic, character: CharacterPresenter): FeatureTemplate[] {
   const connection = character.getMysticConnection();
@@ -47,4 +47,9 @@ export function getSoldierFeatureTemplates(
   const features: FeatureTemplate[] = [...classFeatures, ...specializationFeatures];
 
   return features;
+}
+
+export function getTechnomancerFeatureTemplates(classDetails: ClassTechnomancer): FeatureTemplate[] {
+  const classFeatures: FeatureTemplate[] = classDetails.features;
+  return classFeatures;
 }

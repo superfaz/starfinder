@@ -101,3 +101,5 @@ Classe : Soldat / Abilité : Don de combat / Choix des deux dons
 Classe : Soldat / Abilité : Amélioration d'équipement / Liste des améliorations possibles
 
 Classe : Soldat / Abilité : Second style de combat / Choix du style
+
+Classe : Technomancer / Abilité : Altération Magique / Choix des altérations
