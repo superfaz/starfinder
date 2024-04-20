@@ -10,6 +10,6 @@ describe("Page", () => {
   });
 
   test("Page is live", async () => {
-    expect(screen.getByRole("heading", { level: 1, name: "Création de personnage" })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 2, name: "Introduction" })).toBeDefined();
   });
 });
