@@ -1,28 +1,32 @@
 import { z } from "zod";
-import { FeatureTemplateSchema } from "./FeatureTemplate";
+import { FeatureCategorySchema, FeatureTemplateSchema } from "./FeatureTemplate";
 import { IModelSchema } from "./IModel";
 import { INamedModelSchema } from "./INamedModel";
-import { DescriptionSchema } from "./helper";
+import { DescriptionSchema, EvolutionsSchema } from "./helper";
 
-export const ClassSolarianRevelationTypeSchema = z.enum(["graviton", "photon"]);
-
-export type ClassSolarianRevelationType = z.infer<typeof ClassSolarianRevelationTypeSchema>;
-
-export const ClassSolarianRevelationSchema = INamedModelSchema.extend({
-  type: ClassSolarianRevelationTypeSchema,
-  description: DescriptionSchema,
-  features: z.array(FeatureTemplateSchema),
+export const ClassSolarianColorSchema = INamedModelSchema.extend({
+  variables: z.record(z.union([z.string(), z.number()])),
 });
-
-export type ClassSolarianRevelation = z.infer<typeof ClassSolarianRevelationSchema>;
 
 export const ClassSolarianManifestationSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
-  features: z.array(FeatureTemplateSchema),
+});
+
+export const ClassSolarianRevelationTypeSchema = z.enum(["graviton", "photon"]);
+
+export const ClassSolarianRevelationSchema = INamedModelSchema.extend({
+  type: ClassSolarianRevelationTypeSchema,
+  level: z.number(),
+  category: FeatureCategorySchema,
+  zenith: z.boolean(),
+  description: DescriptionSchema,
+  evolutions: z.optional(EvolutionsSchema),
 });
 
 export const ClassSolarianSchema = IModelSchema.extend({
   id: z.string(),
+  colors: z.array(ClassSolarianColorSchema),
+  manifestations: z.array(ClassSolarianManifestationSchema),
   features: z.array(FeatureTemplateSchema),
   revelations: z.array(ClassSolarianRevelationSchema),
 });
