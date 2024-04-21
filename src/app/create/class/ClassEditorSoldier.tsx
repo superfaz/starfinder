@@ -20,7 +20,7 @@ export default function SoldierEditor({ character }: CharacterProps) {
   const selectedStyle = classDetails.styles.find((s) => s.id === character.getSoldierPrimaryStyle());
 
   const handleStyleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(mutators.updateSoldierPrimayStyle(event.target.value));
+    dispatch(mutators.updateSoldierPrimaryStyle(event.target.value));
   };
 
   return (

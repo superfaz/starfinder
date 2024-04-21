@@ -86,7 +86,7 @@ const mainSlice = createSlice({
       state.character = updateSoldierAbilityScoreImpl(state.character, action.payload);
     },
 
-    updateSoldierPrimayStyle(state, action: PayloadAction<string>) {
+    updateSoldierPrimaryStyle(state, action: PayloadAction<string>) {
       state.character = updateSoldierPrimaryStyleImpl(state.character, action.payload);
     },
 
