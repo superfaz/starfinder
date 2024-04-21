@@ -36,7 +36,7 @@ Classe : Solarien / Ajouter les détails de classe
 
 Classe : Soldat / Style de combat: Garde/ Gérer Résistance cinétique
 
-Classe : Technomancien / Ajouter les détails de classe
+Classe : Technomancien / Abilité : Cache de sorts / Définir la forme de la cache
 
 Caractérisques / Méthode de génération : Aléatoire / A implémenter
 
