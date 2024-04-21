@@ -23,11 +23,20 @@ export const ClassSolarianRevelationSchema = INamedModelSchema.extend({
   evolutions: z.optional(EvolutionsSchema),
 });
 
+export const ClassSolarianPrerequisiteSchema = IModelSchema.extend({
+  type: z.literal("manifestation"),
+  value: z.enum(["weapon", "armor"]),
+}).strict();
+
+export const ClassSolarianFeatureTemplateSchema = FeatureTemplateSchema.extend({
+  prerequisites: z.array(ClassSolarianPrerequisiteSchema).optional(),
+});
+
 export const ClassSolarianSchema = IModelSchema.extend({
   id: z.string(),
   colors: z.array(ClassSolarianColorSchema),
   manifestations: z.array(ClassSolarianManifestationSchema),
-  features: z.array(FeatureTemplateSchema),
+  features: z.array(ClassSolarianFeatureTemplateSchema),
   revelations: z.array(ClassSolarianRevelationSchema),
 });
 
