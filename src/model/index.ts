@@ -9,6 +9,7 @@ export * from "./Class";
 export * from "./ClassEnvoy";
 export * from "./ClassOperative";
 export * from "./ClassMystic";
+export * from "./ClassSolarian";
 export * from "./ClassSoldier";
 export * from "./ClassTechnomancer";
 export * from "./CriticalHitEffect";
