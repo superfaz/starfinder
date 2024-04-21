@@ -9,34 +9,6 @@ import StoreProvider from "logic/StoreProvider";
 import { Nav } from "app/components/Nav";
 import { Character, IModel } from "model";
 
-function AbilityScoreSubText({ presenter }: Readonly<{ presenter: CharacterPresenter }>) {
-  const remainingAbilityScoresPoints = presenter.getRemainingAbilityScoresPoints();
-  const ranks = Object.values(presenter.getCharacter().skillRanks).reduce((acc, v) => acc + v, 0);
-  const remainingRanks = presenter.getRemainingSkillRanksPoints();
-
-  if (remainingAbilityScoresPoints === 0 && remainingRanks === 0) {
-    return (
-      <span className="selected">
-        <i className="bi bi-check"></i> Définies
-      </span>
-    );
-  }
-
-  if (remainingAbilityScoresPoints === 0 && remainingRanks !== 0) {
-    return (
-      <span className="selected">
-        Rangs : {remainingRanks} / {ranks + remainingRanks}
-      </span>
-    );
-  }
-
-  if (remainingAbilityScoresPoints !== 10) {
-    return <span className="selected">Charactérisques : {presenter.getRemainingAbilityScoresPoints()} / 10</span>;
-  }
-
-  return null;
-}
-
 export default function LayoutClient({
   data,
   debug,
@@ -110,7 +82,6 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
         <Nav.Item>
           <Nav.Link href="/create/ability-scores" disabled={selectedClass === null}>
             <span className="label">Caractéristiques & Compétences</span>
-            <AbilityScoreSubText presenter={presenter} />
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
