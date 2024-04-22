@@ -2,6 +2,7 @@ import {
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
   ClassSkillModifierSchema,
+  DamageTypeIdSchema,
   FeatModifierSchema,
   IModelSchema,
   ModifierTypes,
@@ -14,7 +15,13 @@ import {
 import { z } from "zod";
 
 export const SimpleModifier = IModelSchema.extend({
-  type: z.enum([ModifierTypes.attack, ModifierTypes.languageCount, ModifierTypes.rank, ModifierTypes.speed]),
+  type: z.enum([
+    ModifierTypes.attack,
+    ModifierTypes.armorClass,
+    ModifierTypes.languageCount,
+    ModifierTypes.rank,
+    ModifierTypes.speed,
+  ]),
   level: z.number().optional(),
   value: z.number(),
 }).strict();
@@ -46,6 +53,13 @@ export const SkillModifier = IModelSchema.extend({
   value: z.number(),
 }).strict();
 
+export const ResistanceModifier = IModelSchema.extend({
+  type: z.literal(ModifierTypes.resistance),
+  level: z.number().optional(),
+  targets: z.array(DamageTypeIdSchema),
+  value: z.number(),
+}).strict();
+
 export const Modifier = z.discriminatedUnion("type", [
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
@@ -55,6 +69,7 @@ export const Modifier = z.discriminatedUnion("type", [
   HitPointsModifier,
   InitiativeModifier,
   RankSkillModifierSchema,
+  ResistanceModifier,
   ResolveModifier,
   SimpleModifier,
   SavingThrowModifierSchema,

@@ -5,6 +5,7 @@ import { IModelSchema } from "./IModel";
 import { ModifierTypes } from "./ModifierType";
 import { SavingThrowIdSchema } from "./SavingThrow";
 import { WeaponTypeIdSchema } from "./WeaponType";
+import { DamageTypeIdSchema } from "./DamageType";
 
 export const AbilityModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.ability),
@@ -70,6 +71,7 @@ export const WeaponProficiencyModifierSchema = IModelSchema.extend({
 
 export const SimpleModifierTemplateSchema = IModelSchema.extend({
   type: z.enum([
+    ModifierTypes.armorClass,
     ModifierTypes.attack,
     ModifierTypes.featCount,
     ModifierTypes.hitPoints,
@@ -91,12 +93,20 @@ export const SkillModifierTemplateSchema = IModelSchema.extend({
   value: z.union([z.string(), z.number()]),
 });
 
+export const ResistanceModifierTemplateSchema = IModelSchema.extend({
+  type: z.literal(ModifierTypes.resistance),
+  level: z.number().optional(),
+  targets: z.array(DamageTypeIdSchema),
+  value: z.union([z.string(), z.number()]),
+});
+
 export const ModifierTemplateSchema = z.discriminatedUnion("type", [
   ArmorProficiencyModifierSchema,
   AbilityModifierSchema,
   ClassSkillModifierSchema,
   FeatModifierSchema,
   RankSkillModifierSchema,
+  ResistanceModifierTemplateSchema,
   SimpleModifierTemplateSchema,
   SavingThrowModifierSchema,
   SavingThrowBonusModifierSchema,

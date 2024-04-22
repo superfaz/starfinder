@@ -25,9 +25,10 @@ interface ModifierComponentElement {
 }
 
 const displayLabelsForType: Record<ModifierType, string> = {
+  ability: "Pouvoir",
+  armorClass: "Classe d’armure",
   armorProficiency: "Port d’armure",
   attack: "Bonus de base à l’attaque",
-  ability: "Pouvoir",
   classSkill: "Compétence de classe",
   feat: "Don",
   featCount: "Nombre de Dons",
@@ -36,6 +37,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   languageCount: "Nombre de langue",
   rank: "Rang de compétence",
   rankSkill: "Rang de compétence",
+  resistance: "Résistance",
   resolve: "Points de persévérance",
   savingThrow: "Jets de sauvegarde",
   savingThrowBonus: "Jets de sauvegarde",
@@ -116,7 +118,12 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       break;
     }
 
-    case "spell": {
+    case ModifierTypes.resistance: {
+      element.targetName = modifier.targets.map((t) => findOrError(data.damageTypes, t).name).join(", ");
+      break;
+    }
+
+    case ModifierTypes.spell: {
       // Target is a spell
       const spell = data.spells.find((s) => s.id === modifier.target);
       element.targetName = spell?.name ?? modifier.target;

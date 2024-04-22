@@ -135,6 +135,7 @@ export class Templater {
           ...template,
           target: this.applyForString(template.target),
         };
+      case ModifierTypes.armorClass:
       case ModifierTypes.attack:
       case ModifierTypes.featCount:
       case ModifierTypes.hitPoints:
@@ -146,6 +147,12 @@ export class Templater {
       case ModifierTypes.stamina:
         return {
           ...template,
+          value: this.applyForNumber(template.value),
+        };
+      case ModifierTypes.resistance:
+        return {
+          ...template,
+          targets: template.targets,
           value: this.applyForNumber(template.value),
         };
       case ModifierTypes.skill:
