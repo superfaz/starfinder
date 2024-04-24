@@ -82,6 +82,18 @@ const mainSlice = createSlice({
       state.character = updateMysticConnectionImpl(state.character, action.payload);
     },
 
+    updateSolarianColor(state, action: PayloadAction<string>) {
+      state.character = updateSolarianColorImpl(state.character, action.payload);
+    },
+
+    updateSolarianManifestation(state, action: PayloadAction<string>) {
+      state.character = updateSolarianManifestationImpl(state.character, action.payload);
+    },
+
+    updateSolarianDamageType(state, action: PayloadAction<string>) {
+      state.character = updateSolarianDamageTypeImpl(state.character, action.payload);
+    },
+
     updateSoldierAbilityScore(state, action: PayloadAction<string>) {
       state.character = updateSoldierAbilityScoreImpl(state.character, action.payload);
     },
@@ -439,6 +451,13 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
   } else if (classId === "operative") {
     // Class: Operative
     result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
+  } else if (classId === "solarian") {
+    // Class: Solarian
+    result.classOptions = {
+      solarianColor: "white",
+      solarianManifestation: "weapon",
+      solarianDamageType: "piercing",
+    };
   } else if (classId === "soldier") {
     // Class: Soldier
     result.classOptions = {
@@ -481,6 +500,57 @@ function updateMysticConnectionImpl(character: Character, connection: string): C
     classOptions: {
       ...character.classOptions,
       mysticConnection: connection,
+    },
+  };
+}
+
+/**
+ * Updates the manifestation color selected for a solarian character.
+ *
+ * @param character - the character to update
+ * @param colorId - the identifier of the selected color
+ * @returns The updated character
+ */
+function updateSolarianColorImpl(character: Character, colorId: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      solarianColor: colorId,
+    },
+  };
+}
+
+/**
+ * Updates the manifestation type selected for a solarian character.
+ *
+ * @param character - the character to update
+ * @param manifestationId - the identifier of the selected manifestation
+ * @returns The updated character
+ */
+function updateSolarianManifestationImpl(character: Character, manifestationId: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      solarianManifestation: manifestationId,
+    },
+  };
+}
+
+/**
+ * Updates the damage type selected for a solarian weapon.
+ *
+ * @param character - the character to update
+ * @param damageTypeId - the identifier of the selected damage type
+ * @returns The updated character
+ */
+function updateSolarianDamageTypeImpl(character: Character, damageTypeId: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      solarianDamageType: damageTypeId,
     },
   };
 }
@@ -651,6 +721,16 @@ class Updators {
 
   updateMysticConnection(connection: string) {
     this._character = updateMysticConnectionImpl(this._character, connection);
+    return this;
+  }
+
+  updateSolarianColor(colorId: string) {
+    this._character = updateSolarianColorImpl(this._character, colorId);
+    return this;
+  }
+
+  updateSolarianManifestation(manifestationId: string) {
+    this._character = updateSolarianManifestationImpl(this._character, manifestationId);
     return this;
   }
 

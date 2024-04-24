@@ -10,6 +10,7 @@ import type {
   ClassEnvoy,
   ClassMystic,
   ClassOperative,
+  ClassSolarian,
   ClassSoldier,
   ClassTechnomancer,
   EquipmentDescriptor,
@@ -31,6 +32,7 @@ import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofTyp
 import {
   getMysticFeatureTemplates,
   getOperativeFeatureTemplates,
+  getSolarianFeatureTemplates,
   getSoldierFeatureTemplates,
   getTechnomancerFeatureTemplates,
 } from "./ClassPresenter";
@@ -348,6 +350,13 @@ export class CharacterPresenter {
         });
       }
 
+      case "solarian":
+        return getSolarianFeatureTemplates(classDetails as ClassSolarian).map((f) => {
+          const level = f.level ?? 1;
+          const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
+          return templater.convertClassFeature(f);
+        });
+
       case "soldier":
         return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {
           const level = f.level ?? 1;
@@ -373,6 +382,18 @@ export class CharacterPresenter {
 
   getOperativeSpecialization(): string | null {
     return this.character.classOptions?.operativeSpecialization ?? null;
+  }
+
+  getSolarianColor(): string | null {
+    return this.character.classOptions?.solarianColor ?? null;
+  }
+
+  getSolarianManifestation(): string | null {
+    return this.character.classOptions?.solarianManifestation ?? null;
+  }
+
+  getSolarianDamageType(): string | null {
+    return this.character.classOptions?.solarianDamageType ?? null;
   }
 
   isSoldier(): boolean {

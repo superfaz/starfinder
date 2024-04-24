@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 const LazyEditorEnvoy = dynamic(() => import("./ClassEditorEnvoy"));
 const LazyEditorOperative = dynamic(() => import("./ClassEditorOperative"));
 const LazyEditorMystic = dynamic(() => import("./ClassEditorMystic"));
+const LazyEditorSolarian = dynamic(() => import("./ClassEditorSolarian"));
 const LazyEditorSoldier = dynamic(() => import("./ClassEditorSoldier"));
 
 export function LazyClassEditor(): JSX.Element | null {
@@ -31,6 +32,9 @@ export function LazyClassEditor(): JSX.Element | null {
 
     case "mystic":
       return <LazyEditorMystic character={presenter} />;
+
+    case "solarian":
+      return <LazyEditorSolarian character={presenter} />;
 
     case "soldier":
       return <LazyEditorSoldier character={presenter} />;
