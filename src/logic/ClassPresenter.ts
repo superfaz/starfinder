@@ -3,6 +3,7 @@ import type {
   ClassMystic,
   ClassOperative,
   ClassSolarian,
+  ClassSolarianFeatureTemplate,
   ClassSoldier,
   ClassTechnomancer,
   FeatureTemplate,
@@ -39,8 +40,8 @@ export function getOperativeFeatureTemplates(
   return features;
 }
 
-export function getSolarianFeatureTemplates(classDetails: ClassSolarian): FeatureTemplate[] {
-  const classFeatures: FeatureTemplate[] = classDetails.features;
+export function getSolarianFeatureTemplates(classDetails: ClassSolarian): ClassSolarianFeatureTemplate[] {
+  const classFeatures: ClassSolarianFeatureTemplate[] = classDetails.features;
   return classFeatures;
 }
 

@@ -10,6 +10,9 @@ import {
   SavingThrowIdSchema,
   WeaponTypeIdSchema,
   isModifierType,
+  EquipmentWeapon,
+  EquipmentWeaponSchema,
+  TemplateEquipment,
 } from "model";
 import { ClassFeature, Feat, Modifier, RaceFeature, ThemeFeature } from "view";
 
@@ -85,6 +88,12 @@ export class Templater {
     };
   }
 
+  convertEquipment(template: TemplateEquipment): EquipmentWeapon {
+    const text = JSON.stringify(template);
+    const converted = this.applyForString(text);
+    return EquipmentWeaponSchema.parse(JSON.parse(converted));
+  }
+
   convertFeat(template: FeatTemplate, target?: INamedModel): Feat {
     if (target !== undefined) {
       this.context.target = target.id;
@@ -129,12 +138,6 @@ export class Templater {
           ...template,
           description: this.applyForString(template.description),
         };
-      case ModifierTypes.classSkill:
-      case ModifierTypes.rankSkill:
-        return {
-          ...template,
-          target: this.applyForString(template.target),
-        };
       case ModifierTypes.armorClass:
       case ModifierTypes.attack:
       case ModifierTypes.featCount:
@@ -148,6 +151,17 @@ export class Templater {
         return {
           ...template,
           value: this.applyForNumber(template.value),
+        };
+      case ModifierTypes.classSkill:
+      case ModifierTypes.rankSkill:
+        return {
+          ...template,
+          target: this.applyForString(template.target),
+        };
+      case ModifierTypes.equipment:
+        return {
+          ...template,
+          equipment: this.convertEquipment(template.equipment),
         };
       case ModifierTypes.resistance:
         return {

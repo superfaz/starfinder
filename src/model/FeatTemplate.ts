@@ -16,7 +16,7 @@ const BaseFeatTemplateSchema = INamedModelSchema.extend({
   prerequisites: z.array(PrerequisiteSchema).optional(),
 });
 
-export const FeatTargetType = z.enum([
+export const FeatTargetTypeSchema = z.enum([
   "combatManeuver",
   "energyDamageType",
   "kineticDamageType",
@@ -30,20 +30,20 @@ export const FeatTargetType = z.enum([
   "weapon",
 ]);
 
-export type FeatTargetType = z.infer<typeof FeatTargetType>;
+export type FeatTargetType = z.infer<typeof FeatTargetTypeSchema>;
 
-export const FeatTargetTypes = FeatTargetType.enum;
+export const FeatTargetTypes = FeatTargetTypeSchema.enum;
 
 export const MultipleFeatTemplateSchema = BaseFeatTemplateSchema.extend({
   type: z.literal("multiple"),
-  targetType: FeatTargetType,
+  targetType: FeatTargetTypeSchema,
 });
 
 export type MultipleFeatTemplate = z.infer<typeof MultipleFeatTemplateSchema>;
 
 export const TargetedFeatTemplateSchema = BaseFeatTemplateSchema.extend({
   type: z.literal("targeted"),
-  targetType: FeatTargetType,
+  targetType: FeatTargetTypeSchema,
 });
 
 export type TargetedFeatTemplate = z.infer<typeof TargetedFeatTemplateSchema>;

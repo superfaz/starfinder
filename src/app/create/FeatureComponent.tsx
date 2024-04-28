@@ -15,6 +15,7 @@ const evolutionLabels: Record<string, string> = {
   bonus: "Bonus: +",
   damage: "Dégâts: ",
   distance: "Distance: ",
+  resistance: "Résistance: ",
   strike: "Attaques: ",
   dice: "Dés: ",
 };

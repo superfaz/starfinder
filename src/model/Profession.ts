@@ -1,4 +1,4 @@
-import { z } from "zod";
+import type { z } from "zod";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { INamedModelSchema } from "./INamedModel";
 

@@ -31,6 +31,7 @@ export * from "./Race";
 export * from "./SavingThrow";
 export * from "./SkillDefinition";
 export * from "./Spell";
+export * from "./Template";
 export * from "./Theme";
 export * from "./ThemeScholar";
 export * from "./Variant";

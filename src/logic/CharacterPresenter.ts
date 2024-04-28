@@ -350,12 +350,16 @@ export class CharacterPresenter {
         });
       }
 
-      case "solarian":
-        return getSolarianFeatureTemplates(classDetails as ClassSolarian).map((f) => {
-          const level = f.level ?? 1;
-          const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
-          return templater.convertClassFeature(f);
-        });
+      case "solarian": {
+        const manifestation = this.getSolarianManifestation();
+        return getSolarianFeatureTemplates(classDetails as ClassSolarian)
+          .filter((f) => !f.prerequisites || f.prerequisites.length === 0 || f.prerequisites[0].value === manifestation)
+          .map((f) => {
+            const level = f.level ?? 1;
+            const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
+            return templater.convertClassFeature(f);
+          });
+      }
 
       case "soldier":
         return getSoldierFeatureTemplates(classDetails as ClassSoldier, this).map((f) => {

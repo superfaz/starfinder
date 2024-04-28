@@ -32,6 +32,8 @@ export const ClassSolarianFeatureTemplateSchema = FeatureTemplateSchema.extend({
   prerequisites: z.array(ClassSolarianPrerequisiteSchema).optional(),
 });
 
+export type ClassSolarianFeatureTemplate = z.infer<typeof ClassSolarianFeatureTemplateSchema>;
+
 export const ClassSolarianSchema = IModelSchema.extend({
   id: z.string(),
   colors: z.array(ClassSolarianColorSchema),

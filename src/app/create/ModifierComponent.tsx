@@ -30,6 +30,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   armorProficiency: "Port d’armure",
   attack: "Bonus de base à l’attaque",
   classSkill: "Compétence de classe",
+  equipment: "Équipement",
   feat: "Don",
   featCount: "Nombre de Dons",
   hitPoints: "Points de vie",

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import type { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
 
