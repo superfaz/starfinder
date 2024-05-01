@@ -1,5 +1,6 @@
 import { CharacterPresenter } from "./CharacterPresenter";
 import type {
+  ClassMechanic,
   ClassMystic,
   ClassOperative,
   ClassSolarian,
@@ -8,6 +9,11 @@ import type {
   ClassTechnomancer,
   FeatureTemplate,
 } from "model";
+
+export function getMechanicFeatureTemplates(classDetails: ClassMechanic): FeatureTemplate[] {
+  const classFeatures: FeatureTemplate[] = classDetails.features;
+  return classFeatures;
+}
 
 export function getMysticFeatureTemplates(classDetails: ClassMystic, character: CharacterPresenter): FeatureTemplate[] {
   const connection = character.getMysticConnection();

@@ -14,10 +14,11 @@ const categories: Record<FeatureCategory, string> = {
 const evolutionLabels: Record<string, string> = {
   bonus: "Bonus: +",
   damage: "Dégâts: ",
+  dice: "Dés: ",
   distance: "Distance: ",
   resistance: "Résistance: ",
   strike: "Attaques: ",
-  dice: "Dés: ",
+  usage: "Utilisations: ",
 };
 
 /**

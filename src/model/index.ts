@@ -8,6 +8,7 @@ export * from "./Character";
 export * from "./Class";
 export * from "./ClassEnvoy";
 export * from "./ClassOperative";
+export * from "./ClassMechanic";
 export * from "./ClassMystic";
 export * from "./ClassSolarian";
 export * from "./ClassSoldier";

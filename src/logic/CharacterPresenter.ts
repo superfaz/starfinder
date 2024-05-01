@@ -8,6 +8,7 @@ import type {
   Character,
   Class,
   ClassEnvoy,
+  ClassMechanic,
   ClassMystic,
   ClassOperative,
   ClassSolarian,
@@ -30,6 +31,7 @@ import type {
 import { AbilityScoreIds, ModifierTypes, PrerequisiteTypes, isCasterId, isVariable, isWeaponTypeId } from "model";
 import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofType } from "view";
 import {
+  getMechanicFeatureTemplates,
   getMysticFeatureTemplates,
   getOperativeFeatureTemplates,
   getSolarianFeatureTemplates,
@@ -324,6 +326,13 @@ export class CharacterPresenter {
     switch (classDetails.id) {
       case "envoy":
         return (classDetails as ClassEnvoy).features.map((f) => {
+          const level = f.level ?? 1;
+          const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
+          return templater.convertClassFeature(f);
+        });
+
+      case "mechanic":
+        return getMechanicFeatureTemplates(classDetails as ClassMechanic).map((f) => {
           const level = f.level ?? 1;
           const templater = this.createTemplater(cleanEvolutions(f.evolutions)[level]);
           return templater.convertClassFeature(f);

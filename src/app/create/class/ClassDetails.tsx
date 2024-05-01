@@ -18,6 +18,7 @@ function LazyClassDetails(): JSX.Element | null {
   switch (selectedClass.id) {
     case "envoy":
     case "operative":
+    case "mechanic":
     case "mystic":
     case "soldier":
     case "technomancer":

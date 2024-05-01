@@ -26,7 +26,9 @@ Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'impro
 
 Classe : Emissaire / Abilité : Maîtrise de compétence / Choix de la compétence
 
-Classe : Mécano / Ajouter les détails de classe
+Classe : Mécano / Ajouter les détails de l'intelligence artificielle
+
+Classe : Mécano / Abilité : Réseau de contrôle / Fournir les détails
 
 Classe : Mystique / Ajouter toutes les connections
 
@@ -97,6 +99,10 @@ Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
 Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation
 
 Classe : Emissaire / Abilité : Savoir-faire maîtrisé / Choix de l'improvisation
+
+Classe : Mécano / Ajouter les astuces de mécano
+
+Classe : Mécano / Abilité : Réseau de contrôle / Gérer l'impact
 
 Classe : Solarien / Gestion les révélations
 

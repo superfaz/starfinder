@@ -1,6 +1,7 @@
 import { DataSource, IDataSource, DataSets } from "data";
 import {
   asClassEnvoy,
+  asClassMechanic,
   asClassMystic,
   asClassOperative,
   asClassSolarian,
@@ -24,10 +25,12 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
   switch (raw.id) {
     case "envoy":
       return Response.json(asClassEnvoy(raw));
-    case "operative":
-      return Response.json(asClassOperative(raw));
+    case "mechanic":
+      return Response.json(asClassMechanic(raw));
     case "mystic":
       return Response.json(asClassMystic(raw));
+    case "operative":
+      return Response.json(asClassOperative(raw));
     case "solarian":
       return Response.json(asClassSolarian(raw));
     case "soldier":
