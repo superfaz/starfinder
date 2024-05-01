@@ -13,5 +13,5 @@ test("has create link", async ({ page }) => {
 
   // Expect a navigation to the create page
   await expect(page).toHaveURL(/\/create/);
-  await expect(page.getByRole("heading", { name: /Création de personnage/, level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Introduction/, level: 2 })).toBeVisible();
 });
