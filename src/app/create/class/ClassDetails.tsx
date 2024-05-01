@@ -5,6 +5,7 @@ import { useCharacterPresenter } from "../helpers";
 import dynamic from "next/dynamic";
 
 const LazyClassDetailsGeneric = dynamic(() => import("./ClassDetailsGeneric"));
+const LazyClassDetailsSolarian = dynamic(() => import("./ClassDetailsSolarian"));
 
 function LazyClassDetails(): JSX.Element | null {
   const presenter = useCharacterPresenter();
@@ -18,10 +19,12 @@ function LazyClassDetails(): JSX.Element | null {
     case "envoy":
     case "operative":
     case "mystic":
-    case "solarian":
     case "soldier":
     case "technomancer":
       return <LazyClassDetailsGeneric character={presenter} classId={selectedClass.id} />;
+
+    case "solarian":
+      return <LazyClassDetailsSolarian character={presenter} classId={selectedClass.id} />;
 
     default:
       return null;
