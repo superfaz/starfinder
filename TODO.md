@@ -32,7 +32,9 @@ Classe : Mystique / Ajouter toutes les connections
 
 Classe : Mystique / Ajouter la gestion des sorts
 
-Classe : Solarien / Ajouter les détails de classe
+Classe : Solarien / Ajouter les révélations
+
+Classe : Solarian / Abilité : Influence Sidérale / Chois des compétences
 
 Classe : Soldat / Style de combat: Garde/ Gérer Résistance cinétique
 
@@ -96,6 +98,10 @@ Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'impro
 
 Classe : Emissaire / Abilité : Savoir-faire maîtrisé / Choix de l'improvisation
 
+Classe : Solarien / Gestion les révélations
+
+Classe : Solarien / Gestion les révélations ultimes
+
 Classe : Soldat / Abilité : Don de combat / Choix des deux dons
 
 Classe : Soldat / Abilité : Amélioration d'équipement / Liste des améliorations possibles
@@ -103,3 +109,4 @@ Classe : Soldat / Abilité : Amélioration d'équipement / Liste des améliorati
 Classe : Soldat / Abilité : Second style de combat / Choix du style
 
 Classe : Technomancer / Abilité : Altération Magique / Choix des altérations
+
