@@ -13,7 +13,8 @@ import {
   hasName,
   hasValue,
 } from "model";
-import { Modifier } from "view";
+import { EquipmentModifier, Modifier } from "view";
+import { DisplayDamageLong, DisplaySpecials } from "./equipment/Components";
 
 interface ModifierComponentElement {
   level?: number;
@@ -30,6 +31,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   armorProficiency: "Port d’armure",
   attack: "Bonus de base à l’attaque",
   classSkill: "Compétence de classe",
+  damage: "Dégâts",
   equipment: "Équipement",
   feat: "Don",
   featCount: "Nombre de Dons",
@@ -95,6 +97,43 @@ function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: Mod
   }
 }
 
+function EquipmentModifierComponent({ modifier }: Readonly<{ modifier: EquipmentModifier }>) {
+  const equipment = modifier.equipment;
+  const weaponTypes = useAppSelector((state) => state.data.weaponTypes);
+  if (equipment.type === "weaponMelee") {
+    return (
+      <p>
+        <Badge bg="primary">{displayLabelsForType[modifier.type]}</Badge>
+        <strong className="me-2">{equipment.name}.</strong>
+        <br />
+        <span className="me-2">{findOrError(weaponTypes, equipment.weaponType).name}</span>
+        <br />
+        {equipment.damage && (
+          <span className="me-2">
+            <DisplayDamageLong damage={equipment.damage} />
+          </span>
+        )}
+        {equipment.specials && equipment.specials.length > 0 && (
+          <span className="me-2">
+            <DisplaySpecials specials={equipment.specials} />
+          </span>
+        )}
+        <br />
+        {equipment.description && <span className="me-2 text-muted">{equipment.description}</span>}
+      </p>
+    );
+  } else {
+    return (
+      <p>
+        <Badge bg="primary">{displayLabelsForType[modifier.type]}</Badge>
+        <strong className="me-2">{equipment.name}.</strong>
+        <br />
+        {equipment.description && <span className="me-2 text-muted">{equipment.description}</span>}
+      </p>
+    );
+  }
+}
+
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
   const data = useAppSelector((state) => state.data);
 
@@ -113,6 +152,9 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       // Target is a skill
       element.targetName = retrieveSkillName(data, modifier.target);
       break;
+
+    case ModifierTypes.equipment:
+      return <EquipmentModifierComponent modifier={modifier} />;
 
     case ModifierTypes.feat: {
       adaptForFeat(data, modifier, element);

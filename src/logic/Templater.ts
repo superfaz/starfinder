@@ -140,12 +140,14 @@ export class Templater {
         };
       case ModifierTypes.armorClass:
       case ModifierTypes.attack:
+      case ModifierTypes.damage:
       case ModifierTypes.featCount:
       case ModifierTypes.hitPoints:
       case ModifierTypes.initiative:
       case ModifierTypes.languageCount:
       case ModifierTypes.rank:
       case ModifierTypes.resolve:
+      case ModifierTypes.savingThrowBonus:
       case ModifierTypes.speed:
       case ModifierTypes.stamina:
         return {

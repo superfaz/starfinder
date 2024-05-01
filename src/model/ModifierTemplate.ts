@@ -21,10 +21,24 @@ export const ArmorProficiencyModifierSchema = IModelSchema.extend({
   target: ArmorTypeIdSchema,
 }).strict();
 
+export const AttackModifierSchema = IModelSchema.extend({
+  type: z.literal(ModifierTypes.attack),
+  level: z.number().optional(),
+  target: z.string().optional(),
+  value: z.union([z.string(), z.number()]),
+}).strict();
+
 export const ClassSkillModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.classSkill),
   level: z.number().optional(),
   target: z.string(),
+}).strict();
+
+export const DamageModifierSchema = IModelSchema.extend({
+  type: z.literal(ModifierTypes.damage),
+  level: z.number().optional(),
+  target: WeaponTypeIdSchema,
+  value: z.union([z.string(), z.number()]),
 }).strict();
 
 export const EquipmentModifierSchema = IModelSchema.extend({
@@ -54,13 +68,13 @@ export const ResistanceModifierTemplateSchema = IModelSchema.extend({
   level: z.number().optional(),
   targets: z.array(DamageTypeIdSchema),
   value: z.union([z.string(), z.number()]),
-});
+}).strict();
 
 export const SavingThrowBonusModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.savingThrowBonus),
   level: z.number().optional(),
   target: SavingThrowIdSchema,
-  value: z.number(),
+  value: z.union([z.string(), z.number()]),
 }).strict();
 
 export const SavingThrowModifierSchema = IModelSchema.extend({
@@ -75,7 +89,7 @@ export const SkillModifierTemplateSchema = IModelSchema.extend({
   level: z.number().optional(),
   target: z.string(),
   value: z.union([z.string(), z.number()]),
-});
+}).strict();
 
 export const SpellModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.spell),
@@ -93,7 +107,6 @@ export const WeaponProficiencyModifierSchema = IModelSchema.extend({
 export const SimpleModifierTemplateSchema = IModelSchema.extend({
   type: z.enum([
     ModifierTypes.armorClass,
-    ModifierTypes.attack,
     ModifierTypes.featCount,
     ModifierTypes.hitPoints,
     ModifierTypes.initiative,
@@ -105,12 +118,14 @@ export const SimpleModifierTemplateSchema = IModelSchema.extend({
   ]),
   level: z.number().optional(),
   value: z.union([z.string(), z.number()]),
-});
+}).strict();
 
 export const ModifierTemplateSchema = z.discriminatedUnion("type", [
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
+  AttackModifierSchema,
   ClassSkillModifierSchema,
+  DamageModifierSchema,
   EquipmentModifierSchema,
   FeatModifierSchema,
   RankSkillModifierSchema,

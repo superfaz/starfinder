@@ -41,7 +41,7 @@
       {
         "id": "8ae7862b-51a9-440a-9f01-62fd82bd599b",
         "type": "attack",
-        "proficiency": "<target>",
+        "target": "<target>",
         "value": 1
       }
     ],

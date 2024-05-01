@@ -2,13 +2,14 @@ import {
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
   ClassSkillModifierSchema,
+  DamageModifierSchema,
   DamageTypeIdSchema,
   EquipmentWeaponSchema,
   FeatModifierSchema,
   IModelSchema,
   ModifierTypes,
   RankSkillModifierSchema,
-  SavingThrowBonusModifierSchema,
+  SavingThrowIdSchema,
   SavingThrowModifierSchema,
   SpellModifierSchema,
   WeaponProficiencyModifierSchema,
@@ -33,6 +34,8 @@ export const EquipmentModifier = IModelSchema.extend({
   equipment: EquipmentWeaponSchema,
 }).strict();
 
+export type EquipmentModifier = z.infer<typeof EquipmentModifier>;
+
 export const FeatCountModifier = SimpleModifier.extend({
   type: z.literal(ModifierTypes.featCount),
 }).strict();
@@ -56,6 +59,13 @@ export const ResolveModifier = SimpleModifier.extend({
   type: z.literal(ModifierTypes.resolve),
 }).strict();
 
+export const SavingThrowBonusModifier = IModelSchema.extend({
+  type: z.literal(ModifierTypes.savingThrowBonus),
+  level: z.number().optional(),
+  target: SavingThrowIdSchema,
+  value: z.number(),
+}).strict();
+
 export const StaminaModifier = SimpleModifier.extend({
   type: z.literal(ModifierTypes.stamina),
 }).strict();
@@ -70,6 +80,7 @@ export const SkillModifier = IModelSchema.extend({
 export const Modifier = z.discriminatedUnion("type", [
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
+  DamageModifierSchema,
   ClassSkillModifierSchema,
   EquipmentModifier,
   FeatModifierSchema,
@@ -81,7 +92,7 @@ export const Modifier = z.discriminatedUnion("type", [
   ResolveModifier,
   SimpleModifier,
   SavingThrowModifierSchema,
-  SavingThrowBonusModifierSchema,
+  SavingThrowBonusModifier,
   SkillModifier,
   SpellModifierSchema,
   StaminaModifier,
