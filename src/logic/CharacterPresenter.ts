@@ -22,6 +22,7 @@ import type {
   Race,
   SavingThrow,
   SavingThrowId,
+  Size,
   SkillDefinition,
   Spell,
   Theme,
@@ -724,6 +725,15 @@ export class CharacterPresenter {
 
   getAlignment(): string {
     return this.character.alignment;
+  }
+
+  getSize(): Size {
+    const modifiers = this.getModifiers().filter(ofType(ModifierTypes.size));
+    if (modifiers.length === 0) {
+      return findOrError(this.data.sizes, "medium");
+    } else {
+      return findOrError(this.data.sizes, modifiers[0].target);
+    }
   }
 
   getSex(): string {

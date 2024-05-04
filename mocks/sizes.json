@@ -1,0 +1,47 @@
+[
+  {
+    "id": "fine",
+    "code": "IN",
+    "name": "Infime"
+  },
+  {
+    "id": "diminutive",
+    "code": "MI",
+    "name": "Minuscule"
+  },
+  {
+    "id": "tiny",
+    "code": "TP",
+    "name": "Très petite"
+  },
+  {
+    "id": "small",
+    "code": "P",
+    "name": "Petite"
+  },
+  {
+    "id": "medium",
+    "code": "M",
+    "name": "Moyenne"
+  },
+  {
+    "id": "large",
+    "code": "G",
+    "name": "Grande"
+  },
+  {
+    "id": "huge",
+    "code": "TG",
+    "name": "Très grande"
+  },
+  {
+    "id": "gargantuan",
+    "code": "GI",
+    "name": "Gigantesque"
+  },
+  {
+    "id": "colossal",
+    "code": "C",
+    "name": "Colossale"
+  }
+]

@@ -23,7 +23,7 @@ export function CardProfile({ character }: CharacterProps) {
           <ValueComponent label="Race" value={character.getRace()?.name} />
           <ValueComponent label="Thème" value={character.getTheme()?.name} />
           <Row>
-            <ValueComponent label="Taille" className="col" value={"Normale"} />
+            <ValueComponent label="Taille" className="col" value={character.getSize().name} />
             <ValueComponent label="Vitesse" className="col" value={"Normale"} />
             <ValueComponent label="Sexe" className="col-3" value={character.getSex()} />
           </Row>

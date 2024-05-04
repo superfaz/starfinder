@@ -63,7 +63,7 @@ describe("/create/sheet - default", () => {
 
   const fixedValueByDefault = [
     ["Level", "Niveau", "1"],
-    ["Size", "Taille", "Normale"],
+    ["Size", "Taille", "Moyenne"],
     ["Speed", "Vitesse", "Normale"],
   ];
 
