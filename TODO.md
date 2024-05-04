@@ -4,7 +4,13 @@
 
 Race / Ajouter les races classiques du livre de règles
 
+Race : Androide / Traits : Emplacement d'amélioration / Choix de l'équipement
+
 Race : Androide / Traits secondaires : Androïde xénométrique / Choix de la race
+
+Race : Androide / Traits secondaires : Augmentations facilitées / Gestion de la limite
+
+Race : Androide / Traits secondaires : Polyglote / Gestion des langues supplémentaires
 
 Race : Lashuntas / Traits : Etudiant / Choix des compétences
 
@@ -41,6 +47,8 @@ Classe : Solarian / Abilité : Influence Sidérale / Chois des compétences
 Classe : Soldat / Style de combat: Garde/ Gérer Résistance cinétique
 
 Classe : Technomancien / Abilité : Cache de sorts / Définir la forme de la cache
+
+Profil / Gestion des langues connues
 
 Caractérisques / Méthode de génération : Aléatoire / A implémenter
 
