@@ -64,7 +64,7 @@ describe("/create/sheet - default", () => {
   const fixedValueByDefault = [
     ["Level", "Niveau", "1"],
     ["Size", "Taille", "Moyenne"],
-    ["Speed", "Vitesse", "Normale"],
+    ["Speed", "Vitesse", "9 mètres"],
   ];
 
   test.each(fixedValueByDefault)("has %s has its default value", async (_, label, defaultValue) => {

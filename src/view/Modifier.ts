@@ -23,7 +23,6 @@ export const SimpleModifier = IModelSchema.extend({
     ModifierTypes.armorClass,
     ModifierTypes.languageCount,
     ModifierTypes.rank,
-    ModifierTypes.speed,
   ]),
   level: z.number().optional(),
   value: z.number(),
@@ -78,6 +77,12 @@ export const SkillModifier = IModelSchema.extend({
   value: z.number(),
 }).strict();
 
+export const SpeedModifier = IModelSchema.extend({
+  type: z.literal(ModifierTypes.speed),
+  level: z.number().optional(),
+  value: z.number(),
+}).strict();
+
 export const Modifier = z.discriminatedUnion("type", [
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
@@ -96,6 +101,7 @@ export const Modifier = z.discriminatedUnion("type", [
   SavingThrowBonusModifier,
   SizeModifierSchema,
   SkillModifier,
+  SpeedModifier,
   SpellModifierSchema,
   StaminaModifier,
   WeaponProficiencyModifierSchema,

@@ -166,6 +166,9 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       element.targetName = modifier.targets.map((t) => findOrError(data.damageTypes, t).name).join(", ");
       break;
     }
+    case ModifierTypes.speed:
+      element.value = modifier.value * 1.5;
+      break;
 
     case ModifierTypes.spell: {
       // Target is a spell
