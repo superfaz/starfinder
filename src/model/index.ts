@@ -30,6 +30,7 @@ export * from "./PrerequisiteType";
 export * from "./Profession";
 export * from "./Race";
 export * from "./SavingThrow";
+export * from "./Size";
 export * from "./SkillDefinition";
 export * from "./Spell";
 export * from "./Template";

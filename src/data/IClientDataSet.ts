@@ -11,6 +11,7 @@ import type {
   Profession,
   Race,
   SavingThrow,
+  Size,
   SkillDefinition,
   Spell,
   Theme,
@@ -34,6 +35,7 @@ export interface IClientDataSet {
   professions: Profession[];
   races: Race[];
   savingThrows: SavingThrow[];
+  sizes: Size[];
   skills: SkillDefinition[];
   spells: Spell[];
   themes: Theme[];
@@ -55,6 +57,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   professions: [],
   races: [],
   savingThrows: [],
+  sizes: [],
   skills: [],
   spells: [],
   themes: [],
@@ -77,6 +80,7 @@ export async function convert(dataSource: IDataSource): Promise<IClientDataSet> 
     professions: await dataSource.get(DataSets.Profession).getAll(),
     races: await dataSource.get(DataSets.Races).getAll(),
     savingThrows: await dataSource.get(DataSets.SavingThrows).getAll(),
+    sizes: await dataSource.get(DataSets.Sizes).getAll(),
     skills: await dataSource.get(DataSets.Skills).getAll(),
     spells: await dataSource.get(DataSets.Spells).getAll(),
     themes: await dataSource.get(DataSets.Themes).getAll(),

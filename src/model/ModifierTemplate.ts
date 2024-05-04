@@ -7,6 +7,7 @@ import { SavingThrowIdSchema } from "./SavingThrow";
 import { WeaponTypeIdSchema } from "./WeaponType";
 import { DamageTypeIdSchema } from "./DamageType";
 import { TemplateEquipmentSchema } from "./Template";
+import { SizeIdSchema } from "./Size";
 
 export const AbilityModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.ability),
@@ -84,6 +85,12 @@ export const SavingThrowModifierSchema = IModelSchema.extend({
   description: DescriptionSchema,
 }).strict();
 
+export const SizeModifierSchema = IModelSchema.extend({
+  type: z.literal(ModifierTypes.size),
+  level: z.number().optional(),
+  target: SizeIdSchema,
+}).strict();
+
 export const SkillModifierTemplateSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.skill),
   level: z.number().optional(),
@@ -130,9 +137,10 @@ export const ModifierTemplateSchema = z.discriminatedUnion("type", [
   FeatModifierSchema,
   RankSkillModifierSchema,
   ResistanceModifierTemplateSchema,
-  SimpleModifierTemplateSchema,
   SavingThrowBonusModifierSchema,
   SavingThrowModifierSchema,
+  SimpleModifierTemplateSchema,
+  SizeModifierSchema,
   SkillModifierTemplateSchema,
   SpellModifierSchema,
   WeaponProficiencyModifierSchema,

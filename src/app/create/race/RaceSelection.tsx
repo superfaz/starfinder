@@ -4,9 +4,33 @@ import { Badge, Card, Form, Stack } from "react-bootstrap";
 import { ReferenceComponent } from "../ReferenceComponent";
 import RaceHumansEditor from "./RaceHumansEditor";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { ModifierTypes, RaceModifier } from "model";
 import { ChangeEvent } from "react";
 import { displayBonus, findOrError } from "app/helpers";
 import { useCharacterPresenter } from "../helpers";
+
+function RaceModifiers({ modifiers }: { modifiers: RaceModifier[] }) {
+  const sizes = useAppSelector((state) => state.data.sizes);
+  return (
+    <Stack direction="horizontal" className="right">
+      {modifiers.map((modifier, index) => {
+        if (modifier.type === ModifierTypes.hitPoints) {
+          return (
+            <Badge key={index} bg="primary">
+              PV +{modifier.value}
+            </Badge>
+          );
+        } else if (modifier.type === ModifierTypes.size) {
+          return (
+            <Badge key={index} bg="secondary">
+              {findOrError(sizes, modifier.target).name}
+            </Badge>
+          );
+        }
+      })}
+    </Stack>
+  );
+}
 
 export function RaceSelection() {
   const dispatch = useAppDispatch();
@@ -41,9 +65,7 @@ export function RaceSelection() {
       </Form.FloatingLabel>
       {selectedRace && (
         <>
-          <Stack direction="horizontal" className="right">
-            <Badge bg="primary">PV +{selectedRace.hitPoints}</Badge>
-          </Stack>
+          <RaceModifiers modifiers={selectedRace.modifiers} />
           <div className="text-muted">{selectedRace.description}</div>
           <ReferenceComponent reference={selectedRace.reference} />
         </>

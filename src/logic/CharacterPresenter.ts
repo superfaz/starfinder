@@ -477,6 +477,7 @@ export class CharacterPresenter {
    * @returns The list of modifiers that apply to the character.
    */
   getInheritedModifiers(): Modifier[] {
+    const raceModifiers = this.getRace()?.modifiers ?? [];
     const selectedRaceTraits = this.getSelectedRaceTraits();
     const themeFeatures = this.getThemeFeatures();
     const classFeatures = this.getClassFeatures();
@@ -486,6 +487,7 @@ export class CharacterPresenter {
       .filter((f) => f.level <= this.character.level)
       .map((t) => t.modifiers)
       .flat()
+      .concat(raceModifiers)
       .filter((t) => t && (t.level === undefined || t.level <= this.character.level));
   }
 
@@ -890,13 +892,12 @@ export class CharacterPresenter {
   }
 
   getHitPoints(): number {
-    const race = this.getRace()?.hitPoints ?? 0;
     const klass = this.getClass()?.hitPoints ?? 0;
     const modifiers = this.getModifiers()
       .filter(ofType(ModifierTypes.hitPoints))
       .reduce((acc, m) => acc + m.value, 0);
 
-    return Math.max(1, race + klass + modifiers);
+    return Math.max(1, klass + modifiers);
   }
 
   getResolvePoints(): number {

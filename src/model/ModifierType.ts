@@ -19,6 +19,7 @@ export const ModifierTypeSchema = z.enum([
   "resolve",
   "savingThrow",
   "savingThrowBonus",
+  "size",
   "skill",
   "speed",
   "spell",

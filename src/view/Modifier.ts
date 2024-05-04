@@ -11,6 +11,7 @@ import {
   RankSkillModifierSchema,
   SavingThrowIdSchema,
   SavingThrowModifierSchema,
+  SizeModifierSchema,
   SpellModifierSchema,
   WeaponProficiencyModifierSchema,
 } from "model";
@@ -93,6 +94,7 @@ export const Modifier = z.discriminatedUnion("type", [
   SimpleModifier,
   SavingThrowModifierSchema,
   SavingThrowBonusModifier,
+  SizeModifierSchema,
   SkillModifier,
   SpellModifierSchema,
   StaminaModifier,

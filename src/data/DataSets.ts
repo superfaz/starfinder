@@ -49,6 +49,8 @@ import {
   EquipmentWeaponAmmunitionSchema,
   EquipmentArmorSchema,
   EquipmentArmor,
+  SizeSchema,
+  Size,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -128,6 +130,7 @@ export const DataSets = {
   Themes: { type: "named", name: "themes", schema: ThemeSchema } as IDescriptor<Theme>,
   ThemeDetails: { type: "simple", name: "themes-details", schema: IModelSchema } as IDescriptor<IModel>,
   SavingThrows: { type: "ordered", name: "saving-throws", schema: SavingThrowSchema } as IDescriptor<SavingThrow>,
+  Sizes: { type: "ordered", name: "sizes", schema: SizeSchema } as IDescriptor<Size>,
   Skills: { type: "named", name: "skills", schema: SkillDefinitionSchema } as IDescriptor<SkillDefinition>,
   WeaponCategories: {
     type: "named",
