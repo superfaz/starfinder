@@ -29,7 +29,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   ability: "Pouvoir",
   armorClass: "Classe d’armure",
   armorProficiency: "Port d’armure",
-  attack: "Bonus de base à l’attaque",
+  attack: "Jet d’attaque",
   classSkill: "Compétence de classe",
   damage: "Dégâts",
   equipment: "Équipement",
