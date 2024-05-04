@@ -17,6 +17,7 @@ import {
   ProfessionSchema,
   RaceSchema,
   SavingThrowSchema,
+  SizeSchema,
   SkillDefinitionSchema,
   SpellSchema,
   ThemeSchema,
@@ -40,6 +41,7 @@ import races from "../../../mocks/races.json";
 import spells from "../../../mocks/spells.json";
 import themes from "../../../mocks/themes.json";
 import savingThrows from "../../../mocks/saving-throws.json";
+import sizes from "../../../mocks/sizes.json";
 import skills from "../../../mocks/skills.json";
 import weaponCategories from "../../../mocks/weapon-categories.json";
 import weaponSpecialProperties from "../../../mocks/weapon-special-properties.json";
@@ -61,6 +63,7 @@ const data: IClientDataSet = {
   feats: FeatTemplateSchema.array().parse(feats),
   professions: ProfessionSchema.array().parse(professions),
   races: RaceSchema.array().parse(races),
+  sizes: SizeSchema.array().parse(sizes),
   spells: SpellSchema.array().parse(spells),
   themes: ThemeSchema.array().parse(themes),
   savingThrows: SavingThrowSchema.array().parse(savingThrows),
