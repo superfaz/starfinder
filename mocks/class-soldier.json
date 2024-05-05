@@ -274,7 +274,8 @@
             {
               "id": "44ad4540-bfd1-4d90-9af0-311baeca1484",
               "type": "initiative",
-              "value": 4
+              "value": 4,
+              "category": "insight"
             },
             {
               "id": "80a65da0-e773-4059-9a53-f1ee1946a761",

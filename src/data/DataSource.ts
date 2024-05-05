@@ -32,9 +32,9 @@ export class DataSource implements IDataSource {
         throw new Error("Method not implemented.");
     }
 
+    const preparedQuery = this.database.collection(descriptor.name).find().sort(sort);
+    const results = await preparedQuery.toArray();
     try {
-      const preparedQuery = this.database.collection(descriptor.name).find().sort(sort);
-      const results = await preparedQuery.toArray();
       return descriptor.schema.array().parse(results);
     } catch (e: unknown) {
       Sentry.captureException(e);

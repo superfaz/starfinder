@@ -42,7 +42,8 @@
         "id": "8ae7862b-51a9-440a-9f01-62fd82bd599b",
         "type": "attack",
         "target": "<target>",
-        "value": 1
+        "value": 1,
+        "category": "untyped"
       }
     ],
     "prerequisites": [
@@ -328,7 +329,8 @@
         "id": "43105c0d-cf3b-450d-b5fc-482d4da4d74e",
         "type": "skill",
         "target": "<target>",
-        "value": 3
+        "value": 3,
+        "category": "untyped"
       }
     ]
   },

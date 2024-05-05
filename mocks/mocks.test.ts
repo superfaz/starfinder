@@ -198,8 +198,8 @@ describe.each(datasets)("$file", (dataset) => {
 
     if (dataset.array && data instanceof Array) {
       for (const element of data) {
-        expect(() => IModelSchema.parse(element)).not.toThrow();
-        expect(() => dataset.schema.parse(element)).not.toThrow();
+        expect(() => IModelSchema.parse(element), element.id).not.toThrow();
+        expect(() => dataset.schema.parse(element), element.id).not.toThrow();
       }
     } else {
       expect(() => dataset.schema.parse(data)).not.toThrow();

@@ -62,7 +62,7 @@ export const ResolveModifier = SimpleModifier.extend({
 export const SavingThrowBonusModifier = IModelSchema.extend({
   type: z.literal(ModifierTypes.savingThrowBonus),
   level: z.number().optional(),
-  target: SavingThrowIdSchema,
+  target: SavingThrowIdSchema.optional(),
   value: z.number(),
 }).strict();
 

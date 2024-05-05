@@ -81,7 +81,8 @@
             "id": "382ab54c-a61c-49ee-b55e-3de37c91085a",
             "type": "skill",
             "target": "sens",
-            "value": -2
+            "value": -2,
+            "category": "malus"
           },
           {
             "id": "7b822402-a8c7-4a06-928b-cc872e1f6f34",
@@ -292,7 +293,13 @@
             "name": "Vision nocture",
             "description": "Peut voir dans une zone de lumière faible comme s’il s’agissait d’une lumière vive."
           },
-          { "id": "2e646e48-4c6f-438b-9da3-2383b514c3f7", "type": "skill", "target": "pers", "value": 2 }
+          {
+            "id": "2e646e48-4c6f-438b-9da3-2383b514c3f7",
+            "type": "skill",
+            "target": "pers",
+            "value": 2,
+            "category": "untyped"
+          }
         ]
       }
     ]

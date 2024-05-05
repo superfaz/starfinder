@@ -423,13 +423,15 @@
         {
           "id": "e3cd9695-425e-4811-9574-615e5384ce67",
           "type": "initiative",
-          "value": "<bonus>"
+          "value": "<bonus>",
+          "category": "insight"
         },
         {
           "id": "0de1e9aa-e146-41df-b125-ada7e6592370",
           "type": "skill",
           "target": "all",
-          "value": "<bonus>"
+          "value": "<bonus>",
+          "category": "insight"
         }
       ],
       "evolutions": {
