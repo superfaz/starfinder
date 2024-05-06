@@ -4,6 +4,7 @@ import { Card, Stack } from "react-bootstrap";
 import { useCharacterPresenter } from "../helpers";
 import { isFeat } from "view";
 import ModifierComponent from "../ModifierComponent";
+import { hasTarget } from "model";
 
 const categories: Record<string, string> = {
   ex: "EXT",
@@ -24,7 +25,7 @@ export function SkillsModifiers() {
     <Stack direction="vertical" gap={2}>
       <h2>Modificateurs</h2>
       {features.map((feature) => (
-        <Card key={isFeat(feature) ? feature.id + "-" + feature.target : feature.id}>
+        <Card key={hasTarget(feature) ? feature.id + "-" + feature.target : feature.id}>
           <Card.Header>
             {feature.name}
             {!isFeat(feature) && feature.category && ` (${categories[feature.category]})`}

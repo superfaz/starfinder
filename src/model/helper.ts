@@ -30,6 +30,12 @@ export function hasValue<T>(obj: T): obj is WithValue<T> {
   return Object.prototype.hasOwnProperty.call(obj, "value");
 }
 
+export type WithTarget<T> = Extract<T, { target?: string }>;
+
+export function hasTarget<T>(obj: T): obj is WithTarget<T> {
+  return Object.prototype.hasOwnProperty.call(obj, "target");
+}
+
 export type WithName<T> = Extract<T, { name?: string }>;
 
 export function hasName<T>(obj: T): obj is WithName<T> {
