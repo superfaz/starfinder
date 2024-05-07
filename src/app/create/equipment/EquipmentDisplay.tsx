@@ -2,7 +2,7 @@
 
 import { EquipmentBase, EquipmentDescriptor } from "model";
 import { useState } from "react";
-import { Button, Card, Col, Collapse, FormControl, InputGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Collapse, FormControl, InputGroup, Row, Stack } from "react-bootstrap";
 import { Credits } from "./Components";
 import { mutators, useAppDispatch } from "logic";
 
@@ -77,6 +77,13 @@ export function EquipmentDisplay({
                     <i className="bi-plus-lg"></i>
                   </Button>
                 </InputGroup>
+              )}
+              {descriptor.type !== "consumable" && (
+                <Stack direction="horizontal" gap={2} className="right">
+                  <Button variant="outline-secondary" onClick={handleDecreaseClick}>
+                    <i className="bi-x"></i>
+                  </Button>
+                </Stack>
               )}
             </Col>
           </Row>
