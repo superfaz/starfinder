@@ -16,7 +16,7 @@ export function WeaponSolarianDisplay({ descriptor }: { descriptor: EquipmentDes
         const equipments = data as EquipmentWeaponSolarian[];
         setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
-  });
+  }, [descriptor.secondaryType, descriptor.equipmentId]);
 
   if (!equipment) {
     return null;

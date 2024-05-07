@@ -18,7 +18,7 @@ export function WeaponRangedDisplay({ descriptor }: { descriptor: EquipmentDescr
         const equipments = data as EquipmentWeaponRanged[];
         setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
-  });
+  }, [descriptor.secondaryType, descriptor.equipmentId]);
 
   if (!equipment) {
     return null;

@@ -15,7 +15,7 @@ export function WeaponAmmunitionDisplay({ descriptor }: { descriptor: EquipmentD
         const equipments = data as EquipmentWeaponAmmunition[];
         setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
-  });
+  }, [descriptor.secondaryType, descriptor.equipmentId]);
 
   if (!equipment) {
     return null;

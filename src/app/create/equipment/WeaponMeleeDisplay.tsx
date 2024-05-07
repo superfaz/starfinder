@@ -18,7 +18,7 @@ export function WeaponMeleeDisplay({ descriptor }: { descriptor: EquipmentDescri
         const equipments = data as EquipmentWeaponMelee[];
         setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
       });
-  });
+  }, [descriptor.secondaryType, descriptor.equipmentId]);
 
   if (!equipment) {
     return null;
