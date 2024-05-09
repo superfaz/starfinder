@@ -64,16 +64,17 @@ export function EquipmentSelected() {
         </Col>
       </Row>
       <h2>Armes</h2>
-      {presenter.getWeapons().length === 0 && <em>Pas d&apos;armes possédées</em>}
+      {presenter.getWeapons().length === 0 && <em>Pas d&apos;arme possédée</em>}
       {presenter.getWeapons().map((weapon) => (
         <EquipmentDisplay key={weapon.id} descriptor={weapon} />
       ))}
       <h2>Armures</h2>
-      {presenter.getArmors().length === 0 && <em>Pas d&apos;armures possédées</em>}
+      {presenter.getArmors().length === 0 && <em>Pas d&apos;armure possédée</em>}
       {presenter.getArmors().map((armor) => (
         <EquipmentDisplay key={armor.id} descriptor={armor} />
       ))}
       <h2>Autres</h2>
+      <em>Pas d&apos;autre objet possédé</em>
     </Stack>
   );
 }
