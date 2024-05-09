@@ -3,7 +3,7 @@ import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
 
 export const EquipmentMaterialSchema = INamedModelSchema.extend({
-  description: DescriptionSchema,
+  description: z.optional(DescriptionSchema),
   reference: ReferenceSchema,
   uniqueCost: z.number(),
   ammunitionCost: z.number(),
