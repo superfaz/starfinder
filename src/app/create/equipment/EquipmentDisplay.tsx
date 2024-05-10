@@ -2,22 +2,24 @@
 
 import { EquipmentBase, EquipmentDescriptor } from "model";
 import { useState } from "react";
-import { Button, Card, Col, Collapse, FormControl, InputGroup, Row, Stack } from "react-bootstrap";
+import { Button, ButtonGroup, Card, Col, Collapse, FormControl, InputGroup, Row } from "react-bootstrap";
 import { Credits } from "./Components";
 import { mutators, useAppDispatch } from "logic";
 
 export function EquipmentDisplay({
   descriptor,
   equipment,
+  selected,
   subtitle,
   children,
 }: {
   descriptor: EquipmentDescriptor;
   equipment: EquipmentBase;
+  selected: boolean;
   subtitle?: string;
   children?: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(selected);
   const dispatch = useAppDispatch();
 
   function handleDecreaseClick() {
@@ -29,8 +31,8 @@ export function EquipmentDisplay({
   }
 
   return (
-    <Card>
-      <Card.Header role="button" onClick={() => setOpen(!open)}>
+    <Card className={selected ? "border-primary" : undefined}>
+      <Card.Header role={selected ? undefined : "button"} onClick={selected ? undefined : () => setOpen(!open)}>
         <Row>
           <Col>
             <div className="fw-bold">
@@ -79,11 +81,11 @@ export function EquipmentDisplay({
                 </InputGroup>
               )}
               {descriptor.type !== "consumable" && (
-                <Stack direction="horizontal" gap={2} className="right">
+                <ButtonGroup className="right">
                   <Button variant="outline-secondary" onClick={handleDecreaseClick}>
-                    <i className="bi-x"></i>
+                    <i className="bi-x-lg"></i>
                   </Button>
-                </Stack>
+                </ButtonGroup>
               )}
             </Col>
           </Row>

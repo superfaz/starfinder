@@ -7,7 +7,7 @@ import { EquipmentDescriptor, EquipmentWeaponRanged } from "model";
 import { DisplayCritical, DisplayDamageLong, DisplaySpecials } from "./Components";
 import { EquipmentDisplay } from "./EquipmentDisplay";
 
-export function WeaponRangedDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function WeaponRangedDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentWeaponRanged | null>(null);
 
@@ -28,7 +28,7 @@ export function WeaponRangedDisplay({ descriptor }: { descriptor: EquipmentDescr
     findOrError(data.weaponTypes, equipment.weaponType).name +
     (equipment.hands === 2 ? " à deux mains" : " à une main");
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle}>
+    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       <div>
         {equipment.range * 1.5}m
         {equipment.damage && (

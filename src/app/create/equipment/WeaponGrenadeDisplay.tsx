@@ -7,7 +7,7 @@ import { EquipmentDescriptor, EquipmentWeaponGrenade } from "model";
 import { DisplaySpecials } from "./Components";
 import { EquipmentDisplay } from "./EquipmentDisplay";
 
-export function WeaponGrenadeDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function WeaponGrenadeDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentWeaponGrenade | null>(null);
 
@@ -26,7 +26,7 @@ export function WeaponGrenadeDisplay({ descriptor }: { descriptor: EquipmentDesc
 
   const subtitle = findOrError(data.weaponTypes, equipment.weaponType).name;
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle}>
+    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       <div>{equipment.range * 1.5}m</div>
       {equipment.specials.length > 0 && (
         <div>

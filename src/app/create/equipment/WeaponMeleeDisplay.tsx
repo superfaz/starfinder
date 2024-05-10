@@ -7,7 +7,7 @@ import { EquipmentDescriptor, EquipmentWeaponMelee } from "model";
 import { DisplayCritical, DisplayDamageLong, DisplaySpecials } from "./Components";
 import { EquipmentDisplay } from "./EquipmentDisplay";
 
-export function WeaponMeleeDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function WeaponMeleeDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentWeaponMelee | null>(null);
 
@@ -28,7 +28,7 @@ export function WeaponMeleeDisplay({ descriptor }: { descriptor: EquipmentDescri
     findOrError(data.weaponTypes, equipment.weaponType).name +
     (equipment.hands === 2 ? " à deux mains" : " à une main");
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle}>
+    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       {equipment.damage && (
         <div>
           <DisplayDamageLong damage={equipment.damage} />

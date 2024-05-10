@@ -971,6 +971,10 @@ export class CharacterPresenter {
     return this.character.credits;
   }
 
+  getEquipment(id: string): EquipmentDescriptor {
+    return findOrError(this.character.equipment, id);
+  }
+
   getWeapons(): EquipmentDescriptor[] {
     return this.character.equipment.filter((e) => e.category === "weapon");
   }

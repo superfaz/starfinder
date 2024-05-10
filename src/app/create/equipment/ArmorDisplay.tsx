@@ -7,7 +7,7 @@ import { EquipmentArmor, EquipmentDescriptor } from "model";
 import { DisplayModifier, DisplayRange } from "./Components";
 import { EquipmentDisplay } from "./EquipmentDisplay";
 
-export function ArmorDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
   const [equipment, setEquipment] = useState<EquipmentArmor | null>(null);
 
@@ -26,7 +26,7 @@ export function ArmorDisplay({ descriptor }: { descriptor: EquipmentDescriptor }
 
   const subtitle = findOrError(data.armorTypes, equipment.type).name;
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle}>
+    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       <div>
         CAE: <DisplayModifier value={equipment.eacBonus} />
         {" / "}

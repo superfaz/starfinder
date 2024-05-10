@@ -6,7 +6,13 @@ import { EquipmentDescriptor, EquipmentWeaponSolarian } from "model";
 import { DisplayCritical, DisplayDamageLong } from "./Components";
 import { EquipmentDisplay } from "./EquipmentDisplay";
 
-export function WeaponSolarianDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function WeaponSolarianDisplay({
+  descriptor,
+  selected,
+}: {
+  descriptor: EquipmentDescriptor;
+  selected: boolean;
+}) {
   const [equipment, setEquipment] = useState<EquipmentWeaponSolarian | null>(null);
 
   useEffect(() => {
@@ -24,7 +30,7 @@ export function WeaponSolarianDisplay({ descriptor }: { descriptor: EquipmentDes
 
   const subtitle = "Crystal de combat solarien";
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle}>
+    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       <div>
         {equipment.damage && (
           <span>
