@@ -11,6 +11,40 @@ $sf-darkred: #a71916;
 $sf-darkblue: #080f1b;
 
 /**
+ * Overrides on the default bootstrap theme.
+ */
+
+.form-floating {
+  & > .form-control:focus::placeholder,
+  & > .form-control-plaintext:focus::placeholder {
+    color: var(--bs-secondary-color);
+    opacity: 0.5;
+  }
+}
+
+// Source: https://github.com/twbs/bootstrap/pull/36155/files
+.form-floating-always {
+  &.form-floating,
+  .form-floating {
+    .form-control {
+      padding-top: 1.625rem;
+      padding-bottom: 0.625rem;
+
+      &::placeholder,
+      &:focus::placeholder {
+        color: var(--bs-secondary-color);
+        opacity: 0.5;
+      }
+    }
+
+    label {
+      color: rgba(var(--bs-body-color-rgb), 0.65);
+      transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+    }
+  }
+}
+
+/**
  * Extend Typeahead to support floating labels.
  */
 .form-floating > .rbt {
