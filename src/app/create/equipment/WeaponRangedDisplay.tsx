@@ -1,24 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeaponRanged } from "model";
 import { DisplayCritical, DisplayDamageLong, DisplaySpecials } from "./Components";
-import { EquipmentDisplay } from "./EquipmentDisplay";
+import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
 
 export function WeaponRangedDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
-  const [equipment, setEquipment] = useState<EquipmentWeaponRanged | null>(null);
-
-  useEffect(() => {
-    fetch(`/api/equipment/weapons/${descriptor.secondaryType}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const equipments = data as EquipmentWeaponRanged[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
-      });
-  }, [descriptor.secondaryType, descriptor.equipmentId]);
+  const equipment = useEquipment<EquipmentWeaponRanged>(descriptor);
 
   if (!equipment) {
     return null;

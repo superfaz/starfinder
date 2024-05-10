@@ -1,24 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentArmor, EquipmentDescriptor } from "model";
 import { DisplayModifier, DisplayRange } from "./Components";
-import { EquipmentDisplay } from "./EquipmentDisplay";
+import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
 
 export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
-  const [equipment, setEquipment] = useState<EquipmentArmor | null>(null);
-
-  useEffect(() => {
-    fetch(`/api/equipment/armors/${descriptor.secondaryType}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const equipments = data as EquipmentArmor[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
-      });
-  });
+  const equipment = useEquipment<EquipmentArmor>(descriptor);
 
   if (!equipment) {
     return null;

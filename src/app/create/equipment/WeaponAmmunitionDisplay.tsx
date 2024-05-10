@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { findOrError } from "app/helpers";
 import { EquipmentDescriptor, EquipmentWeaponAmmunition } from "model";
-import { EquipmentDisplay } from "./EquipmentDisplay";
+import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
 
 export function WeaponAmmunitionDisplay({
   descriptor,
@@ -12,16 +10,7 @@ export function WeaponAmmunitionDisplay({
   descriptor: EquipmentDescriptor;
   selected: boolean;
 }) {
-  const [equipment, setEquipment] = useState<EquipmentWeaponAmmunition | null>(null);
-
-  useEffect(() => {
-    fetch(`/api/equipment/weapons/${descriptor.secondaryType}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const equipments = data as EquipmentWeaponAmmunition[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
-      });
-  }, [descriptor.secondaryType, descriptor.equipmentId]);
+  const equipment = useEquipment<EquipmentWeaponAmmunition>(descriptor);
 
   if (!equipment) {
     return null;

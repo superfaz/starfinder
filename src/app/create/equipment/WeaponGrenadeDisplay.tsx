@@ -1,24 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeaponGrenade } from "model";
 import { DisplaySpecials } from "./Components";
-import { EquipmentDisplay } from "./EquipmentDisplay";
+import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
 
 export function WeaponGrenadeDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
-  const [equipment, setEquipment] = useState<EquipmentWeaponGrenade | null>(null);
-
-  useEffect(() => {
-    fetch(`/api/equipment/weapons/${descriptor.secondaryType}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const equipments = data as EquipmentWeaponGrenade[];
-        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
-      });
-  }, [descriptor.secondaryType, descriptor.equipmentId]);
+  const equipment = useEquipment<EquipmentWeaponGrenade>(descriptor);
 
   if (!equipment) {
     return null;

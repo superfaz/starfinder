@@ -1,10 +1,27 @@
 "use client";
 
-import { EquipmentBase, EquipmentDescriptor } from "model";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Button, ButtonGroup, Card, Col, Collapse, FormControl, InputGroup, Row } from "react-bootstrap";
-import { Credits } from "./Components";
+import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch } from "logic";
+import { EquipmentBase, EquipmentDescriptor } from "model";
+import { Credits } from "./Components";
+
+export function useEquipment<T extends EquipmentBase>(descriptor: EquipmentDescriptor): T | null {
+  const [equipment, setEquipment] = useState<T | null>(null);
+
+  useEffect(() => {
+    fetch(`/api/equipment/${descriptor.category}s/${descriptor.secondaryType}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const equipments = data as T[];
+        setEquipment(findOrError(equipments, (e) => e.id === descriptor.equipmentId));
+      });
+  }, [descriptor.category, descriptor.secondaryType, descriptor.equipmentId]);
+
+  return equipment;
+}
 
 export function EquipmentDisplay({
   descriptor,
@@ -82,6 +99,9 @@ export function EquipmentDisplay({
               )}
               {descriptor.type !== "consumable" && (
                 <ButtonGroup className="right">
+                  <Link className="text-nowrap btn btn-secondary" href={`/create/equipment/${descriptor.id}`}>
+                    <i className="bi-pencil"></i> Modifier
+                  </Link>
                   <Button variant="outline-secondary" onClick={handleDecreaseClick}>
                     <i className="bi-x-lg"></i>
                   </Button>

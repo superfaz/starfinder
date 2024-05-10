@@ -3,7 +3,7 @@
 import { ChangeEvent } from "react";
 import { Col, Form, Row, Stack } from "react-bootstrap";
 import { mutators, useAppDispatch } from "logic";
-import { EquipmentDescriptor } from "model";
+import { EquipmentCategories, EquipmentDescriptor } from "model";
 import { useCharacterPresenter } from "../helpers";
 import { WeaponMeleeDisplay } from "./WeaponMeleeDisplay";
 import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
@@ -13,7 +13,7 @@ import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
 import { ArmorDisplay } from "./ArmorDisplay";
 
 export function EquipmentDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
-  if (descriptor.category === "weapon") {
+  if (descriptor.category === EquipmentCategories.weapon) {
     switch (descriptor.secondaryType) {
       case "ammunition":
         return <WeaponAmmunitionDisplay descriptor={descriptor} selected={selected} />;
@@ -32,7 +32,7 @@ export function EquipmentDisplay({ descriptor, selected }: { descriptor: Equipme
       default:
         return null;
     }
-  } else if (descriptor.category === "armor") {
+  } else if (descriptor.category === EquipmentCategories.armor) {
     return <ArmorDisplay descriptor={descriptor} selected={selected} />;
   } else {
     return null;
