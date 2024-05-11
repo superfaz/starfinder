@@ -18,6 +18,7 @@ export * from "./CriticalHitEffect";
 export * from "./DamageType";
 export * from "./EquipmentArmor";
 export * from "./EquipmentBase";
+export * from "./EquipmentDescriptor";
 export * from "./EquipmentMaterial";
 export * from "./EquipmentWeapon";
 export * from "./EquipmentWeaponFusion";
