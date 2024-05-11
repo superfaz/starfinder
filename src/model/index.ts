@@ -20,6 +20,7 @@ export * from "./EquipmentArmor";
 export * from "./EquipmentBase";
 export * from "./EquipmentMaterial";
 export * from "./EquipmentWeapon";
+export * from "./EquipmentWeaponFusion";
 export * from "./FeatTemplate";
 export * from "./FeatureTemplate";
 export * from "./ICodedModel";
