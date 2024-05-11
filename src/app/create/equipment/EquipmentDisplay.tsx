@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button, ButtonGroup, Card, Col, Collapse, FormControl, InputGroup, Row } from "react-bootstrap";
+import { Badge, Button, ButtonGroup, Card, Col, Collapse, FormControl, InputGroup, Row } from "react-bootstrap";
 import { findOrError } from "app/helpers";
-import { mutators, useAppDispatch } from "logic";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { EquipmentBase, EquipmentDescriptor } from "model";
 import { Credits } from "./Components";
 
@@ -21,6 +21,17 @@ export function useEquipment<T extends EquipmentBase>(descriptor: EquipmentDescr
   }, [descriptor.category, descriptor.secondaryType, descriptor.equipmentId]);
 
   return equipment;
+}
+
+function DisplayMaterial({ descriptor }: { descriptor: EquipmentDescriptor }) {
+  const materials = useAppSelector((state) => state.data.equipmentMaterials);
+  const material = findOrError(materials, descriptor.material);
+
+  return (
+    <Badge bg="secondary" className="mb-2">
+      {material.name}
+    </Badge>
+  );
 }
 
 export function EquipmentDisplay({
@@ -53,7 +64,7 @@ export function EquipmentDisplay({
         <Row>
           <Col>
             <div className="fw-bold">
-              {equipment.name} (niv. {equipment.level})
+              {descriptor.name ?? equipment.name} (niv. {equipment.level})
             </div>
             {subtitle && <div className="small">{subtitle}</div>}
           </Col>
@@ -69,8 +80,9 @@ export function EquipmentDisplay({
       <Collapse in={open}>
         <Card.Body>
           {children}
+          {descriptor.material && <DisplayMaterial descriptor={descriptor} />}
           <hr />
-          <div className="small text-muted">{equipment.description}</div>
+          <div className="small text-muted">{descriptor.description ?? equipment.description}</div>
         </Card.Body>
       </Collapse>
       <Collapse in={open}>

@@ -188,6 +188,51 @@ const mainSlice = createSlice({
         }
       }
     },
+
+    updateEquipmentMaterial(state, action: PayloadAction<{ id: string; material: string }>) {
+      const descriptor = state.character.equipment.find((e) => e.id === action.payload.id);
+      if (!descriptor) {
+        return;
+      }
+
+      const oldMaterial = state.data.equipmentMaterials.find((m) => m.id === descriptor.material);
+      const newMaterial = state.data.equipmentMaterials.find((m) => m.id === action.payload.material);
+
+      state.character.credits += oldMaterial?.uniqueCost ?? 0;
+      descriptor.unitaryCost -= oldMaterial?.uniqueCost ?? 0;
+      state.character.credits -= newMaterial?.uniqueCost ?? 0;
+      descriptor.unitaryCost += newMaterial?.uniqueCost ?? 0;
+
+      if (action.payload.material && action.payload.material !== "normal") {
+        descriptor.material = action.payload.material;
+      } else {
+        delete descriptor.material;
+      }
+    },
+
+    updateEquipmentName(state, action: PayloadAction<{ id: string; name: string }>) {
+      const equipment = state.character.equipment.find((e) => e.id === action.payload.id);
+      if (!equipment) {
+        return;
+      }
+      if (action.payload.name && action.payload.name !== "") {
+        equipment.name = action.payload.name;
+      } else {
+        delete equipment.name;
+      }
+    },
+
+    updateEquipmentDescription(state, action: PayloadAction<{ id: string; description: string }>) {
+      const equipment = state.character.equipment.find((e) => e.id === action.payload.id);
+      if (!equipment) {
+        return;
+      }
+      if (action.payload.description && action.payload.description !== "") {
+        equipment.description = action.payload.description;
+      } else {
+        delete equipment.description;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {

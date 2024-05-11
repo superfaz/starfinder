@@ -8,6 +8,9 @@ const BaseEquipmentDescriptorSchema = IModelSchema.extend({
   secondaryType: IdSchema,
   equipmentId: IdSchema,
   unitaryCost: z.number(),
+  name: z.string().optional().describe("Custom name for the equipment"),
+  description: z.string().optional().describe("Custom description for the equipment"),
+  material: IdSchema.optional(),
 });
 
 export const ConsumableEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
