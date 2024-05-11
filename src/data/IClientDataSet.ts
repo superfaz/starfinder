@@ -7,6 +7,7 @@ import type {
   Class,
   CriticalHitEffect,
   DamageType,
+  EquipmentMaterial,
   FeatTemplate,
   Profession,
   Race,
@@ -31,6 +32,7 @@ export interface IClientDataSet {
   classes: Class[];
   criticalHitEffects: CriticalHitEffect[];
   damageTypes: DamageType[];
+  equipmentMaterials: EquipmentMaterial[];
   feats: FeatTemplate[];
   professions: Profession[];
   races: Race[];
@@ -53,6 +55,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   classes: [],
   criticalHitEffects: [],
   damageTypes: [],
+  equipmentMaterials: [],
   feats: [],
   professions: [],
   races: [],
@@ -76,6 +79,7 @@ export async function convert(dataSource: IDataSource): Promise<IClientDataSet> 
     classes: await dataSource.get(DataSets.Class).getAll(),
     criticalHitEffects: await dataSource.get(DataSets.CriticalHitEffect).getAll(),
     damageTypes: await dataSource.get(DataSets.DamageType).getAll(),
+    equipmentMaterials: await dataSource.get(DataSets.EquipmentMaterial).getAll(),
     feats: await dataSource.get(DataSets.Feat).getAll(),
     professions: await dataSource.get(DataSets.Profession).getAll(),
     races: await dataSource.get(DataSets.Races).getAll(),

@@ -51,6 +51,8 @@ import {
   EquipmentArmor,
   SizeSchema,
   Size,
+  EquipmentMaterial,
+  EquipmentMaterialSchema,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -78,6 +80,11 @@ export const DataSets = {
     name: "equipment-armors-heavy",
     schema: EquipmentArmorSchema,
   } as IDescriptor<EquipmentArmor>,
+  EquipmentMaterial: {
+    type: "ordered",
+    name: "equipment-material",
+    schema: EquipmentMaterialSchema,
+  } as IDescriptor<EquipmentMaterial>,
   EquipmentWeaponBasic: {
     type: "simple",
     name: "equipment-weapons-basic",
