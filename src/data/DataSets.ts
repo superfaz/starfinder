@@ -53,6 +53,8 @@ import {
   Size,
   EquipmentMaterial,
   EquipmentMaterialSchema,
+  EquipmentWeaponFusionSchema,
+  EquipmentWeaponFusion,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -126,10 +128,15 @@ export const DataSets = {
     schema: EquipmentWeaponSolarianSchema,
   } as IDescriptor<EquipmentWeaponSolarian>,
   EquipmentWeaponAmmunition: {
-    type: "simple",
+    type: "named",
     name: "equipment-weapons-ammunition",
     schema: EquipmentWeaponAmmunitionSchema,
   } as IDescriptor<EquipmentWeaponAmmunition>,
+  EquipmentWeaponFusions: {
+    type: "named",
+    name: "equipment-weapons-fusion",
+    schema: EquipmentWeaponFusionSchema,
+  } as IDescriptor<EquipmentWeaponFusion>,
   Feat: { type: "named", name: "feats", schema: FeatTemplateSchema } as IDescriptor<FeatTemplate>,
   Profession: { type: "named", name: "professions", schema: ProfessionSchema } as IDescriptor<Profession>,
   Races: { type: "named", name: "races", schema: RaceSchema } as IDescriptor<Race>,
