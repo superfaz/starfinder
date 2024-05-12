@@ -18,7 +18,6 @@ export function ArmorTable({ armorType, equipments }: { armorType: ArmorTypeId; 
         category: "armor",
         secondaryType: armorType,
         equipmentId: equipment.id,
-        quantity: 1,
         unitaryCost: equipment.cost ?? 0,
       })
     );

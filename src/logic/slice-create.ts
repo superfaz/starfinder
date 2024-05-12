@@ -179,7 +179,14 @@ const mainSlice = createSlice({
 
     updateEquipmentQuantity(state, action: PayloadAction<{ id: string; delta: number }>) {
       const equipment = state.character.equipment.find((e) => e.id === action.payload.id);
-      if (equipment) {
+      if (equipment === undefined) {
+        return;
+      }
+      if (equipment.type === "unique") {
+        throw new Error("Cannot update quantity of unique equipment");
+      }
+
+      if (equipment && equipment.type === "consumable") {
         equipment.quantity += action.payload.delta;
         state.character.credits -= equipment.unitaryCost * action.payload.delta;
 

@@ -22,7 +22,6 @@ export type ConsumableEquipmentDescriptor = z.infer<typeof ConsumableEquipmentDe
 
 export const UniqueEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
   type: z.literal("unique"),
-  quantity: z.literal(1),
 });
 
 export type UniqueEquipmentDescriptor = z.infer<typeof UniqueEquipmentDescriptorSchema>;
