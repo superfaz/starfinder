@@ -7,9 +7,14 @@ import { WeaponPage } from "./WeaponPage";
 
 export default function Page({ params }: { params: { id: string } }) {
   const presenter = useCharacterPresenter();
-  const descriptor = presenter.getEquipment(params.id);
-
   if (presenter.getRace() === null || presenter.getTheme() === null || presenter.getClass() === null) {
+    return null;
+  }
+
+  let descriptor;
+  try {
+    descriptor = presenter.getEquipment(params.id);
+  } catch (e) {
     return null;
   }
 
