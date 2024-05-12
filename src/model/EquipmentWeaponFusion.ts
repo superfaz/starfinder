@@ -27,6 +27,7 @@ export const EquipmentWeaponFusionSchema = INamedModelSchema.extend({
   reference: ReferenceSchema,
   level: LevelSchema,
   description: DescriptionSchema,
+  constraint: z.optional(DescriptionSchema),
   modifiers: z.optional(z.array(FusionModifierSchema)),
 });
 
