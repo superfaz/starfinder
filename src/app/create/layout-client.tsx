@@ -51,7 +51,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
 
   return (
     <>
-      <Nav className="mb-3 nav-create sticky-top" data-testid="tabs">
+      <Nav className="mb-3 nav-create sticky-top justify-content-center" data-testid="tabs">
         <Nav.Item>
           <Nav.Link href="/create">Intro</Nav.Link>
         </Nav.Item>
