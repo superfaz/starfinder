@@ -1,0 +1,25 @@
+[
+  {
+    "id": "normal",
+    "order": 1,
+    "name": "Normal",
+    "reference": {
+      "book": "base",
+      "page": 191
+    },
+    "uniqueCost": 0,
+    "ammunitionCost": 0
+  },
+  {
+    "id": "silver",
+    "order": 2,
+    "name": "Argent",
+    "reference": {
+      "book": "base",
+      "page": 191
+    },
+    "description": "Un processus complexe impliquant des manipulations alchimiques, magiques et métallurgiques peut permettre d’associer de l’argent à des armes et à des munitions pour qu’elles ignorent la réduction des dégâts des créatures ayant un RD/argent, telles que les lycanthropes. Le processus d’argenture ne peut être appliqué à des objets non métalliques et il ne fonctionne pas sur des métaux rares comme l’adamantium, le fer froid ou les métaux stellaires.",
+    "uniqueCost": 300,
+    "ammunitionCost": 6
+  }
+]
