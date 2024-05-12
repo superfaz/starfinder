@@ -12,6 +12,7 @@ import {
   CriticalHitEffectSchema,
   DamageTypeSchema,
   EmptyCharacter,
+  EquipmentMaterialSchema,
   FeatTemplateSchema,
   IModel,
   ProfessionSchema,
@@ -35,6 +36,7 @@ import books from "../../../mocks/books.json";
 import classes from "../../../mocks/classes.json";
 import criticalHitEffects from "../../../mocks/critical-hit-effects.json";
 import damageTypes from "../../../mocks/damage-types.json";
+import equipmentMaterials from "../../../mocks/equipment-materials.json";
 import feats from "../../../mocks/feats.json";
 import professions from "../../../mocks/professions.json";
 import races from "../../../mocks/races.json";
@@ -60,6 +62,7 @@ const data: IClientDataSet = {
   classes: ClassSchema.array().parse(classes),
   criticalHitEffects: CriticalHitEffectSchema.array().parse(criticalHitEffects),
   damageTypes: DamageTypeSchema.array().parse(damageTypes),
+  equipmentMaterials: EquipmentMaterialSchema.array().parse(equipmentMaterials),
   feats: FeatTemplateSchema.array().parse(feats),
   professions: ProfessionSchema.array().parse(professions),
   races: RaceSchema.array().parse(races),
