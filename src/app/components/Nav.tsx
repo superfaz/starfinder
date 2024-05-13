@@ -24,10 +24,22 @@ function NavItem({ children, className, ...props }: Readonly<{ children: ReactNo
   );
 }
 
-function NavLink({ children, href, disabled }: { children: ReactNode; href: string; disabled?: boolean }) {
+function NavLink({
+  children,
+  href,
+  startsWith = false,
+  disabled,
+}: {
+  children: ReactNode;
+  href: string;
+  startsWith?: boolean;
+  disabled?: boolean;
+}) {
   const pathname = usePathname();
+  const isActive = startsWith ? pathname.startsWith(href) : pathname === href;
+
   return (
-    <Link href={href} className={clsx("nav-link", pathname === href && "active", disabled && "disabled")}>
+    <Link href={href} className={clsx("nav-link", isActive && "active", disabled && "disabled")}>
       {children}
     </Link>
   );

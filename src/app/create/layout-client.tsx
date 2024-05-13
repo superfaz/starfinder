@@ -95,7 +95,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/create/equipment" disabled={selectedClass === null}>
+          <Nav.Link href="/create/equipment" startsWith disabled={selectedClass === null}>
             <span className="label">Équipement</span>
           </Nav.Link>
         </Nav.Item>
