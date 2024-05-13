@@ -1,0 +1,42 @@
+[
+  {
+    "id": "5d0a2b0c-ba42-49c1-a433-d5f72660923a",
+    "name": "Assourdissante",
+    "level": 3,
+    "reference": {
+      "book": "base",
+      "page": 192
+    },
+    "modifiers": [
+      {
+        "id": "9c495b93-c7b5-44e0-9a78-8c5eca486ddb",
+        "type": "critical",
+        "target": "deafen"
+      }
+    ],
+    "description": "Avec la fusion assourdissante, l’arme libère à l’impact une vague d’énergie sonique à basse fréquence. Elle bénéficie de l’effet critique assourdissement. Si l’arme dispose déjà d’un effet critique, choisissez à chaque fois lequel des deux vous voulez appliquer.",
+    "constraint": "Seules les armes qui infligent des dégâts contondants, perforants, tranchants et de son peuvent bénéficier de cette fusion."
+  },
+  {
+    "id": "bbd8d1ba-72a6-430d-ab38-6ee244a81dcd",
+    "name": "Axiomatique",
+    "level": 2,
+    "reference": {
+      "book": "base",
+      "page": 193
+    },
+    "description": "La fusion axiomatique infuse dans une arme une énergie divine issue d’une divinité loyale. Toute attaque avec cette arme a l’alignement Loyal. Les dégâts ignorent les RD/Loyal ainsi que la résistance aux énergies des dragons et extérieurs chaotiques.",
+    "constraint": "La fusion axiomatique ne peut être ajoutée à une arme dotée de la fusion anarchique."
+  },
+  {
+    "id": "b1f7b5f7-852a-4678-a8f9-f65b66e49110",
+    "name": "Boomerang",
+    "level": 1,
+    "reference": {
+      "book": "base",
+      "page": 193
+    },
+    "description": "Une arme boomerang revient vers vous en volant après que vous l’avez lancée pour effectuer une attaque à distance. Elle vous revient juste avant votre prochain tour (et elle est donc prête à être utilisée au cours de ce tour). Attraper l’arme quand elle revient ne nécessite aucune action. Si vous ne pouvez pas l’attraper, ou si vous vous êtes déplacé après l’avoir lancée, elle tombe par terre dans la case depuis laquelle vous l’avez lancée.",
+    "constraint": "Vous pouvez ajouter cette fusion uniquement sur des armes qui ont la propriété spéciale lancée."
+  }
+]

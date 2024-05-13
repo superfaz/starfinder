@@ -36,7 +36,7 @@ import books from "../../../mocks/books.json";
 import classes from "../../../mocks/classes.json";
 import criticalHitEffects from "../../../mocks/critical-hit-effects.json";
 import damageTypes from "../../../mocks/damage-types.json";
-import equipmentMaterials from "../../../mocks/equipment-materials.json";
+import equipmentMaterials from "../../../mocks/equipment-material.json";
 import feats from "../../../mocks/feats.json";
 import professions from "../../../mocks/professions.json";
 import races from "../../../mocks/races.json";
