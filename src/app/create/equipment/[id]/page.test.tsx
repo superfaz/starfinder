@@ -3,7 +3,6 @@ import { createCharacter, renderWithData } from "app/create/helpers-test";
 import { beforeAll, describe, expect, test } from "vitest";
 import Page from "./page";
 import { EquipmentDescriptor } from "model";
-import { dump } from "app/test-helpers";
 
 describe("/create/equipment/id", () => {
   beforeAll(async () => {
