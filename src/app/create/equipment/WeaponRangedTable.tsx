@@ -31,6 +31,7 @@ function WeaponRangedTableCategory({
         secondaryType: weaponType,
         equipmentId: equipment.id,
         unitaryCost: equipment.cost ?? 0,
+        quantity: 1,
       })
     );
   }

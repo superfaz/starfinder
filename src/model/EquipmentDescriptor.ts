@@ -1,34 +1,38 @@
 import { z } from "zod";
-import { EquipmentCategorySchema } from "./EquipmentBase";
+import { EquipmentCategories } from "./EquipmentBase";
 import { IModelSchema } from "./IModel";
 import { IdSchema } from "./helper";
 
 const BaseEquipmentDescriptorSchema = IModelSchema.extend({
-  category: EquipmentCategorySchema,
   secondaryType: IdSchema,
   equipmentId: IdSchema,
+  type: z.enum(["unique", "consumable"]),
+  quantity: z.number(),
   unitaryCost: z.number(),
   name: z.string().optional().describe("Custom name for the equipment"),
   description: z.string().optional().describe("Custom description for the equipment"),
   material: IdSchema.optional(),
 });
 
-export const ConsumableEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
-  type: z.literal("consumable"),
-  quantity: z.number(),
+export const WeaponEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
+  category: z.literal(EquipmentCategories.weapon),
+  fusions: z.optional(z.array(IdSchema)),
 });
 
-export type ConsumableEquipmentDescriptor = z.infer<typeof ConsumableEquipmentDescriptorSchema>;
+export type WeaponEquipmentDescriptor = z.infer<typeof WeaponEquipmentDescriptorSchema>;
 
-export const UniqueEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
-  type: z.literal("unique"),
+const ArmorEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
+  category: z.literal(EquipmentCategories.armor),
 });
 
-export type UniqueEquipmentDescriptor = z.infer<typeof UniqueEquipmentDescriptorSchema>;
+const OtherEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
+  category: z.literal(EquipmentCategories.other),
+});
 
-export const EquipmentDescriptorSchema = z.discriminatedUnion("type", [
-  ConsumableEquipmentDescriptorSchema,
-  UniqueEquipmentDescriptorSchema,
+export const EquipmentDescriptorSchema = z.discriminatedUnion("category", [
+  WeaponEquipmentDescriptorSchema,
+  ArmorEquipmentDescriptorSchema,
+  OtherEquipmentDescriptorSchema,
 ]);
 
 export type EquipmentDescriptor = z.infer<typeof EquipmentDescriptorSchema>;

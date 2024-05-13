@@ -2,6 +2,8 @@
 
 import { EquipmentSelection } from "./EquipmentSelection";
 import { useCharacterPresenter } from "../helpers";
+import { EquipmentSelected } from "./EquipmentSelected";
+import { Col } from "react-bootstrap";
 
 export default function Page() {
   const presenter = useCharacterPresenter();
@@ -9,5 +11,14 @@ export default function Page() {
     return null;
   }
 
-  return <EquipmentSelection />;
+  return (
+    <>
+      <Col lg={3}>
+        <EquipmentSelected />
+      </Col>
+      <Col>
+        <EquipmentSelection />
+      </Col>
+    </>
+  );
 }

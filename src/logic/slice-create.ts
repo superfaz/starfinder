@@ -240,6 +240,45 @@ const mainSlice = createSlice({
         delete equipment.description;
       }
     },
+
+    addEquipmentFusion(state, action: PayloadAction<{ equipment: string; id: string; cost: number }>) {
+      const equipment = state.character.equipment.find((e) => e.id === action.payload.equipment);
+      if (!equipment) {
+        return;
+      }
+      if (equipment.category !== "weapon") {
+        throw new Error("Cannot add fusion to non-weapon equipment");
+      }
+
+      if (equipment.fusions === undefined) {
+        equipment.fusions = [];
+      }
+
+      equipment.fusions.push(action.payload.id);
+      equipment.unitaryCost += action.payload.cost;
+      state.character.credits -= action.payload.cost;
+    },
+
+    removeEquipmentFusion(state, action: PayloadAction<{ equipment: string; id: string; cost: number }>) {
+      const equipment = state.character.equipment.find((e) => e.id === action.payload.equipment);
+      if (!equipment || equipment.category !== "weapon" || equipment.fusions === undefined) {
+        return;
+      }
+
+      const filtered = equipment.fusions.filter((f) => f !== action.payload.id);
+      if (filtered.length === equipment.fusions.length) {
+        // Not present
+        return;
+      }
+
+      equipment.unitaryCost -= action.payload.cost;
+      state.character.credits += action.payload.cost;
+      if (filtered.length === 0) {
+        delete equipment.fusions;
+      } else {
+        equipment.fusions = filtered;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(retrieveClassDetails.fulfilled, (state, action) => {

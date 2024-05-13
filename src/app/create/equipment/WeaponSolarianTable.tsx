@@ -18,6 +18,7 @@ function WeaponSolarianTableCategory({ equipments }: { equipments: EquipmentWeap
         secondaryType: "solarian",
         equipmentId: equipment.id,
         unitaryCost: equipment.cost ?? 0,
+        quantity: 1,
       })
     );
   }

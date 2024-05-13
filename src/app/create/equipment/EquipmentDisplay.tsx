@@ -59,7 +59,7 @@ export function EquipmentDisplay({
   }
 
   return (
-    <Card className={selected ? "border-primary" : undefined}>
+    <Card>
       <Card.Header role={selected ? undefined : "button"} onClick={selected ? undefined : () => setOpen(!open)}>
         <Row>
           <Col>
@@ -92,7 +92,7 @@ export function EquipmentDisplay({
               <Credits value={descriptor.unitaryCost} />
             </Col>
             <Col>
-              {descriptor.type === "consumable" && (
+              {!selected && descriptor.type === "consumable" && (
                 <InputGroup>
                   <Button variant="outline-secondary" onClick={handleDecreaseClick}>
                     <i className="bi-dash-lg"></i>
@@ -109,7 +109,7 @@ export function EquipmentDisplay({
                   </Button>
                 </InputGroup>
               )}
-              {descriptor.type !== "consumable" && (
+              {!selected && descriptor.type !== "consumable" && (
                 <ButtonGroup className="right">
                   <Link className="text-nowrap btn btn-secondary" href={`/create/equipment/${descriptor.id}`}>
                     <i className="bi-pencil"></i> Modifier
