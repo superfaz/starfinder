@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Badge, Button, ButtonGroup, Card, Col, Collapse, FormControl, InputGroup, Row } from "react-bootstrap";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { EquipmentBase, EquipmentDescriptor } from "model";
+import { EquipmentBase, EquipmentDescriptor, EquipmentWeaponFusion, EquipmentWeaponFusionSchema } from "model";
 import { Credits } from "./Components";
 
 export function useEquipment<T extends EquipmentBase>(descriptor: EquipmentDescriptor): T | null {
@@ -23,6 +23,21 @@ export function useEquipment<T extends EquipmentBase>(descriptor: EquipmentDescr
   return equipment;
 }
 
+function useFusion(id: string): EquipmentWeaponFusion | null {
+  const [fusion, setFusion] = useState<EquipmentWeaponFusion | null>(null);
+
+  useEffect(() => {
+    fetch(`/api/equipment/weapons/fusions/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const fusion = EquipmentWeaponFusionSchema.parse(data);
+        setFusion(fusion);
+      });
+  }, [id]);
+
+  return fusion;
+}
+
 function DisplayMaterial({ descriptor }: { descriptor: EquipmentDescriptor }) {
   const materials = useAppSelector((state) => state.data.equipmentMaterials);
   const material = findOrError(materials, descriptor.material);
@@ -30,6 +45,17 @@ function DisplayMaterial({ descriptor }: { descriptor: EquipmentDescriptor }) {
   return (
     <Badge bg="secondary" className="mb-2">
       {material.name}
+    </Badge>
+  );
+}
+
+function DisplayFusion({ id }: { id: string }) {
+  const fusion = useFusion(id);
+  if (!fusion) return null;
+
+  return (
+    <Badge bg="secondary" className="mb-2">
+      {fusion.name}
     </Badge>
   );
 }
@@ -81,6 +107,9 @@ export function EquipmentDisplay({
         <Card.Body>
           {children}
           {descriptor.material && <DisplayMaterial descriptor={descriptor} />}
+          {descriptor.category === "weapon" &&
+            descriptor.fusions &&
+            descriptor.fusions.map((id) => <DisplayFusion key={id} id={id} />)}
           <hr />
           <div className="small text-muted">{descriptor.description ?? equipment.description}</div>
         </Card.Body>
