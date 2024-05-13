@@ -25,7 +25,7 @@ export default function SoldierEditor({ character }: CharacterProps) {
 
   return (
     <>
-      <Form.FloatingLabel label="Style de combat">
+      <Form.FloatingLabel controlId="soldierPrimaryStyle" label="Style de combat">
         <Form.Select value={character.getSoldierPrimaryStyle() ?? ""} onChange={handleStyleChange}>
           {classDetails.styles.map((style) => (
             <option key={style.id} value={style.id}>

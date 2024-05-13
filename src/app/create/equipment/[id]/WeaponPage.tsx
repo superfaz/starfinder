@@ -126,7 +126,7 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
           <Row>
             <Col>
               <Stack direction="vertical" gap={2}>
-                <Form.FloatingLabel label="Nom personnalisé" className="form-floating-always">
+                <Form.FloatingLabel controlId="name" label="Nom personnalisé" className="form-floating-always">
                   <Form.Control
                     type="text"
                     placeholder={equipment.name}
@@ -134,7 +134,7 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
                     onChange={handleNameChange}
                   />
                 </Form.FloatingLabel>
-                <Form.FloatingLabel label="Matériau">
+                <Form.FloatingLabel controlId="material" label="Matériau">
                   <Form.Select value={descriptor.material ?? "normal"} onChange={handleMaterialChange}>
                     {materials.map((material) => (
                       <option key={material.id} value={material.id}>
@@ -149,7 +149,7 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
               </Stack>
             </Col>
             <Col>
-              <Form.FloatingLabel label="Description personnalisé" className="h-100">
+              <Form.FloatingLabel controlId="description" label="Description personnalisé" className="h-100">
                 <Form.Control
                   as="textarea"
                   aria-label="Description personnalisée"

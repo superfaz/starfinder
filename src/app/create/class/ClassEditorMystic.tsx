@@ -25,7 +25,7 @@ export default function MysticEditor({ character }: CharacterProps) {
 
   return (
     <>
-      <Form.FloatingLabel label="Connection mystique">
+      <Form.FloatingLabel controlId="mysticConnection" label="Connection mystique">
         <Form.Select value={character.getMysticConnection() ?? ""} onChange={handleConnectionChange}>
           {classDetails.connections.map((connection) => (
             <option key={connection.id} value={connection.id}>
