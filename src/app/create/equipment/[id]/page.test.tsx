@@ -40,7 +40,6 @@ describe("/create/equipment/id", () => {
 
   test("is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
-    dump(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Arme modifiée" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Crédits" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 4, name: "Fusions" })).not.toBeNull();
