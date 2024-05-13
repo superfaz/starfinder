@@ -732,7 +732,7 @@ function updateSkillRankImpl(character: Character, skillId: string, delta: numbe
 }
 
 function addEquipmentImpl(character: Character, descriptor: EquipmentDescriptor) {
-  character.equipment.push(descriptor);
+  character.equipment = [...character.equipment, descriptor];
   character.credits -= descriptor.unitaryCost;
   return character;
 }
@@ -862,6 +862,11 @@ class Updators {
 
   updateDeity(deity: string) {
     this._character = { ...this._character, deity };
+    return this;
+  }
+
+  addEquipment(descriptor: EquipmentDescriptor) {
+    this._character = addEquipmentImpl(this._character, descriptor);
     return this;
   }
 }

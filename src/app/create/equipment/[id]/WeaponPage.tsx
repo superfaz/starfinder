@@ -56,7 +56,7 @@ function FusionDisplay({
           {children}
         </Card.Header>
         <Card.Body>
-          <Card.Text className="small">
+          <Card.Text as="div" className="small">
             {fusion.description}
             {fusion.constraint && (
               <>
@@ -85,7 +85,9 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
   const appliedFusions = (descriptor.fusions ?? []).map((fusionId) => findOrError(fusions, (f) => f.id === fusionId));
   const remainingLevels = equipment.level - appliedFusions.reduce((acc, fusion) => acc + fusion.level, 0);
   const fusionCost = (WeaponFusionCostByLevel as Record<number, number>)[equipment.level];
-  const potentialFusions = fusions.filter((fusion) => fusion.level <= remainingLevels);
+  const potentialFusions = fusions
+    .filter((fusion) => fusion.level <= remainingLevels)
+    .filter((fusion) => !appliedFusions.includes(fusion));
 
   function handleMaterialChange(event: ChangeEvent<HTMLSelectElement>) {
     dispatch(mutators.updateEquipmentMaterial({ id: descriptor.id, material: event.target.value }));

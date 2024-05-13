@@ -3,6 +3,7 @@ import { IDataSource, IDataSet, IDescriptor } from "data";
 import { ArmorTypeIds, EquipmentWeaponIds, IModel } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import envoyDetails from "./mocks/class-envoy.json";
+import fusionsDetails from "./mocks/equipment-weapons-fusion.json";
 import mysticDetails from "./mocks/class-mystic.json";
 import operativeDetails from "./mocks/class-operative.json";
 import scholarDetails from "./mocks/themes-details.json";
@@ -47,6 +48,7 @@ beforeAll(async () => {
   addFetchMock("/api/classes/soldier/details", soldierDetails);
   addFetchMock("/api/classes/mystic/details", mysticDetails);
   addFetchMock("/api/themes/scholar", scholarDetails);
+  addFetchMock("/api/equipment/weapons/fusions", fusionsDetails);
 
   for (const armorType in ArmorTypeIds) {
     addFetchMock(
