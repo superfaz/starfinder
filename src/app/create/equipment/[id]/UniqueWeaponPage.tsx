@@ -7,12 +7,16 @@ import {
   EquipmentWeaponFusionSchema,
   WeaponEquipmentDescriptor,
   WeaponFusionCostByLevel,
+  isMelee,
+  isRanged,
 } from "model";
 import { useEquipment } from "../EquipmentDisplay";
 import { findOrError } from "app/helpers";
 import { WeaponMeleeDisplay } from "../WeaponMeleeDisplay";
 import { CreditsDisplay } from "../CreditsDisplay";
 import Link from "next/link";
+import { WeaponRangedDisplay } from "../WeaponRangedDisplay";
+import { WeaponSolarianDisplay } from "../WeaponSolarianDisplay";
 
 function useFusions(levelMax: number) {
   const [fusions, setFusions] = useState<EquipmentWeaponFusion[]>([]);
@@ -71,7 +75,7 @@ function FusionDisplay({
   );
 }
 
-export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescriptor }) {
+export function UniqueWeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescriptor }) {
   const dispatch = useAppDispatch();
   const equipment = useEquipment<EquipmentWeapon>(descriptor);
   const materials = useAppSelector((state) => state.data.equipmentMaterials);
@@ -79,6 +83,14 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
 
   if (equipment === null || fusions.length === 0) {
     return null;
+  }
+  if (
+    descriptor.category !== "weapon" ||
+    descriptor.type !== "unique" ||
+    descriptor.secondaryType === "grenade" ||
+    descriptor.secondaryType === "ammunition"
+  ) {
+    throw new Error("Invalid descriptor");
   }
 
   const selectedMaterial = materials.find((material) => material.id === descriptor.material);
@@ -88,6 +100,7 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
   const potentialFusions = fusions
     .filter((fusion) => fusion.level <= remainingLevels)
     .filter((fusion) => !appliedFusions.includes(fusion));
+  const materialDisabled = !["basic", "advanced"].includes(descriptor.secondaryType);
 
   function handleMaterialChange(event: ChangeEvent<HTMLSelectElement>) {
     dispatch(mutators.updateEquipmentMaterial({ id: descriptor.id, material: event.target.value }));
@@ -114,7 +127,9 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
       <Col lg={3}>
         <CreditsDisplay />
         <h2>Arme modifiée</h2>
-        <WeaponMeleeDisplay descriptor={descriptor} selected={true} />
+        {isMelee(descriptor.secondaryType) && <WeaponMeleeDisplay descriptor={descriptor} selected={true} />}
+        {isRanged(descriptor.secondaryType) && <WeaponRangedDisplay descriptor={descriptor} selected={true} />}
+        {descriptor.secondaryType === "solarian" && <WeaponSolarianDisplay descriptor={descriptor} selected={true} />}
       </Col>
       <Col>
         <Stack direction="vertical" gap={2}>
@@ -135,7 +150,11 @@ export function WeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescript
                   />
                 </Form.FloatingLabel>
                 <Form.FloatingLabel controlId="material" label="Matériau">
-                  <Form.Select value={descriptor.material ?? "normal"} onChange={handleMaterialChange}>
+                  <Form.Select
+                    value={descriptor.material ?? "normal"}
+                    disabled={materialDisabled}
+                    onChange={handleMaterialChange}
+                  >
                     {materials.map((material) => (
                       <option key={material.id} value={material.id}>
                         {material.name} +{material.uniqueCost} Cr

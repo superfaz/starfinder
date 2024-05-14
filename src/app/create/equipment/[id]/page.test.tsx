@@ -91,6 +91,11 @@ describe("/create/equipment/id for weapons", () => {
     expect(content.queryByRole("heading", { level: 2, name: "Arme modifiée" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Crédits" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 4, name: "Fusions" })).not.toBeNull();
-    expect(content.getByRole("combobox", { name: "Matériau" })).not.toBeNull();
+
+    if (["basic", "advanced"].includes(descriptor.secondaryType)) {
+      expect(content.getByRole("combobox", { name: "Matériau" })).not.toBeDisabled();
+    } else {
+      expect(content.getByRole("combobox", { name: "Matériau" })).toBeDisabled();
+    }
   });
 });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCharacterPresenter } from "../../helpers";
-import { WeaponPage } from "./WeaponPage";
+import { UniqueWeaponPage } from "./UniqueWeaponPage";
 
 export default function Page({ params }: { params: { id: string } }) {
   const presenter = useCharacterPresenter();
@@ -17,6 +17,6 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <>{descriptor.category === "weapon" && descriptor.type === "unique" && <WeaponPage descriptor={descriptor} />}</>
+    <>{descriptor.category === "weapon" && descriptor.type === "unique" && <UniqueWeaponPage descriptor={descriptor} />}</>
   );
 }
