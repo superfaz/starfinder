@@ -94,14 +94,14 @@ function CardWeapon({ presenter, descriptor }: { presenter: CharacterPresenter; 
         </Col>
         <Col xs="auto">
           <ValueComponent label="Dégâts">
-            {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee") && (
+            {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee" || weapon.type === "weaponSolarian") && (
               <DisplayDamageShort damage={weapon.damage} />
             )}
           </ValueComponent>
         </Col>
         <Col>
           <ValueComponent label="Critique">
-            {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee") && (
+            {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee" || weapon.type === "weaponSolarian") && (
               <DisplayCritical critical={weapon.critical} />
             )}
           </ValueComponent>

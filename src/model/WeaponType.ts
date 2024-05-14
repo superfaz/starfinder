@@ -29,3 +29,11 @@ export function isWeaponType(obj: unknown): obj is WeaponType {
 export function isWeaponTypeId(obj: unknown): obj is WeaponTypeId {
   return WeaponTypeIdSchema.safeParse(obj).success;
 }
+
+export function isMelee(type: string): boolean {
+  return ["natural", "basic", "advanced"].includes(type);
+}
+
+export function isRanged(type: string): boolean {
+  return ["small", "long", "heavy", "sniper"].includes(type);
+}
