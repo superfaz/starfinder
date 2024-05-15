@@ -2,7 +2,8 @@
 
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
-import { Critical, Damage, Special } from "model";
+import { Critical, Damage, EquipmentWeaponFusion, Special } from "model";
+import { useEffect, useState } from "react";
 
 export function DisplayDamageShort({ damage }: { damage?: Damage }) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
@@ -53,6 +54,20 @@ export function DisplaySpecials({ specials }: { specials: Special[] }) {
       return special.value ? `${name} (${special.value})` : name;
     })
     .join(", ");
+}
+
+export function DisplayFusions({ fusions }: { fusions: string[] }) {
+  const [elements, setElements] = useState<EquipmentWeaponFusion[]>([]);
+
+  useEffect(() => {
+    fetch("/api/equipment/weapons/fusions")
+      .then((response) => response.json())
+      .then((data) => {
+        setElements(data.filter((f: EquipmentWeaponFusion) => fusions.includes(f.id)));
+      });
+  }, [fusions]);
+
+  return elements.map((f) => f.name).join(", ");
 }
 
 export function Credits({ value }: { value?: number }) {

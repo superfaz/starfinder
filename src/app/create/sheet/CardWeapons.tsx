@@ -5,7 +5,13 @@ import { displayBonus, findOrError } from "app/helpers";
 import { ValueComponent } from "./ValueComponent";
 import { EquipmentDescriptor, EquipmentWeapon } from "model";
 import { useEffect, useState } from "react";
-import { DisplayCritical, DisplayDamageShort, DisplayRange, DisplaySpecials } from "../equipment/Components";
+import {
+  DisplayCritical,
+  DisplayDamageShort,
+  DisplayFusions,
+  DisplayRange,
+  DisplaySpecials,
+} from "../equipment/Components";
 
 function getWeapon(descriptor: EquipmentDescriptor): Promise<EquipmentWeapon> {
   return fetch(`/api/equipment/weapons/${descriptor.secondaryType}`)
@@ -68,7 +74,7 @@ function CardWeapon({ presenter, descriptor }: { presenter: CharacterPresenter; 
     <Card.Body className="small py-2">
       <Row>
         <Col>
-          <ValueComponent label={label} value={weapon.name} />
+          <ValueComponent label={label} value={descriptor.name ?? weapon.name} />
         </Col>
         {(weapon.type === "weaponMelee" || weapon.type === "weaponRanged") && (
           <Col xs="auto">
@@ -125,6 +131,15 @@ function CardWeapon({ presenter, descriptor }: { presenter: CharacterPresenter; 
           </ValueComponent>
         </Col>
       </Row>
+      {descriptor.category === "weapon" && descriptor.fusions && (
+        <Row>
+          <Col>
+            <ValueComponent label="Fusions">
+              <DisplayFusions fusions={descriptor.fusions} />
+            </ValueComponent>
+          </Col>
+        </Row>
+      )}
     </Card.Body>
   );
 }

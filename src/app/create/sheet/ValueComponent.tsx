@@ -1,9 +1,11 @@
+import { ReactNode } from "react";
+
 interface IValueComponentProps {
   label: string;
   value?: string | number;
   title?: string;
   className?: string;
-  children?: JSX.Element[] | JSX.Element | false;
+  children?: JSX.Element[] | JSX.Element | ReactNode | false;
 }
 
 type ValueComponentProps = Readonly<IValueComponentProps>;
