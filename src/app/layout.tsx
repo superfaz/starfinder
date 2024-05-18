@@ -16,7 +16,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body>
         {process.env.NODE_ENV === "development" && (
-          <div className="fixed-top text-black text-end me-1">
+          <div className="fixed-top text-end me-1">
             <div className="d-block d-sm-none">xs</div>
             <div className="d-none d-sm-block d-md-none">sm</div>
             <div className="d-none d-md-block d-lg-none">md</div>
