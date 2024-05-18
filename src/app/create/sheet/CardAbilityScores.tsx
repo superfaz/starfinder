@@ -1,8 +1,11 @@
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
+import { displayBonus } from "app/helpers";
 import { computeAbilityScoreModifier, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
-import { Badge, Card, Row, Stack } from "react-bootstrap";
 import { ValueComponent } from "./ValueComponent";
-import { displayBonus } from "app/helpers";
 
 export function CardAbilityScores({ character }: CharacterProps) {
   const abilityScores = useAppSelector((state) => state.data.abilityScores);

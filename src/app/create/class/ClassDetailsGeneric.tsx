@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import Badge from "react-bootstrap/Badge";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { Badge } from "app/components";
 import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
@@ -37,7 +37,7 @@ export default function ClassDetailsGeneric({ character, classId }: CharacterPro
             <FeatureComponent character={character} feature={feature} />
           </Col>
         ))}
-        {[...new Array((9-levelFeatures.length) % 3)].map((_, index) => (
+        {[...new Array((9 - levelFeatures.length) % 3)].map((_, index) => (
           <Col key={index}></Col>
         ))}
       </Row>

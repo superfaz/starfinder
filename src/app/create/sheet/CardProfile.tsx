@@ -1,8 +1,11 @@
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
 import { useAppSelector } from "logic";
-import { CharacterProps } from "../Props";
 import { Alignment } from "model";
-import { Badge, Card, Row, Stack } from "react-bootstrap";
 import { ValueComponent } from "./ValueComponent";
+import { CharacterProps } from "../Props";
 
 export function CardProfile({ character }: CharacterProps) {
   const alignments = useAppSelector((state) => state.data.alignments);

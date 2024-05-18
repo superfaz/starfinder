@@ -1,4 +1,5 @@
-import { Badge, Card } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import { Badge } from "app/components";
 import { CharacterProps } from "../Props";
 
 export function CardDescription({ character }: CharacterProps) {

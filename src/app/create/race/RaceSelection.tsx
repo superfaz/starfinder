@@ -1,13 +1,16 @@
 "use client";
 
-import { Badge, Card, Form, Stack } from "react-bootstrap";
-import { ReferenceComponent } from "../ReferenceComponent";
-import RaceHumansEditor from "./RaceHumansEditor";
+import { ChangeEvent } from "react";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
+import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { ModifierTypes, RaceModifier } from "model";
-import { ChangeEvent } from "react";
-import { displayBonus, findOrError } from "app/helpers";
+import RaceHumansEditor from "./RaceHumansEditor";
 import { useCharacterPresenter } from "../helpers";
+import { ReferenceComponent } from "../ReferenceComponent";
 
 function RaceModifiers({ modifiers }: { modifiers: RaceModifier[] }) {
   const sizes = useAppSelector((state) => state.data.sizes);

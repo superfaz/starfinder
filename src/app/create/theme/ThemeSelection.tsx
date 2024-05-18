@@ -1,12 +1,14 @@
 "use client";
 
-import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { ChangeEvent } from "react";
-import { Badge, Form, Stack } from "react-bootstrap";
-import { displayBonus, findOrError } from "app/helpers";
-import { ReferenceComponent } from "../ReferenceComponent";
 import dynamic from "next/dynamic";
+import { ChangeEvent } from "react";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
+import { displayBonus, findOrError } from "app/helpers";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
+import { ReferenceComponent } from "../ReferenceComponent";
 
 const LazyThemeNoneEditor = dynamic(() => import("./ThemeNoneEditor"));
 const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"));

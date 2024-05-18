@@ -1,5 +1,13 @@
+import Link from "next/link";
 import { ChangeEvent, ReactNode, useEffect, useState } from "react";
-import { Badge, Button, Card, Col, Form, Row, Stack } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
+import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import {
   EquipmentWeapon,
@@ -10,11 +18,9 @@ import {
   isMelee,
   isRanged,
 } from "model";
-import { useEquipment } from "../EquipmentDisplay";
-import { findOrError } from "app/helpers";
-import { WeaponMeleeDisplay } from "../WeaponMeleeDisplay";
 import { CreditsDisplay } from "../CreditsDisplay";
-import Link from "next/link";
+import { useEquipment } from "../EquipmentDisplay";
+import { WeaponMeleeDisplay } from "../WeaponMeleeDisplay";
 import { WeaponRangedDisplay } from "../WeaponRangedDisplay";
 import { WeaponSolarianDisplay } from "../WeaponSolarianDisplay";
 

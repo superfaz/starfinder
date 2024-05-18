@@ -1,10 +1,13 @@
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
+import { displayBonus } from "app/helpers";
 import { useAppSelector } from "logic";
-import { CharacterProps } from "../Props";
 import { ModifierTypes } from "model";
 import { ofType } from "view";
-import { Badge, Card, Row, Stack } from "react-bootstrap";
 import { ValueComponent } from "./ValueComponent";
-import { displayBonus } from "app/helpers";
+import { CharacterProps } from "../Props";
 
 export function CardSavingThrows({ character }: CharacterProps) {
   const savingThrows = useAppSelector((state) => state.data.savingThrows);

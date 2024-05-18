@@ -1,10 +1,12 @@
-import { Badge, Card, Col, Row } from "react-bootstrap";
-import { CharacterProps } from "../Props";
-import { CharacterPresenter, useAppSelector } from "logic";
-import { displayBonus, findOrError } from "app/helpers";
-import { ValueComponent } from "./ValueComponent";
-import { EquipmentDescriptor, EquipmentWeapon } from "model";
 import { useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { Badge } from "app/components";
+import { displayBonus, findOrError } from "app/helpers";
+import { CharacterPresenter, useAppSelector } from "logic";
+import { EquipmentDescriptor, EquipmentWeapon } from "model";
+import { ValueComponent } from "./ValueComponent";
 import {
   DisplayCritical,
   DisplayDamageShort,
@@ -12,6 +14,7 @@ import {
   DisplayRange,
   DisplaySpecials,
 } from "../equipment/Components";
+import { CharacterProps } from "../Props";
 
 function getWeapon(descriptor: EquipmentDescriptor): Promise<EquipmentWeapon> {
   return fetch(`/api/equipment/weapons/${descriptor.secondaryType}`)

@@ -1,12 +1,12 @@
 "use client";
 
-import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
 import { computeAbilityScoreModifier, mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";

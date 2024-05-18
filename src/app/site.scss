@@ -10,10 +10,25 @@ $sf-blue: #245883;
 $sf-darkred: #a71916;
 $sf-darkblue: #080f1b;
 
+@mixin skew {
+  transform: skew(-20deg);
+}
+
+@mixin unskew {
+  transform: skew(20deg);
+}
+
+.skew {
+  @include skew;
+}
+
+.un-skew {
+  @include unskew;
+}
+
 /**
  * Overrides on the default bootstrap theme.
  */
-
 .form-floating {
   & > .form-control:focus::placeholder,
   & > .form-control-plaintext:focus::placeholder {
@@ -173,42 +188,28 @@ input[type="number"] {
   }
 }
 
-.badge::before {
-  transform: skew(-20deg);
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0;
-  z-index: -100;
-}
-
 .badge {
-  --bs-badge-font-size: 0.875em;
+  @include skew();
   position: relative;
-  padding-left: 0.5em;
-  padding-right: 0.75em;
-  padding-top: 0;
-  padding-bottom: 0;
-  line-height: var(--bs-line-height);
-  margin-right: 0.5em;
+  top: -0.2em;
+  border-radius: 0;
+  padding-top: 0.45em;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
   text-transform: uppercase;
   font-weight: bold;
 }
 
+.badge .content {
+  @include unskew();
+}
+
 .badge.bg-primary {
-  --bs-bg-opacity: 0;
-  &::before {
-    background-color: $sf-red;
-  }
+  background-color: $sf-red !important;
 }
 
 .badge.bg-secondary {
-  --bs-bg-opacity: 0;
-  &::before {
-    background-color: $sf-blue;
-  }
+  background-color: $sf-blue !important;
 }
 
 /**

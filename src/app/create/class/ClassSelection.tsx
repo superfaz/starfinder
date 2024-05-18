@@ -1,13 +1,15 @@
 "use client";
 
-import { Badge, Form, Stack } from "react-bootstrap";
-import { ReferenceComponent } from "../ReferenceComponent";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
+import dynamic from "next/dynamic";
 import { ChangeEvent } from "react";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
 import { findOrError } from "app/helpers";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { AbilityScoreIds } from "model";
 import { useCharacterPresenter } from "../helpers";
-import dynamic from "next/dynamic";
+import { ReferenceComponent } from "../ReferenceComponent";
 
 const LazyEditorEnvoy = dynamic(() => import("./ClassEditorEnvoy"));
 const LazyEditorOperative = dynamic(() => import("./ClassEditorOperative"));

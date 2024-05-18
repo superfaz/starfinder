@@ -1,11 +1,11 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import Badge from "react-bootstrap/Badge";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
 import { SkillPresenter, mutators, useAppDispatch } from "logic";
 import { useCharacterPresenter } from "../helpers";

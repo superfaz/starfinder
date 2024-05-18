@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
-import Badge from "react-bootstrap/Badge";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";

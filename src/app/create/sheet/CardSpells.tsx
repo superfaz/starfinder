@@ -1,4 +1,6 @@
-import { Badge, Card, Stack } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
 import { CharacterProps } from "../Props";
 
 export function CardSpells({ character }: CharacterProps) {
@@ -24,7 +26,9 @@ export function CardSpells({ character }: CharacterProps) {
             if (spells !== undefined && spells.length > 0) {
               return (
                 <>
-                  <Badge className="bg-secondary me-auto">Niv. {level}</Badge>
+                  <Badge bg="secondary" className="me-auto">
+                    Niv. {level}
+                  </Badge>
                   {spells.map((spell) => (
                     <div key={spell.id}>{spell.name}</div>
                   ))}

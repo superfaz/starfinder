@@ -1,10 +1,13 @@
-import { useAppSelector } from "logic";
-import { CharacterProps } from "../Props";
-import { displayBonus, findOrError } from "app/helpers";
-import { ValueComponent } from "./ValueComponent";
-import { Badge, Card, Col, Row } from "react-bootstrap";
-import { EquipmentArmor, EquipmentDescriptor } from "model";
 import { useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { displayBonus, findOrError } from "app/helpers";
+import { Badge } from "app/components";
+import { useAppSelector } from "logic";
+import { EquipmentArmor, EquipmentDescriptor } from "model";
+import { ValueComponent } from "./ValueComponent";
+import { CharacterProps } from "../Props";
 
 async function getArmor(descriptor: EquipmentDescriptor): Promise<EquipmentArmor> {
   return fetch(`/api/equipment/armors/${descriptor.secondaryType}`)

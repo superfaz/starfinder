@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import Badge from "react-bootstrap/Badge";
+import { Badge } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { useAppSelector } from "logic";

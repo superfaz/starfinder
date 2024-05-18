@@ -1,7 +1,9 @@
-import { Badge, Card, Row } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import { Badge } from "app/components";
+import { displayBonus } from "app/helpers";
 import { CharacterProps } from "../Props";
 import { ValueComponent } from "./ValueComponent";
-import { displayBonus } from "app/helpers";
 
 export function CardAttackBonuses({ character }: CharacterProps) {
   const attackBonuses = character.getAttackBonuses();

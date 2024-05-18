@@ -1,4 +1,6 @@
-import { Badge, Card, Row } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import { Badge } from "app/components";
 import { CharacterProps } from "../Props";
 import { ValueComponent } from "./ValueComponent";
 

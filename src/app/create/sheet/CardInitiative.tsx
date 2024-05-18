@@ -1,6 +1,9 @@
-import { Badge, Card, Col, Row } from "react-bootstrap";
-import { CharacterProps } from "../Props";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
+import { CharacterProps } from "../Props";
 
 export function CardInitiative({ character }: CharacterProps) {
   const initiative = character.getInitiative();

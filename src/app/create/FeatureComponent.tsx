@@ -1,5 +1,5 @@
-import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
+import { Badge } from "app/components";
 import { CharacterPresenter } from "logic";
 import type { FeatureCategory } from "model";
 import type { Feature } from "view";

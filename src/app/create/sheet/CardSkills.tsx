@@ -1,6 +1,10 @@
-import { Badge, Card, Col, Row, Stack } from "react-bootstrap";
-import { CharacterProps } from "../Props";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
+import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
+import { CharacterProps } from "../Props";
 
 export function CardSkills({ character }: CharacterProps) {
   return (
