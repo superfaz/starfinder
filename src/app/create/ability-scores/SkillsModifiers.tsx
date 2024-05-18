@@ -1,10 +1,11 @@
 "use client";
 
-import { Card, Stack } from "react-bootstrap";
-import { useCharacterPresenter } from "../helpers";
-import { isFeat } from "view";
-import ModifierComponent from "../ModifierComponent";
+import Card from "react-bootstrap/Card";
+import Stack from "react-bootstrap/Stack";
 import { hasTarget } from "model";
+import { isFeat } from "view";
+import { useCharacterPresenter } from "../helpers";
+import ModifierComponent from "../ModifierComponent";
 
 const categories: Record<string, string> = {
   ex: "EXT",

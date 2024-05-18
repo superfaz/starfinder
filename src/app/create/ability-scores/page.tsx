@@ -1,11 +1,12 @@
 "use client";
 
-import { Col, Stack } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Stack from "react-bootstrap/Stack";
+import { useCharacterPresenter } from "../helpers";
 import { AbilityScores } from "./AbilityScores";
 import { ProfessionSkills } from "./ProfessionSkills";
 import { Skills } from "./Skills";
 import { SkillsModifiers } from "./SkillsModifiers";
-import { useCharacterPresenter } from "../helpers";
 
 export default function Page() {
   const presenter = useCharacterPresenter();

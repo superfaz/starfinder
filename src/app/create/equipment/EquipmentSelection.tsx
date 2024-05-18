@@ -1,7 +1,10 @@
 "use client";
 
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { Alert, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import Alert from "react-bootstrap/Alert";
+import Form from "react-bootstrap/Form";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
 import Row from "react-bootstrap/Row";
@@ -20,12 +23,12 @@ import {
   ArmorTypeId,
 } from "model";
 import { useCharacterPresenter } from "../helpers";
+import { ArmorTable } from "./ArmorTable";
+import { WeaponAmmunitionTable } from "./WeaponAmmunitionTable";
+import { WeaponGrenadeTable } from "./WeaponGrenadeTable";
 import { WeaponMeleeTable } from "./WeaponMeleeTable";
 import { WeaponRangedTable } from "./WeaponRangedTable";
-import { WeaponGrenadeTable } from "./WeaponGrenadeTable";
-import { WeaponAmmunitionTable } from "./WeaponAmmunitionTable";
 import { WeaponSolarianTable } from "./WeaponSolarianTable";
-import { ArmorTable } from "./ArmorTable";
 
 function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {

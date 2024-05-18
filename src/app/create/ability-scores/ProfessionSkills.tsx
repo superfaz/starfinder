@@ -1,11 +1,13 @@
 "use client";
 
+import { useMemo, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
+import { Typeahead } from "react-bootstrap-typeahead";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { AbilityScoreId, AbilityScoreIds, Profession, isProfession, simpleHash } from "model";
-import { useMemo, useState } from "react";
-import { Button, Form, Stack } from "react-bootstrap";
-import { Typeahead } from "react-bootstrap-typeahead";
 
 type NewOption = { id: string; name: string; customOption: true };
 

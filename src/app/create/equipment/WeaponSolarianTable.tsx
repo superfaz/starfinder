@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Table } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
 import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponSolarian } from "model";

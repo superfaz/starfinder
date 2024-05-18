@@ -1,10 +1,10 @@
+import Card from "react-bootstrap/Card";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
 import { Prerequisite, PrerequisiteTypes } from "model";
 import { Feat } from "view";
 import ModifierComponent from "../ModifierComponent";
-import { Card } from "react-bootstrap";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 function getPrerequisiteText(data: IClientDataSet, prerequisite: Prerequisite) {

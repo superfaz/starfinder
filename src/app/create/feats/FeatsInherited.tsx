@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack } from "react-bootstrap";
+import Stack from "react-bootstrap/Stack";
 import { useCharacterPresenter } from "../helpers";
 import { FeatComponent } from "./FeatComponent";
 

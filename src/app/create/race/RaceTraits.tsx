@@ -1,8 +1,8 @@
 "use client";
 
-import { Stack } from "react-bootstrap";
-import FeatureComponent from "../FeatureComponent";
+import Stack from "react-bootstrap/Stack";
 import { useCharacterPresenter } from "../helpers";
+import FeatureComponent from "../FeatureComponent";
 
 export function RaceTraits() {
   const presenter = useCharacterPresenter();

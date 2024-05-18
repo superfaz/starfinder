@@ -1,6 +1,6 @@
 "use client";
 
-import { Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 import { ClassSelection } from "./ClassSelection";
 import { ClassDetails } from "./ClassDetails";
 import { useCharacterPresenter } from "../helpers";

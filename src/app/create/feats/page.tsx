@@ -1,10 +1,10 @@
 "use client";
 
-import { Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import { useCharacterPresenter } from "../helpers";
 import { FeatsInherited } from "./FeatsInherited";
 import { FeatsSelected } from "./FeatsSelected";
 import { FeatsSelection } from "./FeatsSelection";
-import { useCharacterPresenter } from "../helpers";
 
 export default function Page() {
   const presenter = useCharacterPresenter();

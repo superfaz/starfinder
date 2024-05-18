@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 import { useCookies } from "react-cookie";
 import { Character, CharacterSchema } from "model";
 

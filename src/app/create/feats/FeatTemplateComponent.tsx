@@ -1,7 +1,11 @@
-import { CharacterPresenter, FeatTemplateExtended, mutators, useAppDispatch } from "logic";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import { FeatComponentBody } from "./FeatComponentBody";
 import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import { CharacterPresenter, FeatTemplateExtended, mutators, useAppDispatch } from "logic";
+import { FeatComponentBody } from "./FeatComponentBody";
 
 export function FeatTemplateComponent({
   presenter,

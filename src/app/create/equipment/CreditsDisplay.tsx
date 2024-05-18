@@ -1,5 +1,7 @@
 import { ChangeEvent } from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 import { mutators, useAppDispatch } from "logic";
 import { useCharacterPresenter } from "../helpers";
 

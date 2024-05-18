@@ -1,10 +1,11 @@
 "use client";
 
+import { ChangeEvent } from "react";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch } from "logic";
 import { RaceFeature } from "view";
-import { ChangeEvent } from "react";
 import FeatureComponent from "../FeatureComponent";
-import { Form, Stack } from "react-bootstrap";
 import { useCharacterPresenter } from "../helpers";
 
 export function RaceAlternateTraits() {

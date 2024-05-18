@@ -1,12 +1,13 @@
 "use client";
 
 import { ReactNode, useEffect, useMemo } from "react";
-import { Container, Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 import { CookiesProvider, useCookies } from "react-cookie";
+import { Nav } from "app/components/Nav";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "logic/StoreProvider";
-import { Nav } from "app/components/Nav";
 import { Character, IModel } from "model";
 
 export default function LayoutClient({

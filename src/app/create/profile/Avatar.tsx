@@ -1,9 +1,11 @@
 "use client";
 
+import { ChangeEvent } from "react";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
-import { ChangeEvent } from "react";
-import { Card, Form, Stack } from "react-bootstrap";
 
 export function Avatar() {
   const presenter = useCharacterPresenter();

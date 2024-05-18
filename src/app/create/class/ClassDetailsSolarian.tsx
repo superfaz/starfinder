@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { CharacterPresenter, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import { ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
-import { Stack } from "react-bootstrap";
 
 function Level1({ presenter, features }: { presenter: CharacterPresenter; features: ClassFeature[] }) {
   const specials = features.filter((f) => f.id.startsWith("solarian-"));

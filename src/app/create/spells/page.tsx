@@ -1,8 +1,8 @@
 "use client";
 
-import { Col } from "react-bootstrap";
-import { SpellsSelection } from "./SpellsSelection";
+import Col from "react-bootstrap/Col";
 import { useCharacterPresenter } from "../helpers";
+import { SpellsSelection } from "./SpellsSelection";
 
 export default function Page() {
   const presenter = useCharacterPresenter();

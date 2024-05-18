@@ -1,5 +1,8 @@
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { CharacterPresenter, mutators, useAppDispatch } from "logic";
-import { Button, Card, Col, Row } from "react-bootstrap";
 import { Feat } from "view";
 import { FeatComponentBody } from "./FeatComponentBody";
 

@@ -1,9 +1,9 @@
 "use client";
 
-import { EquipmentSelection } from "./EquipmentSelection";
+import Col from "react-bootstrap/Col";
 import { useCharacterPresenter } from "../helpers";
+import { EquipmentSelection } from "./EquipmentSelection";
 import { EquipmentSelected } from "./EquipmentSelected";
-import { Col } from "react-bootstrap";
 
 export default function Page() {
   const presenter = useCharacterPresenter();

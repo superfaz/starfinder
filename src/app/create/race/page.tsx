@@ -1,4 +1,4 @@
-import { Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 import { RaceSelection } from "./RaceSelection";
 import { RaceTraits } from "./RaceTraits";
 import { RaceAlternateTraits } from "./RaceAlternateTraits";

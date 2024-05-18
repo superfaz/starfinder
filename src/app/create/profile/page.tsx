@@ -1,10 +1,10 @@
 "use client";
 
-import { Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import { useCharacterPresenter } from "../helpers";
 import { Profile } from "./Profile";
 import { Avatar } from "./Avatar";
 import { Description } from "./Description";
-import { useCharacterPresenter } from "../helpers";
 
 export default function Page() {
   const presenter = useCharacterPresenter();
