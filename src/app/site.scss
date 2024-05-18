@@ -193,7 +193,6 @@ input[type="number"] {
 .badge {
   @include skew();
   position: relative;
-  top: -0.2em;
   border-radius: 0;
   padding-top: 0.45em;
   margin-left: 0.3em;
