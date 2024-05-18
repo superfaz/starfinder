@@ -65,16 +65,14 @@ function FusionDisplay({
           </Badge>
           {children}
         </Card.Header>
-        <Card.Body>
-          <Card.Text as="div" className="small">
-            {fusion.description}
-            {fusion.constraint && (
-              <>
-                <hr />
-                {fusion.constraint}
-              </>
-            )}
-          </Card.Text>
+        <Card.Body className="small">
+          {fusion.description}
+          {fusion.constraint && (
+            <>
+              <hr />
+              {fusion.constraint}
+            </>
+          )}
         </Card.Body>
       </Card>
     </Col>
