@@ -166,6 +166,10 @@ h1,
     @extend .gap-2;
     border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
 
+    &.collapse:not(.show) {
+      display: none;
+    }
+
     p {
       margin-bottom: 0;
     }
