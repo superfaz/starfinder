@@ -1,3 +1,4 @@
+import { NextRequest } from "next/server";
 import { DataSource, IDataSource, DataSets } from "data";
 import {
   asClassEnvoy,
@@ -9,7 +10,6 @@ import {
   asClassTechnomancer,
   isIModel,
 } from "model";
-import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 

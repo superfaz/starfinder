@@ -1,6 +1,6 @@
+import { NextRequest, NextResponse } from "next/server";
 import { DataSets, DataSource, IDataSource } from "data";
 import { EquipmentWeaponId, EquipmentWeaponIdSchema, EquipmentWeaponIds } from "model";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(_: NextRequest, { params }: { params: { weaponType: string } }) {
   const dataSource: IDataSource = new DataSource();
