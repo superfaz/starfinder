@@ -162,7 +162,13 @@ h1,
   }
 
   .card-body {
+    @extend .vstack;
+    @extend .gap-2;
     border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -192,6 +198,7 @@ input[type="number"] {
 
 .badge {
   @include skew();
+  display: inline-block;
   position: relative;
   border-radius: 0;
   padding-top: 0.45em;
@@ -199,18 +206,19 @@ input[type="number"] {
   margin-right: 0.3em;
   text-transform: uppercase;
   font-weight: bold;
-}
 
-.badge .content {
-  @include unskew();
-}
+  .content {
+    display: inline-block;
+    @include unskew();
+  }
 
-.badge.bg-primary {
-  background-color: $sf-red !important;
-}
+  &.bg-primary {
+    background-color: $sf-red !important;
+  }
 
-.badge.bg-secondary {
-  background-color: $sf-blue !important;
+  &.bg-secondary {
+    background-color: $sf-blue !important;
+  }
 }
 
 /**

@@ -61,10 +61,8 @@ export function ThemeSelection() {
           <ReferenceComponent reference={selectedTheme.reference} />
         </>
       )}
-      <div className="mt-3">
-        {presenter.hasNoTheme() && <LazyThemeNoneEditor character={presenter} />}
-        {presenter.isScholar() && <LazyThemeScholarEditor character={presenter} />}
-      </div>
+      {presenter.hasNoTheme() && <LazyThemeNoneEditor character={presenter} className="mt-3" />}
+      {presenter.isScholar() && <LazyThemeScholarEditor character={presenter} className="mt-3" />}
     </Stack>
   );
 }

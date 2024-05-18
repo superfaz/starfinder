@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { CharacterProps } from "../Props";
+import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import type { ThemeScholar } from "model";
 
 function useThemeDetails(themeId: string) {
@@ -17,7 +16,12 @@ function useThemeDetails(themeId: string) {
   return details;
 }
 
-export default function ThemeScholarEditor({ character }: CharacterProps) {
+interface IThemeScholarEditorProps {
+  character: CharacterPresenter;
+  className?: string;
+}
+
+export default function ThemeScholarEditor({ character, className }: Readonly<IThemeScholarEditorProps>) {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
@@ -62,7 +66,7 @@ export default function ThemeScholarEditor({ character }: CharacterProps) {
 
   return (
     <>
-      <Form.FloatingLabel controlId="scholarSkill" label="Compétence de classe">
+      <Form.FloatingLabel controlId="scholarSkill" label="Compétence de classe" className={className}>
         <Form.Select value={selectedDetails.skill} onChange={handleScholarSkillChange}>
           {data.skills
             .filter((s) => s.id === "life" || s.id === "phys")

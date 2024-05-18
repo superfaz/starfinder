@@ -8,8 +8,8 @@ export function Badge({
   ...props
 }: Readonly<{ children: ReactNode; bg: string; className?: string }>): JSX.Element {
   return (
-    <div className={clsx("badge", bg && `bg-${bg}`, className)} {...props}>
-      <div className="content">{children}</div>
-    </div>
+    <span className={clsx("badge", bg && `bg-${bg}`, className)} {...props}>
+      <span className="content">{children}</span>
+    </span>
   );
 }
