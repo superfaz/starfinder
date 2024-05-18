@@ -123,4 +123,3 @@ Classe : Soldat / Abilité : Amélioration d'équipement / Liste des améliorati
 Classe : Soldat / Abilité : Second style de combat / Choix du style
 
 Classe : Technomancer / Abilité : Altération Magique / Choix des altérations
-

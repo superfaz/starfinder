@@ -17,6 +17,8 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <>{descriptor.category === "weapon" && descriptor.type === "unique" && <UniqueWeaponPage descriptor={descriptor} />}</>
+    <>
+      {descriptor.category === "weapon" && descriptor.type === "unique" && <UniqueWeaponPage descriptor={descriptor} />}
+    </>
   );
 }

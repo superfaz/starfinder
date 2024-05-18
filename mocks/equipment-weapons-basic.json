@@ -34,8 +34,8 @@
       "types": ["slashing"]
     },
     "critical": {
-        "id": "bleed",
-        "value": "1d6"
+      "id": "bleed",
+      "value": "1d6"
     },
     "weight": "F",
     "specials": [

@@ -18,12 +18,7 @@ import {
 import { z } from "zod";
 
 export const SimpleModifier = IModelSchema.extend({
-  type: z.enum([
-    ModifierTypes.attack,
-    ModifierTypes.armorClass,
-    ModifierTypes.languageCount,
-    ModifierTypes.rank,
-  ]),
+  type: z.enum([ModifierTypes.attack, ModifierTypes.armorClass, ModifierTypes.languageCount, ModifierTypes.rank]),
   level: z.number().optional(),
   value: z.number(),
 }).strict();
