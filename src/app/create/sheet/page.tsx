@@ -1,7 +1,6 @@
 "use client";
 
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { useCharacterPresenter } from "../helpers";
 import { CardProfile } from "./CardProfile";
@@ -18,51 +17,53 @@ import { CardWeapons } from "./CardWeapons";
 import { CardAbilities } from "./CardAbilities";
 import { CardFeats } from "./CardFeats";
 import { CardSpells } from "./CardSpells";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
 export default function Page() {
   const presenter = useCharacterPresenter();
 
   return (
     <Col lg={12}>
-      <div className="overflow-x-scroll">
-        <Row style={{ width: 390 * 5 }}>
-          <Col xs={12}></Col>
-          <Col>
-            <Stack id="presentation" direction="vertical" gap={2}>
-              <CardAvatar character={presenter} />
-              <CardFeats character={presenter} />
-            </Stack>
-          </Col>
-          <Col>
-            <Stack direction="vertical" gap={2}>
-              <CardProfile character={presenter} />
-              <CardDescription character={presenter} />
-            </Stack>
-          </Col>
-          <Col>
-            <Stack direction="vertical" gap={2}>
-              <CardAbilities character={presenter} />
-              <CardSpells character={presenter} />
-            </Stack>
-          </Col>
-          <Col>
-            <Stack direction="vertical" gap={2}>
-              <CardAbilityScores character={presenter} />
-              <CardSkills character={presenter} />
-            </Stack>
-          </Col>
-          <Col>
-            <Stack id="fight" direction="vertical" gap={2}>
-              <CardInitiative character={presenter} />
-              <CardKeyPoints character={presenter} />
-              <CardSavingThrows character={presenter} />
-              <CardArmorClass character={presenter} />
-              <CardAttackBonuses character={presenter} />
-              <CardWeapons character={presenter} />
-            </Stack>
-          </Col>
-        </Row>
-      </div>
+      <Splide
+        options={{ rewind: true, perPage: 4, perMove: 1, gap: "1em", arrows: false, omitEnd: true }}
+        tag="section"
+        aria-label="React Splide Example"
+      >
+        <SplideSlide>
+          <Stack id="presentation" direction="vertical" gap={2}>
+            <CardAvatar character={presenter} />
+            <CardFeats character={presenter} />
+          </Stack>
+        </SplideSlide>
+        <SplideSlide>
+          <Stack direction="vertical" gap={2}>
+            <CardProfile character={presenter} />
+            <CardDescription character={presenter} />
+          </Stack>
+        </SplideSlide>
+        <SplideSlide>
+          <Stack direction="vertical" gap={2}>
+            <CardAbilities character={presenter} />
+            <CardSpells character={presenter} />
+          </Stack>
+        </SplideSlide>
+        <SplideSlide>
+          <Stack direction="vertical" gap={2}>
+            <CardAbilityScores character={presenter} />
+            <CardSkills character={presenter} />
+          </Stack>
+        </SplideSlide>
+        <SplideSlide>
+          <Stack id="fight" direction="vertical" gap={2}>
+            <CardInitiative character={presenter} />
+            <CardKeyPoints character={presenter} />
+            <CardSavingThrows character={presenter} />
+            <CardArmorClass character={presenter} />
+            <CardAttackBonuses character={presenter} />
+            <CardWeapons character={presenter} />
+          </Stack>
+        </SplideSlide>
+      </Splide>
     </Col>
   );
 }
