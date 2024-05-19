@@ -82,6 +82,7 @@ export function UniqueWeaponPage({ descriptor }: { descriptor: WeaponEquipmentDe
   if (equipment === null || fusions.length === 0) {
     return null;
   }
+
   if (
     descriptor.category !== "weapon" ||
     descriptor.type !== "unique" ||
@@ -100,16 +101,16 @@ export function UniqueWeaponPage({ descriptor }: { descriptor: WeaponEquipmentDe
     .filter((fusion) => !appliedFusions.includes(fusion));
   const materialDisabled = !["basic", "advanced"].includes(descriptor.secondaryType);
 
-  function handleMaterialChange(event: ChangeEvent<HTMLSelectElement>) {
-    dispatch(mutators.updateEquipmentMaterial({ id: descriptor.id, material: event.target.value }));
-  }
-
   function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch(mutators.updateEquipmentName({ id: descriptor.id, name: event.target.value }));
   }
 
   function handleDescriptionChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch(mutators.updateEquipmentDescription({ id: descriptor.id, description: event.target.value }));
+  }
+
+  function handleMaterialChange(event: ChangeEvent<HTMLSelectElement>) {
+    dispatch(mutators.updateEquipmentMaterial({ id: descriptor.id, material: event.target.value }));
   }
 
   function handleAddFusion(id: string) {
