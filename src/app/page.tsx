@@ -1,10 +1,15 @@
 import Link from "next/link";
 import Card from "react-bootstrap/Card";
+import CardBody from "react-bootstrap/CardBody";
+import CardLink from "react-bootstrap/CardLink";
+import CardText from "react-bootstrap/CardText";
+import CardTitle from "react-bootstrap/CardTitle";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavbarBrand from "react-bootstrap/NavbarBrand";
+import NavLink from "react-bootstrap/NavLink";
 import Row from "react-bootstrap/Row";
 
 export default function Page() {
@@ -14,12 +19,12 @@ export default function Page() {
         <Container>
           <NavbarBrand>monperso StarFinder</NavbarBrand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <NavLink href="/">Home</NavLink>
           </Nav>
           <Nav>
-            <Nav.Link href="https://github.com/superfaz/starfinder">
+            <NavLink href="https://github.com/superfaz/starfinder">
               <i className="bi bi-github" aria-label="github" title="github"></i>
-            </Nav.Link>
+            </NavLink>
           </Nav>
         </Container>
       </Navbar>
@@ -38,55 +43,55 @@ export default function Page() {
             <Row className="my-5 g-2 row-cols-1 row-cols-md-2 row-cols-lg-3">
               <Col>
                 <Card className="h-100 text-bg-primary">
-                  <Card.Body className="d-flex align-items-start flex-column">
-                    <Card.Title>Création libre</Card.Title>
-                    <Card.Text>Créez votre personnage avec un maximum de choix et de possibilités.</Card.Text>
+                  <CardBody className="d-flex align-items-start flex-column">
+                    <CardTitle>Création libre</CardTitle>
+                    <CardText>Créez votre personnage avec un maximum de choix et de possibilités.</CardText>
                     <Link
                       href="/create"
                       className="mt-auto btn btn-outline-dark stretched-link text-light icon-link icon-link-hover"
                     >
                       Démarrer la création <i className="bi bi-chevron-right mb-1"></i>
                     </Link>
-                  </Card.Body>
+                  </CardBody>
                 </Card>
               </Col>
               <Col>
                 <Card className="h-100">
-                  <Card.Body className="d-flex align-items-start flex-column">
-                    <Card.Title>Basée sur un modèle</Card.Title>
-                    <Card.Text>
+                  <CardBody className="d-flex align-items-start flex-column">
+                    <CardTitle>Basée sur un modèle</CardTitle>
+                    <CardText>
                       Choisissez un modèle de personnage et personnalisez celui-ci en fonction de vos envies.
-                    </Card.Text>
-                    <Card.Text>
+                    </CardText>
+                    <CardText>
                       <em>(Non implémenté)</em>
-                    </Card.Text>
-                    <Card.Link
+                    </CardText>
+                    <CardLink
                       href="/create"
                       className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
                     >
                       Démarrer la custo <i className="bi bi-chevron-right mb-1"></i>
-                    </Card.Link>
-                  </Card.Body>
+                    </CardLink>
+                  </CardBody>
                 </Card>
               </Col>
               <Col>
                 <Card className="h-100">
-                  <Card.Body className="d-flex align-items-start flex-column">
-                    <Card.Title>Pré-tirée</Card.Title>
-                    <Card.Text>
+                  <CardBody className="d-flex align-items-start flex-column">
+                    <CardTitle>Pré-tirée</CardTitle>
+                    <CardText>
                       Utilisez l&apos;un des personnages pré-tirées pour démarrer directement votre personnage. Vous ne
                       pourrez pas le modifier sauf lors des montés de niveaux.
-                    </Card.Text>
-                    <Card.Text>
+                    </CardText>
+                    <CardText>
                       <em>(Non implémenté)</em>
-                    </Card.Text>
-                    <Card.Link
+                    </CardText>
+                    <CardLink
                       href="/create"
                       className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
                     >
                       Sélection <i className="bi bi-chevron-right mb-1"></i>
-                    </Card.Link>
-                  </Card.Body>
+                    </CardLink>
+                  </CardBody>
                 </Card>
               </Col>
             </Row>
