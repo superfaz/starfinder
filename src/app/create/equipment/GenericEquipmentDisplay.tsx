@@ -10,6 +10,7 @@ import Collapse from "react-bootstrap/Collapse";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
@@ -68,7 +69,7 @@ function DisplayFusion({ id }: { id: string }) {
   );
 }
 
-export function EquipmentDisplay({
+export function GenericEquipmentDisplay({
   descriptor,
   equipment,
   selected,
@@ -114,10 +115,12 @@ export function EquipmentDisplay({
       <Collapse in={open}>
         <Card.Body>
           {children}
-          {descriptor.material && <DisplayMaterial descriptor={descriptor} />}
-          {descriptor.category === "weapon" &&
-            descriptor.fusions &&
-            descriptor.fusions.map((id) => <DisplayFusion key={id} id={id} />)}
+          <Stack direction="horizontal" gap={2}>
+            {descriptor.material && <DisplayMaterial descriptor={descriptor} />}
+            {descriptor.category === "weapon" &&
+              descriptor.fusions &&
+              descriptor.fusions.map((id) => <DisplayFusion key={id} id={id} />)}
+          </Stack>
           <hr />
           <div className="small text-muted">{descriptor.description ?? equipment.description}</div>
         </Card.Body>

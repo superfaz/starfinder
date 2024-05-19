@@ -1,7 +1,7 @@
 "use client";
 
 import { EquipmentDescriptor, EquipmentWeaponAmmunition } from "model";
-import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
+import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function WeaponAmmunitionDisplay({
   descriptor,
@@ -18,8 +18,8 @@ export function WeaponAmmunitionDisplay({
 
   const subtitle = equipment.specials ? "Munition spéciale" : "Munition";
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
+    <GenericEquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       <div>Capacité : {equipment.capacity}</div>
-    </EquipmentDisplay>
+    </GenericEquipmentDisplay>
   );
 }

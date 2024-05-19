@@ -2,7 +2,7 @@
 
 import { EquipmentDescriptor, EquipmentWeaponSolarian } from "model";
 import { DisplayCritical, DisplayDamageLong } from "./Components";
-import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
+import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function WeaponSolarianDisplay({
   descriptor,
@@ -19,7 +19,7 @@ export function WeaponSolarianDisplay({
 
   const subtitle = "Crystal de combat solarien";
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
+    <GenericEquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       <div>
         {equipment.damage && (
           <span>
@@ -33,6 +33,6 @@ export function WeaponSolarianDisplay({
           </span>
         )}
       </div>
-    </EquipmentDisplay>
+    </GenericEquipmentDisplay>
   );
 }

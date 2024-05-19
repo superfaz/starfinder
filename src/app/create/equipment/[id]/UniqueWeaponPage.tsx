@@ -15,14 +15,8 @@ import {
   EquipmentWeaponFusionSchema,
   WeaponEquipmentDescriptor,
   WeaponFusionCostByLevel,
-  isMelee,
-  isRanged,
 } from "model";
-import { CreditsDisplay } from "../CreditsDisplay";
-import { useEquipment } from "../EquipmentDisplay";
-import { WeaponMeleeDisplay } from "../WeaponMeleeDisplay";
-import { WeaponRangedDisplay } from "../WeaponRangedDisplay";
-import { WeaponSolarianDisplay } from "../WeaponSolarianDisplay";
+import { useEquipment } from "../GenericEquipmentDisplay";
 
 function useFusions(levelMax: number) {
   const [fusions, setFusions] = useState<EquipmentWeaponFusion[]>([]);
@@ -127,93 +121,82 @@ export function UniqueWeaponPage({ descriptor }: { descriptor: WeaponEquipmentDe
   }
 
   return (
-    <>
-      <Col lg={3}>
-        <CreditsDisplay />
-        <h2>Arme modifiée</h2>
-        {isMelee(descriptor.secondaryType) && <WeaponMeleeDisplay descriptor={descriptor} selected={true} />}
-        {isRanged(descriptor.secondaryType) && <WeaponRangedDisplay descriptor={descriptor} selected={true} />}
-        {descriptor.secondaryType === "solarian" && <WeaponSolarianDisplay descriptor={descriptor} selected={true} />}
-      </Col>
-      <Col>
-        <Stack direction="vertical" gap={2}>
-          <Link href="/create/equipment" className="btn btn-primary me-auto">
-            <i className="bi bi-chevron-left"></i> Retour à la sélection
-          </Link>
+    <Stack direction="vertical" gap={2}>
+      <Link href="/create/equipment" className="btn btn-primary me-auto">
+        <i className="bi bi-chevron-left"></i> Retour à la sélection
+      </Link>
 
-          <h4 className="mt-3">Informations Générales</h4>
-          <Row>
-            <Col>
-              <Stack direction="vertical" gap={2}>
-                <Form.FloatingLabel controlId="name" label="Nom personnalisé" className="form-floating-always">
-                  <Form.Control
-                    type="text"
-                    placeholder={equipment.name}
-                    value={descriptor.name ?? ""}
-                    onChange={handleNameChange}
-                  />
-                </Form.FloatingLabel>
-                <Form.FloatingLabel controlId="material" label="Matériau">
-                  <Form.Select
-                    value={descriptor.material ?? "normal"}
-                    disabled={materialDisabled}
-                    onChange={handleMaterialChange}
-                  >
-                    {materials.map((material) => (
-                      <option key={material.id} value={material.id}>
-                        {material.name} +{material.uniqueCost} Cr
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.FloatingLabel>
-                {selectedMaterial && selectedMaterial.description && (
-                  <div className="text-muted small">{selectedMaterial.description}</div>
-                )}
-              </Stack>
-            </Col>
-            <Col>
-              <Form.FloatingLabel controlId="description" label="Description personnalisé" className="h-100">
-                <Form.Control
-                  as="textarea"
-                  aria-label="Description personnalisée"
-                  value={descriptor.description ?? ""}
-                  onChange={handleDescriptionChange}
-                  style={{ height: "100%", minHeight: "100%" }}
-                />
-              </Form.FloatingLabel>
-            </Col>
-          </Row>
-          <h4 className="mt-3">Fusions</h4>
-          <Row>
-            <Col sm={1}>
-              <Form.Control type="number" value={remainingLevels} disabled className="text-center" />
-            </Col>
-            <Form.Label column>Niveaux disponibles</Form.Label>
-            <Col sm={1}>
-              <Form.Control type="number" value={fusionCost} disabled className="text-center" />
-            </Col>
-            <Form.Label column>Coût par fusion</Form.Label>
-          </Row>
-          <Row className="row-cols-3">
-            {appliedFusions.map((fusion) => (
-              <FusionDisplay key={fusion.id} fusion={fusion} selected={true}>
-                <Button variant="primary" size="sm" className="ms-auto" onClick={() => handleRemoveFusion(fusion.id)}>
-                  Enlever
-                </Button>
-              </FusionDisplay>
-            ))}
-          </Row>
-          <Row className="row-cols-3">
-            {potentialFusions.map((fusion) => (
-              <FusionDisplay key={fusion.id} fusion={fusion} selected={false}>
-                <Button variant="primary" size="sm" className="ms-auto" onClick={() => handleAddFusion(fusion.id)}>
-                  Ajouter
-                </Button>
-              </FusionDisplay>
-            ))}
-          </Row>
-        </Stack>
-      </Col>
-    </>
+      <h4 className="mt-3">Informations Générales</h4>
+      <Row>
+        <Col>
+          <Stack direction="vertical" gap={2}>
+            <Form.FloatingLabel controlId="name" label="Nom personnalisé" className="form-floating-always">
+              <Form.Control
+                type="text"
+                placeholder={equipment.name}
+                value={descriptor.name ?? ""}
+                onChange={handleNameChange}
+              />
+            </Form.FloatingLabel>
+            <Form.FloatingLabel controlId="material" label="Matériau">
+              <Form.Select
+                value={descriptor.material ?? "normal"}
+                disabled={materialDisabled}
+                onChange={handleMaterialChange}
+              >
+                {materials.map((material) => (
+                  <option key={material.id} value={material.id}>
+                    {material.name} +{material.uniqueCost} Cr
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.FloatingLabel>
+            {selectedMaterial && selectedMaterial.description && (
+              <div className="text-muted small">{selectedMaterial.description}</div>
+            )}
+          </Stack>
+        </Col>
+        <Col>
+          <Form.FloatingLabel controlId="description" label="Description personnalisé" className="h-100">
+            <Form.Control
+              as="textarea"
+              aria-label="Description personnalisée"
+              value={descriptor.description ?? ""}
+              onChange={handleDescriptionChange}
+              style={{ height: "100%", minHeight: "100%" }}
+            />
+          </Form.FloatingLabel>
+        </Col>
+      </Row>
+      <h4 className="mt-3">Fusions</h4>
+      <Row>
+        <Col sm={1}>
+          <Form.Control type="number" value={remainingLevels} disabled className="text-center" />
+        </Col>
+        <Form.Label column>Niveaux disponibles</Form.Label>
+        <Col sm={1}>
+          <Form.Control type="number" value={fusionCost} disabled className="text-center" />
+        </Col>
+        <Form.Label column>Coût par fusion</Form.Label>
+      </Row>
+      <Row className="row-cols-3">
+        {appliedFusions.map((fusion) => (
+          <FusionDisplay key={fusion.id} fusion={fusion} selected={true}>
+            <Button variant="primary" size="sm" className="ms-auto" onClick={() => handleRemoveFusion(fusion.id)}>
+              Enlever
+            </Button>
+          </FusionDisplay>
+        ))}
+      </Row>
+      <Row className="row-cols-3">
+        {potentialFusions.map((fusion) => (
+          <FusionDisplay key={fusion.id} fusion={fusion} selected={false}>
+            <Button variant="primary" size="sm" className="ms-auto" onClick={() => handleAddFusion(fusion.id)}>
+              Ajouter
+            </Button>
+          </FusionDisplay>
+        ))}
+      </Row>
+    </Stack>
   );
 }

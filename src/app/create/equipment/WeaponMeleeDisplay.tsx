@@ -4,7 +4,7 @@ import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeaponMelee } from "model";
 import { DisplayCritical, DisplayDamageLong, DisplaySpecials } from "./Components";
-import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
+import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function WeaponMeleeDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
@@ -18,7 +18,7 @@ export function WeaponMeleeDisplay({ descriptor, selected }: { descriptor: Equip
     findOrError(data.weaponTypes, equipment.weaponType).name +
     (equipment.hands === 2 ? " à deux mains" : " à une main");
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
+    <GenericEquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       {equipment.damage && (
         <div>
           <DisplayDamageLong damage={equipment.damage} />
@@ -35,6 +35,6 @@ export function WeaponMeleeDisplay({ descriptor, selected }: { descriptor: Equip
           <DisplaySpecials specials={equipment.specials} />
         </div>
       )}
-    </EquipmentDisplay>
+    </GenericEquipmentDisplay>
   );
 }

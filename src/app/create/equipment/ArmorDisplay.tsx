@@ -4,7 +4,7 @@ import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentArmor, EquipmentDescriptor } from "model";
 import { DisplayModifier, DisplayRange } from "./Components";
-import { EquipmentDisplay, useEquipment } from "./EquipmentDisplay";
+import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
   const data = useAppSelector((state) => state.data);
@@ -16,7 +16,7 @@ export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDe
 
   const subtitle = findOrError(data.armorTypes, equipment.type).name;
   return (
-    <EquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
+    <GenericEquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       <div>
         CAE: <DisplayModifier value={equipment.eacBonus} />
         {" / "}
@@ -34,6 +34,6 @@ export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDe
           Modificateur de vitesse: <DisplayRange value={equipment.speedAdjustment} />
         </div>
       )}
-    </EquipmentDisplay>
+    </GenericEquipmentDisplay>
   );
 }

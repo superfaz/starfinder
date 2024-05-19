@@ -1,15 +1,13 @@
 "use client";
 
-import Stack from "react-bootstrap/Stack";
 import { EquipmentCategories, EquipmentDescriptor } from "model";
 import { useCharacterPresenter } from "../helpers";
+import { ArmorDisplay } from "./ArmorDisplay";
+import { WeaponAmmunitionDisplay } from "./WeaponAmmunitionDisplay";
+import { WeaponGrenadeDisplay } from "./WeaponGrenadeDisplay";
 import { WeaponMeleeDisplay } from "./WeaponMeleeDisplay";
 import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
-import { WeaponGrenadeDisplay } from "./WeaponGrenadeDisplay";
-import { WeaponAmmunitionDisplay } from "./WeaponAmmunitionDisplay";
 import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
-import { ArmorDisplay } from "./ArmorDisplay";
-import { CreditsDisplay } from "./CreditsDisplay";
 
 export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   if (descriptor.category === EquipmentCategories.weapon) {
@@ -42,8 +40,7 @@ export function EquipmentSelected() {
   const presenter = useCharacterPresenter();
 
   return (
-    <Stack direction="vertical" gap={2}>
-      <CreditsDisplay />
+    <>
       <h2>Armes</h2>
       {presenter.getWeapons().length === 0 && <em>Pas d&apos;arme possédée</em>}
       {presenter.getWeapons().map((weapon) => (
@@ -56,6 +53,6 @@ export function EquipmentSelected() {
       ))}
       <h2>Autres</h2>
       <em>Pas d&apos;autre objet possédé</em>
-    </Stack>
+    </>
   );
 }
