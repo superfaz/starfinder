@@ -90,15 +90,13 @@ Sorts : Souhait / Ajouter à la liste
 
 Equipement : Armes / Ajouter les armes spéciales
 
-Equipement : Armes / Ajouter les matériaux
+Equipement : Armures / Armures assistées / Gérer les modifiers associés à certaines armures
 
-Equipement : Armes / Ajouter les accessoires
+Equipement : Armures / Armures assistées / Gérer les modes de déplacements spéciaux
 
-Equipement : Armes / Ajouter les fusions
+Equipement : Armures / Améliorations d'armure / Gérer la consommation
 
-Equipement : Armures / Ajouter les armures assistées
-
-Equipement : Armures / Ajouter les améliorations d'armure
+Equipement : Armures / Améliorations d'armure / Gérer les modifiers associés
 
 ## Level increase
 
