@@ -10,6 +10,7 @@ import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
 import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
 import { useCharacterPresenter } from "../helpers";
 import { isMelee, isRanged } from "model";
+import { ArmorDisplay } from "./ArmorDisplay";
 
 function EquipmentEdited({ id }: { id: string }) {
   const presenter = useCharacterPresenter();
@@ -22,6 +23,13 @@ function EquipmentEdited({ id }: { id: string }) {
         {isMelee(descriptor.secondaryType) && <WeaponMeleeDisplay descriptor={descriptor} selected={true} />}
         {isRanged(descriptor.secondaryType) && <WeaponRangedDisplay descriptor={descriptor} selected={true} />}
         {descriptor.secondaryType === "solarian" && <WeaponSolarianDisplay descriptor={descriptor} selected={true} />}
+      </>
+    );
+  } else if (descriptor.category === "armor") {
+    return (
+      <>
+        <h2>Armure modifiée</h2>
+        <ArmorDisplay descriptor={descriptor} selected={true} />
       </>
     );
   } else {

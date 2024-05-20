@@ -29,11 +29,13 @@ export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDe
           Malus aux tests: <DisplayModifier value={equipment.armorCheckPenalty} />
         </div>
       )}
-      {equipment.type !== ArmorTypeIds.powered && equipment.speedAdjustment !== 0 && (
+      {equipment.type !== ArmorTypeIds.powered && (
         <>
-          <div>
-            Modificateur de vitesse: <DisplayRange value={equipment.speedAdjustment} />
-          </div>
+          {equipment.speedAdjustment !== 0 && (
+            <div>
+              Modificateur de vitesse: <DisplayRange value={equipment.speedAdjustment} />
+            </div>
+          )}
           <div>Emplacement d’amélioration: {equipment.upgradeSlots}</div>
         </>
       )}

@@ -25,6 +25,8 @@ const ArmorEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
   category: z.literal(EquipmentCategories.armor),
 });
 
+export type ArmorEquipmentDescriptor = z.infer<typeof ArmorEquipmentDescriptorSchema>;
+
 const OtherEquipmentDescriptorSchema = BaseEquipmentDescriptorSchema.extend({
   category: z.literal(EquipmentCategories.other),
 });
