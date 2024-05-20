@@ -11,8 +11,6 @@ export function ArmorPoweredTable({ equipments }: { equipments: EquipmentBase[] 
   const dispatch = useAppDispatch();
   const casted = equipments as EquipmentArmorPowered[];
 
-  console.log(equipments.length, casted.length);
-
   function handleAdd(equipment: EquipmentBase) {
     dispatch(
       mutators.addEquipment({
