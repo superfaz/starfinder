@@ -96,11 +96,13 @@ function CardWeapon({ presenter, descriptor }: { presenter: CharacterPresenter; 
             </ValueComponent>
           </Col>
         )}
-        <Col xs="auto">
-          <ValueComponent label="Att.">
-            <Badge bg="primary">{displayBonus(computeModifierFor(weapon, presenter))}</Badge>
-          </ValueComponent>
-        </Col>
+        {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee" || weapon.type === "weaponGrenade") && (
+          <Col xs="auto">
+            <ValueComponent label="Att.">
+              <Badge bg="primary">{displayBonus(computeModifierFor(weapon, presenter))}</Badge>
+            </ValueComponent>
+          </Col>
+        )}
         <Col xs="auto">
           <ValueComponent label="Dégâts">
             {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee" || weapon.type === "weaponSolarian") && (
@@ -126,13 +128,13 @@ function CardWeapon({ presenter, descriptor }: { presenter: CharacterPresenter; 
             </ValueComponent>
           </Col>
         )}
-        <Col>
-          <ValueComponent label="Spécial">
-            {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee" || weapon.type === "weaponGrenade") && (
+        {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee" || weapon.type === "weaponGrenade") && (
+          <Col>
+            <ValueComponent label="Spécial">
               <DisplaySpecials specials={weapon.specials} />
-            )}
-          </ValueComponent>
-        </Col>
+            </ValueComponent>
+          </Col>
+        )}
       </Row>
       {descriptor.category === "weapon" && descriptor.fusions && (
         <Row>
@@ -150,6 +152,7 @@ function CardWeapon({ presenter, descriptor }: { presenter: CharacterPresenter; 
 export function CardWeapons({ character }: CharacterProps) {
   const weaponTypes = useAppSelector((state) => state.data.weaponTypes);
   const proficiencies = character.getWeaponProficiencies().map((p) => findOrError(weaponTypes, p).name);
+  const weapons = character.getWeapons().filter((w) => w.secondaryType !== "ammunition");
 
   return (
     <Card data-testid="weapons">
@@ -160,7 +163,7 @@ export function CardWeapons({ character }: CharacterProps) {
         <span>Formations : {proficiencies.join(", ")}</span>
         {proficiencies.length === 0 && <em>Pas de classe sélectionnée</em>}
       </Card.Body>
-      {character.getWeapons().map((descriptor) => (
+      {weapons.map((descriptor) => (
         <CardWeapon key={descriptor.id} presenter={character} descriptor={descriptor} />
       ))}
     </Card>
