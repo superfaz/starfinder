@@ -1,6 +1,6 @@
 "use client";
 
-import { EquipmentCategories, EquipmentDescriptor } from "model";
+import { EquipmentArmorIds, EquipmentCategories, EquipmentDescriptor, EquipmentWeaponIds } from "model";
 import { useCharacterPresenter } from "../helpers";
 import { ArmorDisplay } from "./ArmorDisplay";
 import { WeaponAmmunitionDisplay } from "./WeaponAmmunitionDisplay";
@@ -13,30 +13,30 @@ import { ArmorUpgradeDisplay } from "./ArmorUpgradeDisplay";
 export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   if (descriptor.category === EquipmentCategories.weapon) {
     switch (descriptor.secondaryType) {
-      case "ammunition":
+      case EquipmentWeaponIds.ammunition:
         return <WeaponAmmunitionDisplay descriptor={descriptor} selected={false} />;
-      case "basic":
-      case "advanced":
+      case EquipmentWeaponIds.basic:
+      case EquipmentWeaponIds.advanced:
         return <WeaponMeleeDisplay descriptor={descriptor} selected={false} />;
-      case "small":
-      case "long":
-      case "heavy":
-      case "sniper":
+      case EquipmentWeaponIds.small:
+      case EquipmentWeaponIds.long:
+      case EquipmentWeaponIds.heavy:
+      case EquipmentWeaponIds.sniper:
         return <WeaponRangedDisplay descriptor={descriptor} selected={false} />;
-      case "grenade":
+      case EquipmentWeaponIds.grenade:
         return <WeaponGrenadeDisplay descriptor={descriptor} selected={false} />;
-      case "solarian":
+      case EquipmentWeaponIds.solarian:
         return <WeaponSolarianDisplay descriptor={descriptor} selected={false} />;
       default:
         return null;
     }
   } else if (descriptor.category === EquipmentCategories.armor) {
     switch (descriptor.secondaryType) {
-      case "light":
-      case "heavy":
-      case "assisted":
+      case EquipmentArmorIds.light:
+      case EquipmentArmorIds.heavy:
+      case EquipmentArmorIds.powered:
         return <ArmorDisplay descriptor={descriptor} selected={false} />;
-      case "upgrade":
+      case EquipmentArmorIds.upgrade:
         return <ArmorUpgradeDisplay descriptor={descriptor} selected={false} />;
       default:
         return null;
