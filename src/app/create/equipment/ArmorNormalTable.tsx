@@ -4,12 +4,12 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
 import { mutators, useAppDispatch } from "logic";
-import { ArmorTypeId, EquipmentArmor, EquipmentBase } from "model";
+import { ArmorTypeId, EquipmentArmorHeavy, EquipmentArmorLight, EquipmentBase } from "model";
 import { DisplayModifier, DisplayRange } from "./Components";
 
-export function ArmorTable({ armorType, equipments }: { armorType: ArmorTypeId; equipments: EquipmentBase[] }) {
+export function ArmorNormalTable({ armorType, equipments }: { armorType: ArmorTypeId; equipments: EquipmentBase[] }) {
   const dispatch = useAppDispatch();
-  const casted = equipments as EquipmentArmor[];
+  const casted = equipments as (EquipmentArmorLight | EquipmentArmorHeavy)[];
 
   function handleAdd(equipment: EquipmentBase) {
     dispatch(

@@ -47,14 +47,18 @@ import {
   EquipmentWeaponSolarianSchema,
   EquipmentWeaponAmmunition,
   EquipmentWeaponAmmunitionSchema,
-  EquipmentArmorSchema,
-  EquipmentArmor,
   SizeSchema,
   Size,
   EquipmentMaterial,
   EquipmentMaterialSchema,
   EquipmentWeaponFusionSchema,
   EquipmentWeaponFusion,
+  EquipmentArmorHeavy,
+  EquipmentArmorLight,
+  EquipmentArmorLightSchema,
+  EquipmentArmorHeavySchema,
+  EquipmentArmorPoweredSchema,
+  EquipmentArmorPowered,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -75,13 +79,18 @@ export const DataSets = {
   EquipmentArmorLight: {
     type: "simple",
     name: "equipment-armors-light",
-    schema: EquipmentArmorSchema,
-  } as IDescriptor<EquipmentArmor>,
+    schema: EquipmentArmorLightSchema,
+  } as IDescriptor<EquipmentArmorLight>,
   EquipmentArmorHeavy: {
     type: "simple",
     name: "equipment-armors-heavy",
-    schema: EquipmentArmorSchema,
-  } as IDescriptor<EquipmentArmor>,
+    schema: EquipmentArmorHeavySchema,
+  } as IDescriptor<EquipmentArmorHeavy>,
+  EquipmentArmorPowered: {
+    type: "simple",
+    name: "equipment-armors-powered",
+    schema: EquipmentArmorPoweredSchema,
+  } as IDescriptor<EquipmentArmorPowered>,
   EquipmentMaterial: {
     type: "ordered",
     name: "equipment-material",

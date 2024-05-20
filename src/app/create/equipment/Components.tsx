@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
-import { Critical, Damage, EquipmentWeaponFusion, Special } from "model";
-import { useEffect, useState } from "react";
+import { Critical, Damage, EquipmentWeaponFusion, SizeId, Special } from "model";
 
 export function DisplayDamageShort({ damage }: { damage?: Damage }) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
@@ -94,4 +94,11 @@ export function DisplayRange({ value }: { value?: number }) {
   } else {
     return value * 1.5 + " m";
   }
+}
+
+export function DisplaySize({ value }: { value: SizeId }) {
+  const sizes = useAppSelector((state) => state.data.sizes);
+  const size = findOrError(sizes, value);
+
+  return size.name;
 }

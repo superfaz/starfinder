@@ -23,12 +23,13 @@ import {
   ArmorTypeId,
 } from "model";
 import { useCharacterPresenter } from "../helpers";
-import { ArmorTable } from "./ArmorTable";
+import { ArmorNormalTable } from "./ArmorNormalTable";
 import { WeaponAmmunitionTable } from "./WeaponAmmunitionTable";
 import { WeaponGrenadeTable } from "./WeaponGrenadeTable";
 import { WeaponMeleeTable } from "./WeaponMeleeTable";
 import { WeaponRangedTable } from "./WeaponRangedTable";
 import { WeaponSolarianTable } from "./WeaponSolarianTable";
+import { ArmorPoweredTable } from "./ArmorPoweredTable";
 
 function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {
@@ -131,6 +132,12 @@ function createMenu(presenter: CharacterPresenter): Menu[] {
           name: "Armures lourdes",
           uri: "/api/equipment/armors/heavy",
           proficient: presenter.getArmorProficiencies().includes(ArmorTypeIds.heavy),
+        },
+        {
+          id: ArmorTypeIds.powered,
+          name: "Armures assistées",
+          uri: "/api/equipment/armors/powered",
+          proficient: presenter.getArmorProficiencies().includes(ArmorTypeIds.powered),
         },
       ],
     },
@@ -267,8 +274,11 @@ export function EquipmentSelection() {
       )}
       {equipmentType === EquipmentCategories.armor &&
         (subType === ArmorTypeIds.light || subType === ArmorTypeIds.heavy) && (
-          <ArmorTable armorType={subType} equipments={filtered} />
+          <ArmorNormalTable armorType={subType} equipments={filtered} />
         )}
+      {equipmentType === EquipmentCategories.armor && subType === ArmorTypeIds.powered && (
+        <ArmorPoweredTable armorType={subType} equipments={filtered} />
+      )}
     </Stack>
   );
 }

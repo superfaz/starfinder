@@ -17,14 +17,14 @@ export type EquipmentArmorBase = z.infer<typeof EquipmentArmorBaseSchema>;
 export const EquipmentArmorLightSchema = EquipmentArmorBaseSchema.extend({
   type: z.literal(ArmorTypeIds.light),
   speedAdjustment: z.number(),
-}).strict();
+});
 
 export type EquipmentArmorLight = z.infer<typeof EquipmentArmorLightSchema>;
 
 export const EquipmentArmorHeavySchema = EquipmentArmorBaseSchema.extend({
   type: z.literal(ArmorTypeIds.heavy),
   speedAdjustment: z.number(),
-}).strict();
+});
 
 export type EquipmentArmorHeavy = z.infer<typeof EquipmentArmorHeavySchema>;
 
@@ -38,14 +38,14 @@ export const EquipmentArmorPoweredSchema = EquipmentArmorBaseSchema.extend({
   capacity: z.number().int().positive(),
   usage: z.string(),
   weaponSlots: z.number().int(),
-}).strict();
+});
 
 export type EquipmentArmorPowered = z.infer<typeof EquipmentArmorPoweredSchema>;
 
 export const EquipmentArmorSchema = z.discriminatedUnion("type", [
-  EquipmentArmorLightSchema,
-  EquipmentArmorHeavySchema,
-  EquipmentArmorPoweredSchema,
+  EquipmentArmorLightSchema.strict(),
+  EquipmentArmorHeavySchema.strict(),
+  EquipmentArmorPoweredSchema.strict(),
 ]);
 
 export type EquipmentArmor = z.infer<typeof EquipmentArmorSchema>;

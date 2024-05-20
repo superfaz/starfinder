@@ -2,8 +2,8 @@
 
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
-import { EquipmentArmor, EquipmentDescriptor } from "model";
-import { DisplayModifier, DisplayRange } from "./Components";
+import { ArmorTypeIds, EquipmentArmor, EquipmentDescriptor } from "model";
+import { DisplayDamageShort, DisplayModifier, DisplayRange, DisplaySize } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
@@ -29,10 +29,32 @@ export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDe
           Malus aux tests: <DisplayModifier value={equipment.armorCheckPenalty} />
         </div>
       )}
-      {equipment.speedAdjustment !== 0 && (
-        <div>
-          Modificateur de vitesse: <DisplayRange value={equipment.speedAdjustment} />
-        </div>
+      {equipment.type !== ArmorTypeIds.powered && equipment.speedAdjustment !== 0 && (
+        <>
+          <div>
+            Modificateur de vitesse: <DisplayRange value={equipment.speedAdjustment} />
+          </div>
+          <div>Emplacement d’amélioration: {equipment.upgradeSlots}</div>
+        </>
+      )}
+      {equipment.type === ArmorTypeIds.powered && (
+        <>
+          <div>
+            Vitesse: <DisplayRange value={equipment.speed} />
+            {" / "}Force: {equipment.strength}
+            {" / "}Dégâts: <DisplayDamageShort damage={equipment.damage} />
+          </div>
+          <div>
+            Taille: <DisplaySize value={equipment.size} />
+            {" / "}Portée: <DisplayRange value={equipment.reach} />
+          </div>
+          <div>
+            Capacité: {equipment.capacity}
+            {" / "}Utilisation: {equipment.usage}
+          </div>
+          <div>Emplacement d’amélioration: {equipment.upgradeSlots}</div>
+          <div>Emplacement d’armes: {equipment.weaponSlots}</div>
+        </>
       )}
     </GenericEquipmentDisplay>
   );

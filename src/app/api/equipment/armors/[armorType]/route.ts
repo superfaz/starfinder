@@ -12,6 +12,7 @@ export async function GET(_: NextRequest, { params }: { params: { armorType: str
     case ArmorTypeIds.heavy:
       return NextResponse.json(await dataSource.get(DataSets.EquipmentArmorHeavy).getAll());
     case ArmorTypeIds.powered:
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentArmorPowered).getAll());
     default:
       return NextResponse.error();
   }
