@@ -18,6 +18,7 @@ import { CardAbilities } from "./CardAbilities";
 import { CardFeats } from "./CardFeats";
 import { CardSpells } from "./CardSpells";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import CardEquipment from "./CardEquipment";
 
 export default function Page() {
   const presenter = useCharacterPresenter();
@@ -27,10 +28,10 @@ export default function Page() {
       <Splide
         options={{ rewind: true, perPage: 4, perMove: 1, gap: "1em", arrows: false, omitEnd: true }}
         tag="section"
-        aria-label="React Splide Example"
+        aria-label="Character sheet navigation"
       >
         <SplideSlide>
-          <Stack id="presentation" direction="vertical" gap={2}>
+          <Stack direction="vertical" gap={2}>
             <CardAvatar character={presenter} />
             <CardFeats character={presenter} />
           </Stack>
@@ -54,13 +55,18 @@ export default function Page() {
           </Stack>
         </SplideSlide>
         <SplideSlide>
-          <Stack id="fight" direction="vertical" gap={2}>
+          <Stack direction="vertical" gap={2}>
             <CardInitiative character={presenter} />
             <CardKeyPoints character={presenter} />
             <CardSavingThrows character={presenter} />
             <CardArmorClass character={presenter} />
             <CardAttackBonuses character={presenter} />
             <CardWeapons character={presenter} />
+          </Stack>
+        </SplideSlide>
+        <SplideSlide>
+          <Stack direction="vertical" gap={2}>
+            <CardEquipment character={presenter} />
           </Stack>
         </SplideSlide>
       </Splide>

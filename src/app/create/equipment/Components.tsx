@@ -106,7 +106,7 @@ export function DisplaySize({ value }: { value: SizeId }) {
 export function DisplayArmorTypes({ types }: { types: ArmorTypeId[] }) {
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
 
-  if (types.length === 0) {
+  if (types === undefined || types.length === 0) {
     return "Aucune";
   } else if (types.length === armorTypes.length) {
     return "Toutes";
