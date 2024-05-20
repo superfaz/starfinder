@@ -24,7 +24,7 @@ function Level1({ presenter, features }: { presenter: CharacterPresenter; featur
               <Stack gap={4}>
                 <FeatureComponent character={presenter} feature={feature} />
                 {specials.map((special) => (
-                  <FeatureComponent key={feature.id} character={presenter} feature={special} />
+                  <FeatureComponent key={special.id} character={presenter} feature={special} />
                 ))}
               </Stack>
             </Col>
