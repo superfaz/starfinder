@@ -182,17 +182,15 @@ const mainSlice = createSlice({
       if (equipment === undefined) {
         return;
       }
-      if (equipment.type === "unique") {
+      if (equipment.type === "unique" && action.payload.delta !== -1) {
         throw new Error("Cannot update quantity of unique equipment");
       }
 
-      if (equipment && equipment.type === "consumable") {
-        equipment.quantity += action.payload.delta;
-        state.character.credits -= equipment.unitaryCost * action.payload.delta;
+      equipment.quantity += action.payload.delta;
+      state.character.credits -= equipment.unitaryCost * action.payload.delta;
 
-        if (equipment.quantity <= 0) {
-          state.character.equipment = state.character.equipment.filter((e) => e.id !== action.payload.id);
-        }
+      if (equipment.quantity <= 0) {
+        state.character.equipment = state.character.equipment.filter((e) => e.id !== action.payload.id);
       }
     },
 
