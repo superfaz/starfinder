@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import { displayBonus, findOrError } from "app/helpers";
 import { Badge } from "app/components";
 import { useAppSelector } from "logic";
-import { EquipmentArmor, EquipmentDescriptor } from "model";
+import { EquipmentArmor, EquipmentArmorIds, EquipmentDescriptor } from "model";
 import { ValueComponent } from "./ValueComponent";
 import { CharacterProps } from "../Props";
 
@@ -56,6 +56,8 @@ export function CardArmorClass({ character }: CharacterProps) {
     kinetic: { value: character.getKineticArmorClass(), label: "Classe d’armure cinétique" },
     maneuvers: { value: character.getArmorClassAgainstCombatManeuvers(), label: "CA vs manoeuvres offensives" },
   };
+  const armors = character.getArmors().filter((a) => a.secondaryType !== EquipmentArmorIds.upgrade);
+
   return (
     <Card data-testid="armors">
       <Card.Header>
@@ -71,7 +73,7 @@ export function CardArmorClass({ character }: CharacterProps) {
           ))}
         </Row>
       </Card.Body>
-      {character.getArmors().map((descriptor) => (
+      {armors.map((descriptor) => (
         <CardArmor key={descriptor.id} descriptor={descriptor} />
       ))}
     </Card>
