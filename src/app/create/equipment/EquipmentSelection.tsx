@@ -20,7 +20,8 @@ import {
   WeaponTypeIds,
   EquipmentCategory,
   EquipmentCategorySchema,
-  ArmorTypeId,
+  EquipmentArmorId,
+  EquipmentArmorIds,
 } from "model";
 import { useCharacterPresenter } from "../helpers";
 import { ArmorNormalTable } from "./ArmorNormalTable";
@@ -30,6 +31,7 @@ import { WeaponMeleeTable } from "./WeaponMeleeTable";
 import { WeaponRangedTable } from "./WeaponRangedTable";
 import { WeaponSolarianTable } from "./WeaponSolarianTable";
 import { ArmorPoweredTable } from "./ArmorPoweredTable";
+import { ArmorUpgradeTable } from "./ArmorUpgradeTable";
 
 function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {
@@ -40,7 +42,7 @@ function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
 }
 
 interface SubMenu {
-  id: EquipmentWeaponId | ArmorTypeId;
+  id: EquipmentWeaponId | EquipmentArmorId;
   name: string;
   uri: string;
   proficient: boolean;
@@ -122,22 +124,28 @@ function createMenu(presenter: CharacterPresenter): Menu[] {
       disabled: false,
       submenu: [
         {
-          id: ArmorTypeIds.light,
+          id: EquipmentArmorIds.light,
           name: "Armures légères",
           uri: "/api/equipment/armors/light",
           proficient: presenter.getArmorProficiencies().includes(ArmorTypeIds.light),
         },
         {
-          id: ArmorTypeIds.heavy,
+          id: EquipmentArmorIds.heavy,
           name: "Armures lourdes",
           uri: "/api/equipment/armors/heavy",
           proficient: presenter.getArmorProficiencies().includes(ArmorTypeIds.heavy),
         },
         {
-          id: ArmorTypeIds.powered,
+          id: EquipmentArmorIds.powered,
           name: "Armures assistées",
           uri: "/api/equipment/armors/powered",
           proficient: presenter.getArmorProficiencies().includes(ArmorTypeIds.powered),
+        },
+        {
+          id: EquipmentArmorIds.upgrade,
+          name: "Améliorations d’armure",
+          uri: "/api/equipment/armors/upgrade",
+          proficient: true,
         },
       ],
     },
@@ -273,11 +281,14 @@ export function EquipmentSelection() {
         </Alert>
       )}
       {equipmentType === EquipmentCategories.armor &&
-        (subType === ArmorTypeIds.light || subType === ArmorTypeIds.heavy) && (
+        (subType === EquipmentArmorIds.light || subType === EquipmentArmorIds.heavy) && (
           <ArmorNormalTable armorType={subType} equipments={filtered} />
         )}
-      {equipmentType === EquipmentCategories.armor && subType === ArmorTypeIds.powered && (
-        <ArmorPoweredTable armorType={subType} equipments={filtered} />
+      {equipmentType === EquipmentCategories.armor && subType === EquipmentArmorIds.powered && (
+        <ArmorPoweredTable equipments={filtered} />
+      )}
+      {equipmentType === EquipmentCategories.armor && subType === EquipmentArmorIds.upgrade && (
+        <ArmorUpgradeTable equipments={filtered} />
       )}
     </Stack>
   );

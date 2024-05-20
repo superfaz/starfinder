@@ -4,6 +4,12 @@ import { ArmorTypeIds } from "./ArmorType";
 import { DamageSchema } from "./EquipmentWeapon";
 import { SizeIdSchema } from "./Size";
 
+export const EquipmentArmorIdSchema = z.enum([ArmorTypeIds.light, ArmorTypeIds.heavy, ArmorTypeIds.powered, "upgrade"]);
+
+export type EquipmentArmorId = z.infer<typeof EquipmentArmorIdSchema>;
+
+export const EquipmentArmorIds = EquipmentArmorIdSchema.enum;
+
 export const EquipmentArmorBaseSchema = EquipmentBaseSchema.extend({
   eacBonus: z.number(),
   kacBonus: z.number(),

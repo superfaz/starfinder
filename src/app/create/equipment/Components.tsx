@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
-import { Critical, Damage, EquipmentWeaponFusion, SizeId, Special } from "model";
+import { ArmorTypeId, Critical, Damage, EquipmentWeaponFusion, SizeId, Special } from "model";
 
 export function DisplayDamageShort({ damage }: { damage?: Damage }) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
@@ -101,4 +101,19 @@ export function DisplaySize({ value }: { value: SizeId }) {
   const size = findOrError(sizes, value);
 
   return size.name;
+}
+
+export function DisplayArmorTypes({ types }: { types: ArmorTypeId[] }) {
+  const armorTypes = useAppSelector((state) => state.data.armorTypes);
+
+  if (types.length === 0) {
+    return "Aucune";
+  } else if (types.length === armorTypes.length) {
+    return "Toutes";
+  }
+
+  return types
+    .map((t) => findOrError(armorTypes, t).name)
+    .map((n) => n.replace("Armures ", "").toLowerCase())
+    .join(", ");
 }

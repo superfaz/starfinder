@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
 import { mutators, useAppDispatch } from "logic";
-import { ArmorTypeId, EquipmentArmorPowered, EquipmentBase } from "model";
+import { EquipmentArmorPowered, EquipmentBase } from "model";
 import { DisplayModifier, DisplaySize } from "./Components";
 
-export function ArmorPoweredTable({ armorType, equipments }: { armorType: ArmorTypeId; equipments: EquipmentBase[] }) {
+export function ArmorPoweredTable({ equipments }: { equipments: EquipmentBase[] }) {
   const dispatch = useAppDispatch();
   const casted = equipments as EquipmentArmorPowered[];
 
@@ -19,7 +19,7 @@ export function ArmorPoweredTable({ armorType, equipments }: { armorType: ArmorT
         id: uuidv4(),
         type: "unique",
         category: "armor",
-        secondaryType: armorType,
+        secondaryType: "powered",
         equipmentId: equipment.id,
         unitaryCost: equipment.cost ?? 0,
         quantity: 1,

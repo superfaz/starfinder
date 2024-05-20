@@ -8,6 +8,7 @@ import { WeaponGrenadeDisplay } from "./WeaponGrenadeDisplay";
 import { WeaponMeleeDisplay } from "./WeaponMeleeDisplay";
 import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
 import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
+import { ArmorUpgradeDisplay } from "./ArmorUpgradeDisplay";
 
 export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
   if (descriptor.category === EquipmentCategories.weapon) {
@@ -30,7 +31,16 @@ export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescript
         return null;
     }
   } else if (descriptor.category === EquipmentCategories.armor) {
-    return <ArmorDisplay descriptor={descriptor} selected={false} />;
+    switch (descriptor.secondaryType) {
+      case "light":
+      case "heavy":
+      case "assisted":
+        return <ArmorDisplay descriptor={descriptor} selected={false} />;
+      case "upgrade":
+        return <ArmorUpgradeDisplay descriptor={descriptor} selected={false} />;
+      default:
+        return null;
+    }
   } else {
     return null;
   }

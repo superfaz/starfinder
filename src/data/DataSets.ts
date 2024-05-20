@@ -59,6 +59,8 @@ import {
   EquipmentArmorHeavySchema,
   EquipmentArmorPoweredSchema,
   EquipmentArmorPowered,
+  EquipmentArmorUpgradeSchema,
+  EquipmentArmorUpgrade,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -91,6 +93,11 @@ export const DataSets = {
     name: "equipment-armors-powered",
     schema: EquipmentArmorPoweredSchema,
   } as IDescriptor<EquipmentArmorPowered>,
+  EquipmentArmorUpgrade: {
+    type: "simple",
+    name: "equipment-armors-upgrades",
+    schema: EquipmentArmorUpgradeSchema,
+  } as IDescriptor<EquipmentArmorUpgrade>,
   EquipmentMaterial: {
     type: "ordered",
     name: "equipment-material",
