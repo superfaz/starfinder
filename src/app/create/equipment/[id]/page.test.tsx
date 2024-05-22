@@ -1,8 +1,9 @@
 import { cleanup, screen, waitFor, within } from "@testing-library/react";
 import { createCharacter, renderWithData } from "app/create/helpers-test";
-import { beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import Page from "./page";
 import { EquipmentDescriptor } from "model";
+import Layout from "../layout";
 
 describe("/create/equipment/id", () => {
   beforeAll(async () => {
@@ -76,6 +77,11 @@ const weaponDescriptors: EquipmentDescriptor[] = [
 describe("/create/equipment/id for weapons", () => {
   beforeEach(async () => {
     cleanup();
+
+    vi.mock("next/navigation", () => ({
+      useParams: () => ({ id: "test-id" }),
+      usePathname: () => "",
+    }));
   });
 
   test.each(weaponDescriptors)("$secondaryType", async (descriptor) => {
@@ -84,14 +90,19 @@ describe("/create/equipment/id for weapons", () => {
       .updateTheme("bounty-hunter")
       .updateClass("operative")
       .addEquipment(descriptor).character;
-    await renderWithData(<Page params={{ id: descriptor.id }} />, character);
+    await renderWithData(
+      <Layout>
+        <Page params={{ id: descriptor.id }} />
+      </Layout>,
+      character
+    );
     await waitFor(() => screen.getByRole("heading", { level: 2, name: "Crédits" }));
 
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Arme modifiée" })).not.toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Crédits" })).not.toBeNull();
-    expect(content.queryByRole("heading", { level: 4, name: "Fusions" })).not.toBeNull();
 
+    await waitFor(() => content.getByRole("heading", { level: 4, name: "Fusions" }));
     if (["basic", "advanced"].includes(descriptor.secondaryType)) {
       expect(content.getByRole("combobox", { name: "Matériau" })).not.toBeDisabled();
     } else {

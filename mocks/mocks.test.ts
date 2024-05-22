@@ -20,12 +20,13 @@ import {
   WeaponTypeSchema,
   CriticalHitEffectSchema,
   DamageTypeSchema,
-  EquipmentArmorSchema,
   EquipmentWeaponMeleeSchema,
   EquipmentWeaponAmmunitionSchema,
   EquipmentWeaponGrenadeSchema,
   EquipmentWeaponRangedSchema,
   EquipmentWeaponSolarianSchema,
+  EquipmentArmorHeavySchema,
+  EquipmentArmorLightSchema,
 } from "model";
 import { describe, expect, test } from "vitest";
 
@@ -88,12 +89,12 @@ const datasets = [
   {
     file: "equipment-armors-heavy.json",
     array: true,
-    schema: EquipmentArmorSchema.strict(),
+    schema: EquipmentArmorHeavySchema.strict(),
   },
   {
     file: "equipment-armors-light.json",
     array: true,
-    schema: EquipmentArmorSchema.strict(),
+    schema: EquipmentArmorLightSchema.strict(),
   },
   {
     file: "equipment-weapons-advanced.json",

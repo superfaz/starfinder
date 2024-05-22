@@ -1,8 +1,9 @@
 import { cleanup, screen, within } from "@testing-library/react";
-import { beforeAll, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test, vi } from "vitest";
 import { createCharacter, renderWithData } from "../helpers-test";
 import Page from "./page";
 import userEvent from "@testing-library/user-event";
+import Layout from "./layout";
 
 describe("/create/equipment", () => {
   beforeAll(async () => {
@@ -23,7 +24,18 @@ describe("/create/equipment", () => {
       .updateRace("androids")
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
-    await renderWithData(<Page />, character);
+
+    vi.mock("next/navigation", () => ({
+      useParams: () => ({}),
+      usePathname: () => "",
+    }));
+
+    await renderWithData(
+      <Layout>
+        <Page />
+      </Layout>,
+      character
+    );
   });
 
   test("is displayed", async () => {
