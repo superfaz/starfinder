@@ -149,23 +149,9 @@ export const SavingThrowModifierSchema = IModelSchema.extend({
 }).strict();
 
 export const ModifierTemplateSchema = z.discriminatedUnion("type", [
+  ...EffectTemplateSchema.options,
   AbilityModifierSchema,
-  ArmorProficiencyModifierSchema,
-  AttackModifierSchema,
-  SimpleBonusModifierTemplateSchema,
-  ClassSkillModifierSchema,
-  DamageModifierSchema,
-  EquipmentModifierSchema,
-  FeatModifierSchema,
-  RankSkillModifierSchema,
-  ResistanceModifierTemplateSchema,
-  SavingThrowBonusModifierSchema,
   SavingThrowModifierSchema,
-  SimpleModifierTemplateSchema,
-  SizeModifierSchema,
-  SkillModifierTemplateSchema,
-  SpellModifierSchema,
-  WeaponProficiencyModifierSchema,
 ]);
 
 export type ModifierTemplate = z.infer<typeof ModifierTemplateSchema>;
