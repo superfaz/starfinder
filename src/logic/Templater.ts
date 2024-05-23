@@ -3,7 +3,6 @@ import {
   type FeatureTemplate,
   type INamedModel,
   type ModifierTemplate,
-  ModifierTypes,
   type Prerequisite,
   isModifierType,
   EquipmentWeapon,
@@ -128,58 +127,14 @@ export class Templater {
       throw new Error(`Invalid modifier type: ${template.type}`);
     }
 
-    switch (template.type) {
-      case ModifierTypes.ability:
-      case ModifierTypes.savingThrow:
-        return {
-          ...template,
-          description: this.applyForString(template.description),
-        };
-      case ModifierTypes.armorClass:
-      case ModifierTypes.attack:
-      case ModifierTypes.damage:
-      case ModifierTypes.featCount:
-      case ModifierTypes.hitPoints:
-      case ModifierTypes.initiative:
-      case ModifierTypes.languageCount:
-      case ModifierTypes.rank:
-      case ModifierTypes.resolve:
-      case ModifierTypes.savingThrowBonus:
-      case ModifierTypes.speed:
-      case ModifierTypes.stamina:
-        return {
-          ...template,
-          value: this.applyForNumber(template.value),
-        };
-      case ModifierTypes.classSkill:
-      case ModifierTypes.rankSkill:
-        return {
-          ...template,
-          target: this.applyForString(template.target),
-        };
-      case ModifierTypes.equipment:
-        return {
-          ...template,
-          equipment: this.convertEquipment(template.equipment),
-        };
-      case ModifierTypes.resistance:
-        return {
-          ...template,
-          targets: template.targets,
-          value: this.applyForNumber(template.value),
-        };
-      case ModifierTypes.skill:
-        return {
-          ...template,
-          target: this.applyForString(template.target),
-          value: this.applyForNumber(template.value),
-        };
-      case ModifierTypes.spell:
-      case ModifierTypes.feat:
-      default:
-        return {
-          ...template,
-        };
+    const text = JSON.stringify(template);
+    const converted = this.applyForString(text);
+    const result = Modifier.safeParse(JSON.parse(converted));
+    if (result.success) {
+      return result.data;
+    } else {
+      console.log(template);
+      throw new Error(`Failed to convert modifier: ${result.error.errors}`);
     }
   }
 

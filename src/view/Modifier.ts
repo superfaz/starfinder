@@ -1,8 +1,8 @@
 import {
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
+  BonusCategoryIdSchema,
   ClassSkillModifierSchema,
-  DamageModifierSchema,
   DamageTypeIdSchema,
   EquipmentWeaponSchema,
   FeatModifierSchema,
@@ -14,13 +14,81 @@ import {
   SizeModifierSchema,
   SpellModifierSchema,
   WeaponProficiencyModifierSchema,
+  WeaponTypeIdSchema,
 } from "model";
 import { z } from "zod";
 
-export const SimpleModifier = IModelSchema.extend({
-  type: z.enum([ModifierTypes.attack, ModifierTypes.armorClass, ModifierTypes.languageCount, ModifierTypes.rank]),
+const BaseModifier = IModelSchema.extend({
   level: z.number().optional(),
-  value: z.number(),
+  value: z.coerce.number(),
+});
+
+export const AttackModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.attack),
+  category: BonusCategoryIdSchema,
+  target: z.optional(WeaponTypeIdSchema),
+}).strict();
+
+export const ArmorClassModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.armorClass),
+  category: BonusCategoryIdSchema,
+}).strict();
+
+export const DamageModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.damage),
+  target: WeaponTypeIdSchema,
+  category: BonusCategoryIdSchema,
+}).strict();
+
+export const FeatCountModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.featCount),
+}).strict();
+
+export const HitPointsModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.hitPoints),
+}).strict();
+
+export const InitiativeModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.initiative),
+  category: BonusCategoryIdSchema,
+}).strict();
+
+export const LanguageCountModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.languageCount),
+}).strict();
+
+export const RankModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.rank),
+}).strict();
+
+export const ResistanceModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.resistance),
+  targets: z.array(DamageTypeIdSchema),
+  category: BonusCategoryIdSchema,
+}).strict();
+
+export const ResolveModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.resolve),
+}).strict();
+
+export const SavingThrowBonusModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.savingThrowBonus),
+  target: SavingThrowIdSchema.optional(),
+  category: BonusCategoryIdSchema,
+}).strict();
+
+export const StaminaModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.stamina),
+}).strict();
+
+export const SkillModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.skill),
+  target: z.string(),
+  category: BonusCategoryIdSchema,
+}).strict();
+
+export const SpeedModifier = BaseModifier.extend({
+  type: z.literal(ModifierTypes.speed),
 }).strict();
 
 export const EquipmentModifier = IModelSchema.extend({
@@ -31,57 +99,14 @@ export const EquipmentModifier = IModelSchema.extend({
 
 export type EquipmentModifier = z.infer<typeof EquipmentModifier>;
 
-export const FeatCountModifier = SimpleModifier.extend({
-  type: z.literal(ModifierTypes.featCount),
-}).strict();
-
-export const HitPointsModifier = SimpleModifier.extend({
-  type: z.literal(ModifierTypes.hitPoints),
-}).strict();
-
-export const InitiativeModifier = SimpleModifier.extend({
-  type: z.literal(ModifierTypes.initiative),
-}).strict();
-
-export const ResistanceModifier = IModelSchema.extend({
-  type: z.literal(ModifierTypes.resistance),
-  level: z.number().optional(),
-  targets: z.array(DamageTypeIdSchema),
-  value: z.number(),
-}).strict();
-
-export const ResolveModifier = SimpleModifier.extend({
-  type: z.literal(ModifierTypes.resolve),
-}).strict();
-
-export const SavingThrowBonusModifier = IModelSchema.extend({
-  type: z.literal(ModifierTypes.savingThrowBonus),
-  level: z.number().optional(),
-  target: SavingThrowIdSchema.optional(),
-  value: z.number(),
-}).strict();
-
-export const StaminaModifier = SimpleModifier.extend({
-  type: z.literal(ModifierTypes.stamina),
-}).strict();
-
-export const SkillModifier = IModelSchema.extend({
-  type: z.literal(ModifierTypes.skill),
-  level: z.number().optional(),
-  target: z.string(),
-  value: z.number(),
-}).strict();
-
-export const SpeedModifier = IModelSchema.extend({
-  type: z.literal(ModifierTypes.speed),
-  level: z.number().optional(),
-  value: z.number(),
-}).strict();
-
 export const Modifier = z.discriminatedUnion("type", [
+  AttackModifier,
+  ArmorClassModifier,
+  LanguageCountModifier,
+  RankModifier,
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
-  DamageModifierSchema,
+  DamageModifier,
   ClassSkillModifierSchema,
   EquipmentModifier,
   FeatModifierSchema,
@@ -91,7 +116,6 @@ export const Modifier = z.discriminatedUnion("type", [
   RankSkillModifierSchema,
   ResistanceModifier,
   ResolveModifier,
-  SimpleModifier,
   SavingThrowModifierSchema,
   SavingThrowBonusModifier,
   SizeModifierSchema,
