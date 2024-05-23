@@ -1,18 +1,15 @@
 import {
-  AbilityScoreIdSchema,
-  ArmorTypeIdSchema,
   type FeatTemplate,
   type FeatureTemplate,
   type INamedModel,
   type ModifierTemplate,
   ModifierTypes,
   type Prerequisite,
-  SavingThrowIdSchema,
-  WeaponTypeIdSchema,
   isModifierType,
   EquipmentWeapon,
   EquipmentWeaponSchema,
   TemplateEquipment,
+  PrerequisiteSchema,
 } from "model";
 import { ClassFeature, Feat, Modifier, RaceFeature, ThemeFeature } from "view";
 
@@ -186,44 +183,10 @@ export class Templater {
     }
   }
 
-  convertPrerequisite(prerequisite: Prerequisite): Prerequisite {
-    switch (prerequisite.type) {
-      case "abilityScore":
-        return {
-          ...prerequisite,
-          target: AbilityScoreIdSchema.parse(this.applyForString(prerequisite.target)),
-        };
-
-      case "armorProficiency":
-        return {
-          ...prerequisite,
-          target: ArmorTypeIdSchema.parse(this.applyForString(prerequisite.target)),
-        };
-
-      case "savingThrow":
-        return {
-          ...prerequisite,
-          target: SavingThrowIdSchema.parse(this.applyForString(prerequisite.target)),
-        };
-
-      case "weaponProficiency":
-        return {
-          ...prerequisite,
-          target: WeaponTypeIdSchema.parse(this.applyForString(prerequisite.target)),
-        };
-
-      case "class":
-      case "feat":
-        return {
-          ...prerequisite,
-          target: this.applyForString(prerequisite.target),
-        };
-
-      default:
-        return {
-          ...prerequisite,
-        };
-    }
+  convertPrerequisite(template: Prerequisite): Prerequisite {
+    const text = JSON.stringify(template);
+    const converted = this.applyForString(text);
+    return PrerequisiteSchema.parse(JSON.parse(converted));
   }
 
   convertString(text: string): string {
