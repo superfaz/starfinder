@@ -4,8 +4,7 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
 import { useAppSelector } from "logic";
-import { ModifierTypes } from "model";
-import { ofType } from "view";
+import { ModifierTypes, ofType } from "model";
 import { ValueComponent } from "./ValueComponent";
 import { CharacterProps } from "../Props";
 

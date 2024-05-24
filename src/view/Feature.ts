@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { DescriptionSchema, EvolutionsSchema, FeatureCategorySchema, INamedModelSchema } from "model";
-import { Modifier } from "./Modifier";
+import { DescriptionSchema, EvolutionsSchema, FeatureCategorySchema, INamedModelSchema, Modifier } from "model";
 
 const BaseFeature = INamedModelSchema.extend({
   description: z.optional(DescriptionSchema),

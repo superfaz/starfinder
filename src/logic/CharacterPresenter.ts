@@ -18,6 +18,7 @@ import type {
   FeatTemplate,
   IModel,
   INamedModel,
+  Modifier,
   Prerequisite,
   Race,
   SavingThrow,
@@ -29,8 +30,16 @@ import type {
   Variant,
   WeaponTypeId,
 } from "model";
-import { AbilityScoreIds, ModifierTypes, PrerequisiteTypes, isCasterId, isVariable, isWeaponTypeId } from "model";
-import { ClassFeature, Feat, Feature, Modifier, RaceFeature, ThemeFeature, ofType } from "view";
+import {
+  AbilityScoreIds,
+  ModifierTypes,
+  PrerequisiteTypes,
+  isCasterId,
+  isVariable,
+  isWeaponTypeId,
+  ofType,
+} from "model";
+import { ClassFeature, Feat, Feature, RaceFeature, ThemeFeature } from "view";
 import {
   getMechanicFeatureTemplates,
   getMysticFeatureTemplates,

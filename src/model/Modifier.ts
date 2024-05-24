@@ -1,22 +1,22 @@
+import { z } from "zod";
+import { BonusCategoryIdSchema } from "./BonusCategory";
+import { DamageTypeIdSchema } from "./DamageType";
+import { EquipmentWeaponSchema } from "./EquipmentWeapon";
+import { IModelSchema } from "./IModel";
 import {
   AbilityModifierSchema,
   ArmorProficiencyModifierSchema,
-  BonusCategoryIdSchema,
   ClassSkillModifierSchema,
-  DamageTypeIdSchema,
-  EquipmentWeaponSchema,
   FeatModifierSchema,
-  IModelSchema,
-  ModifierTypes,
   RankSkillModifierSchema,
-  SavingThrowIdSchema,
   SavingThrowModifierSchema,
   SizeModifierSchema,
   SpellModifierSchema,
   WeaponProficiencyModifierSchema,
-  WeaponTypeIdSchema,
-} from "model";
-import { z } from "zod";
+} from "./ModifierTemplate";
+import { ModifierTypes } from "./ModifierType";
+import { SavingThrowIdSchema } from "./SavingThrow";
+import { WeaponTypeIdSchema } from "./WeaponType";
 
 const BaseModifier = IModelSchema.extend({
   level: z.number().optional(),

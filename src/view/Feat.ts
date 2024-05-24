@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { DescriptionSchema, INamedModelSchema, IdSchema, PrerequisiteSchema, ReferenceSchema } from "model";
-import { Modifier } from "./Modifier";
+import { DescriptionSchema, INamedModelSchema, IdSchema, Modifier, PrerequisiteSchema, ReferenceSchema } from "model";
 
 export const Feat = INamedModelSchema.extend({
   target: z.optional(IdSchema),

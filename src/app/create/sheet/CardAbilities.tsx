@@ -1,8 +1,7 @@
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
-import { ModifierTypes } from "model";
-import { ofType } from "view";
+import { ModifierTypes, ofType } from "model";
 import { CharacterProps } from "../Props";
 
 export function CardAbilities({ character }: CharacterProps) {

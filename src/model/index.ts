@@ -28,6 +28,7 @@ export * from "./FeatureTemplate";
 export * from "./ICodedModel";
 export * from "./IModel";
 export * from "./INamedModel";
+export * from "./Modifier";
 export * from "./ModifierTemplate";
 export * from "./ModifierType";
 export * from "./Prerequisite";

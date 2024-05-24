@@ -12,8 +12,9 @@ import {
   hasExtra,
   hasName,
   hasValue,
+  EquipmentModifier,
+  Modifier,
 } from "model";
-import { EquipmentModifier, Modifier } from "view";
 import { DisplayDamageLong, DisplaySpecials } from "./equipment/Components";
 
 interface ModifierComponentElement {

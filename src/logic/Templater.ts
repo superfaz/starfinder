@@ -9,8 +9,9 @@ import {
   EquipmentWeaponSchema,
   TemplateEquipment,
   PrerequisiteSchema,
+  Modifier,
 } from "model";
-import { ClassFeature, Feat, Modifier, RaceFeature, ThemeFeature } from "view";
+import { ClassFeature, Feat, RaceFeature, ThemeFeature } from "view";
 
 export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
