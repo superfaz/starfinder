@@ -9,7 +9,8 @@ import {
   EquipmentWeaponSchema,
   TemplateEquipment,
   PrerequisiteSchema,
-  Modifier,
+  ModifierSchema,
+  type Modifier,
 } from "model";
 import { ClassFeature, Feat, RaceFeature, ThemeFeature } from "view";
 
@@ -130,13 +131,7 @@ export class Templater {
 
     const text = JSON.stringify(template);
     const converted = this.applyForString(text);
-    const result = Modifier.safeParse(JSON.parse(converted));
-    if (result.success) {
-      return result.data;
-    } else {
-      console.log(template);
-      throw new Error(`Failed to convert modifier: ${result.error.errors}`);
-    }
+    return ModifierSchema.parse(JSON.parse(converted));
   }
 
   convertPrerequisite(template: Prerequisite): Prerequisite {

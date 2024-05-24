@@ -1,17 +1,9 @@
 import { z } from "zod";
-import { INamedModelSchema } from "./INamedModel";
-import { VariantSchema } from "./Variant";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
-import { IModelSchema } from "./IModel";
-import { ModifierTypes } from "./ModifierType";
-import { SizeModifierSchema } from "./ModifierTemplate";
-
-export const HitPointsModifierSchema = IModelSchema.extend({
-  type: z.enum([ModifierTypes.hitPoints]),
-  level: z.number().optional(),
-  value: z.number(),
-}).strict();
+import { INamedModelSchema } from "./INamedModel";
+import { HitPointsModifierSchema, SizeModifierSchema } from "./Modifier";
+import { VariantSchema } from "./Variant";
 
 export const RaceModifierSchema = z.discriminatedUnion("type", [HitPointsModifierSchema, SizeModifierSchema]);
 

@@ -4,7 +4,6 @@ import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { useAppSelector } from "logic";
 import {
-  type FeatModifier,
   FeatTargetTypes,
   type ModifierType,
   ModifierTypes,
@@ -12,6 +11,7 @@ import {
   hasExtra,
   hasName,
   hasValue,
+  FeatModifier,
   EquipmentModifier,
   Modifier,
 } from "model";

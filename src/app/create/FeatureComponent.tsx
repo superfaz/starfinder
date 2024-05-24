@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import { Badge } from "app/components";
 import { CharacterPresenter } from "logic";
-import type { FeatureCategory } from "model";
+import { ModifierTypes, type FeatureCategory } from "model";
 import type { Feature } from "view";
 import ModifierComponent from "./ModifierComponent";
 
@@ -41,7 +41,7 @@ function convertReplaceToText(character: CharacterPresenter, replace: string[]):
       .flat()
       .find((c) => c.id === id);
 
-    if (!modifier || (modifier.type !== "ability" && modifier.type !== "savingThrow")) {
+    if (!modifier || (modifier.type !== ModifierTypes.ability && modifier.type !== ModifierTypes.savingThrow)) {
       return id;
     }
 
