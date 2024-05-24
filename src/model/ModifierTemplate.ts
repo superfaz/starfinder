@@ -2,7 +2,7 @@ import { z } from "zod";
 import { ArmorTypeIdSchema } from "./ArmorType";
 import { DescriptionSchema, IdSchema } from "./helper";
 import { IModelSchema } from "./IModel";
-import { ModifierTypes } from "./ModifierType";
+import { ModifierTypeSchema, ModifierTypes } from "./ModifierType";
 import { SavingThrowIdSchema } from "./SavingThrow";
 import { WeaponTypeIdSchema } from "./WeaponType";
 import { DamageTypeIdSchema } from "./DamageType";
@@ -148,11 +148,9 @@ export const SavingThrowModifierSchema = IModelSchema.extend({
   effects: z.optional(z.array(EffectTemplateSchema)),
 }).strict();
 
-export const ModifierTemplateSchema = z.discriminatedUnion("type", [
-  ...EffectTemplateSchema.options,
-  AbilityModifierSchema,
-  SavingThrowModifierSchema,
-]);
+export const ModifierTemplateSchema = IModelSchema.extend({
+  type: ModifierTypeSchema,
+}).passthrough();
 
 export type ModifierTemplate = z.infer<typeof ModifierTemplateSchema>;
 

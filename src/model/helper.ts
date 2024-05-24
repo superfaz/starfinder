@@ -42,9 +42,9 @@ export function hasName<T>(obj: T): obj is WithName<T> {
   return Object.prototype.hasOwnProperty.call(obj, "name");
 }
 
-export type WithDescription<T> = Extract<T, { description: string }>;
+export type WithDescription = { description: string };
 
-export function hasDescription<T>(obj: T): obj is WithDescription<T> {
+export function hasDescription(obj: object): obj is WithDescription {
   return Object.prototype.hasOwnProperty.call(obj, "description");
 }
 
