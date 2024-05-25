@@ -5,6 +5,7 @@ import { Badge } from "app/components";
 import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
+import ClassDetailsLoading from "./ClassDetailsLoading";
 
 export default function ClassDetailsGeneric({ character, classId }: CharacterProps & { classId: string }) {
   const classDetails = useClassDetails(classId);
@@ -16,7 +17,7 @@ export default function ClassDetailsGeneric({ character, classId }: CharacterPro
   }, [dispatch, classDetails, classId]);
 
   if (!classDetails) {
-    return <p>Loading...</p>;
+    return <ClassDetailsLoading />;
   }
 
   const features = character.getClassFeatures();

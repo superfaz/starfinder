@@ -7,6 +7,7 @@ import { CharacterPresenter, retrieveClassDetails, useAppDispatch, useClassDetai
 import { ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
+import ClassDetailsLoading from "./ClassDetailsLoading";
 
 function Level1({ presenter, features }: { presenter: CharacterPresenter; features: ClassFeature[] }) {
   const specials = features.filter((f) => f.id.startsWith("solarian-"));
@@ -80,7 +81,7 @@ export default function ClassDetailsGeneric({ character, classId }: CharacterPro
   }, [dispatch, classDetails, classId]);
 
   if (!classDetails) {
-    return <p>Loading...</p>;
+    return <ClassDetailsLoading />;
   }
 
   const features = character.getClassFeatures();

@@ -48,7 +48,7 @@ export default function ThemeScholarEditor({ character, className }: Readonly<IT
   }
 
   if (!selectedDetails || !themeDetails) {
-    return "loading...";
+    return null;
   }
 
   let specialization: string;

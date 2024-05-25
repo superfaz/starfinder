@@ -1,11 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Stack from "react-bootstrap/Stack";
 import { useCharacterPresenter } from "../helpers";
-import dynamic from "next/dynamic";
+import ClassDetailsLoading from "./ClassDetailsLoading";
 
-const LazyClassDetailsGeneric = dynamic(() => import("./ClassDetailsGeneric"));
-const LazyClassDetailsSolarian = dynamic(() => import("./ClassDetailsSolarian"));
+const LazyClassDetailsGeneric = dynamic(() => import("./ClassDetailsGeneric"), {
+  loading: () => <ClassDetailsLoading />,
+});
+const LazyClassDetailsSolarian = dynamic(() => import("./ClassDetailsSolarian"), {
+  loading: () => <ClassDetailsLoading />,
+});
 
 function LazyClassDetails(): JSX.Element | null {
   const presenter = useCharacterPresenter();

@@ -9,9 +9,11 @@ import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
 import { ReferenceComponent } from "../ReferenceComponent";
+import ThemeNoneLoading from "./ThemeNoneLoading";
+import ThemeScholarLoading from "./ThemeScholarLoading";
 
-const LazyThemeNoneEditor = dynamic(() => import("./ThemeNoneEditor"));
-const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"));
+const LazyThemeNoneEditor = dynamic(() => import("./ThemeNoneEditor"), { loading: () => <ThemeNoneLoading /> });
+const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), { loading: () => <ThemeScholarLoading /> });
 
 export function ThemeSelection() {
   const data = useAppSelector((state) => state.data);
