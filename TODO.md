@@ -16,8 +16,6 @@ Race : Lashuntas / Traits : Etudiant / Choix des compétences
 
 Race : Shirrens / Traits secondaires : Obsession individuelle / Choix de la compétence
 
-Race : Ysokis / Taille
-
 Thème / Ajouter les thèmes du guide des options
 
 Thème : Icône / Sélection de la compétence de Profession
@@ -38,13 +36,11 @@ Classe : Mécano / Abilité : Réseau de contrôle / Fournir les détails
 
 Classe : Mystique / Ajouter toutes les connections
 
-Classe : Mystique / Ajouter la gestion des sorts
-
 Classe : Solarien / Ajouter les révélations
 
 Classe : Solarian / Abilité : Influence Sidérale / Chois des compétences
 
-Classe : Soldat / Style de combat: Garde/ Gérer Résistance cinétique
+Classe : Soldat / Style de combat: Garde / Gérer Résistance cinétique
 
 Classe : Technomancien / Abilité : Cache de sorts / Définir la forme de la cache
 
