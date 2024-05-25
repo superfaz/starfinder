@@ -98,6 +98,8 @@ Equipement : Armures / Améliorations d'armure / Gérer la consommation
 
 Equipement : Armures / Améliorations d'armure / Gérer les modifiers associés
 
+Equipment : Autres / Ajouter tous les autres équipments
+
 ## Level increase
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
