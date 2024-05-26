@@ -1,10 +1,8 @@
 "use client";
 
 import Col from "react-bootstrap/Col";
-import Stack from "react-bootstrap/Stack";
 import { useCharacterPresenter } from "../helpers";
 import { AbilityScores } from "./AbilityScores";
-import { ProfessionSkills } from "./ProfessionSkills";
 import { Skills } from "./Skills";
 import { SkillsModifiers } from "./SkillsModifiers";
 
@@ -16,10 +14,7 @@ export default function Page() {
   return (
     <>
       <Col lg={4}>
-        <Stack direction="vertical" gap={4}>
-          <AbilityScores />
-          <ProfessionSkills />
-        </Stack>
+        <AbilityScores />
       </Col>
       <Col lg={4}>
         <Skills />

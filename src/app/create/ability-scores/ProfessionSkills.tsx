@@ -1,7 +1,6 @@
-"use client";
-
 import { useMemo, useState } from "react";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -11,7 +10,7 @@ import { AbilityScoreId, AbilityScoreIds, Profession, isProfession, simpleHash }
 
 type NewOption = { id: string; name: string; customOption: true };
 
-export function ProfessionSkills() {
+export function ProfessionSkills({ onClose }: { onClose: () => void }) {
   const professions = useAppSelector((state) => state.data.professions);
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   const dispatch = useAppDispatch();
@@ -42,37 +41,50 @@ export function ProfessionSkills() {
       dispatch(mutators.addProfessionSkill(profession));
       setSelectedProfession([]);
     }
+
+    handleClose();
+  }
+
+  function handleClose() {
+    setAbilityScore(AbilityScoreIds.cha);
+    setSelectedProfession([]);
+    onClose();
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
-      <h2>Compétences de profession</h2>
-      <p className="text-muted">Ajouter une profession à la liste des compétences de ce personnage.</p>
-      <Form.FloatingLabel controlId="profAbilityScore" label="Caractérisque de référence">
-        <Form.Select value={abilityScore} onChange={(e) => setAbilityScore(e.target.value as AbilityScoreId)}>
-          {optionsForAbilityScores.map((abilityScore) => (
-            <option key={abilityScore.id} value={abilityScore.id}>
-              {abilityScore.name}
-            </option>
-          ))}
-        </Form.Select>
-      </Form.FloatingLabel>
-      <Form.FloatingLabel controlId="profName" label="Nom de la profession">
-        <Typeahead
-          id="profName"
-          allowNew={true}
-          clearButton={true}
-          newSelectionPrefix="Ajouter une profession : "
-          labelKey="name"
-          options={optionsForProfessions}
-          selected={selectedProfession}
-          onChange={(e) => setSelectedProfession(e as Profession[] | NewOption[])}
-        />
-      </Form.FloatingLabel>
-      <div></div>
-      <Button variant="primary ms-auto" onClick={handleAddProfession} disabled={selectedProfession.length == 0}>
-        Ajouter aux compétences
-      </Button>
-    </Stack>
+    <Card>
+      <Card.Header>Compétences de profession</Card.Header>
+      <Card.Body>
+        <Form.FloatingLabel controlId="profAbilityScore" label="Caractérisque de référence">
+          <Form.Select value={abilityScore} onChange={(e) => setAbilityScore(e.target.value as AbilityScoreId)}>
+            {optionsForAbilityScores.map((abilityScore) => (
+              <option key={abilityScore.id} value={abilityScore.id}>
+                {abilityScore.name}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.FloatingLabel>
+        <Form.FloatingLabel controlId="profName" label="Nom de la profession">
+          <Typeahead
+            id="profName"
+            allowNew={true}
+            clearButton={true}
+            newSelectionPrefix="Ajouter une profession : "
+            labelKey="name"
+            options={optionsForProfessions}
+            selected={selectedProfession}
+            onChange={(e) => setSelectedProfession(e as Profession[] | NewOption[])}
+          />
+        </Form.FloatingLabel>
+        <Stack direction="horizontal" gap={2}>
+          <Button variant="primary" onClick={handleAddProfession} disabled={selectedProfession.length == 0}>
+            Ajouter aux compétences
+          </Button>
+          <Button variant="link" onClick={handleClose}>
+            Annuler
+          </Button>
+        </Stack>
+      </Card.Body>
+    </Card>
   );
 }

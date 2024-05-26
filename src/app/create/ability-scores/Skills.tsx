@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -9,6 +9,8 @@ import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
 import { SkillPresenter, mutators, useAppDispatch } from "logic";
 import { useCharacterPresenter } from "../helpers";
+import { Button } from "react-bootstrap";
+import { ProfessionSkills } from "./ProfessionSkills";
 
 type SkillProps = Readonly<{
   skill: SkillPresenter;
@@ -64,6 +66,7 @@ function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
 export function Skills() {
   const presenter = useCharacterPresenter();
   const dispatch = useAppDispatch();
+  const [isProfessionOpen, setProfessionOpen] = useState(false);
 
   const selectedRace = presenter.getRace();
   const selectedTheme = presenter.getTheme();
@@ -86,22 +89,16 @@ export function Skills() {
       <h2>Compétences</h2>
 
       <Row>
-        <Col></Col>
+        <Col lg={6} className="mt-auto mb-auto text-center">
+          <Button hidden={isProfessionOpen} onClick={() => setProfessionOpen(true)}>
+            Ajouter une profession
+          </Button>
+        </Col>
         <Col lg={2} className="pt-2 text-center">
           Classe
         </Col>
         <Col lg={2} className="pt-2 text-center">
-          Rang
-        </Col>
-        <Col lg={2} className="pt-2 text-center">
-          Bonus
-        </Col>
-      </Row>
-
-      <Row>
-        <Col></Col>
-        <Col lg={2} className="text-center"></Col>
-        <Col lg={2} className="text-center">
+          <div className="mb-2">Rang</div>
           <Form.Control
             title="Rangs de compétence à distribuer"
             type="text"
@@ -110,8 +107,14 @@ export function Skills() {
             disabled
           />
         </Col>
-        <Col lg={2}></Col>
+        <Col lg={2} className="pt-2 text-center">
+          Bonus
+        </Col>
       </Row>
+
+      <div hidden={!isProfessionOpen}>
+        <ProfessionSkills onClose={() => setProfessionOpen(false)} />
+      </div>
 
       {presenter.getSkills().map((skill) => (
         <Skill key={skill.id} skill={skill} availableSkillRanks={availableSkillRanks} onCheck={handleSkillRankChange} />
