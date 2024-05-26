@@ -146,6 +146,7 @@ export const WeaponProficiencyModifierSchema = IModelSchema.extend({
 // #endregion
 
 export const EffectModifierSchema = z.discriminatedUnion("type", [
+  ArmorClassModifierSchema,
   ArmorProficiencyModifierSchema,
   AttackModifierSchema,
   ClassSkillModifierSchema,
