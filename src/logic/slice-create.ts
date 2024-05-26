@@ -117,6 +117,15 @@ const mainSlice = createSlice({
       };
     },
 
+    removeProfessionSkill(state, action: PayloadAction<string>) {
+      state.character = {
+        ...state.character,
+        professionSkills: state.character.professionSkills.filter((p) => p.id !== action.payload),
+      };
+
+      delete state.character.skillRanks[action.payload];
+    },
+
     updateSkillRank(state, action: PayloadAction<{ id: string; delta: number }>) {
       state.character = updateSkillRankImpl(state.character, action.payload.id, action.payload.delta);
     },

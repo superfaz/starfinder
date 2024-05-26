@@ -583,14 +583,14 @@ export class CharacterPresenter {
     });
   }
 
-  private getProfessionSkills(): SkillPresenter[] {
+  getProfessionSkills(): SkillPresenter[] {
     const professionSkills = this.character.professionSkills;
     const profession = findOrError(this.data.skills, "prof");
 
     return this.prepareSkillPresenters(
       professionSkills.map((p) => ({
         id: p.id,
-        fullName: `${profession.name} ${p.name}`,
+        fullName: p.name,
         definition: profession,
         abilityScore: p.abilityScore,
         ranks: 0,
@@ -601,7 +601,7 @@ export class CharacterPresenter {
     );
   }
 
-  private getGenericSkills(): SkillPresenter[] {
+  getGenericSkills(): SkillPresenter[] {
     return this.prepareSkillPresenters(
       this.data.skills
         .filter((s) => s.abilityScore !== undefined)

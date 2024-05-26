@@ -19,9 +19,21 @@ type SkillProps = Readonly<{
 }>;
 
 function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
+  const dispatch = useAppDispatch();
+
+  function handleRemove(id: string): void {
+    console.log("remove", id);
+    dispatch(mutators.removeProfessionSkill(id));
+  }
+
   return (
     <Form.Group key={skill.id} as={Row} controlId={skill.id} data-testid={skill.id}>
       <Form.Label column>
+        {skill.definition.id === "prof" && (
+          <Button variant="outline-secondary" size="sm" className="me-2" onClick={() => handleRemove(skill.id)}>
+            <i className="bi bi-x-lg"></i>
+          </Button>
+        )}
         <span className="me-1">{skill.fullName}</span>
         {skill.definition.trainedOnly && (
           <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
@@ -116,7 +128,13 @@ export function Skills() {
         <ProfessionSkills onClose={() => setProfessionOpen(false)} />
       </div>
 
-      {presenter.getSkills().map((skill) => (
+      {presenter.getProfessionSkills().map((skill) => (
+        <Skill key={skill.id} skill={skill} availableSkillRanks={availableSkillRanks} onCheck={handleSkillRankChange} />
+      ))}
+
+      {presenter.getProfessionSkills().length > 0 && <hr />}
+
+      {presenter.getGenericSkills().map((skill) => (
         <Skill key={skill.id} skill={skill} availableSkillRanks={availableSkillRanks} onCheck={handleSkillRankChange} />
       ))}
     </Stack>
