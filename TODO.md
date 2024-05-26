@@ -36,8 +36,6 @@ Classe : Mystique / Ajouter toutes les connections
 
 Classe : Solarien / Ajouter les révélations
 
-Classe : Solarian / Abilité : Influence Sidérale / Chois des compétences
-
 Classe : Soldat / Style de combat: Garde / Gérer Résistance cinétique
 
 Classe : Technomancien / Abilité : Cache de sorts / Définir la forme de la cache
@@ -111,6 +109,8 @@ Classe : Mécano / Abilité : Réseau de contrôle / Gérer l'impact
 Classe : Solarien / Gestion les révélations
 
 Classe : Solarien / Gestion les révélations ultimes
+
+Classe : Solarian / Abilité : Influence Sidérale / Chois des compétences
 
 Classe : Soldat / Abilité : Don de combat / Choix des deux dons
 
