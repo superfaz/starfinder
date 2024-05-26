@@ -1,4 +1,4 @@
-import { z } from "zod";
+import type { z } from "zod";
 import { IModelSchema } from "./IModel";
 import { ModifierTypeSchema } from "./ModifierType";
 

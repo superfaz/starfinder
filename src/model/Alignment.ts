@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ICodedModelSchema } from "./ICodedModel";
 
-const AlignmentIdSchema = z.enum(["lg", "ng", "cg", "ln", "n", "cn", "le", "ne", "ce"]);
+export const AlignmentIdSchema = z.enum(["lg", "ng", "cg", "ln", "n", "cn", "le", "ne", "ce"]);
 
 export const AlignmentSchema = ICodedModelSchema.extend({
   id: AlignmentIdSchema,
