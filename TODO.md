@@ -28,8 +28,6 @@ Classe / Ajouter les classes du guide des options
 
 Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation
 
-Classe : Emissaire / Abilité : Maîtrise de compétence / Choix de la compétence
-
 Classe : Mécano / Ajouter les détails de l'intelligence artificielle
 
 Classe : Mécano / Abilité : Réseau de contrôle / Fournir les détails
@@ -97,6 +95,8 @@ Equipement : Armures / Améliorations d'armure / Gérer les modifiers associés
 Equipment : Autres / Ajouter tous les autres équipments
 
 ## Level increase
+
+Thème : Sans thème / Avantage : Etudes approfondies / Choix de la compétence
 
 Classe : Agent / Abilité : Exploit d'agent / Choix des exploits d'agent
 

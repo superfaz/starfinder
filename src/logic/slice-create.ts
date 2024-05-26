@@ -74,12 +74,16 @@ const mainSlice = createSlice({
       state.character = updateClassImpl(state.data, state.character, action.payload);
     },
 
-    updateOperativeSpecialization(state, action: PayloadAction<string>) {
-      state.character = updateOperativeSpecializationImpl(state.character, action.payload);
+    updateEnvoySkill(state, action: PayloadAction<string>) {
+      state.character = updateEnvoySkillImpl(state.character, action.payload);
     },
 
     updateMysticConnection(state, action: PayloadAction<string>) {
       state.character = updateMysticConnectionImpl(state.character, action.payload);
+    },
+
+    updateOperativeSpecialization(state, action: PayloadAction<string>) {
+      state.character = updateOperativeSpecializationImpl(state.character, action.payload);
     },
 
     updateSolarianColor(state, action: PayloadAction<string>) {
@@ -534,7 +538,10 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
   };
 
   // Special cases - prepare the associated options
-  if (classId === "mystic") {
+  if (classId === "envoy") {
+    // Class: Envoy
+    result.classOptions = { envoySkill: "bluf" };
+  } else if (classId === "mystic") {
     // Class: Mystic
     result.classOptions = { mysticConnection: "60ee0f41-3c5b-4aa4-93d8-f139f5b864b3" };
   } else if (classId === "operative") {
@@ -560,18 +567,18 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
 }
 
 /**
- * Updates the specialization selected for an operative character.
+ * Updates the skill selected as a class skill for an envoy character.
  *
  * @param character - the character to update
- * @param specialization - the selected operative specialization
+ * @param skillId - the identifier of the selected skill
  * @returns The updated character
  */
-function updateOperativeSpecializationImpl(character: Character, specialization: string): Character {
+function updateEnvoySkillImpl(character: Character, skillId: string): Character {
   return {
     ...character,
     classOptions: {
       ...character.classOptions,
-      operativeSpecialization: specialization,
+      envoySkill: skillId,
     },
   };
 }
@@ -589,6 +596,23 @@ function updateMysticConnectionImpl(character: Character, connection: string): C
     classOptions: {
       ...character.classOptions,
       mysticConnection: connection,
+    },
+  };
+}
+
+/**
+ * Updates the specialization selected for an operative character.
+ *
+ * @param character - the character to update
+ * @param specialization - the selected operative specialization
+ * @returns The updated character
+ */
+function updateOperativeSpecializationImpl(character: Character, specialization: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      operativeSpecialization: specialization,
     },
   };
 }

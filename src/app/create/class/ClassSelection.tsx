@@ -27,7 +27,7 @@ export function LazyClassEditor(): JSX.Element | null {
 
   switch (selectedClass.id) {
     case "envoy":
-      return <LazyEditorEnvoy />;
+      return <LazyEditorEnvoy character={presenter} />;
 
     case "operative":
       return <LazyEditorOperative character={presenter} />;

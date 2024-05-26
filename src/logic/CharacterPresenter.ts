@@ -182,6 +182,12 @@ export class CharacterPresenter {
     const klass = this.getClass();
     if (klass) {
       templater.addToContext("primary", klass.primaryAbilityScore);
+      if (klass.id === "envoy") {
+        templater.addToContext(
+          "envoySkill",
+          findOrError(this.data.skills, this.character.classOptions?.envoySkill).name
+        );
+      }
     }
 
     return templater;
@@ -397,6 +403,10 @@ export class CharacterPresenter {
       default:
         return [];
     }
+  }
+
+  getEnvoySkill(): string | null {
+    return this.character.classOptions?.envoySkill ?? null;
   }
 
   getMysticConnection(): string | null {
