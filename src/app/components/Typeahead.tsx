@@ -6,15 +6,17 @@ function defaultFilter<T extends INamedModel>(options: T[], value: string): T[] 
   return options.filter((option) => option.name.toLowerCase().includes(value.toLowerCase()));
 }
 
-export default function Typeahead<T extends INamedModel>(props: {
-  controlId: string;
-  label: string;
-  value: string;
-  onChange: (newValue: string) => void;
-  options?: T[];
-  filter?: (options: T[], value: string) => T[];
-  itemComponent?: (item: T) => ReactNode;
-}): ReactNode {
+export default function Typeahead<T extends INamedModel>(
+  props: Readonly<{
+    controlId: string;
+    label: string;
+    value: string;
+    onChange: (newValue: string) => void;
+    options?: T[];
+    filter?: (options: T[], value: string) => T[];
+    itemComponent?: (item: T) => ReactNode;
+  }>
+): ReactNode {
   const filter = props.filter ?? defaultFilter;
   const options = useMemo(() => {
     return filter(props.options ?? [], props.value);
@@ -44,7 +46,7 @@ export default function Typeahead<T extends INamedModel>(props: {
         {options.map((option) => (
           <Dropdown.Item key={option.id} onClick={() => props.onChange(option.name)}>
             {!props.itemComponent && option.name}
-            {props.itemComponent && props.itemComponent(option)}
+            {props?.itemComponent?.(option)}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>

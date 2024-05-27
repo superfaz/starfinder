@@ -6,7 +6,10 @@ import { EquipmentDescriptor, EquipmentWeaponGrenade } from "model";
 import { DisplaySpecials } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
-export function WeaponGrenadeDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
+export function WeaponGrenadeDisplay({
+  descriptor,
+  selected,
+}: Readonly<{ descriptor: EquipmentDescriptor; selected: boolean }>) {
   const data = useAppSelector((state) => state.data);
   const equipment = useEquipment<EquipmentWeaponGrenade>(descriptor);
 

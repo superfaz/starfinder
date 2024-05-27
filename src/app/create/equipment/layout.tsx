@@ -12,7 +12,7 @@ import { useCharacterPresenter } from "../helpers";
 import { isMelee, isRanged } from "model";
 import { ArmorDisplay } from "./ArmorDisplay";
 
-function EquipmentEdited({ id }: { id: string }) {
+function EquipmentEdited({ id }: Readonly<{ id: string }>) {
   const presenter = useCharacterPresenter();
   const descriptor = presenter.getEquipment(id);
 
@@ -37,7 +37,7 @@ function EquipmentEdited({ id }: { id: string }) {
   }
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   const { id }: { id: string } = useParams();
   const isList = id === undefined;
 

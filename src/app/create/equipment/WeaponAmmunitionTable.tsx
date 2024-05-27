@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponAmmunition } from "model";
 
-function WeaponAmmunitionTableCategory({ equipments }: { equipments: EquipmentWeaponAmmunition[] }) {
+function WeaponAmmunitionTableCategory({ equipments }: Readonly<{ equipments: EquipmentWeaponAmmunition[] }>) {
   const dispatch = useAppDispatch();
 
   function handleAdd(equipment: EquipmentBase) {
@@ -40,7 +40,7 @@ function WeaponAmmunitionTableCategory({ equipments }: { equipments: EquipmentWe
   ));
 }
 
-export function WeaponAmmunitionTable({ equipments }: { equipments: EquipmentBase[] }) {
+export function WeaponAmmunitionTable({ equipments }: Readonly<{ equipments: EquipmentBase[] }>) {
   const casted = equipments as EquipmentWeaponAmmunition[];
 
   return (

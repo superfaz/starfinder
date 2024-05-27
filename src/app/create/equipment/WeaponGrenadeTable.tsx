@@ -7,7 +7,7 @@ import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponGrenade } from "model";
 import { DisplaySpecials } from "./Components";
 
-function WeaponGrenadeTableCategory({ equipments }: { equipments: EquipmentWeaponGrenade[] }) {
+function WeaponGrenadeTableCategory({ equipments }: Readonly<{ equipments: EquipmentWeaponGrenade[] }>) {
   const dispatch = useAppDispatch();
 
   function handleAdd(equipment: EquipmentBase) {
@@ -44,7 +44,7 @@ function WeaponGrenadeTableCategory({ equipments }: { equipments: EquipmentWeapo
   ));
 }
 
-export function WeaponGrenadeTable({ equipments }: { equipments: EquipmentBase[] }) {
+export function WeaponGrenadeTable({ equipments }: Readonly<{ equipments: EquipmentBase[] }>) {
   const casted = equipments as EquipmentWeaponGrenade[];
 
   return (

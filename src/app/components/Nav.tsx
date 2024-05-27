@@ -29,14 +29,14 @@ function NavLink({
   href,
   startsWith = false,
   disabled,
-}: {
+}: Readonly<{
   children: ReactNode;
   href: string;
   startsWith?: boolean;
   disabled?: boolean;
-}) {
+}>) {
   const pathname = usePathname();
-  const isActive = startsWith ? pathname && pathname.startsWith(href) : pathname === href;
+  const isActive = startsWith ? pathname?.startsWith(href) : pathname === href;
 
   return (
     <Link href={href} className={clsx("nav-link", isActive && "active", disabled && "disabled")}>

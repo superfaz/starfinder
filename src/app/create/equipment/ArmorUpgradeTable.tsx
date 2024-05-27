@@ -7,7 +7,7 @@ import { mutators, useAppDispatch } from "logic";
 import { EquipmentArmorUpgrade, EquipmentBase } from "model";
 import { DisplayArmorTypes } from "./Components";
 
-function ArmorUpgradeTableCategory({ equipments }: { equipments: EquipmentArmorUpgrade[] }) {
+function ArmorUpgradeTableCategory({ equipments }: Readonly<{ equipments: EquipmentArmorUpgrade[] }>) {
   const dispatch = useAppDispatch();
 
   function handleAdd(equipment: EquipmentBase) {
@@ -43,7 +43,7 @@ function ArmorUpgradeTableCategory({ equipments }: { equipments: EquipmentArmorU
   ));
 }
 
-export function ArmorUpgradeTable({ equipments }: { equipments: EquipmentBase[] }) {
+export function ArmorUpgradeTable({ equipments }: Readonly<{ equipments: EquipmentBase[] }>) {
   const casted = equipments as EquipmentArmorUpgrade[];
 
   return (

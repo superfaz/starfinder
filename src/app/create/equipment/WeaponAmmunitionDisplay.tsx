@@ -6,10 +6,10 @@ import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay
 export function WeaponAmmunitionDisplay({
   descriptor,
   selected,
-}: {
+}: Readonly<{
   descriptor: EquipmentDescriptor;
   selected: boolean;
-}) {
+}>) {
   const equipment = useEquipment<EquipmentWeaponAmmunition>(descriptor);
 
   if (!equipment) {

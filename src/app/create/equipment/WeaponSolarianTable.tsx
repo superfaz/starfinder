@@ -7,7 +7,7 @@ import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponSolarian } from "model";
 import { DisplayCritical, DisplayDamageShort } from "./Components";
 
-function WeaponSolarianTableCategory({ equipments }: { equipments: EquipmentWeaponSolarian[] }) {
+function WeaponSolarianTableCategory({ equipments }: Readonly<{ equipments: EquipmentWeaponSolarian[] }>) {
   const dispatch = useAppDispatch();
 
   function handleAdd(equipment: EquipmentBase) {
@@ -45,7 +45,7 @@ function WeaponSolarianTableCategory({ equipments }: { equipments: EquipmentWeap
   ));
 }
 
-export function WeaponSolarianTable({ equipments }: { equipments: EquipmentBase[] }) {
+export function WeaponSolarianTable({ equipments }: Readonly<{ equipments: EquipmentBase[] }>) {
   const casted = equipments as EquipmentWeaponSolarian[];
 
   return (

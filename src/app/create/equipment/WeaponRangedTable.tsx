@@ -13,10 +13,10 @@ import { DisplayCritical, DisplayDamageShort, DisplaySpecials } from "./Componen
 function WeaponRangedTableCategory({
   weaponType,
   equipments,
-}: {
+}: Readonly<{
   weaponType: WeaponTypeId;
   equipments: EquipmentWeaponRanged[];
-}) {
+}>) {
   const dispatch = useAppDispatch();
   const weaponCategories = useAppSelector((state) => state.data.weaponCategories);
   const groupedByCategory = groupBy(
@@ -78,10 +78,10 @@ function WeaponRangedTableCategory({
 export function WeaponRangedTable({
   weaponType,
   equipments,
-}: {
+}: Readonly<{
   weaponType: WeaponTypeId;
   equipments: EquipmentBase[];
-}) {
+}>) {
   const casted = equipments as EquipmentWeaponRanged[];
   const groupedByHands = groupBy(casted, (e) => e.hands);
 

@@ -9,7 +9,7 @@ import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 import ClassDetailsLoading from "./ClassDetailsLoading";
 
-function Level1({ presenter, features }: { presenter: CharacterPresenter; features: ClassFeature[] }) {
+function Level1({ presenter, features }: Readonly<{ presenter: CharacterPresenter; features: ClassFeature[] }>) {
   const specials = features.filter((f) => f.id.startsWith("solarian-"));
   const others = features.filter((f) => !f.id.startsWith("solarian-"));
 
@@ -49,11 +49,11 @@ function LevelN({
   level,
   presenter,
   features,
-}: {
+}: Readonly<{
   level: number;
   presenter: CharacterPresenter;
   features: ClassFeature[];
-}) {
+}>) {
   return (
     <Row className="mb-3">
       <Col lg={1}>
@@ -71,7 +71,7 @@ function LevelN({
   );
 }
 
-export default function ClassDetailsGeneric({ character, classId }: CharacterProps & { classId: string }) {
+export default function ClassDetailsGeneric({ character, classId }: Readonly<CharacterProps & { classId: string }>) {
   const classDetails = useClassDetails(classId);
   const dispatch = useAppDispatch();
   useEffect(() => {

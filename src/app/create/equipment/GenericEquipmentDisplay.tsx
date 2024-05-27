@@ -47,7 +47,7 @@ function useFusion(id: string): EquipmentWeaponFusion | null {
   return fusion;
 }
 
-function DisplayMaterial({ descriptor }: { descriptor: EquipmentDescriptor }) {
+function DisplayMaterial({ descriptor }: Readonly<{ descriptor: EquipmentDescriptor }>) {
   const materials = useAppSelector((state) => state.data.equipmentMaterials);
   const material = findOrError(materials, descriptor.material);
 
@@ -75,13 +75,13 @@ export function GenericEquipmentDisplay({
   selected,
   subtitle,
   children,
-}: {
+}: Readonly<{
   descriptor: EquipmentDescriptor;
   equipment: EquipmentBase;
   selected: boolean;
   subtitle?: string;
   children?: React.ReactNode;
-}) {
+}>) {
   const [open, setOpen] = useState(selected);
   const dispatch = useAppDispatch();
 

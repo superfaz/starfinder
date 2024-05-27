@@ -5,7 +5,7 @@ import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { ArmorTypeId, Critical, Damage, EquipmentWeaponFusion, SizeId, Special } from "model";
 
-export function DisplayDamageShort({ damage }: { damage?: Damage }) {
+export function DisplayDamageShort({ damage }: Readonly<{ damage?: Damage }>) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
 
   if (damage === undefined) {
@@ -16,7 +16,7 @@ export function DisplayDamageShort({ damage }: { damage?: Damage }) {
   return `${damage.roll} ${types}`;
 }
 
-export function DisplayDamageLong({ damage }: { damage?: Damage }) {
+export function DisplayDamageLong({ damage }: Readonly<{ damage?: Damage }>) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
 
   if (damage === undefined) {
@@ -27,7 +27,7 @@ export function DisplayDamageLong({ damage }: { damage?: Damage }) {
   return `${damage.roll} ${types}`;
 }
 
-export function DisplayCritical({ critical }: { critical?: Critical }) {
+export function DisplayCritical({ critical }: Readonly<{ critical?: Critical }>) {
   const criticalHitEffects = useAppSelector((state) => state.data.criticalHitEffects);
   if (!critical) {
     return "-";
@@ -41,7 +41,7 @@ export function DisplayCritical({ critical }: { critical?: Critical }) {
   }
 }
 
-export function DisplaySpecials({ specials }: { specials: Special[] }) {
+export function DisplaySpecials({ specials }: Readonly<{ specials: Special[] }>) {
   const weaponSpecialProperties = useAppSelector((state) => state.data.weaponSpecialProperties);
 
   if (specials === undefined || specials.length === 0) {
@@ -56,7 +56,7 @@ export function DisplaySpecials({ specials }: { specials: Special[] }) {
     .join(", ");
 }
 
-export function DisplayFusions({ fusions }: { fusions: string[] }) {
+export function DisplayFusions({ fusions }: Readonly<{ fusions: string[] }>) {
   const [elements, setElements] = useState<EquipmentWeaponFusion[]>([]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export function DisplayFusions({ fusions }: { fusions: string[] }) {
   return elements.map((f) => f.name).join(", ");
 }
 
-export function Credits({ value }: { value?: number }) {
+export function Credits({ value }: Readonly<{ value?: number }>) {
   if (value === undefined || value === 0) {
     return "- Cr";
   } else {
@@ -78,7 +78,7 @@ export function Credits({ value }: { value?: number }) {
   }
 }
 
-export function DisplayModifier({ value }: { value?: number }) {
+export function DisplayModifier({ value }: Readonly<{ value?: number }>) {
   if (value === undefined || value === 0) {
     return "-";
   } else if (value > 0) {
@@ -88,7 +88,7 @@ export function DisplayModifier({ value }: { value?: number }) {
   }
 }
 
-export function DisplayRange({ value }: { value?: number }) {
+export function DisplayRange({ value }: Readonly<{ value?: number }>) {
   if (value === undefined || value === 0) {
     return "-";
   } else {
@@ -96,14 +96,14 @@ export function DisplayRange({ value }: { value?: number }) {
   }
 }
 
-export function DisplaySize({ value }: { value: SizeId }) {
+export function DisplaySize({ value }: Readonly<{ value: SizeId }>) {
   const sizes = useAppSelector((state) => state.data.sizes);
   const size = findOrError(sizes, value);
 
   return size.name;
 }
 
-export function DisplayArmorTypes({ types }: { types: ArmorTypeId[] }) {
+export function DisplayArmorTypes({ types }: Readonly<{ types: ArmorTypeId[] }>) {
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
 
   if (types === undefined || types.length === 0) {

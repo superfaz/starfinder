@@ -10,7 +10,7 @@ import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
 import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
 import { ArmorUpgradeDisplay } from "./ArmorUpgradeDisplay";
 
-export function EquipmentDisplay({ descriptor }: { descriptor: EquipmentDescriptor }) {
+export function EquipmentDisplay({ descriptor }: Readonly<{ descriptor: EquipmentDescriptor }>) {
   if (descriptor.category === EquipmentCategories.weapon) {
     switch (descriptor.secondaryType) {
       case EquipmentWeaponIds.ammunition:

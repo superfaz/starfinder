@@ -7,10 +7,10 @@ import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay
 export function WeaponSolarianDisplay({
   descriptor,
   selected,
-}: {
+}: Readonly<{
   descriptor: EquipmentDescriptor;
   selected: boolean;
-}) {
+}>) {
   const equipment = useEquipment<EquipmentWeaponSolarian>(descriptor);
 
   if (!equipment) {

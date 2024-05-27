@@ -10,7 +10,7 @@ import { AbilityScoreId, AbilityScoreIds, Profession, isProfession, simpleHash }
 
 type NewOption = { id: string; name: string; customOption: true };
 
-export function ProfessionSkills({ onClose }: { onClose: () => void }) {
+export function ProfessionSkills({ onClose }: Readonly<{ onClose: () => void }>) {
   const professions = useAppSelector((state) => state.data.professions);
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   const dispatch = useAppDispatch();

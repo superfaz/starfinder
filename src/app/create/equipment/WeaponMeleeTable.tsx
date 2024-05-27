@@ -13,10 +13,10 @@ import { DisplayCritical, DisplayDamageShort, DisplaySpecials } from "./Componen
 function WeaponMeleeTableCategory({
   weaponType,
   equipments,
-}: {
+}: Readonly<{
   weaponType: WeaponTypeId;
   equipments: EquipmentWeaponMelee[];
-}) {
+}>) {
   const dispatch = useAppDispatch();
   const weaponCategories = useAppSelector((state) => state.data.weaponCategories);
   const groupedByCategory = groupBy(

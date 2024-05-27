@@ -7,7 +7,10 @@ import { mutators, useAppDispatch } from "logic";
 import { ArmorTypeId, EquipmentArmorHeavy, EquipmentArmorLight, EquipmentBase } from "model";
 import { DisplayModifier, DisplayRange } from "./Components";
 
-export function ArmorNormalTable({ armorType, equipments }: { armorType: ArmorTypeId; equipments: EquipmentBase[] }) {
+export function ArmorNormalTable({
+  armorType,
+  equipments,
+}: Readonly<{ armorType: ArmorTypeId; equipments: EquipmentBase[] }>) {
   const dispatch = useAppDispatch();
   const casted = equipments as (EquipmentArmorLight | EquipmentArmorHeavy)[];
 

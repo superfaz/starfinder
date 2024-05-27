@@ -78,7 +78,7 @@ function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
 export function Skills() {
   const presenter = useCharacterPresenter();
   const dispatch = useAppDispatch();
-  const [isProfessionOpen, setProfessionOpen] = useState(false);
+  const [isProfessionOpen, setIsProfessionOpen] = useState(false);
 
   const selectedRace = presenter.getRace();
   const selectedTheme = presenter.getTheme();
@@ -102,7 +102,7 @@ export function Skills() {
 
       <Row>
         <Col lg={6} className="mt-auto mb-auto text-center">
-          <Button hidden={isProfessionOpen} onClick={() => setProfessionOpen(true)}>
+          <Button hidden={isProfessionOpen} onClick={() => setIsProfessionOpen(true)}>
             Ajouter une profession
           </Button>
         </Col>
@@ -125,7 +125,7 @@ export function Skills() {
       </Row>
 
       <div hidden={!isProfessionOpen}>
-        <ProfessionSkills onClose={() => setProfessionOpen(false)} />
+        <ProfessionSkills onClose={() => setIsProfessionOpen(false)} />
       </div>
 
       {presenter.getProfessionSkills().map((skill) => (

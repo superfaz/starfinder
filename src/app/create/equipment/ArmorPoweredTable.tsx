@@ -7,7 +7,7 @@ import { mutators, useAppDispatch } from "logic";
 import { EquipmentArmorPowered, EquipmentBase } from "model";
 import { DisplayModifier, DisplaySize } from "./Components";
 
-export function ArmorPoweredTable({ equipments }: { equipments: EquipmentBase[] }) {
+export function ArmorPoweredTable({ equipments }: Readonly<{ equipments: EquipmentBase[] }>) {
   const dispatch = useAppDispatch();
   const casted = equipments as EquipmentArmorPowered[];
 

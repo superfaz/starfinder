@@ -6,7 +6,7 @@ import { ArmorTypeIds, EquipmentArmor, EquipmentDescriptor } from "model";
 import { DisplayDamageShort, DisplayModifier, DisplayRange, DisplaySize } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
-export function ArmorDisplay({ descriptor, selected }: { descriptor: EquipmentDescriptor; selected: boolean }) {
+export function ArmorDisplay({ descriptor, selected }: Readonly<{ descriptor: EquipmentDescriptor; selected: boolean }>) {
   const data = useAppSelector((state) => state.data);
   const equipment = useEquipment<EquipmentArmor>(descriptor);
 
