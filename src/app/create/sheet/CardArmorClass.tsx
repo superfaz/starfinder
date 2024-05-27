@@ -18,7 +18,7 @@ async function getArmor(descriptor: EquipmentDescriptor): Promise<EquipmentArmor
     });
 }
 
-function CardArmor({ descriptor }: { descriptor: EquipmentDescriptor }) {
+function CardArmor({ descriptor }: Readonly<{ descriptor: EquipmentDescriptor }>) {
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
   const [armor, setArmor] = useState<EquipmentArmor | undefined>(undefined);
 

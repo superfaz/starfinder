@@ -8,7 +8,7 @@ import { mutators, useAppDispatch } from "logic";
 import { EquipmentArmor, ArmorEquipmentDescriptor } from "model";
 import { useEquipment } from "../GenericEquipmentDisplay";
 
-export function ArmorPage({ descriptor }: { descriptor: ArmorEquipmentDescriptor }) {
+export function ArmorPage({ descriptor }: Readonly<{ descriptor: ArmorEquipmentDescriptor }>) {
   const dispatch = useAppDispatch();
   const equipment = useEquipment<EquipmentArmor>(descriptor);
 

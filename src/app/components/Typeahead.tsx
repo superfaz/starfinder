@@ -14,7 +14,7 @@ export default function Typeahead<T extends INamedModel>(
     onChange: (newValue: string) => void;
     options?: T[];
     filter?: (options: T[], value: string) => T[];
-    itemComponent?: (item: T) => ReactNode;
+    renderItem?: (item: T) => ReactNode;
   }>
 ): ReactNode {
   const filter = props.filter ?? defaultFilter;
@@ -45,8 +45,8 @@ export default function Typeahead<T extends INamedModel>(
       <Dropdown.Menu className="w-100">
         {options.map((option) => (
           <Dropdown.Item key={option.id} onClick={() => props.onChange(option.name)}>
-            {!props.itemComponent && option.name}
-            {props?.itemComponent?.(option)}
+            {!props.renderItem && option.name}
+            {props?.renderItem?.(option)}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>

@@ -12,7 +12,7 @@ import RaceHumansEditor from "./RaceHumansEditor";
 import { useCharacterPresenter } from "../helpers";
 import { ReferenceComponent } from "../ReferenceComponent";
 
-function RaceModifiers({ modifiers }: { modifiers: RaceModifier[] }) {
+function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
   const sizes = useAppSelector((state) => state.data.sizes);
   return (
     <Stack direction="horizontal" className="right">

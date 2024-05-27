@@ -44,11 +44,11 @@ function FusionDisplay({
   fusion,
   children,
   selected,
-}: {
+}: Readonly<{
   fusion: EquipmentWeaponFusion;
   children: ReactNode;
   selected: boolean;
-}) {
+}>) {
   return (
     <Col key={fusion.id} className="mb-3">
       <Card className="h-100" border={selected ? "primary" : undefined}>
@@ -73,7 +73,7 @@ function FusionDisplay({
   );
 }
 
-export function UniqueWeaponPage({ descriptor }: { descriptor: WeaponEquipmentDescriptor }) {
+export function UniqueWeaponPage({ descriptor }: Readonly<{ descriptor: WeaponEquipmentDescriptor }>) {
   const dispatch = useAppDispatch();
   const equipment = useEquipment<EquipmentWeapon>(descriptor);
   const materials = useAppSelector((state) => state.data.equipmentMaterials);
@@ -152,9 +152,7 @@ export function UniqueWeaponPage({ descriptor }: { descriptor: WeaponEquipmentDe
                 ))}
               </Form.Select>
             </Form.FloatingLabel>
-            {selectedMaterial && selectedMaterial.description && (
-              <div className="text-muted small">{selectedMaterial.description}</div>
-            )}
+            {selectedMaterial?.description && <div className="text-muted small">{selectedMaterial.description}</div>}
           </Stack>
         </Col>
         <Col>

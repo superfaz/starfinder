@@ -58,7 +58,7 @@ function DisplayMaterial({ descriptor }: Readonly<{ descriptor: EquipmentDescrip
   );
 }
 
-function DisplayFusion({ id }: { id: string }) {
+function DisplayFusion({ id }: Readonly<{ id: string }>) {
   const fusion = useFusion(id);
   if (!fusion) return null;
 
@@ -117,9 +117,7 @@ export function GenericEquipmentDisplay({
           {children}
           <Stack direction="horizontal" gap={2}>
             {descriptor.material && <DisplayMaterial descriptor={descriptor} />}
-            {descriptor.category === "weapon" &&
-              descriptor.fusions &&
-              descriptor.fusions.map((id) => <DisplayFusion key={id} id={id} />)}
+            {descriptor.category === "weapon" && descriptor.fusions?.map((id) => <DisplayFusion key={id} id={id} />)}
           </Stack>
           <hr />
           <div className="small text-muted">{descriptor.description ?? equipment.description}</div>

@@ -75,10 +75,10 @@ function WeaponMeleeTableCategory({
 export function WeaponMeleeTable({
   weaponType,
   equipments,
-}: {
+}: Readonly<{
   weaponType: WeaponTypeId;
   equipments: EquipmentBase[];
-}) {
+}>) {
   const casted = equipments as EquipmentWeaponMelee[];
   const groupedByHands = groupBy(casted, (e) => e.hands);
 

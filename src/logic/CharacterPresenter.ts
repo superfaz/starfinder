@@ -537,9 +537,7 @@ export class CharacterPresenter {
     if (!this.cachedClassSkills) {
       const modifiers = this.getModifiers();
 
-      const classSkillsFromModifiers = modifiers
-        .filter(ofType(ModifierTypes.classSkill))
-        .map((m) => m.target) as string[];
+      const classSkillsFromModifiers = modifiers.filter(ofType(ModifierTypes.classSkill)).map((m) => m.target);
       this.cachedClassSkills = [...classSkillsFromModifiers, ...selectedClass.classSkills];
     }
 

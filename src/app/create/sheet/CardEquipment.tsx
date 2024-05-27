@@ -15,7 +15,7 @@ import { ValueComponent } from "./ValueComponent";
 import { useAppSelector } from "logic";
 import { findOrError } from "app/helpers";
 
-function AmmunitionSection({ descriptor }: { descriptor: WeaponEquipmentDescriptor }): ReactNode {
+function AmmunitionSection({ descriptor }: Readonly<{ descriptor: WeaponEquipmentDescriptor }>): ReactNode {
   const equipment = useEquipment<EquipmentWeaponAmmunition>(descriptor);
 
   if (equipment === null) {
@@ -50,7 +50,7 @@ function AmmunitionSection({ descriptor }: { descriptor: WeaponEquipmentDescript
   }
 }
 
-function UpgradeSection({ descriptor }: { descriptor: ArmorEquipmentDescriptor }): ReactNode {
+function UpgradeSection({ descriptor }: Readonly<{ descriptor: ArmorEquipmentDescriptor }>): ReactNode {
   const equipment = useEquipment<EquipmentArmorUpgrade>(descriptor);
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
 

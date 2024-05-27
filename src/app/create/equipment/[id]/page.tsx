@@ -4,7 +4,7 @@ import { useCharacterPresenter } from "../../helpers";
 import { ArmorPage } from "./ArmorPage";
 import { UniqueWeaponPage } from "./UniqueWeaponPage";
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: Readonly<{ params: { id: string } }>) {
   const presenter = useCharacterPresenter();
   if (presenter.getRace() === null || presenter.getTheme() === null || presenter.getClass() === null) {
     return null;

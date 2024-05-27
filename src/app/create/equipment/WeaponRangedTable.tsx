@@ -64,7 +64,7 @@ function WeaponRangedTableCategory({
             <DisplayCritical critical={equipment.critical} />
           </td>
           <td>{equipment.ammunition && `${equipment.ammunition.type} - ${equipment.ammunition.capacity}`}</td>
-          <td>{equipment.ammunition && equipment.ammunition.usage}</td>
+          <td>{equipment.ammunition?.usage}</td>
           <td>{equipment.weight}</td>
           <td>
             <DisplaySpecials specials={equipment.specials} />

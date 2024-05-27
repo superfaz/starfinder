@@ -33,7 +33,7 @@ function useDeities() {
   return deities;
 }
 
-function DeityLine({ deity }: { deity: Deity }) {
+function DeityLine({ deity }: Readonly<{ deity: Deity }>) {
   const alignments = useAppSelector((state) => state.data.alignments);
   return (
     <div className="d-flex justify-content-between">
@@ -132,7 +132,7 @@ export function Profile() {
         value={presenter.getDeity()}
         onChange={handleDeityChange}
         options={deities}
-        itemComponent={(item) => <DeityLine deity={item} />}
+        renderItem={(item) => <DeityLine deity={item} />}
       />
 
       {selectedDeity && (

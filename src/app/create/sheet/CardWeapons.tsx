@@ -61,7 +61,10 @@ function computeModifierFor(weapon: EquipmentWeapon, presenter: CharacterPresent
   }
 }
 
-function CardWeapon({ presenter, descriptor }: { presenter: CharacterPresenter; descriptor: EquipmentDescriptor }) {
+function CardWeapon({
+  presenter,
+  descriptor,
+}: Readonly<{ presenter: CharacterPresenter; descriptor: EquipmentDescriptor }>) {
   const [weapon, setWeapon] = useState<EquipmentWeapon | undefined>(undefined);
   const label = useWeaponLabel(weapon);
 
