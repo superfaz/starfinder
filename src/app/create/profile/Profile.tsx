@@ -44,10 +44,16 @@ function DeityLine({ deity }: { deity: Deity }) {
 
 export function Profile() {
   const presenter = useCharacterPresenter();
-  const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
+  const alignments = useAppSelector((state) => state.data.alignments);
   const worlds = useWorlds();
   const deities = useDeities();
+
+  if (worlds.length === 0 || deities.length === 0) {
+    return null;
+  }
+
+  const selectedDeity = deities.find((deity) => deity.name === presenter.getDeity());
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
     dispatch(mutators.updateName(e.target.value));
@@ -95,7 +101,7 @@ export function Profile() {
       <Form.FloatingLabel controlId="alignment" label="Alignement">
         <Form.Select value={presenter.getAlignment()} onChange={handleAlignmentChange}>
           {presenter.getAlignment() === "" && <option value=""></option>}
-          {data.alignments.map((alignment) => (
+          {alignments.map((alignment) => (
             <option key={alignment.id} value={alignment.id}>
               {`${alignment.name} (${alignment.code})`}
             </option>
@@ -123,6 +129,13 @@ export function Profile() {
         options={deities}
         itemComponent={(item) => <DeityLine deity={item} />}
       />
+
+      {selectedDeity && (
+        <div className="text-muted">
+          <div>Alignement : {alignments.find((a) => a.id === selectedDeity.alignment)?.name}</div>
+          <div>Domaines : {selectedDeity.portfolios}</div>
+        </div>
+      )}
     </Stack>
   );
 }
