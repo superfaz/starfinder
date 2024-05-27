@@ -5,10 +5,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Stack from "react-bootstrap/Stack";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { computeSteps, mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
 import Typeahead from "app/components/Typeahead";
 import { Deity, World } from "model";
+import { Alert } from "react-bootstrap";
 
 function useWorlds() {
   const [worlds, setWorlds] = useState<World[]>([]);
@@ -54,6 +55,10 @@ export function Profile() {
   }
 
   const selectedDeity = deities.find((deity) => deity.name === presenter.getDeity());
+  const steps = computeSteps(
+    alignments.find((a) => a.id === presenter.getAlignment()),
+    alignments.find((a) => a.id === selectedDeity?.alignment)
+  );
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
     dispatch(mutators.updateName(e.target.value));
@@ -135,6 +140,11 @@ export function Profile() {
           <div>Alignement : {alignments.find((a) => a.id === selectedDeity.alignment)?.name}</div>
           <div>Domaines : {selectedDeity.portfolios}</div>
         </div>
+      )}
+      {steps > 1 && (
+        <Alert variant="warning">
+          <strong>Attention : </strong> Votre alignement et celui de votre divinité sont séparés de plus de 1 catégorie.
+        </Alert>
       )}
     </Stack>
   );
