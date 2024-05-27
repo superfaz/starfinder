@@ -1,4 +1,4 @@
-import { cleanup, within } from "@testing-library/react";
+import { cleanup, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, test } from "vitest";
 import Page from "./page";
@@ -13,6 +13,7 @@ describe("/create/profile", () => {
   test("is not displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Profil" })).toBeNull();
+    expect(content.queryByRole("heading", { level: 2, name: "Avatar" })).toBeNull();
   });
 });
 
@@ -24,11 +25,13 @@ describe("/create/profile", () => {
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
     await renderWithData(<Page />, character);
+    await waitFor(() => screen.getByRole("heading", { level: 2, name: "Profil" }));
   });
 
   test("is displayed", async () => {
     const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.queryByRole("heading", { level: 2, name: "Profil" })).not.toBeNull();
+    expect(content.getByRole("heading", { level: 2, name: "Profil" })).not.toBeNull();
+    expect(content.getByRole("heading", { level: 2, name: "Avatar" })).not.toBeNull();
   });
 
   test("can be used to modify the character name", async () => {
