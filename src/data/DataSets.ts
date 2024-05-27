@@ -61,6 +61,8 @@ import {
   EquipmentArmorPowered,
   EquipmentArmorUpgradeSchema,
   EquipmentArmorUpgrade,
+  WorldSchema,
+  World,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -173,4 +175,5 @@ export const DataSets = {
     schema: WeaponSpecialPropertySchema,
   } as IDescriptor<WeaponSpecialProperty>,
   WeaponTypes: { type: "ordered", name: "weapon-types", schema: WeaponTypeSchema } as IDescriptor<WeaponType>,
+  Worlds: { type: "simple", name: "worlds", schema: WorldSchema } as IDescriptor<World>,
 };
