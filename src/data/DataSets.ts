@@ -63,6 +63,8 @@ import {
   EquipmentArmorUpgrade,
   WorldSchema,
   World,
+  DeitySchema,
+  Deity,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -80,6 +82,7 @@ export const DataSets = {
     schema: CriticalHitEffectSchema,
   } as IDescriptor<CriticalHitEffect>,
   DamageType: { type: "named", name: "damage-types", schema: DamageTypeSchema } as IDescriptor<DamageType>,
+  Deities: { type: "named", name: "deities", schema: DeitySchema } as IDescriptor<Deity>,
   EquipmentArmorLight: {
     type: "simple",
     name: "equipment-armors-light",

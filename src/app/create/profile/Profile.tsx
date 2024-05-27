@@ -8,7 +8,7 @@ import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
 import Typeahead from "app/components/Typeahead";
-import { World } from "model";
+import { Deity, World } from "model";
 
 function useWorlds() {
   const [worlds, setWorlds] = useState<World[]>([]);
@@ -21,11 +21,33 @@ function useWorlds() {
   return worlds;
 }
 
+function useDeities() {
+  const [deities, setDeities] = useState<Deity[]>([]);
+  useEffect(() => {
+    fetch("/api/deities")
+      .then((response) => response.json())
+      .then((data) => setDeities(data));
+  }, []);
+
+  return deities;
+}
+
+function DeityLine({ deity }: { deity: Deity }) {
+  const alignments = useAppSelector((state) => state.data.alignments);
+  return (
+    <div className="d-flex justify-content-between">
+      <div>{deity.name}</div>
+      <div className="">{alignments.find((a) => a.id === deity.alignment)?.code}</div>
+    </div>
+  );
+}
+
 export function Profile() {
   const presenter = useCharacterPresenter();
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
   const worlds = useWorlds();
+  const deities = useDeities();
 
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
     dispatch(mutators.updateName(e.target.value));
@@ -54,8 +76,8 @@ export function Profile() {
     dispatch(mutators.updateHomeWorld(e));
   }
 
-  function handleDeityChange(e: ChangeEvent<HTMLInputElement>): void {
-    dispatch(mutators.updateDeity(e.target.value));
+  function handleDeityChange(e: string): void {
+    dispatch(mutators.updateDeity(e));
   }
 
   return (
@@ -93,9 +115,14 @@ export function Profile() {
         options={worlds}
       />
 
-      <Form.FloatingLabel controlId="deity" label="Divinité">
-        <Form.Control type="text" value={presenter.getDeity()} onChange={handleDeityChange} />
-      </Form.FloatingLabel>
+      <Typeahead
+        controlId="deity"
+        label="Divinité"
+        value={presenter.getDeity()}
+        onChange={handleDeityChange}
+        options={deities}
+        itemComponent={(item) => <DeityLine deity={item} />}
+      />
     </Stack>
   );
 }
