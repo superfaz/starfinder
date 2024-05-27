@@ -1,6 +1,6 @@
 import { INamedModel } from "model";
 import { ReactNode, useMemo } from "react";
-import { Dropdown, Form } from "react-bootstrap";
+import { Button, Dropdown, Form } from "react-bootstrap";
 
 function defaultFilter<T extends INamedModel>(options: T[], value: string): T[] {
   return options.filter((option) => option.name.toLowerCase().includes(value.toLowerCase()));
@@ -28,6 +28,17 @@ export default function Typeahead<T extends INamedModel>(props: {
         value={props.value}
         onChange={(e) => props.onChange((e.target as HTMLInputElement).value)}
       />
+
+      {props.value && (
+        <Button
+          className="position-absolute top-0 bottom-0 mt-auto mb-auto text-white"
+          variant="link"
+          style={{ bottom: 0, right: 0, zIndex: 100 }}
+          onClick={() => props.onChange("")}
+        >
+          <i className="bi bi-x-lg"></i>
+        </Button>
+      )}
 
       <Dropdown.Menu className="w-100">
         {options.map((option) => (
