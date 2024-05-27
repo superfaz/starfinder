@@ -2,46 +2,64 @@
   {
     "id": "lg",
     "code": "LB",
-    "name": "Loyal bon"
+    "name": "Loyal bon",
+    "morality": "good",
+    "ethic": "lawful"
   },
   {
     "id": "ng",
     "code": "NB",
-    "name": "Neutre bon"
+    "name": "Neutre bon",
+    "morality": "good",
+    "ethic": "neutral"
   },
   {
     "id": "cg",
     "code": "CB",
-    "name": "Chaotique bon"
+    "name": "Chaotique bon",
+    "morality": "good",
+    "ethic": "chaotic"
   },
   {
     "id": "ln",
     "code": "LN",
-    "name": "Loyal neutre"
+    "name": "Loyal neutre",
+    "morality": "neutral",
+    "ethic": "lawful"
   },
   {
     "id": "n",
     "code": "N",
-    "name": "Neutre"
+    "name": "Neutre",
+    "morality": "neutral",
+    "ethic": "neutral"
   },
   {
     "id": "cn",
     "code": "CN",
-    "name": "Chaotique neutre"
+    "name": "Chaotique neutre",
+    "morality": "neutral",
+    "ethic": "chaotic"
   },
   {
     "id": "le",
     "code": "LM",
-    "name": "Loyal mauvais"
+    "name": "Loyal mauvais",
+    "morality": "evil",
+    "ethic": "lawful"
   },
   {
     "id": "ne",
     "code": "NM",
-    "name": "Neutre mauvais"
+    "name": "Neutre mauvais",
+    "morality": "evil",
+    "ethic": "neutral"
   },
   {
     "id": "ce",
     "code": "CM",
-    "name": "Chaotique mauvais"
+    "name": "Chaotique mauvais",
+    "morality": "evil",
+    "ethic": "chaotic"
   }
 ]
