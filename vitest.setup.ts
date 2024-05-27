@@ -2,12 +2,14 @@ import { beforeAll, vi } from "vitest";
 import { IDataSource, IDataSet, IDescriptor } from "data";
 import { ArmorTypeIds, EquipmentWeaponIds, IModel } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
+import deities from "./mocks/deities.json";
 import envoyDetails from "./mocks/class-envoy.json";
 import fusionsDetails from "./mocks/equipment-weapons-fusion.json";
 import mysticDetails from "./mocks/class-mystic.json";
 import operativeDetails from "./mocks/class-operative.json";
 import scholarDetails from "./mocks/themes-details.json";
 import soldierDetails from "./mocks/class-soldier.json";
+import worlds from "./mocks/worlds.json";
 
 import "@testing-library/jest-dom/vitest";
 
@@ -47,8 +49,10 @@ beforeAll(async () => {
   addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/soldier/details", soldierDetails);
   addFetchMock("/api/classes/mystic/details", mysticDetails);
-  addFetchMock("/api/themes/scholar", scholarDetails);
+  addFetchMock("/api/deities", deities);
   addFetchMock("/api/equipment/weapons/fusions", fusionsDetails);
+  addFetchMock("/api/themes/scholar", scholarDetails);
+  addFetchMock("/api/worlds", worlds);
 
   for (const armorType in ArmorTypeIds) {
     addFetchMock(

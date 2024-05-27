@@ -1,0 +1,20 @@
+[
+    {
+        "id": "0dd2b259-c877-4a59-bccb-879ee6d2a0b4",
+        "name": "Le Soleil",
+        "location": "pact",
+        "reference": {
+            "book": "base",
+            "page": 434
+        }
+    },
+    {
+        "id": "4b161cd6-4da9-4437-8e65-8906c56cbe53",
+        "name": "Aballon",
+        "location": "pact",
+        "reference": {
+            "book": "base",
+            "page": 436
+        }
+    }
+]

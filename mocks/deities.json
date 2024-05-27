@@ -1,0 +1,22 @@
+[
+  {
+    "id": "hylax",
+    "name": "Hylax",
+    "alignment": "lg",
+    "portfolios": "diplomatie, premier contact, amitié, paix",
+    "reference": {
+      "book": "base",
+      "page": 486
+    }
+  },
+  {
+    "id": "iomedae",
+    "name": "Iomédae",
+    "alignment": "lg",
+    "portfolios": "honneur au combat, humanité, justice, bravoure",
+    "reference": {
+      "book": "base",
+      "page": 487
+    }
+  }
+]
