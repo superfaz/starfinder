@@ -8,7 +8,7 @@ import Stack from "react-bootstrap/Stack";
 import { computeSteps, mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
 import Typeahead from "app/components/Typeahead";
-import { Deity, World } from "model";
+import { Deity, INamedModel, World } from "model";
 import { Alert } from "react-bootstrap";
 
 function useWorlds() {
@@ -33,6 +33,17 @@ function useDeities() {
   return deities;
 }
 
+function useLanguages() {
+  const [data, setData] = useState<INamedModel[]>([]);
+  useEffect(() => {
+    fetch("/api/languages")
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, []);
+
+  return data;
+}
+
 function DeityLine({ deity }: Readonly<{ deity: Deity }>) {
   const alignments = useAppSelector((state) => state.data.alignments);
   return (
@@ -49,11 +60,13 @@ export function Profile() {
   const alignments = useAppSelector((state) => state.data.alignments);
   const worlds = useWorlds();
   const deities = useDeities();
+  const languages = useLanguages();
 
-  if (worlds.length === 0 || deities.length === 0) {
+  if (worlds.length === 0 || deities.length === 0 || languages.length === 0) {
     return null;
   }
 
+  const selectedHomeWorld = worlds.find((world) => world.name === presenter.getHomeWorld());
   const selectedDeity = deities.find((deity) => deity.name === presenter.getDeity());
   const steps = computeSteps(
     alignments.find((a) => a.id === presenter.getAlignment()),
@@ -125,6 +138,12 @@ export function Profile() {
         onChange={handleHomeWorldChange}
         options={worlds}
       />
+
+      {selectedHomeWorld?.language && (
+        <div className="text-muted">
+          <div>Langue standard : {languages.find((a) => a.id === selectedHomeWorld.language)?.name}</div>
+        </div>
+      )}
 
       <Typeahead
         controlId="deity"
