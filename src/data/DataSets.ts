@@ -65,6 +65,8 @@ import {
   World,
   DeitySchema,
   Deity,
+  INamedModelSchema,
+  INamedModel,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -159,6 +161,7 @@ export const DataSets = {
     schema: EquipmentWeaponFusionSchema,
   } as IDescriptor<EquipmentWeaponFusion>,
   Feat: { type: "named", name: "feats", schema: FeatTemplateSchema } as IDescriptor<FeatTemplate>,
+  Languages: { type: "simple", name: "languages", schema: INamedModelSchema } as IDescriptor<INamedModel>,
   Profession: { type: "named", name: "professions", schema: ProfessionSchema } as IDescriptor<Profession>,
   Races: { type: "named", name: "races", schema: RaceSchema } as IDescriptor<Race>,
   Spells: { type: "named", name: "spells", schema: SpellSchema } as IDescriptor<Spell>,

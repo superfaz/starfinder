@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
-import { DescriptionSchema, ReferenceSchema } from "./helper";
+import { DescriptionSchema, IdSchema, ReferenceSchema } from "./helper";
 import { INamedModelSchema } from "./INamedModel";
 import { HitPointsModifierSchema, SizeModifierSchema } from "./Modifier";
 import { VariantSchema } from "./Variant";
@@ -15,6 +15,7 @@ export const RaceSchema = INamedModelSchema.extend({
   modifiers: z.array(RaceModifierSchema),
   variants: z.array(VariantSchema),
   names: z.array(z.string()),
+  language: z.optional(IdSchema),
   traits: z.array(FeatureTemplateSchema),
   secondaryTraits: z.array(FeatureTemplateSchema),
 });
