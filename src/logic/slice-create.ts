@@ -151,6 +151,18 @@ const mainSlice = createSlice({
       state.character.homeWorldLanguage = action.payload;
     },
 
+    addLanguage(state, action: PayloadAction<string>) {
+      state.character.languages.push(action.payload);
+    },
+
+    updateLanguage(state, action: PayloadAction<{ index: number; language: string }>) {
+      state.character.languages[action.payload.index] = action.payload.language;
+    },
+
+    removeLanguage(state, action: PayloadAction<number>) {
+      state.character.languages.splice(action.payload, 1);
+    },
+
     updateDeity(state, action: PayloadAction<string>) {
       state.character.deity = action.payload;
     },

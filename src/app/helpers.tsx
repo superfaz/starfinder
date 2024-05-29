@@ -1,4 +1,4 @@
-import { IModel } from "model";
+import { IModel, INamedModel } from "model";
 
 export function findOrError<T extends IModel>(
   array: T[],
@@ -36,4 +36,19 @@ export function groupBy<T, K extends string | number | symbol>(arr: T[], key: (i
     },
     {} as Record<K, T[]>
   );
+}
+
+/**
+ * Retrieves the name of the item in a data list or send the name back if it's not found.
+ * @param data - The list of items
+ * @param idOrName - The id of an item or the name to return back
+ * @returns The name o the item if found, otherwise the idOrName
+ */
+export function idOrName<T extends INamedModel>(data: T[], idOrName: string | undefined): string | undefined {
+  if (idOrName === undefined) {
+    return undefined;
+  }
+
+  const name = data.find((l) => l.id === idOrName)?.name;
+  return name ?? idOrName;
 }

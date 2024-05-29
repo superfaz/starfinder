@@ -775,6 +775,20 @@ export class CharacterPresenter {
     return this.character.homeWorldLanguage;
   }
 
+  getExtraLanguagesCount(): number {
+    const modifier = this.getModifiers()
+      .filter(ofType(ModifierTypes.languageCount))
+      .reduce((acc, m) => acc + m.value, 0);
+    const intBonus = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.int]);
+    const cultRanks = this.character.skillRanks.cult ?? 0;
+
+    return modifier + Math.max(0, intBonus) + cultRanks;
+  }
+
+  getLanguages(): string[] {
+    return this.character.languages;
+  }
+
   getDeity(): string {
     return this.character.deity;
   }
