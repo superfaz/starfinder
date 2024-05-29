@@ -1,5 +1,5 @@
 import { INamedModel } from "model";
-import { ReactNode, useMemo } from "react";
+import { CSSProperties, ReactNode, useMemo } from "react";
 import { Button, Dropdown, Form } from "react-bootstrap";
 
 function defaultFilter<T extends INamedModel>(options: T[], value: string): T[] {
@@ -15,15 +15,16 @@ export default function Typeahead<T extends INamedModel>(
     options?: T[];
     filter?: (options: T[], value: string) => T[];
     renderItem?: (item: T) => ReactNode;
+    style?: CSSProperties;
   }>
 ): ReactNode {
   const filter = props.filter ?? defaultFilter;
   const options = useMemo(() => {
-    return filter(props.options ?? [], props.value);
+    return filter(props.options ?? [], props.value ?? "");
   }, [filter, props.value, props.options]);
 
   return (
-    <Dropdown as={Form.FloatingLabel} controlId={props.controlId} label={props.label}>
+    <Dropdown as={Form.FloatingLabel} controlId={props.controlId} label={props.label} style={props.style}>
       <Dropdown.Toggle
         as={Form.Control}
         id={undefined}
