@@ -77,7 +77,7 @@ describe("/create/skills", () => {
     expect(control).toBeDisabled();
   });
 
-  test.fails("manages multiples bonuses with the same category", async () => {
+  test("manages multiples bonuses with the same category", async () => {
     // Acrobaties is expected to be at +8:
     //   Dexterity: 12    --> +1
     //   Skill focus:     --> +3 insight

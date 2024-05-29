@@ -330,7 +330,7 @@
         "type": "skill",
         "target": "<target>",
         "value": 3,
-        "category": "untyped"
+        "category": "insight"
       }
     ]
   },

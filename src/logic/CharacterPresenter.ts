@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import { findOrError } from "app/helpers";
+import { findOrError, groupBy } from "app/helpers";
 import { IClientDataSet } from "data";
 import type {
   AbilityScoreId,
@@ -555,11 +555,17 @@ export class CharacterPresenter {
       const bonusDoubleClassSkill: number = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
       const abilityScoreModifier: number = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
       const abilityCode = findOrError(this.data.abilityScores, s.abilityScore).code;
+      const targetedModifiers = groupBy(
+        skillModifiers.filter((m) => m.target === s.id || m.target === "all"),
+        (m) => m.category
+      );
 
-      // TODO: Add bonus from modifiers
-      const bonusFromSkillModifiers = skillModifiers
-        .filter((m) => m.target === s.id || m.target === "all")
-        .reduce((acc, m) => acc + m.value, 0);
+      const { untyped, malus, ...categorized } = targetedModifiers;
+      let bonusFromSkillModifiers = untyped?.reduce((acc, m) => acc + m.value, 0) ?? 0;
+      bonusFromSkillModifiers += malus?.reduce((acc, m) => acc + m.value, 0) ?? 0;
+      for (const modifiers of Object.values(categorized)) {
+        bonusFromSkillModifiers += modifiers.reduce((acc, m) => Math.max(acc, m.value), 0);
+      }
 
       function computeSkillBonus() {
         const base = ranks + abilityScoreModifier + bonusFromSkillModifiers + bonusDoubleClassSkill;
