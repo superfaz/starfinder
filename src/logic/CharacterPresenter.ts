@@ -771,6 +771,10 @@ export class CharacterPresenter {
     return this.character.homeWorld;
   }
 
+  getHomeWorldLanguage(): string {
+    return this.character.homeWorldLanguage;
+  }
+
   getDeity(): string {
     return this.character.deity;
   }

@@ -142,8 +142,13 @@ const mainSlice = createSlice({
       state.character.sex = action.payload;
     },
 
-    updateHomeWorld(state, action: PayloadAction<string>) {
-      state.character.homeWorld = action.payload;
+    updateHomeWorld(state, action: PayloadAction<{ world: string; language: string }>) {
+      state.character.homeWorld = action.payload.world;
+      state.character.homeWorldLanguage = action.payload.language;
+    },
+
+    updateHomeWorldLanguage(state, action: PayloadAction<string>) {
+      state.character.homeWorldLanguage = action.payload;
     },
 
     updateDeity(state, action: PayloadAction<string>) {

@@ -73,6 +73,11 @@ export function Profile() {
     alignments.find((a) => a.id === selectedDeity?.alignment)
   );
 
+  function languageForWorld(world: string): string {
+    const selectedWorld = worlds.find((w) => w.name === world);
+    return selectedWorld?.language ?? "";
+  }
+
   function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
     dispatch(mutators.updateName(e.target.value));
   }
@@ -96,8 +101,8 @@ export function Profile() {
     dispatch(mutators.updateSex(e.target.value));
   }
 
-  function handleHomeWorldChange(e: string): void {
-    dispatch(mutators.updateHomeWorld(e));
+  function handleHomeWorldChange(world: string, language: string): void {
+    dispatch(mutators.updateHomeWorld({ world, language }));
   }
 
   function handleDeityChange(e: string): void {
@@ -135,7 +140,7 @@ export function Profile() {
         controlId="homeWorld"
         label="Monde natal"
         value={presenter.getHomeWorld()}
-        onChange={handleHomeWorldChange}
+        onChange={(w) => handleHomeWorldChange(w, languageForWorld(w))}
         options={worlds}
       />
 
