@@ -99,7 +99,7 @@ export default function Languages() {
   }
 
   return (
-    <Stack direction="vertical" gap={2} className="mt-3">
+    <Stack direction="vertical" gap={2} className="mt-3" data-testid="languages">
       <h2>Langues</h2>
       <Language controlId="languageCommon" languages={languages} label="Langue principale" value="Commun" disabled />
       {raceLanguage && (

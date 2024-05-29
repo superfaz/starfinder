@@ -23,7 +23,7 @@ export function SkillsModifiers() {
     ...presenter.getFeats().filter((f) => f.modifiers.some((m) => types.includes(m.type))),
   ];
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} data-testid="modifiers">
       <h2>Modificateurs</h2>
       {features.map((feature) => (
         <Card key={hasTarget(feature) ? feature.id + "-" + feature.target : feature.id}>

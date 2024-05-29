@@ -1,8 +1,9 @@
 import { describe, beforeAll, test, expect, beforeEach } from "vitest";
-import { cleanup, screen, within } from "@testing-library/react";
+import { cleanup, screen, waitFor, within } from "@testing-library/react";
 import Page from "./page";
 import referential from "./page.test.json";
 import { createCharacter, renderWithData } from "../helpers-test";
+import userEvent from "@testing-library/user-event";
 
 describe("/create/skills", () => {
   beforeAll(async () => {
@@ -21,25 +22,20 @@ describe("/create/skills", () => {
   });
 
   test("displays calculated minimal ability scores", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.getByRole("spinbutton", { name: "Force" })).toHaveProperty("value", "10");
-    expect(content.getByRole("spinbutton", { name: "Dextérité +2" })).toHaveProperty("value", "12");
-    expect(content.getByRole("spinbutton", { name: "Constitution +1" })).toHaveProperty("value", "11");
-    expect(content.getByRole("spinbutton", { name: "Intelligence +2" })).toHaveProperty("value", "12");
-    expect(content.getByRole("spinbutton", { name: "Sagesse" })).toHaveProperty("value", "10");
-    expect(content.getByRole("spinbutton", { name: "Charisme -2" })).toHaveProperty("value", "8");
+    const view = within(screen.getByTestId("ability-scores"));
+    expect(view.getByRole("spinbutton", { name: "Force" })).toHaveProperty("value", "10");
+    expect(view.getByRole("spinbutton", { name: "Dextérité +2" })).toHaveProperty("value", "12");
+    expect(view.getByRole("spinbutton", { name: "Constitution +1" })).toHaveProperty("value", "11");
+    expect(view.getByRole("spinbutton", { name: "Intelligence +2" })).toHaveProperty("value", "12");
+    expect(view.getByRole("spinbutton", { name: "Sagesse" })).toHaveProperty("value", "10");
+    expect(view.getByRole("spinbutton", { name: "Charisme -2" })).toHaveProperty("value", "8");
   });
 
   test("displays modifiers", async () => {
-    const content = within(document.querySelector("#content") as HTMLElement);
-    expect(content.getByRole("heading", { name: "Modificateurs", level: 2 })).not.toBeNull();
-    const section = content.getByRole("heading", { name: "Modificateurs", level: 2 }).parentElement;
-    if (section !== null) {
-      expect(within(section).getByText("Emotions contrôlées"), "Can't display modifiers from race").toBeVisible();
-      expect(within(section).getByText("Skill Focus - Acrobaties"), "Can't display modifiers from feats").toBeVisible();
-    } else {
-      expect(true).toBeFalsy();
-    }
+    const view = within(screen.getByTestId("modifiers"));
+    expect(view.getByRole("heading", { name: "Modificateurs", level: 2 })).not.toBeNull();
+    expect(view.getByText("Emotions contrôlées"), "Can't display modifiers from race").toBeVisible();
+    expect(view.getByText("Skill Focus - Acrobaties"), "Can't display modifiers from feats").toBeVisible();
   });
 
   test("adds +1 when the theme skill is already a class skill", async () => {
@@ -79,6 +75,28 @@ describe("/create/skills", () => {
     expect(control).not.toBeNull();
     expect(control).toBeChecked();
     expect(control).toBeDisabled();
+  });
+
+  test.fails("manages multiples bonuses with the same category", async () => {
+    // Acrobaties is expected to be at +8:
+    //   Dexterity: 12    --> +1
+    //   Skill focus:     --> +3 insight
+    //   Class: Operative --> +1 insight (all)
+    //   Class: Operative --> +4 automatic rank
+    const content = within(document.querySelector("#content") as HTMLElement);
+    const view = within(content.getByTestId("acro"));
+    expect(view.getByText("+8")).not.toBeNull();
+  });
+
+  test("displays additional languages", async () => {
+    await waitFor(() => screen.getByTestId("languages"));
+    const view = within(screen.getByTestId("languages"));
+    expect(view.getByRole("spinbutton")).toHaveValue(1);
+
+    const user = userEvent.setup();
+    await user.click(view.getByRole("button", { name: /ajouter/i }));
+
+    expect(view.getByText("Langue additionnelle")).not.toBeNull();
   });
 });
 

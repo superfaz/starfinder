@@ -32,7 +32,7 @@ export function AbilityScores() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} data-testid="ability-scores">
       <h2>Caractéristiques</h2>
       <Form.FloatingLabel controlId="abilityScoresMethod" label="Méthode de génération">
         <Form.Select>
