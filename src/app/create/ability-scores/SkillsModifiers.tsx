@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
-import { hasTarget } from "model";
+import { ModifierTypes, hasTarget } from "model";
 import { type Feature, isFeat, Feat } from "view";
 import { useCharacterPresenter } from "../helpers";
 import ModifierComponent from "../ModifierComponent";
@@ -13,7 +13,7 @@ const categories: Record<string, string> = {
   su: "SUR",
 };
 
-const types = ["skill", "classSkill", "rankSkill"];
+const types: string[] = [ModifierTypes.skill, ModifierTypes.classSkill, ModifierTypes.rankSkill];
 
 export function FeatureDisplay({
   presenter,
