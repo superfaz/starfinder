@@ -15,7 +15,8 @@
           {
             "id": "d3da2cb0-3475-4ef1-8c43-83a438cfd669",
             "type": "classSkill",
-            "target": "surv"
+            "target": "surv",
+            "doubleEffect": "none"
           },
           {
             "id": "74329167-bfbf-4f52-bb52-82cb0046302e",
@@ -109,7 +110,8 @@
           {
             "id": "aafb7874-5436-4bd4-b69d-6fdd0b61cf8f",
             "type": "classSkill",
-            "target": "<scholarSkill>"
+            "target": "<scholarSkill>",
+            "doubleEffect": "none"
           },
           {
             "id": "d98484ba-0d4a-4f73-af84-c4d14ede8e58",
@@ -178,7 +180,8 @@
           {
             "id": "8c7bdc0c-4e1d-4ca5-b378-c0d3ced44766",
             "type": "classSkill",
-            "target": "any"
+            "target": "any",
+            "doubleEffect": "none"
           }
         ]
       },

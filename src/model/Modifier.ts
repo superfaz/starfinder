@@ -98,6 +98,7 @@ export const ClassSkillModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.classSkill),
   level: z.number().optional(),
   target: z.string(),
+  doubleEffect: z.enum(["none", "rank", "bonus"]),
 }).strict();
 
 export const EquipmentModifierSchema = IModelSchema.extend({
