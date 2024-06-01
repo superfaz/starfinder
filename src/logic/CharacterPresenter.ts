@@ -228,6 +228,10 @@ export class CharacterPresenter {
     return this.character.raceOptions?.humanBonus ?? null;
   }
 
+  getShirrenObsessionSkill(): string | null {
+    return this.character.raceOptions?.shirrenObsessionSkill ?? null;
+  }
+
   getPrimaryRaceTraits(): RaceFeature[] {
     const race = this.getRace();
     if (!race) {

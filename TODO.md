@@ -14,8 +14,6 @@ Race : Androide / Traits secondaires : Polyglote / Gestion des langues suppléme
 
 Race : Lashuntas / Traits : Etudiant / Choix des compétences
 
-Race : Shirrens / Traits secondaires : Obsession individuelle / Choix de la compétence
-
 Thème / Ajouter les thèmes du guide des options
 
 Thème : Icône / Sélection de la compétence de Profession

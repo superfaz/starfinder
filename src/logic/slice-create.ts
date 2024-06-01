@@ -46,6 +46,10 @@ const mainSlice = createSlice({
       state.character = updateHumanBonusImpl(state.data, state.character, action.payload);
     },
 
+    updateShirrenObsessionSkill(state, action: PayloadAction<string>) {
+      state.character = updateShirrenObsessionSkillImpl(state.data, state.character, action.payload);
+    },
+
     enableSecondaryTrait(state, action: PayloadAction<RaceFeature>) {
       state.character = enableSecondaryTraitImpl(state.character, action.payload);
     },
@@ -416,6 +420,25 @@ function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilit
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
   return result;
+}
+
+/**
+ * Updates the skill selected for the "shirren obsession" race trait for a shirren character.
+ *
+ * @param data - the data set
+ * @param character - the character to update
+ * @param shirrenObsessionSkill - the identifier of the selected skill
+ * @returns The updated character
+ */
+function updateShirrenObsessionSkillImpl(
+  data: IClientDataSet,
+  character: Character,
+  shirrenObsessionSkill: string
+): Character {
+  return {
+    ...character,
+    raceOptions: { shirrenObsessionSkill },
+  };
 }
 
 type SubsetRaceFeature = {
