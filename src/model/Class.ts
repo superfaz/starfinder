@@ -4,6 +4,9 @@ import { DescriptionSchema, ReferenceSchema, VariableSchema } from "./helper";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ArmorTypeIdSchema } from "./ArmorType";
 import { WeaponTypeIdSchema } from "./WeaponType";
+import { ClassSkillModifierSchema } from "./Modifier";
+
+const ClassModifierSchema = z.discriminatedUnion("type", [ClassSkillModifierSchema]);
 
 export const ClassSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
@@ -14,7 +17,7 @@ export const ClassSchema = INamedModelSchema.extend({
   secondaryAbilityScores: z.array(AbilityScoreIdSchema),
   spellCaster: z.boolean().default(false),
   skillRank: z.number(),
-  classSkills: z.array(z.string()),
+  modifiers: z.array(ClassModifierSchema),
   armors: z.array(ArmorTypeIdSchema),
   weapons: z.array(WeaponTypeIdSchema),
   baseAttack: z.enum(["low", "high"]),
