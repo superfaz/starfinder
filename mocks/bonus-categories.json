@@ -1,0 +1,52 @@
+[
+    {
+        "id": "untyped",
+        "name": "sans catégorie",
+        "stack": true
+    },
+    {
+        "id": "malus",
+        "name": "malus",
+        "stack": true
+    },
+    {
+        "id": "racial",
+        "name": "racial",
+        "stack": false
+    },
+    {
+        "id": "insight",
+        "name": "intuition",
+        "stack": false
+    },
+    {
+        "id": "luck",
+        "name": "chance",
+        "stack": false
+    },
+    {
+        "id": "enhancement",
+        "name": "altération",
+        "stack": false
+    },
+    {
+        "id": "ability",
+        "name": "caractéristique",
+        "stack": true
+    },
+    {
+        "id": "moral",
+        "name": "moral",
+        "stack": false
+    },
+    {
+        "id": "divine",
+        "name": "divin",
+        "stack": false
+    },
+    {
+        "id": "circumstance",
+        "name": "circonstances",
+        "stack": true
+    }
+]
