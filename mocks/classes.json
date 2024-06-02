@@ -9,23 +9,87 @@
     "primaryAbilityScore": "dex",
     "secondaryAbilityScores": ["int", "cha"],
     "skillRank": 8,
-    "classSkills": [
-      "acro",
-      "athl",
-      "bluf",
-      "cult",
-      "disg",
-      "stea",
-      "slei",
-      "comp",
-      "engi",
-      "inti",
-      "medi",
-      "pers",
-      "pilo",
-      "prof",
-      "sens",
-      "surv"
+    "modifiers": [
+      {
+        "id": "2a30d8da-a007-4208-bc10-2bec1b570469",
+        "type": "classSkill",
+        "target": "acro"
+      },
+      {
+        "id": "e6092b76-3393-4086-8d90-4f96ad201946",
+        "type": "classSkill",
+        "target": "athl"
+      },
+      {
+        "id": "9133d018-746d-4fe4-b7c5-95477f9c9a9c",
+        "type": "classSkill",
+        "target": "bluf"
+      },
+      {
+        "id": "ec124d95-47bc-42c9-b198-ea644e5dc50a",
+        "type": "classSkill",
+        "target": "cult"
+      },
+      {
+        "id": "4fa4ce49-6e10-4b74-8925-72d91befc320",
+        "type": "classSkill",
+        "target": "disg"
+      },
+      {
+        "id": "7c08a7c7-9d3e-44a9-8e22-22299f45184f",
+        "type": "classSkill",
+        "target": "stea"
+      },
+      {
+        "id": "c9e19282-73de-41f4-a0eb-b5a644b4dd70",
+        "type": "classSkill",
+        "target": "slei"
+      },
+      {
+        "id": "e2f62da7-80a0-4097-94db-affac74bed8e",
+        "type": "classSkill",
+        "target": "comp"
+      },
+      {
+        "id": "8d04b432-cea3-4a5b-bf31-18f6300b6135",
+        "type": "classSkill",
+        "target": "engi"
+      },
+      {
+        "id": "8fb8c284-cf83-4456-9982-37fe36775433",
+        "type": "classSkill",
+        "target": "inti"
+      },
+      {
+        "id": "519b9e65-b838-450a-921d-4586667cd3bf",
+        "type": "classSkill",
+        "target": "medi"
+      },
+      {
+        "id": "31107c21-2d11-4008-852f-e557db78aa81",
+        "type": "classSkill",
+        "target": "pers"
+      },
+      {
+        "id": "d0ec14be-6fcc-4e08-999f-9c3a94b0b678",
+        "type": "classSkill",
+        "target": "pilo"
+      },
+      {
+        "id": "03a792c3-8bc0-41fe-9cef-17f32b320718",
+        "type": "classSkill",
+        "target": "prof"
+      },
+      {
+        "id": "4acd1b4e-5b0c-4b7b-b630-dc4e7910c609",
+        "type": "classSkill",
+        "target": "sens"
+      },
+      {
+        "id": "60dc6577-aa74-412b-bd1a-3d423b327e74",
+        "type": "classSkill",
+        "target": "surv"
+      }
     ],
     "armors": ["light"],
     "weapons": ["basic", "small", "sniper"],
@@ -46,7 +110,48 @@
     "primaryAbilityScore": "<soldierAbilityScore>",
     "secondaryAbilityScores": ["con"],
     "skillRank": 4,
-    "classSkills": ["acro", "athl", "engi", "inti", "medi", "pilo", "prof", "surv"],
+    "modifiers": [
+      {
+        "id": "aef0864b-688d-4eaa-9af5-b00c1f337929",
+        "type": "classSkill",
+        "target": "acro"
+      },
+      {
+        "id": "99181b69-a797-4493-816d-495a2f3d3d5e",
+        "type": "classSkill",
+        "target": "athl"
+      },
+      {
+        "id": "3159fd9c-4710-41e1-a969-6c8957abaac3",
+        "type": "classSkill",
+        "target": "engi"
+      },
+      {
+        "id": "7e318df5-b856-4e6a-97ee-1ad4f2e53947",
+        "type": "classSkill",
+        "target": "inti"
+      },
+      {
+        "id": "7243522a-dd14-4303-b2fb-b390702f4a2b",
+        "type": "classSkill",
+        "target": "medi"
+      },
+      {
+        "id": "45404399-1f1b-463d-89ed-292012b0e914",
+        "type": "classSkill",
+        "target": "pilo"
+      },
+      {
+        "id": "0a82da31-341e-423f-a270-db1ff45ee75a",
+        "type": "classSkill",
+        "target": "prof"
+      },
+      {
+        "id": "c7bbf2a6-5cdf-4152-a846-cc4e16ad0201",
+        "type": "classSkill",
+        "target": "surv"
+      }
+    ],
     "armors": ["light", "heavy"],
     "weapons": ["basic", "advanced", "small", "long", "heavy", "sniper", "grenade"],
     "baseAttack": "high",
@@ -66,8 +171,49 @@
     "primaryAbilityScore": "wis",
     "secondaryAbilityScores": ["int"],
     "skillRank": 4,
+    "modifiers": [
+      {
+        "id": "a97bd72b-fe58-43e0-9ad6-c8a65671b0ed",
+        "type": "classSkill",
+        "target": "acro"
+      },
+      {
+        "id": "b8821917-a8cd-492e-8495-9bbb7cdb2957",
+        "type": "classSkill",
+        "target": "athl"
+      },
+      {
+        "id": "19812c83-19c8-49d8-9943-0bd704ceff0d",
+        "type": "classSkill",
+        "target": "engi"
+      },
+      {
+        "id": "8365351b-7ab2-4c2b-9aa7-9f9d0e816331",
+        "type": "classSkill",
+        "target": "inti"
+      },
+      {
+        "id": "416e008c-025a-4cbc-9b82-b63dc4b59f63",
+        "type": "classSkill",
+        "target": "medi"
+      },
+      {
+        "id": "c0d944be-42c4-40fc-94d4-804887ef9a77",
+        "type": "classSkill",
+        "target": "pilo"
+      },
+      {
+        "id": "29b4a32b-d198-4534-b2b2-7346b39d72ab",
+        "type": "classSkill",
+        "target": "prof"
+      },
+      {
+        "id": "87bfce2e-c267-4f64-8423-2d88f54e7196",
+        "type": "classSkill",
+        "target": "surv"
+      }
+    ],
     "spellCaster": true,
-    "classSkills": ["acro", "athl", "engi", "inti", "medi", "pilo", "prof", "surv"],
     "armors": ["light", "heavy"],
     "weapons": ["basic", "small"],
     "baseAttack": "high",

@@ -494,16 +494,18 @@ export class CharacterPresenter {
   getInheritedModifiers(): Modifier[] {
     const raceModifiers = this.getRace()?.modifiers ?? [];
     const selectedRaceTraits = this.getSelectedRaceTraits();
+    const classModifiers = this.getClass()?.modifiers ?? [];
     const themeFeatures = this.getThemeFeatures();
     const classFeatures = this.getClassFeatures();
     const characterFeatures = [...selectedRaceTraits, ...themeFeatures, ...classFeatures];
 
     return characterFeatures
-      .filter((f) => f.level <= this.character.level)
+      .filter((f) => f.level <= this.getLevel())
       .map((t) => t.modifiers)
       .flat()
       .concat(raceModifiers)
-      .filter((t) => t && (t.level === undefined || t.level <= this.character.level));
+      .concat(classModifiers)
+      .filter((t) => t && (t.level === undefined || t.level <= this.getLevel()));
   }
 
   /**
@@ -531,9 +533,7 @@ export class CharacterPresenter {
 
     if (!this.cachedClassSkills) {
       const modifiers = this.getModifiers();
-
-      const classSkillsFromModifiers = modifiers.filter(ofType(ModifierTypes.classSkill)).map((m) => m.target);
-      this.cachedClassSkills = [...classSkillsFromModifiers, ...selectedClass.classSkills];
+      this.cachedClassSkills = modifiers.filter(ofType(ModifierTypes.classSkill)).map((m) => m.target);
     }
 
     return this.cachedClassSkills;

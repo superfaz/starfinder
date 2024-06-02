@@ -115,6 +115,24 @@ export class SkillPresenterBuilder {
     }
   }
 
+  private addMultipleClassSkillBonus(presenter: SkillPresenter) {
+    const classSkillModifiers = this.parent
+      .getModifiers()
+      .filter(ofType(ModifierTypes.classSkill))
+      .filter((m) => m.target === presenter.id || m.target === "all");
+    if (classSkillModifiers.length > 1) {
+      const bonus = classSkillModifiers.filter((m) => m.doubleEffect === "bonus").length;
+      if (bonus > 0) {
+        presenter.modifiers.push({
+          source: "double effect",
+          category: BonusCategoryIds.untyped,
+          value: bonus,
+          applied: false,
+        });
+      }
+    }
+  }
+
   private addAppliedStatus(presenter: SkillPresenter) {
     for (const category of this.data.bonusCategories) {
       const categoryResults = presenter.modifiers.filter((r) => r.category === category.id);
@@ -136,6 +154,7 @@ export class SkillPresenterBuilder {
     this.addAbilityBonus(presenter);
     this.addRankBonus(presenter);
     this.addSkillModifierBonus(presenter);
+    this.addMultipleClassSkillBonus(presenter);
     if (!presenter.definition.trainedOnly || presenter.ranks > 0) {
       this.addAppliedStatus(presenter);
     }
