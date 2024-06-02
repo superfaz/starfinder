@@ -12,6 +12,7 @@ dump/
 
 # Sentry Config File
 .sentryclirc
+.env.sentry-build-plugin
 
 # Vercel
 .vercel
