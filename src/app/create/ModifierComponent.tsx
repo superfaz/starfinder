@@ -14,6 +14,7 @@ import {
   FeatModifier,
   EquipmentModifier,
   Modifier,
+  hasCategory,
 } from "model";
 import { DisplayDamageLong, DisplaySpecials } from "./equipment/Components";
 
@@ -21,6 +22,7 @@ interface ModifierComponentElement {
   level?: number;
   name?: string;
   description?: string;
+  category?: string;
   value?: number;
   targetName?: string;
   extra?: string;
@@ -143,6 +145,7 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
     level: modifier.level && modifier.level > 1 ? modifier.level : undefined,
     name: hasName(modifier) ? modifier.name : undefined,
     description: hasDescription(modifier) ? modifier.description : undefined,
+    category: hasCategory(modifier) ? findOrError(data.bonusCategories, modifier.category).name : undefined,
     value: hasValue(modifier) ? modifier.value : undefined,
     extra: hasExtra(modifier) ? modifier.extra : undefined,
   };
@@ -189,6 +192,7 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       {element.name && <strong className="me-2">{element.name}.</strong>}
       {element.targetName && <strong className="me-2">{element.targetName}</strong>}
       {element.value && <strong className="me-2">{displayBonus(element.value)}</strong>}
+      {element.category && <span className="me-2 text-muted">({element.category})</span>}
       <br />
       {element.description && <span className="me-2 text-muted">{element.description}</span>}
       {element.extra && <span className="me-2 text-muted">{element.extra}</span>}

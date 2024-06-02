@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { BonusCategoryId } from "./BonusCategory";
 
 export const IdSchema = z.union([z.string().regex(/^([a-z]|[a-z][a-z0-9-]*[a-z0-9])$/), z.string().uuid()]);
 
@@ -48,6 +49,14 @@ export interface WithDescription {
 
 export function hasDescription(obj: object): obj is WithDescription {
   return Object.prototype.hasOwnProperty.call(obj, "description");
+}
+
+export interface WithCategory {
+  category: BonusCategoryId;
+}
+
+export function hasCategory(obj: object): obj is WithCategory {
+  return Object.prototype.hasOwnProperty.call(obj, "category");
 }
 
 export type WithExtra<T> = Extract<T, { extra?: string }>;

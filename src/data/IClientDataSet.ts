@@ -3,6 +3,7 @@ import type {
   Alignment,
   ArmorType,
   Avatar,
+  BonusCategory,
   Book,
   Class,
   CriticalHitEffect,
@@ -28,6 +29,7 @@ export interface IClientDataSet {
   alignments: Alignment[];
   armorTypes: ArmorType[];
   avatars: Avatar[];
+  bonusCategories: BonusCategory[];
   books: Book[];
   classes: Class[];
   criticalHitEffects: CriticalHitEffect[];
@@ -51,6 +53,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   alignments: [],
   armorTypes: [],
   avatars: [],
+  bonusCategories: [],
   books: [],
   classes: [],
   criticalHitEffects: [],
@@ -75,6 +78,7 @@ export async function convert(dataSource: IDataSource): Promise<IClientDataSet> 
     alignments: await dataSource.get(DataSets.Alignment).getAll(),
     armorTypes: await dataSource.get(DataSets.ArmorType).getAll(),
     avatars: await dataSource.get(DataSets.Avatar).getAll(),
+    bonusCategories: await dataSource.get(DataSets.BonusCategories).getAll(),
     books: await dataSource.get(DataSets.Book).getAll(),
     classes: await dataSource.get(DataSets.Class).getAll(),
     criticalHitEffects: await dataSource.get(DataSets.CriticalHitEffect).getAll(),

@@ -67,6 +67,8 @@ import {
   Deity,
   INamedModelSchema,
   INamedModel,
+  BonusCategorySchema,
+  BonusCategory,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -75,6 +77,11 @@ export const DataSets = {
   Alignment: { type: "ordered", name: "alignments", schema: AlignmentSchema } as IDescriptor<Alignment>,
   ArmorType: { type: "ordered", name: "armor-types", schema: ArmorTypeSchema } as IDescriptor<ArmorType>,
   Avatar: { type: "simple", name: "avatars", schema: AvatarSchema } as IDescriptor<Avatar>,
+  BonusCategories: {
+    type: "named",
+    name: "bonus-categories",
+    schema: BonusCategorySchema,
+  } as IDescriptor<BonusCategory>,
   Book: { type: "simple", name: "books", schema: BookSchema } as IDescriptor<Book>,
   Class: { type: "named", name: "classes", schema: ClassSchema } as IDescriptor<Class>,
   ClassDetails: { type: "simple", name: "classes-details", schema: IModelSchema } as IDescriptor<IModel>,
