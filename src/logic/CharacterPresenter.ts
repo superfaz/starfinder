@@ -1,8 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
-import { findOrError, groupBy } from "app/helpers";
+import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import type {
-  AbilityScoreId,
   ArmorTypeId,
   Avatar,
   Character,
@@ -24,7 +23,6 @@ import type {
   SavingThrow,
   SavingThrowId,
   Size,
-  SkillDefinition,
   Spell,
   Theme,
   Variant,
@@ -48,7 +46,7 @@ import {
   getSoldierFeatureTemplates,
   getTechnomancerFeatureTemplates,
 } from "./ClassPresenter";
-import { FeatPresenter, Templater, cleanEvolutions } from ".";
+import { FeatPresenter, SkillPresenter, SkillPresenterBuilder, Templater, cleanEvolutions } from ".";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -131,17 +129,6 @@ export function computeBaseAttackBonus(classLevel: number, curve: "high" | "low"
   }
 }
 
-export interface SkillPresenter {
-  id: string;
-  fullName: string;
-  abilityScore: AbilityScoreId;
-  definition: SkillDefinition;
-  ranks: number;
-  rankForced: boolean;
-  isClassSkill: boolean;
-  bonus: number | undefined;
-}
-
 export class CharacterPresenter {
   private data: IClientDataSet;
   private classesDetails: Record<string, IModel>;
@@ -164,6 +151,10 @@ export class CharacterPresenter {
     this.data = data;
     this.classesDetails = classesDetails;
     this.character = character;
+  }
+
+  getLevel(): number {
+    return this.character.level;
   }
 
   createTemplater(context: object = {}): Templater {
@@ -548,88 +539,25 @@ export class CharacterPresenter {
     return this.cachedClassSkills;
   }
 
-  private prepareSkillPresenters(skills: SkillPresenter[]): SkillPresenter[] {
-    const skillModifiers = this.getModifiers().filter(ofType(ModifierTypes.skill));
-    const rankModifiers = this.getModifiers().filter(ofType(ModifierTypes.rankSkill));
-
-    return skills.map((s) => {
-      const rankForced: boolean = rankModifiers.some((m) => m.target === s.id);
-      const ranks: number = (this.character.skillRanks[s.id] ?? 0) + (rankForced ? this.character.level : 0);
-      const isTrained: boolean = ranks > 0;
-      const bonusDoubleClassSkill: number = this.getClassSkills().filter((t) => t === s.id).length > 1 ? 1 : 0;
-      const abilityScoreModifier: number = computeAbilityScoreModifier(this.getAbilityScores()[s.abilityScore]);
-      const abilityCode = findOrError(this.data.abilityScores, s.abilityScore).code;
-      const targetedModifiers = groupBy(
-        skillModifiers.filter((m) => m.target === s.id || m.target === "all"),
-        (m) => m.category
-      );
-
-      const { untyped, malus, ...categorized } = targetedModifiers;
-      let bonusFromSkillModifiers = untyped?.reduce((acc, m) => acc + m.value, 0) ?? 0;
-      bonusFromSkillModifiers += malus?.reduce((acc, m) => acc + m.value, 0) ?? 0;
-      for (const modifiers of Object.values(categorized)) {
-        bonusFromSkillModifiers += modifiers.reduce((acc, m) => Math.max(acc, m.value), 0);
-      }
-
-      function computeSkillBonus() {
-        const base = ranks + abilityScoreModifier + bonusFromSkillModifiers + bonusDoubleClassSkill;
-        if (s.isClassSkill && isTrained) {
-          return base + 3;
-        } else if (!isTrained && s.definition.trainedOnly) {
-          return undefined;
-        } else {
-          return base;
-        }
-      }
-
-      s.fullName = `${s.fullName} (${abilityCode})`;
-      s.ranks = ranks;
-      s.rankForced = rankForced;
-      s.bonus = computeSkillBonus();
-
-      return s;
-    });
-  }
-
   getProfessionSkills(): SkillPresenter[] {
     const professionSkills = this.character.professionSkills;
-    const profession = findOrError(this.data.skills, "prof");
-
-    return this.prepareSkillPresenters(
-      professionSkills.map((p) => ({
-        id: p.id,
-        fullName: p.name,
-        definition: profession,
-        abilityScore: p.abilityScore,
-        ranks: 0,
-        isClassSkill: this.getClassSkills().includes(profession.id),
-        rankForced: false,
-        bonus: 0,
-      }))
-    );
+    const builder = new SkillPresenterBuilder(this, this.data);
+    return builder.buildProfessions(professionSkills);
   }
 
   getGenericSkills(): SkillPresenter[] {
-    return this.prepareSkillPresenters(
-      this.data.skills
-        .filter((s) => s.abilityScore !== undefined)
-        .map((s) => ({
-          id: s.id,
-          fullName: s.name,
-          definition: s,
-          abilityScore: s.abilityScore as AbilityScoreId,
-          ranks: 0,
-          isClassSkill: this.getClassSkills().includes(s.id),
-          rankForced: false,
-          bonus: 0,
-        }))
-    );
+    const builder = new SkillPresenterBuilder(this, this.data);
+    return builder.buildSkills(this.data.skills.filter((s) => s.abilityScore !== undefined));
   }
 
   getSkills(): SkillPresenter[] {
     return [...this.getGenericSkills(), ...this.getProfessionSkills()].sort((a, b) =>
       a.fullName.localeCompare(b.fullName, "fr")
     );
+  }
+
+  getSkillRanks(skillId: string): number {
+    return this.character.skillRanks[skillId] ?? 0;
   }
 
   getRemainingSkillRanksPoints(): number {

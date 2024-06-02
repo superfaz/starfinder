@@ -11,9 +11,12 @@ export const BonusCategoryIdSchema = z.enum([
   "moral",
   "divine",
   "circumstance",
+  "ability",
 ]);
 
 export type BonusCategoryId = z.infer<typeof BonusCategoryIdSchema>;
+
+export const BonusCategoryIds = BonusCategoryIdSchema.enum;
 
 export const BonusCategorySchema = INamedModelSchema.extend({
   id: BonusCategoryIdSchema,

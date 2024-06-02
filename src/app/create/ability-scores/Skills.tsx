@@ -1,15 +1,16 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
-import { displayBonus } from "app/helpers";
-import { SkillPresenter, mutators, useAppDispatch } from "logic";
+import { displayBonus, findOrError } from "app/helpers";
+import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
-import { Button } from "react-bootstrap";
 import { ProfessionSkills } from "./ProfessionSkills";
 
 type SkillProps = Readonly<{
@@ -20,58 +21,79 @@ type SkillProps = Readonly<{
 
 function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
   const dispatch = useAppDispatch();
+  const bonusCategories = useAppSelector((state) => state.data.bonusCategories);
+  const [isOpen, setIsOpen] = useState(false);
 
   function handleRemove(id: string): void {
     console.log("remove", id);
     dispatch(mutators.removeProfessionSkill(id));
   }
 
+  function toggleOpen(): void {
+    setIsOpen(!isOpen);
+  }
+
   return (
-    <Form.Group key={skill.id} as={Row} controlId={skill.id} data-testid={skill.id}>
-      <Form.Label column>
-        {skill.definition.id === "prof" && (
-          <Button variant="outline-secondary" size="sm" className="me-2" onClick={() => handleRemove(skill.id)}>
-            <i className="bi bi-x-lg"></i>
-          </Button>
-        )}
-        <span className="me-1">{skill.fullName}</span>
-        {skill.definition.trainedOnly && (
-          <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
-        )}
-        {skill.definition.armorCheckPenalty && (
-          <i className="bi bi-shield-shaded text-secondary me-1" title="Le malus d’armure aux tests s’applique"></i>
-        )}
-      </Form.Label>
-      <Col lg={2} className="pt-2 text-center">
-        {skill.isClassSkill && (
-          <Form.Check
-            type="checkbox"
-            id={skill.id + "-class"}
-            checked
-            disabled
-            aria-label={skill.fullName + " - Compétence de classe"}
-          />
-        )}
-      </Col>
-      <Col lg={2} className="pt-2 text-center">
-        {skill.rankForced && <Form.Check type="checkbox" id={skill.id} disabled={true} checked={true} />}
-        {!skill.rankForced && (
-          <Form.Check
-            type="checkbox"
-            id={skill.id}
-            disabled={skill.ranks === 0 && availableSkillRanks <= 0}
-            checked={skill.ranks > 0}
-            onChange={onCheck}
-          />
-        )}
-      </Col>
-      <Col lg={2} className="pt-2 text-center">
-        {skill.bonus !== undefined && (
-          <Badge bg={skill.bonus > 0 ? "primary" : "secondary"}>{displayBonus(skill.bonus)}</Badge>
-        )}
-        {skill.bonus === undefined && "-"}
-      </Col>
-    </Form.Group>
+    <>
+      <Form.Group as={Row} controlId={skill.id} data-testid={skill.id}>
+        <Form.Label column>
+          {skill.definition.id === "prof" && (
+            <Button variant="outline-secondary" size="sm" className="me-2" onClick={() => handleRemove(skill.id)}>
+              <i className="bi bi-x-lg"></i>
+            </Button>
+          )}
+          <span className="me-1">{skill.fullName}</span>
+          {skill.definition.trainedOnly && (
+            <i className="bi bi-mortarboard-fill text-secondary me-1" title="Formation nécessaire"></i>
+          )}
+          {skill.definition.armorCheckPenalty && (
+            <i className="bi bi-shield-shaded text-secondary me-1" title="Le malus d’armure aux tests s’applique"></i>
+          )}
+        </Form.Label>
+        <Col lg={2} className="pt-2 text-center">
+          {skill.isClassSkill && (
+            <Form.Check
+              type="checkbox"
+              id={skill.id + "-class"}
+              checked
+              disabled
+              aria-label={skill.fullName + " - Compétence de classe"}
+            />
+          )}
+        </Col>
+        <Col lg={2} className="pt-2 text-center">
+          {skill.rankForced && <Form.Check type="checkbox" id={skill.id} disabled={true} checked={true} />}
+          {!skill.rankForced && (
+            <Form.Check
+              type="checkbox"
+              id={skill.id}
+              disabled={skill.ranks === 0 && availableSkillRanks <= 0}
+              checked={skill.ranks > 0}
+              onChange={onCheck}
+            />
+          )}
+        </Col>
+        <Col lg={2} className="pt-2 text-center" onClick={toggleOpen}>
+          {skill.bonus !== undefined && (
+            <Badge bg={skill.bonus > 0 ? "primary" : "secondary"}>{displayBonus(skill.bonus)}</Badge>
+          )}
+          {skill.bonus === undefined && "-"}
+        </Col>
+      </Form.Group>
+      <Card hidden={!isOpen}>
+        <Card.Body>
+          {skill.modifiers.map((modifier, index) => (
+            <Row key={index} className={modifier.applied ? undefined : "text-decoration-line-through"}>
+              <Col className="text-end">{modifier.source}</Col>
+              <Col>
+                <Badge bg={modifier.value > 0 ? "primary" : "secondary"}>{displayBonus(modifier.value)}</Badge>
+                <span className="text-muted"> ({findOrError(bonusCategories, modifier.category).name})</span>
+              </Col>
+            </Row>
+          ))}
+        </Card.Body>
+      </Card>
+    </>
   );
 }
 
