@@ -1,12 +1,23 @@
 import { z } from "zod";
 import { INamedModelSchema } from "./INamedModel";
 
-export const BonusCategoryIdSchema = z.enum(["untyped", "malus", "racial", "insight", "luck", "enhancement"]);
+export const BonusCategoryIdSchema = z.enum([
+  "untyped",
+  "malus",
+  "racial",
+  "insight",
+  "luck",
+  "enhancement",
+  "moral",
+  "divine",
+  "circumstance",
+]);
 
 export type BonusCategoryId = z.infer<typeof BonusCategoryIdSchema>;
 
 export const BonusCategorySchema = INamedModelSchema.extend({
   id: BonusCategoryIdSchema,
+  stack: z.boolean(),
 });
 
 export type BonusCategory = z.infer<typeof BonusCategorySchema>;
