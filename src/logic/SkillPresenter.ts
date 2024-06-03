@@ -6,6 +6,7 @@ import {
   ModifierTypes,
   Profession,
   SkillDefinition,
+  SkillModifier,
   ofType,
 } from "model";
 import { IClientDataSet } from "data";
@@ -102,14 +103,14 @@ export class SkillPresenterBuilder {
 
   private addSkillModifierBonus(presenter: SkillPresenter) {
     const skillModifiers = this.parent
-      .getModifiers()
+      .getModifiersWithSource()
       .filter(ofType(ModifierTypes.skill))
-      .filter((m) => m.target === presenter.id || m.target === "all");
+      .filter((m) => (m as SkillModifier).target === presenter.id || (m as SkillModifier).target === "all");
     for (const modifier of skillModifiers) {
       presenter.modifiers.push({
-        source: "modifier",
-        category: modifier.category,
-        value: modifier.value,
+        source: modifier.source.name,
+        category: (modifier as SkillModifier).category,
+        value: (modifier as SkillModifier).value,
         applied: false,
       });
     }

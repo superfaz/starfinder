@@ -37,7 +37,7 @@ import {
   isWeaponTypeId,
   ofType,
 } from "model";
-import { ClassFeature, Feat, Feature, RaceFeature, ThemeFeature } from "view";
+import { ClassFeature, Feat, Feature, ModifierWithSource, RaceFeature, ThemeFeature } from "view";
 import {
   getMechanicFeatureTemplates,
   getMysticFeatureTemplates,
@@ -492,17 +492,44 @@ export class CharacterPresenter {
    * @returns The list of modifiers that apply to the character.
    */
   getInheritedModifiers(): Modifier[] {
-    const raceModifiers = this.getRace()?.modifiers ?? [];
     const selectedRaceTraits = this.getSelectedRaceTraits();
-    const classModifiers = this.getClass()?.modifiers ?? [];
     const themeFeatures = this.getThemeFeatures();
     const classFeatures = this.getClassFeatures();
     const characterFeatures = [...selectedRaceTraits, ...themeFeatures, ...classFeatures];
 
-    return characterFeatures
+    const raceModifiers = this.getRace()?.modifiers ?? [];
+    const classModifiers = this.getClass()?.modifiers ?? [];
+    const featureModifiers = characterFeatures
       .filter((f) => f.level <= this.getLevel())
       .map((t) => t.modifiers)
-      .flat()
+      .flat();
+
+    return featureModifiers
+      .concat(raceModifiers)
+      .concat(classModifiers)
+      .filter((t) => t && (t.level === undefined || t.level <= this.getLevel()));
+  }
+
+  getInheritedModifiersWithSource(): ModifierWithSource[] {
+    const selectedRaceTraits = this.getSelectedRaceTraits();
+    const themeFeatures = this.getThemeFeatures();
+    const classFeatures = this.getClassFeatures();
+    const characterFeatures = [...selectedRaceTraits, ...themeFeatures, ...classFeatures];
+
+    const raceModifiers: ModifierWithSource[] = (this.getRace()?.modifiers ?? []).map((m) => ({
+      ...m,
+      source: this.getRace()!,
+    }));
+    const classModifiers: ModifierWithSource[] = (this.getClass()?.modifiers ?? []).map((m) => ({
+      ...m,
+      source: this.getClass()!,
+    }));
+    const featureModifiers: ModifierWithSource[] = characterFeatures
+      .filter((f) => f.level <= this.getLevel())
+      .map((t) => t.modifiers.map((m) => ({ ...m, source: t })))
+      .flat();
+
+    return featureModifiers
       .concat(raceModifiers)
       .concat(classModifiers)
       .filter((t) => t && (t.level === undefined || t.level <= this.getLevel()));
@@ -523,6 +550,13 @@ export class CharacterPresenter {
     }
 
     return this.cachedModifiers;
+  }
+
+  getModifiersWithSource(): ModifierWithSource[] {
+    const featModifiers = this.getFeats()
+      .map((f) => f.modifiers.map((m) => ({ ...m, source: f })))
+      .flat();
+    return [...this.getInheritedModifiersWithSource(), ...featModifiers];
   }
 
   getClassSkills(): string[] {

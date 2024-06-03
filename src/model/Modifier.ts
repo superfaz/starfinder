@@ -85,6 +85,8 @@ export const SkillModifierSchema = BaseCategoryModifierSchema.extend({
   target: z.string(),
 }).strict();
 
+export type SkillModifier = z.infer<typeof SkillModifierSchema>;
+
 // #endregion
 // #region Other simple modifiers
 
