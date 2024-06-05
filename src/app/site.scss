@@ -62,6 +62,15 @@ $sf-darkblue: #080f1b;
 }
 
 /**
+ * Add support to button attached to a form-floating element.
+ */
+.form-floating + .btn {
+  height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+  min-height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+  line-height: 1.25;
+}
+
+/**
  * Extend Typeahead to support floating labels.
  */
 .form-floating > .rbt {
@@ -94,23 +103,6 @@ $sf-darkblue: #080f1b;
 .bi-empty {
   display: inline-block;
   width: 1em;
-}
-
-html.fullscreen,
-.fullscreen body,
-.fullscreen {
-  margin-left: auto;
-  margin-right: auto;
-  width: 1600px;
-}
-
-/**
-  * Add support to button attached to a form-floating element.
-  */
-.form-floating + .btn {
-  height: calc(3.5rem + calc(var(--bs-border-width) * 2));
-  min-height: calc(3.5rem + calc(var(--bs-border-width) * 2));
-  line-height: 1.25;
 }
 
 /**
@@ -265,41 +257,44 @@ input[type="number"] {
 
 .nav-create {
   width: auto;
-  gap: 2pt;
-  align-items: stretch;
   background-color: $sf-darkblue;
-  --bs-nav-link-disabled-color: rgba(222, 226, 230, 0.5);
 
-  .nav-item {
-    display: flex;
-    height: calc(1.85em + 2rem);
-
-    .nav-link {
-      color: white;
+  .nav {
+    --bs-nav-link-disabled-color: rgba(222, 226, 230, 0.5);
+    gap: 2pt;
+    align-items: stretch;
+  
+    .nav-item {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      height: calc(1.85em + 2rem);
 
-      &.disabled {
-        color: var(--bs-nav-link-disabled-color);
-      }
+      .nav-link {
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
-      &.active {
-        background-color: $sf-darkred;
-      }
+        &.disabled {
+          color: var(--bs-nav-link-disabled-color);
+        }
 
-      &:hover {
-        background-color: $sf-red;
-      }
+        &.active {
+          background-color: $sf-darkred;
+        }
 
-      .label:has(+ .selected) {
-        font-size: 0.85em;
-        color: var(--bs-nav-link-disabled-color);
-      }
+        &:hover {
+          background-color: $sf-red;
+        }
 
-      .selected {
-        max-width: 10em;
-        white-space: nowrap;
+        .label:has(+ .selected) {
+          font-size: 0.85em;
+          color: var(--bs-nav-link-disabled-color);
+        }
+
+        .selected {
+          max-width: 10em;
+          white-space: nowrap;
+        }
       }
     }
   }

@@ -1,6 +1,5 @@
 import { clsx } from "clsx";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
 function Nav({
@@ -27,19 +26,16 @@ function NavItem({ children, className, ...props }: Readonly<{ children: ReactNo
 function NavLink({
   children,
   href,
-  startsWith = false,
+  active,
   disabled,
 }: Readonly<{
   children: ReactNode;
   href: string;
-  startsWith?: boolean;
+  active?: boolean;
   disabled?: boolean;
 }>) {
-  const pathname = usePathname();
-  const isActive = startsWith ? pathname?.startsWith(href) : pathname === href;
-
   return (
-    <Link href={href} className={clsx("nav-link", isActive && "active", disabled && "disabled")}>
+    <Link href={href} className={clsx("nav-link", active && "active", disabled && "disabled")}>
       {children}
     </Link>
   );

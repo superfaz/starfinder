@@ -1,7 +1,13 @@
 "use client";
 
+import clsx from "clsx";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useMemo } from "react";
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import Row from "react-bootstrap/Row";
 import { CookiesProvider, useCookies } from "react-cookie";
 import { Nav } from "app/components/Nav";
@@ -32,7 +38,16 @@ export default function LayoutClient({
   );
 }
 
+interface MenuItem {
+  title: string;
+  href: string;
+  disabled?: boolean;
+  subtitle?: string;
+  active?: boolean;
+}
+
 function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; children: ReactNode }>) {
+  const pathname = usePathname();
   const data = useAppSelector((state) => state.data);
   const character = useAppSelector((state) => state.character);
   const classesDetails = useAppSelector((state) => state.classesDetails);
@@ -50,66 +65,80 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
   const selectedTheme = presenter.getTheme();
   const selectedClass = presenter.getClass();
 
+  const menuItems: MenuItem[] = [
+    { title: "Intro", href: "/create" },
+    { title: "Race", href: "/create/race", subtitle: selectedRace?.name },
+    { title: "Thème", href: "/create/theme", disabled: selectedRace === null, subtitle: selectedTheme?.name },
+    { title: "Classe", href: "/create/class", disabled: selectedTheme === null, subtitle: selectedClass?.name },
+    { title: "Profil", href: "/create/profile", disabled: selectedClass === null, subtitle: character.name },
+    { title: "Caractéristiques & Compétences", href: "/create/ability-scores", disabled: selectedClass === null },
+    { title: "Don(s)", href: "/create/feats", disabled: selectedClass === null },
+  ];
+
+  if (selectedClass?.spellCaster) {
+    menuItems.push({
+      title: "Sorts",
+      href: "/create/spells",
+    });
+  }
+
+  menuItems.push(
+    { title: "Équipement", href: "/create/equipment", disabled: selectedClass === null },
+    { title: "Fiche", href: "/create/sheet" }
+  );
+
+  if (debug) {
+    menuItems.push({ title: "Debug", href: "/create/debug" });
+  }
+
+  const activeIndex = menuItems.findLastIndex((item) => pathname.startsWith(item.href));
+  const active = activeIndex === -1 ? undefined : menuItems[activeIndex];
+  const next = activeIndex + 1 === menuItems.length ? undefined : menuItems[activeIndex + 1];
+
+  if (active) {
+    active.active = true;
+  }
+
   return (
     <>
-      <Nav className="mb-3 nav-create sticky-top justify-content-center" data-testid="tabs">
-        <Nav.Item>
-          <Nav.Link href="/create">Intro</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/race">
-            <span className="label">Race</span>
-            {selectedRace && <span className="selected">{selectedRace.name}</span>}
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/theme" disabled={selectedRace === null}>
-            <span className="label">Thème</span>
-            {selectedTheme && <span className="selected">{selectedTheme.name}</span>}
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/class" disabled={selectedTheme === null}>
-            <span className="label">Classe</span>
-            {selectedClass && <span className="selected">{selectedClass.name}</span>}
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/profile" disabled={selectedClass === null}>
-            <span className="label">Profil</span>
-            {character.name && <span className="selected">{character.name}</span>}
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/ability-scores" disabled={selectedClass === null}>
-            <span className="label">Caractéristiques & Compétences</span>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/feats" disabled={selectedClass === null}>
-            <span className="label">Don(s)</span>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/spells" disabled={selectedClass === null || !selectedClass.spellCaster}>
-            <span className="label">Sorts</span>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/equipment" startsWith disabled={selectedClass === null}>
-            <span className="label">Équipement</span>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/create/sheet">Fiche</Nav.Link>
-        </Nav.Item>
-        {debug && (
-          <Nav.Item>
-            <Nav.Link href="/create/debug">Debug</Nav.Link>
-          </Nav.Item>
-        )}
-      </Nav>
-      <Container className="mt-3" style={{ width: "1560px", minWidth: "1560px" }}>
+      <Navbar expand="xl" sticky="top" className="nav-create p-xl-0">
+        <Container fluid>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Text className="d-none d-md-block d-xl-none">
+            <Button>
+              <i className="bi bi-caret-left"></i> Intro
+            </Button>
+          </Navbar.Text>
+          <Navbar.Brand className="d-block d-xl-none">{active?.title}</Navbar.Brand>
+          <Navbar.Text className="d-block d-xl-none">
+            {next && (
+              <Link href={next.href} className={clsx("btn", next.disabled ? "disabled btn-secondary" : "btn-primary")}>
+                <i className="bi bi-caret-right"></i>
+              </Link>
+            )}
+          </Navbar.Text>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="flex-column flex-xl-row mx-xl-auto justify-content-xl-center" data-testid="tabs">
+              {menuItems.map((item) => (
+                <Nav.Item key={item.title}>
+                  <Nav.Link href={item.href} disabled={item.disabled} active={item.active}>
+                    <span className="label">{item.title}</span>
+                    {item.subtitle && <span className="selected">{item.subtitle}</span>}
+                  </Nav.Link>
+                </Nav.Item>
+              ))}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+      <ProgressBar
+        className="rounded-0 d-xl-none"
+        style={{ height: "0.25em" }}
+        now={((activeIndex + 1) / menuItems.length) * 100}
+      />
+
+      <Container className="mt-3">
         <Row id="content">{children}</Row>
       </Container>
     </>
