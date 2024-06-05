@@ -4,7 +4,6 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import ProgressBar from "react-bootstrap/ProgressBar";
@@ -102,48 +101,48 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
 
   return (
     <>
-      <Navbar expand="xl" sticky="top" className="nav-create p-xl-0" expanded={expanded} onToggle={setExpanded}>
-        <Container fluid>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Text className="d-none d-md-block d-xl-none">
-            <Button>
-              <i className="bi bi-caret-left"></i> Intro
-            </Button>
-          </Navbar.Text>
-          <Navbar.Brand className="d-block d-xl-none">{active?.title}</Navbar.Brand>
-          <Navbar.Text className="d-block d-xl-none">
-            {next && (
-              <Link href={next.href} className={clsx("btn", next.disabled ? "disabled btn-secondary" : "btn-primary")}>
-                <i className="bi bi-caret-right"></i>
-              </Link>
-            )}
-          </Navbar.Text>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="flex-column flex-xl-row mx-xl-auto justify-content-xl-center" data-testid="tabs">
-              {menuItems.map((item) => (
-                <Nav.Item key={item.title}>
-                  <Nav.Link
-                    href={item.href}
-                    disabled={item.disabled}
-                    active={item.active}
-                    className="flex-fill"
-                    onClick={() => setExpanded(false)}
-                  >
-                    <span className="label">{item.title}</span>
-                    {item.subtitle && <span className="selected">{item.subtitle}</span>}
-                  </Nav.Link>
-                </Nav.Item>
-              ))}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <div className="sticky-top">
+        <Navbar expand="xl" className="nav-create p-xl-0" expanded={expanded} onToggle={setExpanded}>
+          <Container fluid>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Brand className="d-block d-xl-none">{active?.title}</Navbar.Brand>
+            <Navbar.Text className="d-block d-xl-none">
+              {next && (
+                <Link
+                  href={next.href}
+                  className={clsx("btn", next.disabled ? "disabled btn-secondary" : "btn-primary")}
+                >
+                  <i className="bi bi-caret-right"></i>
+                </Link>
+              )}
+            </Navbar.Text>
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="flex-column flex-xl-row mx-xl-auto justify-content-xl-center" data-testid="tabs">
+                {menuItems.map((item) => (
+                  <Nav.Item key={item.title}>
+                    <Nav.Link
+                      href={item.href}
+                      disabled={item.disabled}
+                      active={item.active}
+                      className="flex-fill"
+                      onClick={() => setExpanded(false)}
+                    >
+                      <span className="label">{item.title}</span>
+                      {item.subtitle && <span className="selected">{item.subtitle}</span>}
+                    </Nav.Link>
+                  </Nav.Item>
+                ))}
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
 
-      <ProgressBar
-        className="rounded-0 d-xl-none"
-        style={{ height: "0.25em" }}
-        now={((activeIndex + 1) / menuItems.length) * 100}
-      />
+        <ProgressBar
+          className="rounded-0 d-xl-none"
+          style={{ height: "0.25em" }}
+          now={((activeIndex + 1) / menuItems.length) * 100}
+        />
+      </div>
 
       <Container className="mt-3">
         <Row id="content">{children}</Row>

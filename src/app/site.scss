@@ -224,6 +224,10 @@ input[type="number"] {
   color: #fada80;
 }
 
+.progress-bar {
+  background-color: $sf-red;
+}
+
 /**
  * Custom elements.
  */
@@ -263,7 +267,7 @@ input[type="number"] {
     --bs-nav-link-disabled-color: rgba(222, 226, 230, 0.5);
     gap: 2pt;
     align-items: stretch;
-  
+
     .nav-item {
       display: flex;
       height: calc(1.85em + 2rem);
