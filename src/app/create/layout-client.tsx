@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode, useEffect, useMemo } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -51,6 +51,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
   const data = useAppSelector((state) => state.data);
   const character = useAppSelector((state) => state.character);
   const classesDetails = useAppSelector((state) => state.classesDetails);
+  const [expanded, setExpanded] = useState(false);
   const presenter = useMemo(
     () => new CharacterPresenter(data, classesDetails, character),
     [data, classesDetails, character]
@@ -101,7 +102,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
 
   return (
     <>
-      <Navbar expand="xl" sticky="top" className="nav-create p-xl-0">
+      <Navbar expand="xl" sticky="top" className="nav-create p-xl-0" expanded={expanded} onToggle={setExpanded}>
         <Container fluid>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Text className="d-none d-md-block d-xl-none">
@@ -121,7 +122,13 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
             <Nav className="flex-column flex-xl-row mx-xl-auto justify-content-xl-center" data-testid="tabs">
               {menuItems.map((item) => (
                 <Nav.Item key={item.title}>
-                  <Nav.Link href={item.href} disabled={item.disabled} active={item.active}>
+                  <Nav.Link
+                    href={item.href}
+                    disabled={item.disabled}
+                    active={item.active}
+                    className="flex-fill"
+                    onClick={() => setExpanded(false)}
+                  >
                     <span className="label">{item.title}</span>
                     {item.subtitle && <span className="selected">{item.subtitle}</span>}
                   </Nav.Link>

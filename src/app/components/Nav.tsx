@@ -26,16 +26,24 @@ function NavItem({ children, className, ...props }: Readonly<{ children: ReactNo
 function NavLink({
   children,
   href,
+  className,
   active,
   disabled,
+  onClick,
 }: Readonly<{
   children: ReactNode;
   href: string;
+  className?: string;
   active?: boolean;
   disabled?: boolean;
+  onClick?: () => void;
 }>) {
   return (
-    <Link href={href} className={clsx("nav-link", active && "active", disabled && "disabled")}>
+    <Link
+      href={href}
+      className={clsx("nav-link", className, active && "active", disabled && "disabled")}
+      onClick={onClick}
+    >
       {children}
     </Link>
   );
