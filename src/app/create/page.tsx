@@ -12,7 +12,13 @@ export default function Page() {
             Publishing.
           </p>
           <p>
-            La version française se base sur la version publiée par Black Book Editions. Vous pouvez trouver plus
+            Cet assistant va vous permettre de choisir les éléments les plus importants de votre personnage, comme sa{" "}
+            <strong>race</strong>, son <strong>thème</strong> et sa <strong>classe</strong> avant de vous guider dans la
+            définition de son profil, de son histoire et enfin vers les choix qui lui sont spécifiques comme ses sorts,
+            son IA ou ses dons.
+          </p>
+          <p>
+            La version française se base sur les publications éditées par Black Book Editions. Vous pouvez trouver plus
             d&apos;informations sur le jeu sur le site de l&apos;éditeur :{" "}
             <a href="https://www.black-book-editions.fr/catalogue.php?id=519">www.black-book-editions.fr</a>.
           </p>
