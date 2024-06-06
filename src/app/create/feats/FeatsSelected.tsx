@@ -10,7 +10,7 @@ export function FeatsSelected() {
   const featCount = presenter.getSelectableFeatCount();
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Don(s) sélectionné(s)</h2>
       <div className="text-muted mb-3">
         <span className="rounded border bg-body-secondary py-2 px-3">{featCount}</span> à choisir

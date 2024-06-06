@@ -50,7 +50,7 @@ function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
             <i className="bi bi-shield-shaded text-secondary me-1" title="Le malus d’armure aux tests s’applique"></i>
           )}
         </Form.Label>
-        <Col lg={2} className="pt-2 text-center">
+        <Col xs={2} className="pt-2 text-center">
           {skill.isClassSkill && (
             <Form.Check
               type="checkbox"
@@ -61,7 +61,7 @@ function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
             />
           )}
         </Col>
-        <Col lg={2} className="pt-2 text-center">
+        <Col xs={2} className="pt-2 text-center">
           {skill.rankForced && <Form.Check type="checkbox" id={skill.id} disabled={true} checked={true} />}
           {!skill.rankForced && (
             <Form.Check
@@ -73,7 +73,7 @@ function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
             />
           )}
         </Col>
-        <Col lg={2} className="pt-2 text-center" onClick={toggleOpen}>
+        <Col xs={2} className="pt-2 text-center" onClick={toggleOpen}>
           {skill.bonus !== undefined && (
             <Badge bg={skill.bonus > 0 ? "primary" : "secondary"}>{displayBonus(skill.bonus)}</Badge>
           )}
@@ -119,19 +119,19 @@ export function Skills() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Compétences</h2>
 
       <Row>
-        <Col lg={6} className="mt-auto mb-auto text-center">
+        <Col xs={6} className="mt-auto mb-auto text-center">
           <Button hidden={isProfessionOpen} onClick={() => setIsProfessionOpen(true)}>
             Ajouter une profession
           </Button>
         </Col>
-        <Col lg={2} className="pt-2 text-center">
+        <Col xs={2} className="pt-2 text-center">
           Classe
         </Col>
-        <Col lg={2} className="pt-2 text-center">
+        <Col xs={2} className="pt-2 text-center">
           <div className="mb-2">Rang</div>
           <Form.Control
             title="Rangs de compétence à distribuer"
@@ -141,7 +141,7 @@ export function Skills() {
             disabled
           />
         </Col>
-        <Col lg={2} className="pt-2 text-center">
+        <Col xs={2} className="pt-2 text-center">
           Bonus
         </Col>
       </Row>

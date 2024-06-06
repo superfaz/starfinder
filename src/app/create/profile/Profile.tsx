@@ -62,10 +62,6 @@ export function Profile() {
   const deities = useDeities();
   const languages = useLanguages();
 
-  if (worlds.length === 0 || deities.length === 0 || languages.length === 0) {
-    return null;
-  }
-
   const selectedHomeWorld = worlds.find((world) => world.name === presenter.getHomeWorld());
   const selectedDeity = deities.find((deity) => deity.name === presenter.getDeity());
   const steps = computeSteps(
@@ -110,7 +106,7 @@ export function Profile() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Profil</h2>
       <InputGroup>
         <Form.FloatingLabel controlId="character-name" label="Nom du personnage">
@@ -141,6 +137,7 @@ export function Profile() {
         label="Monde natal"
         value={presenter.getHomeWorld()}
         onChange={(w) => handleHomeWorldChange(w, languageForWorld(w))}
+        disabled={worlds.length === 0}
         options={worlds}
       />
 
@@ -155,6 +152,7 @@ export function Profile() {
         label="Divinité"
         value={presenter.getDeity()}
         onChange={handleDeityChange}
+        disabled={deities.length === 0}
         options={deities}
         renderItem={(item) => <DeityLine deity={item} />}
       />

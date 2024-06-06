@@ -11,6 +11,7 @@ import { hasDescription } from "model";
 import { FeatPresenter, FeatTemplateExtended, useAppSelector } from "logic";
 import { FeatTemplateComponent } from "./FeatTemplateComponent";
 import { useCharacterPresenter } from "../helpers";
+import { Stack } from "react-bootstrap";
 
 export function FeatsSelection() {
   const presenter = useCharacterPresenter();
@@ -60,15 +61,15 @@ export function FeatsSelection() {
     .filter(searchFilter);
 
   return (
-    <>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Dons disponibles</h2>
 
-      <Row className="mb-3 align-items-center">
-        <Col xs="auto" className="ms-3">
+      <Row className="mb-2 align-items-center">
+        <Col lg="auto" className="d-none d-lg-block ms-3">
           Filtres:
         </Col>
-        <Col xs="auto">
-          <ToggleButtonGroup type="radio" name="type" value={category} onChange={setCategory}>
+        <Col lg="auto" className="mb-1 mb-lg-0">
+          <ToggleButtonGroup type="radio" name="type" value={category} onChange={setCategory} className="w-100">
             <ToggleButton id="type-general" value="general" variant="outline-secondary">
               Dons généraux
             </ToggleButton>
@@ -80,8 +81,14 @@ export function FeatsSelection() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Col>
-        <Col xs="auto">
-          <ToggleButtonGroup type="radio" name="prerequisite" value={prerequisite} onChange={setPrerequisite}>
+        <Col lg="auto" className="mb-1 mb-lg-0">
+          <ToggleButtonGroup
+            type="radio"
+            name="prerequisite"
+            value={prerequisite}
+            onChange={setPrerequisite}
+            className="w-100"
+          >
             <ToggleButton id="prerequisite-available" value="available" variant="outline-secondary">
               Disponibles
             </ToggleButton>
@@ -93,7 +100,7 @@ export function FeatsSelection() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Col>
-        <Col>
+        <Col className="mb-1 mb-lg-0">
           <FormControl
             type="search"
             placeholder="Rechercher"
@@ -103,13 +110,13 @@ export function FeatsSelection() {
         </Col>
       </Row>
 
-      <Row data-testid="feats">
+      <Row data-testid="feats" className="row-cols-1 row-cols-lg-2 row-cols-xxl-3">
         {displayedFeats.map((template) => (
-          <Col xs="4" key={template.id} className="mb-4">
+          <Col key={template.id} className="mb-4">
             <FeatTemplateComponent presenter={presenter} template={template} />
           </Col>
         ))}
       </Row>
-    </>
+    </Stack>
   );
 }

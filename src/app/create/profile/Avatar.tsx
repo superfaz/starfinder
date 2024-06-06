@@ -32,7 +32,7 @@ export function Avatar() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Avatar</h2>
       <Card>
         <picture>

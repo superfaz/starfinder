@@ -15,7 +15,7 @@ export function Description() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Biographie & description</h2>
       <Form.Control
         as="textarea"

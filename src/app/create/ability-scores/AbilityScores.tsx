@@ -32,7 +32,7 @@ export function AbilityScores() {
   }
 
   return (
-    <Stack direction="vertical" gap={2} data-testid="ability-scores">
+    <Stack direction="vertical" gap={2} className="mb-3" data-testid="ability-scores">
       <h2>Caractéristiques</h2>
       <Form.FloatingLabel controlId="abilityScoresMethod" label="Méthode de génération">
         <Form.Select>
@@ -47,10 +47,10 @@ export function AbilityScores() {
       </Form.FloatingLabel>
       <Form.Group as={Row} controlId="abilityScoresPoints">
         <Form.Label column></Form.Label>
-        <Col lg={4}>
+        <Col xs={4}>
           <Form.Control type="number" className="text-center" value={points} disabled />
         </Col>
-        <Col lg={2} className="pt-2 text-center">
+        <Col xs={2} className="pt-2 text-center">
           Mod.
         </Col>
       </Form.Group>
@@ -78,7 +78,7 @@ export function AbilityScores() {
                 </Badge>
               )}
             </Form.Label>
-            <Col lg={4}>
+            <Col xs={4}>
               <InputGroup>
                 <Button
                   variant="outline-secondary"
@@ -104,7 +104,7 @@ export function AbilityScores() {
                 </Button>
               </InputGroup>
             </Col>
-            <Col lg={2}>
+            <Col xs={2}>
               <div className="form-control bg-secondary text-center">{displayBonus(modifier)}</div>
             </Col>
           </Form.Group>

@@ -12,7 +12,7 @@ export function ThemeTraits() {
   const presenter = useCharacterPresenter();
   const features: Feature[] = presenter.getThemeFeatures();
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Traits thématiques</h2>
       {features.map((feature) => (
         <Row key={feature.id}>

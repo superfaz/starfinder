@@ -64,7 +64,7 @@ export function ClassSelection() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Classe</h2>
       <Form.FloatingLabel controlId="class" label="Classe">
         <Form.Select value={selectedClass?.id ?? ""} onChange={handleClassChange}>

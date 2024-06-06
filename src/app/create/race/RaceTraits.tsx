@@ -7,7 +7,7 @@ import FeatureComponent from "../FeatureComponent";
 export function RaceTraits() {
   const presenter = useCharacterPresenter();
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Traits raciaux</h2>
       {presenter.getPrimaryRaceTraits().map((trait) => {
         const isTraitEnabled = presenter.getSelectedRaceTraits().find((t) => t.id === trait.id) !== undefined;

@@ -12,6 +12,7 @@ export default function Typeahead<T extends INamedModel>(
     label: string;
     value: string;
     onChange: (newValue: string) => void;
+    disabled?: boolean;
     options?: T[];
     filter?: (options: T[], value: string) => T[];
     renderItem?: (item: T) => ReactNode;
@@ -28,6 +29,7 @@ export default function Typeahead<T extends INamedModel>(
       <Dropdown.Toggle
         as={Form.Control}
         id={undefined}
+        disabled={props.disabled}
         value={props.value}
         onChange={(e) => props.onChange((e.target as HTMLInputElement).value)}
       />

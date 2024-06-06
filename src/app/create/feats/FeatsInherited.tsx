@@ -11,16 +11,14 @@ export function FeatsInherited() {
     return null;
   } else {
     return (
-      <>
+      <Stack direction="vertical" gap={2} className="mb-3" data-testid="feats-inherited">
         <h2>Don(s) acqui(s)</h2>
-        <Stack direction="vertical" gap={2} className="mb-4" data-testid="feats-inherited">
-          {feats.map((feat) => (
-            <div key={`${feat.id}-${feat.target}`}>
-              <FeatComponent presenter={presenter} feat={feat} noAction />
-            </div>
-          ))}
-        </Stack>
-      </>
+        {feats.map((feat) => (
+          <div key={`${feat.id}-${feat.target}`}>
+            <FeatComponent presenter={presenter} feat={feat} noAction />
+          </div>
+        ))}
+      </Stack>
     );
   }
 }

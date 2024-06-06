@@ -21,7 +21,7 @@ export function RaceAlternateTraits() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Traits alternatifs</h2>
       {presenter.getSecondaryRaceTraits().map((trait) => {
         const isTraitEnabled = presenter.getSelectedRaceTraits().find((t) => t.id === trait.id) !== undefined;

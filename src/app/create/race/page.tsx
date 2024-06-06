@@ -6,13 +6,13 @@ import { RaceAlternateTraits } from "./RaceAlternateTraits";
 export default function Page() {
   return (
     <>
-      <Col lg={3}>
+      <Col xs={12} lg={3}>
         <RaceSelection />
       </Col>
-      <Col>
+      <Col xs={12} className="col-lg">
         <RaceTraits />
       </Col>
-      <Col>
+      <Col xs={12} className="col-lg">
         <RaceAlternateTraits />
       </Col>
     </>

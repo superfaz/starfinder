@@ -198,13 +198,13 @@ export function EquipmentSelection() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Équipement disponible</h2>
       <Row className="mb-3 align-items-center">
-        <Col xs="auto" className="ms-3">
+        <Col xs="auto" className="ms-3 d-none d-lg-block">
           Filtres:
         </Col>
-        <Col xs="auto">
+        <Col lg="auto" className="mb-1 mb-lg-0">
           <Form.Select
             id="equipment-type"
             value={equipmentType}
@@ -218,7 +218,7 @@ export function EquipmentSelection() {
             ))}
           </Form.Select>
         </Col>
-        <Col xs="auto">
+        <Col lg="auto" className="mb-1 mb-lg-0">
           <Form.Select id="sub-type" value={subType} onChange={handleSubTypeChange} aria-label="Sous-catégorie">
             {subMenu.map((type) => (
               <option key={type.id} value={type.id} className={type.proficient ? undefined : "text-danger"}>
@@ -227,7 +227,7 @@ export function EquipmentSelection() {
             ))}
           </Form.Select>
         </Col>
-        <Col xs="auto">
+        <Col lg="auto" className="mb-1 mb-lg-0">
           <ToggleButtonGroup
             type="radio"
             name="levelFilter"

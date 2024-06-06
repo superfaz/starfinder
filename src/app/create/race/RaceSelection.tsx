@@ -54,7 +54,7 @@ export function RaceSelection() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Race</h2>
       <Form.FloatingLabel controlId="race" label="Race">
         <Form.Select value={selectedRace?.id ?? ""} onChange={handleRaceChange}>

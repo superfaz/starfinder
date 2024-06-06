@@ -39,7 +39,7 @@ function LazyClassDetails(): JSX.Element | null {
 
 export function ClassDetails() {
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Abilités de classe</h2>
       <LazyClassDetails />
     </Stack>

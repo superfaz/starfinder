@@ -32,7 +32,7 @@ export function ThemeSelection() {
   }
 
   return (
-    <Stack direction="vertical" gap={2}>
+    <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Thème</h2>
       <Form.FloatingLabel controlId="theme" label="Thème">
         <Form.Select value={selectedTheme?.id ?? ""} onChange={handleThemeChange}>
