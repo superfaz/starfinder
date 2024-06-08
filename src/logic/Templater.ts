@@ -1,17 +1,12 @@
 import {
-  type FeatTemplate,
-  type FeatureTemplate,
-  type INamedModel,
-  type ModifierTemplate,
-  type Prerequisite,
   isModifierType,
-  EquipmentWeapon,
-  EquipmentWeaponSchema,
   TemplateEquipment,
   PrerequisiteSchema,
   ModifierSchema,
   type Modifier,
+  EquipmentSchema,
 } from "model";
+import type { FeatTemplate, FeatureTemplate, INamedModel, ModifierTemplate, Prerequisite, Equipment } from "model";
 import { ClassFeature, Feat, RaceFeature, ThemeFeature } from "view";
 
 export function cleanEvolutions(
@@ -86,10 +81,10 @@ export class Templater {
     };
   }
 
-  convertEquipment(template: TemplateEquipment): EquipmentWeapon {
+  convertEquipment(template: TemplateEquipment): Equipment {
     const text = JSON.stringify(template);
     const converted = this.applyForString(text);
-    return EquipmentWeaponSchema.parse(JSON.parse(converted));
+    return EquipmentSchema.parse(JSON.parse(converted));
   }
 
   convertFeat(template: FeatTemplate, target?: INamedModel): Feat {
