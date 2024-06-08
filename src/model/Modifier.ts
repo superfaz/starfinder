@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { BonusCategoryIdSchema } from "./BonusCategory";
 import { DamageTypeIdSchema } from "./DamageType";
-import { EquipmentWeaponSchema } from "./EquipmentWeapon";
 import { IModelSchema } from "./IModel";
 import { ModifierTypes } from "./ModifierType";
 import { SavingThrowIdSchema } from "./SavingThrow";
@@ -10,6 +9,7 @@ import { ArmorTypeIdSchema } from "./ArmorType";
 import { DescriptionSchema, IdSchema } from "./helper";
 import { SizeIdSchema } from "./Size";
 import { INamedModelSchema } from "./INamedModel";
+import { EquipmentSchema } from "./Equipment";
 
 // #region Modifier with value
 const BaseValueModifierSchema = IModelSchema.extend({
@@ -106,7 +106,7 @@ export const ClassSkillModifierSchema = IModelSchema.extend({
 export const EquipmentModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.equipment),
   level: z.number().optional(),
-  equipment: EquipmentWeaponSchema,
+  equipment: EquipmentSchema,
 }).strict();
 
 export type EquipmentModifier = z.infer<typeof EquipmentModifierSchema>;

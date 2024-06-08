@@ -17,6 +17,7 @@ export * from "./ClassTechnomancer";
 export * from "./CriticalHitEffect";
 export * from "./DamageType";
 export * from "./Deity";
+export * from "./Equipment";
 export * from "./EquipmentArmor";
 export * from "./EquipmentArmorUpgrade";
 export * from "./EquipmentBase";
