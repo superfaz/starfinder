@@ -18,8 +18,6 @@ Thème : Icône / Sélection de la compétence de Profession
 
 Thème : Prêtre / Sélection de la divinité ou de la philosophie
 
-Thème : Sans thème / Choix de la compétence de classe
-
 Classe / Ajouter les classes du guide des options
 
 Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation

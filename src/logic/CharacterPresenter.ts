@@ -162,6 +162,7 @@ export class CharacterPresenter {
       shirrenObsessionSkill: "any",
       lashuntaStudentSkill1: "any",
       lashuntaStudentSkill2: "any",
+      themelessSkill: "any",
       level: this.character.level,
       race: this.character.race,
       theme: this.character.theme,
@@ -319,6 +320,10 @@ export class CharacterPresenter {
       skill: themeOptions.scholarSkill,
       specialization: themeOptions.scholarSpecialization,
     };
+  }
+
+  getThemelessSkill(): string | null {
+    return this.character.themeOptions?.themelessSkill ?? null;
   }
 
   getClass(): Class | null {

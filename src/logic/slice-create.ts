@@ -90,6 +90,14 @@ const mainSlice = createSlice({
       state.character = updateScholarSpecializationImpl(state.character, action.payload);
     },
 
+    updateThemelessSkill(state, action: PayloadAction<string>) {
+      if (state.character.themeOptions === undefined) {
+        state.character.themeOptions = { themelessSkill: action.payload };
+      } else {
+        state.character.themeOptions.themelessSkill = action.payload;
+      }
+    },
+
     updateClass(state, action: PayloadAction<string>) {
       state.character = updateClassImpl(state.data, state.character, action.payload);
     },

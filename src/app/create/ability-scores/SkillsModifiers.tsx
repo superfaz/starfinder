@@ -36,6 +36,10 @@ export function FeatureDisplay({
     dispatch(mutators.updateShirrenObsessionSkill(event.target.value));
   }
 
+  function handleThemelessSkill(event: ChangeEvent<HTMLSelectElement>) {
+    dispatch(mutators.updateThemelessSkill(event.target.value));
+  }
+
   return (
     <Card>
       <Card.Header>
@@ -79,6 +83,22 @@ export function FeatureDisplay({
         <Card.Footer>
           <Form.FloatingLabel controlId="shirrenObsession" label="Compétence sélectionnée">
             <Form.Select value={presenter.getShirrenObsessionSkill() ?? ""} onChange={handleShirrenObsessionSkill}>
+              <option value="" disabled>
+                Aucune
+              </option>
+              {skills.map((skill) => (
+                <option key={skill.id} value={skill.id}>
+                  {skill.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+        </Card.Footer>
+      )}
+      {feature.id === "themeless-general-knowledge" && (
+        <Card.Footer>
+          <Form.FloatingLabel controlId="themelessSkill" label="Compétence de classe sélectionnée">
+            <Form.Select value={presenter.getThemelessSkill() ?? ""} onChange={handleThemelessSkill}>
               <option value="" disabled>
                 Aucune
               </option>
