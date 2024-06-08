@@ -12,8 +12,6 @@ Race : Androide / Traits secondaires : Augmentations facilitées / Gestion de la
 
 Race : Androide / Traits secondaires : Polyglote / Gestion des langues supplémentaires
 
-Race : Lashuntas / Traits : Etudiant / Choix des compétences
-
 Thème / Ajouter les thèmes du guide des options
 
 Thème : Icône / Sélection de la compétence de Profession

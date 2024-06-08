@@ -46,6 +46,22 @@ const mainSlice = createSlice({
       state.character = updateHumanBonusImpl(state.data, state.character, action.payload);
     },
 
+    updateLashuntaStudentSkill1(state, action: PayloadAction<string>) {
+      if (state.character.raceOptions === undefined) {
+        state.character.raceOptions = { lashuntaStudentSkill1: action.payload };
+      } else {
+        state.character.raceOptions.lashuntaStudentSkill1 = action.payload;
+      }
+    },
+
+    updateLashuntaStudentSkill2(state, action: PayloadAction<string>) {
+      if (state.character.raceOptions === undefined) {
+        state.character.raceOptions = { lashuntaStudentSkill2: action.payload };
+      } else {
+        state.character.raceOptions.lashuntaStudentSkill2 = action.payload;
+      }
+    },
+
     updateShirrenObsessionSkill(state, action: PayloadAction<string>) {
       state.character = updateShirrenObsessionSkillImpl(state.data, state.character, action.payload);
     },

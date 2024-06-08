@@ -160,6 +160,8 @@ export class CharacterPresenter {
   createTemplater(context: object = {}): Templater {
     const templater = new Templater({
       shirrenObsessionSkill: "any",
+      lashuntaStudentSkill1: "any",
+      lashuntaStudentSkill2: "any",
       level: this.character.level,
       race: this.character.race,
       theme: this.character.theme,
@@ -217,6 +219,14 @@ export class CharacterPresenter {
 
   getHumanStandardBonus(): string | null {
     return this.character.raceOptions?.humanBonus ?? null;
+  }
+
+  getLashuntaStudentSkill1(): string | null {
+    return this.character.raceOptions?.lashuntaStudentSkill1 ?? null;
+  }
+
+  getLashuntaStudentSkill2(): string | null {
+    return this.character.raceOptions?.lashuntaStudentSkill2 ?? null;
   }
 
   getShirrenObsessionSkill(): string | null {

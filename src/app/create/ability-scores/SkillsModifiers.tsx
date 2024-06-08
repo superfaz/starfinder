@@ -1,11 +1,12 @@
+import { ChangeEvent } from "react";
 import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
+import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import { ModifierTypes, hasTarget } from "model";
 import { type Feature, isFeat, Feat } from "view";
 import { useCharacterPresenter } from "../helpers";
 import ModifierComponent from "../ModifierComponent";
-import { Form } from "react-bootstrap";
-import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 
 const categories: Record<string, string> = {
   ex: "EXT",
@@ -23,7 +24,15 @@ export function FeatureDisplay({
   const modifiers = feature.modifiers.filter((m) => types.includes(m.type));
   const skills = useAppSelector((state) => state.data.skills);
 
-  function handleShirrenObsessionSkill(event: React.ChangeEvent<HTMLSelectElement>) {
+  function handleLashuntaStudentSkill1(event: ChangeEvent<HTMLSelectElement>) {
+    dispatch(mutators.updateLashuntaStudentSkill1(event.target.value));
+  }
+
+  function handleLashuntaStudentSkill2(event: ChangeEvent<HTMLSelectElement>) {
+    dispatch(mutators.updateLashuntaStudentSkill2(event.target.value));
+  }
+
+  function handleShirrenObsessionSkill(event: ChangeEvent<HTMLSelectElement>) {
     dispatch(mutators.updateShirrenObsessionSkill(event.target.value));
   }
 
@@ -38,6 +47,34 @@ export function FeatureDisplay({
           <ModifierComponent key={modifier.id} modifier={modifier} />
         ))}
       </Card.Body>
+      {feature.id === "student" && (
+        <Card.Footer>
+          <Form.FloatingLabel controlId="lashuntaStudent1" label="Première compétence sélectionnée">
+            <Form.Select value={presenter.getLashuntaStudentSkill1() ?? ""} onChange={handleLashuntaStudentSkill1}>
+              <option value="" disabled>
+                Aucune
+              </option>
+              {skills.map((skill) => (
+                <option key={skill.id} value={skill.id}>
+                  {skill.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+          <Form.FloatingLabel controlId="lashuntaStudent2" label="Seconde compétence sélectionnée">
+            <Form.Select value={presenter.getLashuntaStudentSkill2() ?? ""} onChange={handleLashuntaStudentSkill2}>
+              <option value="" disabled>
+                Aucune
+              </option>
+              {skills.map((skill) => (
+                <option key={skill.id} value={skill.id}>
+                  {skill.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+        </Card.Footer>
+      )}
       {feature.id === "f46aaa34-1e74-4e7b-81d8-6f63883bd94e" && (
         <Card.Footer>
           <Form.FloatingLabel controlId="shirrenObsession" label="Compétence sélectionnée">
