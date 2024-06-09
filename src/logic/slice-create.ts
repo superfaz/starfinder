@@ -78,6 +78,16 @@ const mainSlice = createSlice({
       state.character = updateThemeImpl(state.data, state.character, action.payload);
     },
 
+    updateIconProfession(state, action: PayloadAction<string | undefined>) {
+      if (action.payload === undefined) {
+        delete state.character.themeOptions;
+      } else if (state.character.themeOptions === undefined) {
+        state.character.themeOptions = { iconProfession: action.payload };
+      } else {
+        state.character.themeOptions.iconProfession = action.payload;
+      }
+    },
+
     updateNoThemeAbilityScore(state, action: PayloadAction<string>) {
       state.character = updateNoThemeAbilityScoreImpl(state.data, state.character, action.payload);
     },

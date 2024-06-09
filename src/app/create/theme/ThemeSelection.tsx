@@ -12,8 +12,11 @@ import { ReferenceComponent } from "../ReferenceComponent";
 import ThemeNoneLoading from "./ThemeNoneLoading";
 import ThemeScholarLoading from "./ThemeScholarLoading";
 
+const LazyThemeIconEditor = dynamic(() => import("./ThemeIconEditor"));
 const LazyThemeNoneEditor = dynamic(() => import("./ThemeNoneEditor"), { loading: () => <ThemeNoneLoading /> });
-const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), { loading: () => <ThemeScholarLoading /> });
+const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), {
+  loading: () => <ThemeScholarLoading />,
+});
 
 export function ThemeSelection() {
   const data = useAppSelector((state) => state.data);
@@ -64,6 +67,7 @@ export function ThemeSelection() {
         </>
       )}
       {presenter.hasNoTheme() && <LazyThemeNoneEditor character={presenter} className="mt-3" />}
+      {presenter.isIcon() && <LazyThemeIconEditor presenter={presenter} className="mt-3" />}
       {presenter.isScholar() && <LazyThemeScholarEditor character={presenter} className="mt-3" />}
     </Stack>
   );

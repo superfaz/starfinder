@@ -14,8 +14,6 @@ Race : Androide / Traits secondaires : Polyglote / Gestion des langues suppléme
 
 Thème / Ajouter les thèmes du guide des options
 
-Thème : Icône / Sélection de la compétence de Profession
-
 Thème : Prêtre / Sélection de la divinité ou de la philosophie
 
 Classe / Ajouter les classes du guide des options

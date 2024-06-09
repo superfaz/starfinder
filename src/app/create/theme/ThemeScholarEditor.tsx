@@ -3,15 +3,13 @@ import Form from "react-bootstrap/Form";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import type { ThemeScholar } from "model";
 
-function useThemeDetails(themeId: string) {
+function useThemeDetails() {
   const [details, setDetails] = useState<ThemeScholar | null>(null);
   useEffect(() => {
-    if (themeId && details === null) {
-      fetch("/api/themes/" + themeId)
-        .then((response) => response.json())
-        .then((data) => setDetails(data));
-    }
-  }, [themeId, details]);
+    fetch("/api/themes/scholar")
+      .then((response) => response.json())
+      .then((data) => setDetails(data));
+  }, []);
 
   return details;
 }
@@ -24,9 +22,9 @@ interface IThemeScholarEditorProps {
 export default function ThemeScholarEditor({ character, className }: Readonly<IThemeScholarEditorProps>) {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
+  const themeDetails = useThemeDetails();
 
   const selectedDetails = character.getScholarDetails();
-  const themeDetails = useThemeDetails("scholar");
 
   if (data === null) {
     return <div>Loading...</div>;

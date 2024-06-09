@@ -68,12 +68,23 @@ function retrieveSkillName(data: IClientDataSet, target: string | undefined): st
     return "Toutes";
   }
 
-  const skill = data.skills.find((s) => s.id === target);
-  if (!skill) {
-    Sentry.captureMessage(`Skill ${target} not found`);
-  }
+  if (target.startsWith("prof-")) {
+    // Manage profession skills
+    const profession = data.professions.find((s) => s.id === target);
+    if (!profession) {
+      Sentry.captureMessage(`Profession ${target} not found`);
+    }
 
-  return skill ? skill.name : target;
+    return profession ? profession.name : target;
+  } else {
+    // Manage generic skills
+    const skill = data.skills.find((s) => s.id === target);
+    if (!skill) {
+      Sentry.captureMessage(`Skill ${target} not found`);
+    }
+
+    return skill ? skill.name : target;
+  }
 }
 
 function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: ModifierComponentElement): void {

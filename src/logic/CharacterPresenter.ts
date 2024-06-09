@@ -19,6 +19,7 @@ import type {
   INamedModel,
   Modifier,
   Prerequisite,
+  Profession,
   Race,
   SavingThrow,
   SavingThrowId,
@@ -162,6 +163,7 @@ export class CharacterPresenter {
       shirrenObsessionSkill: "any",
       lashuntaStudentSkill1: "any",
       lashuntaStudentSkill2: "any",
+      iconProfession: "any",
       themelessSkill: "any",
       level: this.character.level,
       race: this.character.race,
@@ -304,6 +306,18 @@ export class CharacterPresenter {
 
   getNoThemeAbilityScore(): string | null {
     return this.character.themeOptions?.noThemeAbility ?? null;
+  }
+
+  isIcon(): boolean {
+    return this.character.theme === "icon";
+  }
+
+  getIconProfession(): Profession | null {
+    if (!this.character.themeOptions?.iconProfession) {
+      return null;
+    }
+
+    return findOrError(this.character.professionSkills, (p) => p.id === this.character.themeOptions?.iconProfession);
   }
 
   isScholar(): boolean {

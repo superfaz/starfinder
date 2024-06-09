@@ -39,7 +39,6 @@ export function ProfessionSkills({ onClose }: Readonly<{ onClose: () => void }>)
       };
 
       dispatch(mutators.addProfessionSkill(profession));
-      setSelectedProfession([]);
     }
 
     handleClose();
