@@ -85,7 +85,7 @@ export function computeMinimalAbilityScores(data: IClientDataSet, character: Cha
     if (
       character.theme === "themeless" &&
       character.themeOptions !== undefined &&
-      abilityScore.id === character.themeOptions.noThemeAbility
+      abilityScore.id === character.themeOptions.themelessAbility
     ) {
       // Theme: No Theme
       score += 1;
@@ -300,14 +300,6 @@ export class CharacterPresenter {
     return theme.features.map((f) => templater.convertThemeFeature(f));
   }
 
-  hasNoTheme(): boolean {
-    return this.character.theme === "themeless";
-  }
-
-  getNoThemeAbilityScore(): string | null {
-    return this.character.themeOptions?.noThemeAbility ?? null;
-  }
-
   isIcon(): boolean {
     return this.character.theme === "icon";
   }
@@ -334,6 +326,14 @@ export class CharacterPresenter {
       skill: themeOptions.scholarSkill,
       specialization: themeOptions.scholarSpecialization,
     };
+  }
+
+  isThemeless(): boolean {
+    return this.character.theme === "themeless";
+  }
+
+  getThemelessAbilityScore(): string | null {
+    return this.character.themeOptions?.themelessAbility ?? null;
   }
 
   getThemelessSkill(): string | null {

@@ -5,24 +5,24 @@ import { Badge } from "app/components";
 import { findOrError } from "app/helpers";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 
-interface IThemeNoneEditorProps {
+interface IThemelessEditorProps {
   character: CharacterPresenter;
   className?: string;
 }
 
-export default function ThemeNoneEditor({ character, className }: Readonly<IThemeNoneEditorProps>) {
+export default function ThemelessEditor({ character, className }: Readonly<IThemelessEditorProps>) {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
-  function handleNoThemeAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
+  function handleThemelessAbilityChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    dispatch(mutators.updateNoThemeAbilityScore(id));
+    dispatch(mutators.updateThemelessAbilityScore(id));
   }
 
   return (
     <>
-      <Form.FloatingLabel controlId="noThemeAbility" label="Caractérisque du thème" className={className}>
-        <Form.Select value={character.getNoThemeAbilityScore() ?? ""} onChange={handleNoThemeAbilityChange}>
+      <Form.FloatingLabel controlId="themelessAbility" label="Caractérisque du thème" className={className}>
+        <Form.Select value={character.getThemelessAbilityScore() ?? ""} onChange={handleThemelessAbilityChange}>
           {data.abilityScores.map((abilityScore) => (
             <option key={abilityScore.id} value={abilityScore.id}>
               {abilityScore.name}
@@ -32,7 +32,7 @@ export default function ThemeNoneEditor({ character, className }: Readonly<IThem
       </Form.FloatingLabel>
       <Stack direction="horizontal" className="right">
         <Badge bg={"primary"}>
-          {findOrError(data.abilityScores, character.getNoThemeAbilityScore()).code}
+          {findOrError(data.abilityScores, character.getThemelessAbilityScore()).code}
           {" +1"}
         </Badge>
       </Stack>

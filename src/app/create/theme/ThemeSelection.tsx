@@ -9,11 +9,11 @@ import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { useCharacterPresenter } from "../helpers";
 import { ReferenceComponent } from "../ReferenceComponent";
-import ThemeNoneLoading from "./ThemeNoneLoading";
+import ThemelessLoading from "./ThemelessLoading";
 import ThemeScholarLoading from "./ThemeScholarLoading";
 
 const LazyThemeIconEditor = dynamic(() => import("./ThemeIconEditor"));
-const LazyThemeNoneEditor = dynamic(() => import("./ThemeNoneEditor"), { loading: () => <ThemeNoneLoading /> });
+const LazyThemelessEditor = dynamic(() => import("./ThemelessEditor"), { loading: () => <ThemelessLoading /> });
 const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), {
   loading: () => <ThemeScholarLoading />,
 });
@@ -47,7 +47,7 @@ export function ThemeSelection() {
           ))}
         </Form.Select>
       </Form.FloatingLabel>
-      {selectedTheme && !presenter.hasNoTheme() && (
+      {selectedTheme && !presenter.isThemeless() && (
         <Stack direction="horizontal" className="right">
           {Object.entries(selectedTheme.abilityScores).map(
             ([key, value]) =>
@@ -66,7 +66,7 @@ export function ThemeSelection() {
           <ReferenceComponent reference={selectedTheme.reference} />
         </>
       )}
-      {presenter.hasNoTheme() && <LazyThemeNoneEditor character={presenter} className="mt-3" />}
+      {presenter.isThemeless() && <LazyThemelessEditor character={presenter} className="mt-3" />}
       {presenter.isIcon() && <LazyThemeIconEditor presenter={presenter} className="mt-3" />}
       {presenter.isScholar() && <LazyThemeScholarEditor character={presenter} className="mt-3" />}
     </Stack>

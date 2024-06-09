@@ -88,8 +88,8 @@ const mainSlice = createSlice({
       }
     },
 
-    updateNoThemeAbilityScore(state, action: PayloadAction<string>) {
-      state.character = updateNoThemeAbilityScoreImpl(state.data, state.character, action.payload);
+    updateThemelessAbilityScore(state, action: PayloadAction<string>) {
+      state.character = updateThemelessAbilityScoreImpl(state.data, state.character, action.payload);
     },
 
     updateScholarSkill(state, action: PayloadAction<string>) {
@@ -533,7 +533,7 @@ function updateThemeImpl(data: IClientDataSet, character: Character, themeId: st
     };
   } else if (themeId === "themeless") {
     // Theme: No theme
-    result.themeOptions = { noThemeAbility: AbilityScoreIds.str };
+    result.themeOptions = { themelessAbility: AbilityScoreIds.str };
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -548,12 +548,16 @@ function updateThemeImpl(data: IClientDataSet, character: Character, themeId: st
  * @param abilityScoreId - the identifier of the selected ability score
  * @returns The updated character
  */
-function updateNoThemeAbilityScoreImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
+function updateThemelessAbilityScoreImpl(
+  data: IClientDataSet,
+  character: Character,
+  abilityScoreId: string
+): Character {
   const result: Character = {
     ...character,
     themeOptions: {
       ...character.themeOptions,
-      noThemeAbility: abilityScoreId,
+      themelessAbility: abilityScoreId,
     },
   };
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -890,11 +894,6 @@ class Updators {
     return this;
   }
 
-  updateNoThemeAbilityScore(abilityScoreId: string) {
-    this._character = updateNoThemeAbilityScoreImpl(this.data, this._character, abilityScoreId);
-    return this;
-  }
-
   updateScholarSkill(skillId: string) {
     this._character = updateScholarSkillImpl(this.data, this._character, skillId);
     return this;
@@ -902,6 +901,11 @@ class Updators {
 
   updateScholarSpecialization(specialization: string) {
     this._character = updateScholarSpecializationImpl(this._character, specialization);
+    return this;
+  }
+
+  updateThemelessAbilityScore(abilityScoreId: string) {
+    this._character = updateThemelessAbilityScoreImpl(this.data, this._character, abilityScoreId);
     return this;
   }
 
