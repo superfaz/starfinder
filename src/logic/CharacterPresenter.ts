@@ -602,6 +602,10 @@ export class CharacterPresenter {
     return this.cachedClassSkills;
   }
 
+  getAllProfessions(): Profession[] {
+    return [...this.data.professions, ...this.character.professionSkills];
+  }
+
   getProfessionSkills(): SkillPresenter[] {
     const professionSkills = this.character.professionSkills;
     const builder = new SkillPresenterBuilder(this, this.data);

@@ -9,7 +9,6 @@ import { CharacterProps } from "../Props";
 export default function ThemeIconEditor({ presenter }: CharacterProps) {
   const profession = presenter.getIconProfession();
   const dispatch = useAppDispatch();
-  const professions = useAppSelector((state) => state.data.professions);
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   const [abilityScore, setAbilityScore] = useState<AbilityScoreId>(profession?.abilityScore ?? AbilityScoreIds.cha);
   const optionsForAbilityScores = useMemo(() => {
@@ -19,6 +18,7 @@ export default function ThemeIconEditor({ presenter }: CharacterProps) {
   }, [abilityScores]);
 
   const professionName = profession?.name ?? "";
+  const professions = presenter.getAllProfessions();
 
   function handleProfessionChange(name: string): void {
     if (name === professionName) {

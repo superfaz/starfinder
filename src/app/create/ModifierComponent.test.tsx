@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import ModifierComponent from "./ModifierComponent";
 import StoreProvider from "logic/StoreProvider";
 import { DataSource, IClientDataSet, convert } from "data";
-import { Modifier } from "view";
+import { Modifier } from "model";
 
 describe("ModifierComponent", () => {
   test("should adapt for spell", async () => {

@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 import { Badge } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { useAppSelector } from "logic";
+import { CharacterPresenter, useAppSelector } from "logic";
 import {
   FeatTargetTypes,
   type ModifierType,
@@ -17,6 +17,7 @@ import {
   hasCategory,
 } from "model";
 import { DisplayDamageLong, DisplaySpecials } from "./equipment/Components";
+import { useCharacterPresenter } from "./helpers";
 
 interface ModifierComponentElement {
   level?: number;
@@ -55,7 +56,11 @@ const displayLabelsForType: Record<ModifierType, string> = {
   weaponProficiency: "Maniement d’arme",
 };
 
-function retrieveSkillName(data: IClientDataSet, target: string | undefined): string | undefined {
+function retrieveSkillName(
+  presenter: CharacterPresenter,
+  data: IClientDataSet,
+  target: string | undefined
+): string | undefined {
   if (target === undefined) {
     return undefined;
   }
@@ -70,7 +75,7 @@ function retrieveSkillName(data: IClientDataSet, target: string | undefined): st
 
   if (target.startsWith("prof-")) {
     // Manage profession skills
-    const profession = data.professions.find((s) => s.id === target);
+    const profession = presenter.getAllProfessions().find((s) => s.id === target);
     if (!profession) {
       Sentry.captureMessage(`Profession ${target} not found`);
     }
@@ -87,7 +92,12 @@ function retrieveSkillName(data: IClientDataSet, target: string | undefined): st
   }
 }
 
-function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: ModifierComponentElement): void {
+function adaptForFeat(
+  presenter: CharacterPresenter,
+  data: IClientDataSet,
+  modifier: FeatModifier,
+  element: ModifierComponentElement
+): void {
   const feat = data.feats.find((f) => f.id === modifier.feat);
   if (!feat) {
     Sentry.captureMessage(`Feat ${modifier.feat} not found`);
@@ -100,7 +110,7 @@ function adaptForFeat(data: IClientDataSet, modifier: FeatModifier, element: Mod
   if (feat.type === "targeted" || feat.type === "multiple") {
     switch (feat.targetType) {
       case FeatTargetTypes.skill:
-        element.targetName = retrieveSkillName(data, modifier.target);
+        element.targetName = retrieveSkillName(presenter, data, modifier.target);
         break;
       case FeatTargetTypes.weapon:
         element.targetName = findOrError(data.weaponTypes, modifier.target).name;
@@ -150,6 +160,7 @@ function EquipmentModifierComponent({ modifier }: Readonly<{ modifier: Equipment
 }
 
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
+  const presenter = useCharacterPresenter();
   const data = useAppSelector((state) => state.data);
 
   const element: ModifierComponentElement = {
@@ -166,14 +177,14 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
     case ModifierTypes.classSkill:
     case ModifierTypes.rankSkill:
       // Target is a skill
-      element.targetName = retrieveSkillName(data, modifier.target);
+      element.targetName = retrieveSkillName(presenter, data, modifier.target);
       break;
 
     case ModifierTypes.equipment:
       return <EquipmentModifierComponent modifier={modifier} />;
 
     case ModifierTypes.feat: {
-      adaptForFeat(data, modifier, element);
+      adaptForFeat(presenter, data, modifier, element);
       break;
     }
 
