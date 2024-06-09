@@ -16,10 +16,9 @@ function useThemeDetails() {
 
 interface IThemeScholarEditorProps {
   character: CharacterPresenter;
-  className?: string;
 }
 
-export default function ThemeScholarEditor({ character, className }: Readonly<IThemeScholarEditorProps>) {
+export default function ThemeScholarEditor({ character }: Readonly<IThemeScholarEditorProps>) {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
   const themeDetails = useThemeDetails();
@@ -64,7 +63,7 @@ export default function ThemeScholarEditor({ character, className }: Readonly<IT
 
   return (
     <>
-      <Form.FloatingLabel controlId="scholarSkill" label="Compétence de classe" className={className}>
+      <Form.FloatingLabel controlId="scholarSkill" label="Compétence de classe" className="mt-3">
         <Form.Select value={selectedDetails.skill} onChange={handleScholarSkillChange}>
           {data.skills
             .filter((s) => s.id === "life" || s.id === "phys")

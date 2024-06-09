@@ -7,10 +7,9 @@ import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "lo
 
 interface IThemelessEditorProps {
   character: CharacterPresenter;
-  className?: string;
 }
 
-export default function ThemelessEditor({ character, className }: Readonly<IThemelessEditorProps>) {
+export default function ThemelessEditor({ character }: Readonly<IThemelessEditorProps>) {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
@@ -21,7 +20,7 @@ export default function ThemelessEditor({ character, className }: Readonly<IThem
 
   return (
     <>
-      <Form.FloatingLabel controlId="themelessAbility" label="Caractérisque du thème" className={className}>
+      <Form.FloatingLabel controlId="themelessAbility" label="Caractérisque du thème" className="mt-3">
         <Form.Select value={character.getThemelessAbilityScore() ?? ""} onChange={handleThemelessAbilityChange}>
           {data.abilityScores.map((abilityScore) => (
             <option key={abilityScore.id} value={abilityScore.id}>

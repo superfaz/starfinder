@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import Form from "react-bootstrap/Form";
-import Stack from "react-bootstrap/Stack";
 import Typeahead from "app/components/Typeahead";
 import { findOrError } from "app/helpers";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
@@ -8,10 +7,9 @@ import { AbilityScoreId, AbilityScoreIds, Profession, simpleHash } from "model";
 
 interface IThemeIconEditorProps {
   presenter: CharacterPresenter;
-  className?: string;
 }
 
-export default function ThemeIconEditor({ presenter, className }: Readonly<IThemeIconEditorProps>) {
+export default function ThemeIconEditor({ presenter }: Readonly<IThemeIconEditorProps>) {
   const profession = presenter.getIconProfession();
   const dispatch = useAppDispatch();
   const professions = useAppSelector((state) => state.data.professions);
@@ -49,8 +47,8 @@ export default function ThemeIconEditor({ presenter, className }: Readonly<IThem
   }
 
   return (
-    <Stack direction="vertical" gap={2} className={className}>
-      <div>Profession iconique</div>
+    <>
+      <div className="mt-3">Profession iconique</div>
       <Form.FloatingLabel controlId="profAbilityScore" label="Caractérisque de référence">
         <Form.Select value={abilityScore} onChange={(e) => setAbilityScore(e.target.value as AbilityScoreId)}>
           {optionsForAbilityScores.map((abilityScore) => (
@@ -67,6 +65,6 @@ export default function ThemeIconEditor({ presenter, className }: Readonly<IThem
         onChange={handleProfessionChange}
         options={professions.filter((p) => p.abilityScore === abilityScore)}
       />
-    </Stack>
+    </>
   );
 }
