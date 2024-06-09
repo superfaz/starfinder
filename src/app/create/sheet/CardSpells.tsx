@@ -3,9 +3,9 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { CharacterProps } from "../Props";
 
-export function CardSpells({ character }: CharacterProps) {
-  const spellsByLevel = character.getSelectedSpells();
-  const isSpellCaster: boolean = character.getClass()?.spellCaster ?? false;
+export function CardSpells({ presenter }: CharacterProps) {
+  const spellsByLevel = presenter.getSelectedSpells();
+  const isSpellCaster: boolean = presenter.getClass()?.spellCaster ?? false;
   const levels = [0, 1, 2, 3, 4, 5, 6];
   if (!isSpellCaster) {
     return null;

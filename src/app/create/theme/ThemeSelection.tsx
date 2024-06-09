@@ -67,9 +67,9 @@ export function ThemeSelection() {
         </>
       )}
 
-      {presenter.isThemeless() && <LazyThemelessEditor character={presenter} />}
+      {presenter.isThemeless() && <LazyThemelessEditor presenter={presenter} />}
       {presenter.isIcon() && <LazyThemeIconEditor presenter={presenter} />}
-      {presenter.isScholar() && <LazyThemeScholarEditor character={presenter} />}
+      {presenter.isScholar() && <LazyThemeScholarEditor presenter={presenter} />}
     </Stack>
   );
 }

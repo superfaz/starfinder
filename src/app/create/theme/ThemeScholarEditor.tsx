@@ -1,7 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import type { ThemeScholar } from "model";
+import { CharacterProps } from "../Props";
 
 function useThemeDetails() {
   const [details, setDetails] = useState<ThemeScholar | null>(null);
@@ -14,16 +15,12 @@ function useThemeDetails() {
   return details;
 }
 
-interface IThemeScholarEditorProps {
-  character: CharacterPresenter;
-}
-
-export default function ThemeScholarEditor({ character }: Readonly<IThemeScholarEditorProps>) {
+export default function ThemeScholarEditor({ presenter }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
   const themeDetails = useThemeDetails();
 
-  const selectedDetails = character.getScholarDetails();
+  const selectedDetails = presenter.getScholarDetails();
 
   if (data === null) {
     return <div>Loading...</div>;

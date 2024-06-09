@@ -5,8 +5,8 @@ import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
 import { CharacterProps } from "../Props";
 
-export function CardInitiative({ character }: CharacterProps) {
-  const initiative = character.getInitiative();
+export function CardInitiative({ presenter }: CharacterProps) {
+  const initiative = presenter.getInitiative();
   return (
     <Card data-testid="initiative">
       <Card.Header>

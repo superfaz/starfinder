@@ -6,7 +6,7 @@ import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
 import { CharacterProps } from "../Props";
 
-export function CardSkills({ character }: CharacterProps) {
+export function CardSkills({ presenter }: CharacterProps) {
   return (
     <Card>
       <Card.Header>
@@ -14,7 +14,7 @@ export function CardSkills({ character }: CharacterProps) {
       </Card.Header>
       <Card.Body className="position-relative">
         <Stack direction="vertical" gap={2}>
-          {character.getSkills().map((skill) => {
+          {presenter.getSkills().map((skill) => {
             return (
               <Row key={skill.id}>
                 <Col xs="auto" className="pe-0 me-0">

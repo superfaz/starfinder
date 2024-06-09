@@ -1,7 +1,7 @@
 import { CharacterPresenter } from "logic";
 
 interface ICharacterProps {
-  character: CharacterPresenter;
+  presenter: CharacterPresenter;
 }
 
 export type CharacterProps = Readonly<ICharacterProps>;

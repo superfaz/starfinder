@@ -4,7 +4,7 @@ import { mutators, retrieveClassDetails, useAppDispatch, useAppSelector, useClas
 import type { ClassSolarian } from "model";
 import { CharacterProps } from "../Props";
 
-export default function SolarianEditor({ character }: CharacterProps) {
+export default function SolarianEditor({ presenter }: CharacterProps) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes).filter((d) => d.category === "kinetic");
   const classDetails = useClassDetails<ClassSolarian>("solarian");
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ export default function SolarianEditor({ character }: CharacterProps) {
     return <p>Loading...</p>;
   }
 
-  const selectedManifestation = classDetails.manifestations.find((s) => s.id === character.getSolarianManifestation());
+  const selectedManifestation = classDetails.manifestations.find((s) => s.id === presenter.getSolarianManifestation());
 
   const handleColorChange = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(mutators.updateSolarianColor(event.target.value));
@@ -35,7 +35,7 @@ export default function SolarianEditor({ character }: CharacterProps) {
   return (
     <>
       <Form.FloatingLabel controlId="solarianColor" label="Couleur de la manifestation solaire">
-        <Form.Select value={character.getSolarianColor() ?? ""} onChange={handleColorChange}>
+        <Form.Select value={presenter.getSolarianColor() ?? ""} onChange={handleColorChange}>
           {classDetails.colors.map((color) => (
             <option key={color.id} value={color.id}>
               {color.name}
@@ -45,7 +45,7 @@ export default function SolarianEditor({ character }: CharacterProps) {
       </Form.FloatingLabel>
 
       <Form.FloatingLabel controlId="solarianManifestation" label="Forme de la manifestation solaire">
-        <Form.Select value={character.getSolarianManifestation() ?? ""} onChange={handleManifestationChange}>
+        <Form.Select value={presenter.getSolarianManifestation() ?? ""} onChange={handleManifestationChange}>
           {classDetails.manifestations.map((manifestation) => (
             <option key={manifestation.id} value={manifestation.id}>
               {manifestation.name}
@@ -57,7 +57,7 @@ export default function SolarianEditor({ character }: CharacterProps) {
 
       {selectedManifestation?.id === "weapon" && (
         <Form.FloatingLabel controlId="solarianDamageType" label="Type de dégâts">
-          <Form.Select value={character.getSolarianDamageType() ?? ""} onChange={handleDamageTypeChange}>
+          <Form.Select value={presenter.getSolarianDamageType() ?? ""} onChange={handleDamageTypeChange}>
             {damageTypes.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.name}

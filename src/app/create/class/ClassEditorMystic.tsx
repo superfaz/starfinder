@@ -4,7 +4,7 @@ import { CharacterProps } from "../Props";
 import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import type { ClassMystic } from "model";
 
-export default function MysticEditor({ character }: CharacterProps) {
+export default function MysticEditor({ presenter }: CharacterProps) {
   const classDetails = useClassDetails<ClassMystic>("mystic");
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function MysticEditor({ character }: CharacterProps) {
     return <p>Loading...</p>;
   }
 
-  const selectedConnection = classDetails.connections.find((s) => s.id === character.getMysticConnection());
+  const selectedConnection = classDetails.connections.find((s) => s.id === presenter.getMysticConnection());
 
   const handleConnectionChange = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(mutators.updateMysticConnection(event.target.value));
@@ -26,7 +26,7 @@ export default function MysticEditor({ character }: CharacterProps) {
   return (
     <>
       <Form.FloatingLabel controlId="mysticConnection" label="Connection mystique">
-        <Form.Select value={character.getMysticConnection() ?? ""} onChange={handleConnectionChange}>
+        <Form.Select value={presenter.getMysticConnection() ?? ""} onChange={handleConnectionChange}>
           {classDetails.connections.map((connection) => (
             <option key={connection.id} value={connection.id}>
               {connection.name}

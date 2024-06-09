@@ -2,8 +2,8 @@ import Card from "react-bootstrap/Card";
 import { Badge } from "app/components";
 import { CharacterProps } from "../Props";
 
-export function CardAvatar({ character }: CharacterProps) {
-  const avatar = character.getAvatar();
+export function CardAvatar({ presenter }: CharacterProps) {
+  const avatar = presenter.getAvatar();
   return (
     <Card data-testid="avatar">
       <Card.Header>

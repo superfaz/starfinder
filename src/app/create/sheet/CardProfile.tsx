@@ -7,9 +7,9 @@ import { Alignment } from "model";
 import { ValueComponent } from "./ValueComponent";
 import { CharacterProps } from "../Props";
 
-export function CardProfile({ character }: CharacterProps) {
+export function CardProfile({ presenter }: CharacterProps) {
   const alignments = useAppSelector((state) => state.data.alignments);
-  const alignment: Alignment | undefined = alignments.find((a) => a.id === character.getAlignment());
+  const alignment: Alignment | undefined = alignments.find((a) => a.id === presenter.getAlignment());
 
   return (
     <Card>
@@ -18,19 +18,19 @@ export function CardProfile({ character }: CharacterProps) {
       </Card.Header>
       <Card.Body>
         <Stack direction="vertical" gap={2}>
-          <ValueComponent label="Nom du personnage" value={character.getName()} />
+          <ValueComponent label="Nom du personnage" value={presenter.getName()} />
           <Row>
-            <ValueComponent label="Classe" className="col-8" value={character.getClass()?.name} />
-            <ValueComponent label="Niveau" className="col-4" value={character.getCharacter().level} />
+            <ValueComponent label="Classe" className="col-8" value={presenter.getClass()?.name} />
+            <ValueComponent label="Niveau" className="col-4" value={presenter.getCharacter().level} />
           </Row>
-          <ValueComponent label="Race" value={character.getRace()?.name} />
-          <ValueComponent label="Thème" value={character.getTheme()?.name} />
+          <ValueComponent label="Race" value={presenter.getRace()?.name} />
+          <ValueComponent label="Thème" value={presenter.getTheme()?.name} />
           <Row>
-            <ValueComponent label="Taille" className="col" value={character.getSize().name} />
-            <ValueComponent label="Vitesse" className="col" value={character.getSpeed() * 1.5 + " mètres"} />
-            <ValueComponent label="Sexe" className="col-3" value={character.getSex()} />
+            <ValueComponent label="Taille" className="col" value={presenter.getSize().name} />
+            <ValueComponent label="Vitesse" className="col" value={presenter.getSpeed() * 1.5 + " mètres"} />
+            <ValueComponent label="Sexe" className="col-3" value={presenter.getSex()} />
           </Row>
-          <ValueComponent label="Monde natal" value={character.getHomeWorld()} />
+          <ValueComponent label="Monde natal" value={presenter.getHomeWorld()} />
           <Row>
             <ValueComponent
               label="Alignement"
@@ -38,7 +38,7 @@ export function CardProfile({ character }: CharacterProps) {
               value={alignment?.code ?? ""}
               title={alignment?.name ?? undefined}
             />
-            <ValueComponent label="Divinité" className="col" value={character.getDeity()} />
+            <ValueComponent label="Divinité" className="col" value={presenter.getDeity()} />
           </Row>
         </Stack>
       </Card.Body>

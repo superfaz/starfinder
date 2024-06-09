@@ -3,8 +3,8 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { CharacterProps } from "../Props";
 
-export function CardFeats({ character }: CharacterProps) {
-  const feats = character.getFeats();
+export function CardFeats({ presenter }: CharacterProps) {
+  const feats = presenter.getFeats();
   return (
     <Card data-testid="sheet-feats">
       <Card.Header>

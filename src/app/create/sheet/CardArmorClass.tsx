@@ -47,16 +47,16 @@ function CardArmor({ descriptor }: Readonly<{ descriptor: EquipmentDescriptor }>
   );
 }
 
-export function CardArmorClass({ character }: CharacterProps) {
+export function CardArmorClass({ presenter }: CharacterProps) {
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
-  const proficiencies = character.getArmorProficiencies();
+  const proficiencies = presenter.getArmorProficiencies();
   const texts = proficiencies.map((p) => findOrError(armorTypes, p).name);
   const armorClasses = {
-    energy: { value: character.getEnergyArmorClass(), label: "Classe d’armure énergétique" },
-    kinetic: { value: character.getKineticArmorClass(), label: "Classe d’armure cinétique" },
-    maneuvers: { value: character.getArmorClassAgainstCombatManeuvers(), label: "CA vs manoeuvres offensives" },
+    energy: { value: presenter.getEnergyArmorClass(), label: "Classe d’armure énergétique" },
+    kinetic: { value: presenter.getKineticArmorClass(), label: "Classe d’armure cinétique" },
+    maneuvers: { value: presenter.getArmorClassAgainstCombatManeuvers(), label: "CA vs manoeuvres offensives" },
   };
-  const armors = character.getArmors().filter((a) => a.secondaryType !== EquipmentArmorIds.upgrade);
+  const armors = presenter.getArmors().filter((a) => a.secondaryType !== EquipmentArmorIds.upgrade);
 
   return (
     <Card data-testid="armors">

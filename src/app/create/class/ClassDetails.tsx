@@ -27,10 +27,10 @@ function LazyClassDetails(): JSX.Element | null {
     case "mystic":
     case "soldier":
     case "technomancer":
-      return <LazyClassDetailsGeneric character={presenter} classId={selectedClass.id} />;
+      return <LazyClassDetailsGeneric presenter={presenter} classId={selectedClass.id} />;
 
     case "solarian":
-      return <LazyClassDetailsSolarian character={presenter} classId={selectedClass.id} />;
+      return <LazyClassDetailsSolarian presenter={presenter} classId={selectedClass.id} />;
 
     default:
       return null;

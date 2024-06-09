@@ -71,7 +71,7 @@ function LevelN({
   );
 }
 
-export default function ClassDetailsGeneric({ character, classId }: Readonly<CharacterProps & { classId: string }>) {
+export default function ClassDetailsGeneric({ presenter, classId }: Readonly<CharacterProps & { classId: string }>) {
   const classDetails = useClassDetails(classId);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function ClassDetailsGeneric({ character, classId }: Readonly<Cha
     return <ClassDetailsLoading />;
   }
 
-  const features = character.getClassFeatures();
+  const features = presenter.getClassFeatures();
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)
@@ -94,9 +94,9 @@ export default function ClassDetailsGeneric({ character, classId }: Readonly<Cha
     const levelFeatures = features.filter((s) => s.level === level);
 
     if (level === 1) {
-      return <Level1 key={level} presenter={character} features={levelFeatures} />;
+      return <Level1 key={level} presenter={presenter} features={levelFeatures} />;
     } else {
-      return <LevelN key={level} level={level} presenter={character} features={levelFeatures} />;
+      return <LevelN key={level} level={level} presenter={presenter} features={levelFeatures} />;
     }
   });
 }

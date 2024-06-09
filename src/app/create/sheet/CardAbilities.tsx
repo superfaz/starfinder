@@ -4,8 +4,8 @@ import { Badge } from "app/components";
 import { ModifierTypes, ofType } from "model";
 import { CharacterProps } from "../Props";
 
-export function CardAbilities({ character }: CharacterProps) {
-  const modifiers = character.getModifiers().filter(ofType(ModifierTypes.ability));
+export function CardAbilities({ presenter }: CharacterProps) {
+  const modifiers = presenter.getModifiers().filter(ofType(ModifierTypes.ability));
   return (
     <Card data-testid="abilities">
       <Card.Header>

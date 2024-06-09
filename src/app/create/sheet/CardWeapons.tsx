@@ -152,10 +152,10 @@ function CardWeapon({
   );
 }
 
-export function CardWeapons({ character }: CharacterProps) {
+export function CardWeapons({ presenter }: CharacterProps) {
   const weaponTypes = useAppSelector((state) => state.data.weaponTypes);
-  const proficiencies = character.getWeaponProficiencies().map((p) => findOrError(weaponTypes, p).name);
-  const weapons = character.getWeapons().filter((w) => w.secondaryType !== "ammunition");
+  const proficiencies = presenter.getWeaponProficiencies().map((p) => findOrError(weaponTypes, p).name);
+  const weapons = presenter.getWeapons().filter((w) => w.secondaryType !== "ammunition");
 
   return (
     <Card data-testid="weapons">
@@ -167,7 +167,7 @@ export function CardWeapons({ character }: CharacterProps) {
         {proficiencies.length === 0 && <em>Pas de classe sélectionnée</em>}
       </Card.Body>
       {weapons.map((descriptor) => (
-        <CardWeapon key={descriptor.id} presenter={character} descriptor={descriptor} />
+        <CardWeapon key={descriptor.id} presenter={presenter} descriptor={descriptor} />
       ))}
     </Card>
   );

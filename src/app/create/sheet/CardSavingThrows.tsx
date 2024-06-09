@@ -8,10 +8,10 @@ import { ModifierTypes, ofType } from "model";
 import { ValueComponent } from "./ValueComponent";
 import { CharacterProps } from "../Props";
 
-export function CardSavingThrows({ character }: CharacterProps) {
+export function CardSavingThrows({ presenter }: CharacterProps) {
   const savingThrows = useAppSelector((state) => state.data.savingThrows);
-  const selectedClass = character.getClass();
-  const modifiers = character.getModifiers().filter(ofType(ModifierTypes.savingThrow));
+  const selectedClass = presenter.getClass();
+  const modifiers = presenter.getModifiers().filter(ofType(ModifierTypes.savingThrow));
 
   return (
     <Card data-testid="savingThrows">
@@ -27,7 +27,7 @@ export function CardSavingThrows({ character }: CharacterProps) {
           )}
           {selectedClass &&
             savingThrows.map((savingThrow) => {
-              const bonus = character.getSavingThrowBonus(savingThrow);
+              const bonus = presenter.getSavingThrowBonus(savingThrow);
               return (
                 bonus !== undefined && (
                   <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">

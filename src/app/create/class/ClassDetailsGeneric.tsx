@@ -7,7 +7,7 @@ import FeatureComponent from "../FeatureComponent";
 import { CharacterProps } from "../Props";
 import ClassDetailsLoading from "./ClassDetailsLoading";
 
-export default function ClassDetailsGeneric({ character, classId }: CharacterProps & { classId: string }) {
+export default function ClassDetailsGeneric({ presenter, classId }: CharacterProps & { classId: string }) {
   const classDetails = useClassDetails(classId);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function ClassDetailsGeneric({ character, classId }: CharacterPro
     return <ClassDetailsLoading />;
   }
 
-  const features = character.getClassFeatures();
+  const features = presenter.getClassFeatures();
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)
@@ -35,7 +35,7 @@ export default function ClassDetailsGeneric({ character, classId }: CharacterPro
         </Col>
         {levelFeatures.map((feature) => (
           <Col key={feature.id}>
-            <FeatureComponent character={character} feature={feature} />
+            <FeatureComponent character={presenter} feature={feature} />
           </Col>
         ))}
         {[...new Array((9 - levelFeatures.length) % 3)].map((_, index) => (

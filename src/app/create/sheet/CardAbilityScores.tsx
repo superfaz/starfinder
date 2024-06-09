@@ -7,7 +7,7 @@ import { computeAbilityScoreModifier, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
 import { ValueComponent } from "./ValueComponent";
 
-export function CardAbilityScores({ character }: CharacterProps) {
+export function CardAbilityScores({ presenter }: CharacterProps) {
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   return (
     <Card>
@@ -22,11 +22,11 @@ export function CardAbilityScores({ character }: CharacterProps) {
           ].map(([min, max]) => (
             <Row key={max}>
               {abilityScores.slice(min, max).map((a) => {
-                const bonus = computeAbilityScoreModifier(character.getAbilityScores()[a.id]);
+                const bonus = computeAbilityScoreModifier(presenter.getAbilityScores()[a.id]);
                 return (
                   <ValueComponent key={a.id} label={a.name} className="col">
                     <div className="position-relative">
-                      <span>{character.getAbilityScores()[a.id]}</span>
+                      <span>{presenter.getAbilityScores()[a.id]}</span>
                       <Badge bg={bonus > 0 ? "primary" : "secondary"} className="position-absolute end-0 me-0">
                         {displayBonus(bonus)}
                       </Badge>

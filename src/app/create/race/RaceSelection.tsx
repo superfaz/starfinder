@@ -97,7 +97,7 @@ export function RaceSelection() {
               )}
             </Stack>
           )}
-          {presenter.isHumanStandard() && <RaceHumansEditor character={presenter} />}
+          {presenter.isHumanStandard() && <RaceHumansEditor presenter={presenter} />}
           {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
         </>
       )}

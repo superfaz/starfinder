@@ -3,13 +3,10 @@ import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { findOrError } from "app/helpers";
-import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
+import { CharacterProps } from "../Props";
 
-interface IThemelessEditorProps {
-  character: CharacterPresenter;
-}
-
-export default function ThemelessEditor({ character }: Readonly<IThemelessEditorProps>) {
+export default function ThemelessEditor({ presenter }: CharacterProps) {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
@@ -21,7 +18,7 @@ export default function ThemelessEditor({ character }: Readonly<IThemelessEditor
   return (
     <>
       <Form.FloatingLabel controlId="themelessAbility" label="Caractérisque du thème" className="mt-3">
-        <Form.Select value={character.getThemelessAbilityScore() ?? ""} onChange={handleThemelessAbilityChange}>
+        <Form.Select value={presenter.getThemelessAbilityScore() ?? ""} onChange={handleThemelessAbilityChange}>
           {data.abilityScores.map((abilityScore) => (
             <option key={abilityScore.id} value={abilityScore.id}>
               {abilityScore.name}
@@ -31,7 +28,7 @@ export default function ThemelessEditor({ character }: Readonly<IThemelessEditor
       </Form.FloatingLabel>
       <Stack direction="horizontal" className="right">
         <Badge bg={"primary"}>
-          {findOrError(data.abilityScores, character.getThemelessAbilityScore()).code}
+          {findOrError(data.abilityScores, presenter.getThemelessAbilityScore()).code}
           {" +1"}
         </Badge>
       </Stack>

@@ -27,19 +27,19 @@ export function LazyClassEditor(): JSX.Element | null {
 
   switch (selectedClass.id) {
     case "envoy":
-      return <LazyEditorEnvoy character={presenter} />;
+      return <LazyEditorEnvoy presenter={presenter} />;
 
     case "operative":
-      return <LazyEditorOperative character={presenter} />;
+      return <LazyEditorOperative presenter={presenter} />;
 
     case "mystic":
-      return <LazyEditorMystic character={presenter} />;
+      return <LazyEditorMystic presenter={presenter} />;
 
     case "solarian":
-      return <LazyEditorSolarian character={presenter} />;
+      return <LazyEditorSolarian presenter={presenter} />;
 
     case "soldier":
-      return <LazyEditorSoldier character={presenter} />;
+      return <LazyEditorSoldier presenter={presenter} />;
 
     default:
       return null;

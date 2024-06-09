@@ -4,11 +4,11 @@ import { Badge } from "app/components";
 import { CharacterProps } from "../Props";
 import { ValueComponent } from "./ValueComponent";
 
-export function CardKeyPoints({ character }: CharacterProps) {
+export function CardKeyPoints({ presenter }: CharacterProps) {
   const keyPoints = {
-    stamina: { max: character.getStaminaPoints(), label: "Points d'endurance" },
-    hit: { max: character.getHitPoints(), label: "Points de vie" },
-    resolve: { max: character.getResolvePoints(), label: "Points de persévérance" },
+    stamina: { max: presenter.getStaminaPoints(), label: "Points d'endurance" },
+    hit: { max: presenter.getHitPoints(), label: "Points de vie" },
+    resolve: { max: presenter.getResolvePoints(), label: "Points de persévérance" },
   };
 
   return (

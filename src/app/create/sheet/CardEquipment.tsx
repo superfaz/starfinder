@@ -69,11 +69,11 @@ function UpgradeSection({ descriptor }: Readonly<{ descriptor: ArmorEquipmentDes
   );
 }
 
-export default function CardEquipment({ character }: CharacterProps) {
-  const ammunitions = character
+export default function CardEquipment({ presenter }: CharacterProps) {
+  const ammunitions = presenter
     .getWeapons()
     .filter((w) => w.secondaryType === EquipmentWeaponIds.ammunition) as WeaponEquipmentDescriptor[];
-  const armorUpgrades = character
+  const armorUpgrades = presenter
     .getArmors()
     .filter((a) => a.secondaryType === EquipmentArmorIds.upgrade) as ArmorEquipmentDescriptor[];
 

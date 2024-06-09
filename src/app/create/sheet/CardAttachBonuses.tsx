@@ -5,8 +5,8 @@ import { displayBonus } from "app/helpers";
 import { CharacterProps } from "../Props";
 import { ValueComponent } from "./ValueComponent";
 
-export function CardAttackBonuses({ character }: CharacterProps) {
-  const attackBonuses = character.getAttackBonuses();
+export function CardAttackBonuses({ presenter }: CharacterProps) {
+  const attackBonuses = presenter.getAttackBonuses();
   return (
     <Card data-testid="attackBonuses">
       <Card.Header>

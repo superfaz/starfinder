@@ -32,41 +32,41 @@ export default function Page() {
       >
         <SplideSlide>
           <Stack direction="vertical" gap={2}>
-            <CardAvatar character={presenter} />
-            <CardFeats character={presenter} />
+            <CardAvatar presenter={presenter} />
+            <CardFeats presenter={presenter} />
           </Stack>
         </SplideSlide>
         <SplideSlide>
           <Stack direction="vertical" gap={2}>
-            <CardProfile character={presenter} />
-            <CardDescription character={presenter} />
+            <CardProfile presenter={presenter} />
+            <CardDescription presenter={presenter} />
           </Stack>
         </SplideSlide>
         <SplideSlide>
           <Stack direction="vertical" gap={2}>
-            <CardAbilities character={presenter} />
-            <CardSpells character={presenter} />
+            <CardAbilities presenter={presenter} />
+            <CardSpells presenter={presenter} />
           </Stack>
         </SplideSlide>
         <SplideSlide>
           <Stack direction="vertical" gap={2}>
-            <CardAbilityScores character={presenter} />
-            <CardSkills character={presenter} />
+            <CardAbilityScores presenter={presenter} />
+            <CardSkills presenter={presenter} />
           </Stack>
         </SplideSlide>
         <SplideSlide>
           <Stack direction="vertical" gap={2}>
-            <CardInitiative character={presenter} />
-            <CardKeyPoints character={presenter} />
-            <CardSavingThrows character={presenter} />
-            <CardArmorClass character={presenter} />
-            <CardAttackBonuses character={presenter} />
-            <CardWeapons character={presenter} />
+            <CardInitiative presenter={presenter} />
+            <CardKeyPoints presenter={presenter} />
+            <CardSavingThrows presenter={presenter} />
+            <CardArmorClass presenter={presenter} />
+            <CardAttackBonuses presenter={presenter} />
+            <CardWeapons presenter={presenter} />
           </Stack>
         </SplideSlide>
         <SplideSlide>
           <Stack direction="vertical" gap={2}>
-            <CardEquipment character={presenter} />
+            <CardEquipment presenter={presenter} />
           </Stack>
         </SplideSlide>
       </Splide>

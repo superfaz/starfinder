@@ -5,7 +5,7 @@ import { mutators, retrieveClassDetails, useAppDispatch, useAppSelector, useClas
 import { findOrError } from "app/helpers";
 import { Form } from "react-bootstrap";
 
-export default function EnvoyEditor({ character }: CharacterProps): ReactNode {
+export default function EnvoyEditor({ presenter }: CharacterProps): ReactNode {
   const classDetails = useClassDetails<ClassEnvoy>("envoy");
   const skills = useAppSelector((state) => state.data.skills);
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ export default function EnvoyEditor({ character }: CharacterProps): ReactNode {
 
   return (
     <Form.FloatingLabel controlId="mysticConnection" label="Maîtrise de compétence">
-      <Form.Select value={character.getEnvoySkill() ?? ""} onChange={handleSkillChange}>
+      <Form.Select value={presenter.getEnvoySkill() ?? ""} onChange={handleSkillChange}>
         {envoySkills.map((skill) => (
           <option key={skill.id} value={skill.id}>
             {skill.name}

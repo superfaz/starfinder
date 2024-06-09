@@ -4,7 +4,7 @@ import { CharacterProps } from "../Props";
 import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import type { ClassOperative } from "model";
 
-export default function OperativeEditor({ character }: CharacterProps) {
+export default function OperativeEditor({ presenter }: CharacterProps) {
   const classDetails = useClassDetails<ClassOperative>("operative");
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function OperativeEditor({ character }: CharacterProps) {
   }
 
   const selectedSpecialization = classDetails.specializations.find(
-    (s) => s.id === character.getOperativeSpecialization()
+    (s) => s.id === presenter.getOperativeSpecialization()
   );
 
   const handleSpecializationChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -28,7 +28,7 @@ export default function OperativeEditor({ character }: CharacterProps) {
   return (
     <>
       <Form.FloatingLabel controlId="operativeSpecialization" label="Spécialisation">
-        <Form.Select value={character.getOperativeSpecialization() ?? ""} onChange={handleSpecializationChange}>
+        <Form.Select value={presenter.getOperativeSpecialization() ?? ""} onChange={handleSpecializationChange}>
           {classDetails.specializations.map((specialization) => (
             <option key={specialization.id} value={specialization.id}>
               {specialization.name}

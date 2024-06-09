@@ -4,7 +4,7 @@ import { CharacterProps } from "../Props";
 import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
 import type { ClassSoldier } from "model";
 
-export default function SoldierEditor({ character }: CharacterProps) {
+export default function SoldierEditor({ presenter }: CharacterProps) {
   const classDetails = useClassDetails<ClassSoldier>("soldier");
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function SoldierEditor({ character }: CharacterProps) {
     return <p>Loading...</p>;
   }
 
-  const selectedStyle = classDetails.styles.find((s) => s.id === character.getSoldierPrimaryStyle());
+  const selectedStyle = classDetails.styles.find((s) => s.id === presenter.getSoldierPrimaryStyle());
 
   const handleStyleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(mutators.updateSoldierPrimaryStyle(event.target.value));
@@ -26,7 +26,7 @@ export default function SoldierEditor({ character }: CharacterProps) {
   return (
     <>
       <Form.FloatingLabel controlId="soldierPrimaryStyle" label="Style de combat">
-        <Form.Select value={character.getSoldierPrimaryStyle() ?? ""} onChange={handleStyleChange}>
+        <Form.Select value={presenter.getSoldierPrimaryStyle() ?? ""} onChange={handleStyleChange}>
           {classDetails.styles.map((style) => (
             <option key={style.id} value={style.id}>
               {style.name}

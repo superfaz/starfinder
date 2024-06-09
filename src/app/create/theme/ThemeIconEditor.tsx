@@ -2,14 +2,11 @@ import { useMemo, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Typeahead from "app/components/Typeahead";
 import { findOrError } from "app/helpers";
-import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { AbilityScoreId, AbilityScoreIds, Profession, simpleHash } from "model";
+import { CharacterProps } from "../Props";
 
-interface IThemeIconEditorProps {
-  presenter: CharacterPresenter;
-}
-
-export default function ThemeIconEditor({ presenter }: Readonly<IThemeIconEditorProps>) {
+export default function ThemeIconEditor({ presenter }: CharacterProps) {
   const profession = presenter.getIconProfession();
   const dispatch = useAppDispatch();
   const professions = useAppSelector((state) => state.data.professions);
