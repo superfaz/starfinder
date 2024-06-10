@@ -6,19 +6,19 @@ import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { CharacterProps } from "../Props";
 
-export default function RaceHumansEditor({ presenter }: CharacterProps): JSX.Element {
+export default function RaceSelectableBonusEditor({ presenter }: CharacterProps): JSX.Element {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
-  function handleHumanBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
+  function handleSelectableBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
-    dispatch(mutators.updateHumanBonus(id));
+    dispatch(mutators.updateSelectableBonus(id));
   }
 
   return (
     <>
-      <Form.FloatingLabel controlId="humanBonus" label="Choix de la charactérisque">
-        <Form.Select value={presenter.getHumanStandardBonus() ?? ""} onChange={handleHumanBonusChange}>
+      <Form.FloatingLabel controlId="selectableBonus" label="Choix de la charactérisque">
+        <Form.Select value={presenter.getRaceSelectableBonus() ?? ""} onChange={handleSelectableBonusChange}>
           {data.abilityScores.map((abilityScore) => (
             <option key={abilityScore.id} value={abilityScore.id}>
               {abilityScore.name}
@@ -28,7 +28,7 @@ export default function RaceHumansEditor({ presenter }: CharacterProps): JSX.Ele
       </Form.FloatingLabel>
       <Stack direction="horizontal" className="right">
         <Badge bg="primary">
-          {findOrError(data.abilityScores, presenter.getHumanStandardBonus()).code}
+          {findOrError(data.abilityScores, presenter.getRaceSelectableBonus()).code}
           {" +2"}
         </Badge>
       </Stack>

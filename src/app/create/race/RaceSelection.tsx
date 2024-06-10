@@ -8,7 +8,7 @@ import { Badge } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { ModifierTypes, RaceModifier } from "model";
-import RaceHumansEditor from "./RaceHumansEditor";
+import RaceSelectableBonusEditor from "./RaceHumansEditor";
 import { useCharacterPresenter } from "../helpers";
 import { ReferenceComponent } from "../ReferenceComponent";
 
@@ -97,7 +97,7 @@ export function RaceSelection() {
               )}
             </Stack>
           )}
-          {presenter.isHumanStandard() && <RaceHumansEditor presenter={presenter} />}
+          {Object.keys(selectedVariant.abilityScores).length === 0 && <RaceSelectableBonusEditor presenter={presenter} />}
           {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
         </>
       )}
@@ -107,7 +107,11 @@ export function RaceSelection() {
           <hr />
           <Card>
             <picture>
-              <img alt="" src={"/" + selectedRace.id + "-male.png"} className="img-fluid" />
+              <img
+                alt=""
+                src={"/" + data.avatars.find((a) => a.tags.includes(selectedRace.id))?.image}
+                className="img-fluid"
+              />
             </picture>
           </Card>
         </>

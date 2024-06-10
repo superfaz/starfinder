@@ -73,12 +73,8 @@ export function computeMinimalAbilityScores(data: IClientDataSet, character: Cha
       score += selectedTheme.abilityScores[abilityScore.id] ?? 0;
     }
 
-    if (
-      character.raceVariant === "humans-standard" &&
-      character.raceOptions !== undefined &&
-      abilityScore.id === character.raceOptions.humanBonus
-    ) {
-      // Race: Human and Variant: Standard
+    if (character.raceOptions !== undefined && abilityScore.id === character.raceOptions.selectableBonus) {
+      // Variant with selectable bonus
       score += 2;
     }
 
@@ -216,12 +212,8 @@ export class CharacterPresenter {
     return this.cachedRaceVariant;
   }
 
-  isHumanStandard(): boolean {
-    return this.character.raceVariant === "humans-standard";
-  }
-
-  getHumanStandardBonus(): string | null {
-    return this.character.raceOptions?.humanBonus ?? null;
+  getRaceSelectableBonus(): string | null {
+    return this.character.raceOptions?.selectableBonus ?? null;
   }
 
   getLashuntaStudentSkill1(): string | null {

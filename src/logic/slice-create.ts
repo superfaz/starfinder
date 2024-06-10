@@ -42,8 +42,8 @@ const mainSlice = createSlice({
       state.character = updateRaceVariantImpl(state.data, state.character, action.payload);
     },
 
-    updateHumanBonus(state, action: PayloadAction<string>) {
-      state.character = updateHumanBonusImpl(state.data, state.character, action.payload);
+    updateSelectableBonus(state, action: PayloadAction<string>) {
+      state.character = updateSelectableBonusImpl(state.data, state.character, action.payload);
     },
 
     updateLashuntaStudentSkill1(state, action: PayloadAction<string>) {
@@ -394,8 +394,8 @@ function updateRaceImpl(data: IClientDataSet, character: Character, raceId: stri
   };
 
   // Special case - prepare the associated options
-  if (raceId === "humans") {
-    result.raceOptions = { humanBonus: data.abilityScores[0].id };
+  if (Object.keys(race.variants[0].abilityScores).length === 0) {
+    result.raceOptions = { selectableBonus: data.abilityScores[0].id };
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -421,6 +421,8 @@ function updateRaceVariantImpl(data: IClientDataSet, character: Character, varia
     return character;
   }
 
+  const race = findOrError(data.races, character.race);
+  const variant = findOrError(race.variants, variantId);
   const result: Character = {
     ...character,
     raceVariant: variantId,
@@ -428,8 +430,8 @@ function updateRaceVariantImpl(data: IClientDataSet, character: Character, varia
   };
 
   // Special case - prepare the associated options
-  if (variantId === "humans-standard") {
-    result.raceOptions = { humanBonus: data.abilityScores[0].id };
+  if (Object.keys(variant.abilityScores).length === 0) {
+    result.raceOptions = { selectableBonus: data.abilityScores[0].id };
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -437,7 +439,7 @@ function updateRaceVariantImpl(data: IClientDataSet, character: Character, varia
 }
 
 /**
- * Updates the ability score selected as a bonus for a human character.
+ * Updates the ability score selected as a bonus for race variant letting the user choose its bonus.
  *
  * Ensure that the ability scores are reset.
  *
@@ -446,10 +448,10 @@ function updateRaceVariantImpl(data: IClientDataSet, character: Character, varia
  * @param abilityScoreId - the identifier of the selected ability score
  * @returns The updated character
  */
-function updateHumanBonusImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
+function updateSelectableBonusImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
   const result: Character = {
     ...character,
-    raceOptions: { humanBonus: abilityScoreId },
+    raceOptions: { selectableBonus: abilityScoreId },
   };
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -870,8 +872,8 @@ class Updators {
     return this;
   }
 
-  updateHumanBonus(abilityScoreId: string) {
-    this._character = updateHumanBonusImpl(this.data, this._character, abilityScoreId);
+  updateSelectableBonus(abilityScoreId: string) {
+    this._character = updateSelectableBonusImpl(this.data, this._character, abilityScoreId);
     return this;
   }
 

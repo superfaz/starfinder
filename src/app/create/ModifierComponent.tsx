@@ -189,9 +189,11 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
     }
 
     case ModifierTypes.resistance: {
-      element.targetName = modifier.targets.map((t) => findOrError(data.damageTypes, t).name).join(", ");
+      // Target is a damage type
+      element.targetName = findOrError(data.damageTypes, modifier.target).name;
       break;
     }
+
     case ModifierTypes.speed:
       element.value = modifier.value * 1.5;
       break;
