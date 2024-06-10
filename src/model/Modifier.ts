@@ -45,6 +45,11 @@ export const SpeedModifierSchema = BaseValueModifierSchema.extend({
   type: z.literal(ModifierTypes.speed),
 }).strict();
 
+export const ResistanceModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.resistance),
+  target: DamageTypeIdSchema,
+}).strict();
+
 // #endregion
 // #region Modifier with bonus category
 
@@ -68,11 +73,6 @@ export const DamageModifierSchema = BaseCategoryModifierSchema.extend({
 
 export const InitiativeModifierSchema = BaseCategoryModifierSchema.extend({
   type: z.literal(ModifierTypes.initiative),
-}).strict();
-
-export const ResistanceModifierSchema = BaseCategoryModifierSchema.extend({
-  type: z.literal(ModifierTypes.resistance),
-  targets: z.array(DamageTypeIdSchema),
 }).strict();
 
 export const SavingThrowBonusModifierSchema = BaseCategoryModifierSchema.extend({
