@@ -17,6 +17,18 @@ const BaseValueModifierSchema = IModelSchema.extend({
   value: z.coerce.number(),
 });
 
+export const ArmorCheckPenaltyModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.armorCheckPenalty),
+}).strict();
+
+export const ArmorSpeedAdjustmentModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.armorSpeedAdjustment),
+}).strict();
+
+export const DamageReductionModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.damageReduction),
+}).strict();
+
 export const FeatCountModifierSchema = BaseValueModifierSchema.extend({
   type: z.literal(ModifierTypes.featCount),
 }).strict();
@@ -149,11 +161,14 @@ export const WeaponProficiencyModifierSchema = IModelSchema.extend({
 // #endregion
 
 export const EffectModifierSchema = z.discriminatedUnion("type", [
+  ArmorCheckPenaltyModifierSchema,
   ArmorClassModifierSchema,
+  ArmorSpeedAdjustmentModifierSchema,
   ArmorProficiencyModifierSchema,
   AttackModifierSchema,
   ClassSkillModifierSchema,
   DamageModifierSchema,
+  DamageReductionModifierSchema,
   EquipmentModifierSchema,
   FeatCountModifierSchema,
   FeatModifierSchema,

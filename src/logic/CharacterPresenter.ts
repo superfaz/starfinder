@@ -159,6 +159,7 @@ export class CharacterPresenter {
       shirrenObsessionSkill: "any",
       lashuntaStudentSkill1: "any",
       lashuntaStudentSkill2: "any",
+      halforcProfession: "any",
       iconProfession: "any",
       themelessSkill: "any",
       level: this.character.level,
@@ -226,6 +227,10 @@ export class CharacterPresenter {
 
   getShirrenObsessionSkill(): string | null {
     return this.character.raceOptions?.shirrenObsessionSkill ?? null;
+  }
+
+  getHalforcProfession(): string | null {
+    return this.character.raceOptions?.halforcProfession ?? null;
   }
 
   getPrimaryRaceTraits(): RaceFeature[] {

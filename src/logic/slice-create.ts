@@ -66,6 +66,14 @@ const mainSlice = createSlice({
       state.character = updateShirrenObsessionSkillImpl(state.data, state.character, action.payload);
     },
 
+    updateHalforcProfession(state, action: PayloadAction<string>) {
+      if (state.character.raceOptions === undefined) {
+        state.character.raceOptions = { halforcProfession: action.payload };
+      } else {
+        state.character.raceOptions.halforcProfession = action.payload;
+      }
+    },
+
     enableSecondaryTrait(state, action: PayloadAction<RaceFeature>) {
       state.character = enableSecondaryTraitImpl(state.character, action.payload);
     },

@@ -31,11 +31,14 @@ interface ModifierComponentElement {
 
 const displayLabelsForType: Record<ModifierType, string> = {
   ability: "Pouvoir",
+  armorCheckPenalty: "Malus d’armure aux tests",
   armorClass: "Classe d’armure",
   armorProficiency: "Port d’armure",
+  armorSpeedAdjustment: "Modificateur de vitesse d’armure",
   attack: "Jet d’attaque",
   classSkill: "Compétence de classe",
   damage: "Dégâts",
+  damageReduction: "Réduction des dégâts (RD)",
   equipment: "Équipement",
   feat: "Don",
   featCount: "Nombre de Dons",

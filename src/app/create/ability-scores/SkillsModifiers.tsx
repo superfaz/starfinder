@@ -23,6 +23,7 @@ export function FeatureDisplay({
   const dispatch = useAppDispatch();
   const modifiers = feature.modifiers.filter((m) => types.includes(m.type));
   const skills = useAppSelector((state) => state.data.skills);
+  const professions = presenter.getProfessionSkills();
 
   function handleLashuntaStudentSkill1(event: ChangeEvent<HTMLSelectElement>) {
     dispatch(mutators.updateLashuntaStudentSkill1(event.target.value));
@@ -34,6 +35,10 @@ export function FeatureDisplay({
 
   function handleShirrenObsessionSkill(event: ChangeEvent<HTMLSelectElement>) {
     dispatch(mutators.updateShirrenObsessionSkill(event.target.value));
+  }
+
+  function handleHalforcProfession(event: ChangeEvent<HTMLSelectElement>) {
+    dispatch(mutators.updateHalforcProfession(event.target.value));
   }
 
   function handleThemelessSkill(event: ChangeEvent<HTMLSelectElement>) {
@@ -89,6 +94,22 @@ export function FeatureDisplay({
               {skills.map((skill) => (
                 <option key={skill.id} value={skill.id}>
                   {skill.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.FloatingLabel>
+        </Card.Footer>
+      )}
+      {feature.id === "558ae3e2-3749-4234-bd70-9c7ce766ba10" && (
+        <Card.Footer>
+          <Form.FloatingLabel controlId="halforcProfession" label="Profession sélectionnée">
+            <Form.Select value={presenter.getHalforcProfession() ?? ""} onChange={handleHalforcProfession}>
+              <option value="" disabled>
+                Aucune
+              </option>
+              {professions.map((profession) => (
+                <option key={profession.id} value={profession.id}>
+                  {profession.fullName}
                 </option>
               ))}
             </Form.Select>
