@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import { displayBonus, findOrError } from "app/helpers";
 import { Badge } from "app/components";
 import { useAppSelector } from "logic";
-import { EquipmentArmor, EquipmentArmorIds, EquipmentDescriptor } from "model";
+import { EquipmentArmor, EquipmentArmorIds, EquipmentDescriptor, ModifierTypes, ofType } from "model";
 import { ValueComponent } from "./ValueComponent";
 import { CharacterProps } from "../Props";
 
@@ -49,6 +49,7 @@ function CardArmor({ descriptor }: Readonly<{ descriptor: EquipmentDescriptor }>
 
 export function CardArmorClass({ presenter }: CharacterProps) {
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
+  const damageTypes = useAppSelector((state) => state.data.damageTypes);
   const proficiencies = presenter.getArmorProficiencies();
   const texts = proficiencies.map((p) => findOrError(armorTypes, p).name);
   const armorClasses = {
@@ -56,6 +57,8 @@ export function CardArmorClass({ presenter }: CharacterProps) {
     kinetic: { value: presenter.getKineticArmorClass(), label: "Classe d’armure cinétique" },
     maneuvers: { value: presenter.getArmorClassAgainstCombatManeuvers(), label: "CA vs manoeuvres offensives" },
   };
+  const reductions = presenter.getModifiers().filter(ofType(ModifierTypes.damageReduction));
+  const resistances = presenter.getModifiers().filter(ofType(ModifierTypes.resistance));
   const armors = presenter.getArmors().filter((a) => a.secondaryType !== EquipmentArmorIds.upgrade);
 
   return (
@@ -66,13 +69,23 @@ export function CardArmorClass({ presenter }: CharacterProps) {
       <Card.Body className="position-relative small py-2">
         {texts.length > 0 && <span>Formations : {texts.join(", ")}</span>}
       </Card.Body>
-      <Card.Body className="position-relative">
+      <Card.Body className="position-relative py-2">
         <Row>
           {Object.entries(armorClasses).map(([key, { label, value }]) => (
             <ValueComponent key={key} label={label} className="col" value={value} />
           ))}
         </Row>
       </Card.Body>
+      {reductions.length > 0 && (
+        <Card.Body className="position-relative small py-2">
+          RD : {reductions.map((r) => r.value + "/—").join(", ")}
+        </Card.Body>
+      )}
+      {resistances.length > 0 && (
+        <Card.Body className="position-relative small py-2">
+          Résistances : {resistances.map((r) => r.value + " au " + findOrError(damageTypes, r.target).name).join(", ")}
+        </Card.Body>
+      )}
       {armors.map((descriptor) => (
         <CardArmor key={descriptor.id} descriptor={descriptor} />
       ))}
