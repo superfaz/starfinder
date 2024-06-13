@@ -3,19 +3,17 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import { Typeahead } from "react-bootstrap-typeahead";
+import Typeahead from "app/components/Typeahead";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { AbilityScoreId, AbilityScoreIds, Profession, isProfession, simpleHash } from "model";
-
-type NewOption = { id: string; name: string; customOption: true };
+import { AbilityScoreId, AbilityScoreIds, Profession, simpleHash } from "model";
 
 export function ProfessionSkills({ onClose }: Readonly<{ onClose: () => void }>) {
-  const professions = useAppSelector((state) => state.data.professions);
+  const professions: Profession[] = useAppSelector((state) => state.data.professions);
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   const dispatch = useAppDispatch();
   const [abilityScore, setAbilityScore] = useState<AbilityScoreId>(AbilityScoreIds.cha);
-  const [selectedProfession, setSelectedProfession] = useState<Array<Profession | NewOption>>([]);
+  const [selectedProfession, setSelectedProfession] = useState<string>("");
 
   const optionsForAbilityScores = useMemo(() => {
     return [AbilityScoreIds.cha, AbilityScoreIds.int, AbilityScoreIds.wis]
@@ -28,14 +26,14 @@ export function ProfessionSkills({ onClose }: Readonly<{ onClose: () => void }>)
   }, [abilityScore, professions]);
 
   function handleAddProfession() {
-    const selected = selectedProfession[0];
-    if (isProfession(selected)) {
+    const selected = professions.find((p) => p.name === selectedProfession);
+    if (selected) {
       dispatch(mutators.addProfessionSkill(selected));
     } else {
       const profession: Profession = {
-        id: "prof-" + simpleHash(selectedProfession[0].name),
+        id: "prof-" + simpleHash(selectedProfession),
         abilityScore: abilityScore,
-        name: selectedProfession[0].name,
+        name: selectedProfession,
       };
 
       dispatch(mutators.addProfessionSkill(profession));
@@ -46,7 +44,7 @@ export function ProfessionSkills({ onClose }: Readonly<{ onClose: () => void }>)
 
   function handleClose() {
     setAbilityScore(AbilityScoreIds.cha);
-    setSelectedProfession([]);
+    setSelectedProfession("");
     onClose();
   }
 
@@ -63,18 +61,13 @@ export function ProfessionSkills({ onClose }: Readonly<{ onClose: () => void }>)
             ))}
           </Form.Select>
         </Form.FloatingLabel>
-        <Form.FloatingLabel controlId="profName" label="Nom de la profession">
-          <Typeahead
-            id="profName"
-            allowNew={true}
-            clearButton={true}
-            newSelectionPrefix="Ajouter une profession : "
-            labelKey="name"
-            options={optionsForProfessions}
-            selected={selectedProfession}
-            onChange={(e) => setSelectedProfession(e as Profession[] | NewOption[])}
-          />
-        </Form.FloatingLabel>
+        <Typeahead
+          controlId="profName"
+          label="Nom de la profession"
+          options={optionsForProfessions}
+          value={selectedProfession}
+          onChange={setSelectedProfession}
+        />
         <Stack direction="horizontal" gap={2}>
           <Button variant="primary" onClick={handleAddProfession} disabled={selectedProfession.length == 0}>
             Ajouter aux compétences

@@ -46,6 +46,9 @@ export default function Typeahead<T extends INamedModel>(
       )}
 
       <Dropdown.Menu className="w-100">
+        {options.length === 0 && (
+          <Dropdown.Item onClick={() => props.onChange(props.value)}>Nouvelle entrée : {props.value}</Dropdown.Item>
+        )}
         {options.map((option) => (
           <Dropdown.Item key={option.id} onClick={() => props.onChange(option.name)}>
             {!props.renderItem && option.name}

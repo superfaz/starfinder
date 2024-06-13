@@ -1,11 +1,8 @@
 @use "bootstrap/scss/bootstrap.scss";
 
-@import "bootstrap-icons/font/bootstrap-icons.css";
+@use "bootstrap-icons/font/bootstrap-icons";
 
-@import "react-bootstrap-typeahead/css/Typeahead.css";
-@import "react-bootstrap-typeahead/css/Typeahead.bs5.css";
-
-@import "@splidejs/react-splide/css";
+@use "@splidejs/react-splide/css";
 
 $sf-red: #cc381b;
 $sf-blue: #245883;
