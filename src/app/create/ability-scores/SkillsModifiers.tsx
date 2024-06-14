@@ -14,7 +14,12 @@ const categories: Record<string, string> = {
   su: "SUR",
 };
 
-const types: string[] = [ModifierTypes.skill, ModifierTypes.classSkill, ModifierTypes.rankSkill];
+const types: string[] = [
+  ModifierTypes.classSkill,
+  ModifierTypes.rankSkill,
+  ModifierTypes.skill,
+  ModifierTypes.skillTrained,
+];
 
 export function FeatureDisplay({
   presenter,

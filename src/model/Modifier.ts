@@ -111,7 +111,7 @@ export const ArmorProficiencyModifierSchema = IModelSchema.extend({
 export const ClassSkillModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.classSkill),
   level: z.number().optional(),
-  target: z.string(),
+  target: IdSchema,
   doubleEffect: z.optional(z.enum(["rank", "bonus"])),
 }).strict();
 
@@ -127,7 +127,7 @@ export const FeatModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.feat),
   level: z.number().optional(),
   feat: IdSchema,
-  target: z.string().optional(),
+  target: IdSchema.optional(),
   extra: z.string().optional(),
 }).strict();
 
@@ -136,7 +136,7 @@ export type FeatModifier = z.infer<typeof FeatModifierSchema>;
 export const RankSkillModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.rankSkill),
   level: z.number().optional(),
-  target: z.string(),
+  target: IdSchema,
 }).strict();
 
 export const SizeModifierSchema = IModelSchema.extend({
@@ -145,10 +145,16 @@ export const SizeModifierSchema = IModelSchema.extend({
   target: SizeIdSchema,
 }).strict();
 
+export const SkillTrainedModifierSchema = IModelSchema.extend({
+  type: z.literal(ModifierTypes.skillTrained),
+  level: z.number().optional(),
+  target: IdSchema,
+}).strict();
+
 export const SpellModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.spell),
   level: z.number().optional(),
-  target: z.string(),
+  target: IdSchema,
   extra: z.string().optional(),
 }).strict();
 
@@ -182,6 +188,7 @@ export const EffectModifierSchema = z.discriminatedUnion("type", [
   SavingThrowBonusModifierSchema,
   SizeModifierSchema,
   SkillModifierSchema,
+  SkillTrainedModifierSchema,
   SpeedModifierSchema,
   SpellModifierSchema,
   StaminaModifierSchema,

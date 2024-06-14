@@ -53,6 +53,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   savingThrowBonus: "Jets de sauvegarde",
   size: "Taille",
   skill: "Compétence",
+  skillTrained: "Compétence entraînée",
   speed: "Vitesse de déplacement",
   spell: "Sort",
   stamina: "Points d'endurance",
@@ -176,9 +177,10 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
   };
 
   switch (modifier.type) {
-    case ModifierTypes.skill:
     case ModifierTypes.classSkill:
     case ModifierTypes.rankSkill:
+    case ModifierTypes.skill:
+    case ModifierTypes.skillTrained:
       // Target is a skill
       element.targetName = retrieveSkillName(presenter, data, modifier.target);
       break;
