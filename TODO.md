@@ -12,6 +12,10 @@ Race : Androide / Traits secondaires : Augmentations facilitées / Gestion de la
 
 Race : Androide / Traits secondaires : Polyglote / Gestion des langues supplémentaires
 
+Race : Demi-orques / Traits secondaires : Port d’armure facilité / Impact sur les armures
+
+Race : Gnomes / Traits secondaires : Entretenir les relations / Impact sur les compétences
+
 Thème / Ajouter les thèmes du guide des options
 
 Thème : Prêtre / Sélection de la divinité ou de la philosophie
