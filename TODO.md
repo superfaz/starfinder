@@ -42,6 +42,8 @@ Caractérisques / Méthode de génération : Aléatoire / A implémenter
 
 Caractérisques / Méthode de génération : Rapide / A implémenter
 
+Langues / Gestion des formats de langue
+
 Dons : Combat adaptatif / Sélection des trois dons
 
 Dons : Compétence synergique / Sélection des deux compétences
