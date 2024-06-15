@@ -210,6 +210,12 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       break;
     }
 
+    case ModifierTypes.weaponProficiency: {
+      // Target is a weapon type
+      element.targetName = findOrError(data.weaponTypes, modifier.target).name;
+      break;
+    }
+
     default:
     // Do nothing
   }
