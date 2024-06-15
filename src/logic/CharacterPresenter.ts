@@ -834,12 +834,12 @@ export class CharacterPresenter {
   }
 
   getWeaponProficiencies(): WeaponTypeId[] {
-    const selectedClass = this.getClass();
-    const modifiers = this.getModifiers()
+    const fromClass = this.getClass()?.weapons ?? [];
+    const fromModifiers = this.getModifiers()
       .filter(ofType(ModifierTypes.weaponProficiency))
       .map((m) => m.target);
 
-    return [...(selectedClass?.weapons ?? []), ...modifiers];
+    return Array.from(new Set([...fromClass, ...fromModifiers]));
   }
 
   /**

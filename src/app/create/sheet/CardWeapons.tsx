@@ -154,7 +154,11 @@ function CardWeapon({
 
 export function CardWeapons({ presenter }: CharacterProps) {
   const weaponTypes = useAppSelector((state) => state.data.weaponTypes);
-  const proficiencies = presenter.getWeaponProficiencies().map((p) => findOrError(weaponTypes, p).name);
+  const proficiencies = presenter
+    .getWeaponProficiencies()
+    .map((p) => findOrError(weaponTypes, p))
+    .sort((a, b) => a.order - b.order)
+    .map((p) => p.name);
   const weapons = presenter.getWeapons().filter((w) => w.secondaryType !== "ammunition");
 
   return (

@@ -16,6 +16,7 @@ export type WeaponTypeId = z.infer<typeof WeaponTypeIdSchema>;
 
 export const WeaponTypeSchema = INamedModelSchema.extend({
   id: WeaponTypeIdSchema,
+  order: z.number(),
 });
 
 export type WeaponType = z.infer<typeof WeaponTypeSchema>;
