@@ -10,6 +10,7 @@ export const RaceModifierSchema = z.discriminatedUnion("type", [HitPointsModifie
 export type RaceModifier = z.infer<typeof RaceModifierSchema>;
 
 export const RaceSchema = INamedModelSchema.extend({
+  category: z.enum(["core", "legacy", "other"]),
   description: DescriptionSchema,
   reference: ReferenceSchema,
   modifiers: z.array(RaceModifierSchema),
