@@ -5,12 +5,17 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
-import { displayBonus, findOrError } from "app/helpers";
+import { displayBonus, findOrError, groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { ModifierTypes, RaceModifier } from "model";
 import RaceSelectableBonusEditor from "./RaceHumansEditor";
 import { useCharacterPresenter } from "../helpers";
 import { ReferenceComponent } from "../ReferenceComponent";
+
+const labels = {
+  core: "Standard",
+  legacy: "Héritage",
+};
 
 function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
   const sizes = useAppSelector((state) => state.data.sizes);
@@ -42,6 +47,7 @@ export function RaceSelection() {
   const presenter = useCharacterPresenter();
   const selectedRace = presenter.getRace();
   const selectedVariant = presenter.getRaceVariant();
+  const groupedRaces = groupBy(data.races, (r) => r.category);
 
   function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
@@ -59,10 +65,14 @@ export function RaceSelection() {
       <Form.FloatingLabel controlId="race" label="Race">
         <Form.Select value={selectedRace?.id ?? ""} onChange={handleRaceChange}>
           {selectedRace === null && <option value=""></option>}
-          {data.races.map((race) => (
-            <option key={race.id} value={race.id}>
-              {race.name}
-            </option>
+          {Object.entries(groupedRaces).map(([category, races]) => (
+            <optgroup key={category} label={labels[category as "core" | "legacy"]}>
+              {races.map((race) => (
+                <option key={race.id} value={race.id}>
+                  {race.name}
+                </option>
+              ))}
+            </optgroup>
           ))}
         </Form.Select>
       </Form.FloatingLabel>
@@ -97,7 +107,9 @@ export function RaceSelection() {
               )}
             </Stack>
           )}
-          {Object.keys(selectedVariant.abilityScores).length === 0 && <RaceSelectableBonusEditor presenter={presenter} />}
+          {Object.keys(selectedVariant.abilityScores).length === 0 && (
+            <RaceSelectableBonusEditor presenter={presenter} />
+          )}
           {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
         </>
       )}
