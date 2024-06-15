@@ -2,6 +2,7 @@
   {
     "id": "androids",
     "name": "Androïdes",
+    "category": "core",
     "description": "Personnes artificielles composées d’éléments mécaniques, autrefois construites pour en faire des serviteurs mais à présent reconnues comme citoyens à part entière.",
     "reference": { "book": "base", "page": 1 },
     "modifiers": [{ "id": "c1f9822a-bb63-4711-abdb-28e12155fff3", "type": "hitPoints", "value": 4 }],
@@ -176,6 +177,7 @@
   {
     "id": "humans",
     "name": "Humains",
+    "category": "core",
     "description": "Race extrêmement polyvalente et capable de s’adapter dont les membres n’ont de cesse d’explorer et de se répandre.",
     "reference": { "book": "base", "page": 1 },
     "modifiers": [{ "id": "c1f9822a-bb63-4711-abdb-28e12155fff3", "type": "hitPoints", "value": 4 }],
