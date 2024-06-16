@@ -1,30 +1,37 @@
 [
   {
     "id": "basic",
+    "order": 1,
     "name": "Armes de corps à corps simples"
   },
   {
     "id": "advanced",
+    "order": 2,
     "name": "Armes de corps à corps évoluées"
   },
   {
     "id": "small",
+    "order": 3,
     "name": "Armes légères"
   },
   {
     "id": "long",
+    "order": 4,
     "name": "Armes longues"
   },
   {
     "id": "heavy",
+    "order": 5,
     "name": "Armes lourdes"
   },
   {
     "id": "sniper",
+    "order": 6,
     "name": "Armes de précision"
   },
   {
     "id": "grenade",
+    "order": 7,
     "name": "Grenades"
   }
 ]
