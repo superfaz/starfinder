@@ -20,6 +20,8 @@ Thème / Ajouter les thèmes du guide des options
 
 Thème : Prêtre / Sélection de la divinité ou de la philosophie
 
+Classe / Ajouter les archétypes
+
 Classe / Ajouter les classes du guide des options
 
 Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation
@@ -88,7 +90,9 @@ Equipement : Armures / Améliorations d'armure / Gérer la consommation
 
 Equipement : Armures / Améliorations d'armure / Gérer les modifiers associés
 
-Equipment : Autres / Ajouter tous les autres équipments
+Equipement : Autres / Ajouter tous les autres équipments
+
+Equipement : Autres / Augmentations : Biotechs / Ajouter et supporter les Bio-chaînons adaptatifs
 
 ## Level increase
 
