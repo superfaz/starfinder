@@ -25,6 +25,7 @@ export * from "./EquipmentAugmentation";
 export * from "./EquipmentBase";
 export * from "./EquipmentDescriptor";
 export * from "./EquipmentMaterial";
+export * from "./EquipmentOther";
 export * from "./EquipmentWeapon";
 export * from "./EquipmentWeaponFusion";
 export * from "./FeatTemplate";

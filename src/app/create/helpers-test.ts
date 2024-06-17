@@ -6,6 +6,7 @@ import {
   AlignmentSchema,
   ArmorTypeSchema,
   AvatarSchema,
+  BodyPartSchema,
   BonusCategorySchema,
   BookSchema,
   Character,
@@ -33,6 +34,7 @@ import abilityScores from "../../../mocks/ability-scores.json";
 import alignments from "../../../mocks/alignments.json";
 import armorTypes from "../../../mocks/armor-types.json";
 import avatars from "../../../mocks/avatars.json";
+import bodyParts from "../../../mocks/body-parts.json";
 import bonusCategories from "../../../mocks/bonus-categories.json";
 import books from "../../../mocks/books.json";
 import classes from "../../../mocks/classes.json";
@@ -60,6 +62,7 @@ const data: IClientDataSet = {
   alignments: AlignmentSchema.array().parse(alignments),
   armorTypes: ArmorTypeSchema.array().parse(armorTypes),
   avatars: AvatarSchema.array().parse(avatars),
+  bodyParts: BodyPartSchema.array().parse(bodyParts),
   bonusCategories: BonusCategorySchema.array().parse(bonusCategories),
   books: BookSchema.array().parse(books),
   classes: ClassSchema.array().parse(classes),

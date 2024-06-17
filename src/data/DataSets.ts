@@ -69,6 +69,10 @@ import {
   INamedModel,
   BonusCategorySchema,
   BonusCategory,
+  EquipmentAugmentationSchema,
+  EquipmentAugmentation,
+  BodyPartSchema,
+  BodyPart,
 } from "model";
 import { IDescriptor } from "./interfaces";
 
@@ -77,6 +81,7 @@ export const DataSets = {
   Alignment: { type: "ordered", name: "alignments", schema: AlignmentSchema } as IDescriptor<Alignment>,
   ArmorType: { type: "ordered", name: "armor-types", schema: ArmorTypeSchema } as IDescriptor<ArmorType>,
   Avatar: { type: "simple", name: "avatars", schema: AvatarSchema } as IDescriptor<Avatar>,
+  BodyParts: { type: "named", name: "body-parts", schema: BodyPartSchema } as IDescriptor<BodyPart>,
   BonusCategories: {
     type: "named",
     name: "bonus-categories",
@@ -117,6 +122,11 @@ export const DataSets = {
     name: "equipment-material",
     schema: EquipmentMaterialSchema,
   } as IDescriptor<EquipmentMaterial>,
+  EquipmentOtherAugmentation: {
+    type: "simple",
+    name: "equipment-others-augmentations",
+    schema: EquipmentAugmentationSchema,
+  } as IDescriptor<EquipmentAugmentation>,
   EquipmentWeaponBasic: {
     type: "simple",
     name: "equipment-weapons-basic",

@@ -9,6 +9,7 @@ import { WeaponMeleeDisplay } from "./WeaponMeleeDisplay";
 import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
 import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
 import { ArmorUpgradeDisplay } from "./ArmorUpgradeDisplay";
+import { OtherAugmentationDisplay } from "./OtherAugmentationDisplay";
 
 export function EquipmentDisplay({ descriptor }: Readonly<{ descriptor: EquipmentDescriptor }>) {
   if (descriptor.category === EquipmentCategories.weapon) {
@@ -41,6 +42,12 @@ export function EquipmentDisplay({ descriptor }: Readonly<{ descriptor: Equipmen
       default:
         return null;
     }
+  } else if (descriptor.category === EquipmentCategories.other) {
+    if (descriptor.secondaryType === "augmentation") {
+      return <OtherAugmentationDisplay descriptor={descriptor} selected={false} />;
+    } else {
+      return null;
+    }
   } else {
     return null;
   }
@@ -62,7 +69,10 @@ export function EquipmentSelected() {
         <EquipmentDisplay key={armor.id} descriptor={armor} />
       ))}
       <h2>Autres</h2>
-      <em>Pas d&apos;autre objet possédé</em>
+      {presenter.getEquipmentOthers().length === 0 && <em>Pas d&apos;autre objet possédé</em>}
+      {presenter.getEquipmentOthers().map((other) => (
+        <EquipmentDisplay key={other.id} descriptor={other} />
+      ))}
     </>
   );
 }

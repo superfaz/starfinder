@@ -3,6 +3,7 @@ import type {
   Alignment,
   ArmorType,
   Avatar,
+  BodyPart,
   BonusCategory,
   Book,
   Class,
@@ -29,6 +30,7 @@ export interface IClientDataSet {
   alignments: Alignment[];
   armorTypes: ArmorType[];
   avatars: Avatar[];
+  bodyParts: BodyPart[];
   bonusCategories: BonusCategory[];
   books: Book[];
   classes: Class[];
@@ -53,6 +55,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   alignments: [],
   armorTypes: [],
   avatars: [],
+  bodyParts: [],
   bonusCategories: [],
   books: [],
   classes: [],
@@ -78,6 +81,7 @@ export async function convert(dataSource: IDataSource): Promise<IClientDataSet> 
     alignments: await dataSource.get(DataSets.Alignment).getAll(),
     armorTypes: await dataSource.get(DataSets.ArmorType).getAll(),
     avatars: await dataSource.get(DataSets.Avatar).getAll(),
+    bodyParts: await dataSource.get(DataSets.BodyParts).getAll(),
     bonusCategories: await dataSource.get(DataSets.BonusCategories).getAll(),
     books: await dataSource.get(DataSets.Book).getAll(),
     classes: await dataSource.get(DataSets.Class).getAll(),

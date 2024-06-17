@@ -1,9 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
-import { ArmorTypeId, Critical, Damage, EquipmentWeaponFusion, SizeId, Special } from "model";
+import {
+  ArmorTypeId,
+  Critical,
+  Damage,
+  EquipmentAugmentationCategory,
+  EquipmentAugmentationSystem,
+  EquipmentWeaponFusion,
+  SizeId,
+  Special,
+} from "model";
 
 export function DisplayDamageShort({ damage }: Readonly<{ damage?: Damage }>) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
@@ -116,4 +125,39 @@ export function DisplayArmorTypes({ types }: Readonly<{ types: ArmorTypeId[] }>)
     .map((t) => findOrError(armorTypes, t).name)
     .map((n) => n.replace("Armures ", "").toLowerCase())
     .join(", ");
+}
+
+export function DisplaySystem({ system }: Readonly<{ system: EquipmentAugmentationSystem }>) {
+  const bodyParts = useAppSelector((state) => state.data.bodyParts);
+  const bodyPart = findOrError(bodyParts, system.part);
+
+  if (system.quantity === "all") {
+    return bodyPart.name + " (tous)";
+  } else if (system.quantity === 1) {
+    return bodyPart.name;
+  } else {
+    throw new Error(`Invalid quantity for ${system.id}: ${system.quantity}`);
+  }
+}
+
+export function DisplaySystems({ systems }: Readonly<{ systems: EquipmentAugmentationSystem[] }>) {
+  return systems.map((system, index) => (
+    <Fragment key={system.id}>
+      {index > 0 && ", "}
+      <DisplaySystem system={system} />
+    </Fragment>
+  ));
+}
+
+export function DisplayAugmentationCategory({ category }: Readonly<{ category: EquipmentAugmentationCategory }>) {
+  switch (category) {
+    case "biotech":
+      return "Biotechnologie";
+    case "cybernetic":
+      return "Cybernétique";
+    case "personal":
+      return "Personnelle";
+    default:
+      return category;
+  }
 }

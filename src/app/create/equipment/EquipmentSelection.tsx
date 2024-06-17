@@ -22,6 +22,8 @@ import {
   EquipmentCategorySchema,
   EquipmentArmorId,
   EquipmentArmorIds,
+  EquipmentOtherId,
+  EquipmentOtherIds,
 } from "model";
 import { useCharacterPresenter } from "../helpers";
 import { ArmorNormalTable } from "./ArmorNormalTable";
@@ -32,6 +34,7 @@ import { WeaponRangedTable } from "./WeaponRangedTable";
 import { WeaponSolarianTable } from "./WeaponSolarianTable";
 import { ArmorPoweredTable } from "./ArmorPoweredTable";
 import { ArmorUpgradeTable } from "./ArmorUpgradeTable";
+import { OtherAugmentationTable } from "./OtherAugmentationTable";
 
 function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
   if (a.level !== b.level) {
@@ -42,7 +45,7 @@ function equipmentSort(a: EquipmentBase, b: EquipmentBase): number {
 }
 
 interface SubMenu {
-  id: EquipmentWeaponId | EquipmentArmorId;
+  id: EquipmentWeaponId | EquipmentArmorId | EquipmentOtherId;
   name: string;
   uri: string;
   proficient: boolean;
@@ -152,8 +155,15 @@ function createMenu(presenter: CharacterPresenter): Menu[] {
     {
       id: "other",
       name: "Autres",
-      disabled: true,
-      submenu: [],
+      disabled: false,
+      submenu: [
+        {
+          id: EquipmentOtherIds.augmentation,
+          name: "Augmentations",
+          uri: "/api/equipment/others/augmentation",
+          proficient: true,
+        },
+      ],
     },
   ];
 }
@@ -289,6 +299,9 @@ export function EquipmentSelection() {
       )}
       {equipmentType === EquipmentCategories.armor && subType === EquipmentArmorIds.upgrade && (
         <ArmorUpgradeTable equipments={filtered} />
+      )}
+      {equipmentType === EquipmentCategories.other && subType === EquipmentOtherIds.augmentation && (
+        <OtherAugmentationTable equipments={filtered} />
       )}
     </Stack>
   );
