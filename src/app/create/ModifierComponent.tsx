@@ -36,7 +36,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   armorProficiency: "Port d’armure",
   armorSpeedAdjustment: "Modificateur de vitesse d’armure",
   attack: "Jet d’attaque",
-  bodyParts: "Organe",
+  bodyPart: "Organe",
   classSkill: "Compétence de classe",
   damage: "Dégâts",
   damageReduction: "Réduction des dégâts (RD)",
@@ -186,7 +186,7 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
       element.targetName = retrieveSkillName(presenter, data, modifier.target);
       break;
 
-    case ModifierTypes.bodyParts:
+    case ModifierTypes.bodyPart:
       // Target is a body part
       element.targetName = findOrError(data.bodyParts, modifier.target).name;
       break;

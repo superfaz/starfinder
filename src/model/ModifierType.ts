@@ -7,7 +7,7 @@ export const ModifierTypeSchema = z.enum([
   "armorSpeedAdjustment",
   "attack",
   "armorProficiency",
-  "bodyParts",
+  "bodyPart",
   "classSkill",
   "damage",
   "damageReduction",

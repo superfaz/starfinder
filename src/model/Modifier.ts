@@ -26,8 +26,8 @@ export const ArmorSpeedAdjustmentModifierSchema = BaseValueModifierSchema.extend
   type: z.literal(ModifierTypes.armorSpeedAdjustment),
 }).strict();
 
-export const BodyPartsModifierSchema = BaseValueModifierSchema.extend({
-  type: z.literal(ModifierTypes.bodyParts),
+export const BodyPartModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.bodyPart),
   target: BodyPartIdSchema,
 }).strict();
 
@@ -178,7 +178,7 @@ export const EffectModifierSchema = z.discriminatedUnion("type", [
   ArmorSpeedAdjustmentModifierSchema,
   ArmorProficiencyModifierSchema,
   AttackModifierSchema,
-  BodyPartsModifierSchema,
+  BodyPartModifierSchema,
   ClassSkillModifierSchema,
   DamageModifierSchema,
   DamageReductionModifierSchema,
