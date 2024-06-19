@@ -2,6 +2,8 @@ import { z } from "zod";
 import { EquipmentBaseSchema } from "./EquipmentBase";
 import { BodyPartIdSchema } from "./BodyPart";
 import { IdSchema } from "./helper";
+import { ModifierSchema } from "./Modifier";
+import { PrerequisiteSchema } from "./Prerequisite";
 
 export const EquipmentAugmentationCategorySchema = z.enum(["biotech", "cybernetic", "personal"]);
 
@@ -18,6 +20,8 @@ export type EquipmentAugmentationSystem = z.infer<typeof EquipmentAugmentationSy
 export const EquipmentAugmentationSchema = EquipmentBaseSchema.extend({
   category: EquipmentAugmentationCategorySchema,
   systems: z.array(EquipmentAugmentationSystemSchema),
+  prerequisites: z.optional(z.array(PrerequisiteSchema)),
+  modifiers: z.optional(z.array(ModifierSchema)),
 });
 
 export type EquipmentAugmentation = z.infer<typeof EquipmentAugmentationSchema>;

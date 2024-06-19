@@ -10,6 +10,7 @@ import { DescriptionSchema, IdSchema } from "./helper";
 import { SizeIdSchema } from "./Size";
 import { INamedModelSchema } from "./INamedModel";
 import { EquipmentSchema } from "./Equipment";
+import { BodyPartIdSchema } from "./BodyPart";
 
 // #region Modifier with value
 const BaseValueModifierSchema = IModelSchema.extend({
@@ -23,6 +24,11 @@ export const ArmorCheckPenaltyModifierSchema = BaseValueModifierSchema.extend({
 
 export const ArmorSpeedAdjustmentModifierSchema = BaseValueModifierSchema.extend({
   type: z.literal(ModifierTypes.armorSpeedAdjustment),
+}).strict();
+
+export const BodyPartsModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.bodyParts),
+  target: BodyPartIdSchema,
 }).strict();
 
 export const DamageReductionModifierSchema = BaseValueModifierSchema.extend({
@@ -51,10 +57,6 @@ export const ResolveModifierSchema = BaseValueModifierSchema.extend({
 
 export const StaminaModifierSchema = BaseValueModifierSchema.extend({
   type: z.literal(ModifierTypes.stamina),
-}).strict();
-
-export const SpeedModifierSchema = BaseValueModifierSchema.extend({
-  type: z.literal(ModifierTypes.speed),
 }).strict();
 
 export const ResistanceModifierSchema = BaseValueModifierSchema.extend({
@@ -98,6 +100,10 @@ export const SkillModifierSchema = BaseCategoryModifierSchema.extend({
 }).strict();
 
 export type SkillModifier = z.infer<typeof SkillModifierSchema>;
+
+export const SpeedModifierSchema = BaseCategoryModifierSchema.extend({
+  type: z.literal(ModifierTypes.speed),
+}).strict();
 
 // #endregion
 // #region Other simple modifiers
@@ -172,6 +178,7 @@ export const EffectModifierSchema = z.discriminatedUnion("type", [
   ArmorSpeedAdjustmentModifierSchema,
   ArmorProficiencyModifierSchema,
   AttackModifierSchema,
+  BodyPartsModifierSchema,
   ClassSkillModifierSchema,
   DamageModifierSchema,
   DamageReductionModifierSchema,
