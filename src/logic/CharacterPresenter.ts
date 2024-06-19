@@ -649,9 +649,15 @@ export class CharacterPresenter {
         return !!selectedClass && selectedClass.armors.includes(prerequisite.target);
       }
 
-      case PrerequisiteTypes.arms:
-        // TODO: Manage other cases
-        return this.character.race === "khasathas";
+      case PrerequisiteTypes.arms: {
+        const count =
+          findOrError(this.data.bodyParts, "arm").default +
+          this.getModifiers()
+            .filter(ofType(ModifierTypes.bodyPart))
+            .filter((m) => m.target === "arm")
+            .reduce((acc, m) => acc + m.value, 0);
+        return count >= prerequisite.value;
+      }
 
       case PrerequisiteTypes.baseAttack: {
         const baseAttack = this.getAttackBonuses()?.base;
