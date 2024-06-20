@@ -31,6 +31,7 @@ interface ModifierComponentElement {
 
 const displayLabelsForType: Record<ModifierType, string> = {
   ability: "Pouvoir",
+  abilityScore: "Caractéristique",
   armorCheckPenalty: "Malus d’armure aux tests",
   armorClass: "Classe d’armure",
   armorProficiency: "Port d’armure",
@@ -178,6 +179,11 @@ export default function ModifierComponent({ modifier }: Readonly<{ modifier: Mod
   };
 
   switch (modifier.type) {
+    case ModifierTypes.abilityScore:
+      // Target is an ability score
+      element.targetName = findOrError(data.abilityScores, modifier.target).name;
+      break;
+
     case ModifierTypes.classSkill:
     case ModifierTypes.rankSkill:
     case ModifierTypes.skill:

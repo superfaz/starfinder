@@ -2,10 +2,14 @@ import { z } from "zod";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { DescriptionSchema, IdSchema, ReferenceSchema } from "./helper";
 import { INamedModelSchema } from "./INamedModel";
-import { HitPointsModifierSchema, SizeModifierSchema } from "./Modifier";
+import { BodyPartModifierSchema, HitPointsModifierSchema, SizeModifierSchema } from "./Modifier";
 import { VariantSchema } from "./Variant";
 
-export const RaceModifierSchema = z.discriminatedUnion("type", [HitPointsModifierSchema, SizeModifierSchema]);
+export const RaceModifierSchema = z.discriminatedUnion("type", [
+  BodyPartModifierSchema,
+  HitPointsModifierSchema,
+  SizeModifierSchema,
+]);
 
 export type RaceModifier = z.infer<typeof RaceModifierSchema>;
 

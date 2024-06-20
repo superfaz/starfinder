@@ -94,6 +94,8 @@ Equipement : Autres / Ajouter tous les autres équipments
 
 Equipement : Autres / Augmentations : Biotechs / Ajouter et supporter les Bio-chaînons adaptatifs
 
+Equipement : Autres / Augmentations : Biotechs / Glande de dragon : Gérer la sélection du type de dégâts
+
 ## Level increase
 
 Thème : Sans thème / Avantage : Etudes approfondies / Choix de la compétence

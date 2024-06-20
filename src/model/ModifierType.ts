@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ModifierTypeSchema = z.enum([
   "ability",
+  "abilityScore",
   "armorCheckPenalty",
   "armorClass",
   "armorSpeedAdjustment",

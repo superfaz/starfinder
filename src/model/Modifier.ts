@@ -11,12 +11,18 @@ import { SizeIdSchema } from "./Size";
 import { INamedModelSchema } from "./INamedModel";
 import { EquipmentSchema } from "./Equipment";
 import { BodyPartIdSchema } from "./BodyPart";
+import { AbilityScoreIdSchema } from "./AbilityScore";
 
 // #region Modifier with value
 const BaseValueModifierSchema = IModelSchema.extend({
   level: z.number().optional(),
   value: z.coerce.number(),
 });
+
+export const AbilityScoreModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.abilityScore),
+  target: AbilityScoreIdSchema,
+}).strict();
 
 export const ArmorCheckPenaltyModifierSchema = BaseValueModifierSchema.extend({
   type: z.literal(ModifierTypes.armorCheckPenalty),
@@ -173,6 +179,7 @@ export const WeaponProficiencyModifierSchema = IModelSchema.extend({
 // #endregion
 
 export const EffectModifierSchema = z.discriminatedUnion("type", [
+  AbilityScoreModifierSchema,
   ArmorCheckPenaltyModifierSchema,
   ArmorClassModifierSchema,
   ArmorSpeedAdjustmentModifierSchema,
