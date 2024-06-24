@@ -18,6 +18,7 @@ export const EquipmentAugmentationSystemSchema = z.object({
 export type EquipmentAugmentationSystem = z.infer<typeof EquipmentAugmentationSystemSchema>;
 
 export const EquipmentAugmentationSchema = EquipmentBaseSchema.extend({
+  type: z.literal("augmentation"),
   category: EquipmentAugmentationCategorySchema,
   systems: z.array(EquipmentAugmentationSystemSchema),
   prerequisites: z.optional(z.array(PrerequisiteSchema)),

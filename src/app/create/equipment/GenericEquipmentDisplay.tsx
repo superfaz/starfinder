@@ -129,7 +129,7 @@ export function GenericEquipmentDisplay({
             <Col className="align-self-center text-center">
               <Credits value={descriptor.unitaryCost} />
             </Col>
-            <Col>
+            <Col className="text-end">
               {!selected && descriptor.type === "consumable" && (
                 <InputGroup>
                   <Button variant="outline-secondary" onClick={handleDecreaseClick}>
@@ -148,10 +148,12 @@ export function GenericEquipmentDisplay({
                 </InputGroup>
               )}
               {!selected && descriptor.type !== "consumable" && (
-                <ButtonGroup className="right">
-                  <Link className="text-nowrap btn btn-secondary" href={`/create/equipment/${descriptor.id}`}>
-                    <i className="bi-pencil"></i> Modifier
-                  </Link>
+                <ButtonGroup>
+                  {descriptor.category !== "other" && (
+                    <Link className="text-nowrap btn btn-secondary" href={`/create/equipment/${descriptor.id}`}>
+                      <i className="bi-pencil"></i> Modifier
+                    </Link>
+                  )}
                   <Button variant="outline-secondary" onClick={handleDecreaseClick}>
                     <i className="bi-x-lg"></i>
                   </Button>
