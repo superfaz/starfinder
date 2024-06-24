@@ -12,6 +12,7 @@ import { INamedModelSchema } from "./INamedModel";
 import { BodyPartIdSchema } from "./BodyPart";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { EquipmentWeaponSchema } from "./EquipmentWeapon";
+import { EquipmentArmorSchema } from "./EquipmentArmor";
 
 // #region Modifier with value
 const BaseValueModifierSchema = IModelSchema.extend({
@@ -130,7 +131,7 @@ export const ClassSkillModifierSchema = IModelSchema.extend({
 export const EquipmentModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.equipment),
   level: z.number().optional(),
-  equipment: EquipmentWeaponSchema,
+  equipment: z.union([EquipmentArmorSchema, EquipmentWeaponSchema]),
 }).strict();
 
 export type EquipmentModifier = z.infer<typeof EquipmentModifierSchema>;
