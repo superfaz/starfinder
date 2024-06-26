@@ -1,13 +1,10 @@
-"use client";
-
-import { useCharacterPresenter } from "../helpers";
+import { Metadata } from "next";
 import { EquipmentSelection } from "./EquipmentSelection";
 
-export default function Page() {
-  const presenter = useCharacterPresenter();
-  if (presenter.getRace() === null || presenter.getTheme() === null || presenter.getClass() === null) {
-    return null;
-  }
+export const metadata: Metadata = {
+  title: "Sélection de l'équipement",
+};
 
+export default function Page() {
   return <EquipmentSelection />;
 }

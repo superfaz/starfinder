@@ -1,16 +1,13 @@
-"use client";
-
+import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
 import { ClassSelection } from "./ClassSelection";
 import { ClassDetails } from "./ClassDetails";
-import { useCharacterPresenter } from "../helpers";
+
+export const metadata: Metadata = {
+  title: "Sélection de la classe",
+};
 
 export default function Page() {
-  const presenter = useCharacterPresenter();
-  if (presenter.getRace() === null || presenter.getTheme() === null) {
-    return null;
-  }
-
   return (
     <>
       <Col lg={3}>

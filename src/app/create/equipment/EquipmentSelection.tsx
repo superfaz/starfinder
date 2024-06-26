@@ -196,6 +196,10 @@ export function EquipmentSelection() {
       });
   }, [subMenuEntry]);
 
+  if (presenter.getClass() === null) {
+    return null;
+  }
+
   function handleEquipmentTypeChange(event: ChangeEvent<HTMLSelectElement>) {
     setEquipments([]);
     setEquipmentType(EquipmentCategorySchema.parse(event.target.value));

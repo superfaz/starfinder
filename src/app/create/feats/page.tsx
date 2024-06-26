@@ -1,17 +1,14 @@
-"use client";
-
+import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
-import { useCharacterPresenter } from "../helpers";
 import { FeatsInherited } from "./FeatsInherited";
 import { FeatsSelected } from "./FeatsSelected";
 import { FeatsSelection } from "./FeatsSelection";
 
-export default function Page() {
-  const presenter = useCharacterPresenter();
-  if (presenter.getRace() === null || presenter.getTheme() === null || presenter.getClass() === null) {
-    return null;
-  }
+export const metadata: Metadata = {
+  title: "Sélection des dons",
+};
 
+export default function Page() {
   return (
     <>
       <Col lg={3}>

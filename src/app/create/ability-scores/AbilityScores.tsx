@@ -16,6 +16,10 @@ export function AbilityScores() {
   const data = useAppSelector((state) => state.data);
   const dispatch = useAppDispatch();
 
+  if (presenter.getClass() === null) {
+    return null;
+  }
+
   if (data === null) {
     return <div>Loading...</div>;
   }

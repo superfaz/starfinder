@@ -9,11 +9,11 @@ import { useCharacterPresenter } from "../helpers";
 
 export function Avatar() {
   const presenter = useCharacterPresenter();
-  const data = useAppSelector((state) => state.data);
+  const avatars = useAppSelector((state) => state.data.avatars);
   const dispatch = useAppDispatch();
 
-  if (data === null) {
-    return <div>Loading...</div>;
+  if (presenter.getClass() === null) {
+    return null;
   }
 
   const selectedRace = presenter.getRace();
@@ -21,13 +21,13 @@ export function Avatar() {
     return null;
   }
 
-  const avatars = data.avatars.filter((avatar) => avatar.tags.includes(selectedRace.id));
+  const filteredAvatars = avatars.filter((avatar) => avatar.tags.includes(selectedRace.id));
   const avatar = presenter.getAvatar();
-  const index = avatar === null ? 0 : avatars.findIndex((c) => c.id === avatar.id);
+  const index = avatar === null ? 0 : filteredAvatars.findIndex((c) => c.id === avatar.id);
 
   function handleAvatarChange(e: ChangeEvent<HTMLInputElement>): void {
     const index = parseInt(e.target.value);
-    const avatar = avatars[index];
+    const avatar = filteredAvatars[index];
     dispatch(mutators.updateAvatar(avatar.id));
   }
 
@@ -36,13 +36,13 @@ export function Avatar() {
       <h2>Avatar</h2>
       <Card>
         <picture>
-          <img alt="avatar" src={"/" + avatars[index].image} className="img-fluid" />
+          <img alt="avatar" src={"/" + filteredAvatars[index].image} className="img-fluid" />
         </picture>
         <Card.Body>
           <Form.Range
             aria-label="Avatar"
             min={0}
-            max={avatars.length - 1}
+            max={filteredAvatars.length - 1}
             step={1}
             value={index}
             onChange={handleAvatarChange}

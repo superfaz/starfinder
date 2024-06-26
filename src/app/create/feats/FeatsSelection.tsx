@@ -16,12 +16,16 @@ import { Stack } from "react-bootstrap";
 export function FeatsSelection() {
   const presenter = useCharacterPresenter();
   const data = useAppSelector((state) => state.data);
-  const featPresenter = new FeatPresenter(data, presenter);
-  const allFeats = featPresenter.getFeatTemplates();
-
   const [category, setCategory] = useState<"general" | "combat" | "all">("all");
   const [prerequisite, setPrerequisite] = useState<"available" | "blocked" | "all">("available");
   const [search, setSearch] = useState<string>("");
+
+  if (presenter.getClass() === null) {
+    return null;
+  }
+
+  const featPresenter = new FeatPresenter(data, presenter);
+  const allFeats = featPresenter.getFeatTemplates();
 
   let categoryFilter: (feat: FeatTemplate) => boolean;
   if (category === "combat") {

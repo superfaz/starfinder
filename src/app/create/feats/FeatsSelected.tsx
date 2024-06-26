@@ -6,6 +6,11 @@ import { FeatComponent } from "./FeatComponent";
 
 export function FeatsSelected() {
   const presenter = useCharacterPresenter();
+
+  if (presenter.getClass() === null) {
+    return null;
+  }
+
   const feats = presenter.getSelectedFeats();
   const featCount = presenter.getSelectableFeatCount();
 

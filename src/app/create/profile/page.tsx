@@ -1,17 +1,14 @@
-"use client";
-
+import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
-import { useCharacterPresenter } from "../helpers";
 import { Profile } from "./Profile";
 import { Avatar } from "./Avatar";
 import { Description } from "./Description";
 
-export default function Page() {
-  const presenter = useCharacterPresenter();
-  if (presenter.getRace() === null || presenter.getTheme() === null || presenter.getClass() === null) {
-    return null;
-  }
+export const metadata: Metadata = {
+  title: "Définition du profil",
+};
 
+export default function Page() {
   return (
     <>
       <Col lg={3}>

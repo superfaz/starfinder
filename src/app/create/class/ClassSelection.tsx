@@ -51,6 +51,10 @@ export function ClassSelection() {
   const presenter = useCharacterPresenter();
   const dispatch = useAppDispatch();
 
+  if (presenter.getTheme() === null) {
+    return null;
+  }
+
   const selectedClass = presenter.getClass();
 
   function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {

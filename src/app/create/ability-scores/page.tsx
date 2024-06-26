@@ -1,18 +1,15 @@
-"use client";
-
+import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
-import { useCharacterPresenter } from "../helpers";
 import { AbilityScores } from "./AbilityScores";
 import { Skills } from "./Skills";
 import { SkillsModifiers } from "./SkillsModifiers";
 import Languages from "./Languages";
 
-export default function Page() {
-  const presenter = useCharacterPresenter();
-  if (presenter.getRace() === null || presenter.getTheme() === null || presenter.getClass() === null) {
-    return null;
-  }
+export const metadata: Metadata = {
+  title: "Définition des caractéristiques et compétences",
+};
 
+export default function Page() {
   return (
     <>
       <Col lg={4}>

@@ -6,7 +6,9 @@ import { FeatComponent } from "./FeatComponent";
 
 export function FeatsInherited() {
   const presenter = useCharacterPresenter();
+
   const feats = presenter.getInheritedFeats();
+
   if (feats.length === 0) {
     return null;
   } else {

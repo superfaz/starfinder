@@ -1,7 +1,12 @@
+import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
 import { RaceSelection } from "./RaceSelection";
 import { RaceTraits } from "./RaceTraits";
 import { RaceAlternateTraits } from "./RaceAlternateTraits";
+
+export const metadata: Metadata = {
+  title: "Sélection de la race",
+};
 
 export default function Page() {
   return (

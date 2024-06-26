@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -69,6 +71,10 @@ export default function Languages() {
   const presenter = useCharacterPresenter();
   const languages = useLanguages();
   const dispatch = useAppDispatch();
+
+  if (presenter.getClass() === null) {
+    return null;
+  }
 
   if (languages.length === 0) {
     return null;

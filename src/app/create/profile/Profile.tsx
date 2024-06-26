@@ -62,6 +62,10 @@ export function Profile() {
   const deities = useDeities();
   const languages = useLanguages();
 
+  if (presenter.getClass() === null) {
+    return null;
+  }
+
   const selectedHomeWorld = worlds.find((world) => world.name === presenter.getHomeWorld());
   const selectedDeity = deities.find((deity) => deity.name === presenter.getDeity());
   const steps = computeSteps(

@@ -1,5 +1,10 @@
+import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
 import Stack from "react-bootstrap/Stack";
+
+export const metadata: Metadata = {
+  title: "Création",
+};
 
 export default function Page() {
   return (

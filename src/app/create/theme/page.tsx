@@ -1,16 +1,13 @@
-"use client";
-
+import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
 import { ThemeSelection } from "./ThemeSelection";
 import { ThemeTraits } from "./ThemeTraits";
-import { useCharacterPresenter } from "../helpers";
+
+export const metadata: Metadata = {
+  title: "Sélection du thème",
+};
 
 export default function Page() {
-  const presenter = useCharacterPresenter();
-  if (presenter.getRace() === null) {
-    return null;
-  }
-
   return (
     <>
       <Col lg={3}>

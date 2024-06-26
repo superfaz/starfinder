@@ -10,6 +10,10 @@ export function Description() {
   const presenter = useCharacterPresenter();
   const dispatch = useAppDispatch();
 
+  if (presenter.getClass() === null) {
+    return null;
+  }
+
   function handleDescriptionChange(e: ChangeEvent<HTMLTextAreaElement>): void {
     dispatch(mutators.updateDescription(e.target.value));
   }

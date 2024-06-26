@@ -38,6 +38,11 @@ function LazyClassDetails(): JSX.Element | null {
 }
 
 export function ClassDetails() {
+  const presenter = useCharacterPresenter();
+  if (presenter.getTheme() === null) {
+    return null;
+  }
+
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Abilités de classe</h2>
