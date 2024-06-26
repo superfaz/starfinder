@@ -20,6 +20,12 @@ const table = [
   { label: "Shirrens", expected: "Perception aveugle" },
   { label: "Vesks", expected: "Expert en armure" },
   { label: "Ysokis", expected: "Abajoues" },
+  { label: "Demi-elfes", expected: "Adaptabilité" },
+  { label: "Demi-orques", expected: "Autonome" },
+  { label: "Elfes", expected: "Immunités elfiques" },
+  { label: "Gnomes", expected: "Curieux" },
+  { label: "Halflings", expected: "Chance des halfelins" },
+  { label: "Nains", expected: "Connaissances de la pierre" },
 ];
 
 test("has expected race choices", async ({ page }) => {

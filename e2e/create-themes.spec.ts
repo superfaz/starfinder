@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 
 test("can display Theme tab", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Thème/, level: 2 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Traits thématiques/, level: 2 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Traits thématiques/, level: 2 })).not.toBeVisible();
 });
 
 const table = [
