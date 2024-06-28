@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, screen } from "@testing-library/react";
-import { PageContent } from "./page";
 import { renderWithData } from "./helpers-test";
+import { PageContent } from "./PageContent";
 
 describe("Page", () => {
   beforeAll(async () => {
