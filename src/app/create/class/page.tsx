@@ -1,21 +1,9 @@
 import { Metadata } from "next";
-import Col from "react-bootstrap/Col";
-import { ClassSelection } from "./ClassSelection";
-import { ClassDetails } from "./ClassDetails";
+import { secure } from "../helpers";
+import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
   title: "Sélection de la classe",
 };
 
-export default function Page() {
-  return (
-    <>
-      <Col lg={3}>
-        <ClassSelection />
-      </Col>
-      <Col>
-        <ClassDetails />
-      </Col>
-    </>
-  );
-}
+export default secure(<PageContent />, "/create/class");

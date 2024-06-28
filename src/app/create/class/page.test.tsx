@@ -1,13 +1,13 @@
 import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Page from "./page";
 import { createCharacter, renderWithData } from "../helpers-test";
+import { PageContent } from "./PageContent";
 
 describe("/create/class", () => {
   beforeAll(async () => {
     cleanup();
-    await renderWithData(<Page />);
+    await renderWithData(<PageContent />);
   });
 
   test("is not displayed", async () => {
@@ -20,7 +20,7 @@ describe("/create/class", () => {
   beforeAll(async () => {
     cleanup();
     const character = createCharacter().updateRace("androids").updateTheme("bounty-hunter").character;
-    await renderWithData(<Page />, character);
+    await renderWithData(<PageContent />, character);
   });
 
   test("is displayed", async () => {

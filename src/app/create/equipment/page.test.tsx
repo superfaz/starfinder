@@ -1,14 +1,14 @@
-import { cleanup, screen, within } from "@testing-library/react";
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { createCharacter, renderWithData } from "../helpers-test";
-import Page from "./page";
+import { cleanup, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createCharacter, renderWithData } from "../helpers-test";
+import { EquipmentSelection } from "./EquipmentSelection";
 import Layout from "./layout";
 
 describe("/create/equipment", () => {
   beforeAll(async () => {
     cleanup();
-    await renderWithData(<Page />);
+    await renderWithData(<EquipmentSelection />);
   });
 
   test("is not displayed", async () => {
@@ -32,7 +32,7 @@ describe("/create/equipment", () => {
 
     await renderWithData(
       <Layout>
-        <Page />
+        <EquipmentSelection />
       </Layout>,
       character
     );

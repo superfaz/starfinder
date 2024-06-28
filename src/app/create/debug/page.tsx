@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import Col from "react-bootstrap/Col";
-import { Client } from "./Client";
+import { secure } from "../helpers";
+import { PageContent } from "./PageContent";
 
 export const dynamic = "force-dynamic";
 
@@ -8,10 +8,4 @@ export const metadata: Metadata = {
   title: "Debug",
 };
 
-export default function Page() {
-  return (
-    <Col lg={12}>
-      <Client />
-    </Col>
-  );
-}
+export default secure(<PageContent />, "/create/debug");

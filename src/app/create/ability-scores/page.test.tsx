@@ -1,9 +1,9 @@
 import { describe, beforeAll, test, expect, beforeEach } from "vitest";
 import { cleanup, screen, waitFor, within } from "@testing-library/react";
-import Page from "./page";
 import referential from "./page.test.json";
 import { createCharacter, renderWithData } from "../helpers-test";
 import userEvent from "@testing-library/user-event";
+import { PageContent } from "./PageContent";
 
 describe("/create/skills", () => {
   beforeAll(async () => {
@@ -12,7 +12,7 @@ describe("/create/skills", () => {
       .updateRace("androids")
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
-    await renderWithData(<Page />, character);
+    await renderWithData(<PageContent />, character);
   });
 
   test("is displayed", async () => {
@@ -106,7 +106,7 @@ describe("/create/skills", () => {
   });
 
   test("is not displayed", async () => {
-    await renderWithData(<Page />);
+    await renderWithData(<PageContent />);
     const content = within(document.querySelector("#content") as HTMLElement);
     expect(content.queryByRole("heading", { level: 2, name: "Caractéristiques" })).toBeNull();
     expect(content.queryByRole("heading", { level: 2, name: "Compétences" })).toBeNull();
@@ -117,7 +117,7 @@ describe("/create/skills", () => {
     "displays the class skills based on theme $theme.id and class $klass.id",
     async ({ theme, klass }) => {
       const character = createCharacter().updateRace("androids").updateTheme(theme.id).updateClass(klass.id).character;
-      await renderWithData(<Page />, character);
+      await renderWithData(<PageContent />, character);
 
       for (const skill of [...klass.classSkills, ...theme.classSkills]) {
         const control = screen.queryByRole("checkbox", { name: skill + " - Compétence de classe" });

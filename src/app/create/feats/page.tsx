@@ -1,23 +1,9 @@
 import { Metadata } from "next";
-import Col from "react-bootstrap/Col";
-import { FeatsInherited } from "./FeatsInherited";
-import { FeatsSelected } from "./FeatsSelected";
-import { FeatsSelection } from "./FeatsSelection";
+import { secure } from "../helpers";
+import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
   title: "Sélection des dons",
 };
 
-export default function Page() {
-  return (
-    <>
-      <Col lg={3}>
-        <FeatsInherited />
-        <FeatsSelected />
-      </Col>
-      <Col>
-        <FeatsSelection />
-      </Col>
-    </>
-  );
-}
+export default secure(<PageContent />, "/create/feats");

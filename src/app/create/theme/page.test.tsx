@@ -1,12 +1,12 @@
 import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, within } from "@testing-library/react";
-import Page from "./page";
 import { createCharacter, renderWithData } from "../helpers-test";
+import { PageContent } from "./PageContent";
 
 describe("/create/theme", () => {
   beforeAll(async () => {
     cleanup();
-    await renderWithData(<Page />);
+    await renderWithData(<PageContent />);
   });
 
   test("is not displayed by default", async () => {
@@ -19,7 +19,7 @@ describe("/create/theme", () => {
   beforeAll(async () => {
     cleanup();
     const character = createCharacter().updateRace("androids").character;
-    await renderWithData(<Page />, character);
+    await renderWithData(<PageContent />, character);
   });
 
   test("displays ThemeSelection", async () => {

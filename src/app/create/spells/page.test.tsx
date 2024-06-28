@@ -1,12 +1,12 @@
 import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, screen, within } from "@testing-library/react";
-import Page from "./page";
 import { createCharacter, renderWithData } from "../helpers-test";
+import { SpellsSelection } from "./SpellsSelection";
 
 describe("/create/spells", () => {
   test("is not available per default", async () => {
     cleanup();
-    await renderWithData(<Page />);
+    await renderWithData(<SpellsSelection />);
     expect(screen.queryByRole("heading", { level: 2, name: /Sorts de niveau 0/ })).toBeNull();
   });
 
@@ -16,7 +16,7 @@ describe("/create/spells", () => {
       .updateRace("androids")
       .updateTheme("bounty-hunter")
       .updateClass("soldier").character;
-    await renderWithData(<Page />, character);
+    await renderWithData(<SpellsSelection />, character);
     expect(screen.queryByRole("heading", { level: 2, name: /Sorts de niveau 0/ })).toBeNull();
   });
 });
@@ -29,7 +29,7 @@ describe("/create/spells", () => {
       .updateTheme("bounty-hunter")
       .updateClass("mystic").character;
 
-    await renderWithData(<Page />, character);
+    await renderWithData(<SpellsSelection />, character);
   });
 
   test("is displayed", async () => {
