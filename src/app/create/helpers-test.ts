@@ -28,7 +28,7 @@ import {
   WeaponSpecialPropertySchema,
   WeaponTypeSchema,
 } from "model";
-import { LayoutServer } from "./layout";
+import { LayoutTest } from "./layout-test";
 
 import abilityScores from "../../../mocks/ability-scores.json";
 import alignments from "../../../mocks/alignments.json";
@@ -96,5 +96,5 @@ export function createCharacter() {
 export type Updator = ReturnType<typeof createCharacter>;
 
 export async function renderWithData(children: React.ReactNode, character?: Character) {
-  return render(await LayoutServer({ children, character, classesDetails }));
+  return render(await LayoutTest({ children, character, classesDetails }));
 }

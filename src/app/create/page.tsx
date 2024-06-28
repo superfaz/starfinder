@@ -1,4 +1,6 @@
+import { getSession } from "@auth0/nextjs-auth0";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Col from "react-bootstrap/Col";
 import Stack from "react-bootstrap/Stack";
 
@@ -6,7 +8,7 @@ export const metadata: Metadata = {
   title: "Création",
 };
 
-export default function Page() {
+export function PageContent() {
   return (
     <>
       <Col lg={6}>
@@ -31,4 +33,14 @@ export default function Page() {
       </Col>
     </>
   );
+}
+
+export default async function Page() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/api/auth/login?returnTo=/create");
+  }
+
+  return <PageContent />;
 }

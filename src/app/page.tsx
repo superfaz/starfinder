@@ -11,6 +11,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavbarBrand from "react-bootstrap/NavbarBrand";
 import NavLink from "react-bootstrap/NavLink";
 import Row from "react-bootstrap/Row";
+import AuthNavLink from "./AuthNavLink";
 
 export default function Page() {
   return (
@@ -22,6 +23,7 @@ export default function Page() {
             <NavLink href="/">Home</NavLink>
           </Nav>
           <Nav>
+            <AuthNavLink />
             <NavLink href="https://github.com/superfaz/starfinder">
               <i className="bi bi-github" aria-label="github" title="github"></i>
             </NavLink>

@@ -1,3 +1,4 @@
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import Page from "./page";
@@ -5,7 +6,11 @@ import Page from "./page";
 describe("Page", () => {
   beforeAll(() => {
     cleanup();
-    render(<Page />);
+    render(
+      <UserProvider>
+        <Page />
+      </UserProvider>
+    );
   });
 
   test("Page is live", async () => {

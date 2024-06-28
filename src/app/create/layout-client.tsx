@@ -14,6 +14,7 @@ import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "logic/StoreProvider";
 import { Character, IModel } from "model";
+import AuthNavLink from "app/AuthNavLink";
 
 export default function LayoutClient({
   data,
@@ -103,7 +104,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
     <>
       <div className="sticky-top">
         <Navbar expand="xl" className="nav-create p-xl-0" expanded={expanded} onToggle={setExpanded}>
-          <Container fluid>
+          <Container>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Brand className="d-block d-xl-none">{active?.title}</Navbar.Brand>
             <Navbar.Text className="d-block d-xl-none">
@@ -117,7 +118,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
               )}
             </Navbar.Text>
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="flex-column flex-xl-row mx-xl-auto justify-content-xl-center" data-testid="tabs">
+              <Nav className="flex-column flex-xl-row justify-content-xl-center" data-testid="tabs">
                 {menuItems.map((item) => (
                   <Nav.Item key={item.title}>
                     <Nav.Link
@@ -134,6 +135,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
                 ))}
               </Nav>
             </Navbar.Collapse>
+            <AuthNavLink />
           </Container>
         </Navbar>
 
