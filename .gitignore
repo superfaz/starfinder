@@ -18,7 +18,8 @@ dump/
 .vercel
 
 ## Playwright
+/blob-report/
 /test-results/
 /playwright-report/
-/blob-report/
 /playwright/.cache/
+/playwright/.auth/
