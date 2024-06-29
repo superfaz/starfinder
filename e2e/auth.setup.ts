@@ -5,13 +5,8 @@ const authFile = "playwright/.auth/user.json";
 const PLAYWRIGHT_USER_EMAIL = process.env.PLAYWRIGHT_USER_EMAIL;
 const PLAYWRIGHT_USER_PASSWORD = process.env.PLAYWRIGHT_USER_PASSWORD;
 
-if (!PLAYWRIGHT_USER_EMAIL) {
-  console.error(process.env);
-  throw new Error("Please provide PLAYWRIGHT_USER_EMAIL in the environment variables.");
-}
-if (!PLAYWRIGHT_USER_PASSWORD) {
-  console.error(process.env);
-  throw new Error("Please provide PLAYWRIGHT_USER_PASSWORD in the environment variables.");
+if (!PLAYWRIGHT_USER_EMAIL || !PLAYWRIGHT_USER_PASSWORD) {
+  throw new Error("Please provide PLAYWRIGHT_USER_EMAIL and PLAYWRIGHT_USER_PASSWORD in the environment variables.");
 }
 
 setup("authenticate", async ({ page }) => {
