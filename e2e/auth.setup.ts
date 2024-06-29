@@ -2,11 +2,11 @@ import { test as setup } from "@playwright/test";
 
 const authFile = "playwright/.auth/user.json";
 
-const USER_EMAIL = process.env.USER_EMAIL;
-const USER_PASSWORD = process.env.USER_PASSWORD;
+const USER_EMAIL = process.env.PLAYWRIGHT_USER_EMAIL;
+const USER_PASSWORD = process.env.PLAYWRIGHT_USER_PASSWORD;
 
 if (!USER_EMAIL || !USER_PASSWORD) {
-  throw new Error("Please provide USER_EMAIL and USER_PASSWORD in the environment variables.");
+  throw new Error("Please provide PLAYWRIGHT_USER_EMAIL and PLAYWRIGHT_USER_PASSWORD in the environment variables.");
 }
 
 setup("authenticate", async ({ page }) => {
