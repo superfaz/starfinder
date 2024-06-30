@@ -46,8 +46,7 @@ describe("/create/theme", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "scholar");
 
     await waitFor(() => screen.getByRole("combobox", { name: "Compétence de classe" }), { timeout: 1000 });
-    expect(screen.getByRole("heading", { name: "Spécialité" })).toBeVisible();
-    expect(screen.getByRole("heading", { name: "Domaine de spécialité" })).toBeVisible();
+    expect(screen.getByRole("combobox", { name: "Spécialité" })).toBeVisible();
   });
 
   test("displays themeless specific components", async () => {
