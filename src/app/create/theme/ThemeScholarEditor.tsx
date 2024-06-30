@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import type { ThemeScholar } from "model";
 import { CharacterProps } from "../Props";
+import ThemeScholarLoading from "./ThemeScholarLoading";
+import SimpleTypeahead from "app/components/SimpleTypeahead";
 
 function useThemeDetails() {
   const [details, setDetails] = useState<ThemeScholar | null>(null);
@@ -21,37 +23,19 @@ export default function ThemeScholarEditor({ presenter }: CharacterProps) {
   const themeDetails = useThemeDetails();
 
   const selectedDetails = presenter.getScholarDetails();
+  if (!selectedDetails || !themeDetails) {
+    return <ThemeScholarLoading />;
+  }
+
+  const specialization = selectedDetails.specialization;
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
     dispatch(mutators.updateScholarSkill(id));
   }
 
-  function handleScholarSpecializationChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const specialization = e.target.value;
-    dispatch(mutators.updateScholarSpecialization(specialization));
-  }
-
-  function handleScholarLabelChange(e: ChangeEvent<HTMLInputElement>): void {
-    const label = e.target.value;
-    dispatch(mutators.updateScholarSpecialization(label));
-  }
-
-  if (!selectedDetails || !themeDetails) {
-    return null;
-  }
-
-  let specialization: string;
-  let label: string;
-  if (selectedDetails.specialization === "") {
-    specialization = "";
-    label = "";
-  } else if (themeDetails.values[selectedDetails.skill].find((s) => s === selectedDetails.specialization)) {
-    specialization = selectedDetails.specialization;
-    label = "";
-  } else {
-    specialization = "other";
-    label = selectedDetails.specialization === "other" ? "" : selectedDetails.specialization;
+  function handleSpecializationChange(value: string): void {
+    dispatch(mutators.updateScholarSpecialization(value));
   }
 
   return (
@@ -67,20 +51,14 @@ export default function ThemeScholarEditor({ presenter }: CharacterProps) {
             ))}
         </Form.Select>
       </Form.FloatingLabel>
-      <Form.FloatingLabel controlId="scholarSpecialization" label="Spécialité">
-        <Form.Select value={specialization} onChange={handleScholarSpecializationChange}>
-          <option value=""></option>
-          {themeDetails.values[selectedDetails.skill].map((d) => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-          <option value="other">Autre domaine</option>
-        </Form.Select>
-      </Form.FloatingLabel>
-      <Form.FloatingLabel controlId="scholarLabel" label="Domaine de spécialité" hidden={specialization !== "other"}>
-        <Form.Control type="text" value={label} onChange={handleScholarLabelChange} />
-      </Form.FloatingLabel>
+
+      <SimpleTypeahead
+        controlId="scholarSpecialization2"
+        label="Spécialité"
+        value={specialization}
+        onChange={handleSpecializationChange}
+        options={themeDetails.values[selectedDetails.skill]}
+      />
     </>
   );
 }

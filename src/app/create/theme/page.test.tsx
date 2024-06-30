@@ -46,17 +46,17 @@ describe("/create/theme", () => {
     await user.selectOptions(screen.getByRole("combobox", { name: "Thème" }), "scholar");
 
     await waitFor(() => screen.getByRole("combobox", { name: /Compétence de classe/ }), { timeout: 1000 });
-    expect(screen.getByRole("combobox", { name: /Spécialité/ })).toBeVisible();
-    expect(screen.getByRole("combobox", { name: /Spécialité/ })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: /Spécialité/ })).toBeVisible();
+    expect(screen.getByRole("textbox", { name: /Spécialité/ })).toHaveValue("");
 
-    await user.selectOptions(screen.getByRole("combobox", { name: /Spécialité/ }), "Bio-ingénierie");
-    expect(screen.getByRole("combobox", { name: /Spécialité/ })).toHaveValue("Bio-ingénierie");
+    await user.type(screen.getByRole("textbox", { name: /Spécialité/ }), "Bio-ingénierie");
+    expect(screen.getByRole("textbox", { name: /Spécialité/ })).toHaveValue("Bio-ingénierie");
 
     await user.selectOptions(screen.getByRole("combobox", { name: /Compétence de classe/ }), "phys");
-    expect(screen.getByRole("combobox", { name: /Spécialité/ })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: /Spécialité/ })).toHaveValue("");
 
-    await user.selectOptions(screen.getByRole("combobox", { name: /Spécialité/ }), "Astronomie");
-    expect(screen.getByRole("combobox", { name: /Spécialité/ })).toHaveValue("Astronomie");
+    await user.type(screen.getByRole("textbox", { name: /Spécialité/ }), "Astronomie");
+    expect(screen.getByRole("textbox", { name: /Spécialité/ })).toHaveValue("Astronomie");
   });
 
   test("displays themeless specific components", async () => {
