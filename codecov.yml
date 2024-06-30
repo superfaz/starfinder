@@ -1,0 +1,5 @@
+ignore:
+  - "*.config.mjs"
+  - "*.config.ts"
+  - "e2e/"
+  - "mocks/"
