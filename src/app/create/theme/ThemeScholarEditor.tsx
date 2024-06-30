@@ -16,15 +16,11 @@ function useThemeDetails() {
 }
 
 export default function ThemeScholarEditor({ presenter }: CharacterProps) {
-  const data = useAppSelector((state) => state.data);
+  const skills = useAppSelector((state) => state.data.skills);
   const dispatch = useAppDispatch();
   const themeDetails = useThemeDetails();
 
   const selectedDetails = presenter.getScholarDetails();
-
-  if (data === null) {
-    return <div>Loading...</div>;
-  }
 
   function handleScholarSkillChange(e: ChangeEvent<HTMLSelectElement>): void {
     const id = e.target.value;
@@ -62,7 +58,7 @@ export default function ThemeScholarEditor({ presenter }: CharacterProps) {
     <>
       <Form.FloatingLabel controlId="scholarSkill" label="Compétence de classe" className="mt-3">
         <Form.Select value={selectedDetails.skill} onChange={handleScholarSkillChange}>
-          {data.skills
+          {skills
             .filter((s) => s.id === "life" || s.id === "phys")
             .map((skill) => (
               <option key={skill.id} value={skill.id}>

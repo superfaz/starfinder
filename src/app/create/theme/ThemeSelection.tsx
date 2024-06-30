@@ -19,7 +19,8 @@ const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), {
 });
 
 export function ThemeSelection() {
-  const data = useAppSelector((state) => state.data);
+  const abilityScores = useAppSelector((state) => state.data.abilityScores);
+  const themes = useAppSelector((state) => state.data.themes);
   const dispatch = useAppDispatch();
   const presenter = useCharacterPresenter();
 
@@ -40,7 +41,7 @@ export function ThemeSelection() {
       <Form.FloatingLabel controlId="theme" label="Thème">
         <Form.Select value={selectedTheme?.id ?? ""} onChange={handleThemeChange}>
           {selectedTheme === null && <option value=""></option>}
-          {data.themes.map((theme) => (
+          {themes.map((theme) => (
             <option key={theme.id} value={theme.id}>
               {theme.name}
             </option>
@@ -53,7 +54,7 @@ export function ThemeSelection() {
             ([key, value]) =>
               value && (
                 <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
-                  {findOrError(data.abilityScores, key).code}
+                  {findOrError(abilityScores, key).code}
                   {displayBonus(value)}
                 </Badge>
               )
