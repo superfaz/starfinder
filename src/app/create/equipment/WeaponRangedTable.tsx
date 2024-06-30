@@ -38,7 +38,7 @@ function WeaponRangedTableCategory({
     );
   }
 
-  const keys = Object.keys(groupedByCategory).toSorted();
+  const keys = Object.keys(groupedByCategory).toSorted((a, b) => a.localeCompare(b));
   return keys.map((category) => (
     <Fragment key={category}>
       <tr>
