@@ -1,16 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
-if (!process.env.AUTH0_BASE_URL) {
-  if (process.env.VERCEL_URL) {
-    process.env.AUTH0_BASE_URL = `https://${process.env.VERCEL_URL}`;
-    console.info("AUTH0_BASE_URL is not set, using Vercel context", process.env.AUTH0_BASE_URL);
-  } else {
-    process.env.AUTH0_BASE_URL = process.env.BASE_URL ?? "http://localhost:3000";
-    console.info("AUTH0_BASE_URL is not set, defaulting to", process.env.AUTH0_BASE_URL);
-  }
-}
-
 function nextConfig() {
   return {
     eslint: { dirs: ["src", "mocks"] },

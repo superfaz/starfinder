@@ -1,4 +1,4 @@
-import { getSession } from "@auth0/nextjs-auth0";
+import auth0 from "app/auth0";
 import { redirect } from "next/navigation";
 import { ReactNode, useMemo } from "react";
 import { CharacterPresenter, useAppSelector } from "logic";
@@ -12,7 +12,7 @@ export function useCharacterPresenter() {
 
 export function secure(content: ReactNode, returnTo: string): () => Promise<ReactNode> {
   return async function (): Promise<ReactNode> {
-    const session = await getSession();
+    const session = await auth0.getSession();
 
     if (!session) {
       redirect(`/api/auth/login?returnTo=${encodeURIComponent(returnTo)}`);
