@@ -40,11 +40,9 @@ function Language({
   return (
     <InputGroup>
       {disabled && (
-        <>
-          <Form.FloatingLabel style={{ width: "70%" }} controlId={controlId} label={label}>
-            <Form.Control type="text" value={value} disabled />
-          </Form.FloatingLabel>
-        </>
+        <Form.FloatingLabel style={{ width: "70%" }} controlId={controlId} label={label}>
+          <Form.Control type="text" value={value} disabled />
+        </Form.FloatingLabel>
       )}
       {!disabled && (
         <Typeahead

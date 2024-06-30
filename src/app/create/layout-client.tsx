@@ -92,7 +92,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
     menuItems.push({ title: "Debug", href: "/create/debug" });
   }
 
-  const activeIndex = menuItems.findLastIndex((item) => pathname && pathname.startsWith(item.href));
+  const activeIndex = menuItems.findLastIndex((item) => pathname?.startsWith(item.href));
   const active = activeIndex === -1 ? undefined : menuItems[activeIndex];
   const next = activeIndex + 1 === menuItems.length ? undefined : menuItems[activeIndex + 1];
 
