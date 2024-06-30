@@ -25,7 +25,6 @@ function Skill({ skill, availableSkillRanks, onCheck }: SkillProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleRemove(id: string): void {
-    console.log("remove", id);
     dispatch(mutators.removeProfessionSkill(id));
   }
 
