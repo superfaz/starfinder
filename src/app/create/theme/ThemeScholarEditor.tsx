@@ -53,7 +53,7 @@ export default function ThemeScholarEditor({ presenter }: CharacterProps) {
       </Form.FloatingLabel>
 
       <SimpleTypeahead
-        controlId="scholarSpecialization2"
+        controlId="scholarSpecialization"
         label="Spécialité"
         value={specialization}
         onChange={handleSpecializationChange}
