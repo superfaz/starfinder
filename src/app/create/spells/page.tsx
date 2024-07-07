@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
 import { SpellsSelection } from "./SpellsSelection";
-import { secure } from "../helpers";
+import { secure } from "../helpers-server";
 
 export const metadata: Metadata = {
   title: "Sélection des sorts",

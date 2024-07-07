@@ -8,7 +8,7 @@ import { Badge } from "app/components";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { AbilityScoreIds } from "model";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { ReferenceComponent } from "../ReferenceComponent";
 
 const LazyEditorEnvoy = dynamic(() => import("./ClassEditorEnvoy"));

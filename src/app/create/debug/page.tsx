@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { secure } from "../helpers";
+import { secure } from "../helpers-server";
 import { PageContent } from "./PageContent";
 
 export const dynamic = "force-dynamic";

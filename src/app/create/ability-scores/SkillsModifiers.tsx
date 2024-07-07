@@ -2,7 +2,7 @@
 
 import Stack from "react-bootstrap/Stack";
 import { ModifierTypes, hasTarget } from "model";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { FeatureDisplay } from "./FeatureDisplay";
 
 const types: string[] = [

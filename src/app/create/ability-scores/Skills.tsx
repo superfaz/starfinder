@@ -10,7 +10,7 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { ProfessionSkills } from "./ProfessionSkills";
 
 type SkillProps = Readonly<{

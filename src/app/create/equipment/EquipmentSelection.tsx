@@ -25,7 +25,7 @@ import {
   EquipmentOtherId,
   EquipmentOtherIds,
 } from "model";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { ArmorNormalTable } from "./ArmorNormalTable";
 import { WeaponAmmunitionTable } from "./WeaponAmmunitionTable";
 import { WeaponGrenadeTable } from "./WeaponGrenadeTable";

@@ -17,7 +17,7 @@ import {
   hasCategory,
 } from "model";
 import { DisplayDamageLong, DisplaySpecials } from "./equipment/Components";
-import { useCharacterPresenter } from "./helpers";
+import { useCharacterPresenter } from "./helpers-client";
 
 interface ModifierComponentElement {
   level?: number;

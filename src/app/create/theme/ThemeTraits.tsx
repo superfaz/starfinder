@@ -6,7 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { Feature } from "view";
 import FeatureComponent from "../FeatureComponent";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 
 export function ThemeTraits() {
   const presenter = useCharacterPresenter();

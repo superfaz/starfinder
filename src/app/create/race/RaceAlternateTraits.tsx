@@ -6,7 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch } from "logic";
 import { RaceFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 
 export function RaceAlternateTraits() {
   const dispatch = useAppDispatch();

@@ -7,7 +7,7 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { ReferenceComponent } from "../ReferenceComponent";
 import ThemelessLoading from "./ThemelessLoading";
 import ThemeScholarLoading from "./ThemeScholarLoading";

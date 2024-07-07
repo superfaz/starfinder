@@ -1,7 +1,7 @@
 "use client";
 
 import { EquipmentArmorIds, EquipmentCategories, EquipmentDescriptor, EquipmentWeaponIds } from "model";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { ArmorDisplay } from "./ArmorDisplay";
 import { WeaponAmmunitionDisplay } from "./WeaponAmmunitionDisplay";
 import { WeaponGrenadeDisplay } from "./WeaponGrenadeDisplay";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCharacterPresenter } from "../../helpers";
+import { useCharacterPresenter } from "../../helpers-client";
 import { ArmorPage } from "./ArmorPage";
 import { UniqueWeaponPage } from "./UniqueWeaponPage";
 

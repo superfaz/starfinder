@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Stack from "react-bootstrap/Stack";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import ClassDetailsLoading from "./ClassDetailsLoading";
 
 const LazyClassDetailsGeneric = dynamic(() => import("./ClassDetailsGeneric"), {

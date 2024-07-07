@@ -8,7 +8,7 @@ import { InputGroup } from "app/components";
 import Typeahead from "app/components/Typeahead";
 import { mutators, useAppDispatch } from "logic";
 import { INamedModel } from "model";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { idOrName } from "app/helpers";
 
 function useLanguages() {

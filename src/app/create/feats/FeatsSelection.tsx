@@ -10,7 +10,7 @@ import type { FeatTemplate } from "model";
 import { hasDescription } from "model";
 import { FeatPresenter, FeatTemplateExtended, useAppSelector } from "logic";
 import { FeatTemplateComponent } from "./FeatTemplateComponent";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { Stack } from "react-bootstrap";
 
 export function FeatsSelection() {

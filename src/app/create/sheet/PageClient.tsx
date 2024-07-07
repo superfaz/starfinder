@@ -2,7 +2,7 @@
 
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Stack from "react-bootstrap/Stack";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { CardProfile } from "./CardProfile";
 import { CardAvatar } from "./CardAvatar";
 import { CardDescription } from "./CardDescription";

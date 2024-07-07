@@ -9,7 +9,7 @@ import { displayBonus, findOrError, groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { ModifierTypes, RaceModifier } from "model";
 import RaceSelectableBonusEditor from "./RaceHumansEditor";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { ReferenceComponent } from "../ReferenceComponent";
 
 const labels = {

@@ -9,7 +9,7 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import { type CasterId, type Spell, isCasterId } from "model";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 
 function filterOnLevelAndClass(classId: CasterId, level: number) {
   return (spell: Spell) => {

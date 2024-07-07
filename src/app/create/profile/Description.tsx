@@ -4,7 +4,7 @@ import { ChangeEvent } from "react";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch } from "logic";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 
 export function Description() {
   const presenter = useCharacterPresenter();

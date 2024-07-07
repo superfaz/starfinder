@@ -1,7 +1,7 @@
 "use client";
 
 import Stack from "react-bootstrap/Stack";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import FeatureComponent from "../FeatureComponent";
 
 export function RaceTraits() {

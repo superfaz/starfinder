@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Stack from "react-bootstrap/Stack";
 import { computeSteps, mutators, useAppDispatch, useAppSelector } from "logic";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import Typeahead from "app/components/Typeahead";
 import { Deity, INamedModel, World } from "model";
 import { Alert } from "react-bootstrap";

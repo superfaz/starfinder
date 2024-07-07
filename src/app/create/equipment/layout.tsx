@@ -8,7 +8,7 @@ import { EquipmentSelected } from "./EquipmentSelected";
 import { WeaponMeleeDisplay } from "./WeaponMeleeDisplay";
 import { WeaponRangedDisplay } from "./WeaponRangedDisplay";
 import { WeaponSolarianDisplay } from "./WeaponSolarianDisplay";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 import { isMelee, isRanged } from "model";
 import { ArmorDisplay } from "./ArmorDisplay";
 

@@ -9,7 +9,7 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
 import { computeAbilityScoreModifier, mutators, useAppDispatch, useAppSelector } from "logic";
-import { useCharacterPresenter } from "../helpers";
+import { useCharacterPresenter } from "../helpers-client";
 
 export function AbilityScores() {
   const presenter = useCharacterPresenter();
