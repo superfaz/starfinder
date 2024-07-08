@@ -46,6 +46,7 @@ beforeAll(async () => {
 
   vi.stubGlobal("fetch", mockFetch);
 
+  addFetchMock("/api/auth/setup", {});
   addFetchMock("/api/classes/envoy/details", envoyDetails);
   addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/soldier/details", soldierDetails);
