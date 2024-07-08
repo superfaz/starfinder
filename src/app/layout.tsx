@@ -1,4 +1,3 @@
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Metadata } from "next";
 import React from "react";
 import "./site.scss";
@@ -20,21 +19,19 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           rel="stylesheet"
         />
       </head>
-      <UserProvider>
-        <body>
-          {process.env.NODE_ENV === "development" && (
-            <div className="fixed-top ms-1" style={{ right: "auto" }}>
-              <div className="d-block d-sm-none">xs</div>
-              <div className="d-none d-sm-block d-md-none">sm</div>
-              <div className="d-none d-md-block d-lg-none">md</div>
-              <div className="d-none d-lg-block d-xl-none">lg</div>
-              <div className="d-none d-xl-block d-xxl-none">xl</div>
-              <div className="d-none d-xxl-block">xxl</div>
-            </div>
-          )}
-          {children}
-        </body>
-      </UserProvider>
+      <body>
+        {process.env.NODE_ENV === "development" && (
+          <div className="fixed-top ms-1" style={{ right: "auto" }}>
+            <div className="d-block d-sm-none">xs</div>
+            <div className="d-none d-sm-block d-md-none">sm</div>
+            <div className="d-none d-md-block d-lg-none">md</div>
+            <div className="d-none d-lg-block d-xl-none">lg</div>
+            <div className="d-none d-xl-block d-xxl-none">xl</div>
+            <div className="d-none d-xxl-block">xxl</div>
+          </div>
+        )}
+        {children}
+      </body>
     </html>
   );
 }

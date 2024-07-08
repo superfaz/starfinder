@@ -1,4 +1,3 @@
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { ReactNode } from "react";
 import { DataSource, IDataSource, convert } from "data";
 import { Character, IModel } from "model";
@@ -14,10 +13,8 @@ export async function LayoutTest({
   const debug = process.env.STARFINDER_DEBUG === "true";
 
   return (
-    <UserProvider>
-      <LayoutClient debug={debug} character={character} classesDetails={classesDetails} data={clientData}>
-        {children}
-      </LayoutClient>
-    </UserProvider>
+    <LayoutClient debug={debug} character={character} classesDetails={classesDetails} data={clientData}>
+      {children}
+    </LayoutClient>
   );
 }

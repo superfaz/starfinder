@@ -9,12 +9,12 @@ import Navbar from "react-bootstrap/Navbar";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Row from "react-bootstrap/Row";
 import { CookiesProvider, useCookies } from "react-cookie";
+import AuthMenu from "app/AuthMenu";
 import { Nav } from "app/components/Nav";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
 import StoreProvider from "logic/StoreProvider";
 import { Character, IModel } from "model";
-import AuthNavLink from "app/AuthNavLink";
 
 export default function LayoutClient({
   data,
@@ -134,8 +134,10 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
                   </Nav.Item>
                 ))}
               </Nav>
+              <Nav className="ms-auto">
+                <AuthMenu />
+              </Nav>
             </Navbar.Collapse>
-            <AuthNavLink />
           </Container>
         </Navbar>
 

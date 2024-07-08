@@ -1,13 +1,13 @@
-import auth0 from "app/auth0";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
 export function secure(content: ReactNode, returnTo: string): () => Promise<ReactNode> {
   return async function (): Promise<ReactNode> {
-    const session = await auth0.getSession();
+    const { isAuthenticated } = getKindeServerSession();
 
-    if (!session) {
-      redirect(`/api/auth/login?returnTo=${encodeURIComponent(returnTo)}`);
+    if (!(await isAuthenticated())) {
+      redirect(`/api/auth/login?post_login_redirect_url=${encodeURIComponent(returnTo)}`);
     } else {
       return content;
     }
