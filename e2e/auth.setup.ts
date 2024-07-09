@@ -12,7 +12,8 @@ if (!PLAYWRIGHT_USER_EMAIL || !PLAYWRIGHT_USER_PASSWORD) {
 setup("authenticate", async ({ page }) => {
   await page.goto("/api/auth/login");
   await page.getByLabel("Email").fill(PLAYWRIGHT_USER_EMAIL);
-  await page.getByLabel("Password").fill(PLAYWRIGHT_USER_PASSWORD);
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page.getByLabel("Password", { exact: true }).fill(PLAYWRIGHT_USER_PASSWORD);
   await page.getByRole("button", { name: "Continue", exact: true }).click();
 
   // Wait until the page receives the cookies.
