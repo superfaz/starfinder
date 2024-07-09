@@ -23,6 +23,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "@sentry/nextjs": "^8.9.2",
     "@splidejs/react-splide": "^0.7.12",
+    "@vercel/edge-config": "^1.2.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "clsx": "^2.1.1",
