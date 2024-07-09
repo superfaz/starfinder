@@ -11,7 +11,7 @@ if (!PLAYWRIGHT_USER_EMAIL || !PLAYWRIGHT_USER_PASSWORD) {
 
 setup("authenticate", async ({ page }) => {
   await page.goto("/api/auth/login");
-  await page.getByLabel("Email address").fill(PLAYWRIGHT_USER_EMAIL);
+  await page.getByLabel("Email").fill(PLAYWRIGHT_USER_EMAIL);
   await page.getByLabel("Password").fill(PLAYWRIGHT_USER_PASSWORD);
   await page.getByRole("button", { name: "Continue", exact: true }).click();
 
