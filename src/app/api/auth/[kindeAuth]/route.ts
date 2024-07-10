@@ -3,10 +3,11 @@ import handleAuth from "./auth";
 import { ClientOptions } from "./types";
 
 async function overrideConfig(): Promise<ClientOptions> {
-  if (process.env.VERCEL && process.env.VERCEL_DEPLOYMENT_ID && process.env.VERCEL_ENV === "production") {
+  if (process.env.VERCEL && process.env.VERCEL_URL && process.env.VERCEL_ENV === "production") {
     // When deploying to vercel production
     // Check if the project is flagged as tested and promoted to select the correct base url
-    if (await has(process.env.VERCEL_DEPLOYMENT_ID)) {
+    const deploymentCode = process.env.VERCEL_URL.split("-")[2];
+    if (await has(deploymentCode)) {
       return {
         siteUrl: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
         postLoginRedirectUrl: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
