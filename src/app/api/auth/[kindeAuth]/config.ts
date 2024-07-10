@@ -68,9 +68,7 @@ async function initConfig(options?: HandleAuthOptions) {
 }
 
 export async function getConfig(options?: HandleAuthOptions): Promise<HandleAuthConfig> {
-  if (!singletonConfig) {
-    await initConfig(options);
-  }
+  await initConfig(options);
 
   if (!singletonConfig) {
     throw new Error("Failed to initialize config");
