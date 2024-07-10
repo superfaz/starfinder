@@ -75,6 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       deployUrl: ${{ steps.deploy.outputs.deployUrl }}
+      deployId: ${{ steps.deploy.outputs.deployId }}
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -114,6 +115,8 @@ jobs:
         run: |
           DEPLOY_URL=$(vercel deploy --prebuilt --prod --skip-domain --token=${{ secrets.VERCEL_TOKEN }})
           echo "deployUrl=$DEPLOY_URL" >> "$GITHUB_OUTPUT"
+          DEPLOY_ID=$(echo $DEPLOY_URL | cut -d'-' -f2)
+          echo "deployId=$DEPLOY_ID" >> "$GITHUB_OUTPUT"
 
   sonar:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -205,7 +208,7 @@ jobs:
           curl -X 'PATCH' 'https://api.vercel.com/v1/edge-config/${{secrets.VERCEL_EDGE_CONFIG_ID}}/items'
           -H 'Authorization: Bearer ${{secrets.VERCEL_EDGE_CONFIG_TOKEN}}'
           -H 'Content-Type: application/json'
-          -d $'{ "items": [ { "operation": "create", "key": "${{needs.deploy.outputs.deployUrl}}", "value": "promoted" } ] }'
+          -d $'{ "items": [ { "operation": "create", "key": "${{needs.deploy.outputs.deployId}}", "value": "promoted" } ] }'
 
       - name: Promote the Deployment
         run: vercel promote ${{needs.deploy.outputs.deployUrl}} --scope=${{ secrets.VERCEL_ORG_ID }} --token=${{ secrets.VERCEL_TOKEN }}
