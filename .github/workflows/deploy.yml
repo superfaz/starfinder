@@ -206,9 +206,9 @@ jobs:
       - name: Flag the deployment as promoted
         run: >-
           curl -X 'PATCH' 'https://api.vercel.com/v1/edge-config/${{secrets.VERCEL_EDGE_CONFIG_ID}}/items'
-          -H 'Authorization: Bearer ${{secrets.VERCEL_EDGE_CONFIG_TOKEN}}'
+          -H 'Authorization: Bearer ${{secrets.VERCEL_TOKEN}}'
           -H 'Content-Type: application/json'
-          -d $'{ "items": [ { "operation": "create", "key": "${{needs.deploy.outputs.deployId}}", "value": "promoted" } ] }'
+          -d '{ "items": [ { "operation": "create", "key": "${{needs.deploy.outputs.deployId}}", "value": "promoted" } ] }'
 
       - name: Promote the Deployment
         run: vercel promote ${{needs.deploy.outputs.deployUrl}} --scope=${{ secrets.VERCEL_ORG_ID }} --token=${{ secrets.VERCEL_TOKEN }}
