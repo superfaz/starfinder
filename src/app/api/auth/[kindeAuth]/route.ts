@@ -6,7 +6,7 @@ async function overrideConfig(): Promise<ClientOptions> {
   if (process.env.VERCEL && process.env.VERCEL_URL && process.env.VERCEL_ENV === "production") {
     // When deploying to vercel production
     // Check if the project is flagged as tested and promoted to select the correct base url
-    const deploymentCode = process.env.VERCEL_URL.split("-")[2];
+    const deploymentCode = process.env.VERCEL_URL.split("-")[1];
     if (await has(deploymentCode)) {
       return {
         siteUrl: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
