@@ -2,8 +2,6 @@
 
 ## Création
 
-Race / Ajouter les races classiques du livre de règles
-
 Race : Androide / Traits : Emplacement d'amélioration / Choix de l'équipement
 
 Race : Androide / Traits secondaires : Androïde xénométrique / Choix de la race
@@ -26,7 +24,7 @@ Classe / Ajouter les classes du guide des options
 
 Classe : Emissaire / Abilité : Improvisation de l'émissaire / Choix de l'improvisation
 
-Classe : Mécano / Ajouter les détails de l'intelligence artificielle
+Classe : Mécano / Style : Drone / Abilité : Module de compétence / Choix de la compétence et rang
 
 Classe : Mécano / Abilité : Réseau de contrôle / Fournir les détails
 

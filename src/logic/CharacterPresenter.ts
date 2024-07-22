@@ -767,8 +767,9 @@ export class CharacterPresenter {
    * @returns The speed of the character in case.
    */
   getSpeed(): number {
+    const defaultSpeed = 6;
     const modifiers = this.getModifiers().filter(ofType(ModifierTypes.speed));
-    return modifiers.reduce((acc, m) => acc + m.value, 6);
+    return modifiers.reduce((acc, m) => acc + m.value, defaultSpeed);
   }
 
   getSex(): string {
