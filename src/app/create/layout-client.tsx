@@ -83,6 +83,13 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
     });
   }
 
+  if (presenter.getMechanicStyle() === "drone") {
+    menuItems.push({
+      title: "Drone",
+      href: "/create/drone",
+    });
+  }
+
   menuItems.push(
     { title: "Équipement", href: "/create/equipment", disabled: selectedClass === null },
     { title: "Fiche", href: "/create/sheet" }
