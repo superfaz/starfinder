@@ -47,7 +47,7 @@ import {
   getSoldierFeatureTemplates,
   getTechnomancerFeatureTemplates,
 } from "./ClassPresenter";
-import { FeatPresenter, SkillPresenter, SkillPresenterBuilder, Templater, cleanEvolutions } from ".";
+import { FeatPresenter, ICharacterPresenter, SkillPresenter, SkillPresenterBuilder, Templater, cleanEvolutions } from ".";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -126,7 +126,7 @@ export function computeBaseAttackBonus(classLevel: number, curve: "high" | "low"
   }
 }
 
-export class CharacterPresenter {
+export class CharacterPresenter implements ICharacterPresenter {
   private data: IClientDataSet;
   private classesDetails: Record<string, IModel>;
   private character: Readonly<Character>;

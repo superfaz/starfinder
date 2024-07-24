@@ -6,13 +6,13 @@ import { ModSelection } from "./ModSelection";
 export function PageContent() {
   return (
     <>
-      <Col lg={4}>
+      <Col lg={3}>
         <ChassisSelection />
       </Col>
-      <Col lg={4}>
+      <Col>
         <FeatureSelection />
       </Col>
-      <Col lg={4}>
+      <Col>
         <ModSelection />
       </Col>
     </>

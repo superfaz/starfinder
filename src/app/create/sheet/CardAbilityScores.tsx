@@ -3,11 +3,10 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
-import { computeAbilityScoreModifier, useAppSelector } from "logic";
-import { CharacterProps } from "../Props";
+import { ICharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
 import { ValueComponent } from "./ValueComponent";
 
-export function CardAbilityScores({ presenter }: CharacterProps) {
+export function CardAbilityScores({ presenter }: Readonly<{ presenter: ICharacterPresenter }>) {
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   return (
     <Card>
@@ -22,11 +21,12 @@ export function CardAbilityScores({ presenter }: CharacterProps) {
           ].map(([min, max]) => (
             <Row key={max}>
               {abilityScores.slice(min, max).map((a) => {
-                const bonus = computeAbilityScoreModifier(presenter.getAbilityScores()[a.id]);
+                const score = presenter.getAbilityScores()[a.id];
+                const bonus = computeAbilityScoreModifier(score ?? 10);
                 return (
                   <ValueComponent key={a.id} label={a.name} className="col">
                     <div className="position-relative">
-                      <span>{presenter.getAbilityScores()[a.id]}</span>
+                      <span>{score ?? "-"}</span>
                       <Badge bg={bonus > 0 ? "primary" : "secondary"} className="position-absolute end-0 me-0">
                         {displayBonus(bonus)}
                       </Badge>

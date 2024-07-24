@@ -42,6 +42,8 @@ export const DroneChassisSchema = INamedModelSchema.extend({
   primaryAbilityScores: z.array(AbilityScoreIdSchema),
 }).strict();
 
+export type DroneChassis = z.infer<typeof DroneChassisSchema>;
+
 export const ClassMechanicStyleSchema = INamedModelSchema.extend({
   reference: ReferenceSchema,
   description: DescriptionSchema,
