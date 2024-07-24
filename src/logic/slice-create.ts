@@ -124,6 +124,10 @@ const mainSlice = createSlice({
       state.character = updateEnvoySkillImpl(state.character, action.payload);
     },
 
+    updateMechanicStyle(state, action: PayloadAction<string>) {
+      state.character = updateMechanicStyleImpl(state.character, action.payload);
+    },
+
     updateMysticConnection(state, action: PayloadAction<string>) {
       state.character = updateMysticConnectionImpl(state.character, action.payload);
     },
@@ -635,28 +639,32 @@ function updateClassImpl(data: IClientDataSet, character: Character, classId: st
   };
 
   // Special cases - prepare the associated options
-  if (classId === "envoy") {
-    // Class: Envoy
-    result.classOptions = { envoySkill: "bluf" };
-  } else if (classId === "mystic") {
-    // Class: Mystic
-    result.classOptions = { mysticConnection: "60ee0f41-3c5b-4aa4-93d8-f139f5b864b3" };
-  } else if (classId === "operative") {
-    // Class: Operative
-    result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
-  } else if (classId === "solarian") {
-    // Class: Solarian
-    result.classOptions = {
-      solarianColor: "white",
-      solarianManifestation: "weapon",
-      solarianDamageType: "piercing",
-    };
-  } else if (classId === "soldier") {
-    // Class: Soldier
-    result.classOptions = {
-      soldierAbilityScore: AbilityScoreIds.str,
-      soldierPrimaryStyle: "5103271c-c10e-4afc-8750-fb0e3e22c7d5",
-    };
+  switch (classId) {
+    case "envoy":
+      result.classOptions = { envoySkill: "bluf" };
+      break;
+    case "mechanic":
+      result.classOptions = { mechanicStyle: "drone" };
+      break;
+    case "mystic":
+      result.classOptions = { mysticConnection: "60ee0f41-3c5b-4aa4-93d8-f139f5b864b3" };
+      break;
+    case "operative":
+      result.classOptions = { operativeSpecialization: "0110533f-eba1-4bad-ae1d-b18c584b7cbc" };
+      break;
+    case "solarian":
+      result.classOptions = {
+        solarianColor: "white",
+        solarianManifestation: "weapon",
+        solarianDamageType: "piercing",
+      };
+      break;
+    case "soldier":
+      result.classOptions = {
+        soldierAbilityScore: AbilityScoreIds.str,
+        soldierPrimaryStyle: "5103271c-c10e-4afc-8750-fb0e3e22c7d5",
+      };
+      break;
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -681,10 +689,27 @@ function updateEnvoySkillImpl(character: Character, skillId: string): Character 
 }
 
 /**
+ * Updates the style selected for a mechanic character.
+ *
+ * @param character - the character to update
+ * @param style - the selected style
+ * @returns The updated character
+ */
+function updateMechanicStyleImpl(character: Character, style: string): Character {
+  return {
+    ...character,
+    classOptions: {
+      ...character.classOptions,
+      mechanicStyle: style,
+    },
+  };
+}
+
+/**
  * Updates the connection selected for a mystic character.
  *
  * @param character - the character to update
- * @param specialization - the selected connection
+ * @param connection - the selected connection
  * @returns The updated character
  */
 function updateMysticConnectionImpl(character: Character, connection: string): Character {
@@ -924,13 +949,18 @@ class Updators {
     return this;
   }
 
-  updateOperativeSpecialization(specialization: string) {
-    this._character = updateOperativeSpecializationImpl(this._character, specialization);
+  updateMechanicStyle(style: string) {
+    this._character = updateMechanicStyleImpl(this._character, style);
     return this;
   }
 
   updateMysticConnection(connection: string) {
     this._character = updateMysticConnectionImpl(this._character, connection);
+    return this;
+  }
+
+  updateOperativeSpecialization(specialization: string) {
+    this._character = updateOperativeSpecializationImpl(this._character, specialization);
     return this;
   }
 

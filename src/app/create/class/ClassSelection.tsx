@@ -12,8 +12,9 @@ import { useCharacterPresenter } from "../helpers-client";
 import { ReferenceComponent } from "../ReferenceComponent";
 
 const LazyEditorEnvoy = dynamic(() => import("./ClassEditorEnvoy"));
-const LazyEditorOperative = dynamic(() => import("./ClassEditorOperative"));
+const LazyEditorMechanic = dynamic(() => import("./ClassEditorMechanic"));
 const LazyEditorMystic = dynamic(() => import("./ClassEditorMystic"));
+const LazyEditorOperative = dynamic(() => import("./ClassEditorOperative"));
 const LazyEditorSolarian = dynamic(() => import("./ClassEditorSolarian"));
 const LazyEditorSoldier = dynamic(() => import("./ClassEditorSoldier"));
 
@@ -29,11 +30,14 @@ export function LazyClassEditor(): JSX.Element | null {
     case "envoy":
       return <LazyEditorEnvoy presenter={presenter} />;
 
-    case "operative":
-      return <LazyEditorOperative presenter={presenter} />;
+    case "mechanic":
+      return <LazyEditorMechanic presenter={presenter} />;
 
     case "mystic":
       return <LazyEditorMystic presenter={presenter} />;
+
+    case "operative":
+      return <LazyEditorOperative presenter={presenter} />;
 
     case "solarian":
       return <LazyEditorSolarian presenter={presenter} />;

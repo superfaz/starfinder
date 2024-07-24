@@ -430,6 +430,10 @@ export class CharacterPresenter {
     return this.character.classOptions?.envoySkill ?? null;
   }
 
+  getMechanicStyle(): string | null {
+    return this.character.classOptions?.mechanicStyle ?? null;
+  }
+
   getMysticConnection(): string | null {
     return this.character.classOptions?.mysticConnection ?? null;
   }
