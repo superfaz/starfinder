@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
-import { CharacterPresenter, retrieveClassDetails, useAppDispatch } from "logic";
+import { CharacterPresenter } from "logic";
 import { ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { useClassDetails } from "../helpers-client";
@@ -74,12 +73,6 @@ function LevelN({
 
 export default function ClassDetailsGeneric({ presenter, classId }: Readonly<CharacterProps & { classId: string }>) {
   const classDetails = useClassDetails(classId);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (!classDetails) {
-      dispatch(retrieveClassDetails(classId));
-    }
-  }, [dispatch, classDetails, classId]);
 
   if (!classDetails) {
     return <ClassDetailsLoading />;

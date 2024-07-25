@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { CharacterPresenter, DronePresenter, useAppSelector } from "logic";
+import { useEffect, useMemo } from "react";
+import { CharacterPresenter, DronePresenter, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
 import type { ClassMechanic, IModel } from "model";
 
 export function useCharacterPresenter() {
@@ -10,7 +10,15 @@ export function useCharacterPresenter() {
 }
 
 export function useClassDetails<T extends IModel>(classId: string): T | undefined {
-  return useAppSelector((state) => state.classesDetails[classId]) as T | undefined;
+  const classDetails = useAppSelector((state) => state.classesDetails[classId]) as T | undefined;
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!classDetails) {
+      dispatch(retrieveClassDetails(classId));
+    }
+  }, [dispatch, classDetails, classId]);
+
+  return classDetails;
 }
 
 export function useDronePresenter() {
@@ -19,6 +27,7 @@ export function useDronePresenter() {
   const classDetails = useClassDetails<ClassMechanic>("mechanic");
 
   return useMemo(() => {
+    console.log("useDronePresenter useMemo", classDetails);
     if (classDetails === undefined) {
       return undefined;
     } else {

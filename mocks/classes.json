@@ -222,5 +222,25 @@
       "reflex": "low",
       "will": "high"
     }
+  },
+  {
+    "id": "mechanic",
+    "name": "Mechanic",
+    "description": "Créer pour les tests.",
+    "reference": { "book": "base", "page": 1 },
+    "hitPoints": 6,
+    "staminaPoints": 6,
+    "primaryAbilityScore": "int",
+    "secondaryAbilityScores": ["dex"],
+    "skillRank": 6,
+    "modifiers": [],
+    "armors": ["light"],
+    "weapons": ["basic", "small"],
+    "baseAttack": "low",
+    "savingThrows": {
+      "fortitude": "low",
+      "reflex": "high",
+      "will": "high"
+    }
   }
 ]

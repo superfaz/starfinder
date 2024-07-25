@@ -1,6 +1,6 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, retrieveClassDetails, useAppDispatch } from "logic";
+import { mutators, useAppDispatch } from "logic";
 import type { ClassMystic } from "model";
 import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";
@@ -8,11 +8,6 @@ import { CharacterProps } from "../Props";
 export default function MysticEditor({ presenter }: CharacterProps) {
   const classDetails = useClassDetails<ClassMystic>("mystic");
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (!classDetails) {
-      dispatch(retrieveClassDetails("mystic"));
-    }
-  }, [dispatch, classDetails]);
 
   if (!classDetails) {
     return <p>Loading...</p>;

@@ -1,6 +1,6 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, retrieveClassDetails, useAppDispatch } from "logic";
+import { mutators, useAppDispatch } from "logic";
 import type { ClassSoldier } from "model";
 import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";
@@ -8,11 +8,6 @@ import { CharacterProps } from "../Props";
 export default function SoldierEditor({ presenter }: CharacterProps) {
   const classDetails = useClassDetails<ClassSoldier>("soldier");
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (!classDetails) {
-      dispatch(retrieveClassDetails("soldier"));
-    }
-  }, [dispatch, classDetails]);
 
   if (!classDetails) {
     return <p>Loading...</p>;

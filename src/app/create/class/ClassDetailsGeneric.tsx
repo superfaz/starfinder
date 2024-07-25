@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Badge } from "app/components";
-import { retrieveClassDetails, useAppDispatch } from "logic";
 import FeatureComponent from "../FeatureComponent";
 import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";
@@ -10,12 +8,6 @@ import ClassDetailsLoading from "./ClassDetailsLoading";
 
 export default function ClassDetailsGeneric({ presenter, classId }: CharacterProps & { classId: string }) {
   const classDetails = useClassDetails(classId);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (!classDetails) {
-      dispatch(retrieveClassDetails(classId));
-    }
-  }, [dispatch, classDetails, classId]);
 
   if (!classDetails) {
     return <ClassDetailsLoading />;

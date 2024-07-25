@@ -1,6 +1,6 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
+import { mutators, useAppDispatch, useAppSelector } from "logic";
 import type { ClassSolarian } from "model";
 import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";
@@ -9,11 +9,6 @@ export default function SolarianEditor({ presenter }: CharacterProps) {
   const damageTypes = useAppSelector((state) => state.data.damageTypes).filter((d) => d.category === "kinetic");
   const classDetails = useClassDetails<ClassSolarian>("solarian");
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (!classDetails) {
-      dispatch(retrieveClassDetails("solarian"));
-    }
-  }, [dispatch, classDetails]);
 
   if (!classDetails) {
     return <p>Loading...</p>;
