@@ -1,9 +1,10 @@
 import { ChangeEvent, ReactNode, useEffect } from "react";
-import { CharacterProps } from "../Props";
-import { ClassEnvoy } from "model";
-import { mutators, retrieveClassDetails, useAppDispatch, useAppSelector, useClassDetails } from "logic";
-import { findOrError } from "app/helpers";
 import { Form } from "react-bootstrap";
+import { findOrError } from "app/helpers";
+import { mutators, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
+import { ClassEnvoy } from "model";
+import { useClassDetails } from "../helpers-client";
+import { CharacterProps } from "../Props";
 
 export default function EnvoyEditor({ presenter }: CharacterProps): ReactNode {
   const classDetails = useClassDetails<ClassEnvoy>("envoy");

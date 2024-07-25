@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Badge } from "app/components";
-import { retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
+import { retrieveClassDetails, useAppDispatch } from "logic";
 import FeatureComponent from "../FeatureComponent";
+import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";
 import ClassDetailsLoading from "./ClassDetailsLoading";
 

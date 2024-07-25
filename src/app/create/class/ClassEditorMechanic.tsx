@@ -1,8 +1,9 @@
 import { ChangeEvent, useEffect } from "react";
 import Form from "react-bootstrap/Form";
-import { CharacterProps } from "../Props";
-import { mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
+import { mutators, retrieveClassDetails, useAppDispatch } from "logic";
 import type { ClassMechanic } from "model";
+import { useClassDetails } from "../helpers-client";
+import { CharacterProps } from "../Props";
 
 export default function MysticEditor({ presenter }: CharacterProps) {
   const classDetails = useClassDetails<ClassMechanic>("mechanic");

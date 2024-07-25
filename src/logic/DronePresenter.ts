@@ -16,6 +16,10 @@ export class DronePresenter implements ICharacterPresenter {
     return this.data.drone.chassis.find((c) => c.id === this.getClassOptions().droneChassis);
   }
 
+  public getAllChassis(): DroneChassis[] {
+    return this.data.drone.chassis;
+  }
+
   public getAbilityScores(): Record<string, number> {
     return this.getChassis()?.abilityScores ?? {};
   }

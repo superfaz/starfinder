@@ -1,7 +1,8 @@
 import { ChangeEvent, useEffect } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, retrieveClassDetails, useAppDispatch, useAppSelector, useClassDetails } from "logic";
+import { mutators, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
 import type { ClassSolarian } from "model";
+import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";
 
 export default function SolarianEditor({ presenter }: CharacterProps) {

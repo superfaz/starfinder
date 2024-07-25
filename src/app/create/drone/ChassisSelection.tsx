@@ -1,35 +1,14 @@
 "use client";
 
-import { DronePresenter, mutators, retrieveClassDetails, useAppDispatch, useClassDetails } from "logic";
-import { ClassMechanic } from "model";
-import { useEffect, useMemo } from "react";
+import { mutators, useAppDispatch } from "logic";
 import { Form, Stack } from "react-bootstrap";
-import { useCharacterPresenter } from "../helpers-client";
-import { CardAbilityScores } from "../sheet/CardAbilityScores";
-
-function useDronePresenter(classDetails: ClassMechanic | undefined) {
-  const parent = useCharacterPresenter();
-  return useMemo(() => {
-    if (classDetails === undefined) {
-      return undefined;
-    } else {
-      return new DronePresenter(parent, classDetails);
-    }
-  }, [parent, classDetails]);
-}
+import { useDronePresenter } from "../helpers-client";
 
 export function ChassisSelection() {
-  const classDetails = useClassDetails<ClassMechanic>("mechanic");
-  const presenter = useDronePresenter(classDetails);
+  const presenter = useDronePresenter();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!classDetails) {
-      dispatch(retrieveClassDetails("mechanic"));
-    }
-  }, [dispatch, classDetails]);
-
-  if (!classDetails || !presenter) {
+  if (!presenter) {
     return (
       <Stack direction="vertical" gap={2}>
         <h2>Chassis</h2>
@@ -38,7 +17,7 @@ export function ChassisSelection() {
     );
   }
 
-  const chassis = classDetails.drone.chassis;
+  const chassis = presenter.getAllChassis();
   const selectedChassis = presenter.getChassis();
 
   function handleChassisChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -59,12 +38,7 @@ export function ChassisSelection() {
           ))}
         </Form.Select>
       </Form.FloatingLabel>
-      {selectedChassis && (
-        <Stack direction="vertical" gap={2}>
-          <div className="text-muted">{selectedChassis.description}</div>
-          <CardAbilityScores presenter={presenter} />
-        </Stack>
-      )}
+      {selectedChassis && <div className="text-muted">{selectedChassis.description}</div>}
     </Stack>
   );
 }
