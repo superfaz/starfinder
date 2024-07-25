@@ -3,9 +3,9 @@ import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { IModelSchema } from "./IModel";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
 import { INamedModelSchema } from "./INamedModel";
-import { ModifierTemplateSchema } from "./ModifierTemplate";
 import { AbilityScoreIdSchema } from "./AbilityScore";
-import { SavingThrowIdSchema } from "./SavingThrow";
+import { ClassSkillModifierSchema, SizeModifierSchema } from "./Modifier";
+import { ModifierTemplateSchema } from "./ModifierTemplate";
 
 export const DroneModifierTypeSchema = z.enum([
   "ability",
@@ -25,6 +25,8 @@ export const DroneModifierTemplateSchema = ModifierTemplateSchema.extend({ type:
 
 export type DroneModifierTemplate = z.infer<typeof DroneModifierTemplateSchema>;
 
+export const DroneModifierSchema = z.discriminatedUnion("type", [ClassSkillModifierSchema, SizeModifierSchema]);
+
 export const DroneFeatureTemplateSchema = FeatureTemplateSchema.extend({
   modifiers: z.optional(z.array(DroneModifierTemplateSchema)),
 });
@@ -36,9 +38,13 @@ export const DroneChassisSchema = INamedModelSchema.extend({
   reference: ReferenceSchema,
   description: DescriptionSchema,
   armorClasses: z.object({ energy: z.number().int().positive(), kynetic: z.number().int().positive() }),
-  modifiers: z.optional(z.array(DroneModifierTemplateSchema)),
+  modifiers: z.optional(z.array(DroneModifierSchema)),
   abilityScores: z.record(AbilityScoreIdSchema, z.number()),
-  savingThrows: z.record(SavingThrowIdSchema, z.enum(["good", "poor"])),
+  savingThrows: z.object({
+    fortitude: z.enum(["good", "poor"]),
+    reflex: z.enum(["good", "poor"]),
+    will: z.enum(["good", "poor"]),
+  }),
   primaryAbilityScores: z.array(AbilityScoreIdSchema),
 }).strict();
 

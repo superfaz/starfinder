@@ -12,6 +12,7 @@ export const ModifierTypeSchema = z.enum([
   "classSkill",
   "damage",
   "damageReduction",
+  "droneWeapon",
   "equipment",
   "featCount",
   "feat",

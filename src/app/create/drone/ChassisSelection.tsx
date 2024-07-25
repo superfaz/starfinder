@@ -21,7 +21,6 @@ export function ChassisSelection() {
   const selectedChassis = presenter.getChassis();
 
   function handleChassisChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    console.log(event.target.value);
     dispatch(mutators.updateDroneChassis(event.target.value));
   }
 

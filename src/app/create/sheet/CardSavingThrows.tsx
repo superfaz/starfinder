@@ -3,14 +3,12 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
-import { useAppSelector } from "logic";
+import { ICharacterPresenter, useAppSelector } from "logic";
 import { ModifierTypes, ofType } from "model";
 import { ValueComponent } from "./ValueComponent";
-import { CharacterProps } from "../Props";
 
-export function CardSavingThrows({ presenter }: CharacterProps) {
+export function CardSavingThrows({ presenter }: Readonly<{ presenter: ICharacterPresenter }>) {
   const savingThrows = useAppSelector((state) => state.data.savingThrows);
-  const selectedClass = presenter.getClass();
   const modifiers = presenter.getModifiers().filter(ofType(ModifierTypes.savingThrow));
 
   return (
@@ -20,24 +18,19 @@ export function CardSavingThrows({ presenter }: CharacterProps) {
       </Card.Header>
       <Card.Body className="position-relative">
         <Row>
-          {!selectedClass && (
-            <div className="small">
-              <em>Pas de classe sélectionnée</em>
-            </div>
-          )}
-          {selectedClass &&
-            savingThrows.map((savingThrow) => {
-              const bonus = presenter.getSavingThrowBonus(savingThrow);
-              return (
-                bonus !== undefined && (
-                  <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">
-                    <Badge bg={bonus > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
-                      {displayBonus(bonus)}
-                    </Badge>
-                  </ValueComponent>
-                )
-              );
-            })}
+          {savingThrows.map((savingThrow) => {
+            const bonus = presenter.getSavingThrowBonus(savingThrow);
+            return (
+              <ValueComponent key={savingThrow.id} label={savingThrow.name} className="col">
+                {bonus === undefined && <Badge bg="secondary">-</Badge>}
+                {bonus !== undefined && (
+                  <Badge bg={bonus > 0 ? "primary" : "secondary"} className="ms-1 mb-1">
+                    {displayBonus(bonus)}
+                  </Badge>
+                )}
+              </ValueComponent>
+            );
+          })}
         </Row>
       </Card.Body>
       {modifiers.length > 0 && (

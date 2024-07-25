@@ -14,14 +14,15 @@ export function useClassDetails<T extends IModel>(classId: string): T | undefine
 }
 
 export function useDronePresenter() {
-  const classDetails = useClassDetails<ClassMechanic>("mechanic");
   const parent = useCharacterPresenter();
+  const data = useAppSelector((state) => state.data);
+  const classDetails = useClassDetails<ClassMechanic>("mechanic");
 
   return useMemo(() => {
     if (classDetails === undefined) {
       return undefined;
     } else {
-      return new DronePresenter(parent, classDetails);
+      return new DronePresenter(parent, data, classDetails);
     }
-  }, [parent, classDetails]);
+  }, [parent, data, classDetails]);
 }

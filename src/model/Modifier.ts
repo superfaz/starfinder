@@ -128,6 +128,12 @@ export const ClassSkillModifierSchema = IModelSchema.extend({
   doubleEffect: z.optional(z.enum(["rank", "bonus"])),
 }).strict();
 
+export const DroneWeaponModifierSchema = IModelSchema.extend({
+  type: z.literal(ModifierTypes.droneWeapon),
+  level: z.number().optional(),
+  target: z.enum(["melee", "ranged"]),
+}).strict();
+
 export const EquipmentModifierSchema = IModelSchema.extend({
   type: z.literal(ModifierTypes.equipment),
   level: z.number().optional(),
@@ -190,6 +196,7 @@ export const EffectModifierSchema = z.discriminatedUnion("type", [
   ClassSkillModifierSchema,
   DamageModifierSchema,
   DamageReductionModifierSchema,
+  DroneWeaponModifierSchema,
   EquipmentModifierSchema,
   FeatCountModifierSchema,
   FeatModifierSchema,

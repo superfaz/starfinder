@@ -47,7 +47,14 @@ import {
   getSoldierFeatureTemplates,
   getTechnomancerFeatureTemplates,
 } from "./ClassPresenter";
-import { FeatPresenter, ICharacterPresenter, SkillPresenter, SkillPresenterBuilder, Templater, cleanEvolutions } from ".";
+import {
+  FeatPresenter,
+  ICharacterPresenter,
+  SkillPresenter,
+  SkillPresenterBuilder,
+  Templater,
+  cleanEvolutions,
+} from ".";
 
 /**
  * Computes the minimal ability scores for a specific character.
@@ -99,7 +106,7 @@ export function computeMinimalAbilityScores(data: IClientDataSet, character: Cha
  * @param abilityScore - the ability score value
  * @returns The ability score modifier
  */
-export function computeAbilityScoreModifier(abilityScore: number): number {
+export function computeAbilityScoreModifier(abilityScore: number = 10): number {
   return Math.floor((abilityScore - 10) / 2);
 }
 
