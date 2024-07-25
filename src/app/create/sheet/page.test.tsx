@@ -81,7 +81,10 @@ describe("/create/sheet - default", () => {
 
   test("has Saving Throws initialized", async () => {
     const view = screen.getByTestId("savingThrows");
-    expect(within(view).queryByText(NO_CLASS)).not.toBeNull();
+    expect(view).not.toBeNull();
+    expect(within(view).queryByText("Vigueur")).not.toBeNull();
+    expect(within(view).queryByText("Réflexe")).not.toBeNull();
+    expect(within(view).queryByText("Volonté")).not.toBeNull();
   });
 
   test("has Attack Bonuses initialized", async () => {

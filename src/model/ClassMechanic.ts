@@ -37,7 +37,7 @@ export const DroneChassisSchema = INamedModelSchema.extend({
   id: DroneChassisIdSchema,
   reference: ReferenceSchema,
   description: DescriptionSchema,
-  armorClasses: z.object({ energy: z.number().int().positive(), kynetic: z.number().int().positive() }),
+  armorClasses: z.object({ energy: z.number().int().positive(), kinetic: z.number().int().positive() }),
   modifiers: z.optional(z.array(DroneModifierSchema)),
   abilityScores: z.record(AbilityScoreIdSchema, z.number()),
   savingThrows: z.object({

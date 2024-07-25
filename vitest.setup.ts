@@ -4,6 +4,7 @@ import { ArmorTypeIds, EquipmentWeaponIds, IModel } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import deities from "./mocks/deities.json";
 import envoyDetails from "./mocks/class-envoy.json";
+import mechanicDetails from "./mocks/class-mechanic.json";
 import mysticDetails from "./mocks/class-mystic.json";
 import operativeDetails from "./mocks/class-operative.json";
 import soldierDetails from "./mocks/class-soldier.json";
@@ -48,9 +49,10 @@ beforeAll(async () => {
 
   addFetchMock("/api/auth/setup", {});
   addFetchMock("/api/classes/envoy/details", envoyDetails);
+  addFetchMock("/api/classes/mechanic/details", mechanicDetails);
+  addFetchMock("/api/classes/mystic/details", mysticDetails);
   addFetchMock("/api/classes/operative/details", operativeDetails);
   addFetchMock("/api/classes/soldier/details", soldierDetails);
-  addFetchMock("/api/classes/mystic/details", mysticDetails);
   addFetchMock("/api/deities", deities);
   addFetchMock("/api/equipment/weapons/fusions", fusionsDetails);
   addFetchMock("/api/themes/scholar", scholarDetails);

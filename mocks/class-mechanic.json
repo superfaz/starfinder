@@ -1,0 +1,65 @@
+{
+  "id": "mechanic",
+  "drone": {
+    "chassis": [
+      {
+        "id": "combat",
+        "name": "Drone de combat",
+        "reference": { "book": "base", "page": 83 },
+        "description": "A combat drone.",
+        "armorClasses": {
+          "energy": 11,
+          "kinetic": 10
+        },
+        "abilityScores": {
+          "str": 12,
+          "dex": 14,
+          "int": 6,
+          "wis": 10,
+          "cha": 6
+        },
+        "savingThrows": {
+          "fortitude": "good",
+          "reflex": "poor",
+          "will": "poor"
+        },
+        "primaryAbilityScores": ["dex", "str"]
+      },
+      {
+        "id": "hover",
+        "name": "Drone volant",
+        "reference": { "book": "base", "page": 83 },
+        "description": "A hovering drone.",
+        "armorClasses": {
+          "energy": 10,
+          "kinetic": 11
+        },
+        "abilityScores": {
+          "str": 6,
+          "dex": 14,
+          "int": 6,
+          "wis": 10,
+          "cha": 8
+        },
+        "savingThrows": {
+          "fortitude": "poor",
+          "reflex": "good",
+          "will": "poor"
+        },
+        "primaryAbilityScores": ["dex", "wis"]
+      }
+    ],
+    "features": [],
+    "mods": []
+  },
+  "styles": [
+    { "id": "drone", "name": "Drone", "reference": { "book": "base", "page": 83 }, "description": "A drone." },
+    {
+      "id": "exocortex",
+      "name": "Exocortex",
+      "reference": { "book": "base", "page": 83 },
+      "description": "An exocortex."
+    }
+  ],
+  "features": []
+}

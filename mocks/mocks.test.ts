@@ -27,6 +27,8 @@ import {
   EquipmentWeaponSolarianSchema,
   EquipmentArmorHeavySchema,
   EquipmentArmorLightSchema,
+  ClassMechanicSchema,
+  ClassMysticSchema,
 } from "model";
 import { describe, expect, test } from "vitest";
 
@@ -60,6 +62,16 @@ const datasets = [
     file: "class-envoy.json",
     array: false,
     schema: ClassEnvoySchema.strict(),
+  },
+  {
+    file: "class-mechanic.json",
+    array: false,
+    schema: ClassMechanicSchema.strict(),
+  },
+  {
+    file: "class-mystic.json",
+    array: false,
+    schema: ClassMysticSchema.strict(),
   },
   {
     file: "class-operative.json",

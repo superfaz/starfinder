@@ -12,7 +12,7 @@ export function DroneSheet() {
   if (!presenter) {
     return (
       <Stack direction="vertical" gap={2}>
-        <h2>Détails du Drone</h2>
+        <h2>Détails du drone</h2>
         <p>Loading...</p>
       </Stack>
     );
@@ -20,7 +20,7 @@ export function DroneSheet() {
 
   return (
     <Stack direction="vertical" gap={2}>
-      <h2>Détails du Drone</h2>
+      <h2>Détails du drone</h2>
       <CardDroneProfile presenter={presenter} />
       <CardAbilityScores presenter={presenter} />
       <CardSavingThrows presenter={presenter} />

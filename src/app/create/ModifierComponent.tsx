@@ -41,6 +41,7 @@ const displayLabelsForType: Record<ModifierType, string> = {
   classSkill: "Compétence de classe",
   damage: "Dégâts",
   damageReduction: "Réduction des dégâts (RD)",
+  droneWeapon: "Arme de drone",
   equipment: "Équipement",
   feat: "Don",
   featCount: "Nombre de Dons",
