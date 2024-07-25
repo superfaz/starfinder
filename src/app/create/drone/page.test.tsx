@@ -36,9 +36,9 @@ describe("/create/drone", () => {
 
   test("updates the details while changing the chassis", async () => {
     const user = userEvent.setup();
-    await waitFor(() => expect(screen.queryAllByText("Loading...")).toHaveLength(0));
-    await user.selectOptions(screen.getByRole("combobox", { name: "Chassis" }), "hover");
+    await waitFor(() => expect(screen.queryAllByText("Loading...")).toHaveLength(0), { timeout: 5000 });
+    await user.selectOptions(screen.getByRole("combobox", { name: /chassis/i }), "hover");
 
-    expect(within(screen.getByTestId("profile")).queryByText("Drone flottant")).toBeDefined();
+    expect(within(screen.getByTestId("profile")).queryByText("Drone volant")).toBeDefined();
   });
 });

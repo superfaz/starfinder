@@ -75,7 +75,6 @@ export class DronePresenter implements ICharacterPresenter {
       .filter((b) => b.target === savingThrow.id)
       .reduce((a, c) => a + c.value, 0);
 
-    console.log(savingThrow.id, chassisBonus, abilityScoreBonus, otherBonus);
     return chassisBonus + abilityScoreBonus + otherBonus;
   }
 }

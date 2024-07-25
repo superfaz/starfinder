@@ -27,7 +27,6 @@ export function useDronePresenter() {
   const classDetails = useClassDetails<ClassMechanic>("mechanic");
 
   return useMemo(() => {
-    console.log("useDronePresenter useMemo", classDetails);
     if (classDetails === undefined) {
       return undefined;
     } else {

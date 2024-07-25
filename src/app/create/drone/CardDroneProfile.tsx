@@ -9,7 +9,7 @@ export function CardDroneProfile({ presenter }: Readonly<{ presenter: DronePrese
   const alignment: Alignment | undefined = alignments.find((a) => a.id === AlignmentIds.n);
 
   return (
-    <Card>
+    <Card data-testid="profile">
       <Card.Header>
         <Badge bg="primary">Profil</Badge>
       </Card.Header>
