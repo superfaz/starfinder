@@ -4,7 +4,7 @@ import { IModelSchema } from "./IModel";
 import { DescriptionSchema, ReferenceSchema } from "./helper";
 import { INamedModelSchema } from "./INamedModel";
 import { AbilityScoreIdSchema } from "./AbilityScore";
-import { ClassSkillModifierSchema, SizeModifierSchema } from "./Modifier";
+import { ClassSkillModifierSchema, RankSkillModifierSchema, SizeModifierSchema } from "./Modifier";
 import { ModifierTemplateSchema } from "./ModifierTemplate";
 
 export const DroneModifierTypeSchema = z.enum([
@@ -25,7 +25,11 @@ export const DroneModifierTemplateSchema = ModifierTemplateSchema.extend({ type:
 
 export type DroneModifierTemplate = z.infer<typeof DroneModifierTemplateSchema>;
 
-export const DroneModifierSchema = z.discriminatedUnion("type", [ClassSkillModifierSchema, SizeModifierSchema]);
+export const DroneModifierSchema = z.discriminatedUnion("type", [
+  ClassSkillModifierSchema,
+  RankSkillModifierSchema,
+  SizeModifierSchema,
+]);
 
 export const DroneFeatureTemplateSchema = FeatureTemplateSchema.extend({
   modifiers: z.optional(z.array(DroneModifierTemplateSchema)),
