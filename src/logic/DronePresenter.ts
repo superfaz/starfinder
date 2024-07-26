@@ -14,6 +14,7 @@ import { CharacterPresenter, computeAbilityScoreModifier } from "./CharacterPres
 import { ICharacterPresenter } from "./ICharacterPresenter";
 import { SkillPresenter, SkillPresenterBuilder } from "./SkillPresenter";
 import { ModifierWithSource } from "view";
+import { Templater } from "./Templater";
 
 function computeSavingThrowBonus(level: number, type: "good" | "poor"): number {
   if (type === "good") {
@@ -38,25 +39,31 @@ export class DronePresenter implements ICharacterPresenter {
     return this.parent.getCharacter()?.classOptions ?? {};
   }
 
-  // private createTemplater(context: object = {}): Templater {
-  //   return new Templater({ ...context });
-  // }
+  private createTemplater(context: object = {}): Templater {
+    return new Templater({ ...context });
+  }
 
   public getLevel(): number {
     return 1;
   }
 
   public getModifiers(): Modifier[] {
-    return this.getChassis()?.modifiers ?? [];
+    const templater = this.createTemplater();
+    const featureModifiers = this.classDetail.drone.features
+      .map((f) => templater.convertDroneFeature(f))
+      .flatMap((f) => f.modifiers);
+    const chassisModifiers = this.getChassis()?.modifiers ?? [];
+
+    return [...featureModifiers, ...chassisModifiers];
   }
 
   public getModifiersWithSource(): ModifierWithSource[] {
     const chassis = this.getChassis();
-    if (!chassis || !chassis.modifiers) {
+    if (!chassis) {
       return [];
     }
 
-    return chassis.modifiers.map((m) => ({ ...m, source: chassis }));
+    return this.getModifiers().map((m) => ({ ...m, source: chassis }));
   }
 
   public getChassis(): DroneChassis | undefined {

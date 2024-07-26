@@ -1,14 +1,14 @@
 import { z } from "zod";
 import { DescriptionSchema, EvolutionsSchema, FeatureCategorySchema, INamedModelSchema, ModifierSchema } from "model";
 
-const BaseFeature = INamedModelSchema.extend({
+const BaseFeatureSchema = INamedModelSchema.extend({
   description: z.optional(DescriptionSchema),
   modifiers: z.array(ModifierSchema),
   level: z.number(),
   category: z.optional(FeatureCategorySchema),
 });
 
-export const RaceFeature = BaseFeature.extend({
+export const RaceFeatureSchema = BaseFeatureSchema.extend({
   source: z.literal("race"),
 
   /**
@@ -17,15 +17,15 @@ export const RaceFeature = BaseFeature.extend({
   replace: z.array(z.string()),
 }).strict();
 
-export type RaceFeature = z.infer<typeof RaceFeature>;
+export type RaceFeature = z.infer<typeof RaceFeatureSchema>;
 
-export const ThemeFeature = BaseFeature.extend({
+export const ThemeFeatureSchema = BaseFeatureSchema.extend({
   source: z.literal("theme"),
 }).strict();
 
-export type ThemeFeature = z.infer<typeof ThemeFeature>;
+export type ThemeFeature = z.infer<typeof ThemeFeatureSchema>;
 
-export const ClassFeature = BaseFeature.extend({
+export const ClassFeatureSchema = BaseFeatureSchema.extend({
   source: z.literal("class"),
 
   /**
@@ -34,15 +34,25 @@ export const ClassFeature = BaseFeature.extend({
   evolutions: EvolutionsSchema,
 }).strict();
 
-export type ClassFeature = z.infer<typeof ClassFeature>;
+export type ClassFeature = z.infer<typeof ClassFeatureSchema>;
+
+export const DroneFeatureSchema = BaseFeatureSchema.extend({
+  source: z.literal("drone"),
+});
+
+export type DroneFeature = z.infer<typeof DroneFeatureSchema>;
 
 /**
  * Represents a racial trait as well as a thematic or a class feature that can be applied to a character.
  */
-export const Feature = z.discriminatedUnion("source", [RaceFeature, ThemeFeature, ClassFeature]);
+export const FeatureSchema = z.discriminatedUnion("source", [
+  RaceFeatureSchema,
+  ThemeFeatureSchema,
+  ClassFeatureSchema,
+]);
 
-export type Feature = z.infer<typeof Feature>;
+export type Feature = z.infer<typeof FeatureSchema>;
 
 export function isFeature(data: unknown): data is Feature {
-  return Feature.safeParse(data).success;
+  return FeatureSchema.safeParse(data).success;
 }

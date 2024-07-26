@@ -1,10 +1,10 @@
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
+import { ICharacterPresenter } from "logic";
 import { ModifierTypes, ofType } from "model";
-import { CharacterProps } from "../Props";
 
-export function CardAbilities({ presenter }: CharacterProps) {
+export function CardAbilities({ presenter }: Readonly<{ presenter: ICharacterPresenter }>) {
   const modifiers = presenter.getModifiers().filter(ofType(ModifierTypes.ability));
   return (
     <Card data-testid="abilities">

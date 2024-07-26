@@ -8,6 +8,7 @@ import { CardSavingThrows } from "../sheet/CardSavingThrows";
 import { CardArmorClass } from "../sheet/CardArmorClass";
 import { CardSkills } from "../sheet/CardSkills";
 import { CardAttackBonuses } from "../sheet/CardAttackBonuses";
+import { CardAbilities } from "../sheet/CardAbilities";
 
 export function DroneSheetOne() {
   const presenter = useDronePresenter();
@@ -50,7 +51,7 @@ export function DroneSheetThree() {
 
   return (
     <Stack direction="vertical" gap={2}>
-      <CardAbilityScores presenter={presenter} />
+      <CardAbilities presenter={presenter} />
     </Stack>
   );
 }

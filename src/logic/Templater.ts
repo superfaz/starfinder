@@ -7,7 +7,7 @@ import {
   EquipmentSchema,
 } from "model";
 import type { FeatTemplate, FeatureTemplate, INamedModel, ModifierTemplate, Prerequisite, Equipment } from "model";
-import { ClassFeature, Feat, RaceFeature, ThemeFeature } from "view";
+import type { ClassFeature, DroneFeature, Feat, RaceFeature, ThemeFeature } from "view";
 
 export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
@@ -52,7 +52,6 @@ export class Templater {
       source: "race",
       name: this.applyForString(template.name) ?? "",
       description: template.description ? this.applyForString(template.description) : undefined,
-      category: template.category,
       replace: template.replace ?? [],
       modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
     };
@@ -64,7 +63,6 @@ export class Templater {
       source: "theme",
       name: this.applyForString(template.name) ?? "",
       description: template.description ? this.applyForString(template.description) : undefined,
-      category: template.category,
       modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
     };
   }
@@ -75,8 +73,17 @@ export class Templater {
       source: "class",
       name: this.applyForString(template.name) ?? "",
       description: template.description ? this.applyForString(template.description) : undefined,
-      category: template.category,
       evolutions: cleanEvolutions(template.evolutions) ?? {},
+      modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
+    };
+  }
+
+  convertDroneFeature(template: FeatureTemplate): DroneFeature {
+    return {
+      ...template,
+      source: "drone",
+      name: this.applyForString(template.name) ?? "",
+      description: template.description ? this.applyForString(template.description) : undefined,
       modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
     };
   }
