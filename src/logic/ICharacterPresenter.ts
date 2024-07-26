@@ -16,4 +16,5 @@ export interface ICharacterPresenter {
   getClassSkills(): string[];
   getSkills(): SkillPresenter[];
   getSkillRanks(id: string): number;
+  getAttackBonuses(): { base: number; melee: number; ranged: number; thrown: number } | undefined;
 }

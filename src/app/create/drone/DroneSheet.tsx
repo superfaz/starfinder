@@ -7,6 +7,7 @@ import { CardDroneProfile } from "./CardDroneProfile";
 import { CardSavingThrows } from "../sheet/CardSavingThrows";
 import { CardArmorClass } from "../sheet/CardArmorClass";
 import { CardSkills } from "../sheet/CardSkills";
+import { CardAttackBonuses } from "../sheet/CardAttackBonuses";
 
 export function DroneSheetOne() {
   const presenter = useDronePresenter();
@@ -20,6 +21,7 @@ export function DroneSheetOne() {
       <CardDroneProfile presenter={presenter} />
       <CardSavingThrows presenter={presenter} />
       <CardArmorClass presenter={presenter} />
+      <CardAttackBonuses presenter={presenter} />
     </Stack>
   );
 }

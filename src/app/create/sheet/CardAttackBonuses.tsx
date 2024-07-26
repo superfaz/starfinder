@@ -2,10 +2,10 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
-import { CharacterProps } from "../Props";
+import { ICharacterPresenter } from "logic";
 import { ValueComponent } from "./ValueComponent";
 
-export function CardAttackBonuses({ presenter }: CharacterProps) {
+export function CardAttackBonuses({ presenter }: Readonly<{ presenter: ICharacterPresenter }>) {
   const attackBonuses = presenter.getAttackBonuses();
   return (
     <Card data-testid="attackBonuses">

@@ -830,10 +830,10 @@ export class CharacterPresenter implements ICharacterPresenter {
     }
   }
 
-  getAttackBonuses(): { base: number; melee: number; ranged: number; thrown: number } | null {
+  getAttackBonuses(): { base: number; melee: number; ranged: number; thrown: number } | undefined {
     const klass = this.getClass();
     if (!klass) {
-      return null;
+      return undefined;
     }
 
     const base = computeBaseAttackBonus(this.character.level, klass.baseAttack);

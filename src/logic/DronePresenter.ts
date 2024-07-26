@@ -23,6 +23,10 @@ function computeSavingThrowBonus(level: number, type: "good" | "poor"): number {
   }
 }
 
+function computeBaseAttackBonus(level: number) {
+  return Math.floor((3 / 4) * level + 1 / 4);
+}
+
 export class DronePresenter implements ICharacterPresenter {
   constructor(
     private parent: CharacterPresenter,
@@ -156,5 +160,17 @@ export class DronePresenter implements ICharacterPresenter {
 
   public getSkillRanks(): number {
     return 0;
+  }
+
+  public getAttackBonuses(): { base: number; melee: number; ranged: number; thrown: number } {
+    const base = computeBaseAttackBonus(this.getLevel());
+    const str = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.str]);
+    const dex = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
+    return {
+      base,
+      melee: base + str,
+      ranged: base + dex,
+      thrown: base + str,
+    };
   }
 }
