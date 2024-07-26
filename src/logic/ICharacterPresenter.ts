@@ -1,7 +1,11 @@
 import type { ArmorEquipmentDescriptor, ArmorTypeId, Modifier, SavingThrow } from "model";
+import { SkillPresenter } from "./SkillPresenter";
+import { ModifierWithSource } from "view";
 
 export interface ICharacterPresenter {
+  getLevel(): number;
   getModifiers(): Modifier[];
+  getModifiersWithSource(): ModifierWithSource[];
   getAbilityScores(): Record<string, number>;
   getSavingThrowBonus(savingThrow: SavingThrow): number | undefined;
   getEnergyArmorClass(): number;
@@ -9,4 +13,7 @@ export interface ICharacterPresenter {
   getArmorClassAgainstCombatManeuvers(): number;
   getArmorProficiencies(): ArmorTypeId[] | undefined;
   getArmors(): ArmorEquipmentDescriptor[] | undefined;
+  getClassSkills(): string[];
+  getSkills(): SkillPresenter[];
+  getSkillRanks(id: string): number;
 }

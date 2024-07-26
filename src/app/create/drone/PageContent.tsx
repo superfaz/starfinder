@@ -1,8 +1,6 @@
 import Col from "react-bootstrap/Col";
 import { ChassisSelection } from "./ChassisSelection";
-import { FeatureSelection } from "./FeatureSelection";
-import { ModSelection } from "./ModSelection";
-import { DroneSheet } from "./DroneSheet";
+import { DroneSheetOne, DroneSheetTwo } from "./DroneSheet";
 
 export function PageContent() {
   return (
@@ -10,15 +8,13 @@ export function PageContent() {
       <Col lg={3}>
         <ChassisSelection />
       </Col>
-      <Col>
-        <FeatureSelection />
-      </Col>
-      <Col>
-        <ModSelection />
+      <Col lg={3}>
+        <DroneSheetOne />
       </Col>
       <Col lg={3}>
-        <DroneSheet />
+        <DroneSheetTwo />
       </Col>
+      <Col></Col>
     </>
   );
 }

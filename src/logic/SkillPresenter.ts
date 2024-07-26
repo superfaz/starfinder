@@ -10,7 +10,8 @@ import {
   ofType,
 } from "model";
 import { IClientDataSet } from "data";
-import { CharacterPresenter, computeAbilityScoreModifier } from "./CharacterPresenter";
+import { computeAbilityScoreModifier } from "./CharacterPresenter";
+import { ICharacterPresenter } from "./ICharacterPresenter";
 
 export interface BonusModifier {
   source: string;
@@ -33,7 +34,7 @@ export interface SkillPresenter {
 
 export class SkillPresenterBuilder {
   constructor(
-    private parent: CharacterPresenter,
+    private parent: ICharacterPresenter,
     private data: IClientDataSet
   ) {}
 

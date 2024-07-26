@@ -12,6 +12,8 @@ import {
 } from "model";
 import { CharacterPresenter, computeAbilityScoreModifier } from "./CharacterPresenter";
 import { ICharacterPresenter } from "./ICharacterPresenter";
+import { SkillPresenter, SkillPresenterBuilder } from "./SkillPresenter";
+import { ModifierWithSource } from "view";
 
 function computeSavingThrowBonus(level: number, type: "good" | "poor"): number {
   if (type === "good") {
@@ -36,8 +38,21 @@ export class DronePresenter implements ICharacterPresenter {
   //   return new Templater({ ...context });
   // }
 
+  public getLevel(): number {
+    return 1;
+  }
+
   public getModifiers(): Modifier[] {
     return this.getChassis()?.modifiers ?? [];
+  }
+
+  public getModifiersWithSource(): ModifierWithSource[] {
+    const chassis = this.getChassis();
+    if (!chassis || !chassis.modifiers) {
+      return [];
+    }
+
+    return chassis.modifiers.map((m) => ({ ...m, source: chassis }));
   }
 
   public getChassis(): DroneChassis | undefined {
@@ -77,7 +92,7 @@ export class DronePresenter implements ICharacterPresenter {
       return undefined;
     }
 
-    const chassisBonus = computeSavingThrowBonus(1, chassis.savingThrows[savingThrow.id]);
+    const chassisBonus = computeSavingThrowBonus(this.getLevel(), chassis.savingThrows[savingThrow.id]);
     const abilityScoreBonus = computeAbilityScoreModifier(this.getAbilityScores()[savingThrow.abilityScore]);
     const otherBonus = this.getModifiers()
       .filter(ofType(ModifierTypes.savingThrowBonus))
@@ -87,15 +102,15 @@ export class DronePresenter implements ICharacterPresenter {
     return chassisBonus + abilityScoreBonus + otherBonus;
   }
 
-  getArmorProficiencies(): undefined {
+  public getArmorProficiencies(): undefined {
     return undefined;
   }
 
-  getArmors(): undefined {
+  public getArmors(): undefined {
     return undefined;
   }
 
-  getKineticArmorClass(): number {
+  public getKineticArmorClass(): number {
     const chassis = this.getChassis();
     if (!chassis) {
       return 10;
@@ -110,7 +125,7 @@ export class DronePresenter implements ICharacterPresenter {
     return base + dexBonus + modifierBonus;
   }
 
-  getEnergyArmorClass(): number {
+  public getEnergyArmorClass(): number {
     const chassis = this.getChassis();
     if (!chassis) {
       return 10;
@@ -125,7 +140,21 @@ export class DronePresenter implements ICharacterPresenter {
     return base + dexBonus + modifierBonus;
   }
 
-  getArmorClassAgainstCombatManeuvers(): number {
+  public getArmorClassAgainstCombatManeuvers(): number {
     return 8 + this.getKineticArmorClass();
+  }
+
+  public getClassSkills(): string[] {
+    const modifiers = this.getModifiers();
+    return modifiers.filter(ofType(ModifierTypes.classSkill)).map((m) => m.target);
+  }
+
+  public getSkills(): SkillPresenter[] {
+    const builder = new SkillPresenterBuilder(this, this.data);
+    return builder.buildSkills(this.data.skills.filter((s) => s.abilityScore !== undefined));
+  }
+
+  public getSkillRanks(): number {
+    return 0;
   }
 }

@@ -1013,7 +1013,7 @@ export class CharacterPresenter implements ICharacterPresenter {
 
     const savingThrow =
       typeof savingThrowOrId === "string" ? findOrError(this.data.savingThrows, savingThrowOrId) : savingThrowOrId;
-    const classBonus = computeSavingThrowBonus(1, selectedClass.savingThrows[savingThrow.id]);
+    const classBonus = computeSavingThrowBonus(this.getLevel(), selectedClass.savingThrows[savingThrow.id]);
     const abilityScoreBonus = computeAbilityScoreModifier(this.getAbilityScores()[savingThrow.abilityScore]);
     const otherBonus = this.getModifiers()
       .filter(ofType(ModifierTypes.savingThrowBonus))

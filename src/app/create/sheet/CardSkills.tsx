@@ -4,9 +4,9 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { displayBonus } from "app/helpers";
-import { CharacterProps } from "../Props";
+import { ICharacterPresenter } from "logic";
 
-export function CardSkills({ presenter }: CharacterProps) {
+export function CardSkills({ presenter }: Readonly<{ presenter: ICharacterPresenter }>) {
   return (
     <Card>
       <Card.Header>

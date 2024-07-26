@@ -11,7 +11,7 @@ export function ChassisSelection() {
   if (!presenter) {
     return (
       <Stack direction="vertical" gap={2}>
-        <h2>Chassis</h2>
+        <h2>Drone</h2>
         <p>Loading...</p>
       </Stack>
     );
@@ -26,7 +26,7 @@ export function ChassisSelection() {
 
   return (
     <Stack direction="vertical" gap={2}>
-      <h2>Chassis</h2>
+      <h2>Drone</h2>
       <Form.FloatingLabel controlId="chassis" label="Type de chassis">
         <Form.Select value={selectedChassis?.id ?? ""} onChange={handleChassisChange}>
           {selectedChassis === undefined && <option value=""></option>}

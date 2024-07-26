@@ -11,8 +11,7 @@ describe("/create/drone", () => {
   });
 
   test("is displayed", async () => {
-    expect(screen.queryByRole("heading", { level: 2, name: "Chassis" })).not.toBeNull();
-    expect(screen.queryByRole("heading", { level: 2, name: "Détails du drone" })).not.toBeNull();
+    expect(screen.queryByRole("heading", { level: 2, name: "Drone" })).not.toBeNull();
   });
 });
 
@@ -27,11 +26,7 @@ describe("/create/drone", () => {
   });
 
   test("displays ChassisSelection", async () => {
-    expect(screen.getByRole("heading", { level: 2, name: "Chassis" })).toBeDefined();
-  });
-
-  test("displays DroneSheet", async () => {
-    expect(screen.getByRole("heading", { level: 2, name: "Détails du drone" })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 2, name: "Drone" })).toBeDefined();
   });
 
   test("updates the details while changing the chassis", async () => {
