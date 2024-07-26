@@ -9,7 +9,7 @@ import {
   type Profession,
   EquipmentDescriptor,
 } from "model";
-import { RaceFeature } from "view";
+import { type RaceFeature } from "view";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 const initialState = {

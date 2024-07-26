@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
-import { Feature } from "view";
+import { type Feature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { useCharacterPresenter } from "../helpers-client";
 

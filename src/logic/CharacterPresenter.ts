@@ -43,7 +43,7 @@ import {
   ofCategory,
   ofType,
 } from "model";
-import { ClassFeature, Feat, Feature, ModifierWithSource, RaceFeature, ThemeFeature } from "view";
+import type { ClassFeature, Feat, Feature, ModifierWithSource, RaceFeature, ThemeFeature } from "view";
 import {
   getMechanicFeatureTemplates,
   getMysticFeatureTemplates,

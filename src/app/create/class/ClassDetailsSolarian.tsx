@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { CharacterPresenter } from "logic";
-import { ClassFeature } from "view";
+import { type ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";

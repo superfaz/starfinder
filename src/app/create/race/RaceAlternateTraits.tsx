@@ -4,7 +4,7 @@ import { ChangeEvent } from "react";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch } from "logic";
-import { RaceFeature } from "view";
+import { type RaceFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { useCharacterPresenter } from "../helpers-client";
 
