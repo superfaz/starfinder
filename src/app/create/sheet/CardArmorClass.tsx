@@ -4,10 +4,9 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { displayBonus, findOrError } from "app/helpers";
 import { Badge } from "app/components";
-import { useAppSelector } from "logic";
+import { ICharacterPresenter, useAppSelector } from "logic";
 import { EquipmentArmor, EquipmentArmorIds, EquipmentDescriptor, ModifierTypes, ofType } from "model";
 import { ValueComponent } from "./ValueComponent";
-import { CharacterProps } from "../Props";
 
 async function getArmor(descriptor: EquipmentDescriptor): Promise<EquipmentArmor> {
   return fetch(`/api/equipment/armors/${descriptor.secondaryType}`)
@@ -47,11 +46,11 @@ function CardArmor({ descriptor }: Readonly<{ descriptor: EquipmentDescriptor }>
   );
 }
 
-export function CardArmorClass({ presenter }: CharacterProps) {
+export function CardArmorClass({ presenter }: Readonly<{ presenter: ICharacterPresenter }>) {
   const armorTypes = useAppSelector((state) => state.data.armorTypes);
   const damageTypes = useAppSelector((state) => state.data.damageTypes);
+
   const proficiencies = presenter.getArmorProficiencies();
-  const texts = proficiencies.map((p) => findOrError(armorTypes, p).name);
   const armorClasses = {
     energy: { value: presenter.getEnergyArmorClass(), label: "Classe d’armure énergétique" },
     kinetic: { value: presenter.getKineticArmorClass(), label: "Classe d’armure cinétique" },
@@ -59,16 +58,18 @@ export function CardArmorClass({ presenter }: CharacterProps) {
   };
   const reductions = presenter.getModifiers().filter(ofType(ModifierTypes.damageReduction));
   const resistances = presenter.getModifiers().filter(ofType(ModifierTypes.resistance));
-  const armors = presenter.getArmors().filter((a) => a.secondaryType !== EquipmentArmorIds.upgrade);
+  const armors = presenter.getArmors()?.filter((a) => a.secondaryType !== EquipmentArmorIds.upgrade) ?? [];
 
   return (
     <Card data-testid="armors">
       <Card.Header>
         <Badge bg="primary">Classe d&apos;armure</Badge>
       </Card.Header>
-      <Card.Body className="position-relative small py-2">
-        {texts.length > 0 && <span>Formations : {texts.join(", ")}</span>}
-      </Card.Body>
+      {proficiencies && proficiencies.length > 0 && (
+        <Card.Body className="position-relative small py-2">
+          <span>Formations : {proficiencies.map((p) => findOrError(armorTypes, p).name).join(", ")}</span>
+        </Card.Body>
+      )}
       <Card.Body className="position-relative py-2">
         <Row>
           {Object.entries(armorClasses).map(([key, { label, value }]) => (

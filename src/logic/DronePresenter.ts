@@ -1,6 +1,15 @@
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
-import { ClassMechanic, DroneChassis, Modifier, ModifierTypes, SavingThrow, Size, ofType } from "model";
+import {
+  AbilityScoreIds,
+  ClassMechanic,
+  DroneChassis,
+  Modifier,
+  ModifierTypes,
+  SavingThrow,
+  Size,
+  ofType,
+} from "model";
 import { CharacterPresenter, computeAbilityScoreModifier } from "./CharacterPresenter";
 import { ICharacterPresenter } from "./ICharacterPresenter";
 
@@ -76,5 +85,47 @@ export class DronePresenter implements ICharacterPresenter {
       .reduce((a, c) => a + c.value, 0);
 
     return chassisBonus + abilityScoreBonus + otherBonus;
+  }
+
+  getArmorProficiencies(): undefined {
+    return undefined;
+  }
+
+  getArmors(): undefined {
+    return undefined;
+  }
+
+  getKineticArmorClass(): number {
+    const chassis = this.getChassis();
+    if (!chassis) {
+      return 10;
+    }
+
+    const dexBonus = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
+    const base = chassis.armorClasses.kinetic;
+    const modifierBonus = this.getModifiers()
+      .filter(ofType(ModifierTypes.armorClass))
+      .reduce((a, c) => a + c.value, 0);
+
+    return base + dexBonus + modifierBonus;
+  }
+
+  getEnergyArmorClass(): number {
+    const chassis = this.getChassis();
+    if (!chassis) {
+      return 10;
+    }
+
+    const dexBonus = computeAbilityScoreModifier(this.getAbilityScores()[AbilityScoreIds.dex]);
+    const base = chassis.armorClasses.energy;
+    const modifierBonus = this.getModifiers()
+      .filter(ofType(ModifierTypes.armorClass))
+      .reduce((a, c) => a + c.value, 0);
+
+    return base + dexBonus + modifierBonus;
+  }
+
+  getArmorClassAgainstCombatManeuvers(): number {
+    return 8 + this.getKineticArmorClass();
   }
 }

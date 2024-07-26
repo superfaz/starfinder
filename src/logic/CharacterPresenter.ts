@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 import { findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import type {
+  ArmorEquipmentDescriptor,
   ArmorTypeId,
   Avatar,
   Character,
@@ -18,6 +19,7 @@ import type {
   IModel,
   INamedModel,
   Modifier,
+  OtherEquipmentDescriptor,
   Prerequisite,
   Profession,
   Race,
@@ -27,15 +29,18 @@ import type {
   Spell,
   Theme,
   Variant,
+  WeaponEquipmentDescriptor,
   WeaponTypeId,
 } from "model";
 import {
   AbilityScoreIds,
+  EquipmentCategories,
   ModifierTypes,
   PrerequisiteTypes,
   isCasterId,
   isVariable,
   isWeaponTypeId,
+  ofCategory,
   ofType,
 } from "model";
 import { ClassFeature, Feat, Feature, ModifierWithSource, RaceFeature, ThemeFeature } from "view";
@@ -1030,15 +1035,15 @@ export class CharacterPresenter implements ICharacterPresenter {
     return findOrError(this.character.equipment, id);
   }
 
-  getWeapons(): EquipmentDescriptor[] {
-    return this.character.equipment.filter((e) => e.category === "weapon");
+  getWeapons(): WeaponEquipmentDescriptor[] {
+    return this.character.equipment.filter(ofCategory(EquipmentCategories.weapon));
   }
 
-  getArmors(): EquipmentDescriptor[] {
-    return this.character.equipment.filter((e) => e.category === "armor");
+  getArmors(): ArmorEquipmentDescriptor[] {
+    return this.character.equipment.filter(ofCategory(EquipmentCategories.armor));
   }
 
-  getEquipmentOthers(): EquipmentDescriptor[] {
-    return this.character.equipment.filter((e) => e.category === "other");
+  getEquipmentOthers(): OtherEquipmentDescriptor[] {
+    return this.character.equipment.filter(ofCategory(EquipmentCategories.other));
   }
 }
