@@ -1,12 +1,12 @@
 import Col from "react-bootstrap/Col";
-import { ChassisSelection } from "./ChassisSelection";
+import { DroneDefinition } from "./DroneDefinition";
 import { DroneSheetOne, DroneSheetTwo } from "./DroneSheet";
 
 export function PageContent() {
   return (
     <>
       <Col lg={3}>
-        <ChassisSelection />
+        <DroneDefinition />
       </Col>
       <Col lg={3}>
         <DroneSheetOne />

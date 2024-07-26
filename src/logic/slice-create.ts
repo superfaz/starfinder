@@ -244,6 +244,13 @@ const mainSlice = createSlice({
       );
     },
 
+    updateDroneName(state, action: PayloadAction<string>) {
+      if (!state.character.classOptions) {
+        state.character.classOptions = {};
+      }
+      state.character.classOptions.droneName = action.payload;
+    },
+
     updateDroneChassis(state, action: PayloadAction<string>) {
       if (!state.character.classOptions) {
         state.character.classOptions = {};
