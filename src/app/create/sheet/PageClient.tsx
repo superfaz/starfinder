@@ -13,7 +13,7 @@ import { CardSkills } from "./CardSkills";
 import { CardKeyPoints } from "./CardKeyPoints";
 import { CardSavingThrows } from "./CardSavingThrows";
 import { CardArmorClass } from "./CardArmorClass";
-import { CardAttackBonuses } from "./CardAttachBonuses";
+import { CardAttackBonuses } from "./CardAttackBonuses";
 import { CardWeapons } from "./CardWeapons";
 import { CardAbilities } from "./CardAbilities";
 import { CardFeats } from "./CardFeats";
