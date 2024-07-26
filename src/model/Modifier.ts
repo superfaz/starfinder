@@ -17,7 +17,7 @@ import { EquipmentArmorSchema } from "./EquipmentArmor";
 // #region Modifier with value
 const BaseValueModifierSchema = IModelSchema.extend({
   level: z.number().optional(),
-  value: z.coerce.number(),
+  value: z.coerce.number(), // 'coerce' required because of template conversion
 });
 
 export const AbilityScoreModifierSchema = BaseValueModifierSchema.extend({
@@ -40,6 +40,11 @@ export const BodyPartModifierSchema = BaseValueModifierSchema.extend({
 
 export const DamageReductionModifierSchema = BaseValueModifierSchema.extend({
   type: z.literal(ModifierTypes.damageReduction),
+}).strict();
+
+export const DroneWeaponModifierSchema = BaseValueModifierSchema.extend({
+  type: z.literal(ModifierTypes.droneWeapon),
+  target: z.enum(["melee", "ranged"]),
 }).strict();
 
 export const FeatCountModifierSchema = BaseValueModifierSchema.extend({
@@ -126,12 +131,6 @@ export const ClassSkillModifierSchema = IModelSchema.extend({
   level: z.number().optional(),
   target: IdSchema,
   doubleEffect: z.optional(z.enum(["rank", "bonus"])),
-}).strict();
-
-export const DroneWeaponModifierSchema = IModelSchema.extend({
-  type: z.literal(ModifierTypes.droneWeapon),
-  level: z.number().optional(),
-  target: z.enum(["melee", "ranged"]),
 }).strict();
 
 export const EquipmentModifierSchema = IModelSchema.extend({
