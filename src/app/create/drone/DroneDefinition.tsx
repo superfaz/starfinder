@@ -33,7 +33,7 @@ export function DroneDefinition() {
       <h2>Drone</h2>
 
       <Form.FloatingLabel controlId="name" label="Nom du drone">
-        <Form.Control type="text" value={presenter.getName()} onChange={handleNameChange} />
+        <Form.Control type="text" value={presenter.getName() ?? ""} onChange={handleNameChange} />
       </Form.FloatingLabel>
 
       <Form.FloatingLabel controlId="chassis" label="Type de chassis">

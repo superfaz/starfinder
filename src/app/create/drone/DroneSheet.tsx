@@ -40,3 +40,17 @@ export function DroneSheetTwo() {
     </Stack>
   );
 }
+
+export function DroneSheetThree() {
+  const presenter = useDronePresenter();
+
+  if (!presenter) {
+    return null;
+  }
+
+  return (
+    <Stack direction="vertical" gap={2}>
+      <CardAbilityScores presenter={presenter} />
+    </Stack>
+  );
+}

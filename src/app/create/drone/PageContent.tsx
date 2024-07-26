@@ -1,6 +1,6 @@
 import Col from "react-bootstrap/Col";
 import { DroneDefinition } from "./DroneDefinition";
-import { DroneSheetOne, DroneSheetTwo } from "./DroneSheet";
+import { DroneSheetOne, DroneSheetThree, DroneSheetTwo } from "./DroneSheet";
 
 export function PageContent() {
   return (
@@ -14,7 +14,9 @@ export function PageContent() {
       <Col lg={3}>
         <DroneSheetTwo />
       </Col>
-      <Col></Col>
+      <Col lg={3}>
+        <DroneSheetThree />
+      </Col>
     </>
   );
 }
