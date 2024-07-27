@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { IModelSchema } from "./IModel";
-import { DescriptionSchema, ReferenceSchema } from "./helper";
+import { DescriptionSchema, IdSchema, ReferenceSchema } from "./helper";
 import { INamedModelSchema } from "./INamedModel";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ClassSkillModifierSchema, RankSkillModifierSchema, SizeModifierSchema } from "./Modifier";
@@ -66,6 +66,7 @@ export const ClassMechanicSchema = IModelSchema.extend({
   drone: z
     .object({
       chassis: z.array(DroneChassisSchema),
+      skills: z.array(IdSchema),
       features: z.array(DroneFeatureTemplateSchema),
       mods: z.array(DroneFeatureTemplateSchema),
     })

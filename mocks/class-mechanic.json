@@ -49,6 +49,7 @@
         "primaryAbilityScores": ["dex", "wis"]
       }
     ],
+    "skills": ["acro", "engi", "stea"],
     "features": [],
     "mods": []
   },
