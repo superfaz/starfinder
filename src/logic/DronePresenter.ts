@@ -8,6 +8,7 @@ import {
   ModifierTypes,
   SavingThrow,
   Size,
+  SkillDefinition,
   ofType,
 } from "model";
 import { CharacterPresenter, computeAbilityScoreModifier } from "./CharacterPresenter";
@@ -40,7 +41,7 @@ export class DronePresenter implements ICharacterPresenter {
   }
 
   private createTemplater(context: object = {}): Templater {
-    return new Templater({ ...context });
+    return new Templater({ ...context, ...this.getClassOptions() });
   }
 
   public getLevel(): number {
@@ -48,10 +49,12 @@ export class DronePresenter implements ICharacterPresenter {
   }
 
   public getModifiers(): Modifier[] {
-    const templater = this.createTemplater();
+    const templater = this.createTemplater({ droneSkillUnit: "any" });
     const featureModifiers = this.classDetail.drone.features
+      .filter((f) => f.level <= this.getLevel())
       .map((f) => templater.convertDroneFeature(f))
-      .flatMap((f) => f.modifiers);
+      .flatMap((f) => f.modifiers)
+      .filter((f) => f.level === undefined || f.level <= this.getLevel());
     const chassisModifiers = this.getChassis()?.modifiers ?? [];
 
     return [...featureModifiers, ...chassisModifiers];
@@ -72,6 +75,14 @@ export class DronePresenter implements ICharacterPresenter {
 
   public getAllChassis(): DroneChassis[] {
     return this.classDetail.drone.chassis;
+  }
+
+  public getSkillUnit(): string {
+    return this.getClassOptions().droneSkillUnit;
+  }
+
+  public getAllSkillUnit(): SkillDefinition[] {
+    return this.data.skills.filter((s) => this.classDetail.drone.skills.includes(s.id));
   }
 
   public getAbilityScores(): Record<string, number> {

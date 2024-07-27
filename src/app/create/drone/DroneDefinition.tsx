@@ -3,6 +3,7 @@
 import { mutators, useAppDispatch } from "logic";
 import { Form, Stack } from "react-bootstrap";
 import { useDronePresenter } from "../helpers-client";
+import { ChangeEvent } from "react";
 
 export function DroneDefinition() {
   const presenter = useDronePresenter();
@@ -19,13 +20,19 @@ export function DroneDefinition() {
 
   const chassis = presenter.getAllChassis();
   const selectedChassis = presenter.getChassis();
+  const skillUnit = presenter.getSkillUnit();
+  const skills = presenter.getAllSkillUnit();
 
-  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch(mutators.updateDroneName(event.target.value));
   }
 
-  function handleChassisChange(event: React.ChangeEvent<HTMLSelectElement>) {
+  function handleChassisChange(event: ChangeEvent<HTMLSelectElement>) {
     dispatch(mutators.updateDroneChassis(event.target.value));
+  }
+
+  function handleSkillUnitChange(event: ChangeEvent<HTMLSelectElement>) {
+    dispatch(mutators.updateDroneSkillUnit(event.target.value));
   }
 
   return (
@@ -48,6 +55,17 @@ export function DroneDefinition() {
       </Form.FloatingLabel>
 
       {selectedChassis && <div className="text-muted">{selectedChassis.description}</div>}
+
+      <Form.FloatingLabel controlId="skillUnit" label="Module de compétence">
+        <Form.Select value={skillUnit ?? ""} onChange={handleSkillUnitChange}>
+          {skillUnit === undefined && <option value=""></option>}
+          {skills.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.FloatingLabel>
     </Stack>
   );
 }

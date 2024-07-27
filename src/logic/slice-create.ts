@@ -258,6 +258,13 @@ const mainSlice = createSlice({
       state.character.classOptions.droneChassis = action.payload;
     },
 
+    updateDroneSkillUnit(state, action: PayloadAction<string>) {
+      if (!state.character.classOptions) {
+        state.character.classOptions = {};
+      }
+      state.character.classOptions.droneSkillUnit = action.payload;
+    },
+
     updateInitialCapital(state, action: PayloadAction<number>) {
       state.character.credits += action.payload - state.character.initialCapital;
       state.character.initialCapital = action.payload;

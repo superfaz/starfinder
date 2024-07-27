@@ -5,16 +5,16 @@ import { DroneSheetOne, DroneSheetThree, DroneSheetTwo } from "./DroneSheet";
 export function PageContent() {
   return (
     <>
-      <Col lg={3}>
+      <Col lg={3} className="mb-3">
         <DroneDefinition />
       </Col>
-      <Col lg={3}>
+      <Col lg={3} className="mb-3">
         <DroneSheetOne />
       </Col>
-      <Col lg={3}>
+      <Col lg={3} className="mb-3">
         <DroneSheetTwo />
       </Col>
-      <Col lg={3}>
+      <Col lg={3} className="mb-3">
         <DroneSheetThree />
       </Col>
     </>
