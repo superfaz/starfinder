@@ -36,6 +36,10 @@ export const DroneFeatureTemplateSchema = FeatureTemplateSchema.extend({
   modifiers: z.optional(z.array(DroneModifierTemplateSchema)),
 });
 
+export const DroneModTemplateSchema = DroneFeatureTemplateSchema.extend({
+  multiple: z.union([z.boolean(), z.number().int().positive()]),
+});
+
 export const DroneChassisIdSchema = z.enum(["combat", "hover", "stealth"]);
 
 export const DroneChassisSchema = INamedModelSchema.extend({
@@ -51,6 +55,7 @@ export const DroneChassisSchema = INamedModelSchema.extend({
     will: z.enum(["good", "poor"]),
   }),
   primaryAbilityScores: z.array(AbilityScoreIdSchema),
+  initialMods: z.array(z.union([IdSchema, z.record(z.string(), z.array(IdSchema))])),
 }).strict();
 
 export type DroneChassis = z.infer<typeof DroneChassisSchema>;
@@ -69,7 +74,7 @@ export const ClassMechanicSchema = IModelSchema.extend({
       chassis: z.array(DroneChassisSchema),
       skills: z.array(IdSchema),
       features: z.array(DroneFeatureTemplateSchema),
-      mods: z.array(DroneFeatureTemplateSchema),
+      mods: z.array(DroneModTemplateSchema),
     })
     .strict(),
   styles: z.array(ClassMechanicStyleSchema),
