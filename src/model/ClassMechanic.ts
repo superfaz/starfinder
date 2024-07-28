@@ -12,6 +12,7 @@ export const DroneModifierTypeSchema = z.enum([
   "abilityScore",
   "armorClass",
   "classSkill",
+  "damageReduction",
   "droneWeapon",
   "rankSkill",
   "resistance",
