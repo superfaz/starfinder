@@ -43,7 +43,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
 
   return (
     <>
-      <Col lg={3}>
+      <Col xs={12} sm={6} md={4} lg={3} xl={2}>
         <Stack direction="vertical" gap={2}>
           <CreditsDisplay />
           {isList && <EquipmentSelected />}

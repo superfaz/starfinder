@@ -25,31 +25,31 @@ export function PageClient() {
 
   return (
     <Row>
-      <Col lg={3} className="mb-2">
+      <Col xs={12} sm={6} md={4} lg={3} xl={2} className="mb-2">
         <Stack direction="vertical" gap={2}>
           <CardAvatar presenter={presenter} />
           <CardFeats presenter={presenter} />
         </Stack>
       </Col>
-      <Col lg={3} className="mb-2">
+      <Col xs={12} sm={6} md={4} lg={3} xl={2} className="mb-2">
         <Stack direction="vertical" gap={2}>
           <CardProfile presenter={presenter} />
           <CardDescription presenter={presenter} />
         </Stack>
       </Col>
-      <Col lg={3} className="mb-2">
+      <Col xs={12} sm={6} md={4} lg={3} xl={2} className="mb-2">
         <Stack direction="vertical" gap={2}>
           <CardAbilities presenter={presenter} />
           <CardSpells presenter={presenter} />
         </Stack>
       </Col>
-      <Col lg={3} className="mb-2">
+      <Col xs={12} sm={6} md={4} lg={3} xl={2} className="mb-2">
         <Stack direction="vertical" gap={2}>
           <CardAbilityScores presenter={presenter} />
           <CardSkills presenter={presenter} />
         </Stack>
       </Col>
-      <Col lg={3} className="mb-2">
+      <Col xs={12} sm={6} md={4} lg={3} xl={2} className="mb-2">
         <Stack direction="vertical" gap={2}>
           <CardInitiative presenter={presenter} />
           <CardKeyPoints presenter={presenter} />
@@ -59,7 +59,7 @@ export function PageClient() {
           <CardWeapons presenter={presenter} />
         </Stack>
       </Col>
-      <Col lg={3} className="mb-2">
+      <Col xs={12} sm={6} md={4} lg={3} xl={2} className="mb-2">
         <Stack direction="vertical" gap={2}>
           <CardEquipment presenter={presenter} />
         </Stack>

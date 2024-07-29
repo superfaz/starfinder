@@ -108,7 +108,7 @@ export function SpellsSelection() {
 
   return levels.map((level) => (
     <Row key={level} data-testid={"spells-" + level}>
-      <Col xs="3">
+      <Col xs={12} sm={6} md={4} lg={3} xl={2}>
         <Stack direction="vertical" gap={2}>
           <Stack direction="horizontal" gap={2}>
             <h2>Sorts connus</h2>
@@ -131,7 +131,7 @@ export function SpellsSelection() {
               .filter(filterOnLevelAndClass(classId, level))
               .sort(byName)
               .map((spell) => (
-                <Col key={spell.id} lg={4} className="mb-3">
+                <Col key={spell.id} md={6} lg={4} xl={3} className="mb-3">
                   <SpellComponent
                     character={presenter}
                     spell={spell}

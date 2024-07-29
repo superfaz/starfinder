@@ -6,13 +6,13 @@ import { Description } from "./Description";
 export function PageContent() {
   return (
     <>
-      <Col lg={3}>
+      <Col xs={12} sm={6} md={4} lg={3} xl={2}>
         <Profile />
       </Col>
-      <Col lg={3}>
+      <Col  xs={12} sm={6} md={4} lg={3} xl={2}>
         <Avatar />
       </Col>
-      <Col lg={6}>
+      <Col  xs={12} sm={12} md={4} lg={6} xl={8}>
         <Description />
       </Col>
     </>

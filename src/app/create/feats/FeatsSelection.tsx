@@ -114,7 +114,7 @@ export function FeatsSelection() {
         </Col>
       </Row>
 
-      <Row data-testid="feats" className="row-cols-1 row-cols-lg-2 row-cols-xxl-3">
+      <Row data-testid="feats" className="row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
         {displayedFeats.map((template) => (
           <Col key={template.id} className="mb-4">
             <FeatTemplateComponent presenter={presenter} template={template} />
