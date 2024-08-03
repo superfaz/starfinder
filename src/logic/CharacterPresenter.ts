@@ -710,22 +710,19 @@ export class CharacterPresenter implements ICharacterPresenter {
       }
 
       case PrerequisiteTypes.weaponProficiency: {
-        const selectedClass = this.getClass();
-        if (isVariable(prerequisite.target)) {
-          const target = this.createTemplater().convertString(prerequisite.target);
-          if (isWeaponTypeId(target)) {
-            return !!selectedClass && selectedClass.weapons.includes(target);
-          } else {
-            Sentry.captureMessage(
-              `Invalid weapon type id: ${target} for prerequisite ${prerequisite.id} with value ${prerequisite.target}`
-            );
-            return false;
-          }
-        } else if (isWeaponTypeId(prerequisite.target)) {
-          return !!selectedClass && selectedClass.weapons.includes(prerequisite.target);
-        } else {
+        const modifiers = this.getWeaponProficiencies();
+        const target = isVariable(prerequisite.target)
+          ? this.createTemplater().convertString(prerequisite.target)
+          : prerequisite.target;
+
+        if (!isWeaponTypeId(target)) {
+          Sentry.captureMessage(
+            `Invalid weapon type id: ${target} for prerequisite ${prerequisite.id} with value ${prerequisite.target}`
+          );
           return false;
         }
+
+        return modifiers.includes(target);
       }
 
       case PrerequisiteTypes.savingThrow:
@@ -857,12 +854,11 @@ export class CharacterPresenter implements ICharacterPresenter {
   }
 
   getWeaponProficiencies(): WeaponTypeId[] {
-    const fromClass = this.getClass()?.weapons ?? [];
     const fromModifiers = this.getModifiers()
       .filter(ofType(ModifierTypes.weaponProficiency))
       .map((m) => m.target);
 
-    return Array.from(new Set([...fromClass, ...fromModifiers]));
+    return Array.from(new Set(fromModifiers));
   }
 
   /**
@@ -944,10 +940,10 @@ export class CharacterPresenter implements ICharacterPresenter {
     } else if (spellLevel === 0) {
       max = low[this.character.level + 2] ?? 6;
     } else if (spellLevel === 6) {
-      max = this.character.level <= 15 ? 0 : low[this.character.level - 16] ?? 6;
+      max = this.character.level <= 15 ? 0 : (low[this.character.level - 16] ?? 6);
     } else {
       const minLevel = (spellLevel - 1) * 3;
-      max = this.character.level <= minLevel ? 0 : high[this.character.level - minLevel - 1] ?? 6;
+      max = this.character.level <= minLevel ? 0 : (high[this.character.level - minLevel - 1] ?? 6);
     }
 
     return max;

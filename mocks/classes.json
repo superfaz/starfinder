@@ -89,10 +89,24 @@
         "id": "60dc6577-aa74-412b-bd1a-3d423b327e74",
         "type": "classSkill",
         "target": "surv"
+      },
+      {
+        "id": "ede52300-5ba7-4421-b390-dfcb3c1556e4",
+        "type": "weaponProficiency",
+        "target": "basic"
+      },
+      {
+        "id": "c7cdff3d-6a86-41a2-b5bf-f4766387ed8f",
+        "type": "weaponProficiency",
+        "target": "basic"
+      },
+      {
+        "id": "9e15af3d-fd8b-41d2-9c20-11cadd739ba7",
+        "type": "weaponProficiency",
+        "target": "sniper"
       }
     ],
     "armors": ["light"],
-    "weapons": ["basic", "small", "sniper"],
     "baseAttack": "low",
     "savingThrows": {
       "fortitude": "low",
@@ -150,10 +164,44 @@
         "id": "c7bbf2a6-5cdf-4152-a846-cc4e16ad0201",
         "type": "classSkill",
         "target": "surv"
+      },
+      {
+        "id": "1349b5d9-638e-4484-998f-6b6f01ad4100",
+        "type": "weaponProficiency",
+        "target": "basic"
+      },
+      {
+        "id": "7d56a766-c8ce-43ce-b7ef-b83155c83b93",
+        "type": "weaponProficiency",
+        "target": "advanced"
+      },
+      {
+        "id": "12bc83b8-bf0b-4e7b-813a-e9c464ff3270",
+        "type": "weaponProficiency",
+        "target": "small"
+      },
+      {
+        "id": "0206a6a5-564f-460b-87fc-d4768dc28db7",
+        "type": "weaponProficiency",
+        "target": "long"
+      },
+      {
+        "id": "fa9e2fd4-541d-434b-909a-cca2c9135b31",
+        "type": "weaponProficiency",
+        "target": "heavy"
+      },
+      {
+        "id": "2270c8ab-e002-499f-9dd5-9791025c2d8a",
+        "type": "weaponProficiency",
+        "target": "sniper"
+      },
+      {
+        "id": "240e5838-f7d2-4f06-8e5f-6cc50d995a0d",
+        "type": "weaponProficiency",
+        "target": "grenade"
       }
     ],
     "armors": ["light", "heavy"],
-    "weapons": ["basic", "advanced", "small", "long", "heavy", "sniper", "grenade"],
     "baseAttack": "high",
     "savingThrows": {
       "fortitude": "high",
@@ -211,11 +259,20 @@
         "id": "87bfce2e-c267-4f64-8423-2d88f54e7196",
         "type": "classSkill",
         "target": "surv"
+      },
+      {
+        "id": "b448b658-1b9d-4b0a-b35e-fa3d98c3ada9",
+        "type": "weaponProficiency",
+        "target": "basic"
+      },
+      {
+        "id": "e92eb92e-1dcf-42f9-9851-a196cd43878c",
+        "type": "weaponProficiency",
+        "target": "small"
       }
     ],
     "spellCaster": true,
     "armors": ["light", "heavy"],
-    "weapons": ["basic", "small"],
     "baseAttack": "high",
     "savingThrows": {
       "fortitude": "high",
@@ -233,9 +290,19 @@
     "primaryAbilityScore": "int",
     "secondaryAbilityScores": ["dex"],
     "skillRank": 6,
-    "modifiers": [],
+    "modifiers": [
+      {
+        "id": "c8aeb5bb-de3e-4cf9-9b11-91c1c080dcaf",
+        "type": "weaponProficiency",
+        "target": "basic"
+      },
+      {
+        "id": "40b22ace-1264-4423-a661-a536aed3a121",
+        "type": "weaponProficiency",
+        "target": "small"
+      }
+    ],
     "armors": ["light"],
-    "weapons": ["basic", "small"],
     "baseAttack": "low",
     "savingThrows": {
       "fortitude": "low",

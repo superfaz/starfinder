@@ -45,7 +45,7 @@ function useWeaponLabel(weapon?: EquipmentWeapon): string {
 function computeModifierFor(weapon: EquipmentWeapon, presenter: CharacterPresenter): number {
   const bonuses = presenter.getAttackBonuses();
 
-  if (bonuses === null) {
+  if (!bonuses) {
     return 0;
   }
 

@@ -3,10 +3,9 @@ import { INamedModelSchema } from "./INamedModel";
 import { DescriptionSchema, ReferenceSchema, VariableSchema } from "./helper";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ArmorTypeIdSchema } from "./ArmorType";
-import { WeaponTypeIdSchema } from "./WeaponType";
-import { ClassSkillModifierSchema } from "./Modifier";
+import { ClassSkillModifierSchema, WeaponProficiencyModifierSchema } from "./Modifier";
 
-const ClassModifierSchema = z.discriminatedUnion("type", [ClassSkillModifierSchema]);
+const ClassModifierSchema = z.discriminatedUnion("type", [ClassSkillModifierSchema, WeaponProficiencyModifierSchema]);
 
 export const ClassSchema = INamedModelSchema.extend({
   description: DescriptionSchema,
@@ -19,7 +18,6 @@ export const ClassSchema = INamedModelSchema.extend({
   skillRank: z.number(),
   modifiers: z.array(ClassModifierSchema),
   armors: z.array(ArmorTypeIdSchema),
-  weapons: z.array(WeaponTypeIdSchema),
   baseAttack: z.enum(["low", "high"]),
   savingThrows: z.object({
     fortitude: z.enum(["low", "high"]),

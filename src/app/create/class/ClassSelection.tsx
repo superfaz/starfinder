@@ -7,7 +7,7 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "app/components";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { AbilityScoreIds } from "model";
+import { AbilityScoreIds, ofType } from "model";
 import { useCharacterPresenter } from "../helpers-client";
 import { ReferenceComponent } from "../ReferenceComponent";
 
@@ -125,7 +125,10 @@ export function ClassSelection() {
           </div>
           <div>
             <Badge bg="primary">Armes</Badge>
-            {selectedClass.weapons.map((a) => findOrError(data.weaponTypes, a).name).join(", ")}
+            {selectedClass.modifiers
+              .filter(ofType("weaponProficiency"))
+              .map((m) => findOrError(data.weaponTypes, m.target).name)
+              .join(", ")}
           </div>
           <hr />
           <LazyClassEditor />

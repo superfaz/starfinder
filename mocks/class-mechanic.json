@@ -23,7 +23,8 @@
           "reflex": "poor",
           "will": "poor"
         },
-        "primaryAbilityScores": ["dex", "str"]
+        "primaryAbilityScores": ["dex", "str"],
+        "initialMods": []
       },
       {
         "id": "hover",
@@ -46,7 +47,8 @@
           "reflex": "good",
           "will": "poor"
         },
-        "primaryAbilityScores": ["dex", "wis"]
+        "primaryAbilityScores": ["dex", "wis"],
+        "initialMods": []
       }
     ],
     "skills": ["acro", "engi", "stea"],
