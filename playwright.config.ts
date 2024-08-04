@@ -35,6 +35,8 @@ export default defineConfig({
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    deviceScaleFactor: 1,
+
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL,
 
@@ -49,7 +51,11 @@ export default defineConfig({
     },
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"], storageState: "playwright/.auth/user.json" },
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1920, height: 1080 },
+        storageState: "playwright/.auth/user.json",
+      },
       dependencies: ["setup"],
     },
   ],
