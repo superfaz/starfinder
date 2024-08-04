@@ -111,6 +111,7 @@ export function RaceSelection() {
             <RaceSelectableBonusEditor presenter={presenter} />
           )}
           {selectedVariant.description && <p className="text-muted">{selectedVariant.description}</p>}
+          {selectedVariant.reference && <ReferenceComponent reference={selectedVariant.reference} />}
         </>
       )}
 

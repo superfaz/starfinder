@@ -190,12 +190,14 @@
       {
         "id": "g9f8h8g7-ch9j-9j8f-di8g-7h9fagbhci0h",
         "name": "Graviteur",
+        "reference": { "book": "option", "page": 1 },
         "description": "Les humains qui se sont adaptés à une forte gravité développent une importante musculature et sont plus trapus. Ils passent plus de temps à lutter contre des conditions difficiles qu’à interagir avec les autres.",
         "abilityScores": { "str": 2, "dex": 2, "cha": -2 }
       },
       {
         "id": "h0g9i9h8-di0k-0k9g-ej9h-8i0gbhcidj1i",
         "name": "Léger comme une plume",
+        "reference": { "book": "option", "page": 1 },
         "description": "Les humains nés dans la Diaspora, les stations spatiales, les vaisseaux générationnels ou dans d’autres environnements à faible gravité ou à gravité zéro peuvent parfois se développer de manière différente. Ces humains peuvent être plus grands avec des membres plus longs que la moyenne et une masse musculaire inférieure.",
         "abilityScores": { "dex": 4, "str": -2 }
       }
