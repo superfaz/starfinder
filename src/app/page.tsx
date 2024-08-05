@@ -36,7 +36,7 @@ export default function Page() {
           <br className="d-block d-xl-none" /> Explorateur des étoiles !
         </h1>
         <Row>
-          <Col xl={8}>
+          <Col lg={8}>
             <h3>À propos</h3>
             <p className="lead">
               Ce site est un outil de gestion de personnages pour le jeu de rôle <strong>Starfinder</strong>. Il a été
@@ -98,7 +98,7 @@ export default function Page() {
               </Col>
             </Row>
           </Col>
-          <Col xl={4}>
+          <Col lg={4}>
             <h3>Licences</h3>
             <p className="text-muted">
               Ce site utilise des marques déposées et/ou des droits d’auteurs qui sont la propriété de Black Book
