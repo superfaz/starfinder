@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/create");
+  await page.goto("/create/1");
   await page.getByRole("link", { name: /Race/ }).click();
   await expect(page.getByRole("heading", { name: /Race/, level: 2 })).toBeVisible();
 });
