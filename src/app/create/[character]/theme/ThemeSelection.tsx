@@ -18,14 +18,22 @@ const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), {
   loading: () => <ThemeScholarLoading />,
 });
 
-export function ThemeSelection() {
+export function ThemeSelection({ mode = "full" }: Readonly<{ mode: "light" | "full" }>) {
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   const themes = useAppSelector((state) => state.data.themes);
   const dispatch = useAppDispatch();
   const presenter = useCharacterPresenter();
 
   if (presenter.getRace() === null) {
-    return null;
+    if (mode === "full") {
+      return null;
+    } else {
+      return (
+        <Form.FloatingLabel controlId="theme" label="Thème" className="mb-3">
+          <Form.Select disabled />
+        </Form.FloatingLabel>
+      );
+    }
   }
 
   const selectedTheme = presenter.getTheme();
@@ -37,7 +45,7 @@ export function ThemeSelection() {
 
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
-      <h2>Thème</h2>
+      {mode === "full" && <h2>Thème</h2>}
       <Form.FloatingLabel controlId="theme" label="Thème">
         <Form.Select value={selectedTheme?.id ?? ""} onChange={handleThemeChange}>
           {selectedTheme === null && <option value=""></option>}
@@ -48,7 +56,7 @@ export function ThemeSelection() {
           ))}
         </Form.Select>
       </Form.FloatingLabel>
-      {selectedTheme && !presenter.isThemeless() && (
+      {selectedTheme && mode === "full" && !presenter.isThemeless() && (
         <Stack direction="horizontal" className="right">
           {Object.entries(selectedTheme.abilityScores).map(
             ([key, value]) =>
@@ -68,9 +76,9 @@ export function ThemeSelection() {
         </>
       )}
 
-      {presenter.isThemeless() && <LazyThemelessEditor presenter={presenter} />}
-      {presenter.isIcon() && <LazyThemeIconEditor presenter={presenter} />}
-      {presenter.isScholar() && <LazyThemeScholarEditor presenter={presenter} />}
+      {mode === "full" && presenter.isThemeless() && <LazyThemelessEditor presenter={presenter} />}
+      {mode === "full" && presenter.isIcon() && <LazyThemeIconEditor presenter={presenter} />}
+      {mode === "full" && presenter.isScholar() && <LazyThemeScholarEditor presenter={presenter} />}
     </Stack>
   );
 }

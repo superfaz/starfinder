@@ -50,13 +50,21 @@ export function LazyClassEditor(): JSX.Element | null {
   }
 }
 
-export function ClassSelection() {
+export function ClassSelection({ mode = "full" }: Readonly<{ mode: "light" | "full" }>) {
   const data = useAppSelector((state) => state.data);
   const presenter = useCharacterPresenter();
   const dispatch = useAppDispatch();
 
   if (presenter.getTheme() === null) {
-    return null;
+    if (mode === "full") {
+      return null;
+    } else {
+      return (
+        <Form.FloatingLabel controlId="class" label="Classe" className="mb-3">
+          <Form.Select disabled />
+        </Form.FloatingLabel>
+      );
+    }
   }
 
   const selectedClass = presenter.getClass();
@@ -73,7 +81,7 @@ export function ClassSelection() {
 
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
-      <h2>Classe</h2>
+      {mode === "full" && <h2>Classe</h2>}
       <Form.FloatingLabel controlId="class" label="Classe">
         <Form.Select value={selectedClass?.id ?? ""} onChange={handleClassChange}>
           {selectedClass === null && <option value=""></option>}
@@ -86,18 +94,20 @@ export function ClassSelection() {
       </Form.FloatingLabel>
       {selectedClass && (
         <>
-          <Stack direction="horizontal" className="right">
-            {!presenter.isSoldier() && (
-              <Badge bg="primary">{findOrError(data.abilityScores, selectedClass.primaryAbilityScore).code}</Badge>
-            )}
-            <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
-            <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
-          </Stack>
+          {mode === "full" && (
+            <Stack direction="horizontal" className="right">
+              {!presenter.isSoldier() && (
+                <Badge bg="primary">{findOrError(data.abilityScores, selectedClass.primaryAbilityScore).code}</Badge>
+              )}
+              <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
+              <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
+            </Stack>
+          )}
           <div className="text-muted">{selectedClass.description}</div>
           <ReferenceComponent reference={selectedClass.reference} />
         </>
       )}
-      {presenter.isSoldier() && (
+      {mode === "full" && presenter.isSoldier() && (
         <>
           <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe" className="mt-3">
             <Form.Select value={presenter.getSoldierAbilityScore() ?? ""} onChange={handleSoldierAbilityScoreChange}>
@@ -113,7 +123,7 @@ export function ClassSelection() {
           </Stack>
         </>
       )}
-      {selectedClass && (
+      {mode === "full" && selectedClass && (
         <>
           <hr />
           <div>
