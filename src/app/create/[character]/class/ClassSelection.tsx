@@ -50,7 +50,7 @@ export function LazyClassEditor(): JSX.Element | null {
   }
 }
 
-export function ClassSelection({ mode = "full" }: Readonly<{ mode: "light" | "full" }>) {
+export function ClassSelection({ mode = "full" }: Readonly<{ mode?: "light" | "full" }>) {
   const data = useAppSelector((state) => state.data);
   const presenter = useCharacterPresenter();
   const dispatch = useAppDispatch();

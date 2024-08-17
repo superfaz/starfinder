@@ -40,7 +40,7 @@ function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
   );
 }
 
-export function RaceSelection({ mode = "full" }: Readonly<{ mode: "light" | "full" }>) {
+export function RaceSelection({ mode = "full" }: Readonly<{ mode?: "light" | "full" }>) {
   const dispatch = useAppDispatch();
 
   const data = useAppSelector((state) => state.data);

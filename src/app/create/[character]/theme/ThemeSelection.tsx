@@ -18,7 +18,7 @@ const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), {
   loading: () => <ThemeScholarLoading />,
 });
 
-export function ThemeSelection({ mode = "full" }: Readonly<{ mode: "light" | "full" }>) {
+export function ThemeSelection({ mode = "full" }: Readonly<{ mode?: "light" | "full" }>) {
   const abilityScores = useAppSelector((state) => state.data.abilityScores);
   const themes = useAppSelector((state) => state.data.themes);
   const dispatch = useAppDispatch();
