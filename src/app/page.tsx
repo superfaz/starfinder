@@ -49,7 +49,7 @@ export default function Page() {
                     <CardTitle>Création libre</CardTitle>
                     <CardText>Créez votre personnage avec un maximum de choix et de possibilités.</CardText>
                     <Link
-                      href="/create"
+                      href="/edit"
                       className="mt-auto btn btn-outline-dark stretched-link text-light icon-link icon-link-hover"
                     >
                       Démarrer la création <i className="bi bi-chevron-right mb-1"></i>
@@ -68,7 +68,7 @@ export default function Page() {
                       <em>(Non implémenté)</em>
                     </CardText>
                     <CardLink
-                      href="/create"
+                      href="/edit"
                       className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
                     >
                       Démarrer la custo <i className="bi bi-chevron-right mb-1"></i>
@@ -88,7 +88,7 @@ export default function Page() {
                       <em>(Non implémenté)</em>
                     </CardText>
                     <CardLink
-                      href="/create"
+                      href="/edit"
                       className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
                     >
                       Sélection <i className="bi bi-chevron-right mb-1"></i>

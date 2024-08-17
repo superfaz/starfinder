@@ -19,6 +19,6 @@ describe("Page", () => {
     expect(link.attributes.getNamedItem("href")).toBeDefined();
 
     const attribute = link.attributes.getNamedItem("href") as Attr;
-    expect(attribute.value).toEqual("/create");
+    expect(attribute.value).toEqual("/edit");
   });
 });

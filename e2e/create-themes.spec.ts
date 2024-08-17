@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/create/1");
+  await page.goto("/edit/1");
   await page.getByRole("link", { name: /Race/ }).click();
   await page.getByRole("combobox", { name: /Race/ }).selectOption("Shirrens");
 
