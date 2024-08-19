@@ -28,7 +28,7 @@ export function ThemeSelection({
         </Form.Select>
         <div className="invalid-feedback">Ce thème n&rsquo;est pas valide</div>
       </Form.FloatingLabel>
-      <div className="text-muted">{selectedTheme?.description}</div>
+      {selectedTheme && <div className="text-muted">{selectedTheme?.description}</div>}
     </>
   );
 }

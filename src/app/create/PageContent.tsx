@@ -89,7 +89,7 @@ export function PageContent({ races, themes, classes }: { races: Race[]; themes:
             <div className="lead mt-3">Quelle sera sa race ?</div>
             <RaceSelection races={races} value={state.race ?? ""} onChange={handleChange} isInvalid={!!errors.race} />
 
-            <div className="lead">Quel sera son thème ?</div>
+            <div className="lead mt-3">Quel sera son thème ?</div>
             <ThemeSelection
               themes={themes}
               value={state.theme ?? ""}
@@ -97,7 +97,7 @@ export function PageContent({ races, themes, classes }: { races: Race[]; themes:
               isInvalid={!!errors.theme}
             />
 
-            <div className="lead">Quelle sera sa classe ?</div>
+            <div className="lead mt-3">Quelle sera sa classe ?</div>
             <ClassSelection
               classes={classes}
               value={state.class ?? ""}
@@ -108,7 +108,7 @@ export function PageContent({ races, themes, classes }: { races: Race[]; themes:
         </Col>
         <Col md={6} lg={4} className="offset-md-3 offset-lg-8 mt-2">
           <Stack direction="vertical" gap={2}>
-            <Button variant="primary" className="my-4" disabled={loading} onClick={handleSave}>
+            <Button variant="primary" className="my-5" disabled={loading} onClick={handleSave}>
               Démarrer la création détaillée
             </Button>
           </Stack>

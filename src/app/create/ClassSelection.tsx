@@ -28,7 +28,7 @@ export function ClassSelection({
         </Form.Select>
         <div className="invalid-feedback">Cette classe n&rsquo;est pas valide</div>
       </Form.FloatingLabel>
-      <div className="text-muted">{selectedClass?.description}</div>
+      {selectedClass && <div className="text-muted">{selectedClass?.description}</div>}
     </>
   );
 }

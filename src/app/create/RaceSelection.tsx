@@ -39,7 +39,7 @@ export function RaceSelection({
         </Form.Select>
         <div className="invalid-feedback">Cette race n&rsquo;est pas valide</div>
       </Form.FloatingLabel>
-      <div className="text-muted">{selectedRace?.description}</div>
+      {selectedRace && <div className="text-muted">{selectedRace?.description}</div>}
     </>
   );
 }
