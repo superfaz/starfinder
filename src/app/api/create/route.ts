@@ -1,10 +1,20 @@
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { DataSets, DataSource, IDataSource } from "data";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateDataSchema } from "view";
+import { CreateDataErrors, CreateDataSchema } from "view";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  // Security check
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const isUserAuthenticated = await isAuthenticated();
+
+  if (!isUserAuthenticated) {
+    return new NextResponse(undefined, { status: 401 });
+  }
+
+  // Data check
   const data = await request.json();
   const check = CreateDataSchema.safeParse(data);
 
@@ -13,27 +23,36 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const dataSource: IDataSource = new DataSource();
+  let errors: CreateDataErrors = {};
   if (check.data.race) {
     try {
       await dataSource.get(DataSets.Races).getOne(check.data.race);
     } catch {
-      return NextResponse.json({ race: ["Invalid"] }, { status: 400 });
+      errors = { ...errors, race: ["Invalid"] };
     }
   }
   if (check.data.theme) {
     try {
       await dataSource.get(DataSets.Themes).getOne(check.data.theme);
     } catch {
-      return NextResponse.json({ theme: ["Invalid"] }, { status: 400 });
+      errors = { ...errors, theme: ["Invalid"] };
     }
   }
   if (check.data.class) {
     try {
       await dataSource.get(DataSets.Class).getOne(check.data.class);
     } catch {
-      return NextResponse.json({ class: ["Invalid"] }, { status: 400 });
+      errors = { ...errors, class: ["Invalid"] };
     }
   }
 
-  return new NextResponse(undefined, { status: 200 });
+  if (Object.keys(errors).length > 0) {
+    return NextResponse.json(errors, { status: 400 });
+  }
+
+  // Save character data
+  const user = await getUser();
+  console.log("User id", user?.id);
+
+  return NextResponse.json({ id: 1 }, { status: 200 });
 }

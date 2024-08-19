@@ -1,23 +1,24 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
+import { useRouter } from "next/navigation";
 import { Class, Race, Theme } from "model";
+import { CreateData, CreateDataErrors } from "view";
 import { RaceSelection } from "./RaceSelection";
 import { ThemeSelection } from "./ThemeSelection";
 import { ClassSelection } from "./ClassSelection";
-import { useState } from "react";
-import { CreateData, CreateDataErrors } from "view";
 
 export function PageContent({ races, themes, classes }: { races: Race[]; themes: Theme[]; classes: Class[] }) {
   const [state, setState] = useState<CreateData>({ name: "" });
   const [errors, setErrors] = useState<CreateDataErrors>({});
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const id = event.target.id;
@@ -37,9 +38,9 @@ export function PageContent({ races, themes, classes }: { races: Race[]; themes:
 
       if (response.ok) {
         // Redirect to the detailed character creation page
-        // TODO missing id
+        const { id } = await response.json();
         setErrors({});
-        redirect("/edit");
+        router.push("/edit/" + id);
       } else if (response.status === 400) {
         // Provide feedback to the user
         const result = await response.json();
