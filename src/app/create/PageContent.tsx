@@ -1,67 +1,118 @@
 "use client";
 
-import { mutators, useAppDispatch } from "logic";
-import { ChangeEvent } from "react";
-import { Button, Form } from "react-bootstrap";
+import { redirect } from "next/navigation";
+import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { useCharacterPresenter } from "../edit/[character]/helpers-client";
-import { RaceSelection } from "../edit/[character]/race/RaceSelection";
-import { ThemeSelection } from "../edit/[character]/theme/ThemeSelection";
-import { ClassSelection } from "../edit/[character]/class/ClassSelection";
+import { Class, Race, Theme } from "model";
+import { RaceSelection } from "./RaceSelection";
+import { ThemeSelection } from "./ThemeSelection";
+import { ClassSelection } from "./ClassSelection";
+import { useState } from "react";
+import { CreateData, CreateDataErrors } from "view";
 
-export function PageContent() {
-  const presenter = useCharacterPresenter();
-  const dispatch = useAppDispatch();
+export function PageContent({ races, themes, classes }: { races: Race[]; themes: Theme[]; classes: Class[] }) {
+  const [state, setState] = useState<CreateData>({ name: "" });
+  const [errors, setErrors] = useState<CreateDataErrors>({});
+  const [loading, setLoading] = useState(false);
 
-  function handleNameChange(e: ChangeEvent<HTMLInputElement>): void {
-    dispatch(mutators.updateName(e.target.value));
+  function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    const id = event.target.id;
+    setErrors({ ...errors, [id]: undefined });
+    setState({ ...state, [id]: event.target.value });
   }
 
-  function handleDescriptionChange(e: ChangeEvent<HTMLTextAreaElement>): void {
-    dispatch(mutators.updateDescription(e.target.value));
+  async function handleSave() {
+    // Save character data
+    setLoading(true);
+    try {
+      const response = await fetch("/api/create", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: JSON.stringify(state),
+      });
+
+      if (response.ok) {
+        // Redirect to the detailed character creation page
+        // TODO missing id
+        setErrors({});
+        redirect("/edit");
+      } else if (response.status === 400) {
+        // Provide feedback to the user
+        const result = await response.json();
+        setErrors(result);
+      } else {
+        // Handle unexpected errors
+        console.error("Failed to save character data", response);
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <>
-      <Col md={6}>
-        <Stack direction="vertical" gap={2}>
-          <div className="lead mt-3">Quel genre de héros de science-fantasy voulez-vous jouer ?</div>
-          <Form.FloatingLabel controlId="character-desc" label="Concept">
-            <Form.Control
-              as="textarea"
-              aria-label="Concept"
-              value={presenter.getDescription()}
-              onChange={handleDescriptionChange}
-              style={{ height: "20em" }}
+    <Container>
+      <h1 className="mb-3">Concept de personnage</h1>
+      <Row>
+        <Col md={6}>
+          <Stack direction="vertical" gap={2}>
+            <div className="lead mt-3">Quel genre de héros de science-fantasy voulez-vous jouer ?</div>
+            <Form.FloatingLabel controlId="description" label="Concept">
+              <Form.Control
+                as="textarea"
+                value={state.description ?? ""}
+                onChange={handleChange}
+                aria-label="Concept"
+                style={{ height: "20em" }}
+              />
+            </Form.FloatingLabel>
+
+            <div className="lead mt-3">Quel est le nom de votre nouvel héros ?</div>
+            <Form.FloatingLabel controlId="name" label="Nom du personnage">
+              <Form.Control
+                type="text"
+                value={state.name ?? ""}
+                onChange={handleChange}
+                autoComplete="off"
+                isInvalid={!!errors.name}
+              />
+              <div className="invalid-feedback">Le nom est obligatoire</div>
+            </Form.FloatingLabel>
+          </Stack>
+        </Col>
+        <Col md={6} className="mt-2">
+          <Stack direction="vertical" gap={2}>
+            <div className="lead mt-3">Quelle sera sa race ?</div>
+            <RaceSelection races={races} value={state.race ?? ""} onChange={handleChange} isInvalid={!!errors.race} />
+
+            <div className="lead">Quel sera son thème ?</div>
+            <ThemeSelection
+              themes={themes}
+              value={state.theme ?? ""}
+              onChange={handleChange}
+              isInvalid={!!errors.theme}
             />
-          </Form.FloatingLabel>
 
-          <div className="lead mt-3">Quel est le nom de votre nouvel héros ?</div>
-          <Form.FloatingLabel controlId="character-name" label="Nom du personnage">
-            <Form.Control type="text" autoComplete="off" value={presenter.getName()} onChange={handleNameChange} />
-          </Form.FloatingLabel>
-        </Stack>
-      </Col>
-      <Col md={6} className="mt-2">
-        <Stack direction="vertical" gap={2}>
-          <div className="lead mt-3">Quelle sera sa race ?</div>
-          <RaceSelection mode="light" />
-
-          <div className="lead">Quel sera son thème ?</div>
-          <ThemeSelection mode="light" />
-
-          <div className="lead">Quelle sera sa classe ?</div>
-          <ClassSelection mode="light" />
-        </Stack>
-      </Col>
-      <Col md={6} lg={4} className="offset-md-3 offset-lg-8 mt-2">
-        <Stack direction="vertical" gap={2}>
-          <Button variant="primary" className="my-4" disabled={!presenter.getClass()}>
-            Démarrer la création détaillée
-          </Button>
-        </Stack>
-      </Col>
-    </>
+            <div className="lead">Quelle sera sa classe ?</div>
+            <ClassSelection
+              classes={classes}
+              value={state.class ?? ""}
+              onChange={handleChange}
+              isInvalid={!!errors.class}
+            />
+          </Stack>
+        </Col>
+        <Col md={6} lg={4} className="offset-md-3 offset-lg-8 mt-2">
+          <Stack direction="vertical" gap={2}>
+            <Button variant="primary" className="my-4" disabled={loading} onClick={handleSave}>
+              Démarrer la création détaillée
+            </Button>
+          </Stack>
+        </Col>
+      </Row>
+    </Container>
   );
 }
