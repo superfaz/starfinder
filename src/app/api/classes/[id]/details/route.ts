@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { DataSource, IDataSource, DataSets } from "data";
+import { StaticDataSource, IStaticDataSource, DataSets } from "data";
 import {
   asClassEnvoy,
   asClassMechanic,
@@ -14,7 +14,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  const dataSource: IDataSource = new DataSource();
+  const dataSource: IStaticDataSource = new StaticDataSource();
   const dataset = dataSource.get(DataSets.ClassDetails);
   const raw: unknown = await dataset.getOne(params.id);
 

@@ -22,7 +22,7 @@ import type {
   WeaponSpecialProperty,
   WeaponType,
 } from "model";
-import { IDataSource } from "./interfaces";
+import { IStaticDataSource } from "./interfaces";
 import { DataSets } from "./DataSets";
 
 export interface IClientDataSet {
@@ -75,7 +75,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   weaponTypes: [],
 };
 
-export async function convert(dataSource: IDataSource): Promise<IClientDataSet> {
+export async function convert(dataSource: IStaticDataSource): Promise<IClientDataSet> {
   return {
     abilityScores: await dataSource.get(DataSets.AbilityScore).getAll(),
     alignments: await dataSource.get(DataSets.Alignment).getAll(),

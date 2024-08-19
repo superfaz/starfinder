@@ -1,5 +1,5 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { DataSets, DataSource, IDataSource } from "data";
+import { DataSets, StaticDataSource, IStaticDataSource } from "data";
 import { NextRequest, NextResponse } from "next/server";
 import { CreateDataErrors, CreateDataSchema } from "view";
 
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json(check.error.flatten().fieldErrors, { status: 400 });
   }
 
-  const dataSource: IDataSource = new DataSource();
+  const dataSource: IStaticDataSource = new StaticDataSource();
   let errors: CreateDataErrors = {};
   if (check.data.race) {
     try {

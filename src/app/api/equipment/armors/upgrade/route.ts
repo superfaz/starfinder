@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { DataSets, DataSource, IDataSource } from "data";
+import { DataSets, StaticDataSource, IStaticDataSource } from "data";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const dataSource: IDataSource = new DataSource();
+  const dataSource: IStaticDataSource = new StaticDataSource();
   return NextResponse.json(await dataSource.get(DataSets.EquipmentArmorUpgrade).getAll());
 }

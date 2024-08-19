@@ -1,9 +1,9 @@
 import * as Sentry from "@sentry/nextjs";
 import { Db, MongoClient, Sort } from "mongodb";
 import { type IModel } from "model";
-import { IDataSet, IDataSource, IDescriptor } from "./interfaces";
+import { IStaticDataSet, IStaticDataSource, IDescriptor } from "./interfaces";
 
-export class DataSource implements IDataSource {
+export class StaticDataSource implements IStaticDataSource {
   private readonly client: MongoClient;
   private readonly database: Db;
 
@@ -57,7 +57,7 @@ export class DataSource implements IDataSource {
     return result;
   }
 
-  get<T extends IModel>(descriptor: IDescriptor<T>): IDataSet<T> {
+  get<T extends IModel>(descriptor: IDescriptor<T>): IStaticDataSet<T> {
     return {
       getAll: () => this.getAll(descriptor),
       getOne: (id: string) => this.getOne(descriptor, id),

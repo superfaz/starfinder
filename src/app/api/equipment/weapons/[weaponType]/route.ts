@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DataSets, DataSource, IDataSource } from "data";
+import { DataSets, StaticDataSource, IStaticDataSource } from "data";
 import { EquipmentWeaponId, EquipmentWeaponIdSchema, EquipmentWeaponIds } from "model";
 
 export async function GET(_: NextRequest, { params }: { params: { weaponType: string } }) {
-  const dataSource: IDataSource = new DataSource();
+  const dataSource: IStaticDataSource = new StaticDataSource();
 
   const weaponType: EquipmentWeaponId = EquipmentWeaponIdSchema.parse(params.weaponType);
   switch (weaponType) {

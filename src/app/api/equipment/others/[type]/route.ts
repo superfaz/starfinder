@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DataSets, DataSource, IDataSource } from "data";
+import { DataSets, StaticDataSource, IStaticDataSource } from "data";
 import { EquipmentOtherId, EquipmentOtherIdSchema, EquipmentOtherIds } from "model";
 
 export async function GET(_: NextRequest, { params }: { params: { type: string } }) {
-  const dataSource: IDataSource = new DataSource();
+  const dataSource: IStaticDataSource = new StaticDataSource();
 
   const type: EquipmentOtherId = EquipmentOtherIdSchema.parse(params.type);
   if (type === EquipmentOtherIds.augmentation) {
