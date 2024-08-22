@@ -10,22 +10,20 @@ import {
   IStaticDescriptor,
 } from "./interfaces";
 
-export class DataSource implements IDataSource {
-  private readonly client: MongoClient;
-  private readonly database: Db;
+class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
+  protected readonly client: MongoClient;
+  protected readonly descriptor: IDescriptor<T>;
+  protected readonly database: Db;
 
-  constructor() {
-    if (!process.env.STARFINDER_MONGO_URI || !process.env.STARFINDER_MONGO_DATABASE) {
-      throw new Error("Missing Mongo configuration");
-    }
-
-    this.client = new MongoClient(process.env.STARFINDER_MONGO_URI);
-    this.database = this.client.db(process.env.STARFINDER_MONGO_DATABASE);
+  constructor(client: MongoClient, descriptor: IDescriptor<T>, database: string) {
+    this.client = client;
+    this.descriptor = descriptor;
+    this.database = this.client.db(database);
   }
 
-  private async getAll<T extends IModel>(descriptor: IDescriptor<T>): Promise<T[]> {
+  async getAll(): Promise<T[]> {
     let sort: Sort = 1;
-    switch (descriptor.type) {
+    switch (this.descriptor.type) {
       case "simple":
         sort = {};
         break;
@@ -39,81 +37,93 @@ export class DataSource implements IDataSource {
         throw new Error("Method not implemented.");
     }
 
-    const preparedQuery = this.database.collection(descriptor.name).find().sort(sort);
+    const preparedQuery = this.database.collection(this.descriptor.name).find().sort(sort);
     const results = await preparedQuery.toArray();
     try {
-      return descriptor.schema.array().parse(results);
+      return this.descriptor.schema.array().parse(results);
     } catch (e: unknown) {
       Sentry.captureException(e);
-      throw new Error(`Failed to get ${descriptor.name}`, { cause: e });
+      throw new Error(`Failed to get ${this.descriptor.name}`, { cause: e });
     }
   }
 
-  private async getOne<T extends IModel>(descriptor: IDescriptor<T>, id: string): Promise<T> {
-    const isT = (obj: unknown): obj is T => descriptor.schema.safeParse(obj).success;
-    const result = await this.database.collection(descriptor.name).findOne({ id });
+  async getOne(id: string): Promise<T> {
+    const isT = (obj: unknown): obj is T => this.descriptor.schema.safeParse(obj).success;
+    const result = await this.database.collection(this.descriptor.name).findOne({ id });
 
     if (result === null) {
-      throw new Error(`Failed to get ${descriptor.name}/${id}`);
+      throw new Error(`Failed to get ${this.descriptor.name}/${id}`);
     }
 
     if (!isT(result)) {
-      throw new Error(`Failed to parse ${descriptor.name}/${id}`);
+      throw new Error(`Failed to parse ${this.descriptor.name}/${id}`);
     }
 
     return result;
   }
+}
 
-  private async create<T extends IModel>(descriptor: IDescriptor<T>, data: T): Promise<T> {
-    const protect = descriptor.schema.safeParse(data);
+class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDynamicDataSet<T> {
+  constructor(client: MongoClient, descriptor: IDescriptor<T>, database: string) {
+    super(client, descriptor, database);
+  }
+
+  async create(data: T): Promise<T> {
+    const protect = this.descriptor.schema.safeParse(data);
     if (protect.success === false) {
-      throw new Error(`Failed to validate a ${descriptor.name}`);
+      throw new Error(`Failed to validate a ${this.descriptor.name}`);
     }
 
-    const result = await this.database.collection(descriptor.name).insertOne(protect.data);
+    const result = await this.database.collection(this.descriptor.name).insertOne(protect.data);
     if (!result.acknowledged) {
-      throw new Error(`Failed to create ${descriptor.name}`);
+      throw new Error(`Failed to create ${this.descriptor.name}`);
     }
 
     return protect.data;
   }
 
-  private async update<T extends IModel>(descriptor: IDescriptor<T>, data: T): Promise<T> {
-    const protect = descriptor.schema.safeParse(data);
+  async update(data: T): Promise<T> {
+    const protect = this.descriptor.schema.safeParse(data);
     if (protect.success === false) {
-      throw new Error(`Failed to validate a ${descriptor.name}`);
+      throw new Error(`Failed to validate a ${this.descriptor.name}`);
     }
 
-    const result = await this.database.collection(descriptor.name).updateOne({ id: data.id }, protect.data);
+    const result = await this.database.collection(this.descriptor.name).updateOne({ id: data.id }, protect.data);
     if (!result.acknowledged) {
-      throw new Error(`Failed to create ${descriptor.name}`);
+      throw new Error(`Failed to create ${this.descriptor.name}`);
     }
 
     return protect.data;
   }
 
-  private async delete<T extends IModel>(descriptor: IDescriptor<T>, id: string): Promise<void> {
-    const result = await this.database.collection(descriptor.name).deleteOne({ id });
+  async delete(id: string): Promise<void> {
+    const result = await this.database.collection(this.descriptor.name).deleteOne({ id });
     if (!result.acknowledged) {
-      throw new Error(`Failed to delete ${descriptor.name}/${id}`);
+      throw new Error(`Failed to delete ${this.descriptor.name}/${id}`);
     }
+  }
+}
+
+export class DataSource implements IDataSource {
+  private readonly client: MongoClient;
+  private readonly databasePrefix: string;
+
+  constructor() {
+    if (!process.env.STARFINDER_MONGO_URI || !process.env.STARFINDER_MONGO_DATABASE) {
+      throw new Error("Missing Mongo configuration");
+    }
+
+    this.client = new MongoClient(process.env.STARFINDER_MONGO_URI);
+    this.databasePrefix = process.env.STARFINDER_MONGO_DATABASE;
   }
 
   get<T extends IModel>(descriptor: IStaticDescriptor<T>): IStaticDataSet<T>;
   get<T extends IModel>(descriptor: IDynamicDescriptor<T>): IDynamicDataSet<T>;
   get<T extends IModel>(descriptor: IDescriptor<T>): IStaticDataSet<T> | IDynamicDataSet<T> {
     if (descriptor.mode === "static") {
-      return {
-        getAll: () => this.getAll(descriptor),
-      } as IStaticDataSet<T>;
+      return new StaticDataSet(this.client, descriptor, this.databasePrefix + "-fr");
     } else {
-      return {
-        getAll: () => this.getAll(descriptor),
-        getOne: (id: string) => this.getOne(descriptor, id),
-        create: (data: T) => this.create(descriptor, data),
-        update: (data: T) => this.update(descriptor, data),
-        delete: (id: string) => this.delete(descriptor, id),
-      } as IDynamicDataSet<T>;
+      return new DynamicDataSet(this.client, descriptor, this.databasePrefix);
     }
   }
 }
