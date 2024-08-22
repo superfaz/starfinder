@@ -49,11 +49,21 @@ class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
   }
 
   protected async getOneCore(id: string): Promise<T> {
+    const result = await this.findOneCore(id);
+
+    if (result === undefined) {
+      throw new Error(`Failed to get ${this.descriptor.name}/${id}`);
+    }
+
+    return result;
+  }
+
+  protected async findOneCore(id: string): Promise<T | undefined> {
     const isT = (obj: unknown): obj is T => this.descriptor.schema.safeParse(obj).success;
     const result = await this.database.collection(this.descriptor.name).findOne({ id });
 
     if (result === null) {
-      throw new Error(`Failed to get ${this.descriptor.name}/${id}`);
+      return undefined;
     }
 
     if (!isT(result)) {
@@ -65,6 +75,7 @@ class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
 
   getAll = unstable_cache(this.getAllCore);
   getOne = unstable_cache(this.getOneCore);
+  findOne = unstable_cache(this.findOneCore);
 }
 
 class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDynamicDataSet<T> {

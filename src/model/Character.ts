@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { ProfessionSchema } from "./Profession";
 import { IdSchema } from "./helper";
@@ -42,8 +41,7 @@ export function isCharacter(obj: unknown): obj is Character {
   return CharacterSchema.safeParse(obj).success;
 }
 
-export const EmptyCharacter: Readonly<Character> = {
-  id: uuidv4(),
+export const EmptyCharacter: Readonly<Omit<Character, "id">> = {
   version: 0,
   level: 1,
   race: "",

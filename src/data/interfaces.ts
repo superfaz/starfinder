@@ -20,6 +20,7 @@ export type IDescriptor<T extends IModel> = IStaticDescriptor<T> | IDynamicDescr
 export interface IStaticDataSet<T extends IModel> {
   getAll(): Promise<T[]>;
   getOne(id: string): Promise<T>;
+  findOne(id: string): Promise<T | undefined>;
 }
 
 export interface IDynamicDataSet<T extends IModel> extends IStaticDataSet<T> {

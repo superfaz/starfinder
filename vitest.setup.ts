@@ -28,18 +28,21 @@ beforeAll(async () => {
             return {
               getAll: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
               getOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
+              findOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
             };
           }
           if (descriptor.name === "themes-details") {
             return {
               getAll: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
               getOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
+              findOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
             };
           } else {
             return {
               getAll: async () =>
                 descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
               getOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
+              findOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
             };
           }
         }

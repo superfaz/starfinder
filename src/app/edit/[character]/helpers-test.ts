@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import { v4 as uuidv4 } from "uuid";
 import { IClientDataSet } from "data";
 import { updators } from "logic";
 import {
@@ -90,7 +91,7 @@ const classesDetails: Record<string, IModel> = {
 };
 
 export function createCharacter() {
-  return updators(data, EmptyCharacter);
+  return updators(data, {...EmptyCharacter, id: uuidv4() });
 }
 
 export type Updator = ReturnType<typeof createCharacter>;

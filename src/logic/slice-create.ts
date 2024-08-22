@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 import { findOrError } from "app/helpers";
 import { EmptyClientDataSet, type IClientDataSet } from "data/IClientDataSet";
 import {
@@ -14,7 +15,7 @@ import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 const initialState = {
   data: EmptyClientDataSet,
-  character: EmptyCharacter,
+  character: {...EmptyCharacter, id: uuidv4()},
   classesDetails: {} as Record<string, IModel>,
 };
 

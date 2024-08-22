@@ -1,5 +1,6 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { DataSets, DataSource, IDataSource } from "data";
+import { createCharacter } from "logic/server";
 import { NextRequest, NextResponse } from "next/server";
 import { CreateDataErrors, CreateDataSchema } from "view";
 
@@ -7,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   // Security check
-  const { isAuthenticated, getUser } = getKindeServerSession();
+  const { isAuthenticated } = getKindeServerSession();
   const isUserAuthenticated = await isAuthenticated();
 
   if (!isUserAuthenticated) {
@@ -23,28 +24,25 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const dataSource: IDataSource = new DataSource();
-  const builder = createCharacter();
+  const builder = createCharacter(dataSource);
   let errors: CreateDataErrors = {};
   if (check.data.race) {
     try {
-      await dataSource.get(DataSets.Races).getOne(check.data.race);
-      builder.updateRace(check.data.race);
+      await builder.updateRace(check.data.race);
     } catch {
       errors = { ...errors, race: ["Invalid"] };
     }
   }
   if (check.data.theme) {
     try {
-      await dataSource.get(DataSets.Themes).getOne(check.data.theme);
-      builder.updateTheme(check.data.theme);
+      await builder.updateTheme(check.data.theme);
     } catch {
       errors = { ...errors, theme: ["Invalid"] };
     }
   }
   if (check.data.class) {
     try {
-      await dataSource.get(DataSets.Class).getOne(check.data.class);
-      builder.updateClass(check.data.class);
+      await builder.updateClass(check.data.class);
     } catch {
       errors = { ...errors, class: ["Invalid"] };
     }
@@ -55,8 +53,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   // Save character data
-  const user = await getUser();
-  await dataSource.get(DataSets.Characters).create(builder.character);
+  const character = builder.getCharacter();
+  await dataSource.get(DataSets.Characters).create(character);
 
-  return NextResponse.json({ id: builder.character.id }, { status: 200 });
+  return NextResponse.json({ id: character.id }, { status: 200 });
 }
