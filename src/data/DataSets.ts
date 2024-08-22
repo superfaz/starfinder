@@ -73,10 +73,20 @@ import {
   EquipmentAugmentation,
   BodyPartSchema,
   BodyPart,
+  CharacterSchema,
 } from "model";
 import { IStaticDescriptor } from "./interfaces";
 
-export const DataSets = {
+const DynamicDataSets = {
+  Characters: {
+    model: "dynamic",
+    type: "simple",
+    name: "characters",
+    schema: CharacterSchema,
+  },
+};
+
+const StaticDataSets = {
   AbilityScore: {
     mode: "static",
     type: "ordered",
@@ -280,3 +290,5 @@ export const DataSets = {
   } as IStaticDescriptor<WeaponType>,
   Worlds: { mode: "static", type: "simple", name: "worlds", schema: WorldSchema } as IStaticDescriptor<World>,
 };
+
+export const DataSets = { ...StaticDataSets, ...DynamicDataSets };
