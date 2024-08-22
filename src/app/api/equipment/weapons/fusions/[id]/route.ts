@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DataSets, StaticDataSource, IStaticDataSource } from "data";
+import { DataSets, DataSource, IDataSource } from "data";
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  const dataSource: IStaticDataSource = new StaticDataSource();
+  const dataSource: IDataSource = new DataSource();
   return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponFusions).getOne(params.id));
 }

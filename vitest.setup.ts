@@ -1,5 +1,5 @@
 import { beforeAll, vi } from "vitest";
-import { IStaticDataSource, IStaticDataSet, IDescriptor } from "data";
+import { IDataSource, IStaticDataSet, IDescriptor, IDynamicDataSet, IStaticDescriptor, IDynamicDescriptor } from "data";
 import { ArmorTypeIds, EquipmentWeaponIds, IModel } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import deities from "./mocks/deities.json";
@@ -20,8 +20,10 @@ beforeAll(async () => {
     const mod = await importOriginal<typeof import("data")>();
     return {
       ...mod,
-      StaticDataSource: class MockedDataSource implements IStaticDataSource {
-        get<T extends IModel>(descriptor: IDescriptor<T>): IStaticDataSet<T> {
+      DataSource: class MockedDataSource implements IDataSource {
+        get<T extends IModel>(descriptor: IStaticDescriptor<T>): IStaticDataSet<T>;
+        get<T extends IModel>(descriptor: IDynamicDescriptor<T>): IDynamicDataSet<T>;
+        get<T extends IModel>(descriptor: IDescriptor<T>): IStaticDataSet<T> | IDynamicDataSet<T> {
           if (descriptor.name === "classes-details") {
             return {
               getAll: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],

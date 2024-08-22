@@ -22,7 +22,7 @@ import type {
   WeaponSpecialProperty,
   WeaponType,
 } from "model";
-import { IStaticDataSource } from "./interfaces";
+import { IDataSource } from "./interfaces";
 import { DataSets } from "./DataSets";
 
 export interface IClientDataSet {
@@ -75,7 +75,7 @@ export const EmptyClientDataSet: IClientDataSet = {
   weaponTypes: [],
 };
 
-export async function convert(dataSource: IStaticDataSource): Promise<IClientDataSet> {
+export async function convert(dataSource: IDataSource): Promise<IClientDataSet> {
   return {
     abilityScores: await dataSource.get(DataSets.AbilityScore).getAll(),
     alignments: await dataSource.get(DataSets.Alignment).getAll(),
@@ -85,8 +85,8 @@ export async function convert(dataSource: IStaticDataSource): Promise<IClientDat
     bonusCategories: await dataSource.get(DataSets.BonusCategories).getAll(),
     books: await dataSource.get(DataSets.Book).getAll(),
     classes: await dataSource.get(DataSets.Class).getAll(),
-    criticalHitEffects: await dataSource.get(DataSets.CriticalHitEffect).getAll(),
-    damageTypes: await dataSource.get(DataSets.DamageType).getAll(),
+    criticalHitEffects: await dataSource.get(DataSets.CriticalHitEffects).getAll(),
+    damageTypes: await dataSource.get(DataSets.DamageTypes).getAll(),
     equipmentMaterials: await dataSource.get(DataSets.EquipmentMaterial).getAll(),
     feats: await dataSource.get(DataSets.Feat).getAll(),
     professions: await dataSource.get(DataSets.Profession).getAll(),
