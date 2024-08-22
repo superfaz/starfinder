@@ -9,6 +9,7 @@ import {
   IStaticDataSet,
   IStaticDescriptor,
 } from "./interfaces";
+import { unstable_cache } from "next/cache";
 
 class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
   protected readonly client: MongoClient;
@@ -21,7 +22,7 @@ class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
     this.database = this.client.db(database);
   }
 
-  async getAll(): Promise<T[]> {
+  protected async getAllCore(): Promise<T[]> {
     let sort: Sort = 1;
     switch (this.descriptor.type) {
       case "simple":
@@ -47,7 +48,7 @@ class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
     }
   }
 
-  async getOne(id: string): Promise<T> {
+  protected async getOneCore(id: string): Promise<T> {
     const isT = (obj: unknown): obj is T => this.descriptor.schema.safeParse(obj).success;
     const result = await this.database.collection(this.descriptor.name).findOne({ id });
 
@@ -61,12 +62,18 @@ class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
 
     return result;
   }
+
+  getAll = unstable_cache(this.getAllCore);
+  getOne = unstable_cache(this.getOneCore);
 }
 
 class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDynamicDataSet<T> {
   constructor(client: MongoClient, descriptor: IDescriptor<T>, database: string) {
     super(client, descriptor, database);
   }
+
+  getAll = super.getAllCore;
+  getOne = super.getOneCore;
 
   async create(data: T): Promise<T> {
     const protect = this.descriptor.schema.safeParse(data);
