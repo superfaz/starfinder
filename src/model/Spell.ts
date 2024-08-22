@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { INamedModelSchema } from "./INamedModel";
-import { DescriptionSchema, EvolutionsSchema, ReferenceSchema } from "./helper";
+import { EvolutionsSchema } from "./helper";
+import { IEntrySchema } from "./IEntry";
 
 export const CasterIdSchema = z.enum(["mystic", "technomancer"]);
 
@@ -14,9 +14,7 @@ export function isCasterId(obj: unknown): obj is CasterId {
 
 export const RangeSchema = z.object({ min: z.number(), max: z.number() });
 
-export const SpellSchema = INamedModelSchema.extend({
-  description: DescriptionSchema,
-  reference: ReferenceSchema,
+export const SpellSchema = IEntrySchema.extend({
   levels: z.record(CasterIdSchema, z.union([z.number(), RangeSchema])),
   resolve: z.boolean().default(false),
   evolutions: z.optional(EvolutionsSchema),

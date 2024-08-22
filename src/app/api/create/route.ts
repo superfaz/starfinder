@@ -23,10 +23,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const dataSource: IDataSource = new DataSource();
+  const builder = createCharacter();
   let errors: CreateDataErrors = {};
   if (check.data.race) {
     try {
       await dataSource.get(DataSets.Races).getOne(check.data.race);
+      builder.updateRace(check.data.race);
     } catch {
       errors = { ...errors, race: ["Invalid"] };
     }
@@ -34,6 +36,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (check.data.theme) {
     try {
       await dataSource.get(DataSets.Themes).getOne(check.data.theme);
+      builder.updateTheme(check.data.theme);
     } catch {
       errors = { ...errors, theme: ["Invalid"] };
     }
@@ -41,6 +44,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (check.data.class) {
     try {
       await dataSource.get(DataSets.Class).getOne(check.data.class);
+      builder.updateClass(check.data.class);
     } catch {
       errors = { ...errors, class: ["Invalid"] };
     }
@@ -52,7 +56,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   // Save character data
   const user = await getUser();
-  console.log("User id", user?.id);
+  await dataSource.get(DataSets.Characters).create(builder.character);
 
-  return NextResponse.json({ id: 1 }, { status: 200 });
+  return NextResponse.json({ id: builder.character.id }, { status: 200 });
 }

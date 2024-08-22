@@ -31,6 +31,7 @@ export * from "./EquipmentWeaponFusion";
 export * from "./FeatTemplate";
 export * from "./FeatureTemplate";
 export * from "./ICodedModel";
+export * from "./IEntry";
 export * from "./IModel";
 export * from "./INamedModel";
 export * from "./Modifier";

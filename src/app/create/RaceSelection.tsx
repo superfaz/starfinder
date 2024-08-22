@@ -1,5 +1,5 @@
 import { groupBy } from "app/helpers";
-import { Race } from "model";
+import { IRaceEntry } from "model";
 import { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
 
@@ -14,7 +14,7 @@ export function RaceSelection({
   onChange,
   isInvalid,
 }: {
-  races: Race[];
+  races: IRaceEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;

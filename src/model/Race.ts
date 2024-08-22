@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
-import { DescriptionSchema, IdSchema, ReferenceSchema } from "./helper";
-import { INamedModelSchema } from "./INamedModel";
 import { BodyPartModifierSchema, HitPointsModifierSchema, SizeModifierSchema } from "./Modifier";
 import { VariantSchema } from "./Variant";
+import { IEntrySchema } from "./IEntry";
+import { IdSchema } from "./helper";
 
 export const RaceModifierSchema = z.discriminatedUnion("type", [
   BodyPartModifierSchema,
@@ -13,10 +13,13 @@ export const RaceModifierSchema = z.discriminatedUnion("type", [
 
 export type RaceModifier = z.infer<typeof RaceModifierSchema>;
 
-export const RaceSchema = INamedModelSchema.extend({
+export const IRaceEntrySchema = IEntrySchema.extend({
   category: z.enum(["core", "legacy", "other"]),
-  description: DescriptionSchema,
-  reference: ReferenceSchema,
+});
+
+export type IRaceEntry = z.infer<typeof IRaceEntrySchema>;
+
+export const RaceSchema = IRaceEntrySchema.extend({
   modifiers: z.array(RaceModifierSchema),
   variants: z.array(VariantSchema),
   names: z.array(z.string()),

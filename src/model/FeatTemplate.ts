@@ -1,17 +1,14 @@
 import { z } from "zod";
-import { INamedModelSchema } from "./INamedModel";
-import { DescriptionSchema, ReferenceSchema } from "./helper";
 import { PrerequisiteSchema } from "./Prerequisite";
 import { ModifierTemplateSchema } from "./ModifierTemplate";
+import { IEntrySchema } from "./IEntry";
 
-const BaseFeatTemplateSchema = INamedModelSchema.extend({
+const BaseFeatTemplateSchema = IEntrySchema.extend({
   /**
    * If true, the feat will not be shown in the feat list.
    */
   hidden: z.boolean().default(false),
   combatFeat: z.boolean().default(false),
-  description: DescriptionSchema,
-  reference: ReferenceSchema,
   modifiers: z.array(ModifierTemplateSchema),
   prerequisites: z.array(PrerequisiteSchema).optional(),
 });

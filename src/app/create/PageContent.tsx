@@ -8,13 +8,13 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { useRouter } from "next/navigation";
-import { Class, Race, Theme } from "model";
+import type { IEntry, IRaceEntry } from "model";
 import { CreateData, CreateDataErrors } from "view";
 import { RaceSelection } from "./RaceSelection";
 import { ThemeSelection } from "./ThemeSelection";
 import { ClassSelection } from "./ClassSelection";
 
-export function PageContent({ races, themes, classes }: { races: Race[]; themes: Theme[]; classes: Class[] }) {
+export function PageContent({ races, themes, classes }: { races: IRaceEntry[]; themes: IEntry[]; classes: IEntry[] }) {
   const [state, setState] = useState<CreateData>({ name: "" });
   const [errors, setErrors] = useState<CreateDataErrors>({});
   const [loading, setLoading] = useState(false);

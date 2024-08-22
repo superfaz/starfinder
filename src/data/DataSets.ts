@@ -74,16 +74,17 @@ import {
   BodyPartSchema,
   BodyPart,
   CharacterSchema,
+  Character,
 } from "model";
-import { IStaticDescriptor } from "./interfaces";
+import { IDynamicDescriptor, IStaticDescriptor } from "./interfaces";
 
 const DynamicDataSets = {
   Characters: {
-    model: "dynamic",
+    mode: "dynamic",
     type: "simple",
     name: "characters",
     schema: CharacterSchema,
-  },
+  } as IDynamicDescriptor<Character>,
 };
 
 const StaticDataSets = {

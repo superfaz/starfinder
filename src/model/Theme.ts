@@ -1,11 +1,8 @@
 import { z } from "zod";
-import { INamedModelSchema } from "./INamedModel";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
-import { DescriptionSchema, ReferenceSchema } from "./helper";
+import { IEntrySchema } from "./IEntry";
 
-export const ThemeSchema = INamedModelSchema.extend({
-  description: DescriptionSchema,
-  reference: ReferenceSchema,
+export const ThemeSchema = IEntrySchema.extend({
   abilityScores: z.record(z.union([z.undefined(), z.number()])),
   features: z.array(FeatureTemplateSchema),
 });

@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { FeatureTemplateSchema } from "./FeatureTemplate";
 import { IModelSchema } from "./IModel";
-import { DescriptionSchema, IdSchema, ReferenceSchema } from "./helper";
-import { INamedModelSchema } from "./INamedModel";
+import { IdSchema } from "./helper";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ClassSkillModifierSchema, RankSkillModifierSchema, SizeModifierSchema } from "./Modifier";
 import { ModifierTemplateSchema } from "./ModifierTemplate";
+import { IEntrySchema } from "./IEntry";
 
 export const DroneModifierTypeSchema = z.enum([
   "ability",
@@ -43,10 +43,8 @@ export const DroneModTemplateSchema = DroneFeatureTemplateSchema.extend({
 
 export const DroneChassisIdSchema = z.enum(["combat", "hover", "stealth"]);
 
-export const DroneChassisSchema = INamedModelSchema.extend({
+export const DroneChassisSchema = IEntrySchema.extend({
   id: DroneChassisIdSchema,
-  reference: ReferenceSchema,
-  description: DescriptionSchema,
   armorClasses: z.object({ energy: z.number().int().positive(), kinetic: z.number().int().positive() }),
   modifiers: z.optional(z.array(DroneModifierSchema)),
   abilityScores: z.record(AbilityScoreIdSchema, z.number()),
@@ -61,9 +59,7 @@ export const DroneChassisSchema = INamedModelSchema.extend({
 
 export type DroneChassis = z.infer<typeof DroneChassisSchema>;
 
-export const ClassMechanicStyleSchema = INamedModelSchema.extend({
-  reference: ReferenceSchema,
-  description: DescriptionSchema,
+export const ClassMechanicStyleSchema = IEntrySchema.extend({
   features: z.optional(z.array(FeatureTemplateSchema)),
 }).strict();
 

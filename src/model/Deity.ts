@@ -1,11 +1,7 @@
 import { z } from "zod";
-import { AlignmentIdSchema } from "./Alignment";
-import { INamedModelSchema } from "./INamedModel";
-import { ReferenceSchema } from "./helper";
+import { IEntrySchema } from "./IEntry";
 
-export const DeitySchema = INamedModelSchema.extend({
-  reference: ReferenceSchema,
-  alignment: AlignmentIdSchema,
+export const DeitySchema = IEntrySchema.extend({
   portfolios: z.string(),
 });
 

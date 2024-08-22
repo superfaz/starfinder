@@ -1,11 +1,10 @@
 import { z } from "zod";
-import { DescriptionSchema, INamedModelSchema, IdSchema, ModifierSchema, PrerequisiteSchema, ReferenceSchema } from "model";
+import { IdSchema, ModifierSchema, PrerequisiteSchema } from "model";
+import { IEntryModelSchema } from "model/IEntryModel";
 
-export const Feat = INamedModelSchema.extend({
+export const Feat = IEntryModelSchema.extend({
   target: z.optional(IdSchema),
   combatFeat: z.boolean().default(false),
-  description: DescriptionSchema,
-  reference: ReferenceSchema,
   modifiers: z.array(ModifierSchema),
   prerequisites: z.array(PrerequisiteSchema),
 });

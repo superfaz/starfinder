@@ -1,15 +1,13 @@
 import { z } from "zod";
-import { INamedModelSchema } from "./INamedModel";
-import { DescriptionSchema, ReferenceSchema, VariableSchema } from "./helper";
+import { VariableSchema } from "./helper";
 import { AbilityScoreIdSchema } from "./AbilityScore";
 import { ArmorTypeIdSchema } from "./ArmorType";
 import { ClassSkillModifierSchema, WeaponProficiencyModifierSchema } from "./Modifier";
+import { IEntrySchema } from "./IEntry";
 
 const ClassModifierSchema = z.discriminatedUnion("type", [ClassSkillModifierSchema, WeaponProficiencyModifierSchema]);
 
-export const ClassSchema = INamedModelSchema.extend({
-  description: DescriptionSchema,
-  reference: ReferenceSchema,
+export const ClassSchema = IEntrySchema.extend({
   hitPoints: z.number(),
   staminaPoints: z.number(),
   primaryAbilityScore: z.union([AbilityScoreIdSchema, VariableSchema]),

@@ -1,4 +1,4 @@
-import { Class } from "model";
+import { IEntry } from "model";
 import { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
 
@@ -8,7 +8,7 @@ export function ClassSelection({
   onChange,
   isInvalid,
 }: {
-  classes: Class[];
+  classes: IEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;
