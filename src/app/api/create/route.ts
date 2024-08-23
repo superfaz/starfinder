@@ -26,12 +26,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const dataSource: IDataSource = new DataSource();
   const builder = createCharacter(dataSource);
   let errors: CreateDataErrors = {};
-  if (check.data.race) {
-    try {
-      await builder.updateRace(check.data.race);
-    } catch {
-      errors = { ...errors, race: ["Invalid"] };
-    }
+  if (check.data.race && !(await builder.updateRace(check.data.race))) {
+    errors = { ...errors, race: ["Invalid"] };
   }
   if (check.data.theme) {
     try {

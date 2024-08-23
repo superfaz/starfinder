@@ -72,15 +72,23 @@ export class CharacterBuilder {
    * Ensure that the variant, options, traits and ability scores are reset.
    *
    * @param raceId - the identifier of its new race
+   * @returns `true` if `raceId` is valid, `false` otherwise
    */
-  async updateRace(raceId: string): Promise<void> {
-    const race = await this.dataSource.get(DataSets.Races).getOne(raceId);
+  async updateRace(raceId: string): Promise<boolean> {
+    const race = await this.dataSource.get(DataSets.Races).findOne(raceId);
+    if (race === undefined) {
+      return false;
+    }
+
     const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
     const avatars = await this.dataSource.get(DataSets.Avatar).getAll();
 
+    console.log("abilityScores", abilityScores);
+    console.log("avatars", avatars);
+
     if (this.character.race === raceId) {
       // No change
-      return;
+      return true;
     }
 
     const result: Character = {
@@ -100,6 +108,7 @@ export class CharacterBuilder {
     result.avatar = avatars.filter((avatar) => avatar.tags.includes(raceId))[0].id;
 
     this.character = result;
+    return true;
   }
 
   /**
@@ -108,13 +117,17 @@ export class CharacterBuilder {
    * Ensure that the theme options and ability scores are reset.
    *
    * @param themeId - the identifier of its new theme
+   * @returns `true` if `themeId` is valid, `false` otherwise
    */
-  async updateTheme(themeId: string): Promise<void> {
-    const theme = await this.dataSource.get(DataSets.Themes).getOne(themeId);
+  async updateTheme(themeId: string): Promise<boolean> {
+    const theme = await this.dataSource.get(DataSets.Themes).findOne(themeId);
+    if (theme === undefined) {
+      return false;
+    }
 
     if (this.character.theme === themeId) {
       // No change
-      return;
+      return true;
     }
 
     const result: Character = {
@@ -138,6 +151,7 @@ export class CharacterBuilder {
     result.abilityScores = await this.computeMinimalAbilityScores(result);
 
     this.character = result;
+    return true;
   }
 
   /**
@@ -146,13 +160,17 @@ export class CharacterBuilder {
    * Ensure that the class options and ability scores are reset.
    *
    * @param classId - the identifier of its new class
+   * @returns `true` if `classId` is valid, `false` otherwise
    */
-  async updateClass(classId: string): Promise<void> {
-    const klass = await this.dataSource.get(DataSets.Class).getOne(classId);
+  async updateClass(classId: string): Promise<boolean> {
+    const klass = await this.dataSource.get(DataSets.Class).findOne(classId);
+    if (klass === undefined) {
+      return false;
+    }
 
     if (this.character.class === classId) {
       // No change
-      return;
+      return true;
     }
 
     const result: Character = {
@@ -192,6 +210,7 @@ export class CharacterBuilder {
 
     result.abilityScores = await this.computeMinimalAbilityScores(result);
     this.character = result;
+    return true;
   }
 }
 
