@@ -8,10 +8,11 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   // Security check
-  const { isAuthenticated } = getKindeServerSession();
+  const { isAuthenticated, getUser } = getKindeServerSession();
   const isUserAuthenticated = await isAuthenticated();
+  const user = await getUser();
 
-  if (!isUserAuthenticated) {
+  if (!isUserAuthenticated || !user) {
     return new NextResponse(undefined, { status: 401 });
   }
 
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const dataSource: IDataSource = new DataSource();
-  const builder = createCharacter(dataSource);
+  const builder = createCharacter(dataSource, user.id);
   let errors: CreateDataErrors = {};
   if (check.data.race && !(await builder.updateRace(check.data.race))) {
     errors = { ...errors, race: ["Invalid"] };

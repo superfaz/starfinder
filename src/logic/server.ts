@@ -214,6 +214,6 @@ export class CharacterBuilder {
   }
 }
 
-export function createCharacter(dataSource: IDataSource): CharacterBuilder {
-  return new CharacterBuilder(dataSource, { ...EmptyCharacter, id: uuidv4() });
+export function createCharacter(dataSource: IDataSource, userId: string): CharacterBuilder {
+  return new CharacterBuilder(dataSource, { ...EmptyCharacter, id: uuidv4(), userId });
 }

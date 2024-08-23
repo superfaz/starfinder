@@ -15,7 +15,7 @@ import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 const initialState = {
   data: EmptyClientDataSet,
-  character: {...EmptyCharacter, id: uuidv4()},
+  character: { ...EmptyCharacter, id: uuidv4(), userId: "client" },
   classesDetails: {} as Record<string, IModel>,
 };
 

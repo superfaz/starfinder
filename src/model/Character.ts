@@ -5,6 +5,7 @@ import { EquipmentDescriptorSchema } from "./EquipmentDescriptor";
 import { IModelSchema } from "./IModel";
 
 export const CharacterSchema = IModelSchema.extend({
+  userId: z.string().trim().min(1),
   version: z.number(),
   level: z.number(),
   race: z.string(),
@@ -41,7 +42,7 @@ export function isCharacter(obj: unknown): obj is Character {
   return CharacterSchema.safeParse(obj).success;
 }
 
-export const EmptyCharacter: Readonly<Omit<Character, "id">> = {
+export const EmptyCharacter: Readonly<Omit<Character, "id" | "userId">> = {
   version: 0,
   level: 1,
   race: "",

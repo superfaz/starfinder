@@ -91,7 +91,7 @@ const classesDetails: Record<string, IModel> = {
 };
 
 export function createCharacter() {
-  return updators(data, {...EmptyCharacter, id: uuidv4() });
+  return updators(data, { ...EmptyCharacter, id: uuidv4(), userId: "client" });
 }
 
 export type Updator = ReturnType<typeof createCharacter>;
