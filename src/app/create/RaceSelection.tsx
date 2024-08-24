@@ -1,7 +1,8 @@
 import { groupBy } from "app/helpers";
-import { IRaceEntry } from "model";
-import { ChangeEvent } from "react";
+import type { Book, IRaceEntry } from "model";
+import type { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
+import { ReferenceComponent } from "./ReferenceComponent";
 
 const labels = {
   core: "Standard",
@@ -9,11 +10,13 @@ const labels = {
 };
 
 export function RaceSelection({
+  books,
   races,
   value,
   onChange,
   isInvalid,
 }: {
+  books: Book[];
   races: IRaceEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -40,6 +43,7 @@ export function RaceSelection({
         <div className="invalid-feedback">Cette race n&rsquo;est pas valide</div>
       </Form.FloatingLabel>
       {selectedRace && <div className="text-muted">{selectedRace?.description}</div>}
+      {selectedRace && <ReferenceComponent books={books} reference={selectedRace.reference} />}
     </>
   );
 }

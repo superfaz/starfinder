@@ -13,10 +13,11 @@ export default async function Page() {
 
   if (await isSecure(returnTo)) {
     const dataSource: IDataSource = new DataSource();
+    const books = await dataSource.get(DataSets.Book).getAll();
     const races = forSelectRace(await dataSource.get(DataSets.Races).getAll());
     const themes = forSelect(await dataSource.get(DataSets.Themes).getAll());
     const classes = forSelect(await dataSource.get(DataSets.Class).getAll());
 
-    return <PageContent races={races} themes={themes} classes={classes} />;
+    return <PageContent books={books} races={races} themes={themes} classes={classes} />;
   }
 }

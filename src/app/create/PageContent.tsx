@@ -8,13 +8,23 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { useRouter } from "next/navigation";
-import type { IEntry, IRaceEntry } from "model";
+import type { Book, IEntry, IRaceEntry } from "model";
 import { CreateData, CreateDataErrors } from "view";
 import { RaceSelection } from "./RaceSelection";
 import { ThemeSelection } from "./ThemeSelection";
 import { ClassSelection } from "./ClassSelection";
 
-export function PageContent({ races, themes, classes }: { races: IRaceEntry[]; themes: IEntry[]; classes: IEntry[] }) {
+export function PageContent({
+  books,
+  races,
+  themes,
+  classes,
+}: {
+  books: Book[];
+  races: IRaceEntry[];
+  themes: IEntry[];
+  classes: IEntry[];
+}) {
   const [state, setState] = useState<CreateData>({ name: "" });
   const [errors, setErrors] = useState<CreateDataErrors>({});
   const [loading, setLoading] = useState(false);
@@ -87,10 +97,17 @@ export function PageContent({ races, themes, classes }: { races: IRaceEntry[]; t
         <Col md={6} className="mt-2">
           <Stack direction="vertical" gap={2}>
             <div className="lead mt-3">Quelle sera sa race ?</div>
-            <RaceSelection races={races} value={state.race ?? ""} onChange={handleChange} isInvalid={!!errors.race} />
+            <RaceSelection
+              books={books}
+              races={races}
+              value={state.race ?? ""}
+              onChange={handleChange}
+              isInvalid={!!errors.race}
+            />
 
             <div className="lead mt-3">Quel sera son thème ?</div>
             <ThemeSelection
+              books={books}
               themes={themes}
               value={state.theme ?? ""}
               onChange={handleChange}
@@ -99,6 +116,7 @@ export function PageContent({ races, themes, classes }: { races: IRaceEntry[]; t
 
             <div className="lead mt-3">Quelle sera sa classe ?</div>
             <ClassSelection
+              books={books}
               classes={classes}
               value={state.class ?? ""}
               onChange={handleChange}
