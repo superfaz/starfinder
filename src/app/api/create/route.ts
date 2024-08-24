@@ -44,9 +44,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       errors = { ...errors, class: ["Invalid"] };
     }
   }
+  if (check.data.name) {
+    try {
+      await builder.updateName(check.data.name);
+    } catch {
+      errors = { ...errors, name: ["Invalid"] };
+    }
+  }
 
   if (Object.keys(errors).length > 0) {
     return NextResponse.json(errors, { status: 400 });
+  }
+  if (check.data.description) {
+    await builder.updateDescription(check.data.description);
   }
 
   // Save character data

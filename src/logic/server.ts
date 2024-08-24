@@ -212,6 +212,24 @@ export class CharacterBuilder {
     this.character = result;
     return true;
   }
+
+  /**
+   * Updates the name of a character.
+   *
+   * @param name - the new name
+   */
+  async updateName(name: string): Promise<void> {
+    this.character = { ...this.character, name };
+  }
+
+  /**
+   * Updates the description of a character.
+   *
+   * @param description - the new description
+   */
+  async updateDescription(description: string): Promise<void> {
+    this.character = { ...this.character, description };
+  }
 }
 
 export function createCharacter(dataSource: IDataSource, userId: string): CharacterBuilder {
