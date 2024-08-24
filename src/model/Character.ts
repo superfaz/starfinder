@@ -1,8 +1,12 @@
-import { z } from "zod";
+import { ZodTypeAny, z } from "zod";
 import { ProfessionSchema } from "./Profession";
 import { IdSchema } from "./helper";
 import { EquipmentDescriptorSchema } from "./EquipmentDescriptor";
 import { IModelSchema } from "./IModel";
+
+function optional<I extends ZodTypeAny>(schema: I) {
+  return z.preprocess((v) => (v === null ? undefined : v), z.optional(schema));
+}
 
 export const CharacterSchema = IModelSchema.extend({
   userId: z.string().trim().min(1),
@@ -10,13 +14,13 @@ export const CharacterSchema = IModelSchema.extend({
   level: z.number(),
   race: z.string(),
   raceVariant: z.string(),
-  raceOptions: z.optional(z.record(z.string())),
+  raceOptions: optional(z.record(z.string())),
   theme: z.string(),
-  themeOptions: z.optional(z.record(z.string())),
+  themeOptions: optional(z.record(z.string())),
   class: z.string(),
-  classOptions: z.optional(z.record(z.string())),
+  classOptions: optional(z.record(z.string())),
   traits: z.array(z.string()),
-  traitsOptions: z.optional(z.record(z.string())),
+  traitsOptions: optional(z.record(z.string())),
   abilityScores: z.record(z.number()),
   professionSkills: z.array(ProfessionSchema),
   skillRanks: z.record(z.number()),
@@ -34,7 +38,7 @@ export const CharacterSchema = IModelSchema.extend({
   initialCapital: z.number(),
   credits: z.number(),
   equipment: z.array(EquipmentDescriptorSchema),
-}).strict();
+});
 
 export type Character = z.infer<typeof CharacterSchema>;
 

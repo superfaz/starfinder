@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
-import { Db, MongoClient, Sort } from "mongodb";
-import { type IModel } from "model";
-import {
+import { Db, type Document, type Filter, MongoClient, type Sort } from "mongodb";
+import type { IModel } from "model";
+import type {
   IDataSource,
   IDescriptor,
   IDynamicDataSet,
@@ -12,7 +12,11 @@ import {
 import { unstable_cache } from "next/cache";
 import "server-only";
 
-async function getAllCore<T extends IModel>(database: Db, descriptor: IDescriptor<T>): Promise<T[]> {
+async function findCore<T extends IModel>(
+  database: Db,
+  descriptor: IDescriptor<T>,
+  query: Filter<T> | undefined
+): Promise<T[]> {
   let sort: Sort = 1;
   switch (descriptor.type) {
     case "simple":
@@ -28,7 +32,10 @@ async function getAllCore<T extends IModel>(database: Db, descriptor: IDescripto
       throw new Error("Method not implemented.");
   }
 
-  const preparedQuery = database.collection(descriptor.name).find().sort(sort);
+  const preparedQuery = database
+    .collection(descriptor.name)
+    .find(query as Filter<Document>)
+    .sort(sort);
   const results = await preparedQuery.toArray();
   try {
     return descriptor.schema.array().parse(results);
@@ -36,6 +43,10 @@ async function getAllCore<T extends IModel>(database: Db, descriptor: IDescripto
     Sentry.captureException(e);
     throw new Error(`Failed to get ${descriptor.name}`, { cause: e });
   }
+}
+
+async function getAllCore<T extends IModel>(database: Db, descriptor: IDescriptor<T>): Promise<T[]> {
+  return findCore(database, descriptor, undefined);
 }
 
 async function findOneCore<T extends IModel>(
@@ -78,12 +89,12 @@ class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
     this.database = this.client.db(database);
   }
 
-  getAll = () => {
-    return unstable_cache(
-      () => getAllCore(this.database, this.descriptor),
-      [this.descriptor.mode, this.descriptor.name]
-    )();
-  };
+  find = (query: Filter<T>) =>
+    unstable_cache(
+      (query) => findCore(this.database, this.descriptor, query),
+      ["find", this.descriptor.mode, this.descriptor.name]
+    )(query);
+  getAll = () => getAllCore(this.database, this.descriptor);
   findOne = (id: string) => {
     return unstable_cache(
       (id: string) => findOneCore(this.database, this.descriptor, id),
@@ -98,6 +109,7 @@ class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDyna
     super(client, descriptor, database);
   }
 
+  find = (query: Filter<T>) => findCore(this.database, this.descriptor, query);
   getAll = () => getAllCore(this.database, this.descriptor);
   getOne = (id: string) => getOneCore(this.database, this.descriptor, id);
   findOne = (id: string) => findOneCore(this.database, this.descriptor, id);

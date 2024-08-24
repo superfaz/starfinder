@@ -1,5 +1,6 @@
-import { IModel } from "model";
-import { Schema } from "zod";
+import type { IModel } from "model";
+import type { Filter } from "mongodb";
+import type { Schema } from "zod";
 
 interface IBaseDescriptor<T extends IModel> {
   type: "simple" | "named" | "ordered";
@@ -21,6 +22,7 @@ export interface IStaticDataSet<T extends IModel> {
   getAll(): Promise<T[]>;
   getOne(id: string): Promise<T>;
   findOne(id: string): Promise<T | undefined>;
+  find(query: Filter<T>): Promise<T[]>;
 }
 
 export interface IDynamicDataSet<T extends IModel> extends IStaticDataSet<T> {
