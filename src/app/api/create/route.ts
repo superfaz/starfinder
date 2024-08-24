@@ -30,33 +30,21 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (check.data.race && !(await builder.updateRace(check.data.race))) {
     errors = { ...errors, race: ["Invalid"] };
   }
-  if (check.data.theme) {
-    try {
-      await builder.updateTheme(check.data.theme);
-    } catch {
-      errors = { ...errors, theme: ["Invalid"] };
-    }
+  if (check.data.theme && !(await builder.updateTheme(check.data.theme))) {
+    errors = { ...errors, theme: ["Invalid"] };
   }
-  if (check.data.class) {
-    try {
-      await builder.updateClass(check.data.class);
-    } catch {
-      errors = { ...errors, class: ["Invalid"] };
-    }
+  if (check.data.class && !(await builder.updateClass(check.data.class))) {
+    errors = { ...errors, class: ["Invalid"] };
   }
-  if (check.data.name) {
-    try {
-      await builder.updateName(check.data.name);
-    } catch {
-      errors = { ...errors, name: ["Invalid"] };
-    }
+  if (check.data.name && !(await builder.updateName(check.data.name))) {
+    errors = { ...errors, name: ["Invalid"] };
+  }
+  if (check.data.description && !(await builder.updateDescription(check.data.description))) {
+    errors = { ...errors, description: ["Invalid"] };
   }
 
   if (Object.keys(errors).length > 0) {
     return NextResponse.json(errors, { status: 400 });
-  }
-  if (check.data.description) {
-    await builder.updateDescription(check.data.description);
   }
 
   // Save character data

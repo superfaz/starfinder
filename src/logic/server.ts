@@ -218,8 +218,9 @@ export class CharacterBuilder {
    *
    * @param name - the new name
    */
-  async updateName(name: string): Promise<void> {
+  async updateName(name: string): Promise<boolean> {
     this.character = { ...this.character, name };
+    return true;
   }
 
   /**
@@ -227,8 +228,9 @@ export class CharacterBuilder {
    *
    * @param description - the new description
    */
-  async updateDescription(description: string): Promise<void> {
+  async updateDescription(description: string): Promise<boolean> {
     this.character = { ...this.character, description };
+    return true;
   }
 }
 
