@@ -26,6 +26,7 @@ beforeAll(async () => {
         get<T extends IModel>(descriptor: IDescriptor<T>): IStaticDataSet<T> | IDynamicDataSet<T> {
           if (descriptor.name === "classes-details") {
             return {
+              find: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
               getAll: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
               getOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
               findOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
@@ -33,12 +34,15 @@ beforeAll(async () => {
           }
           if (descriptor.name === "themes-details") {
             return {
+              find: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
               getAll: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
               getOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
               findOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
             };
           } else {
             return {
+              find: async () =>
+                descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
               getAll: async () =>
                 descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
               getOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
