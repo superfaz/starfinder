@@ -1,11 +1,16 @@
+"use client";
+
 import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { CharacterVM } from "./viewmodel";
 import { Badge, Card } from "app/components";
+import Link from "next/link";
 
 export function PageContent({ characters }: { characters: CharacterVM[] }) {
+  function displayDeleteWarning(name: string) {}
+
   return (
     <Container>
       <h2>Vos personnages</h2>
@@ -34,10 +39,15 @@ export function PageContent({ characters }: { characters: CharacterVM[] }) {
                 </Col>
               </Row>
               <Card.Footer className="d-flex">
-                <Button className="card-link flex-fill" href={`/edit/${character.id}`}>
+                <Link className="card-link btn btn-primary flex-fill" href={`/edit/${character.id}`}>
                   Modifier
-                </Button>
-                <Button className="card-link" variant="danger" href={`/edit/${character.id}`} aria-label="Supprimer">
+                </Link>
+                <Button
+                  className="card-link"
+                  variant="danger"
+                  aria-label="Supprimer"
+                  onClick={() => displayDeleteWarning(character.name)}
+                >
                   <i className="bi bi-trash"></i>
                 </Button>
               </Card.Footer>
