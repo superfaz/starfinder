@@ -49,6 +49,17 @@ Other scripts available :
 - `pnpm run test:e2e` to run all e2e tests based on playwright. Used before as part of the release process to validate a deployment before its promotion to production. Before running those tests locally, playwright browsers needs to be installed via `pnpm exec playwright install`.
 - `pnpm run start` to start a local environment based on the build execution. Useful to connect to the production database after having created a `.env.production` file.
 
+### Initial configuration
+
+Create a `.env.local` file to store the following info:
+
+1. Connectivity to kinde for authentication
+    - `KINDE_CLIENT_ID`
+    - `KINDE_CLIENT_SECRET`
+    - `KINDE_ISSUER_URL`
+1. Connectivity to MongoDB (optional - localhost by default)
+    - `STARFINDER_MONGO_URI`
+
 ### Monitoring via Sentry
 
 The monitoring of the application in production is linked to [sentry](https://sentry.io).
