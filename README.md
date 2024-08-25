@@ -10,7 +10,7 @@ Provides an easy-to-use online creation tool for StarFinder.
 
 This project is in **alpha mode** and supports only French language at the moment.
 
-You can have an overview of the current implementation here: https://starfinder.monperso.fr
+You can have an overview of the current implementation here: <https://starfinder.monperso.fr>
 
 ## Licenses
 
