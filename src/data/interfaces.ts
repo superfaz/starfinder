@@ -28,7 +28,7 @@ export interface IStaticDataSet<T extends IModel> {
 export interface IDynamicDataSet<T extends IModel> extends IStaticDataSet<T> {
   create(data: T): Promise<T>;
   update(data: T): Promise<T>;
-  delete(id: string): Promise<void>;
+  delete(idOrQuery: string | Filter<T>): Promise<void>;
 }
 
 export interface IDataSource {

@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import { Db, type Document, type Filter, MongoClient, type Sort } from "mongodb";
+import { Db, DeleteResult, type Document, type Filter, MongoClient, type Sort } from "mongodb";
 import type { IModel } from "model";
 import type {
   IDataSource,
@@ -142,10 +142,17 @@ class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDyna
     return protect.data;
   }
 
-  async delete(id: string): Promise<void> {
-    const result = await this.database.collection(this.descriptor.name).deleteOne({ id });
+  async delete(idOrQuery: string | Filter<T>): Promise<void> {
+    let result:DeleteResult;
+    if (typeof idOrQuery === "string") {
+      result = await this.database.collection(this.descriptor.name).deleteOne({ id:idOrQuery });
+    }
+    else {
+      result = await this.database.collection(this.descriptor.name).deleteOne(idOrQuery as Filter<Document>);
+    }
+
     if (!result.acknowledged) {
-      throw new Error(`Failed to delete ${this.descriptor.name}/${id}`);
+      throw new Error(`Failed to delete ${this.descriptor.name}/${idOrQuery}`);
     }
   }
 }
