@@ -1,16 +1,33 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
-function nextConfig() {
-  return {
-    eslint: { dirs: ["src", "mocks"] },
-  };
+const BASE_CONFIG = {
+  eslint: { dirs: ["src", "mocks"] },
+};
+
+const CODESPACE_CONFIG = {
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["localhost:3000"],
+    },
+  },
+};
+
+function nextConfig(phase) {
+  const config = { ...DEFAULT_CONFIG };
+
+  if (phase === PHASE_DEVELOPMENT_SERVER && !!process.env.CODESPACE_NAME) {
+    Object.assign(config, CODESPACE_CONFIG);
+  }
+
+  return config;
 }
 
 // Analyze
-let config = process.env.ANALYZE ? withBundleAnalyzer(nextConfig) : nextConfig;
+const config = process.env.ANALYZE ? withBundleAnalyzer(nextConfig) : nextConfig;
 
-export default withSentryConfig(config, {
+const sentryConfig = withSentryConfig(config, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
@@ -44,3 +61,5 @@ export default withSentryConfig(config, {
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
 });
+
+export default sentryConfig;
