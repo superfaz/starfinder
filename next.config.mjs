@@ -1,6 +1,5 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
-import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 const BASE_CONFIG = {
   eslint: { dirs: ["src", "mocks"] },
@@ -14,10 +13,10 @@ const CODESPACE_CONFIG = {
   },
 };
 
-function nextConfig(phase) {
-  const config = { ...DEFAULT_CONFIG };
+function nextConfig() {
+  const config = { ...BASE_CONFIG };
 
-  if (phase === PHASE_DEVELOPMENT_SERVER && !!process.env.CODESPACE_NAME) {
+  if (process.env.CODESPACE_NAME) {
     Object.assign(config, CODESPACE_CONFIG);
   }
 
