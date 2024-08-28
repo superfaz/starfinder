@@ -1,6 +1,5 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { cleanup, screen } from "@testing-library/react";
-import { renderWithData } from "./helpers-test";
+import { cleanup, render, screen } from "@testing-library/react";
 import { PageContent } from "./PageContent";
 
 vi.mock("next/navigation", () => ({
@@ -11,7 +10,7 @@ vi.mock("next/navigation", () => ({
 describe("Page", () => {
   beforeAll(async () => {
     cleanup();
-    await renderWithData(<PageContent />);
+    render(<PageContent />);
   });
 
   test("Page is live", async () => {

@@ -89,6 +89,7 @@ export function PageContent({
                 onChange={handleChange}
                 autoComplete="off"
                 isInvalid={!!errors.name}
+                aria-invalid={!!errors.name}
               />
               <div className="invalid-feedback">Le nom est obligatoire</div>
             </Form.FloatingLabel>

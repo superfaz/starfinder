@@ -21,7 +21,7 @@ export function ThemeSelection({
   return (
     <>
       <Form.FloatingLabel controlId="theme" label="Thème">
-        <Form.Select name="theme" value={value} onChange={onChange} isInvalid={isInvalid}>
+        <Form.Select name="theme" value={value} onChange={onChange} isInvalid={isInvalid} aria-invalid={isInvalid}>
           {value === "" && <option value=""></option>}
           {themes.map((theme) => (
             <option key={theme.id} value={theme.id}>

@@ -21,7 +21,7 @@ export function ClassSelection({
   return (
     <>
       <Form.FloatingLabel controlId="class" label="Classe">
-        <Form.Select name="class" value={value} onChange={onChange} isInvalid={isInvalid}>
+        <Form.Select name="class" value={value} onChange={onChange} isInvalid={isInvalid} aria-invalid={isInvalid}>
           {value === "" && <option value=""></option>}
           {classes.map((klass) => (
             <option key={klass.id} value={klass.id}>

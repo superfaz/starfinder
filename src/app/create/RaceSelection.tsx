@@ -28,7 +28,7 @@ export function RaceSelection({
   return (
     <>
       <Form.FloatingLabel controlId="race" label="Race">
-        <Form.Select name="race" value={value} onChange={onChange} isInvalid={isInvalid}>
+        <Form.Select name="race" value={value} onChange={onChange} isInvalid={isInvalid} aria-invalid={isInvalid}>
           {value === "" && <option value=""></option>}
           {Object.entries(groupedRaces).map(([category, races]) => (
             <optgroup key={category} label={labels[category as "core" | "legacy"]}>
