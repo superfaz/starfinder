@@ -1,13 +1,19 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/universal:2",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"esbenp.prettier-vscode",
-				"dbaeumer.vscode-eslint",
-				"DavidAnson.vscode-markdownlint",
-				"GitHub.copilot"
-			]
-		}
-	}
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "DavidAnson.vscode-markdownlint",
+        "GitHub.copilot"
+      ]
+    }
+  },
+  "containerEnv": {
+    "KINDE_SITE_URL": "https://${localEnv:CODESPACE_NAME}-3000.app.github.dev",
+    "KINDE_POST_LOGOUT_REDIRECT_URL": "https://${localEnv:CODESPACE_NAME}-3000.app.github.dev",
+    "KINDE_POST_LOGIN_REDIRECT_URL": "https://${localEnv:CODESPACE_NAME}-3000.app.github.dev"
+  },
+  "postCreateCommand": "pnpm install"
 }
