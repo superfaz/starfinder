@@ -1,4 +1,5 @@
 @use "bootstrap-icons/font/bootstrap-icons";
+@use "sass:map";
 
 $grid-breakpoints: (
   xs: 0,
@@ -12,7 +13,6 @@ $container-max-widths: (
   sm: calc(390px * 2),
   md: calc(390px * 3),
   lg: calc(390px * 4),
-  xl: calc(390px * 6),
 );
 
 @import "bootstrap/scss/bootstrap.scss";
@@ -36,6 +36,13 @@ $sf-darkblue: #080f1b;
 
 .un-skew {
   @include unskew;
+}
+
+// XL container requires a 'large' class to be enabled.
+@media (min-width: map.get($grid-breakpoints, "xl")) {
+  .container.large {
+    max-width: calc(390px * 6);
+  }
 }
 
 /**
