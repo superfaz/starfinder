@@ -10,7 +10,7 @@ import { Badge, Card } from "app/components";
 import { CharacterVM } from "./viewmodel";
 import { deleteCharacter } from "./actions";
 
-function CharacterCard({ character }: { character: CharacterVM }) {
+export function CharacterCard({ character }: { character: CharacterVM }) {
   const [show, setShow] = useState(false);
 
   function handleDelete() {
@@ -84,7 +84,7 @@ export function PageContent({ characters }: { characters: CharacterVM[] }) {
   return (
     <Container>
       <h2>Vos personnages</h2>
-      <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 mb-5">
+      <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mb-5">
         {characters.map((character) => (
           <Col key={character.id} className="mt-3">
             <CharacterCard character={character} />
