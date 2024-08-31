@@ -1,5 +1,13 @@
 import { beforeAll, vi } from "vitest";
-import { ArmorTypeIds, EquipmentWeaponIds } from "model";
+import type {
+  IDataSource,
+  IDescriptor,
+  IDynamicDataSet,
+  IDynamicDescriptor,
+  IStaticDataSet,
+  IStaticDescriptor,
+} from "data";
+import { ArmorTypeIds, EquipmentWeaponIds, IModel } from "model";
 import { addFetchMock, mockFetch } from "./mocks/fetch";
 import deities from "./mocks/deities.json";
 import envoyDetails from "./mocks/class-envoy.json";
@@ -15,6 +23,44 @@ import worlds from "./mocks/worlds.json";
 import "@testing-library/jest-dom/vitest";
 
 beforeAll(async () => {
+  vi.mock("data", async (importOriginal) => {
+    const mod = await importOriginal<typeof import("data")>();
+    return {
+      ...mod,
+      DataSource: class MockedDataSource implements IDataSource {
+        get<T extends IModel>(descriptor: IStaticDescriptor<T>): IStaticDataSet<T>;
+        get<T extends IModel>(descriptor: IDynamicDescriptor<T>): IDynamicDataSet<T>;
+        get<T extends IModel>(descriptor: IDescriptor<T>): IStaticDataSet<T> | IDynamicDataSet<T> {
+          if (descriptor.name === "classes-details") {
+            return {
+              find: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
+              getAll: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
+              getOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
+              findOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
+            };
+          }
+          if (descriptor.name === "themes-details") {
+            return {
+              find: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
+              getAll: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
+              getOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
+              findOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
+            };
+          } else {
+            return {
+              find: async () =>
+                descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
+              getAll: async () =>
+                descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
+              getOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
+              findOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
+            };
+          }
+        }
+      },
+    };
+  });
+
   vi.stubGlobal("fetch", mockFetch);
 
   addFetchMock("/api/auth/setup", {});

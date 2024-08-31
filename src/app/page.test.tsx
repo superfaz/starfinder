@@ -1,8 +1,11 @@
-
-import { beforeAll, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test, vi } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";
+
+vi.mock("@kinde-oss/kinde-auth-nextjs/server", () => ({
+  getKindeServerSession: () => ({}),
+}));
 
 describe("PageContent", () => {
   beforeAll(() => {
@@ -32,7 +35,7 @@ describe("PageAuthenticated", () => {
   });
 
   test("Page is live", async () => {
-    expect(screen.getByRole("heading", { level: 1, name: /Bienvenue à toi/ })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 3, name: /Personnages récents/ })).toBeDefined();
   });
 
   test("Page has link to create character", async () => {
