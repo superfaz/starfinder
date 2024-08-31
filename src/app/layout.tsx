@@ -1,5 +1,9 @@
-import { Metadata } from "next";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import React from "react";
+import { Metadata } from "next";
+import { LayoutAnonymous } from "./LayoutAnonymous";
+import { LayoutAuthenticated } from "./LayoutAuthenticated";
+
 import "./site.scss";
 
 export const metadata: Metadata = {
@@ -7,6 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const { isAuthenticated } = getKindeServerSession();
+  const isUserAuthenticated = await isAuthenticated();
+
   return (
     <html lang="fr" data-bs-theme="dark">
       <head>
@@ -30,7 +37,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <div className="d-none d-xxl-block">xxl</div>
           </div>
         )}
-        {children}
+        {isUserAuthenticated && <LayoutAuthenticated>{children}</LayoutAuthenticated>}
+        {!isUserAuthenticated && <LayoutAnonymous>{children}</LayoutAnonymous>}
       </body>
     </html>
   );
