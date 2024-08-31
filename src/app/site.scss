@@ -115,6 +115,17 @@ $sf-darkblue: #080f1b;
 }
 
 /**
+ * Override default navbar styles.
+ */
+.navbar {
+  background-color: $sf-darkblue;
+
+  .nav-link {
+    color: white;
+  }
+}
+
+/**
  * Extend bootstrap icons with an empty placeholder.
  */
 .bi-empty {
@@ -276,7 +287,7 @@ input[type="number"] {
   }
 }
 
-.nav-create {
+.navbar-create {
   width: auto;
   background-color: $sf-darkblue;
 

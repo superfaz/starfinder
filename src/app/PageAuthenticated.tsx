@@ -1,34 +1,48 @@
+"use client";
+
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavbarBrand from "react-bootstrap/NavbarBrand";
-import NavLink from "react-bootstrap/NavLink";
 import Row from "react-bootstrap/Row";
-import { NavbarCollapse, NavbarToggle } from "react-bootstrap";
+import { Button, Offcanvas } from "react-bootstrap";
 import AuthNavLink from "./AuthNavLink";
 import { Licenses } from "./Licenses";
 import { CreateCards } from "./CreateCards";
 import { CharacterVM } from "./edit/viewmodel";
 import { CharacterCard } from "./edit/PageContent";
+import { useState } from "react";
+import { Nav } from "./components";
 
 export function PageAuthenticated({ characters }: Readonly<{ characters: CharacterVM[] }>) {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <>
-      <Navbar expand="lg" bg="body-secondary" sticky="top">
+      <Navbar expand="lg" sticky="top">
         <Container>
-          <NavbarToggle aria-controls="navbar-authenticated" />
+          <Button variant="outline-secondary" onClick={handleShow}>
+            <i className="bi bi-three-dots-vertical"></i>
+          </Button>
           <NavbarBrand className="me-auto ms-2">monperso StarFinder</NavbarBrand>
-          <NavbarCollapse id="navbar-authenticated">
-            <Nav className="me-auto">
-              <NavLink href="/">Accueil</NavLink>
-            </Nav>
-          </NavbarCollapse>
           <Nav>
             <AuthNavLink />
           </Nav>
         </Container>
       </Navbar>
+      <Offcanvas show={show} onHide={handleClose} backdrop="static">
+        <Offcanvas.Header closeButton></Offcanvas.Header>
+        <Offcanvas.Body>
+          <Nav className="flex-column me-auto">
+            <Nav.Link active href="/">
+              Accueil
+            </Nav.Link>
+            <Nav.Link href="/edit">Vos personnages</Nav.Link>
+          </Nav>
+        </Offcanvas.Body>
+      </Offcanvas>
       <Container>
         <Row>
           <Col lg={8} className="mt-5">

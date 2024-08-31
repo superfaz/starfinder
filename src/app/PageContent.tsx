@@ -10,7 +10,7 @@ import { CreateCards } from "./CreateCards";
 export function PageContent() {
   return (
     <>
-      <Navbar bg="body-secondary" sticky="top">
+      <Navbar sticky="top">
         <Container>
           <NavbarBrand>monperso StarFinder</NavbarBrand>
           <a href="/api/auth/login?lang=fr" className="btn btn-primary">

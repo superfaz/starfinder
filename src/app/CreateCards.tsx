@@ -12,7 +12,7 @@ export function CreateCards() {
             <Card.Title>Création libre</Card.Title>
             <Card.Text>Créez votre personnage avec un maximum de choix et de possibilités.</Card.Text>
             <Link
-              href="/edit"
+              href="/create"
               className="mt-auto btn btn-outline-dark stretched-link text-light icon-link icon-link-hover"
             >
               Démarrer la création <i className="bi bi-chevron-right mb-1"></i>
@@ -31,7 +31,7 @@ export function CreateCards() {
               <em>(Non implémenté)</em>
             </Card.Text>
             <Link
-              href="/edit"
+              href="/create"
               className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
             >
               Démarrer la custo <i className="bi bi-chevron-right mb-1"></i>
@@ -51,7 +51,7 @@ export function CreateCards() {
               <em>(Non implémenté)</em>
             </Card.Text>
             <Link
-              href="/edit"
+              href="/create"
               className="disabled mt-auto btn btn-outline-primary stretched-link text-light icon-link icon-link-hover"
             >
               Sélection <i className="bi bi-chevron-right mb-1"></i>
