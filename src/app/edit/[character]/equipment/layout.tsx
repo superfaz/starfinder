@@ -41,10 +41,6 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
   const { id }: { id?: string } = useParams();
   const isList = id === undefined;
 
-  console.log("id", id);
-  console.log("useParams", useParams());
-  console.log("useParams", useParams);
-
   return (
     <>
       <Col xs={12} sm={6} md={4} lg={3} xl={2}>

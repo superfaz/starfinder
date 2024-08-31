@@ -83,9 +83,6 @@ export class CharacterBuilder {
     const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
     const avatars = await this.dataSource.get(DataSets.Avatar).getAll();
 
-    console.log("abilityScores", abilityScores);
-    console.log("avatars", avatars);
-
     if (this.character.race === raceId) {
       // No change
       return true;
