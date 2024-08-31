@@ -17,6 +17,7 @@ const flagDataTypeMap: Record<KindeFlagTypeCode, KindeFlagTypeValue> = {
   b: "boolean",
   i: "integer",
   s: "string",
+  j: "json",
 };
 
 type KindeStateData = Omit<

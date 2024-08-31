@@ -4,7 +4,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:sonarjs/recommended-legacy",
+    // "plugin:sonarjs/recommended-legacy",
     "next/core-web-vitals",
     "prettier",
   ],
@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     "@next/next/no-page-custom-font": "off",
     "tsdoc/syntax": "warn",
+    "sonarjs/different-types-comparison": "off",
   },
 };

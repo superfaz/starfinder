@@ -89,6 +89,7 @@ export function Profile() {
     }
 
     const names = selectedRace.names;
+    // eslint-disable-next-line sonarjs/pseudo-random
     const name = names[Math.floor(Math.random() * names.length)];
     dispatch(mutators.updateName(name));
   }

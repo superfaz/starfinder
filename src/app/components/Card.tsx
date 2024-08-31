@@ -18,7 +18,7 @@ function CardText({
   as = "p",
   className,
   ...props
-}: Readonly<{ children: ReactNode; as?: "div" | "p" | string; className?: string }>) {
+}: Readonly<{ children: ReactNode; as?: "div" | "p"; className?: string }>) {
   return React.createElement(as, { ...props, className: clsx("card-text", className) }, children);
 }
 
@@ -27,7 +27,7 @@ function CardTitle({
   as = "h5",
   className,
   ...props
-}: Readonly<{ children: ReactNode; as?: "div" | "h1" | "h2" | "h3" | "h4" | "h5" | string; className?: string }>) {
+}: Readonly<{ children: ReactNode; as?: "div" | "h1" | "h2" | "h3" | "h4" | "h5"; className?: string }>) {
   return React.createElement(as, { ...props, className: clsx("card-title", className) }, children);
 }
 
