@@ -873,7 +873,7 @@ function updateAbilityScoreImpl(character: Character, abilityScoreId: string, de
  * @returns The updated character
  */
 function updateSkillRankImpl(character: Character, skillId: string, delta: number): Character {
-  const currentRank = character.skillRanks[skillId];
+  const currentRank = character.skillRanks[skillId] as number | undefined;
   if (delta === 0 || (currentRank === undefined && delta <= 0)) {
     // No change
     return character;
@@ -882,7 +882,7 @@ function updateSkillRankImpl(character: Character, skillId: string, delta: numbe
   const newRank = (currentRank ?? 0) + delta;
   if (newRank <= 0) {
     // Remove the rank
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line sonarjs/sonar-no-unused-vars, @typescript-eslint/no-unused-vars
     const { [skillId]: _, ...skillRanks } = character.skillRanks;
     return {
       ...character,

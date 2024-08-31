@@ -35,7 +35,7 @@ export const appRouterSessionManager = (
           return jsonValue;
         }
         return item.value;
-      } catch (error) {
+      } catch {
         return item.value;
       }
     }

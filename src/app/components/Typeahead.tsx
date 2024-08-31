@@ -18,7 +18,7 @@ export default function Typeahead<T extends INamedModel>(
     renderItem?: (item: T) => ReactNode;
     style?: CSSProperties;
   }>
-): ReactNode {
+): JSX.Element {
   const filter = props.filter ?? defaultFilter;
   const options = useMemo(() => {
     return filter(props.options ?? [], props.value ?? "");

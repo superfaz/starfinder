@@ -19,12 +19,12 @@ export function PageContent({
   races,
   themes,
   classes,
-}: {
+}: Readonly<{
   books: Book[];
   races: IRaceEntry[];
   themes: IEntry[];
   classes: IEntry[];
-}) {
+}>) {
   const [state, setState] = useState<CreateData>({ name: "" });
   const [errors, setErrors] = useState<CreateDataErrors>({});
   const [loading, setLoading] = useState(false);

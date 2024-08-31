@@ -40,9 +40,9 @@ type KindeStateData = Omit<
 > & { featureFlags: Record<string, KindeFlagRaw> };
 
 export const useKindeBrowserClient = (
-  apiPath: string = process.env.NEXT_PUBLIC_KINDE_AUTH_API_PATH || process.env.KINDE_AUTH_API_PATH || "/api/auth",
-  isDebugMode: boolean = process.env.NEXT_PUBLIC_KINDE_AUTH_DEBUG_MODE === "true" ||
-    process.env.KINDE_AUTH_DEBUG_MODE === "true" ||
+  apiPath: string = process.env.NEXT_PUBLIC_KINDE_AUTH_API_PATH ?? process.env.KINDE_AUTH_API_PATH ?? "/api/auth",
+  isDebugMode: boolean = process.env.NEXT_PUBLIC_KINDE_AUTH_DEBUG_MODE === "true" ??
+    process.env.KINDE_AUTH_DEBUG_MODE === "true" ??
     false
 ): KindeState => {
   const [state, setState] = useState<KindeStateData>({
@@ -89,7 +89,7 @@ export const useKindeBrowserClient = (
       throw Error(`Flag ${code} was not found, and no default value has been provided`);
     }
 
-    if (flag && flag.t && flagType !== flag.t) {
+    if (flag?.t && flagType !== flag.t) {
       throw Error(`Flag ${code} is of type ${flagDataTypeMap[flag.t]} - requested type ${flagDataTypeMap[flagType]}`);
     }
 
@@ -121,7 +121,7 @@ export const useKindeBrowserClient = (
       if (isDebugMode) {
         console.error(err);
       }
-      err;
+      throw err;
     }
   };
 
@@ -133,7 +133,7 @@ export const useKindeBrowserClient = (
       if (isDebugMode) {
         console.error(err);
       }
-      err;
+      throw err;
     }
   };
 

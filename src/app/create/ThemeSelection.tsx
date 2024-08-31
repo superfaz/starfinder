@@ -9,13 +9,13 @@ export function ThemeSelection({
   value,
   onChange,
   isInvalid,
-}: {
+}: Readonly<{
   books: Book[];
   themes: IEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;
-}) {
+}>) {
   const selectedTheme = themes.find((r) => r.id === value);
 
   return (

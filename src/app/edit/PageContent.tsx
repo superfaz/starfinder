@@ -10,7 +10,7 @@ import { Badge, Card } from "app/components";
 import { CharacterVM } from "./viewmodel";
 import { deleteCharacter } from "./actions";
 
-export function CharacterCard({ character }: { character: CharacterVM }) {
+export function CharacterCard({ character }: Readonly<{ character: CharacterVM }>) {
   const [show, setShow] = useState(false);
 
   function handleDelete() {
@@ -80,7 +80,7 @@ export function CharacterCard({ character }: { character: CharacterVM }) {
   );
 }
 
-export function PageContent({ characters }: { characters: CharacterVM[] }) {
+export function PageContent({ characters }: Readonly<{ characters: CharacterVM[] }>) {
   return (
     <Container>
       <h2>Vos personnages</h2>

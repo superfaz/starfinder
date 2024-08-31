@@ -38,7 +38,7 @@ function EquipmentEdited({ id }: Readonly<{ id: string }>) {
 }
 
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const { id }: { id: string } = useParams();
+  const { id }: { id?: string } = useParams();
   const isList = id === undefined;
 
   console.log("id", id);

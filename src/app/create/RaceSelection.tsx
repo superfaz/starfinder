@@ -15,13 +15,13 @@ export function RaceSelection({
   value,
   onChange,
   isInvalid,
-}: {
+}: Readonly<{
   books: Book[];
   races: IRaceEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;
-}) {
+}>) {
   const selectedRace = races.find((r) => r.id === value);
   const groupedRaces = groupBy(races, (r) => r.category);
 

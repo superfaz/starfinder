@@ -1,5 +1,5 @@
 
-import { beforeAll, describe, expect, test, vi } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";

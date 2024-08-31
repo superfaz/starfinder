@@ -13,7 +13,7 @@ export function PageContent({ id }: Readonly<{ id: string }>) {
   let descriptor;
   try {
     descriptor = presenter.getEquipment(id);
-  } catch (e) {
+  } catch {
     return null;
   }
 

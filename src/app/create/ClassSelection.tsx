@@ -9,13 +9,13 @@ export function ClassSelection({
   value,
   onChange,
   isInvalid,
-}: {
+}: Readonly<{
   books: Book[];
   classes: IEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;
-}) {
+}>) {
   const selectedClass = classes.find((r) => r.id === value);
 
   return (

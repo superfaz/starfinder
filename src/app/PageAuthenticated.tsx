@@ -12,7 +12,7 @@ import { CreateCards } from "./CreateCards";
 import { CharacterVM } from "./edit/viewmodel";
 import { CharacterCard } from "./edit/PageContent";
 
-export function PageAuthenticated({ characters }: { characters: CharacterVM[] }) {
+export function PageAuthenticated({ characters }: Readonly<{ characters: CharacterVM[] }>) {
   return (
     <>
       <Navbar expand="lg" bg="body-secondary" sticky="top">
