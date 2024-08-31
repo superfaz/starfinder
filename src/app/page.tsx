@@ -13,7 +13,7 @@ export default async function Page() {
     const dataSource = new DataSource();
     const characters = await toViewModel(
       dataSource,
-      await dataSource.get(DataSets.Characters).find({ userId: user.id })
+      await dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3)
     );
     return <PageAuthenticated characters={characters} />;
   } else {

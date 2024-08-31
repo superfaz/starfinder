@@ -16,27 +16,35 @@ import { unstable_cache } from "next/cache";
 async function findCore<T extends IModel>(
   database: Db,
   descriptor: IDescriptor<T>,
-  query: Filter<T> | undefined
+  query: Filter<T> | undefined,
+  sort?: Sort,
+  limit?: number
 ): Promise<T[]> {
-  let sort: Sort = 1;
-  switch (descriptor.type) {
-    case "simple":
-      sort = {};
-      break;
-    case "named":
-      sort = "name";
-      break;
-    case "ordered":
-      sort = "order";
-      break;
-    default:
-      throw new Error("Method not implemented.");
+  if (sort === undefined) {
+    switch (descriptor.type) {
+      case "simple":
+        sort = {};
+        break;
+      case "named":
+        sort = "name";
+        break;
+      case "ordered":
+        sort = "order";
+        break;
+      default:
+        throw new Error("Method not implemented.");
+    }
   }
 
-  const preparedQuery = database
+  let preparedQuery = database
     .collection(descriptor.name)
     .find(query as Filter<Document>)
     .sort(sort);
+
+  if (limit !== undefined) {
+    preparedQuery = preparedQuery.limit(limit);
+  }
+
   const results = await preparedQuery.toArray();
   try {
     return descriptor.schema.array().parse(results);
@@ -144,11 +152,10 @@ class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDyna
   }
 
   async delete(idOrQuery: string | Filter<T>): Promise<void> {
-    let result:DeleteResult;
+    let result: DeleteResult;
     if (typeof idOrQuery === "string") {
-      result = await this.database.collection(this.descriptor.name).deleteOne({ id:idOrQuery });
-    }
-    else {
+      result = await this.database.collection(this.descriptor.name).deleteOne({ id: idOrQuery });
+    } else {
       result = await this.database.collection(this.descriptor.name).deleteOne(idOrQuery as Filter<Document>);
     }
 

@@ -32,14 +32,18 @@ export function PageAuthenticated({ characters }: Readonly<{ characters: Charact
       <Container>
         <Row>
           <Col lg={8} className="mt-5">
-            <h3>Personnages récents</h3>
-            <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 mb-5">
-              {characters.map((character) => (
-                <Col key={character.id} className="mt-3">
-                  <CharacterCard character={character} />
-                </Col>
-              ))}
-            </Row>
+            {characters.length > 0 && (
+              <>
+                <h3>Personnages récents</h3>
+                <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 mb-5">
+                  {characters.map((character) => (
+                    <Col key={character.id} className="mt-3">
+                      <CharacterCard character={character} />
+                    </Col>
+                  ))}
+                </Row>
+              </>
+            )}
             <h3>Créer</h3>
             <CreateCards />
           </Col>

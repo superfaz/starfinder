@@ -10,6 +10,7 @@ function optional<I extends ZodTypeAny>(schema: I) {
 
 export const CharacterSchema = IModelSchema.extend({
   userId: z.string().trim().min(1),
+  updatedAt: z.string().datetime(),
   version: z.number(),
   level: z.number(),
   race: z.string(),
@@ -46,7 +47,7 @@ export function isCharacter(obj: unknown): obj is Character {
   return CharacterSchema.safeParse(obj).success;
 }
 
-export const EmptyCharacter: Readonly<Omit<Character, "id" | "userId">> = {
+export const EmptyCharacter: Readonly<Omit<Character, "id" | "userId" | "updatedAt">> = {
   version: 0,
   level: 1,
   race: "",
