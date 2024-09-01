@@ -12,7 +12,7 @@ export function PageAuthenticated({ characters }: Readonly<{ characters: Charact
   return (
     <Container>
       <Row>
-        <Col lg={8} className="mt-5">
+        <Col lg={8}>
           {characters.length > 0 && (
             <>
               <Stack direction="horizontal" gap={3}>
@@ -33,7 +33,7 @@ export function PageAuthenticated({ characters }: Readonly<{ characters: Charact
           <h3>Créer</h3>
           <CreateCards />
         </Col>
-        <Col lg={4} className="mt-5">
+        <Col lg={4} className="mt-5 mt-lg-0">
           <Licenses />
         </Col>
       </Row>

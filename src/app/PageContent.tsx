@@ -8,12 +8,12 @@ import { CreateCards } from "./CreateCards";
 export function PageContent() {
   return (
     <Container>
-      <h1 className="display-5">
+      <h1 className="display-5 mb-5">
         Bienvenue à toi,
         <br className="d-block d-lg-none" /> Explorateur des étoiles !
       </h1>
       <Row>
-        <Col lg={8} className="mt-5">
+        <Col lg={8}>
           <h3>À propos</h3>
           <p className="lead mb-5">
             Ce site est un outil de gestion de personnages pour le jeu de rôle <strong>Starfinder</strong>. Il a été
@@ -21,7 +21,7 @@ export function PageContent() {
           </p>
           <CreateCards />
         </Col>
-        <Col lg={4} className="mt-5">
+        <Col lg={4} className="mt-5 mt-lg-0">
           <Licenses />
           <hr />
           <Link href="https://github.com/superfaz/starfinder">

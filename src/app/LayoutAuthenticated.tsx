@@ -17,7 +17,7 @@ export function LayoutAuthenticated({ children }: Readonly<{ children: React.Rea
 
   return (
     <>
-      <Navbar expand="lg" sticky="top">
+      <Navbar expand="lg" sticky="top" className="mb-4">
         <Container>
           <Button variant="outline-secondary" onClick={handleShow}>
             <i className="bi bi-three-dots-vertical"></i>
