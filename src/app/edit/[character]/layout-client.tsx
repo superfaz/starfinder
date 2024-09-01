@@ -116,7 +116,7 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
   return (
     <>
       <div className="sticky-top">
-        <Navbar expand="lg" className="nav-create p-lg-0" expanded={expanded} onToggle={setExpanded}>
+        <Navbar expand="lg" className="navbar-create p-lg-0" expanded={expanded} onToggle={setExpanded}>
           <Container>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Brand className="d-block d-lg-none">{active?.title}</Navbar.Brand>
