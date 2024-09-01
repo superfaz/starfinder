@@ -287,6 +287,23 @@ input[type="number"] {
   }
 }
 
+.nav {
+  --bs-nav-link-color: var(--bs-body-color);
+  --bs-nav-link-hover-color: var(--bs-body-color);
+  --bs-nav-link-disabled-color: rgba(222, 226, 230, 0.5);
+  gap: 2pt;
+
+  .nav-link {
+    &.active {
+      background-color: $sf-darkred;
+    }
+
+    &:hover {
+      background-color: $sf-red;
+    }
+  }
+}
+
 .navbar-create {
   width: auto;
   background-color: $sf-darkblue;

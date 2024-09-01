@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -9,6 +10,7 @@ import AuthNavLink from "./AuthNavLink";
 import { Nav } from "./components";
 
 export function LayoutAuthenticated({ children }: Readonly<{ children: React.ReactNode }>) {
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -30,10 +32,15 @@ export function LayoutAuthenticated({ children }: Readonly<{ children: React.Rea
         <Offcanvas.Header closeButton></Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column me-auto">
-            <Nav.Link active href="/">
+            <Nav.Link href="/" active={pathname === "/"} onClick={handleClose}>
               Accueil
             </Nav.Link>
-            <Nav.Link href="/edit">Vos personnages</Nav.Link>
+            <Nav.Link href="/edit" active={pathname.startsWith("/edit")} onClick={handleClose}>
+              Vos personnages
+            </Nav.Link>
+            <Nav.Link href="/create" active={pathname.startsWith("/create")} onClick={handleClose}>
+              <i className="bi bi-plus"></i> Création de personnage
+            </Nav.Link>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
