@@ -10,7 +10,10 @@ import { Badge, Card } from "app/components";
 import { CharacterVM } from "./viewmodel";
 import { deleteCharacter } from "./actions";
 
-export function CharacterCard({ character }: Readonly<{ character: CharacterVM }>) {
+export function CharacterCard({
+  character,
+  noAction = false,
+}: Readonly<{ character: CharacterVM; noAction?: boolean }>) {
   const [show, setShow] = useState(false);
 
   function handleDelete() {
@@ -32,7 +35,7 @@ export function CharacterCard({ character }: Readonly<{ character: CharacterVM }
         <Col xs={3}>
           {character.avatar && (
             <picture>
-              <img className="img-fluid rounded-start m-1" src={character.avatar} alt="" />
+              <img className="img-fluid rounded-start m-1" src={"/" + character.avatar} alt="" />
             </picture>
           )}
         </Col>
@@ -48,34 +51,36 @@ export function CharacterCard({ character }: Readonly<{ character: CharacterVM }
           </Card.Body>
         </Col>
       </Row>
-      <Card.Footer className="d-flex">
-        <Link className="card-link btn btn-primary flex-fill" href={`/edit/${character.id}`}>
-          Modifier
-        </Link>
-        <ButtonGroup className="ms-2">
-          {!show && (
-            <Button variant="danger" aria-label="Supprimer" onClick={handleDelete}>
-              <i className="bi bi-trash"></i>
-            </Button>
-          )}
-          {show && (
-            <>
-              <Button
-                variant="outline-danger"
-                className="position-relative"
-                aria-label="Annuler"
-                onClick={handleCancel}
-              >
-                <i className="bi bi-trash position-absolute"></i>
-                <i className="bi bi-slash-lg"></i>
+      {!noAction && (
+        <Card.Footer className="d-flex">
+          <Link className="card-link btn btn-primary flex-fill" href={`/edit/${character.id}`}>
+            Modifier
+          </Link>
+          <ButtonGroup className="ms-2">
+            {!show && (
+              <Button variant="danger" aria-label="Supprimer" onClick={handleDelete}>
+                <i className="bi bi-trash"></i>
               </Button>
-              <Button variant="danger" aria-label="Confirmer la suppression" onClick={handleConfirm}>
-                Confirmer
-              </Button>
-            </>
-          )}
-        </ButtonGroup>
-      </Card.Footer>
+            )}
+            {show && (
+              <>
+                <Button
+                  variant="outline-danger"
+                  className="position-relative"
+                  aria-label="Annuler"
+                  onClick={handleCancel}
+                >
+                  <i className="bi bi-trash position-absolute"></i>
+                  <i className="bi bi-slash-lg"></i>
+                </Button>
+                <Button variant="danger" aria-label="Confirmer la suppression" onClick={handleConfirm}>
+                  Confirmer
+                </Button>
+              </>
+            )}
+          </ButtonGroup>
+        </Card.Footer>
+      )}
     </Card>
   );
 }
