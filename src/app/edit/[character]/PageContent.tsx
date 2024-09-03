@@ -1,20 +1,21 @@
-import { Character } from "model";
+import Link from "next/link";
 import { Container, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Stack from "react-bootstrap/Stack";
-import { CharacterCard } from "../PageContent";
-import { toViewModel } from "../viewmodel";
-import { DataSource, type IDataSource } from "data";
 import { Badge, Card } from "app/components";
-import Link from "next/link";
+import { DataSource, type IDataSource } from "data";
+import { Character } from "model";
+import { ViewBuilder } from "view";
+import { CharacterCard } from "../PageContent";
 
 export async function PageContent({ character }: Readonly<{ character: Character }>) {
   const dataSource: IDataSource = new DataSource();
+  const builder = new ViewBuilder(dataSource);
   return (
     <Stack direction="vertical" gap={2}>
       <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <Col className="mt-3">
-          <CharacterCard character={await toViewModel(dataSource, character)} noAction />
+          <CharacterCard character={await builder.createCharacter(character)} noAction />
         </Col>
       </Row>
       <h3 className="mt-5">Affiliations</h3>
@@ -37,7 +38,10 @@ export async function PageContent({ character }: Readonly<{ character: Character
             <Card.Footer className="align-items-start">
               <Row>
                 <Col xs="auto">
-                  <Link href={`/edit/${character.id}/race`} className="btn btn-primary stretched-link icon-link icon-link-hover">
+                  <Link
+                    href={`/edit/${character.id}/race`}
+                    className="btn btn-primary stretched-link icon-link icon-link-hover"
+                  >
                     Modifier <i className="bi bi-chevron-right mb-1 me-auto"></i>
                   </Link>
                 </Col>

@@ -2,18 +2,19 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Button, ButtonGroup } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { Badge, Card } from "app/components";
-import { CharacterVM } from "./viewmodel";
+import type { CharacterView } from "view";
 import { deleteCharacter } from "./actions";
 
 export function CharacterCard({
   character,
   noAction = false,
-}: Readonly<{ character: CharacterVM; noAction?: boolean }>) {
+}: Readonly<{ character: CharacterView; noAction?: boolean }>) {
   const [show, setShow] = useState(false);
 
   function handleDelete() {
@@ -85,7 +86,7 @@ export function CharacterCard({
   );
 }
 
-export function PageContent({ characters }: Readonly<{ characters: CharacterVM[] }>) {
+export function PageContent({ characters }: Readonly<{ characters: CharacterView[] }>) {
   return (
     <Container>
       <h2>Vos personnages</h2>

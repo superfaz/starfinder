@@ -2,13 +2,13 @@ import Link from "next/link";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
+import type { CharacterView } from "view";
 import { Licenses } from "./Licenses";
 import { CreateCards } from "./CreateCards";
-import { CharacterVM } from "./edit/viewmodel";
 import { CharacterCard } from "./edit/PageContent";
-import { Stack } from "react-bootstrap";
 
-export function PageAuthenticated({ characters }: Readonly<{ characters: CharacterVM[] }>) {
+export function PageAuthenticated({ characters }: Readonly<{ characters: CharacterView[] }>) {
   return (
     <Container>
       <Row>

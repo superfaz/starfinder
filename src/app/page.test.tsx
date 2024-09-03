@@ -1,9 +1,8 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
+import type { CharacterView } from "view";
 import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";
-import { createCharacter } from "./edit/[character]/helpers-test";
-import { CharacterVM } from "./edit/viewmodel";
 
 vi.mock("@kinde-oss/kinde-auth-nextjs/server", () => ({
   getKindeServerSession: () => ({}),
@@ -62,7 +61,7 @@ describe("PageAuthenticated - new user", () => {
 describe("PageAuthenticated - existing user", () => {
   beforeAll(() => {
     cleanup();
-    const character: CharacterVM = { id: "1", name: "Test" };
+    const character: CharacterView = { id: "1", name: "Test" };
     render(<PageAuthenticated characters={[character]} />);
   });
 

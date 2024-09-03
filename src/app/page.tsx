@@ -1,8 +1,8 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { DataSets, DataSource } from "data";
+import { ViewBuilder } from "view";
 import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";
-import { toViewModel } from "./edit/viewmodel";
 
 export default async function Page() {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -11,8 +11,9 @@ export default async function Page() {
 
   if (isUserAuthenticated) {
     const dataSource = new DataSource();
-    const characters = await toViewModel(
-      dataSource,
+    const builder = new ViewBuilder(dataSource);
+
+    const characters = await builder.createCharacter(
       await dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3)
     );
     return <PageAuthenticated characters={characters} />;
