@@ -5,12 +5,16 @@ function Card({ children, className, ...props }: Readonly<{ children: ReactNode;
   return React.createElement("div", { ...props, className: clsx("card", className) }, children);
 }
 
-function CardBody({ children, className, ...props }: Readonly<{ children: ReactNode; className?: string }>) {
+function CardBody({ children, className, ...props }: Readonly<{ children?: ReactNode; className?: string }>) {
   return React.createElement("div", { ...props, className: clsx("card-body", className) }, children);
 }
 
 function CardFooter({ children, className, ...props }: Readonly<{ children: ReactNode; className?: string }>) {
   return React.createElement("div", { ...props, className: clsx("card-footer", className) }, children);
+}
+
+function CardHeader({ children, className, ...props }: Readonly<{ children: ReactNode; className?: string }>) {
+  return React.createElement("div", { ...props, className: clsx("card-header", className) }, children);
 }
 
 function CardText({
@@ -33,6 +37,7 @@ function CardTitle({
 
 Card.Body = CardBody;
 Card.Footer = CardFooter;
+Card.Header = CardHeader;
 Card.Text = CardText;
 Card.Title = CardTitle;
 

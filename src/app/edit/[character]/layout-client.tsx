@@ -30,7 +30,7 @@ export default function LayoutClient({
 }>) {
   return (
     <StoreProvider data={data} character={character} classesDetails={classesDetails}>
-      <LayoutClientPresenter debug={debug}>{children}</LayoutClientPresenter>
+      <Container>{children}</Container>
     </StoreProvider>
   );
 }

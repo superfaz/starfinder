@@ -181,6 +181,10 @@ h1,
     border-bottom: none;
   }
 
+  > .card-body:first-child {
+    border-top: none;
+  }
+
   .card-body {
     @extend .vstack;
     @extend .gap-2;
@@ -193,6 +197,10 @@ h1,
     p {
       margin-bottom: 0;
     }
+  }
+
+  &:has(.stretched-link:not(.disabled)):hover {
+    border-color: var(--bs-primary);
   }
 }
 
