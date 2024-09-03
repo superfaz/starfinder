@@ -1,18 +1,9 @@
 import { DataSets } from "data";
 import type { Character } from "model";
+import { CharacterView } from "./interfaces";
 import type { ViewBuilder } from "./ViewBuilder";
 
 import "server-only";
-
-export interface CharacterView {
-  id: string;
-  name: string;
-  avatar?: string;
-  race?: string;
-  theme?: string;
-  class?: string;
-  level?: number;
-}
 
 export async function createCharacter(this: ViewBuilder, characters: Character[]): Promise<CharacterView[]>;
 export async function createCharacter(this: ViewBuilder, characters: Character): Promise<CharacterView>;

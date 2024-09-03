@@ -13,13 +13,8 @@ export const RaceModifierSchema = z.discriminatedUnion("type", [
 
 export type RaceModifier = z.infer<typeof RaceModifierSchema>;
 
-export const IRaceEntrySchema = IEntrySchema.extend({
+export const RaceSchema = IEntrySchema.extend({
   category: z.enum(["core", "legacy", "other"]),
-});
-
-export type IRaceEntry = z.infer<typeof IRaceEntrySchema>;
-
-export const RaceSchema = IRaceEntrySchema.extend({
   modifiers: z.array(RaceModifierSchema),
   variants: z.array(VariantSchema),
   names: z.array(z.string()),

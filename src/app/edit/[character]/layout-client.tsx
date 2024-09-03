@@ -1,23 +1,13 @@
 "use client";
 
-import clsx from "clsx";
-import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import Row from "react-bootstrap/Row";
-import AuthMenu from "app/AuthMenu";
-import { Nav } from "app/components/Nav";
 import { IClientDataSet } from "data";
 import StoreProvider from "logic/StoreProvider";
 import { Character, IModel } from "model";
-import { useCharacterPresenter } from "./helpers-client";
 
 export default function LayoutClient({
   data,
-  debug,
   character,
   classesDetails,
   children,
@@ -35,6 +25,7 @@ export default function LayoutClient({
   );
 }
 
+/*
 interface MenuItem {
   title: string;
   href: string;
@@ -167,3 +158,4 @@ function LayoutClientPresenter({ debug, children }: Readonly<{ debug: boolean; c
     </>
   );
 }
+*/

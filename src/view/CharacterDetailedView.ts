@@ -1,18 +1,9 @@
 import { DataSets } from "data";
 import type { Character } from "model";
+import { CharacterDetailedView } from "./interfaces";
 import type { ViewBuilder } from "./ViewBuilder";
 
 import "server-only";
-
-export interface CharacterDetailedView {
-  id: string;
-  name: string;
-  avatar?: string;
-  race?: string;
-  theme?: string;
-  class?: string;
-  level?: number;
-}
 
 export async function createCharacterDetailed(this: ViewBuilder, character: Character): Promise<CharacterDetailedView> {
   return {

@@ -1,6 +1,6 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { DataSets, DataSource } from "data";
-import { ViewBuilder } from "view";
+import { ViewBuilder } from "view/server";
 import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";
 

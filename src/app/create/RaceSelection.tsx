@@ -1,13 +1,9 @@
 import { groupBy } from "app/helpers";
-import type { Book, IRaceEntry } from "model";
+import type { Book } from "model";
 import type { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
 import { ReferenceComponent } from "./ReferenceComponent";
-
-const labels = {
-  core: "Standard",
-  legacy: "Héritage",
-};
+import { RaceEntry } from "view";
 
 export function RaceSelection({
   books,
@@ -17,7 +13,7 @@ export function RaceSelection({
   isInvalid,
 }: Readonly<{
   books: Book[];
-  races: IRaceEntry[];
+  races: RaceEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;
@@ -31,7 +27,7 @@ export function RaceSelection({
         <Form.Select name="race" value={value} onChange={onChange} isInvalid={isInvalid} aria-invalid={isInvalid}>
           {value === "" && <option value=""></option>}
           {Object.entries(groupedRaces).map(([category, races]) => (
-            <optgroup key={category} label={labels[category as "core" | "legacy"]}>
+            <optgroup key={category} label={category}>
               {races.map((race) => (
                 <option key={race.id} value={race.id}>
                   {race.name}

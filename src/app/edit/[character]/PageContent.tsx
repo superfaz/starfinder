@@ -5,7 +5,7 @@ import Stack from "react-bootstrap/Stack";
 import { Badge, Card } from "app/components";
 import { DataSource, type IDataSource } from "data";
 import { Character } from "model";
-import { ViewBuilder } from "view";
+import { ViewBuilder } from "view/server";
 import { CharacterCard } from "../PageContent";
 
 export async function PageContent({ character }: Readonly<{ character: Character }>) {

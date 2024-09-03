@@ -11,7 +11,7 @@ import type {
 } from "./interfaces";
 import { unstable_cache } from "next/cache";
 
-// import "server-only";
+import "server-only";
 
 async function findCore<T extends IModel>(
   database: Db,
