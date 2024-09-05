@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DataSets, DataSource, type IDataSource } from "data";
 import { IdSchema } from "model";
+import { ViewBuilder } from "view/server";
 import { isSecure } from "./helpers-server";
 import { PageContent } from "./PageContent";
 
@@ -34,6 +35,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
     }
 
     // Render the page
-    return <PageContent character={characters[0]} />;
+    const builder = new ViewBuilder();
+    return <PageContent character={await builder.createCharacterDetailed(characters[0])} />;
   }
 }

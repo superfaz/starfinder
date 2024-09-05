@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { IEntrySchema } from "model";
+import { type IEntry, IEntrySchema } from "model";
 
 export interface CharacterView {
   id: string;
@@ -15,9 +15,9 @@ export interface CharacterDetailedView {
   id: string;
   name: string;
   avatar?: string;
-  race?: string;
-  theme?: string;
-  class?: string;
+  race?: IEntry;
+  theme?: IEntry;
+  class?: IEntry;
   level?: number;
 }
 

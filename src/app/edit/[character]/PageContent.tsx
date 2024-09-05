@@ -1,110 +1,91 @@
+import clsx from "clsx";
 import Link from "next/link";
-import { Container, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { Badge, Card } from "app/components";
-import { DataSource, type IDataSource } from "data";
-import { Character } from "model";
-import { ViewBuilder } from "view/server";
+import { Card } from "app/components";
+import { CharacterDetailedView, convert } from "view/server";
 import { CharacterCard } from "../PageContent";
 
-export async function PageContent({ character }: Readonly<{ character: Character }>) {
-  const dataSource: IDataSource = new DataSource();
-  const builder = new ViewBuilder(dataSource);
+function Block({
+  id,
+  code,
+  title,
+  entry,
+  alert,
+  disabled = false,
+}: Readonly<{
+  id: string;
+  code: string;
+  title: string;
+  entry?: { name: string; description: string };
+  alert?: string;
+  disabled?: boolean;
+}>) {
+  return (
+    <Stack direction="vertical" gap={2} data-testid={code}>
+      <h3 className="mt-4">{title}</h3>
+      <Card>
+        {entry && (
+          <Card.Body>
+            <Card.Title>{entry.name}</Card.Title>
+            <Card.Text className="text-muted">{entry.description}</Card.Text>
+          </Card.Body>
+        )}
+        {!entry && (
+          <Card.Body>
+            <Card.Text className="fst-italic">Aucune sélection</Card.Text>
+          </Card.Body>
+        )}
+        {alert && (
+          <Card.Body className="d-flex flex-row align-items-center text-warning-emphasis bg-warning-subtle">
+            <i
+              className="bi display-5 bi-exclamation-diamond flex-shrink-0 me-2"
+              role="img"
+              aria-label="Attention:"
+            ></i>
+            <div>{alert}</div>
+          </Card.Body>
+        )}
+        <Card.Footer>
+          <Link
+            href={`/edit/${id}/${code}`}
+            className={clsx("btn btn-primary icon-link stretched-link icon-link-hover", { disabled })}
+          >
+            Configurer <i className="bi bi-chevron-right mb-1 me-auto"></i>
+          </Link>
+        </Card.Footer>
+      </Card>
+    </Stack>
+  );
+}
+
+export async function PageContent({ character }: Readonly<{ character: CharacterDetailedView }>) {
   return (
     <Stack direction="vertical" gap={2}>
       <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <Col className="mt-3">
-          <CharacterCard character={await builder.createCharacter(character)} noAction />
+          <CharacterCard character={convert(character)} noAction />
         </Col>
       </Row>
-      <h3 className="mt-5">Affiliations</h3>
       <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <Col className="mb-3">
-          <Container className="mb-2">
-            <Row>
-              <Col xs="auto" className="display-5 my-auto text-warning">
-                <i className="bi bi-exclamation-diamond"></i>
-              </Col>
-              <Col className="text-warning">Vous devez choisir la caractéristique principale de votre personnage.</Col>
-            </Row>
-          </Container>
-          <Card data-testid="race">
-            <Card.Header>
-              <Badge bg="primary">Race</Badge>
-              <div className="d-inline-block ms-2">Humains</div>
-            </Card.Header>
-            <Card.Body></Card.Body>
-            <Card.Footer className="align-items-start">
-              <Row>
-                <Col xs="auto">
-                  <Link
-                    href={`/edit/${character.id}/race`}
-                    className="btn btn-primary stretched-link icon-link icon-link-hover"
-                  >
-                    Modifier <i className="bi bi-chevron-right mb-1 me-auto"></i>
-                  </Link>
-                </Col>
-                <Col className="small text-muted">
-                  Modifiez la race de votre personnage, sélectionnez une variante ou choisissez des traits alternatifs.
-                </Col>
-              </Row>
-            </Card.Footer>
-          </Card>
+          <Block
+            id={character.id}
+            code="race"
+            title="Race"
+            entry={character.race}
+            alert="Vous devez choisir la caractéristique principale de votre personnage."
+          />
         </Col>
         <Col className="mb-3">
-          <Card data-testid="theme">
-            <Card.Header>
-              <Badge bg="primary">Thème</Badge>
-              <div className="d-inline-block ms-2">Humains</div>
-            </Card.Header>
-            <Card.Body></Card.Body>
-            <Card.Body>
-              <Row>
-                <Col xs="auto" className="display-5 my-auto text-warning">
-                  <i className="bi bi-exclamation-diamond"></i>
-                </Col>
-                <Col className="text-warning">
-                  Vous devez choisir la caractéristique principale de votre personnage.
-                </Col>
-              </Row>
-            </Card.Body>
-            <Card.Footer className="align-items-start">
-              <Row>
-                <Col xs="auto">
-                  <Link href={`/edit/${character.id}/theme`} className="btn btn-primary stretched-link">
-                    Modifier <i className="bi bi-chevron-right mb-1 me-auto"></i>
-                  </Link>
-                </Col>
-                <Col className="small text-muted">
-                  Modifiez la race de votre personnage, sélectionnez une variante ou choisissez des traits alternatifs.
-                </Col>
-              </Row>
-            </Card.Footer>
-          </Card>
+          <Block id={character.id} code="theme" title="Thème" entry={character.theme} disabled={!character.race} />
         </Col>
         <Col className="mb-3">
-          <Card data-testid="class">
-            <Card.Header>
-              <Badge bg="primary">Classe</Badge>
-              <div className="d-inline-block ms-2">Humains</div>
-            </Card.Header>
-            <Card.Body></Card.Body>
-            <Card.Footer className="align-items-start">
-              <Row>
-                <Col xs="auto">
-                  <Link href={`/edit/${character.id}/class`} className="btn btn-primary stretched-link">
-                    Modifier <i className="bi bi-chevron-right mb-1 me-auto"></i>
-                  </Link>
-                </Col>
-                <Col className="small text-muted">
-                  Modifiez la race de votre personnage, sélectionnez une variante ou choisissez des traits alternatifs.
-                </Col>
-              </Row>
-            </Card.Footer>
-          </Card>
+          <Block id={character.id} code="class" title="Classe" entry={character.class} disabled={!character.theme} />
         </Col>
       </Row>
+
       <h3 className="mt-5">Détails</h3>
       <h3 className="mt-5">Equipement</h3>
 

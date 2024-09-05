@@ -1,6 +1,6 @@
 import { DataSets } from "data";
 import type { Character } from "model";
-import { CharacterView } from "./interfaces";
+import { CharacterView } from "../interfaces";
 import type { ViewBuilder } from "./ViewBuilder";
 
 import "server-only";
