@@ -1,7 +1,7 @@
 import { cleanup, screen, waitFor, within } from "@testing-library/react";
-import { createCharacter, renderWithData } from "app/(edit)/edit/[character]/helpers-test";
 import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import { EquipmentDescriptor } from "model";
+import { createCharacter, renderWithData } from "../../helpers-test";
 import Layout from "../layout";
 import { PageContent } from "./PageContent";
 

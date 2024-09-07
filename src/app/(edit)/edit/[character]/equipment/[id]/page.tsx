@@ -1,4 +1,4 @@
-import { isSecure } from "../../helpers-server";
+import { isSecure } from "app/helpers-server";
 import { PageContent } from "./PageContent";
 
 export default async function Page({ params }: Readonly<{ params: { character: string; id: string } }>) {

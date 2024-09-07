@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
-import { isSecure } from "../helpers-server";
+import { isSecure } from "app/helpers-server";
 import { PageClient } from "./PageClient";
 
 export const metadata: Metadata = {

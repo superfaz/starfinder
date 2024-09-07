@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { DataSets, DataSource, type IDataSource } from "data";
 import { IdSchema } from "model";
 import { ViewBuilder } from "view/server";
-import { isSecure } from "./helpers-server";
+import { isSecure } from "app/helpers-server";
 import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
