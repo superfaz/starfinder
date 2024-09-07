@@ -31,32 +31,32 @@ import {
 } from "model";
 import { LayoutTest } from "./layout-test";
 
-import abilityScores from "../../../../mocks/ability-scores.json";
-import alignments from "../../../../mocks/alignments.json";
-import armorTypes from "../../../../mocks/armor-types.json";
-import avatars from "../../../../mocks/avatars.json";
-import bodyParts from "../../../../mocks/body-parts.json";
-import bonusCategories from "../../../../mocks/bonus-categories.json";
-import books from "../../../../mocks/books.json";
-import classes from "../../../../mocks/classes.json";
-import criticalHitEffects from "../../../../mocks/critical-hit-effects.json";
-import damageTypes from "../../../../mocks/damage-types.json";
-import equipmentMaterials from "../../../../mocks/equipment-material.json";
-import feats from "../../../../mocks/feats.json";
-import professions from "../../../../mocks/professions.json";
-import races from "../../../../mocks/races.json";
-import spells from "../../../../mocks/spells.json";
-import themes from "../../../../mocks/themes.json";
-import savingThrows from "../../../../mocks/saving-throws.json";
-import sizes from "../../../../mocks/sizes.json";
-import skills from "../../../../mocks/skills.json";
-import weaponCategories from "../../../../mocks/weapon-categories.json";
-import weaponSpecialProperties from "../../../../mocks/weapon-special-properties.json";
-import weaponTypes from "../../../../mocks/weapon-types.json";
-import envoyClassDetails from "../../../../mocks/class-envoy.json";
-import operativeClassDetails from "../../../../mocks/class-operative.json";
-import soldierClassDetails from "../../../../mocks/class-soldier.json";
-import mysticClassDetails from "../../../../mocks/class-mystic.json";
+import abilityScores from "../../../../../mocks/ability-scores.json";
+import alignments from "../../../../../mocks/alignments.json";
+import armorTypes from "../../../../../mocks/armor-types.json";
+import avatars from "../../../../../mocks/avatars.json";
+import bodyParts from "../../../../../mocks/body-parts.json";
+import bonusCategories from "../../../../../mocks/bonus-categories.json";
+import books from "../../../../../mocks/books.json";
+import classes from "../../../../../mocks/classes.json";
+import criticalHitEffects from "../../../../../mocks/critical-hit-effects.json";
+import damageTypes from "../../../../../mocks/damage-types.json";
+import equipmentMaterials from "../../../../../mocks/equipment-material.json";
+import feats from "../../../../../mocks/feats.json";
+import professions from "../../../../../mocks/professions.json";
+import races from "../../../../../mocks/races.json";
+import spells from "../../../../../mocks/spells.json";
+import themes from "../../../../../mocks/themes.json";
+import savingThrows from "../../../../../mocks/saving-throws.json";
+import sizes from "../../../../../mocks/sizes.json";
+import skills from "../../../../../mocks/skills.json";
+import weaponCategories from "../../../../../mocks/weapon-categories.json";
+import weaponSpecialProperties from "../../../../../mocks/weapon-special-properties.json";
+import weaponTypes from "../../../../../mocks/weapon-types.json";
+import envoyClassDetails from "../../../../../mocks/class-envoy.json";
+import operativeClassDetails from "../../../../../mocks/class-operative.json";
+import soldierClassDetails from "../../../../../mocks/class-soldier.json";
+import mysticClassDetails from "../../../../../mocks/class-mystic.json";
 
 const data: IClientDataSet = {
   abilityScores: AbilityScoreSchema.array().parse(abilityScores),

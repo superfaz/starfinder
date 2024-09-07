@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Card } from "app/components";
 import { CharacterDetailedView, convert } from "view/server";
-import { CharacterCard } from "../PageContent";
+import { CharacterCard } from "../../../(main)/edit/PageContent";
 
 function Block({
   id,

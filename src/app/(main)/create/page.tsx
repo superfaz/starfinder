@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { isSecure } from "../edit/[character]/helpers-server";
+import { isSecure } from "../../(edit)/edit/[character]/helpers-server";
 import { PageContent } from "./PageContent";
 import { DataSets, DataSource, IDataSource } from "data";
 import { ViewBuilder } from "view/server";

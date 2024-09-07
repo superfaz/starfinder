@@ -8,8 +8,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { useRouter } from "next/navigation";
-import type { Book, IEntry, IRaceEntry } from "model";
-import { CreateData, CreateDataErrors } from "view";
+import type { Book, IEntry } from "model";
+import { CreateData, CreateDataErrors, type RaceEntry } from "view";
 import { RaceSelection } from "./RaceSelection";
 import { ThemeSelection } from "./ThemeSelection";
 import { ClassSelection } from "./ClassSelection";
@@ -21,7 +21,7 @@ export function PageContent({
   classes,
 }: Readonly<{
   books: Book[];
-  races: IRaceEntry[];
+  races: RaceEntry[];
   themes: IEntry[];
   classes: IEntry[];
 }>) {

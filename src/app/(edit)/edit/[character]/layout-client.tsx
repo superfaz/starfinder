@@ -1,10 +1,13 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
+import { Nav } from "app/components";
 import { IClientDataSet } from "data";
 import StoreProvider from "logic/StoreProvider";
 import { Character, IModel } from "model";
+import { DefaultNavBar } from "app/DefaultNavBar";
 
 export default function LayoutClient({
   data,
@@ -18,8 +21,21 @@ export default function LayoutClient({
   classesDetails?: Record<string, IModel>;
   children: ReactNode;
 }>) {
+  const pathname = usePathname();
+
   return (
     <StoreProvider data={data} character={character} classesDetails={classesDetails}>
+      <DefaultNavBar>
+        <hr />
+        <Nav className="flex-column me-auto">
+          <Nav.Link href="/" active={/^\/edit\/[a-z0-9-]+$/i.test(pathname)}>
+            Edition
+          </Nav.Link>
+          <Nav.Link href="/edit" active={pathname.endsWith("/race")}>
+            Race
+          </Nav.Link>
+        </Nav>
+      </DefaultNavBar>
       <Container>{children}</Container>
     </StoreProvider>
   );

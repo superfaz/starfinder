@@ -2,14 +2,15 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import NavbarBrand from "react-bootstrap/NavbarBrand";
-import { Button, Offcanvas } from "react-bootstrap";
-import AuthNavLink from "./AuthNavLink";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import { Nav } from "./components";
+import AuthNavLink from "./AuthNavLink";
 
-export function LayoutAuthenticated({ children }: Readonly<{ children: React.ReactNode }>) {
+export function DefaultNavBar({ children }: Readonly<{ children?: React.ReactNode }>) {
   const pathname = usePathname();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -35,16 +36,16 @@ export function LayoutAuthenticated({ children }: Readonly<{ children: React.Rea
             <Nav.Link href="/" active={pathname === "/"} onClick={handleClose}>
               Accueil
             </Nav.Link>
-            <Nav.Link href="/edit" active={pathname.startsWith("/edit")} onClick={handleClose}>
+            <Nav.Link href="/edit" active={pathname === "/edit"} onClick={handleClose}>
               Vos personnages
             </Nav.Link>
-            <Nav.Link href="/create" active={pathname.startsWith("/create")} onClick={handleClose}>
+            <Nav.Link href="/create" active={pathname === "/create"} onClick={handleClose}>
               <i className="bi bi-plus"></i> Création de personnage
             </Nav.Link>
           </Nav>
+          {children}
         </Offcanvas.Body>
       </Offcanvas>
-      {children}
     </>
   );
 }

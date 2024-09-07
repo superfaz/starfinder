@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "react-bootstrap/Container";
-import AuthMenu from "./AuthMenu";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import { useKindeBrowserClient } from "./kinde";
 
 export default function AuthNavLink() {
@@ -19,7 +19,11 @@ export default function AuthNavLink() {
         </a>
       </Container>
     );
+  } else {
+    return (
+      <NavDropdown title={user.given_name} id="user-nav-dropdown" align={"end"}>
+        <NavDropdown.Item href="/api/auth/logout">Se déconnecter</NavDropdown.Item>
+      </NavDropdown>
+    );
   }
-
-  return <AuthMenu />;
 }

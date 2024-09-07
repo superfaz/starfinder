@@ -3,11 +3,11 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Race } from "model";
 import { ViewBuilder } from "view/server";
-import books from "../../../mocks/books.json";
-import races from "../../../mocks/races.json";
-import themes from "../../../mocks/themes.json";
-import classes from "../../../mocks/classes.json";
-import { addFetchMock } from "../../../mocks/fetch";
+import books from "../../../../mocks/books.json";
+import races from "../../../../mocks/races.json";
+import themes from "../../../../mocks/themes.json";
+import classes from "../../../../mocks/classes.json";
+import { addFetchMock } from "../../../../mocks/fetch";
 import { PageContent } from "./PageContent";
 
 vi.mock("next/navigation", () => ({

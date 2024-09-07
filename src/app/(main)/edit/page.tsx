@@ -2,7 +2,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Metadata } from "next";
 import { DataSets, DataSource, IDataSource } from "data";
 import { ViewBuilder } from "view/server";
-import { isSecure } from "./[character]/helpers-server";
+import { isSecure } from "../../(edit)/edit/[character]/helpers-server";
 import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
