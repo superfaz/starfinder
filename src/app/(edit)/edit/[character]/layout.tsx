@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 import { DataSource, IDataSource, convert } from "data";
 import { Character, IModel } from "model";
 import LayoutClient from "./layout-client";
+import { notFound } from "next/navigation";
+import { retrieveCharacter } from "./helpers-server";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +23,19 @@ export async function LayoutServer({
   );
 }
 
-export default async function Layout({ children }: Readonly<{ children: ReactNode }>) {
-  return await LayoutServer({ children });
+export default async function Layout({
+  children,
+  params,
+}: Readonly<{ children: ReactNode; params: { character: string } }>) {
+  const result = await retrieveCharacter(params.character);
+  if (!result.success) {
+    if (result.errorCode === "notFound") {
+      return notFound();
+    } else {
+      console.error("Unexpected error", result.message);
+      throw new Error("Unexpected error");
+    }
+  }
+
+  return await LayoutServer({ children, character: result.character });
 }
