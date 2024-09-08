@@ -14,11 +14,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
 
   if (await isSecure(returnTo)) {
     const result = await retrieveCharacter(params.character);
-    if (result.success) {
-      // Render the page
-      const builder = new ViewBuilder();
-      return <PageContent character={await builder.createCharacterDetailed(result.character)} />;
-    } else {
+    if (!result.success) {
       if (result.errorCode === "notFound") {
         return notFound();
       } else {
@@ -26,5 +22,9 @@ export default async function Page({ params }: Readonly<{ params: { character: s
         throw new Error("Unexpected error");
       }
     }
+
+    // Render the page
+    const builder = new ViewBuilder();
+    return <PageContent character={await builder.createCharacterDetailed(result.character)} />;
   }
 }
