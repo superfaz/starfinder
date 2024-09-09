@@ -3,6 +3,7 @@ export * from "./CharacterPresenter";
 export * from "./DronePresenter";
 export * from "./FeatPresenter";
 export * from "./ICharacterPresenter";
+export * from "./interfaces";
 export * from "./SkillPresenter";
 export * from "./slice-create";
 export * from "./store";

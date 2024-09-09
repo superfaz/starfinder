@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Card } from "app/components";
+import { IAdvisorResult } from "logic";
 import { CharacterDetailedView, convert } from "view/server";
 import { CharacterCard } from "../../../(main)/edit/PageContent";
 
@@ -60,7 +61,10 @@ function Block({
   );
 }
 
-export async function PageContent({ character }: Readonly<{ character: CharacterDetailedView }>) {
+export async function PageContent({
+  character,
+  alerts,
+}: Readonly<{ character: CharacterDetailedView; alerts: IAdvisorResult }>) {
   return (
     <Stack direction="vertical" gap={2}>
       <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
@@ -70,13 +74,7 @@ export async function PageContent({ character }: Readonly<{ character: Character
       </Row>
       <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <Col className="mb-3">
-          <Block
-            id={character.id}
-            code="race"
-            title="Race"
-            entry={character.race}
-            alert="Vous devez choisir la caractéristique principale de votre personnage."
-          />
+          <Block id={character.id} code="race" title="Race" entry={character.race} alert={alerts.race} />
         </Col>
         <Col className="mb-3">
           <Block id={character.id} code="theme" title="Thème" entry={character.theme} disabled={!character.race} />
