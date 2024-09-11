@@ -13,6 +13,7 @@ import { CreateData, CreateDataErrors, type RaceEntry } from "view";
 import { RaceSelection } from "./RaceSelection";
 import { ThemeSelection } from "./ThemeSelection";
 import { ClassSelection } from "./ClassSelection";
+import Link from "next/link";
 
 export function PageContent({
   books,
@@ -95,7 +96,7 @@ export function PageContent({
             </Form.FloatingLabel>
           </Stack>
         </Col>
-        <Col md={6} className="mt-2">
+        <Col md={6} className="mt-2 mb-5">
           <Stack direction="vertical" gap={2}>
             <div className="lead mt-3">Quelle sera sa race ?</div>
             <RaceSelection
@@ -125,7 +126,7 @@ export function PageContent({
             />
           </Stack>
         </Col>
-        <Col md={6} lg={4} className="offset-md-3 offset-lg-8 mt-2">
+        <Col md={6} lg={4} className="d-none offset-md-3 offset-lg-8 mt-2">
           <Stack direction="vertical" gap={2}>
             <Button variant="primary" className="my-5" disabled={loading} onClick={handleSave}>
               Démarrer la création détaillée
@@ -133,6 +134,20 @@ export function PageContent({
           </Stack>
         </Col>
       </Row>
+      <Container fluid className="fixed-bottom py-2 bg-darkblue">
+        <Row>
+          <Col>
+            <Button variant="primary" className="w-100" disabled={loading} onClick={handleSave}>
+              Démarrer la création
+            </Button>
+          </Col>
+          <Col>
+            <Link className="btn btn-outline-secondary w-100" href="/">
+              <i className="bi bi-x-lg"></i> Annuler
+            </Link>
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 }

@@ -38,6 +38,10 @@ $sf-darkblue: #080f1b;
   @include unskew;
 }
 
+.bg-darkblue {
+  background-color: $sf-darkblue;
+}
+
 // XL container requires a 'large' class to be enabled.
 @media (min-width: map.get($grid-breakpoints, "xl")) {
   .container.large {

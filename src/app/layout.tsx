@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body className="pb-5">
         {process.env.NODE_ENV === "development" && (
           <div className="fixed-top ms-1" style={{ right: "auto" }}>
             <div className="d-block d-sm-none">xs</div>
