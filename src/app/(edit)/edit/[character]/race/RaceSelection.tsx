@@ -117,8 +117,8 @@ export function RaceSelection({ mode = "full" }: Readonly<{ mode?: "light" | "fu
 
       {selectedRace && mode === "full" && (
         <>
-          <hr />
-          <Card>
+          <hr className="d-none d-sm-block" />
+          <Card className="d-none d-sm-block">
             <picture>
               <img
                 alt=""

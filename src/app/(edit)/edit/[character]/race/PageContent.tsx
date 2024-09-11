@@ -3,6 +3,8 @@ import Row from "react-bootstrap/Row";
 import { RaceSelection } from "./RaceSelection";
 import { RaceTraits } from "./RaceTraits";
 import { RaceAlternateTraits } from "./RaceAlternateTraits";
+import { Button } from "react-bootstrap";
+import Link from "next/link";
 
 export function PageContent() {
   return (
@@ -17,6 +19,18 @@ export function PageContent() {
           </Col>
           <Col>
             <RaceAlternateTraits />
+          </Col>
+        </Row>
+      </Col>
+      <Col xs={12} className="fixed-bottom py-2 bg-darkblue">
+        <Row>
+          <Col>
+            <Button className="w-100">Modifier</Button>
+          </Col>
+          <Col>
+            <Link className="btn btn-outline-secondary w-100" href=".">
+              Annuler
+            </Link>
           </Col>
         </Row>
       </Col>
