@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { DataSets, IDataSource } from "data";
-import { AbilityScoreIds, Character, EmptyCharacter } from "model";
+import { AbilityScoreIds, Character, EmptyCharacter, IdSchema } from "model";
 import "server-only";
+import { z } from "zod";
 
 export class CharacterBuilder {
   private readonly dataSource: IDataSource;
@@ -64,6 +65,23 @@ export class CharacterBuilder {
     });
 
     return scores;
+  }
+
+  update(field: string, value: unknown): Promise<boolean> {
+    switch (field) {
+      case "race":
+        return this.updateRace(IdSchema.parse(value));
+      case "theme":
+        return this.updateTheme(IdSchema.parse(value));
+      case "class":
+        return this.updateClass(IdSchema.parse(value));
+      case "name":
+        return this.updateName(z.string().parse(value));
+      case "description":
+        return this.updateDescription(z.string().parse(value));
+      default:
+        throw new Error(`Unknown field ${field}`);
+    }
   }
 
   /**
@@ -236,6 +254,13 @@ export function createCharacter(dataSource: IDataSource, userId: string): Charac
     ...EmptyCharacter,
     id: uuidv4(),
     userId,
+    updatedAt: new Date().toISOString(),
+  });
+}
+
+export function updateCharacter(dataSource: IDataSource, character: Character): CharacterBuilder {
+  return new CharacterBuilder(dataSource, {
+    ...character,
     updatedAt: new Date().toISOString(),
   });
 }
