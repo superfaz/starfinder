@@ -29,7 +29,7 @@ export function DefaultNavBar({ children }: Readonly<{ children?: React.ReactNod
           </Nav>
         </Container>
       </Navbar>
-      <Offcanvas show={show} onHide={handleClose} backdrop="static">
+      <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton></Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column me-auto">

@@ -86,7 +86,7 @@ function EditNav({ debug, id }: Readonly<{ debug: boolean; id: string }>) {
   }
 
   return (
-    <Nav className="nav-create flex-column flex-lg-row justify-content-lg-center">
+    <Nav className="nav-create flex-column">
       {menuItems.map((item) => (
         <Nav.Item key={item.title}>
           <Nav.Link href={item.href} disabled={item.disabled} active={item.active} className="flex-fill">
