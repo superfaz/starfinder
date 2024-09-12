@@ -40,7 +40,7 @@ function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
   );
 }
 
-export function RaceSelection({ mode = "full" }: Readonly<{ mode?: "light" | "full" }>) {
+export function RaceSelection() {
   const dispatch = useAppDispatch();
 
   const data = useAppSelector((state) => state.data);
@@ -61,7 +61,7 @@ export function RaceSelection({ mode = "full" }: Readonly<{ mode?: "light" | "fu
 
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
-      {mode === "full" && <h2>Race</h2>}
+      <h2>Race</h2>
       <Form.FloatingLabel controlId="race" label="Race">
         <Form.Select value={selectedRace?.id ?? ""} onChange={handleRaceChange}>
           {selectedRace === null && <option value=""></option>}
@@ -78,13 +78,13 @@ export function RaceSelection({ mode = "full" }: Readonly<{ mode?: "light" | "fu
       </Form.FloatingLabel>
       {selectedRace && (
         <>
-          {mode === "full" && <RaceModifiers modifiers={selectedRace.modifiers} />}
+          <RaceModifiers modifiers={selectedRace.modifiers} />
           <div className="text-muted">{selectedRace.description}</div>
           <ReferenceComponent reference={selectedRace.reference} />
         </>
       )}
 
-      {selectedRace && selectedVariant && mode === "full" && (
+      {selectedRace && selectedVariant && (
         <>
           <Form.FloatingLabel controlId="variant" label="Variante" className="mt-3">
             <Form.Select value={selectedVariant?.id ?? ""} onChange={handleVariantChange}>
@@ -115,7 +115,7 @@ export function RaceSelection({ mode = "full" }: Readonly<{ mode?: "light" | "fu
         </>
       )}
 
-      {selectedRace && mode === "full" && (
+      {selectedRace && (
         <>
           <hr className="d-none d-sm-block" />
           <Card className="d-none d-sm-block">
