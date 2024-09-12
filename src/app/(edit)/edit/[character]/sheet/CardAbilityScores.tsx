@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { displayBonus } from "app/helpers";
 import { ICharacterPresenter, computeAbilityScoreModifier, useAppSelector } from "logic";
 import { ValueComponent } from "./ValueComponent";

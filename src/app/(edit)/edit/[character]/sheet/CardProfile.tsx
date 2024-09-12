@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { useAppSelector } from "logic";
 import { Alignment } from "model";
 import { ValueComponent } from "./ValueComponent";

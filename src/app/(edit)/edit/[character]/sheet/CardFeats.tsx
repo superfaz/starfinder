@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { CharacterProps } from "../Props";
 
 export function CardFeats({ presenter }: CharacterProps) {

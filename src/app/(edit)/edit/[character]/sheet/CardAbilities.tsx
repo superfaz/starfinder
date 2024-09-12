@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { ICharacterPresenter } from "logic";
 import { ModifierTypes, ofType } from "model";
 

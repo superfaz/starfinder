@@ -7,7 +7,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { Badge, Card } from "app/components";
+import { Badge, Card } from "ui";
 import type { CharacterView } from "view";
 import { deleteCharacter } from "./actions";
 

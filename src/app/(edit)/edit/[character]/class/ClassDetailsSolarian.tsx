@@ -1,8 +1,8 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { Badge } from "app/components";
 import { CharacterPresenter } from "logic";
+import { Badge } from "ui";
 import { type ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { useClassDetails } from "../helpers-client";

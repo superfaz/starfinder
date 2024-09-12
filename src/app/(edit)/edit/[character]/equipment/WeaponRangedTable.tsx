@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { EquipmentBase, EquipmentWeaponRanged, WeaponTypeId } from "model";

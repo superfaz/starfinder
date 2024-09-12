@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { displayBonus } from "app/helpers";
 import { ICharacterPresenter } from "logic";
 import { ValueComponent } from "./ValueComponent";

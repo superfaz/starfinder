@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import FeatureComponent from "../FeatureComponent";
 import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";

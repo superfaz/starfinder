@@ -4,7 +4,7 @@ import { mutators, useAppDispatch, useAppSelector } from "logic";
 import type { ThemeScholar } from "model";
 import { CharacterProps } from "../Props";
 import ThemeScholarLoading from "./ThemeScholarLoading";
-import SimpleTypeahead from "app/components/SimpleTypeahead";
+import SimpleTypeahead from "ui/SimpleTypeahead";
 
 function useThemeDetails() {
   const [details, setDetails] = useState<ThemeScholar | null>(null);

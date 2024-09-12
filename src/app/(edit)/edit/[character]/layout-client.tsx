@@ -3,11 +3,11 @@
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
-import { Nav } from "app/components";
+import { DefaultNavBar } from "app/DefaultNavBar";
 import { IClientDataSet } from "data";
 import StoreProvider from "logic/StoreProvider";
 import { Character, IModel } from "model";
-import { DefaultNavBar } from "app/DefaultNavBar";
+import { Nav } from "ui";
 import { useCharacterPresenter } from "./helpers-client";
 
 interface MenuItem {

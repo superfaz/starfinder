@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import NavbarBrand from "react-bootstrap/NavbarBrand";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { Nav } from "./components";
+import { Nav } from "ui";
 import AuthNavLink from "./AuthNavLink";
 
 export function DefaultNavBar({ children }: Readonly<{ children?: React.ReactNode }>) {

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import Form from "react-bootstrap/Form";
-import Typeahead from "app/components/Typeahead";
+import Typeahead from "ui/Typeahead";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { AbilityScoreId, AbilityScoreIds, Profession, simpleHash } from "model";

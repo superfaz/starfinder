@@ -3,10 +3,10 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import Typeahead from "app/components/Typeahead";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { AbilityScoreId, AbilityScoreIds, Profession, simpleHash } from "model";
+import Typeahead from "ui/Typeahead";
 
 export function ProfessionSkills({ onClose }: Readonly<{ onClose: () => void }>) {
   const professions: Profession[] = useAppSelector((state) => state.data.professions);

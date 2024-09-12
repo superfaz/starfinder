@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { displayBonus, findOrError } from "app/helpers";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { ICharacterPresenter, useAppSelector } from "logic";
 import { EquipmentArmor, EquipmentArmorIds, EquipmentDescriptor, ModifierTypes, ofType } from "model";
 import { ValueComponent } from "./ValueComponent";

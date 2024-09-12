@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
-import { Badge } from "app/components";
 import { CharacterPresenter } from "logic";
 import { ModifierTypes, type FeatureCategory } from "model";
+import { Badge } from "ui";
 import type { Feature } from "view";
 import ModifierComponent from "./ModifierComponent";
 

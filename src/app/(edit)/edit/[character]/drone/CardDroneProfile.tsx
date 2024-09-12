@@ -1,7 +1,7 @@
 import { Card, Row, Stack } from "react-bootstrap";
-import { Badge } from "app/components";
 import { DronePresenter, useAppSelector } from "logic";
 import { type Alignment, AlignmentIds } from "model";
+import { Badge } from "ui";
 import { ValueComponent } from "../sheet/ValueComponent";
 
 export function CardDroneProfile({ presenter }: Readonly<{ presenter: DronePresenter }>) {

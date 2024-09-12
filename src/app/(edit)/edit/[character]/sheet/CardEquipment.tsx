@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Card, Col, Row } from "react-bootstrap";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import {
   ArmorEquipmentDescriptor,
   EquipmentArmorIds,

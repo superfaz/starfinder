@@ -7,9 +7,9 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { Badge } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { SkillPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
+import { Badge } from "ui";
 import { useCharacterPresenter } from "../helpers-client";
 import { ProfessionSkills } from "./ProfessionSkills";
 

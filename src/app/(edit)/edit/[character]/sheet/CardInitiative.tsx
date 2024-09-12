@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { displayBonus } from "app/helpers";
 import { CharacterProps } from "../Props";
 

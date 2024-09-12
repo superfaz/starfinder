@@ -3,10 +3,10 @@ import Link from "next/link";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { Card } from "app/components";
 import { IAdvisorResult } from "logic";
+import { Card } from "ui";
 import { CharacterDetailedView, convert } from "view/server";
-import { CharacterCard } from "../../../(main)/edit/PageContent";
+import { CharacterCard } from "app/(main)/edit/PageContent";
 
 function Block({
   id,

@@ -1,5 +1,5 @@
 import Card from "react-bootstrap/Card";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { CharacterProps } from "../Props";
 
 export function CardAvatar({ presenter }: CharacterProps) {

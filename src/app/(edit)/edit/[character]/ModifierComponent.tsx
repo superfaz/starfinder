@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/nextjs";
-import { Badge } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { IClientDataSet } from "data";
 import { CharacterPresenter, useAppSelector } from "logic";
@@ -16,6 +15,7 @@ import {
   Modifier,
   hasCategory,
 } from "model";
+import { Badge } from "ui";
 import { DisplayDamageLong, DisplaySpecials } from "./equipment/Components";
 import { useCharacterPresenter } from "./helpers-client";
 

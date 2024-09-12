@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Badge } from "app/components";
+import { Badge } from "ui";
 import { displayBonus, findOrError } from "app/helpers";
 import { CharacterPresenter, useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeapon } from "model";

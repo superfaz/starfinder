@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import { InputGroup } from "app/components";
-import Typeahead from "app/components/Typeahead";
+import { idOrName } from "app/helpers";
 import { mutators, useAppDispatch } from "logic";
 import { INamedModel } from "model";
+import { InputGroup } from "ui";
+import Typeahead from "ui/Typeahead";
 import { useCharacterPresenter } from "../helpers-client";
-import { idOrName } from "app/helpers";
 
 function useLanguages() {
   const [languages, setLanguages] = useState<INamedModel[]>([]);

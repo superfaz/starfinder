@@ -1,5 +1,7 @@
-import { Badge } from "app/components";
-import { Card, Col, Placeholder, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Placeholder from "react-bootstrap/Placeholder";
+import Row from "react-bootstrap/Row";
+import { Card, Badge } from "ui";
 
 export default function ClassDetailsLoading() {
   return (

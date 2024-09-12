@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Card } from "../components";
+import { Card } from "ui";
 
 export function CreateCards() {
   return (
