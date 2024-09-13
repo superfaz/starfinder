@@ -1,13 +1,22 @@
 import React from "react";
 import { Metadata } from "next";
+import { DataSets, DataSource } from "data";
+import { LayoutClient } from "./LayoutClient";
 
 import "./site.scss";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: { default: "starfinder · monperso.fr", template: "%s · starfinder · monperso.fr" },
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const dataSource = new DataSource();
+  const data = {
+    sizes: await dataSource.get(DataSets.Sizes).getAll(),
+  };
+
   return (
     <html lang="fr" data-bs-theme="dark">
       <head>
@@ -31,7 +40,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <div className="d-none d-xxl-block">xxl</div>
           </div>
         )}
-        {children}
+        <LayoutClient data={data}>{children}</LayoutClient>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type IEntry, IEntrySchema } from "model";
+import { type IEntry, IEntrySchema, RaceModifierSchema } from "model";
 
 export interface CharacterView {
   id: string;
@@ -29,6 +29,7 @@ const labels = {
 
 export const RaceEntrySchema = IEntrySchema.extend({
   category: z.enum(["core", "legacy", "other"]).transform((v) => labels[v]),
+  modifiers: z.array(RaceModifierSchema),
 });
 
 export type RaceEntry = z.infer<typeof RaceEntrySchema>;

@@ -1,9 +1,35 @@
-import { groupBy } from "app/helpers";
-import type { Book } from "model";
 import type { ChangeEvent } from "react";
-import { Form } from "react-bootstrap";
-import { ReferenceComponent } from "./ReferenceComponent";
+import { Form, Stack } from "react-bootstrap";
+import { findOrError, groupBy } from "app/helpers";
+import { ModifierTypes, type Book, type RaceModifier } from "model";
 import { RaceEntry } from "view";
+import { ReferenceComponent } from "./ReferenceComponent";
+import { Badge } from "ui";
+import { useStaticData } from "logic/StaticContext";
+
+function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
+  const sizes = useStaticData().sizes;
+
+  return (
+    <Stack direction="horizontal" className="right">
+      {modifiers.map((modifier, index) => {
+        if (modifier.type === ModifierTypes.hitPoints) {
+          return (
+            <Badge key={index} bg="primary">
+              PV +{modifier.value}
+            </Badge>
+          );
+        } else if (modifier.type === ModifierTypes.size) {
+          return (
+            <Badge key={index} bg="secondary">
+              {findOrError(sizes, modifier.target).name}
+            </Badge>
+          );
+        }
+      })}
+    </Stack>
+  );
+}
 
 export function RaceSelection({
   books,
@@ -38,6 +64,7 @@ export function RaceSelection({
         </Form.Select>
         <div className="invalid-feedback">Cette race n&rsquo;est pas valide</div>
       </Form.FloatingLabel>
+      {selectedRace && <RaceModifiers modifiers={selectedRace.modifiers} />}
       {selectedRace && <div className="text-muted">{selectedRace?.description}</div>}
       {selectedRace && <ReferenceComponent books={books} reference={selectedRace.reference} />}
     </>

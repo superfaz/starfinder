@@ -1,6 +1,6 @@
-import type { Book, IEntry } from "model";
 import type { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
+import type { Book, IEntry } from "model";
 import { ReferenceComponent } from "./ReferenceComponent";
 
 export function ThemeSelection({

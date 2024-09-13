@@ -10,9 +10,9 @@ import Stack from "react-bootstrap/Stack";
 import { useRouter } from "next/navigation";
 import type { Book, IEntry } from "model";
 import { CreateData, CreateDataErrors, type RaceEntry } from "view";
-import { RaceSelection } from "./RaceSelection";
-import { ThemeSelection } from "./ThemeSelection";
-import { ClassSelection } from "./ClassSelection";
+import { RaceSelection } from "app/components/RaceSelection";
+import { ThemeSelection } from "app/components/ThemeSelection";
+import { ClassSelection } from "app/components/ClassSelection";
 import Link from "next/link";
 
 export function PageContent({
