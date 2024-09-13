@@ -15,6 +15,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const dataSource = new DataSource();
   const data = {
     sizes: await dataSource.get(DataSets.Sizes).getAll(),
+    books: await dataSource.get(DataSets.Book).getAll(),
   };
 
   return (

@@ -1,7 +1,7 @@
 import type { ChangeEvent } from "react";
 import { Form, Stack } from "react-bootstrap";
 import { findOrError, groupBy } from "app/helpers";
-import { ModifierTypes, type Book, type RaceModifier } from "model";
+import { ModifierTypes, type RaceModifier } from "model";
 import { RaceEntry } from "view";
 import { ReferenceComponent } from "./ReferenceComponent";
 import { Badge } from "ui";
@@ -32,13 +32,11 @@ function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
 }
 
 export function RaceSelection({
-  books,
   races,
   value,
   onChange,
   isInvalid,
 }: Readonly<{
-  books: Book[];
   races: RaceEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -66,7 +64,7 @@ export function RaceSelection({
       </Form.FloatingLabel>
       {selectedRace && <RaceModifiers modifiers={selectedRace.modifiers} />}
       {selectedRace && <div className="text-muted">{selectedRace?.description}</div>}
-      {selectedRace && <ReferenceComponent books={books} reference={selectedRace.reference} />}
+      {selectedRace && <ReferenceComponent reference={selectedRace.reference} />}
     </>
   );
 }

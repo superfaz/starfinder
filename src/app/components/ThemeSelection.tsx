@@ -1,16 +1,14 @@
 import type { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
-import type { Book, IEntry } from "model";
+import type { IEntry } from "model";
 import { ReferenceComponent } from "./ReferenceComponent";
 
 export function ThemeSelection({
-  books,
   themes,
   value,
   onChange,
   isInvalid,
 }: Readonly<{
-  books: Book[];
   themes: IEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -32,7 +30,7 @@ export function ThemeSelection({
         <div className="invalid-feedback">Ce thème n&rsquo;est pas valide</div>
       </Form.FloatingLabel>
       {selectedTheme && <div className="text-muted">{selectedTheme?.description}</div>}
-      {selectedTheme && <ReferenceComponent books={books} reference={selectedTheme.reference} />}
+      {selectedTheme && <ReferenceComponent reference={selectedTheme.reference} />}
     </>
   );
 }

@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { useRouter } from "next/navigation";
-import type { Book, IEntry } from "model";
+import type { IEntry } from "model";
 import { CreateData, CreateDataErrors, type RaceEntry } from "view";
 import { RaceSelection } from "app/components/RaceSelection";
 import { ThemeSelection } from "app/components/ThemeSelection";
@@ -16,12 +16,10 @@ import { ClassSelection } from "app/components/ClassSelection";
 import Link from "next/link";
 
 export function PageContent({
-  books,
   races,
   themes,
   classes,
 }: Readonly<{
-  books: Book[];
   races: RaceEntry[];
   themes: IEntry[];
   classes: IEntry[];
@@ -99,17 +97,10 @@ export function PageContent({
         <Col md={6} className="mt-2 mb-5">
           <Stack direction="vertical" gap={2}>
             <div className="lead mt-3">Quelle sera sa race ?</div>
-            <RaceSelection
-              books={books}
-              races={races}
-              value={state.race ?? ""}
-              onChange={handleChange}
-              isInvalid={!!errors.race}
-            />
+            <RaceSelection races={races} value={state.race ?? ""} onChange={handleChange} isInvalid={!!errors.race} />
 
             <div className="lead mt-3">Quel sera son thème ?</div>
             <ThemeSelection
-              books={books}
               themes={themes}
               value={state.theme ?? ""}
               onChange={handleChange}
@@ -118,7 +109,6 @@ export function PageContent({
 
             <div className="lead mt-3">Quelle sera sa classe ?</div>
             <ClassSelection
-              books={books}
               classes={classes}
               value={state.class ?? ""}
               onChange={handleChange}

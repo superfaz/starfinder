@@ -15,11 +15,10 @@ export default async function Page() {
     const dataSource: IDataSource = new DataSource();
     const builder = new ViewBuilder();
 
-    const books = await dataSource.get(DataSets.Book).getAll();
     const races = builder.createRaceEntry(await dataSource.get(DataSets.Races).getAll());
     const themes = builder.createEntry(await dataSource.get(DataSets.Themes).getAll());
     const classes = builder.createEntry(await dataSource.get(DataSets.Class).getAll());
 
-    return <PageContent books={books} races={races} themes={themes} classes={classes} />;
+    return <PageContent races={races} themes={themes} classes={classes} />;
   }
 }

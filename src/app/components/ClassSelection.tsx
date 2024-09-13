@@ -1,16 +1,14 @@
 import type { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
-import type { Book, IEntry } from "model";
+import type { IEntry } from "model";
 import { ReferenceComponent } from "./ReferenceComponent";
 
 export function ClassSelection({
-  books,
   classes,
   value,
   onChange,
   isInvalid,
 }: Readonly<{
-  books: Book[];
   classes: IEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -32,7 +30,7 @@ export function ClassSelection({
         <div className="invalid-feedback">Cette classe n&rsquo;est pas valide</div>
       </Form.FloatingLabel>
       {selectedClass && <div className="text-muted">{selectedClass?.description}</div>}
-      {selectedClass && <ReferenceComponent books={books} reference={selectedClass.reference} />}
+      {selectedClass && <ReferenceComponent reference={selectedClass.reference} />}
     </>
   );
 }
