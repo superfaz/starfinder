@@ -1,9 +1,9 @@
 "use client";
 
+import { DisplaySpecials } from "app/components";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeaponGrenade } from "model";
-import { DisplaySpecials } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function WeaponGrenadeDisplay({

@@ -2,19 +2,14 @@ import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Badge } from "ui";
+import { DisplayCritical, DisplayDamage, DisplayRange, DisplaySpecials } from "app/components";
 import { displayBonus, findOrError } from "app/helpers";
 import { CharacterPresenter, useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeapon } from "model";
-import { ValueComponent } from "./ValueComponent";
-import {
-  DisplayCritical,
-  DisplayDamageShort,
-  DisplayFusions,
-  DisplayRange,
-  DisplaySpecials,
-} from "../equipment/Components";
+import { Badge } from "ui";
+import { DisplayFusions } from "../equipment/Components";
 import { CharacterProps } from "../Props";
+import { ValueComponent } from "./ValueComponent";
 
 function getWeapon(descriptor: EquipmentDescriptor): Promise<EquipmentWeapon> {
   return fetch(`/api/equipment/weapons/${descriptor.secondaryType}`)
@@ -109,7 +104,7 @@ function CardWeapon({
         <Col xs="auto">
           <ValueComponent label="Dégâts">
             {(weapon.type === "weaponRanged" || weapon.type === "weaponMelee" || weapon.type === "weaponSolarian") && (
-              <DisplayDamageShort damage={weapon.damage} />
+              <DisplayDamage damage={weapon.damage} />
             )}
           </ValueComponent>
         </Col>

@@ -4,11 +4,11 @@ import { Fragment } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
-import { Badge } from "ui";
+import { DisplayCritical, DisplayDamage, DisplaySpecials } from "app/components";
 import { groupBy } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { EquipmentBase, EquipmentWeaponMelee, WeaponTypeId } from "model";
-import { DisplayCritical, DisplayDamageShort, DisplaySpecials } from "./Components";
+import { Badge } from "ui";
 
 function WeaponMeleeTableCategory({
   weaponType,
@@ -57,7 +57,7 @@ function WeaponMeleeTableCategory({
           <td>{equipment.level}</td>
           <td>{equipment.cost}</td>
           <td>
-            <DisplayDamageShort damage={equipment.damage} />
+            <DisplayDamage damage={equipment.damage} />
           </td>
           <td>
             <DisplayCritical critical={equipment.critical} />

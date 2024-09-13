@@ -1,11 +1,11 @@
 import { ChangeEvent } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import ModifierComponent from "app/components/ModifierComponent";
 import { CharacterPresenter, mutators, useAppDispatch, useAppSelector } from "logic";
 import { ModifierTypes } from "model";
 import type { Feat, Feature } from "view";
 import { isFeat } from "view";
-import ModifierComponent from "../ModifierComponent";
 
 const categories: Record<string, string> = {
   ex: "EXT",

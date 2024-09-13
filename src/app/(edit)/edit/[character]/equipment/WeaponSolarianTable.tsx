@@ -3,9 +3,9 @@
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
+import { DisplayCritical, DisplayDamage } from "app/components";
 import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponSolarian } from "model";
-import { DisplayCritical, DisplayDamageShort } from "./Components";
 
 function WeaponSolarianTableCategory({ equipments }: Readonly<{ equipments: EquipmentWeaponSolarian[] }>) {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ function WeaponSolarianTableCategory({ equipments }: Readonly<{ equipments: Equi
       <td>{equipment.level}</td>
       <td>{equipment.cost}</td>
       <td>
-        <DisplayDamageShort damage={equipment.damage} />
+        <DisplayDamage damage={equipment.damage} />
       </td>
       <td>
         <DisplayCritical critical={equipment.critical} />

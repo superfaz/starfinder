@@ -1,9 +1,9 @@
 "use client";
 
+import { DisplayCritical, DisplayDamage, DisplaySpecials } from "app/components";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeaponMelee } from "model";
-import { DisplayCritical, DisplayDamageLong, DisplaySpecials } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function WeaponMeleeDisplay({
@@ -24,7 +24,7 @@ export function WeaponMeleeDisplay({
     <GenericEquipmentDisplay descriptor={descriptor} equipment={equipment} subtitle={subtitle} selected={selected}>
       {equipment.damage && (
         <div>
-          <DisplayDamageLong damage={equipment.damage} />
+          <DisplayDamage long damage={equipment.damage} />
           {equipment.critical && (
             <span>
               {" - "}

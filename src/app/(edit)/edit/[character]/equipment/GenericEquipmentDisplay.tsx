@@ -12,10 +12,10 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "ui";
+import { Credits } from "app/components";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { EquipmentBase, EquipmentDescriptor, EquipmentWeaponFusion, EquipmentWeaponFusionSchema } from "model";
-import { Credits } from "./Components";
 
 export function useEquipment<T extends EquipmentBase>(descriptor: EquipmentDescriptor): T | null {
   const [equipment, setEquipment] = useState<T | null>(null);

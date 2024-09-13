@@ -3,9 +3,9 @@
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
+import { DisplayModifier, DisplayRange } from "app/components";
 import { mutators, useAppDispatch } from "logic";
 import { ArmorTypeId, EquipmentArmorHeavy, EquipmentArmorLight, EquipmentBase } from "model";
-import { DisplayModifier, DisplayRange } from "./Components";
 
 export function ArmorNormalTable({
   armorType,

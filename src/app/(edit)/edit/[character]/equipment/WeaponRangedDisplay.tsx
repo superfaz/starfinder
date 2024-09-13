@@ -1,9 +1,9 @@
 "use client";
 
+import { DisplayCritical, DisplayDamage, DisplaySpecials } from "app/components";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { EquipmentDescriptor, EquipmentWeaponRanged } from "model";
-import { DisplayCritical, DisplayDamageLong, DisplaySpecials } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function WeaponRangedDisplay({
@@ -27,7 +27,7 @@ export function WeaponRangedDisplay({
         {equipment.damage && (
           <span>
             {" - "}
-            <DisplayDamageLong damage={equipment.damage} />
+            <DisplayDamage long damage={equipment.damage} />
           </span>
         )}
         {equipment.critical && (

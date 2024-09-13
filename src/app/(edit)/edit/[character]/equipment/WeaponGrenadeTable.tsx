@@ -3,9 +3,9 @@
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
+import { DisplaySpecials } from "app/components";
 import { mutators, useAppDispatch } from "logic";
 import { EquipmentBase, EquipmentWeaponGrenade } from "model";
-import { DisplaySpecials } from "./Components";
 
 function WeaponGrenadeTableCategory({ equipments }: Readonly<{ equipments: EquipmentWeaponGrenade[] }>) {
   const dispatch = useAppDispatch();

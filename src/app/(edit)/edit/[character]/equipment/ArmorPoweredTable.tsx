@@ -3,9 +3,9 @@
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { v4 as uuidv4 } from "uuid";
+import { DisplayModifier, DisplaySize } from "app/components";
 import { mutators, useAppDispatch } from "logic";
 import { EquipmentArmorPowered, EquipmentBase } from "model";
-import { DisplayModifier, DisplaySize } from "./Components";
 
 export function ArmorPoweredTable({ equipments }: Readonly<{ equipments: EquipmentBase[] }>) {
   const dispatch = useAppDispatch();

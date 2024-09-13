@@ -1,7 +1,7 @@
 "use client";
 
+import { DisplayCritical, DisplayDamage } from "app/components";
 import { EquipmentDescriptor, EquipmentWeaponSolarian } from "model";
-import { DisplayCritical, DisplayDamageLong } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function WeaponSolarianDisplay({
@@ -23,7 +23,7 @@ export function WeaponSolarianDisplay({
       <div>
         {equipment.damage && (
           <span>
-            <DisplayDamageLong damage={equipment.damage} />
+            <DisplayDamage long damage={equipment.damage} />
           </span>
         )}
         {equipment.critical && (

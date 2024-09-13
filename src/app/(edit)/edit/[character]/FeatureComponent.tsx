@@ -1,9 +1,9 @@
 import Card from "react-bootstrap/Card";
+import ModifierComponent from "app/components/ModifierComponent";
 import { CharacterPresenter } from "logic";
 import { ModifierTypes, type FeatureCategory } from "model";
 import { Badge } from "ui";
 import type { Feature } from "view";
-import ModifierComponent from "./ModifierComponent";
 
 const categories: Record<FeatureCategory, string> = {
   ex: "EXT",

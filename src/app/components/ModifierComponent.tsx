@@ -16,8 +16,10 @@ import {
   hasCategory,
 } from "model";
 import { Badge } from "ui";
-import { DisplayDamageLong, DisplaySpecials } from "./equipment/Components";
-import { useCharacterPresenter } from "./helpers-client";
+import { useCharacterPresenter } from "../(edit)/edit/[character]/helpers-client";
+import { DisplayDamage } from "./DisplayDamage";
+import { DisplaySpecials } from "./DisplaySpecials";
+import { useStaticData } from "logic/StaticContext";
 
 interface ModifierComponentElement {
   level?: number;
@@ -131,7 +133,7 @@ function adaptForFeat(
 
 function EquipmentModifierComponent({ modifier }: Readonly<{ modifier: EquipmentModifier }>) {
   const equipment = modifier.equipment;
-  const weaponTypes = useAppSelector((state) => state.data.weaponTypes);
+  const weaponTypes = useStaticData().weaponTypes;
   if (equipment.type === "weaponMelee") {
     return (
       <p>
@@ -142,7 +144,7 @@ function EquipmentModifierComponent({ modifier }: Readonly<{ modifier: Equipment
         <br />
         {equipment.damage && (
           <span className="me-2">
-            <DisplayDamageLong damage={equipment.damage} />
+            <DisplayDamage long damage={equipment.damage} />
           </span>
         )}
         {equipment.specials && equipment.specials.length > 0 && (

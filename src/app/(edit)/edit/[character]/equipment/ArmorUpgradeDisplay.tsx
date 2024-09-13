@@ -1,7 +1,7 @@
 "use client";
 
+import { DisplayArmorTypes } from "app/components";
 import { EquipmentArmorUpgrade, EquipmentDescriptor } from "model";
-import { DisplayArmorTypes } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
 export function ArmorUpgradeDisplay({

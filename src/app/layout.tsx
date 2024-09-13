@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { DataSets, DataSource } from "data";
+import { IStaticData } from "logic/StaticContext";
 import { LayoutClient } from "./LayoutClient";
 
 import "./site.scss";
@@ -13,9 +14,12 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dataSource = new DataSource();
-  const data = {
+  const data: IStaticData = {
+    armorTypes: await dataSource.get(DataSets.ArmorType).getAll(),
+    damageTypes: await dataSource.get(DataSets.DamageTypes).getAll(),
     sizes: await dataSource.get(DataSets.Sizes).getAll(),
     books: await dataSource.get(DataSets.Book).getAll(),
+    weaponTypes: await dataSource.get(DataSets.WeaponTypes).getAll(),
   };
 
   return (

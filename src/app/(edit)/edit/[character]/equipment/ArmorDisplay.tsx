@@ -1,12 +1,15 @@
 "use client";
 
+import { DisplayDamage, DisplayModifier, DisplayRange, DisplaySize } from "app/components";
 import { findOrError } from "app/helpers";
 import { useAppSelector } from "logic";
 import { ArmorTypeIds, EquipmentArmor, EquipmentDescriptor } from "model";
-import { DisplayDamageShort, DisplayModifier, DisplayRange, DisplaySize } from "./Components";
 import { GenericEquipmentDisplay, useEquipment } from "./GenericEquipmentDisplay";
 
-export function ArmorDisplay({ descriptor, selected }: Readonly<{ descriptor: EquipmentDescriptor; selected: boolean }>) {
+export function ArmorDisplay({
+  descriptor,
+  selected,
+}: Readonly<{ descriptor: EquipmentDescriptor; selected: boolean }>) {
   const data = useAppSelector((state) => state.data);
   const equipment = useEquipment<EquipmentArmor>(descriptor);
 
@@ -44,7 +47,7 @@ export function ArmorDisplay({ descriptor, selected }: Readonly<{ descriptor: Eq
           <div>
             Vitesse: <DisplayRange value={equipment.speed} />
             {" / "}Force: {equipment.strength}
-            {" / "}Dégâts: <DisplayDamageShort damage={equipment.damage} />
+            {" / "}Dégâts: <DisplayDamage damage={equipment.damage} />
           </div>
           <div>
             Taille: <DisplaySize value={equipment.size} />
