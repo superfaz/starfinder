@@ -12,6 +12,10 @@ export async function LayoutTest({
   const clientData = await convert(dataSource);
   const debug = process.env.STARFINDER_DEBUG === "true";
 
+  if (character === undefined) {
+    return null;
+  }
+
   return (
     <LayoutClient debug={debug} character={character} classesDetails={classesDetails} data={clientData}>
       {children}

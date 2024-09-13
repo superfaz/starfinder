@@ -11,7 +11,7 @@ export default function ClassDetailsLoading() {
       </Col>
       <Col>
         <Card>
-          <Card.Header role="heading" className="placeholder-glow">
+          <Card.Header className="placeholder-glow">
             <Placeholder xs={5} />
             <Placeholder xs={4} />
           </Card.Header>
