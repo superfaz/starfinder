@@ -12,7 +12,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { Badge } from "ui";
-import { Credits } from "app/components";
+import { DisplayCredits } from "app/components";
 import { findOrError } from "app/helpers";
 import { mutators, useAppDispatch, useAppSelector } from "logic";
 import { EquipmentBase, EquipmentDescriptor, EquipmentWeaponFusion, EquipmentWeaponFusionSchema } from "model";
@@ -127,7 +127,7 @@ export function GenericEquipmentDisplay({
         <Card.Footer>
           <Row>
             <Col className="align-self-center text-center">
-              <Credits value={descriptor.unitaryCost} />
+              <DisplayCredits value={descriptor.unitaryCost} />
             </Col>
             <Col className="text-end">
               {!selected && descriptor.type === "consumable" && (

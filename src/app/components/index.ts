@@ -1,5 +1,5 @@
-export * from "./Credits";
 export * from "./DisplayArmorTypes";
+export * from "./DisplayCredits";
 export * from "./DisplayCritical";
 export * from "./DisplayDamage";
 export * from "./DisplayModifier";
