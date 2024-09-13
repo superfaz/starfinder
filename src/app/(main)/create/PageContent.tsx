@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -7,13 +9,11 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { useRouter } from "next/navigation";
+import { FormSelectClass } from "app/components/FormSelectClass";
+import { FormSelectRace } from "app/components/FormSelectRace";
+import { FormSelectTheme } from "app/components/FormSelectTheme";
 import type { IEntry } from "model";
 import { CreateData, CreateDataErrors, type RaceEntry } from "view";
-import { RaceSelection } from "app/components/RaceSelection";
-import { ThemeSelection } from "app/components/ThemeSelection";
-import { ClassSelection } from "app/components/ClassSelection";
-import Link from "next/link";
 
 export function PageContent({
   races,
@@ -97,10 +97,10 @@ export function PageContent({
         <Col md={6} className="mt-2 mb-5">
           <Stack direction="vertical" gap={2}>
             <div className="lead mt-3">Quelle sera sa race ?</div>
-            <RaceSelection races={races} value={state.race ?? ""} onChange={handleChange} isInvalid={!!errors.race} />
+            <FormSelectRace races={races} value={state.race ?? ""} onChange={handleChange} isInvalid={!!errors.race} />
 
             <div className="lead mt-3">Quel sera son thème ?</div>
-            <ThemeSelection
+            <FormSelectTheme
               themes={themes}
               value={state.theme ?? ""}
               onChange={handleChange}
@@ -108,7 +108,7 @@ export function PageContent({
             />
 
             <div className="lead mt-3">Quelle sera sa classe ?</div>
-            <ClassSelection
+            <FormSelectClass
               classes={classes}
               value={state.class ?? ""}
               onChange={handleChange}

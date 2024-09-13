@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import type { IEntry } from "model";
 import { ReferenceComponent } from "./ReferenceComponent";
 
-export function ClassSelection({
+export function FormSelectClass({
   classes,
   value,
   onChange,

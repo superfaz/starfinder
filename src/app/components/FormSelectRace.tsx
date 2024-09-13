@@ -1,11 +1,11 @@
 import type { ChangeEvent } from "react";
 import { Form, Stack } from "react-bootstrap";
 import { findOrError, groupBy } from "app/helpers";
+import { useStaticData } from "logic/StaticContext";
 import { ModifierTypes, type RaceModifier } from "model";
+import { Badge } from "ui";
 import { RaceEntry } from "view";
 import { ReferenceComponent } from "./ReferenceComponent";
-import { Badge } from "ui";
-import { useStaticData } from "logic/StaticContext";
 
 function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
   const sizes = useStaticData().sizes;
@@ -31,7 +31,7 @@ function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
   );
 }
 
-export function RaceSelection({
+export function FormSelectRace({
   races,
   value,
   onChange,
