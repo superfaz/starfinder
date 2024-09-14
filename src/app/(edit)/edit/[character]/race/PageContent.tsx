@@ -9,11 +9,11 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import { FormSelectRace } from "app/components/FormSelectRace";
 import { useStaticData } from "logic/StaticContext";
-import { RaceEntry } from "view";
 import FormSelectVariant from "./FormSelectVariant";
 import FormSelectVariantBonus from "./FormSelectVariantBonus";
 import { RaceAlternateTraits } from "./RaceAlternateTraits";
 import { RaceTraits } from "./RaceTraits";
+import { Race } from "model";
 
 export interface IForm {
   race?: string;
@@ -21,7 +21,7 @@ export interface IForm {
   selectableBonus?: string;
 }
 
-export function PageContent({ races, initial }: Readonly<{ races: RaceEntry[]; initial: IForm }>) {
+export function PageContent({ races, initial }: Readonly<{ races: Race[]; initial: IForm }>) {
   const avatars = useStaticData().avatars;
   const [raceId, updateRaceId] = useState(initial.race);
   const [variantId, updateVariantId] = useState(initial.variant);

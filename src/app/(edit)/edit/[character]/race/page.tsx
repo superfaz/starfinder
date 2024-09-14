@@ -29,7 +29,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
   }
 
   const dataSource = new DataSource();
-  const races = createRaceEntry(await dataSource.get(DataSets.Races).getAll());
+  const races = await dataSource.get(DataSets.Races).getAll();
 
   const form = {
     race: result.character.race,
