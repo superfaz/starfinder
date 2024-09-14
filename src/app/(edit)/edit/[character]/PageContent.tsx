@@ -66,44 +66,34 @@ export async function PageContent({
   alerts,
 }: Readonly<{ character: CharacterDetailedView; alerts: IAdvisorResult }>) {
   return (
-    <Stack direction="vertical" gap={2}>
-      <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <Col className="mt-3">
-          <CharacterCard character={convert(character)} noAction />
-        </Col>
-      </Row>
-      <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <Col className="mb-3">
-          <Block id={character.id} code="race" title="Race" entry={character.race} alert={alerts.race} />
-        </Col>
-        <Col className="mb-3">
-          <Block id={character.id} code="theme" title="Thème" entry={character.theme} disabled={!character.race} />
-        </Col>
-        <Col className="mb-3">
-          <Block id={character.id} code="class" title="Classe" entry={character.class} disabled={!character.theme} />
-        </Col>
-      </Row>
-
-      <h3 className="mt-5">Détails</h3>
-      <h3 className="mt-5">Equipement</h3>
-
-      <Stack direction="vertical" gap={2} className="mt-5">
-        <h2>Introduction</h2>
-        <p>
-          Bienvenue dans le créateur de personnage pour le jeu de rôle <strong>StarFinder</strong> de Paizo Publishing.
-        </p>
-        <p>
-          Cet assistant va vous permettre de choisir les éléments les plus importants de votre personnage, comme sa{" "}
-          <strong>race</strong>, son <strong>thème</strong> et sa <strong>classe</strong> avant de vous guider dans la
-          définition de son profil, de son histoire et enfin vers les choix qui lui sont spécifiques comme ses sorts,
-          son IA ou ses dons.
-        </p>
-        <p>
-          La version française se base sur les publications éditées par Black Book Editions. Vous pouvez trouver plus
-          d&apos;informations sur le jeu sur le site de l&apos;éditeur :{" "}
-          <a href="https://www.black-book-editions.fr/catalogue.php?id=519">www.black-book-editions.fr</a>.
-        </p>
-      </Stack>
-    </Stack>
+    <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+      <Col className="mt-3 h-100">
+        <CharacterCard character={convert(character)} noAction />
+      </Col>
+      <Col className="mt-3 d-none d-sm-block col-md-6 d-lg-none"></Col>
+      <Col className="mb-3">
+        <Block id={character.id} code="race" title="Race" entry={character.race} alert={alerts.race} />
+      </Col>
+      <Col className="mb-3">
+        <Block id={character.id} code="theme" title="Thème" entry={character.theme} disabled={!character.race} />
+      </Col>
+      <Col className="mb-3">
+        <Block id={character.id} code="class" title="Classe" entry={character.class} disabled={!character.theme} />
+      </Col>
+      <Col className="mt-3 d-none d-lg-block"></Col>
+      <Col className="mb-3">
+        <h3>Profil</h3>
+      </Col>
+      <Col className="mb-3">
+        <h3>Caractérisques</h3>
+      </Col>
+      <Col className="mb-3">
+        <h3>Don(s)</h3>
+      </Col>
+      <Col className="mt-3 d-none d-lg-block"></Col>
+      <Col className="mb-3">
+        <h3>Equipement</h3>
+      </Col>
+    </Row>
   );
 }
