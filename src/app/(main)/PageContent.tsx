@@ -23,10 +23,6 @@ export function PageContent() {
         </Col>
         <Col lg={4} className="mt-5 mt-lg-0">
           <Licenses />
-          <hr />
-          <Link href="https://github.com/superfaz/starfinder">
-            <i className="bi bi-github" aria-label="github" title="github"></i>
-          </Link>
         </Col>
       </Row>
     </Container>
