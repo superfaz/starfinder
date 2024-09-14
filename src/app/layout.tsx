@@ -15,7 +15,9 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dataSource = new DataSource();
   const data: IStaticData = {
+    abilityScores: await dataSource.get(DataSets.AbilityScore).getAll(),
     armorTypes: await dataSource.get(DataSets.ArmorType).getAll(),
+    avatars: await dataSource.get(DataSets.Avatar).getAll(),
     damageTypes: await dataSource.get(DataSets.DamageTypes).getAll(),
     sizes: await dataSource.get(DataSets.Sizes).getAll(),
     books: await dataSource.get(DataSets.Book).getAll(),

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type IEntry, IEntrySchema, RaceModifierSchema } from "model";
+import { type IEntry, IEntrySchema, RaceModifierSchema, RaceSchema } from "model";
 
 export interface CharacterView {
   id: string;
@@ -33,3 +33,9 @@ export const RaceEntrySchema = IEntrySchema.extend({
 });
 
 export type RaceEntry = z.infer<typeof RaceEntrySchema>;
+
+export const RaceViewSchema = RaceSchema.omit({ category: true }).extend({
+  category: z.enum(["core", "legacy", "other"]).transform((v) => labels[v]),
+});
+
+export type RaceView = z.infer<typeof RaceSchema>;
