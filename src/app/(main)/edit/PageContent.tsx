@@ -31,8 +31,8 @@ export function CharacterCard({
   }
 
   return (
-    <Card>
-      <Row className="g-0">
+    <Card className="h-100">
+      <Row className="g-0 h-100">
         <Col xs={3}>
           {character.avatar && (
             <picture>
@@ -41,7 +41,7 @@ export function CharacterCard({
           )}
         </Col>
         <Col>
-          <Card.Body>
+          <Card.Body className="border-top-0">
             <Card.Title>{character.name}</Card.Title>
             <Card.Text>
               {character.race && <Badge bg="primary">{character.race}</Badge>}

@@ -21,7 +21,7 @@ export function PageAuthenticated({ characters }: Readonly<{ characters: Charact
                   Voir tous
                 </Link>
               </Stack>
-              <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 mb-5">
+              <Row className="g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 mb-5">
                 {characters.map((character) => (
                   <Col key={character.id} className="mt-3">
                     <CharacterCard character={character} />
