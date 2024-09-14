@@ -13,7 +13,8 @@ import { FormSelectClass } from "app/components/FormSelectClass";
 import { FormSelectRace } from "app/components/FormSelectRace";
 import { FormSelectTheme } from "app/components/FormSelectTheme";
 import type { IEntry } from "model";
-import { CreateData, CreateDataErrors, type RaceEntry } from "view";
+import { type RaceEntry } from "view";
+import { create, type CreateErrors, type CreateData } from "./actions";
 
 export function PageContent({
   races,
@@ -25,7 +26,7 @@ export function PageContent({
   classes: IEntry[];
 }>) {
   const [state, setState] = useState<CreateData>({ name: "" });
-  const [errors, setErrors] = useState<CreateDataErrors>({});
+  const [errors, setErrors] = useState<CreateErrors>({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -39,24 +40,15 @@ export function PageContent({
     // Save character data
     setLoading(true);
     try {
-      const response = await fetch("/api/create", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: JSON.stringify(state),
-      });
+      const response = await create(state);
 
-      if (response.ok) {
+      if (response.success) {
         // Redirect to the detailed character creation page
-        const { id } = await response.json();
         setErrors({});
-        router.push("/edit/" + id);
-      } else if (response.status === 400) {
-        // Provide feedback to the user
-        const result = await response.json();
-        setErrors(result);
+        router.push("/edit/" + response.id);
       } else {
-        // Handle unexpected errors
-        console.error("Failed to save character data", response);
+        // Provide error feedback to the user
+        setErrors(response.errors);
       }
     } finally {
       setLoading(false);

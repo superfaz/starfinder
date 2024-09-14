@@ -1,32 +1,45 @@
+"use server";
+
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { z } from "zod";
 import { DataSets, DataSource, IDataSource } from "data";
 import { createCharacter } from "logic/server";
-import { NextRequest, NextResponse } from "next/server";
-import { CreateDataErrors, CreateDataSchema } from "view";
+import { IdSchema } from "model";
 
-export const dynamic = "force-dynamic";
+const CreateDataSchema = z.object({
+  race: z.preprocess((v) => v || undefined, IdSchema.optional()),
+  theme: z.preprocess((v) => v || undefined, IdSchema.optional()),
+  class: z.preprocess((v) => v || undefined, IdSchema.optional()),
+  name: z.preprocess((v) => v || undefined, z.string()),
+  description: z.preprocess((v) => v || undefined, z.string().optional()),
+});
 
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export type CreateData = z.infer<typeof CreateDataSchema>;
+
+export type CreateErrors = { [P in keyof CreateData]?: string[] | undefined };
+
+export type CreateResult = { success: true; id: string } | { success: false; errors: CreateErrors };
+
+export async function create(data: CreateData): Promise<CreateResult | string> {
   // Security check
   const { isAuthenticated, getUser } = getKindeServerSession();
   const isUserAuthenticated = await isAuthenticated();
   const user = await getUser();
 
   if (!isUserAuthenticated || !user) {
-    return new NextResponse(undefined, { status: 401 });
+    throw new Error("Unauthorized");
   }
 
   // Data check
-  const data = await request.json();
   const check = CreateDataSchema.safeParse(data);
 
   if (!check.success) {
-    return NextResponse.json(check.error.flatten().fieldErrors, { status: 400 });
+    return { success: false, errors: check.error.flatten().fieldErrors };
   }
 
   const dataSource: IDataSource = new DataSource();
   const builder = createCharacter(dataSource, user.id);
-  let errors: CreateDataErrors = {};
+  let errors: CreateErrors = {};
   if (check.data.race && !(await builder.updateRace(check.data.race))) {
     errors = { ...errors, race: ["Invalid"] };
   }
@@ -44,12 +57,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   if (Object.keys(errors).length > 0) {
-    return NextResponse.json(errors, { status: 400 });
+    return { success: false, errors };
   }
 
   // Save character data
   const character = builder.getCharacter();
   await dataSource.get(DataSets.Characters).create(character);
 
-  return NextResponse.json({ id: character.id }, { status: 200 });
+  return { success: true, id: character.id };
 }
