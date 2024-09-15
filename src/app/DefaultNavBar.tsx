@@ -18,7 +18,7 @@ export function DefaultNavBar({ children }: Readonly<{ children?: React.ReactNod
 
   return (
     <>
-      <Navbar expand="lg" sticky="top" className="mb-4">
+      <Navbar expand="lg" fixed="top" className="mb-4">
         <Container>
           <Button variant="outline-secondary" onClick={handleShow}>
             <i className="bi bi-three-dots-vertical"></i>
