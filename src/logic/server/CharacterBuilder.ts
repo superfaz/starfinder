@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
 import { DataSets, IDataSource } from "data";
 import { AbilityScoreIds, Character, EmptyCharacter, IdSchema } from "model";
-import "server-only";
-import { z } from "zod";
 import { RaceFeature } from "view";
+
+import "server-only";
 
 export class CharacterBuilder {
   private readonly dataSource: IDataSource;
