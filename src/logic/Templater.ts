@@ -52,7 +52,7 @@ export class Templater {
       source: "race",
       name: this.applyForString(template.name) ?? "",
       description: template.description ? this.applyForString(template.description) : undefined,
-      replace: template.replace ?? [],
+      replace: [],
       modifiers: template.modifiers?.map((m) => this.convertModifier(m)) ?? [],
     };
   }

@@ -143,7 +143,7 @@ class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDyna
       throw new Error(`Failed to validate a ${this.descriptor.name}`);
     }
 
-    const result = await this.database.collection(this.descriptor.name).updateOne({ id: data.id }, protect.data);
+    const result = await this.database.collection(this.descriptor.name).replaceOne({ id: data.id }, protect.data);
     if (!result.acknowledged) {
       throw new Error(`Failed to create ${this.descriptor.name}`);
     }

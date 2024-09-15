@@ -12,9 +12,9 @@ export const RaceFeatureSchema = BaseFeatureSchema.extend({
   source: z.literal("race"),
 
   /**
-   * The IDs of the replaced racial traits - for secondary racial traits.
+   * The IDs and names of the replaced racial traits - for secondary racial traits.
    */
-  replace: z.array(z.string()),
+  replace: z.array(INamedModelSchema),
 }).strict();
 
 export type RaceFeature = z.infer<typeof RaceFeatureSchema>;

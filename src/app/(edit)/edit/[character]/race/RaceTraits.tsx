@@ -1,22 +1,20 @@
 "use client";
 
+import Alert from "react-bootstrap/Alert";
 import Stack from "react-bootstrap/Stack";
-import { useCharacterPresenter } from "../helpers-client";
 import FeatureComponent from "../FeatureComponent";
-import { Alert } from "react-bootstrap";
+import { UpdateState } from "./actions";
 
-export function RaceTraits() {
-  const presenter = useCharacterPresenter();
-  const traits = presenter.getPrimaryRaceTraits();
+export function RaceTraits({ state }: Readonly<{ state: UpdateState }>) {
+  const traits = state.primaryTraits;
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Traits raciaux</h2>
       {traits.map((trait) => {
-        const isTraitEnabled = presenter.getSelectedRaceTraits().find((t) => t.id === trait.id) !== undefined;
+        const isTraitEnabled = state.selectedTraits.find((t) => t === trait.id) !== undefined;
         return (
           <FeatureComponent
             key={trait.id}
-            character={presenter}
             feature={trait}
             className={isTraitEnabled ? "border-primary" : "text-decoration-line-through"}
           />

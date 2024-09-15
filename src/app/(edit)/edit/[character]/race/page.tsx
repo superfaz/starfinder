@@ -1,10 +1,10 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { isSecure } from "app/helpers-server";
 import { DataSets, DataSource } from "data";
-import { PageContent } from "./PageContent";
-import { createRaceEntry } from "view/server";
 import { retrieveCharacter } from "../helpers-server";
-import { notFound } from "next/navigation";
+import { createState } from "./actions";
+import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
   title: "Sélection de la race",
@@ -15,7 +15,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
   const returnTo = `/edit/${characterId}/race`;
 
   if (!(await isSecure(returnTo))) {
-    return null;
+    throw new Error("Unexpected error");
   }
 
   const result = await retrieveCharacter(characterId);
@@ -30,12 +30,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
 
   const dataSource = new DataSource();
   const races = await dataSource.get(DataSets.Races).getAll();
+  const initial = await createState(result.character);
 
-  const form = {
-    race: result.character.race,
-    variant: result.character.raceVariant,
-    selectableBonus: result.character.raceOptions?.selectableBonus,
-  };
-
-  return <PageContent races={races} initial={form} />;
+  return <PageContent races={races} initial={initial} />;
 }

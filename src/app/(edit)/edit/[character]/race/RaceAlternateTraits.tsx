@@ -1,24 +1,33 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import { mutators, useAppDispatch } from "logic";
+import { ActionErrors } from "app/helpers-server";
 import { type RaceFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
-import { useCharacterPresenter } from "../helpers-client";
-import { Alert } from "react-bootstrap";
+import { updateSecondaryTrait, UpdateState, UpdateTraitInput } from "./actions";
+import { useParams } from "next/navigation";
+import { IdSchema } from "model";
 
-export function RaceAlternateTraits() {
-  const dispatch = useAppDispatch();
-  const presenter = useCharacterPresenter();
-  const traits = presenter.getSecondaryRaceTraits();
+export function RaceAlternateTraits({
+  state,
+  setState,
+}: Readonly<{ state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>) {
+  const { character } = useParams();
+  const characterId = IdSchema.parse(character);
+  const [errors, setErrors] = useState<ActionErrors<UpdateTraitInput>>({});
 
-  function handleTraitEnabled(trait: RaceFeature, e: ChangeEvent<HTMLInputElement>): void {
-    if (e.target.checked) {
-      dispatch(mutators.enableSecondaryTrait(trait));
+  const traits = state.secondaryTraits;
+
+  async function handleTraitEnabled(trait: RaceFeature, e: ChangeEvent<HTMLInputElement>) {
+    const result = await updateSecondaryTrait({ characterId, traitId: trait.id, enable: e.target.checked });
+    if (result.success) {
+      setState(result);
     } else {
-      dispatch(mutators.disableSecondaryTrait(trait));
+      console.error(result.errors);
+      throw new Error("Failed to update secondary trait");
     }
   }
 
@@ -26,24 +35,16 @@ export function RaceAlternateTraits() {
     <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Traits alternatifs</h2>
       {traits.map((trait) => {
-        const isTraitEnabled = presenter.getSelectedRaceTraits().find((t) => t.id === trait.id) !== undefined;
+        const isTraitEnabled = state.selectedTraits.includes(trait.id);
         return (
-          <FeatureComponent
-            key={trait.id}
-            character={presenter}
-            feature={trait}
-            className={isTraitEnabled ? "border-primary" : ""}
-          >
+          <FeatureComponent key={trait.id} feature={trait} className={isTraitEnabled ? "border-primary" : ""}>
             <Form.Switch
               role="switch"
               aria-label={trait.name}
               label={trait.name}
               checked={isTraitEnabled}
               onChange={(e) => handleTraitEnabled(trait, e)}
-              disabled={
-                !isTraitEnabled &&
-                trait.replace.some((r) => presenter.getSelectedRaceTraits().find((t) => t.id === r) === undefined)
-              }
+              disabled={!isTraitEnabled && trait.replace.some((r) => !state.selectedTraits.includes(r.id))}
             />
           </FeatureComponent>
         );

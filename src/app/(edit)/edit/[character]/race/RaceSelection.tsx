@@ -1,26 +1,42 @@
 "use client";
 
-import { ChangeEvent } from "react";
-import Card from "react-bootstrap/Card";
+import { useParams } from "next/navigation";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import { mutators, useAppDispatch } from "logic";
 import { FormSelectRace } from "app/components/FormSelectRace";
 import { useStaticData } from "logic/StaticContext";
-import { RaceEntry } from "view";
+import { IdSchema, Race } from "model";
+import { Card } from "ui";
 import { useCharacterPresenter } from "../helpers-client";
+import { updateRace, UpdateRaceInput, UpdateState } from "./actions";
 import FormSelectVariant from "./FormSelectVariant";
 import FormSelectVariantBonus from "./FormSelectVariantBonus";
+import { ActionErrors } from "app/helpers-server";
 
-export function RaceSelection({ races }: Readonly<{ races: RaceEntry[] }>): JSX.Element {
+export function RaceSelection({
+  races,
+  state,
+  setState,
+}: Readonly<{ races: Race[]; state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>): JSX.Element {
   const dispatch = useAppDispatch();
   const avatars = useStaticData().avatars;
+  const { character } = useParams();
   const presenter = useCharacterPresenter();
-  const selectedRace = presenter.getRace();
+  const [errors, setErrors] = useState<ActionErrors<UpdateRaceInput>>({});
+
+  const characterId = IdSchema.parse(character);
+  const selectedRace = races.find((r) => r.id === state.race);
   const selectedVariant = presenter.getRaceVariant();
 
-  function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    dispatch(mutators.updateRace(id));
+  async function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): Promise<void> {
+    const raceId = e.target.value;
+    const result = await updateRace({ characterId, raceId });
+    if (result.success) {
+      setState(result);
+    } else {
+      setErrors(result.errors);
+    }
   }
 
   function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
@@ -36,7 +52,12 @@ export function RaceSelection({ races }: Readonly<{ races: RaceEntry[] }>): JSX.
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Race</h2>
-      <FormSelectRace races={races} value={selectedRace?.id || ""} onChange={handleRaceChange} />
+      <FormSelectRace
+        races={races}
+        value={selectedRace?.id ?? ""}
+        onChange={handleRaceChange}
+        isInvalid={!!errors.raceId}
+      />
 
       {selectedRace && (
         <FormSelectVariant

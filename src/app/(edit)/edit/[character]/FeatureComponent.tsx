@@ -50,14 +50,12 @@ function convertReplaceToText(character: CharacterPresenter, replace: string[]):
 }
 
 interface FeatureComponentProps {
-  character: CharacterPresenter;
   feature: Feature;
   className?: string;
   children?: JSX.Element;
 }
 
 export default function FeatureComponent({
-  character,
   feature,
   className,
   children,
@@ -73,7 +71,7 @@ export default function FeatureComponent({
         {feature.source === "race" && feature.replace.length > 0 && (
           <p>
             <span>Remplace : </span>
-            {convertReplaceToText(character, feature.replace).join(", ")}
+            {feature.replace.map((r) => r.name).join(", ")}
           </p>
         )}
         {feature.description && <p className="text-muted">{feature.description}</p>}
