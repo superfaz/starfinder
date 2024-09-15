@@ -3,7 +3,6 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Race } from "model";
 import { ViewBuilder } from "view/server";
-import books from "../../../../mocks/books.json";
 import races from "../../../../mocks/races.json";
 import themes from "../../../../mocks/themes.json";
 import classes from "../../../../mocks/classes.json";
@@ -23,7 +22,6 @@ describe("/create", () => {
     const builder = new ViewBuilder();
     render(
       <PageContent
-        books={books}
         races={builder.createRaceEntry(races as Race[])}
         themes={builder.createEntry(themes)}
         classes={builder.createEntry(classes)}
