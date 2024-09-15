@@ -2,8 +2,8 @@ import { useAppSelector } from "logic";
 import type { Reference } from "model";
 
 export function ReferenceComponent({ reference }: Readonly<{ reference: Reference }>) {
-  const data = useAppSelector((state) => state.data);
-  const book = data.books.find((book) => book.id === reference.book);
+  const books = useAppSelector((state) => state.data.books);
+  const book = books.find((book) => book.id === reference.book);
 
   if (!book) {
     console.error(`Book ${reference.book} not found`);

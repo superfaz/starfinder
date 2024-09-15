@@ -23,9 +23,9 @@ function Level1({ presenter, features }: Readonly<{ presenter: CharacterPresente
           return (
             <Col key={feature.id}>
               <Stack gap={4}>
-                <FeatureComponent character={presenter} feature={feature} />
+                <FeatureComponent feature={feature} />
                 {specials.map((special) => (
-                  <FeatureComponent key={special.id} character={presenter} feature={special} />
+                  <FeatureComponent key={special.id} feature={special} />
                 ))}
               </Stack>
             </Col>
@@ -33,7 +33,7 @@ function Level1({ presenter, features }: Readonly<{ presenter: CharacterPresente
         } else {
           return (
             <Col key={feature.id}>
-              <FeatureComponent character={presenter} feature={feature} />
+              <FeatureComponent feature={feature} />
             </Col>
           );
         }
@@ -61,7 +61,7 @@ function LevelN({
       </Col>
       {features.map((feature) => (
         <Col key={feature.id}>
-          <FeatureComponent character={presenter} feature={feature} />
+          <FeatureComponent feature={feature} />
         </Col>
       ))}
       {[...new Array((9 - features.length) % 3)].map((_, index) => (

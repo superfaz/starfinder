@@ -75,14 +75,6 @@ const mainSlice = createSlice({
       }
     },
 
-    enableSecondaryTrait(state, action: PayloadAction<RaceFeature>) {
-      state.character = enableSecondaryTraitImpl(state.character, action.payload);
-    },
-
-    disableSecondaryTrait(state, action: PayloadAction<RaceFeature>) {
-      state.character = disableSecondaryTraitImpl(state.character, action.payload);
-    },
-
     updateTheme(state, action: PayloadAction<string>) {
       state.character = updateThemeImpl(state.data, state.character, action.payload);
     },

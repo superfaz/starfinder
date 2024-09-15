@@ -29,7 +29,7 @@ export default function ClassDetailsGeneric({ presenter, classId }: CharacterPro
         </Col>
         {levelFeatures.map((feature) => (
           <Col key={feature.id}>
-            <FeatureComponent character={presenter} feature={feature} />
+            <FeatureComponent feature={feature} />
           </Col>
         ))}
         {[...new Array((9 - levelFeatures.length) % 3)].map((_, index) => (
