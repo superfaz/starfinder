@@ -131,7 +131,24 @@ describe("Chain", () => {
 });
 
 describe("Usage", () => {
-  test("Prepare 2 services and executes 2 actions", async () => {
+  test("Prepare 2 services and executes 2 actions - one chain", async () => {
+    const service1 = Block.succeed({ a: 2 });
+    const service2 = Block.succeed({ b: 3 });
+    const action1 = (data: { a: number; b: number }) =>
+      data.b > 0 ? Block.succeed(data.a + data.b) : Block.fail("b is negative");
+    const action2 = (data: number) => Block.succeed(data * 2);
+
+    const actual = Chain.start(
+      service1,
+      Chain.addData(() => service2),
+      Chain.withSuccess(action1),
+      Chain.withSuccess(action2)
+    );
+
+    expect(await actual).toEqual({ success: true, data: 10 });
+  });
+
+  test("Prepare 2 services and executes 2 actions - two chains", async () => {
     const service1 = Block.succeed({ a: 2 });
     const service2 = Block.succeed({ b: 3 });
     const action1 = (data: { a: number; b: number }) =>

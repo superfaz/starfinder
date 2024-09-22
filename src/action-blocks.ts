@@ -10,7 +10,7 @@ export interface FailureResult<Error> {
 
 export type Result<Data, Error = never> = SuccessResult<Data> | FailureResult<Error>;
 
-export type PromisedResult<Data, Error> = Promise<Result<Data, Error>>;
+export type PromisedResult<Data, Error = never> = Promise<Result<Data, Error>>;
 
 export class Block {
   static async succeed<Data>(result: Data): PromisedResult<Data, never> {
