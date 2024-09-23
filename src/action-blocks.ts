@@ -58,6 +58,15 @@ export class Node<Data, Error = never, Context = never> {
     );
   }
 
+  public onError<DataB, ErrorB>(
+    callback: (error: Error, context: Context) => PromisedResult<DataB, ErrorB>
+  ): Node<DataB, Error | ErrorB, Context> {
+    return this.add(
+      (r) =>
+        (r.success ? Block.succeed(r.data) : callback(r.error, this.context)) as PromisedResult<DataB, Error | ErrorB>
+    );
+  }
+
   public addData<DataB, ErrorB>(
     callback: (data: Data, context: Context) => PromisedResult<DataB, ErrorB>
   ): Node<Data & DataB, Error | ErrorB, Context> {

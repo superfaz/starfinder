@@ -84,6 +84,24 @@ describe("Node", () => {
     expect(await actual).toEqual({ success: false, error: "error" });
   });
 
+  test("onError() recover", async () => {
+    const start = Block.fail("error");
+    const converting = (error: string) => Block.succeed(error + "2");
+
+    const actual = new Node(start, undefined).onError(converting).runAsync();
+
+    expect(await actual).toEqual({ success: true, data: "error2" });
+  });
+
+  test("onError() fail", async () => {
+    const start = Block.fail("error");
+    const converting = (error: string) => Block.fail(error + "2");
+
+    const actual = new Node(start, undefined).onError(converting).runAsync();
+
+    expect(await actual).toEqual({ success: false, error: "error2" });
+  });
+
   test("addData() success", async () => {
     const start = Block.succeed({ current: 2 });
     const extra = () => Block.succeed({ extra: 3 });
@@ -156,5 +174,23 @@ describe("Usage", () => {
     } else {
       expect.fail("services failed");
     }
+  });
+
+  test("Add 2 services and recover from an error", async () => {
+    const service1 = { a: 2 };
+    const service2 = { b: 3 };
+    const action1 = (data: number, context: { a: number; b: number }) =>
+      data > 0 ? Block.succeed(data + context.a + context.b) : Block.fail("negative");
+    const action2 = (data: number) => Block.succeed(data * 2);
+
+    const actual = Chain.start(-2)
+      .addContext(service1)
+      .addContext(service2)
+      .onSuccess(action1)
+      .onError(() => Block.succeed(1))
+      .onSuccess(action1)
+      .onSuccess(action2);
+
+    expect(await actual.runAsync()).toEqual({ success: true, data: 12 });
   });
 });
