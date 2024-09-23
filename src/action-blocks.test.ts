@@ -163,7 +163,7 @@ describe("Usage", () => {
       data > 0 ? Block.succeed(data + context.a + context.b) : Block.fail("negative");
     const action2 = (data: number) => Block.succeed(data * 2);
 
-    const services = await Chain.start()
+    const services = await Chain.start({})
       .addData(() => service1)
       .addData(() => service2)
       .runAsync();

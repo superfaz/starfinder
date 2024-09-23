@@ -85,7 +85,9 @@ export class Node<Data, Error = never, Context = never> {
     });
   }
 
-  public addContext<ContextB, ErrorB>(extra: ContextB): Node<Data, Error | ErrorB, Context & ContextB> {
+  public addContext<ContextB>(
+    extra: ContextB
+  ): Node<Data, Error, [Context] extends [never] ? ContextB : Context & ContextB> {
     return new Node(this.node, { ...this.context, ...extra });
   }
 
