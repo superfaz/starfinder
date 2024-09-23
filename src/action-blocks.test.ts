@@ -1,4 +1,4 @@
-import { Block, Chain, Result } from "./action-blocks";
+import { Block, Chain, Node, Result } from "./action-blocks";
 import { describe, expect, test } from "vitest";
 
 describe("Block", () => {
@@ -33,136 +33,128 @@ describe("Block", () => {
   });
 });
 
-describe("Chain", () => {
-  test("start(a,b) success", async () => {
+describe("Node", () => {
+  test("runAsync() success", async () => {
+    const start = Block.succeed(2);
+    const actual = new Node(start, undefined).runAsync();
+    expect(await actual).toEqual({ success: true, data: 2 });
+  });
+
+  test("runAsync() fail", async () => {
+    const start = Block.fail("error");
+    const actual = new Node(start, undefined).runAsync();
+    expect(await actual).toEqual({ success: false, error: "error" });
+  });
+
+  test("add() success", async () => {
     const start = Block.succeed(2);
     const converting = (previous: Result<number, string>) =>
       previous.success ? Block.succeed(previous.data + 2) : Block.fail(previous.error);
 
-    const actual = Chain.start(start, converting);
+    const actual = new Node(start, undefined).add(converting).runAsync();
 
     expect(await actual).toEqual({ success: true, data: 4 });
   });
 
-  test("start(a,b) a fail", async () => {
+  test("add() fail", async () => {
     const start = Block.fail("error");
     const converting = (previous: Result<number, string>) =>
       previous.success ? Block.succeed(previous.data + 2) : Block.fail(previous.error);
 
-    const actual = Chain.start(start, converting);
+    const actual = new Node(start, undefined).add(converting).runAsync();
 
     expect(await actual).toEqual({ success: false, error: "error" });
   });
 
-  test("start(a,b) b fail", async () => {
-    const start = Block.succeed(2);
-    const converting = () => Block.fail("error");
-
-    const actual = Chain.start(start, converting);
-
-    expect(await actual).toEqual({ success: false, error: "error" });
-  });
-
-  test("start(a,b) b fix", async () => {
-    const start = Block.fail("error");
-    const converting = (previous: Result<number, string>) =>
-      previous.success ? Block.succeed(previous.data + 2) : Block.succeed(-2);
-
-    const actual = Chain.start(start, converting);
-
-    expect(await actual).toEqual({ success: true, data: -2 });
-  });
-
-  test("start3(a,b,c) success", async () => {
-    const start = Block.succeed(2);
-    const converting = (previous: Result<number, string>) =>
-      previous.success ? Block.succeed(previous.data + 2) : Block.fail(previous.error);
-
-    const actual = Chain.start(start, converting, converting);
-
-    expect(await actual).toEqual({ success: true, data: 6 });
-  });
-
-  test("start3(a,b,c) a fail", async () => {
-    const start = Block.fail("error");
-    const converting = (previous: Result<number, string>) =>
-      previous.success ? Block.succeed(previous.data + 2) : Block.fail(previous.error);
-
-    const actual = Chain.start(start, converting);
-
-    expect(await actual).toEqual({ success: false, error: "error" });
-  });
-
-  test("withSuccess(a,b) success", async () => {
+  test("onSuccess() success", async () => {
     const start = Block.succeed(2);
     const converting = (previous: number) => Block.succeed(previous + 2);
 
-    const actual = Chain.withSuccess(converting)(await start);
+    const actual = new Node(start, undefined).onSuccess(converting).runAsync();
 
     expect(await actual).toEqual({ success: true, data: 4 });
   });
 
-  test("withSuccess(a,b) a fail", async () => {
+  test("onSuccess() fail", async () => {
     const start = Block.fail("error");
     const converting = (previous: number) => Block.succeed(previous + 2);
 
-    const actual = Chain.withSuccess(converting)(await start);
+    const actual = new Node(start, undefined).onSuccess(converting).runAsync();
 
     expect(await actual).toEqual({ success: false, error: "error" });
   });
 
-  test("withSuccess(a,b) b fail", async () => {
+  test("addData() success", async () => {
+    const start = Block.succeed({ current: 2 });
+    const extra = () => Block.succeed({ extra: 3 });
+
+    const actual = new Node(start, undefined).addData(extra).runAsync();
+
+    expect(await actual).toEqual({ success: true, data: { extra: 3, current: 2 } });
+  });
+
+  test("addContext() success", async () => {
     const start = Block.succeed(2);
-    const converting = (previous: number) => Block.fail("error");
 
-    const actual = Chain.withSuccess(converting)(await start);
+    const actual = new Node(start, {})
+      .addContext({ extra: 3 })
+      .onSuccess((data, context) => Block.succeed(data + context.extra));
 
-    expect(await actual).toEqual({ success: false, error: "error" });
-  });
-
-  test("addData(a,b) success", async () => {
-    const start = Block.succeed({ first: "first value" });
-    const converting = () => Block.succeed({ second: "second value" });
-
-    const actual = Chain.addData(converting)(await start);
-
-    expect(await actual).toEqual({ success: true, data: { first: "first value", second: "second value" } });
+    expect(await actual.runAsync()).toEqual({ success: true, data: 5 });
   });
 });
 
 describe("Usage", () => {
-  test("Prepare 2 services and executes 2 actions - one chain", async () => {
-    const service1 = Block.succeed({ a: 2 });
-    const service2 = Block.succeed({ b: 3 });
+  test("Build data and executes 2 actions", async () => {
+    const data1 = Block.succeed({ a: 2 });
+    const data2 = Block.succeed({ b: 3 });
     const action1 = (data: { a: number; b: number }) =>
       data.b > 0 ? Block.succeed(data.a + data.b) : Block.fail("b is negative");
     const action2 = (data: number) => Block.succeed(data * 2);
 
-    const actual = Chain.start(
-      service1,
-      Chain.addData(() => service2),
-      Chain.withSuccess(action1),
-      Chain.withSuccess(action2)
-    );
+    const actual = Chain.start()
+      .addData(() => data1)
+      .addData(() => data2)
+      .onSuccess(action1)
+      .onSuccess(action2);
 
-    expect(await actual).toEqual({ success: true, data: 10 });
+    expect(await actual.runAsync()).toEqual({ success: true, data: 10 });
   });
 
-  test("Prepare 2 services and executes 2 actions - two chains", async () => {
-    const service1 = Block.succeed({ a: 2 });
-    const service2 = Block.succeed({ b: 3 });
-    const action1 = (data: { a: number; b: number }) =>
-      data.b > 0 ? Block.succeed(data.a + data.b) : Block.fail("b is negative");
+  test("Add 2 services and executes 2 actions", async () => {
+    const service1 = { a: 2 };
+    const service2 = { b: 3 };
+    const action1 = (data: number, context: { a: number; b: number }) =>
+      data > 0 ? Block.succeed(data + context.a + context.b) : Block.fail("negative");
     const action2 = (data: number) => Block.succeed(data * 2);
 
-    const services = Chain.start(
-      service1,
-      Chain.addData(() => service2)
-    );
-    expect(await services).toEqual({ success: true, data: { a: 2, b: 3 } });
+    const actual = Chain.start(2)
+      .addContext(service1)
+      .addContext(service2)
+      .onSuccess(action1)
+      .onSuccess(action1)
+      .onSuccess(action2);
 
-    const actual = Chain.start(services, Chain.withSuccess(action1), Chain.withSuccess(action2));
+    expect(await actual.runAsync()).toEqual({ success: true, data: 24 });
+  });
 
-    expect(await actual).toEqual({ success: true, data: 10 });
+  test("Prepare 2 services and executes 2 actions", async () => {
+    const service1 = Block.succeed({ a: 2 });
+    const service2 = Block.succeed({ b: 3 });
+    const action1 = (data: number, context: { a: number; b: number }) =>
+      data > 0 ? Block.succeed(data + context.a + context.b) : Block.fail("negative");
+    const action2 = (data: number) => Block.succeed(data * 2);
+
+    const services = await Chain.start()
+      .addData(() => service1)
+      .addData(() => service2)
+      .runAsync();
+
+    if (services.success) {
+      const actual = Chain.start(2, services.data).onSuccess(action1).onSuccess(action1).onSuccess(action2);
+      expect(await actual.runAsync()).toEqual({ success: true, data: 24 });
+    } else {
+      expect.fail("services failed");
+    }
   });
 });

@@ -35,52 +35,61 @@ export class Block {
   }
 }
 
-export class Chain {
-  static async start<A, B, Error>(a: Promise<A>, ab: (result: A) => PromisedResult<B, Error>): PromisedResult<B, Error>;
-  static async start<A, B, C, Error>(
-    a: Promise<A>,
-    ab: (result: A) => Promise<B>,
-    bc: (result: B) => PromisedResult<C, Error>
-  ): PromisedResult<C, Error>;
-  static async start<A, B, C, D, Error>(
-    a: Promise<A>,
-    ab: (result: A) => Promise<B>,
-    bc: (result: B) => Promise<C>,
-    cd: (result: C) => PromisedResult<D, Error>
-  ): PromisedResult<C, Error>;
-  static async start<A, Data, Error>(
-    a: Promise<A>,
-    ...args: ((result: unknown) => Promise<unknown>)[]
-  ): PromisedResult<Data, Error> {
-    let result: unknown = await a;
-    for (let i = 0, len = args.length; i < len; i++) {
-      result = await args[i](result);
-    }
-    return result as PromisedResult<Data, Error>;
+export class Node<Data, Error = never, Context = never> {
+  constructor(
+    private readonly node: PromisedResult<Data, Error>,
+    private readonly context: Context
+  ) {}
+
+  public add<DataB, ErrorB>(
+    node: (result: Result<Data, Error>, context: Context) => PromisedResult<DataB, ErrorB>
+  ): Node<DataB, Error | ErrorB, Context> {
+    return new Node(
+      this.node.then((r) => node(r, this.context)),
+      this.context
+    );
   }
 
-  static withSuccess<Data1, Error1, Data2, Error2>(
-    callback: (result: Data1) => PromisedResult<Data2, Error2>
-  ): (result: Result<Data1, Error1>) => PromisedResult<Data2, Error1 | Error2> {
-    return async (result) => {
-      if (result.success) {
-        return callback(result.data);
-      } else {
-        return result;
-      }
-    };
+  public onSuccess<DataB, ErrorB>(
+    callback: (data: Data, context: Context) => PromisedResult<DataB, ErrorB>
+  ): Node<DataB, Error | ErrorB, Context> {
+    return this.add(
+      (r) => (r.success ? callback(r.data, this.context) : Block.fail(r.error)) as PromisedResult<DataB, Error | ErrorB>
+    );
   }
 
-  static addData<Data1, Error1, Data2, Error2>(
-    callback: (result: Data1) => PromisedResult<Data2, Error2>
-  ): (result: Result<Data1, Error1>) => PromisedResult<Data1 & Data2, Error1 | Error2> {
-    return Chain.withSuccess(async (data1) => {
-      const result2 = await callback(data1);
-      if (result2.success) {
-        return Block.succeed({ ...data1, ...result2.data });
+  public addData<DataB, ErrorB>(
+    callback: (data: Data, context: Context) => PromisedResult<DataB, ErrorB>
+  ): Node<Data & DataB, Error | ErrorB, Context> {
+    return this.add((r) => {
+      if (r.success) {
+        return callback(r.data, this.context).then(
+          (s) =>
+            (s.success ? Block.succeed({ ...r.data, ...s.data }) : Block.fail(s.error)) as PromisedResult<
+              Data & DataB,
+              Error | ErrorB
+            >
+        );
       } else {
-        return result2;
+        return Block.fail(r.error);
       }
     });
+  }
+
+  public addContext<ContextB, ErrorB>(extra: ContextB): Node<Data, Error | ErrorB, Context & ContextB> {
+    return new Node(this.node, { ...this.context, ...extra });
+  }
+
+  public runAsync(): PromisedResult<Data, Error> {
+    return this.node;
+  }
+}
+
+export class Chain {
+  static start(): Node<undefined, never, never>;
+  static start<Data>(initial: Data): Node<Data, never, never>;
+  static start<Data, Context>(initial: Data, context: Context): Node<Data, never, Context>;
+  static start<Data, Context>(initial?: Data, context?: Context): Node<Data | undefined, never, Context | undefined> {
+    return new Node(Block.succeed(initial), context);
   }
 }
