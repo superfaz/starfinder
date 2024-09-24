@@ -3,28 +3,28 @@ export interface SuccessResult<Data> {
   data: Data;
 }
 
-export interface FailureResult<Error> {
+export interface FailureResult<Err extends Error> {
   success: false;
-  error: Error;
+  error: Err;
 }
 
-export type Result<Data, Error = never> = SuccessResult<Data> | FailureResult<Error>;
+export type Result<Data, Err extends Error = never> = SuccessResult<Data> | FailureResult<Err>;
 
-export type PromisedResult<Data, Error = never> = Promise<Result<Data, Error>>;
+export type PromisedResult<Data, Err extends Error = never> = Promise<Result<Data, Err>>;
 
 export class Block {
   static async succeed<Data>(result: Data): PromisedResult<Data, never> {
     return { success: true, data: result };
   }
 
-  static async fail<Error>(error: Error): PromisedResult<never, Error> {
+  static async fail<Err extends Error>(error: Err): PromisedResult<never, Err> {
     return { success: false, error };
   }
 
-  static async convert<Data, Error>(pair: {
+  static async convert<Data, Err extends Error>(pair: {
     try: () => Promise<Data>;
-    catch: (e: unknown) => Error;
-  }): PromisedResult<Data, Error> {
+    catch: (e: unknown) => Err;
+  }): PromisedResult<Data, Err> {
     try {
       const result = await pair.try();
       return Block.succeed(result);
@@ -35,48 +35,47 @@ export class Block {
   }
 }
 
-export class Node<Data, Error = never, Context = never> {
+export class Node<Data, Err extends Error = never, Context = never> {
   constructor(
-    private readonly node: PromisedResult<Data, Error>,
+    private readonly node: PromisedResult<Data, Err>,
     private readonly context: Context
   ) {}
 
-  public add<DataB, ErrorB>(
-    node: (result: Result<Data, Error>, context: Context) => PromisedResult<DataB, ErrorB>
-  ): Node<DataB, Error | ErrorB, Context> {
+  public add<DataB, ErrB extends Error>(
+    node: (result: Result<Data, Err>, context: Context) => PromisedResult<DataB, ErrB>
+  ): Node<DataB, Err | ErrB, Context> {
     return new Node(
       this.node.then((r) => node(r, this.context)),
       this.context
     );
   }
 
-  public onSuccess<DataB, ErrorB>(
-    callback: (data: Data, context: Context) => PromisedResult<DataB, ErrorB>
-  ): Node<DataB, Error | ErrorB, Context> {
+  public onSuccess<DataB, ErrB extends Error>(
+    callback: (data: Data, context: Context) => PromisedResult<DataB, ErrB>
+  ): Node<DataB, Err | ErrB, Context> {
     return this.add(
-      (r) => (r.success ? callback(r.data, this.context) : Block.fail(r.error)) as PromisedResult<DataB, Error | ErrorB>
+      (r) => (r.success ? callback(r.data, this.context) : Block.fail(r.error)) as PromisedResult<DataB, Err | ErrB>
     );
   }
 
-  public onError<DataB, ErrorB>(
-    callback: (error: Error, context: Context) => PromisedResult<DataB, ErrorB>
-  ): Node<DataB, Error | ErrorB, Context> {
+  public onError<DataB, ErrB extends Error>(
+    callback: (error: Err, context: Context) => PromisedResult<DataB, ErrB>
+  ): Node<DataB, Err | ErrB, Context> {
     return this.add(
-      (r) =>
-        (r.success ? Block.succeed(r.data) : callback(r.error, this.context)) as PromisedResult<DataB, Error | ErrorB>
+      (r) => (r.success ? Block.succeed(r.data) : callback(r.error, this.context)) as PromisedResult<DataB, Err | ErrB>
     );
   }
 
-  public addData<DataB, ErrorB>(
-    callback: (data: Data, context: Context) => PromisedResult<DataB, ErrorB>
-  ): Node<Data & DataB, Error | ErrorB, Context> {
+  public addData<DataB, ErrB extends Error>(
+    callback: (data: Data, context: Context) => PromisedResult<DataB, ErrB>
+  ): Node<Data & DataB, Err | ErrB, Context> {
     return this.add((r) => {
       if (r.success) {
         return callback(r.data, this.context).then(
           (s) =>
             (s.success ? Block.succeed({ ...r.data, ...s.data }) : Block.fail(s.error)) as PromisedResult<
               Data & DataB,
-              Error | ErrorB
+              Err | ErrB
             >
         );
       } else {
@@ -87,11 +86,11 @@ export class Node<Data, Error = never, Context = never> {
 
   public addContext<ContextB>(
     extra: ContextB
-  ): Node<Data, Error, [Context] extends [never] ? ContextB : Context & ContextB> {
+  ): Node<Data, Err, [Context] extends [never] ? ContextB : Context & ContextB> {
     return new Node(this.node, { ...this.context, ...extra });
   }
 
-  public runAsync(): PromisedResult<Data, Error> {
+  public runAsync(): PromisedResult<Data, Err> {
     return this.node;
   }
 }
