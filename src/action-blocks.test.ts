@@ -1,4 +1,4 @@
-import { Block, Chain, Node, Result } from "./action-blocks";
+import { Block, Chain, DelayedNode, Node, Result } from "./action-blocks";
 import { describe, expect, test } from "vitest";
 
 class TestError extends Error {
@@ -125,6 +125,24 @@ describe("Node", () => {
       .onSuccess((data, context) => Block.succeed(data + context.extra));
 
     expect(await actual.runAsync()).toEqual({ success: true, data: 5 });
+  });
+});
+
+describe("DelayedNode", () => {
+  test("constructor", async () => {
+    const chain = Chain.prepare<number>();
+
+    const actual = await chain.runAsync(2, {});
+    expect(actual).toEqual({ success: true, data: 2 });
+  });
+
+  test("add() success", async () => {
+    const chain: DelayedNode<number, Record<string, never>, number, never, number, never> = Chain.prepare<number>().add(
+      (result) => (result.success ? Block.succeed(result.data + 2) : Block.fail(result.error))
+    );
+
+    const actual = await chain.runAsync(2, {});
+    expect(actual).toEqual({ success: true, data: 4 });
   });
 });
 
