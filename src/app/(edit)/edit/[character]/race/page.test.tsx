@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { cleanup, screen, within } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import races from "mocks/races.json";
 import { RaceSchema } from "model";

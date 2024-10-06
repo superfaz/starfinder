@@ -1,7 +1,6 @@
 import Card from "react-bootstrap/Card";
 import ModifierComponent from "app/components/ModifierComponent";
-import { CharacterPresenter } from "logic";
-import { ModifierTypes, type FeatureCategory } from "model";
+import { type FeatureCategory } from "model";
 import { Badge } from "ui";
 import type { Feature } from "view";
 
@@ -20,34 +19,6 @@ const evolutionLabels: Record<string, string> = {
   strike: "Attaques: ",
   usage: "Utilisations: ",
 };
-
-/**
- * Converts a list of replace ids to a list of trait names.
- *
- * @param character - the character presenter
- * @param replace - the list of replace ids
- * @returns the list of trait names
- */
-function convertReplaceToText(character: CharacterPresenter, replace: string[]): string[] {
-  return replace.map((id) => {
-    const trait = character.getPrimaryRaceTraits().find((t) => t.id === id);
-    if (trait) {
-      return trait.name;
-    }
-
-    const modifier = character
-      .getPrimaryRaceTraits()
-      .map((t) => t.modifiers)
-      .flat()
-      .find((c) => c.id === id);
-
-    if (!modifier || (modifier.type !== ModifierTypes.ability && modifier.type !== ModifierTypes.savingThrow)) {
-      return id;
-    }
-
-    return modifier.name;
-  });
-}
 
 interface FeatureComponentProps {
   feature: Feature;

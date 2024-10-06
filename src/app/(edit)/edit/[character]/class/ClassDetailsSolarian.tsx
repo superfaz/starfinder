@@ -1,7 +1,6 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import { CharacterPresenter } from "logic";
 import { Badge } from "ui";
 import { type ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
@@ -9,7 +8,7 @@ import { useClassDetails } from "../helpers-client";
 import { CharacterProps } from "../Props";
 import ClassDetailsLoading from "./ClassDetailsLoading";
 
-function Level1({ presenter, features }: Readonly<{ presenter: CharacterPresenter; features: ClassFeature[] }>) {
+function Level1({ features }: Readonly<{ features: ClassFeature[] }>) {
   const specials = features.filter((f) => f.id.startsWith("solarian-"));
   const others = features.filter((f) => !f.id.startsWith("solarian-"));
 
@@ -47,11 +46,9 @@ function Level1({ presenter, features }: Readonly<{ presenter: CharacterPresente
 
 function LevelN({
   level,
-  presenter,
   features,
 }: Readonly<{
   level: number;
-  presenter: CharacterPresenter;
   features: ClassFeature[];
 }>) {
   return (
@@ -88,9 +85,9 @@ export default function ClassDetailsGeneric({ presenter, classId }: Readonly<Cha
     const levelFeatures = features.filter((s) => s.level === level);
 
     if (level === 1) {
-      return <Level1 key={level} presenter={presenter} features={levelFeatures} />;
+      return <Level1 key={level} features={levelFeatures} />;
     } else {
-      return <LevelN key={level} level={level} presenter={presenter} features={levelFeatures} />;
+      return <LevelN key={level} level={level} features={levelFeatures} />;
     }
   });
 }

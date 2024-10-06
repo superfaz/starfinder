@@ -10,7 +10,6 @@ import {
   type Profession,
   EquipmentDescriptor,
 } from "model";
-import { type RaceFeature } from "view";
 import { computeMinimalAbilityScores } from "./CharacterPresenter";
 
 const initialState = {

@@ -1,13 +1,12 @@
 "use client";
 
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import { ActionErrors } from "app/helpers-server";
 import { type RaceFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
-import { updateSecondaryTrait, UpdateState, UpdateTraitInput } from "./actions";
+import { updateSecondaryTrait, UpdateState } from "./actions";
 import { useParams } from "next/navigation";
 import { IdSchema } from "model";
 
@@ -17,7 +16,6 @@ export function RaceAlternateTraits({
 }: Readonly<{ state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>) {
   const { character } = useParams();
   const characterId = IdSchema.parse(character);
-  const [errors, setErrors] = useState<ActionErrors<UpdateTraitInput>>({});
 
   const traits = state.secondaryTraits;
 
