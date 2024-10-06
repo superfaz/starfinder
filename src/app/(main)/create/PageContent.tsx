@@ -13,8 +13,8 @@ import { FormSelectClass } from "app/components/FormSelectClass";
 import { FormSelectRace } from "app/components/FormSelectRace";
 import { FormSelectTheme } from "app/components/FormSelectTheme";
 import type { IEntry } from "model";
-import { type RaceEntry } from "view";
-import { create, type CreateErrors, type CreateData } from "./actions";
+import { CreateDataErrors, type RaceEntry } from "view";
+import { create, type CreateData } from "./actions";
 
 export function PageContent({
   races,
@@ -26,7 +26,7 @@ export function PageContent({
   classes: IEntry[];
 }>) {
   const [state, setState] = useState<CreateData>({ name: "" });
-  const [errors, setErrors] = useState<CreateErrors>({});
+  const [errors, setErrors] = useState<CreateDataErrors>({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 

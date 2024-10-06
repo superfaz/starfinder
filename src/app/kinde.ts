@@ -42,9 +42,8 @@ type KindeStateData = Omit<
 
 export const useKindeBrowserClient = (
   apiPath: string = process.env.NEXT_PUBLIC_KINDE_AUTH_API_PATH ?? process.env.KINDE_AUTH_API_PATH ?? "/api/auth",
-  isDebugMode: boolean = process.env.NEXT_PUBLIC_KINDE_AUTH_DEBUG_MODE === "true" ??
-    process.env.KINDE_AUTH_DEBUG_MODE === "true" ??
-    false
+  isDebugMode: boolean = process.env.NEXT_PUBLIC_KINDE_AUTH_DEBUG_MODE === "true" ||
+    process.env.KINDE_AUTH_DEBUG_MODE === "true"
 ): KindeState => {
   const [state, setState] = useState<KindeStateData>({
     accessToken: null,

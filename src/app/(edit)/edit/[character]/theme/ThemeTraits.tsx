@@ -24,7 +24,7 @@ export function ThemeTraits() {
             <Badge bg="secondary">Niv. {feature.level}</Badge>
           </Col>
           <Col>
-            <FeatureComponent character={presenter} feature={feature} />
+            <FeatureComponent feature={feature} />
           </Col>
         </Row>
       ))}
