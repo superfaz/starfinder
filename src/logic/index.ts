@@ -1,6 +1,7 @@
 export * from "./AlignmentHelper";
 export * from "./CharacterPresenter";
 export * from "./DronePresenter";
+export * from "./errors";
 export * from "./FeatPresenter";
 export * from "./ICharacterPresenter";
 export * from "./interfaces";

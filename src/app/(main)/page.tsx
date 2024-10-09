@@ -1,23 +1,26 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { DataSets, DataSource } from "data";
+import { DataSets } from "data";
 import { ViewBuilder } from "view/server";
 import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";
+import { start, succeed } from "chain-of-actions";
+import { getAuthenticatedUser, getDataSource } from "logic/server";
 
 export default async function Page() {
-  const { isAuthenticated, getUser } = getKindeServerSession();
-  const isUserAuthenticated = await isAuthenticated();
-  const user = await getUser();
+  const user = await getAuthenticatedUser();
 
-  if (isUserAuthenticated) {
-    const dataSource = new DataSource();
-    const builder = new ViewBuilder(dataSource);
-
-    const characters = await builder.createCharacter(
-      await dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3)
-    );
-    return <PageAuthenticated characters={characters} />;
-  } else {
+  if (!user.success) {
     return <PageContent />;
+  } else {
+    const characters = await start(user.data)
+      .addData(() => getDataSource())
+      .addData(({ dataSource }) => succeed(new ViewBuilder(dataSource)))
+      .onSuccess(({ dataSource, user }) => dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3))
+      .runAsync();
+
+    if (!characters.success) {
+      throw new Error("Failed to load characters", characters.error);
+    } else {
+      return <PageAuthenticated characters={characters.data} />;
+    }
   }
 }

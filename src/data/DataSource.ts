@@ -1,7 +1,9 @@
-import * as Sentry from "@sentry/nextjs";
-import { Db, DeleteResult, type Document, type Filter, MongoClient, type Sort } from "mongodb";
+import { convert, PromisedResult, start, succeed } from "chain-of-actions";
+import { Db, type Document, type Filter, MongoClient, type Sort } from "mongodb";
+import { unstable_cache } from "next/cache";
 import type { IModel } from "model";
-import type {
+import { DataSourceError } from "logic";
+import {
   IDataSource,
   IDescriptor,
   IDynamicDataSet,
@@ -9,9 +11,9 @@ import type {
   IStaticDataSet,
   IStaticDescriptor,
 } from "./interfaces";
-import { unstable_cache } from "next/cache";
 
 import "server-only";
+import { fail } from "assert";
 
 async function findCore<T extends IModel>(
   database: Db,
@@ -19,7 +21,7 @@ async function findCore<T extends IModel>(
   query: Filter<T> | undefined,
   sort?: Sort,
   limit?: number
-): Promise<T[]> {
+): PromisedResult<T[], DataSourceError> {
   if (sort === undefined) {
     switch (descriptor.type) {
       case "simple":
@@ -45,16 +47,18 @@ async function findCore<T extends IModel>(
     preparedQuery = preparedQuery.limit(limit);
   }
 
-  const results = await preparedQuery.toArray();
-  try {
-    return descriptor.schema.array().parse(results);
-  } catch (e: unknown) {
-    Sentry.captureException(e);
-    throw new Error(`Failed to get ${descriptor.name}`, { cause: e });
-  }
+  return start()
+    .onSuccess(() =>
+      convert({
+        try: () => preparedQuery.toArray(),
+        catch: (e: unknown) => new DataSourceError(`Failed to get ${descriptor.name}`, { cause: e }),
+      })
+    )
+    .onSuccess((results) => succeed(descriptor.schema.array().parse(results)))
+    .runAsync();
 }
 
-async function getAllCore<T extends IModel>(database: Db, descriptor: IDescriptor<T>): Promise<T[]> {
+function getAllCore<T extends IModel>(database: Db, descriptor: IDescriptor<T>): PromisedResult<T[], DataSourceError> {
   return findCore(database, descriptor, undefined);
 }
 
@@ -62,29 +66,36 @@ async function findOneCore<T extends IModel>(
   database: Db,
   descriptor: IDescriptor<T>,
   id: string
-): Promise<T | undefined> {
+): PromisedResult<T | undefined, DataSourceError> {
   const isT = (obj: unknown): obj is T => descriptor.schema.safeParse(obj).success;
-  const result = await database.collection(descriptor.name).findOne({ id });
-
-  if (result === null) {
-    return undefined;
-  }
-
-  if (!isT(result)) {
-    throw new Error(`Failed to parse ${descriptor.name}/${id}`);
-  }
-
-  return result;
+  return start()
+    .onSuccess(() =>
+      convert({
+        try: () => database.collection(descriptor.name).findOne({ id }),
+        catch: (e) => new DataSourceError("", { cause: e }),
+      })
+    )
+    .onSuccess((result) => {
+      if (result && !isT(result)) {
+        return fail(new DataSourceError(`Failed to parse ${descriptor.name}/${id}`));
+      } else {
+        return succeed(result === null ? undefined : result);
+      }
+    })
+    .runAsync();
 }
 
-async function getOneCore<T extends IModel>(database: Db, descriptor: IDescriptor<T>, id: string): Promise<T> {
-  const result = await findOneCore(database, descriptor, id);
-
-  if (result === undefined) {
-    throw new Error(`Failed to get ${descriptor.name}/${id}`);
-  }
-
-  return result;
+function getOneCore<T extends IModel>(
+  database: Db,
+  descriptor: IDescriptor<T>,
+  id: string
+): PromisedResult<T, DataSourceError> {
+  return start()
+    .onSuccess(() => findOneCore(database, descriptor, id))
+    .onSuccess((result) =>
+      result ? succeed(result) : fail(new DataSourceError(`Failed to get ${descriptor.name}/${id}`))
+    )
+    .runAsync();
 }
 
 class StaticDataSet<T extends IModel> implements IStaticDataSet<T> {
@@ -123,45 +134,69 @@ class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDyna
   getOne = (id: string) => getOneCore(this.database, this.descriptor, id);
   findOne = (id: string) => findOneCore(this.database, this.descriptor, id);
 
-  async create(data: T): Promise<T> {
+  create(data: T): PromisedResult<T, DataSourceError> {
     const protect = this.descriptor.schema.safeParse(data);
     if (protect.success === false) {
-      throw new Error(`Failed to validate a ${this.descriptor.name}`);
+      return fail(new DataSourceError(`Failed to validate a ${this.descriptor.name}`));
     }
 
-    const result = await this.database.collection(this.descriptor.name).insertOne(protect.data);
-    if (!result.acknowledged) {
-      throw new Error(`Failed to create ${this.descriptor.name}`);
-    }
+    return start()
+      .onSuccess(() =>
+        convert({
+          try: () => this.database.collection(this.descriptor.name).insertOne(protect.data),
+          catch: (e) => new DataSourceError(`Failed to create ${this.descriptor.name}`, { cause: e }),
+        })
+      )
+      .onSuccess((result) => {
+        if (!result.acknowledged) {
+          return fail(new DataSourceError(`Failed to create ${this.descriptor.name}`));
+        }
 
-    return protect.data;
+        return succeed(protect.data);
+      })
+      .runAsync();
   }
 
-  async update(data: T): Promise<T> {
+  update(data: T): PromisedResult<T, DataSourceError> {
     const protect = this.descriptor.schema.safeParse(data);
     if (protect.success === false) {
-      throw new Error(`Failed to validate a ${this.descriptor.name}`);
+      return fail(new DataSourceError(`Failed to validate a ${this.descriptor.name}`));
     }
 
-    const result = await this.database.collection(this.descriptor.name).replaceOne({ id: data.id }, protect.data);
-    if (!result.acknowledged) {
-      throw new Error(`Failed to create ${this.descriptor.name}`);
-    }
-
-    return protect.data;
+    return start()
+      .onSuccess(() =>
+        convert({
+          try: () => this.database.collection(this.descriptor.name).replaceOne({ id: data.id }, protect.data),
+          catch: (e) => new DataSourceError(`Failed to update ${this.descriptor.name}/${data.id}`, { cause: e }),
+        })
+      )
+      .onSuccess((result) => {
+        if (!result.acknowledged) {
+          return fail(new DataSourceError(`Failed to update ${this.descriptor.name}/${data.id}`));
+        }
+        return succeed(protect.data);
+      })
+      .runAsync();
   }
 
-  async delete(idOrQuery: string | Filter<T>): Promise<void> {
-    let result: DeleteResult;
-    if (typeof idOrQuery === "string") {
-      result = await this.database.collection(this.descriptor.name).deleteOne({ id: idOrQuery });
-    } else {
-      result = await this.database.collection(this.descriptor.name).deleteOne(idOrQuery as Filter<Document>);
-    }
-
-    if (!result.acknowledged) {
-      throw new Error(`Failed to delete ${this.descriptor.name}/${idOrQuery}`);
-    }
+  delete(idOrQuery: string | Filter<T>): PromisedResult<void, DataSourceError> {
+    return start()
+      .onSuccess(() =>
+        convert({
+          try: () =>
+            this.database
+              .collection(this.descriptor.name)
+              .deleteOne(typeof idOrQuery === "string" ? { id: idOrQuery } : (idOrQuery as Filter<Document>)),
+          catch: (e) => new DataSourceError(`Failed to delete ${this.descriptor.name}/${idOrQuery}`, { cause: e }),
+        })
+      )
+      .onSuccess((result) => {
+        if (!result.acknowledged) {
+          return fail(new DataSourceError(`Failed to delete ${this.descriptor.name}/${idOrQuery}`));
+        }
+        return succeed(undefined);
+      })
+      .runAsync();
   }
 }
 

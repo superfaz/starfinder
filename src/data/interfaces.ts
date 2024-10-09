@@ -1,3 +1,5 @@
+import { PromisedResult } from "chain-of-actions";
+import { DataSourceError } from "action-errors";
 import type { IModel } from "model";
 import type { Filter, Sort } from "mongodb";
 import type { Schema } from "zod";
@@ -19,16 +21,16 @@ export interface IDynamicDescriptor<T extends IModel> extends IBaseDescriptor<T>
 export type IDescriptor<T extends IModel> = IStaticDescriptor<T> | IDynamicDescriptor<T>;
 
 export interface IStaticDataSet<T extends IModel> {
-  getAll(): Promise<T[]>;
-  getOne(id: string): Promise<T>;
-  findOne(id: string): Promise<T | undefined>;
-  find(query: Filter<T>, sort?: Sort, limit?: number): Promise<T[]>;
+  getAll(): PromisedResult<T[], DataSourceError>;
+  getOne(id: string): PromisedResult<T, DataSourceError>;
+  findOne(id: string): PromisedResult<T | undefined, DataSourceError>;
+  find(query: Filter<T>, sort?: Sort, limit?: number): PromisedResult<T[], DataSourceError>;
 }
 
 export interface IDynamicDataSet<T extends IModel> extends IStaticDataSet<T> {
-  create(data: T): Promise<T>;
-  update(data: T): Promise<T>;
-  delete(idOrQuery: string | Filter<T>): Promise<void>;
+  create(data: T): PromisedResult<T, DataSourceError>;
+  update(data: T): PromisedResult<T, DataSourceError>;
+  delete(idOrQuery: string | Filter<T>): PromisedResult<void, DataSourceError>;
 }
 
 export interface IDataSource {
