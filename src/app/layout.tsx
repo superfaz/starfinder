@@ -38,7 +38,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body style={{paddingTop: "5rem", paddingBottom: "4rem"}}>
         {process.env.NODE_ENV === "development" && (
-          <div className="fixed-top ms-1" style={{ right: "auto" }}>
+          <div className="fixed-top ps-2 pt-1" style={{ right: "auto", zIndex:10000 }}>
             <div className="d-block d-sm-none">xs</div>
             <div className="d-none d-sm-block d-md-none">sm</div>
             <div className="d-none d-md-block d-lg-none">md</div>
