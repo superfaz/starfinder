@@ -1,15 +1,14 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import React from "react";
+import { getAuthenticatedUser } from "logic/server";
 import { LayoutAnonymous } from "./LayoutAnonymous";
 import { LayoutAuthenticated } from "./LayoutAuthenticated";
 
 export default async function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const { isAuthenticated } = getKindeServerSession();
-  const isUserAuthenticated = await isAuthenticated();
+  const user = await getAuthenticatedUser();
 
-  if (isUserAuthenticated) {
-    return <LayoutAuthenticated>{children}</LayoutAuthenticated>;
-  } else {
+  if (!user.success) {
     return <LayoutAnonymous>{children}</LayoutAnonymous>;
   }
+
+  return <LayoutAuthenticated>{children}</LayoutAuthenticated>;
 }
