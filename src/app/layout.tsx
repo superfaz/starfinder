@@ -14,14 +14,29 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dataSource = new DataSource();
+
+  const loadData = await Promise.all([
+    dataSource.get(DataSets.AbilityScore).getAll(),
+    dataSource.get(DataSets.ArmorType).getAll(),
+    dataSource.get(DataSets.Avatar).getAll(),
+    dataSource.get(DataSets.DamageTypes).getAll(),
+    dataSource.get(DataSets.Sizes).getAll(),
+    dataSource.get(DataSets.Book).getAll(),
+    dataSource.get(DataSets.WeaponTypes).getAll(),
+  ]);
+
+  if (loadData.some((d) => !d.success)) {
+    throw new Error("Failed to load data");
+  }
+
   const data: IStaticData = {
-    abilityScores: await dataSource.get(DataSets.AbilityScore).getAll(),
-    armorTypes: await dataSource.get(DataSets.ArmorType).getAll(),
-    avatars: await dataSource.get(DataSets.Avatar).getAll(),
-    damageTypes: await dataSource.get(DataSets.DamageTypes).getAll(),
-    sizes: await dataSource.get(DataSets.Sizes).getAll(),
-    books: await dataSource.get(DataSets.Book).getAll(),
-    weaponTypes: await dataSource.get(DataSets.WeaponTypes).getAll(),
+    abilityScores: loadData[0].success ? loadData[0].data : [],
+    armorTypes: loadData[1].success ? loadData[1].data : [],
+    avatars: loadData[2].success ? loadData[2].data : [],
+    damageTypes: loadData[3].success ? loadData[3].data : [],
+    sizes: loadData[4].success ? loadData[4].data : [],
+    books: loadData[5].success ? loadData[5].data : [],
+    weaponTypes: loadData[6].success ? loadData[6].data : [],
   };
 
   return (
@@ -36,9 +51,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           rel="stylesheet"
         />
       </head>
-      <body style={{paddingTop: "5rem", paddingBottom: "4rem"}}>
+      <body style={{ paddingTop: "5rem", paddingBottom: "4rem" }}>
         {process.env.NODE_ENV === "development" && (
-          <div className="fixed-top ps-2 pt-1" style={{ right: "auto", zIndex:10000 }}>
+          <div className="fixed-top ps-2 pt-1" style={{ right: "auto", zIndex: 10000 }}>
             <div className="d-block d-sm-none">xs</div>
             <div className="d-none d-sm-block d-md-none">sm</div>
             <div className="d-none d-md-block d-lg-none">md</div>
