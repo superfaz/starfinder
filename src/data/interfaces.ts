@@ -1,8 +1,8 @@
 import { PromisedResult } from "chain-of-actions";
-import { DataSourceError } from "action-errors";
-import type { IModel } from "model";
 import type { Filter, Sort } from "mongodb";
 import type { Schema } from "zod";
+import { DataSourceError } from "logic";
+import type { IModel } from "model";
 
 interface IBaseDescriptor<T extends IModel> {
   type: "simple" | "named" | "ordered";
