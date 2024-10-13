@@ -23,7 +23,7 @@ export default async function Page() {
       never
     >(() => redirectToSignIn(`/create`))
     .addData(getDataSource)
-    .addData(({ dataSource }) => getViewBuilder(dataSource))
+    .addData(getViewBuilder)
     .runAsync();
 
   if (!context.success) {

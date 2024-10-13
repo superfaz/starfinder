@@ -4,9 +4,9 @@ import { fail, PromisedResult, Result, start, succeed } from "chain-of-actions";
 import { z } from "zod";
 import { type ActionResult } from "app/helpers-server";
 import { DataSets } from "data";
-import { CharacterBuilder, createCharacter, getAuthenticatedUser, getDataSource, parse } from "logic/server";
-import { IdSchema } from "model";
 import { ParsingError, UnauthorizedError } from "logic";
+import { CharacterBuilder, createCharacter, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
+import { IdSchema } from "model";
 
 const CreateDataSchema = z.object({
   race: z.preprocess((v) => v || undefined, IdSchema.optional()),
@@ -19,13 +19,6 @@ const CreateDataSchema = z.object({
 export type CreateData = z.infer<typeof CreateDataSchema>;
 
 export type CreateResult = ActionResult<CreateData, { id: string }>;
-
-function hasValidInput(data: CreateData): PromisedResult<{ data: CreateData }, ParsingError> {
-  return start()
-    .onSuccess(() => parse(CreateDataSchema, data))
-    .onSuccess(async (data) => succeed({ data }))
-    .runAsync();
-}
 
 function parsingError<Data, Err extends Error>(
   errors: Record<string, string[]>,
@@ -54,21 +47,16 @@ function tryUpdate<Err extends Error>(
   };
 }
 
-export async function create(data: CreateData): Promise<CreateResult> {
+export async function create(data: CreateData): PromisedResult<{ id: string }, UnauthorizedError | ParsingError> {
   const context = await start({})
-    .addData(() => hasValidInput(data))
+    .addData(() => hasValidInput(CreateDataSchema, data))
     .addData(() => getAuthenticatedUser())
     .addData(() => getDataSource())
     .addData(({ user, dataSource }) => succeed({ builder: createCharacter(dataSource, user.id) }))
     .runAsync();
 
   if (!context.success) {
-    if (context.error instanceof UnauthorizedError || context.error instanceof ParsingError) {
-      throw context.error;
-    } else {
-      console.error(context.error);
-      throw new Error("Unexpected error");
-    }
+    return context;
   }
 
   const action = await start(undefined, context.data)

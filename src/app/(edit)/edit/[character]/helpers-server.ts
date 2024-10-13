@@ -1,39 +1,31 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { DataSets, DataSource, type IDataSource } from "data";
+import { fail, PromisedResult, start, succeed } from "chain-of-actions";
+import { DataSets } from "data";
+import { DataSourceError, NotFoundError, NotSingleError, ParsingError, UnauthorizedError } from "logic";
+import { createCharacter, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
 import { type Character, IdSchema } from "model";
 
-interface SuccessResult {
-  success: true;
-  character: Character;
-}
+export async function retrieveCharacter(
+  id: string
+): PromisedResult<Character, DataSourceError | ParsingError | UnauthorizedError | NotFoundError | NotSingleError> {
+  const context = await start({})
+    .addData(() => hasValidInput(IdSchema, id))
+    .addData(() => getAuthenticatedUser())
+    .addData(() => getDataSource())
+    .addData(({ user, dataSource }) => succeed({ builder: createCharacter(dataSource, user.id) }))
+    .runAsync();
 
-interface ErrorResult {
-  success: false;
-  errorCode: "notFound" | "unexpectedError";
-  message?: string;
-}
-
-type Result = SuccessResult | ErrorResult;
-
-export async function retrieveCharacter(id: string): Promise<Result> {
-  // Validate the parameter
-  const parse = IdSchema.safeParse(id);
-  if (!parse.success) {
-    return { success: false, errorCode: "notFound" };
+  if (!context.success) {
+    return context;
   }
 
   // Validate the request
-  const characterId: string = parse.data;
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  const dataSource: IDataSource = new DataSource();
-  const characters = await dataSource.get(DataSets.Characters).find({ id: characterId, userId: user.id });
+  const result = start(undefined, context.data)
+    .onSuccess((_, { data, dataSource, user }) =>
+      dataSource.get(DataSets.Characters).find({ id: data, userId: user.id })
+    )
+    .onSuccess((characters) => (characters.length === 0 ? fail(new NotFoundError()) : succeed(characters)))
+    .onSuccess((characters) => (characters.length > 1 ? fail(new NotSingleError()) : succeed(characters[0])))
+    .runAsync();
 
-  if (characters.length === 0) {
-    return { success: false, errorCode: "notFound" };
-  } else if (characters.length > 1) {
-    return { success: false, errorCode: "unexpectedError", message: "Multiple characters found with the same id" };
-  } else {
-    return { success: true, character: characters[0] };
-  }
+  return result;
 }

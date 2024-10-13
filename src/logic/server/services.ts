@@ -56,6 +56,6 @@ export function redirectToSignIn(returnTo: string): never {
   redirect(`/api/auth/login?post_login_redirect_url=${encodeURIComponent(returnTo)}`);
 }
 
-export function getViewBuilder(dataSource: IDataSource): PromisedResult<{ builder: ViewBuilder }> {
+export function getViewBuilder({ dataSource }: { dataSource: IDataSource }): PromisedResult<{ builder: ViewBuilder }> {
   return succeed({ builder: new ViewBuilder(dataSource) });
 }
