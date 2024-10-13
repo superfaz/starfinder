@@ -1,8 +1,8 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Metadata } from "next";
-import { DataSets, DataSource, IDataSource } from "data";
-import { ViewBuilder } from "view/server";
-import { isSecure } from "app/helpers-server";
+import { start, succeed } from "chain-of-actions";
+import { DataSets } from "data";
+import { UnauthorizedError } from "logic";
+import { getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
 import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
@@ -10,23 +10,32 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const returnTo = `/edit`;
+  const context = await start()
+    .onSuccess(getAuthenticatedUser)
+    .onError(() => redirectToSignIn(`/edit`))
+    .addData(getDataSource)
+    .addData(getViewBuilder)
+    .runAsync();
 
-  if (await isSecure(returnTo)) {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
-
-    if (!user) {
-      // TODO 401
-      return null;
-    }
-
-    const dataSource: IDataSource = new DataSource();
-    const builder = new ViewBuilder(dataSource);
-    const characters = await builder.createCharacter(
-      await dataSource.get(DataSets.Characters).find({ userId: user.id })
-    );
-
-    return <PageContent characters={characters} />;
+  if (!context.success) {
+    // 500
+    throw new Error("Failed to load context", context.error);
   }
+
+  const characters = await start(undefined, context.data)
+    .onSuccess((_, { user, dataSource }) => dataSource.get(DataSets.Characters).find({ userId: user.id }))
+    .onSuccess(async (characters, { viewBuilder }) => succeed(await viewBuilder.createCharacter(characters)))
+    .runAsync();
+
+  if (!characters.success) {
+    if (characters.error instanceof UnauthorizedError) {
+      // TODO 401
+      throw new Error("Unauthorized", characters.error);
+    } else {
+      // TODO 500
+      throw new Error("Failed to load characters", characters.error);
+    }
+  }
+
+  return <PageContent characters={characters.data} />;
 }

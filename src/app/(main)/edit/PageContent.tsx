@@ -27,7 +27,11 @@ export function CharacterCard({
 
   async function handleConfirm() {
     const deleteCharacterWithId = deleteCharacter.bind(null, character.id);
-    await deleteCharacterWithId();
+    const result = await deleteCharacterWithId();
+    if (!result.success) {
+      // TODO handle error
+      console.error(result.error);
+    }
   }
 
   return (
