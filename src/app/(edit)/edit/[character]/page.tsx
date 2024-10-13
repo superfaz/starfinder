@@ -1,32 +1,63 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isSecure } from "app/helpers-server";
-import { check } from "logic/server";
-import { ViewBuilder } from "view/server";
+import { NotFoundError, ParsingError, UnauthorizedError } from "logic";
+import {
+  check,
+  getAuthenticatedUser,
+  getDataSource,
+  getViewBuilder,
+  hasValidInput,
+  redirectToSignIn,
+} from "logic/server";
 import { retrieveCharacter } from "./helpers-server";
 import { PageContent } from "./PageContent";
+import { start, succeed } from "chain-of-actions";
+import { IdSchema } from "model";
 
 export const metadata: Metadata = {
   title: "Création",
 };
 
 export default async function Page({ params }: Readonly<{ params: { character: string } }>) {
-  const returnTo = `/edit/${params.character}`;
+  const context = await start()
+    .onSuccess(getAuthenticatedUser)
+    .onError(() => redirectToSignIn(`/edit/${params.character}`))
+    .addData((data) => hasValidInput(IdSchema, data))
+    .addData(getDataSource)
+    .addData(getViewBuilder)
+    .runAsync();
 
-  if (await isSecure(returnTo)) {
-    const result = await retrieveCharacter(params.character);
-    if (!result.success) {
-      if (result.errorCode === "notFound") {
-        return notFound();
-      } else {
-        console.error("Unexpected error", result.message);
-        throw new Error("Unexpected error");
-      }
+  if (!context.success) {
+    if (context.error instanceof ParsingError) {
+      // 400
+      throw new Error("Invalid input", context.error);
     }
 
-    // Render the page
-    const builder = new ViewBuilder();
-    const alerts = check(result.character);
-    return <PageContent character={await builder.createCharacterDetailed(result.character)} alerts={alerts} />;
+    // 500
+    throw new Error("Failed to load context", context.error);
   }
+
+  const data = await start(undefined, context.data)
+    .onSuccess((_, { data }) => retrieveCharacter(data))
+    .onSuccess((character) => succeed({ character }))
+    .addData(async ({ character }, { viewBuilder }) =>
+      succeed({ view: await viewBuilder.createCharacterDetailed(character) })
+    )
+    .addData(({ character }) => succeed({ alerts: check(character) }))
+    .runAsync();
+
+  if (!data.success) {
+    if (data.error instanceof NotFoundError) {
+      return notFound();
+    } else if (data.error instanceof UnauthorizedError) {
+      // 401
+      throw new Error("Unauthorized");
+    } else {
+      // 500
+      throw new Error("Failed to load data", data.error);
+    }
+  }
+
+  // Render the page
+  return <PageContent character={data.data.view} alerts={data.data.alerts} />;
 }

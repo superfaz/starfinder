@@ -1,9 +1,10 @@
+import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import { DataSource, IDataSource, convert } from "data";
+import { NotFoundError } from "logic";
 import { Character, IModel } from "model";
-import LayoutClient from "./layout-client";
-import { notFound } from "next/navigation";
 import { retrieveCharacter } from "./helpers-server";
+import LayoutClient from "./layout-client";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,7 @@ export async function LayoutServer({
   const debug = process.env.STARFINDER_DEBUG === "true";
 
   if (character === undefined) {
+    // 404
     return notFound();
   }
 
@@ -33,13 +35,14 @@ export default async function Layout({
 }: Readonly<{ children: ReactNode; params: { character: string } }>) {
   const result = await retrieveCharacter(params.character);
   if (!result.success) {
-    if (result.errorCode === "notFound") {
+    if (result.error instanceof NotFoundError) {
+      // 404
       return notFound();
     } else {
-      console.error("Unexpected error", result.message);
+      // 500
       throw new Error("Unexpected error");
     }
   }
 
-  return await LayoutServer({ children, character: result.character });
+  return await LayoutServer({ children, character: result.data });
 }

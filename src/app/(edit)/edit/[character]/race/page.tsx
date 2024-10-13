@@ -5,6 +5,7 @@ import { DataSets, DataSource } from "data";
 import { retrieveCharacter } from "../helpers-server";
 import { createState } from "./actions";
 import { PageContent } from "./PageContent";
+import { NotFoundError } from "logic";
 
 export const metadata: Metadata = {
   title: "Sélection de la race",
@@ -20,17 +21,17 @@ export default async function Page({ params }: Readonly<{ params: { character: s
 
   const result = await retrieveCharacter(characterId);
   if (!result.success) {
-    if (result.errorCode === "notFound") {
+    if (result.error instanceof NotFoundError) {
       return notFound();
     } else {
-      console.error("Unexpected error", result.message);
+      console.error("Unexpected error", result.error);
       throw new Error("Unexpected error");
     }
   }
 
   const dataSource = new DataSource();
   const races = await dataSource.get(DataSets.Races).getAll();
-  const initial = await createState(result.character);
+  const initial = await createState(result.data);
 
   return <PageContent races={races} initial={initial} />;
 }
