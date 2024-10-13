@@ -1,10 +1,10 @@
 "use server";
 
-import { fail, PromisedResult, Result, start, succeed } from "chain-of-actions";
+import { fail, Result, start, succeed } from "chain-of-actions";
 import { z } from "zod";
 import { type ActionResult } from "app/helpers-server";
 import { DataSets } from "data";
-import { DataSourceError, ParsingError, UnauthorizedError } from "logic";
+import { ParsingError } from "logic";
 import { CharacterBuilder, createCharacter, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
 import { IdSchema } from "model";
 
@@ -47,9 +47,7 @@ function tryUpdate<Err extends Error>(
   };
 }
 
-export async function create(
-  data: CreateData
-): PromisedResult<{ id: string }, DataSourceError | UnauthorizedError | ParsingError> {
+export async function create(data: CreateData): Promise<ActionResult<CreateData, { id: string }>> {
   const context = await start({})
     .addData(() => hasValidInput(CreateDataSchema, data))
     .addData(() => getAuthenticatedUser())
@@ -58,10 +56,14 @@ export async function create(
     .runAsync();
 
   if (!context.success) {
-    return context;
+    if (context.error instanceof ParsingError) {
+      return { success: false, errors: context.error.errors };
+    } else {
+      throw context.error;
+    }
   }
 
-  return await start(undefined, context.data)
+  const action = await start(undefined, context.data)
     .add(tryUpdate("race", (b, v) => b.updateRace(v)))
     .add(tryUpdate("theme", (b, v) => b.updateTheme(v)))
     .add(tryUpdate("class", (b, v) => b.updateClass(v)))
@@ -74,4 +76,14 @@ export async function create(
       return succeed({ id: character.id });
     })
     .runAsync();
+
+  if (!action.success) {
+    if (action.error instanceof ParsingError) {
+      return { success: false, errors: action.error.errors };
+    } else {
+      throw action.error;
+    }
+  }
+
+  return { success: true, ...action.data };
 }
