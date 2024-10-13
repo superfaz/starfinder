@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 import { Result, start, succeed } from "chain-of-actions";
 import { DataSets } from "data";
-import { PageContent } from "./PageContent";
 import { getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
-import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
+import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
   title: "Création",
@@ -16,12 +15,7 @@ function getData<T, E extends Error>(result: Result<T[], E>) {
 export default async function Page() {
   const context = await start()
     .onSuccess(getAuthenticatedUser)
-    .onError<
-      {
-        user: KindeUser<Record<string, unknown>>;
-      },
-      never
-    >(() => redirectToSignIn(`/create`))
+    .onError(() => redirectToSignIn(`/create`))
     .addData(getDataSource)
     .addData(getViewBuilder)
     .runAsync();
