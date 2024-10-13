@@ -12,7 +12,7 @@ export class UnauthorizedError extends Error {
 
 export class ParsingError extends Error {
   private _tag = "ParsingError";
-  constructor(readonly errors: Record<string, string[]>) {
+  constructor(readonly errors: Record<string, string[] | undefined>) {
     super();
   }
 }
