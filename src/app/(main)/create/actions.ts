@@ -4,7 +4,7 @@ import { fail, PromisedResult, Result, start, succeed } from "chain-of-actions";
 import { z } from "zod";
 import { type ActionResult } from "app/helpers-server";
 import { DataSets } from "data";
-import { ParsingError, UnauthorizedError } from "logic";
+import { DataSourceError, ParsingError, UnauthorizedError } from "logic";
 import { CharacterBuilder, createCharacter, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
 import { IdSchema } from "model";
 
@@ -47,7 +47,9 @@ function tryUpdate<Err extends Error>(
   };
 }
 
-export async function create(data: CreateData): PromisedResult<{ id: string }, UnauthorizedError | ParsingError> {
+export async function create(
+  data: CreateData
+): PromisedResult<{ id: string }, DataSourceError | UnauthorizedError | ParsingError> {
   const context = await start({})
     .addData(() => hasValidInput(CreateDataSchema, data))
     .addData(() => getAuthenticatedUser())
@@ -59,7 +61,7 @@ export async function create(data: CreateData): PromisedResult<{ id: string }, U
     return context;
   }
 
-  const action = await start(undefined, context.data)
+  return await start(undefined, context.data)
     .add(tryUpdate("race", (b, v) => b.updateRace(v)))
     .add(tryUpdate("theme", (b, v) => b.updateTheme(v)))
     .add(tryUpdate("class", (b, v) => b.updateClass(v)))
@@ -72,15 +74,4 @@ export async function create(data: CreateData): PromisedResult<{ id: string }, U
       return succeed({ id: character.id });
     })
     .runAsync();
-
-  if (action.success) {
-    return { success: true, ...action.data };
-  } else {
-    if (action.error instanceof ParsingError) {
-      return { success: false, errors: action.error.errors };
-    } else {
-      console.error(action.error);
-      throw new Error("Unexpected error");
-    }
-  }
 }

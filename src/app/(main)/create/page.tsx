@@ -27,25 +27,27 @@ export default async function Page() {
     .runAsync();
 
   if (!context.success) {
+    // 500
     throw new Error("Failed to load context", context.error);
   }
 
   const data = await Promise.all([
     start(undefined, context.data)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Races).getAll())
-      .onSuccess((races, { builder }) => succeed(builder.createRaceEntry(races)))
+      .onSuccess((races, { viewBuilder }) => succeed(viewBuilder.createRaceEntry(races)))
       .runAsync(),
     start(undefined, context.data)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Themes).getAll())
-      .onSuccess((themes, { builder }) => succeed(builder.createEntry(themes)))
+      .onSuccess((themes, { viewBuilder }) => succeed(viewBuilder.createEntry(themes)))
       .runAsync(),
     start(undefined, context.data)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Class).getAll())
-      .onSuccess((classes, { builder }) => succeed(builder.createEntry(classes)))
+      .onSuccess((classes, { viewBuilder }) => succeed(viewBuilder.createEntry(classes)))
       .runAsync(),
   ]);
 
   if (data.some((d) => !d.success)) {
+    // 500
     throw new Error("Failed to load data");
   }
 
