@@ -37,7 +37,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
     throw new Error("Failed to load context", context.error);
   }
 
-  const data = await start(undefined, context.data)
+  const data = await start(undefined, context.value)
     .onSuccess((_, { data }) => retrieveCharacter(data))
     .onSuccess((character) => succeed({ character }))
     .addData(async ({ character }, { viewBuilder }) =>
@@ -59,5 +59,5 @@ export default async function Page({ params }: Readonly<{ params: { character: s
   }
 
   // Render the page
-  return <PageContent character={data.data.view} alerts={data.data.alerts} />;
+  return <PageContent character={data.value.view} alerts={data.value.alerts} />;
 }

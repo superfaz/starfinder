@@ -30,13 +30,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   }
 
   const data: IStaticData = {
-    abilityScores: loadData[0].success ? loadData[0].data : [],
-    armorTypes: loadData[1].success ? loadData[1].data : [],
-    avatars: loadData[2].success ? loadData[2].data : [],
-    damageTypes: loadData[3].success ? loadData[3].data : [],
-    sizes: loadData[4].success ? loadData[4].data : [],
-    books: loadData[5].success ? loadData[5].data : [],
-    weaponTypes: loadData[6].success ? loadData[6].data : [],
+    abilityScores: loadData[0].success ? loadData[0].value : [],
+    armorTypes: loadData[1].success ? loadData[1].value : [],
+    avatars: loadData[2].success ? loadData[2].value : [],
+    damageTypes: loadData[3].success ? loadData[3].value : [],
+    sizes: loadData[4].success ? loadData[4].value : [],
+    books: loadData[5].success ? loadData[5].value : [],
+    weaponTypes: loadData[6].success ? loadData[6].value : [],
   };
 
   return (

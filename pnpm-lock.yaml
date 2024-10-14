@@ -36,8 +36,8 @@ importers:
         specifier: ^1.11.3
         version: 1.11.3
       chain-of-actions:
-        specifier: ^0.7.0
-        version: 0.7.0
+        specifier: ^0.8.0
+        version: 0.8.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -2457,8 +2457,8 @@ packages:
     resolution: {integrity: sha512-pT1ZgP8rPNqUgieVaEY+ryQr6Q4HXNg8Ei9UnLUrjN4IA7dvQC5JB+/kxVcPNDHyBcc/26CXPkbNzq3qwrOEKA==}
     engines: {node: '>=12'}
 
-  chain-of-actions@0.7.0:
-    resolution: {integrity: sha512-zKxe/44RG82l/rkQbPe53e3pBsVQsc6lg4ClWN+HMk9ZMO9ZKOTJ+x9pfAblhBtgJrcJJpvh1mi4BeYGgtr/nA==}
+  chain-of-actions@0.8.0:
+    resolution: {integrity: sha512-kvQTGTuwGyDpU3jsg4s6B1Q+PUnjLq0se81sgUKdNacTwL3nHKGpCnnKsnV+k2oon7UWCVzLG89HfeZTNVYAcQ==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -4450,6 +4450,11 @@ packages:
 
   typescript@5.6.2:
     resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7594,9 +7599,9 @@ snapshots:
       loupe: 3.1.1
       pathval: 2.0.0
 
-  chain-of-actions@0.7.0:
+  chain-of-actions@0.8.0:
     dependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   chalk@2.4.2:
     dependencies:
@@ -9841,6 +9846,8 @@ snapshots:
       possible-typed-array-names: 1.0.0
 
   typescript@5.6.2: {}
+
+  typescript@5.6.3: {}
 
   unbox-primitive@1.0.2:
     dependencies:

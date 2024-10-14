@@ -63,7 +63,7 @@ export async function create(data: CreateData): Promise<ActionResult<CreateData,
     }
   }
 
-  const action = await start(undefined, context.data)
+  const action = await start(undefined, context.value)
     .add(tryUpdate("race", (b, v) => b.updateRace(v)))
     .add(tryUpdate("theme", (b, v) => b.updateTheme(v)))
     .add(tryUpdate("class", (b, v) => b.updateClass(v)))
@@ -85,5 +85,5 @@ export async function create(data: CreateData): Promise<ActionResult<CreateData,
     }
   }
 
-  return { success: true, ...action.data };
+  return { success: true, ...action.value };
 }

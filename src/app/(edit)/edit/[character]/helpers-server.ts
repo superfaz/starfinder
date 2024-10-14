@@ -19,7 +19,7 @@ export async function retrieveCharacter(
   }
 
   // Validate the request
-  const result = start(undefined, context.data)
+  const result = start(undefined, context.value)
     .onSuccess((_, { data, dataSource, user }) =>
       dataSource.get(DataSets.Characters).find({ id: data, userId: user.id })
     )

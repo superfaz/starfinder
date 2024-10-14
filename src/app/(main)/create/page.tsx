@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 function getData<T, E extends Error>(result: Result<T[], E>) {
-  return result.success ? result.data : [];
+  return result.success ? result.value : [];
 }
 
 export default async function Page() {
@@ -26,15 +26,15 @@ export default async function Page() {
   }
 
   const data = await Promise.all([
-    start(undefined, context.data)
+    start(undefined, context.value)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Races).getAll())
       .onSuccess((races, { viewBuilder }) => succeed(viewBuilder.createRaceEntry(races)))
       .runAsync(),
-    start(undefined, context.data)
+    start(undefined, context.value)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Themes).getAll())
       .onSuccess((themes, { viewBuilder }) => succeed(viewBuilder.createEntry(themes)))
       .runAsync(),
-    start(undefined, context.data)
+    start(undefined, context.value)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Class).getAll())
       .onSuccess((classes, { viewBuilder }) => succeed(viewBuilder.createEntry(classes)))
       .runAsync(),

@@ -22,7 +22,7 @@ export default async function Page() {
     throw new Error("Failed to load context", context.error);
   }
 
-  const characters = await start(undefined, context.data)
+  const characters = await start(undefined, context.value)
     .onSuccess((_, { user, dataSource }) => dataSource.get(DataSets.Characters).find({ userId: user.id }))
     .onSuccess(async (characters, { viewBuilder }) => succeed(await viewBuilder.createCharacter(characters)))
     .runAsync();
@@ -37,5 +37,5 @@ export default async function Page() {
     }
   }
 
-  return <PageContent characters={characters.data} />;
+  return <PageContent characters={characters.value} />;
 }

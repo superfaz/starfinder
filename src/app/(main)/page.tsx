@@ -12,7 +12,7 @@ export default async function Page() {
     return <PageContent />;
   }
 
-  const characters = await start(user.data)
+  const characters = await start(user.value)
     .addData(() => getDataSource())
     .addData(({ dataSource }) => succeed(new ViewBuilder(dataSource)))
     .onSuccess(({ dataSource, user }) => dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3))
@@ -22,5 +22,5 @@ export default async function Page() {
     throw new Error("Failed to load characters", characters.error);
   }
 
-  return <PageAuthenticated characters={characters.data} />;
+  return <PageAuthenticated characters={characters.value} />;
 }
