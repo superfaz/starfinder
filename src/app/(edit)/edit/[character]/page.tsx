@@ -22,7 +22,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
   const context = await start()
     .onSuccess(getAuthenticatedUser)
     .onError(() => redirectToSignIn(`/edit/${params.character}`))
-    .addData((data) => hasValidInput(IdSchema, data))
+    .addData(() => hasValidInput(IdSchema, params.character))
     .addData(getDataSource)
     .addData(getViewBuilder)
     .runAsync();
@@ -30,7 +30,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
   if (!context.success) {
     if (context.error instanceof ParsingError) {
       // 400
-      throw new Error("Invalid input", context.error);
+      throw new Error("Invalid input");
     }
 
     // 500
