@@ -15,14 +15,24 @@ export async function createCharacter(
     return await Promise.all(characters.map((c) => createCharacter.bind(this)(c)));
   }
 
+  const avatar = await this.dataSource.get(DataSets.Avatar).findOne(characters.avatar);
+  const race = await this.dataSource.get(DataSets.Races).findOne(characters.race);
+  const theme = await this.dataSource.get(DataSets.Themes).findOne(characters.theme);
+  const klass = await this.dataSource.get(DataSets.Class).findOne(characters.class);
+
+  if (!avatar.success) throw avatar.error;
+  if (!race.success) throw race.error;
+  if (!theme.success) throw theme.error;
+  if (!klass.success) throw klass.error;
+
   const c = characters;
   return {
     id: c.id,
     name: c.name,
-    avatar: (await this.dataSource.get(DataSets.Avatar).findOne(c.avatar))?.image,
-    race: (await this.dataSource.get(DataSets.Races).findOne(c.race))?.name,
-    theme: (await this.dataSource.get(DataSets.Themes).findOne(c.theme))?.name,
-    class: (await this.dataSource.get(DataSets.Class).findOne(c.class))?.name,
+    avatar: avatar.value?.image,
+    race: race.value?.name,
+    theme: theme.value?.name,
+    class: klass.value?.name,
     level: c.level,
   };
 }

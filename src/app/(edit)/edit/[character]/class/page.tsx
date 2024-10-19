@@ -1,16 +1,18 @@
 import { Metadata } from "next";
-import { isSecure } from "app/helpers-server";
+import { IdSchema } from "model";
+import { serverError } from "navigation";
 import { PageContent } from "./PageContent";
+import { prepareContext } from "../helpers-server";
 
 export const metadata: Metadata = {
   title: "Sélection de la classe",
 };
 
 export default async function Page({ params }: Readonly<{ params: { character: string } }>) {
-  const characterId = params.character;
-  const returnTo = `/edit/${characterId}/class`;
-
-  if (await isSecure(returnTo)) {
-    return <PageContent />;
+  const context = await prepareContext(`/edit/${params.character}/class`, IdSchema, params.character);
+  if (!context.success) {
+    return serverError(context.error);
   }
+
+  return <PageContent />;
 }

@@ -1,6 +1,8 @@
+import { fail, PromisedResult, start, succeed } from "chain-of-actions";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { DataSets, IDataSource } from "data";
+import { DataSourceError, InvalidError, NotFoundError } from "logic/errors";
 import { AbilityScoreIds, Character, EmptyCharacter, IdSchema } from "model";
 import { RaceFeature } from "view";
 
@@ -31,22 +33,37 @@ export class CharacterBuilder {
    * @param character - the reference character
    * @returns The minimal ability scores for the specified character
    */
-  private async computeMinimalAbilityScores(character: Character): Promise<Record<string, number>> {
-    const selectedRace = await this.dataSource.get(DataSets.Races).findOne(character.race);
-    const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant);
+  private async computeMinimalAbilityScores(
+    character: Character
+  ): PromisedResult<Record<string, number>, DataSourceError> {
+    const selectedVariant = await start(character.race)
+      .onSuccess((raceId) => this.dataSource.get(DataSets.Races).findOne(raceId))
+      .onSuccess((selectedRace) => succeed(selectedRace?.variants.find((v) => v.id === character.raceVariant)))
+      .runAsync();
+    if (!selectedVariant.success) {
+      return fail(selectedVariant.error);
+    }
+
     const selectedTheme = await this.dataSource.get(DataSets.Themes).findOne(character.theme);
+    if (!selectedTheme.success) {
+      return fail(selectedTheme.error);
+    }
+
     const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
+    if (!abilityScores.success) {
+      return fail(abilityScores.error);
+    }
 
     const scores: Record<string, number> = {};
-    abilityScores.forEach((abilityScore) => {
+    abilityScores.value.forEach((abilityScore) => {
       let score = 10;
 
-      if (selectedVariant) {
-        score += selectedVariant.abilityScores[abilityScore.id] ?? 0;
+      if (selectedVariant.value) {
+        score += selectedVariant.value.abilityScores[abilityScore.id] ?? 0;
       }
 
-      if (selectedTheme) {
-        score += selectedTheme.abilityScores[abilityScore.id] ?? 0;
+      if (selectedTheme.value) {
+        score += selectedTheme.value.abilityScores[abilityScore.id] ?? 0;
       }
 
       if (character.raceOptions !== undefined && abilityScore.id === character.raceOptions.selectableBonus) {
@@ -66,10 +83,10 @@ export class CharacterBuilder {
       scores[abilityScore.id] = score;
     });
 
-    return scores;
+    return succeed(scores);
   }
 
-  update(field: string, value: unknown): Promise<boolean> {
+  update(field: string, value: unknown): PromisedResult<undefined, DataSourceError | NotFoundError> {
     switch (field) {
       case "race":
         return this.updateRace(IdSchema.parse(value));
@@ -92,40 +109,50 @@ export class CharacterBuilder {
    * Ensure that the variant, options, traits and ability scores are reset.
    *
    * @param raceId - the identifier of its new race
-   * @returns `true` if `raceId` is valid, `false` otherwise
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
    */
-  async updateRace(raceId: string): Promise<boolean> {
-    const race = await this.dataSource.get(DataSets.Races).findOne(raceId);
-    if (race === undefined) {
-      return false;
-    }
-
-    const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
-    const avatars = await this.dataSource.get(DataSets.Avatar).getAll();
-
+  async updateRace(raceId: string): PromisedResult<undefined, DataSourceError | NotFoundError> {
     if (this.character.race === raceId) {
       // No change
-      return true;
+      return succeed(undefined);
+    }
+
+    const race = await start()
+      .onSuccess(() => this.dataSource.get(DataSets.Races).findOne(raceId))
+      .onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race)))
+      .runAsync();
+
+    if (!race.success) {
+      return fail(race.error);
+    }
+
+    const avatars = await start()
+      .onSuccess(() => this.dataSource.get(DataSets.Avatar).getAll())
+      .runAsync();
+
+    if (!avatars.success) {
+      return fail(avatars.error);
     }
 
     const result: Character = {
       ...this.character,
-      race: race.id,
-      raceVariant: race.variants[0].id,
+      race: race.value.id,
+      raceVariant: race.value.variants[0].id,
       raceOptions: undefined,
-      traits: race.traits.map((t) => t.id),
+      traits: race.value.traits.map((t) => t.id),
     };
 
     // Special case - prepare the associated options
-    if (Object.keys(race.variants[0].abilityScores).length === 0) {
-      result.raceOptions = { selectableBonus: abilityScores[0].id };
-    }
+    /*    if (Object.keys(race.value.variants[0].abilityScores).length === 0) {
+      result.raceOptions = { selectableBonus: abilityScores.value[0].id };
+    }*/
 
-    result.abilityScores = await this.computeMinimalAbilityScores(result);
-    result.avatar = avatars.filter((avatar) => avatar.tags.includes(raceId))[0].id;
+    const abilityScores = await this.computeMinimalAbilityScores(result);
+    result.abilityScores = abilityScores.success ? abilityScores.value : {};
+    result.avatar = avatars.value.filter((avatar) => avatar.tags.includes(raceId))[0].id;
 
     this.character = result;
-    return true;
+    return succeed(undefined);
   }
 
   /**
@@ -134,41 +161,46 @@ export class CharacterBuilder {
    * Ensure that the theme options and ability scores are reset.
    *
    * @param themeId - the identifier of its new theme
-   * @returns `true` if `themeId` is valid, `false` otherwise
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
    */
-  async updateTheme(themeId: string): Promise<boolean> {
-    const theme = await this.dataSource.get(DataSets.Themes).findOne(themeId);
-    if (theme === undefined) {
-      return false;
-    }
-
+  async updateTheme(themeId: string): PromisedResult<undefined, DataSourceError | NotFoundError> {
     if (this.character.theme === themeId) {
       // No change
-      return true;
+      return succeed(undefined);
+    }
+
+    const theme = await start()
+      .onSuccess(() => this.dataSource.get(DataSets.Themes).findOne(themeId))
+      .onSuccess((theme) => (theme === undefined ? fail(new NotFoundError()) : succeed(theme)))
+      .runAsync();
+
+    if (!theme.success) {
+      return fail(theme.error);
     }
 
     const result: Character = {
       ...this.character,
-      theme: theme.id,
+      theme: theme.value.id,
       themeOptions: undefined,
     };
 
     // Special cases - prepare the associated options
-    if (theme.id === "scholar") {
+    if (theme.value.id === "scholar") {
       // Theme: Scholar
       result.themeOptions = {
         scholarSkill: "life",
         scholarSpecialization: "",
       };
-    } else if (theme.id === "themeless") {
+    } else if (theme.value.id === "themeless") {
       // Theme: No theme
       result.themeOptions = { themelessAbility: AbilityScoreIds.str };
     }
 
-    result.abilityScores = await this.computeMinimalAbilityScores(result);
+    const abilityScores = await this.computeMinimalAbilityScores(result);
+    result.abilityScores = abilityScores.success ? abilityScores.value : {};
 
     this.character = result;
-    return true;
+    return succeed(undefined);
   }
 
   /**
@@ -177,22 +209,26 @@ export class CharacterBuilder {
    * Ensure that the class options and ability scores are reset.
    *
    * @param classId - the identifier of its new class
-   * @returns `true` if `classId` is valid, `false` otherwise
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
    */
-  async updateClass(classId: string): Promise<boolean> {
-    const klass = await this.dataSource.get(DataSets.Class).findOne(classId);
-    if (klass === undefined) {
-      return false;
-    }
-
+  async updateClass(classId: string): PromisedResult<undefined, DataSourceError | NotFoundError> {
     if (this.character.class === classId) {
       // No change
-      return true;
+      return succeed(undefined);
+    }
+
+    const klass = await start()
+      .onSuccess(() => this.dataSource.get(DataSets.Class).findOne(classId))
+      .onSuccess((klass) => (klass === undefined ? fail(new NotFoundError()) : succeed(klass)))
+      .runAsync();
+
+    if (!klass.success) {
+      return fail(klass.error);
     }
 
     const result: Character = {
       ...this.character,
-      class: klass.id,
+      class: klass.value.id,
       classOptions: undefined,
     };
 
@@ -225,29 +261,32 @@ export class CharacterBuilder {
         break;
     }
 
-    result.abilityScores = await this.computeMinimalAbilityScores(result);
+    const abilityScores = await this.computeMinimalAbilityScores(result);
+    result.abilityScores = abilityScores.success ? abilityScores.value : {};
     this.character = result;
-    return true;
+    return succeed(undefined);
   }
 
   /**
    * Updates the name of a character.
    *
    * @param name - the new name
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
    */
-  async updateName(name: string): Promise<boolean> {
+  async updateName(name: string): PromisedResult<undefined> {
     this.character = { ...this.character, name };
-    return true;
+    return succeed(undefined);
   }
 
   /**
    * Updates the description of a character.
    *
    * @param description - the new description
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
    */
-  async updateDescription(description: string): Promise<boolean> {
+  async updateDescription(description: string): PromisedResult<undefined> {
     this.character = { ...this.character, description };
-    return true;
+    return succeed(undefined);
   }
 
   /**
@@ -256,17 +295,18 @@ export class CharacterBuilder {
    * Ensure that the associated primary traits are disabled.
    *
    * @param trait - the enabled secondary trait
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
    */
-  async enableSecondaryTrait(trait: RaceFeature): Promise<boolean> {
+  async enableSecondaryTrait(trait: RaceFeature): PromisedResult<undefined, InvalidError> {
     const traits = this.character.traits.filter((t) => !trait.replace.find((r) => r.id === t));
 
     // Validate that the replaced traits were available
     if (traits.length + trait.replace.length !== this.character.traits.length) {
-      return false;
+      return fail(new InvalidError());
     }
 
     this.character = { ...this.character, traits: [...traits, trait.id] };
-    return true;
+    return succeed(undefined);
   }
 
   /**
@@ -275,33 +315,49 @@ export class CharacterBuilder {
    * Ensure that the associated primary traits are enabled.
    *
    * @param trait - the disabled secondary trait
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
    */
-  async disableSecondaryTrait(trait: RaceFeature): Promise<boolean> {
+  async disableSecondaryTrait(trait: RaceFeature): PromisedResult<undefined, InvalidError> {
     // Validate that the trait was enabled
     if (!this.character.traits.includes(trait.id)) {
-      return false;
+      return fail(new InvalidError());
     }
 
     this.character = {
       ...this.character,
       traits: [...this.character.traits.filter((t) => t !== trait.id), ...trait.replace.map((r) => r.id)],
     };
-    return true;
+    return succeed(undefined);
   }
 }
 
-export function createCharacter(dataSource: IDataSource, userId: string): CharacterBuilder {
-  return new CharacterBuilder(dataSource, {
-    ...EmptyCharacter,
-    id: uuidv4(),
-    userId,
-    updatedAt: new Date().toISOString(),
-  });
-}
-
-export function updateCharacter(dataSource: IDataSource, character: Character): CharacterBuilder {
-  return new CharacterBuilder(dataSource, {
-    ...character,
-    updatedAt: new Date().toISOString(),
-  });
+export async function createBuilder(
+  dataSource: IDataSource,
+  userId: string
+): PromisedResult<{ builder: CharacterBuilder }>;
+export async function createBuilder(
+  dataSource: IDataSource,
+  character: Character
+): PromisedResult<{ builder: CharacterBuilder }>;
+export async function createBuilder(
+  dataSource: IDataSource,
+  characterOrUserId: Character | string
+): PromisedResult<{ builder: CharacterBuilder }> {
+  if (typeof characterOrUserId === "string") {
+    return succeed({
+      builder: new CharacterBuilder(dataSource, {
+        ...EmptyCharacter,
+        id: uuidv4(),
+        userId: characterOrUserId,
+        updatedAt: new Date().toISOString(),
+      }),
+    });
+  } else {
+    return succeed({
+      builder: new CharacterBuilder(dataSource, {
+        ...characterOrUserId,
+        updatedAt: new Date().toISOString(),
+      }),
+    });
+  }
 }

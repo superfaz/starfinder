@@ -24,3 +24,7 @@ export class NotFoundError extends Error {
 export class NotSingleError extends Error {
   private _tag = "NotSingleError";
 }
+
+export class InvalidError extends Error {
+  private _tag = "InvalidError";
+}

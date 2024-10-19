@@ -3,6 +3,7 @@ import { start, succeed } from "chain-of-actions";
 import { DataSets } from "data";
 import { UnauthorizedError } from "logic";
 import { getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
+import { serverError, unauthorized } from "navigation";
 import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
@@ -18,8 +19,7 @@ export default async function Page() {
     .runAsync();
 
   if (!context.success) {
-    // 500
-    throw new Error("Failed to load context", context.error);
+    return serverError(context.error);
   }
 
   const characters = await start(undefined, context.value)
@@ -29,11 +29,9 @@ export default async function Page() {
 
   if (!characters.success) {
     if (characters.error instanceof UnauthorizedError) {
-      // TODO 401
-      throw new Error("Unauthorized", characters.error);
+      return unauthorized();
     } else {
-      // TODO 500
-      throw new Error("Failed to load characters", characters.error);
+      return serverError(characters.error);
     }
   }
 

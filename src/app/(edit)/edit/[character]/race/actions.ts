@@ -1,12 +1,21 @@
 "use server";
 
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { fail, start, succeed } from "chain-of-actions";
 import { z } from "zod";
-import { DataSets, DataSource, IDataSource } from "data";
-import { Character, IdSchema } from "model";
-import { CharacterPresenter, updateCharacter } from "logic/server";
 import { ActionResult } from "app/helpers-server";
+import { DataSets, DataSource } from "data";
+import {
+  CharacterPresenter,
+  getAuthenticatedUser,
+  getDataSource,
+  hasValidInput,
+  createBuilder,
+  createCharacterPresenter,
+} from "logic/server";
+import { NotFoundError, ParsingError } from "logic";
+import { Character, IdSchema } from "model";
 import { RaceFeature } from "view";
+import { retrieveCharacter } from "../helpers-server";
 
 export interface UpdateState {
   race?: string;
@@ -20,12 +29,15 @@ export interface UpdateState {
 export async function createState(character: Character): Promise<UpdateState> {
   const presenter = new CharacterPresenter(new DataSource(), character);
 
+  const primaryTraits = await presenter.getPrimaryRaceTraits();
+  const secondaryTraits = await presenter.getSecondaryRaceTraits();
+
   return {
     race: character.race,
     variant: character.raceVariant,
     selectableBonus: character.raceOptions?.selectableBonus,
-    primaryTraits: await presenter.getPrimaryRaceTraits(),
-    secondaryTraits: await presenter.getSecondaryRaceTraits(),
+    primaryTraits: primaryTraits.success ? primaryTraits.value : [],
+    secondaryTraits: secondaryTraits.success ? secondaryTraits.value : [],
     selectedTraits: character.traits,
   };
 }
@@ -38,40 +50,34 @@ const UpdateRaceInputSchema = z.object({
 export type UpdateRaceInput = z.infer<typeof UpdateRaceInputSchema>;
 
 export async function updateRace(data: UpdateRaceInput): Promise<ActionResult<UpdateRaceInput, UpdateState>> {
-  // Security check
-  const { isAuthenticated, getUser } = getKindeServerSession();
-  const isUserAuthenticated = await isAuthenticated();
-  const user = await getUser();
+  const context = await start()
+    .onSuccess(getAuthenticatedUser)
+    .addData(() => hasValidInput(UpdateRaceInputSchema, data))
+    .addData(getDataSource)
+    .addData(({ dataSource, user }) => retrieveCharacter(data.characterId, dataSource, user))
+    .addData(({ dataSource, character }) => createBuilder(dataSource, character))
+    .runAsync();
 
-  if (!isUserAuthenticated || !user) {
-    throw new Error("Unauthorized");
+  if (!context.success) {
+    if (context.error instanceof ParsingError) {
+      return { success: false, errors: context.error.errors };
+    } else if (context.error instanceof NotFoundError) {
+      return { success: false, errors: { characterId: ["Not found"] } };
+    } else {
+      throw context.error;
+    }
   }
 
-  // Data check
-  const check = UpdateRaceInputSchema.safeParse(data);
+  const action = await start(undefined, context.value)
+    .onSuccess((_, { input, builder }) => builder.updateRace(input.raceId))
+    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.getCharacter()))
+    .runAsync();
 
-  if (!check.success) {
-    return { success: false, errors: check.error.flatten().fieldErrors };
-  }
-
-  const dataSource: IDataSource = new DataSource();
-  const character = await dataSource.get(DataSets.Characters).getOne(data.characterId);
-  if (!character) {
-    return { success: false, errors: { characterId: ["Not found"] } };
-  }
-  if (character.userId !== user.id) {
-    return { success: false, errors: { characterId: ["Unauthorized"] } };
-  }
-
-  // Update the character
-  const builder = updateCharacter(dataSource, character);
-  if (!(await builder.updateRace(data.raceId))) {
+  if (!action.success) {
     return { success: false, errors: { raceId: ["Invalid"] } };
   }
 
-  // Save the character
-  const result = await dataSource.get(DataSets.Characters).update(builder.getCharacter());
-  return { success: true, ...(await createState(result)) };
+  return { success: true, ...(await createState(action.value)) };
 }
 
 const UpdateTraitInputSchema = z.object({
@@ -85,50 +91,42 @@ export type UpdateTraitInput = z.infer<typeof UpdateTraitInputSchema>;
 export async function updateSecondaryTrait(
   data: UpdateTraitInput
 ): Promise<ActionResult<UpdateTraitInput, UpdateState>> {
-  // Security check
-  const { isAuthenticated, getUser } = getKindeServerSession();
-  const isUserAuthenticated = await isAuthenticated();
-  const user = await getUser();
+  const context = await start()
+    .onSuccess(getAuthenticatedUser)
+    .addData(() => hasValidInput(UpdateTraitInputSchema, data))
+    .addData(getDataSource)
+    .addData(({ dataSource, user }) => retrieveCharacter(data.characterId, dataSource, user))
+    .addData(({ dataSource, character }) => createBuilder(dataSource, character))
+    .addData(createCharacterPresenter)
+    .runAsync();
 
-  if (!isUserAuthenticated || !user) {
-    throw new Error("Unauthorized");
-  }
-
-  // Data check
-  const check = UpdateTraitInputSchema.safeParse(data);
-
-  if (!check.success) {
-    return { success: false, errors: check.error.flatten().fieldErrors };
-  }
-
-  const dataSource: IDataSource = new DataSource();
-  const character = await dataSource.get(DataSets.Characters).getOne(data.characterId);
-  if (!character) {
-    return { success: false, errors: { characterId: ["Not found"] } };
-  }
-  if (character.userId !== user.id) {
-    return { success: false, errors: { characterId: ["Unauthorized"] } };
-  }
-
-  const presenter = new CharacterPresenter(dataSource, character);
-  const trait = (await presenter.getSecondaryRaceTraits()).find((t) => t.id === data.traitId);
-  if (!trait) {
-    return { success: false, errors: { traitId: ["Invalid"] } };
-  }
-
-  // Update the character
-  const builder = updateCharacter(dataSource, character);
-  if (data.enable) {
-    if (!(await builder.enableSecondaryTrait(trait))) {
-      return { success: false, errors: { traitId: ["Invalid"] } };
+  if (!context.success) {
+    if (context.error instanceof ParsingError) {
+      return { success: false, errors: context.error.errors };
+    } else if (context.error instanceof NotFoundError) {
+      return { success: false, errors: { characterId: ["Not found"] } };
+    } else {
+      throw context.error;
     }
-  } else {
-    if (!(await builder.disableSecondaryTrait(trait))) {
+  }
+
+  const action = await start(undefined, context.value)
+    .onSuccess(async (_, { presenter }) => presenter.getSecondaryRaceTraits())
+    .onSuccess((traits, { input }) => succeed(traits.find((t) => t.id === input.traitId)))
+    .onSuccess((trait) => (trait !== undefined ? succeed(trait) : fail(new NotFoundError())))
+    .onSuccess((trait, { builder, input }) =>
+      input.enable ? builder.enableSecondaryTrait(trait) : builder.disableSecondaryTrait(trait)
+    )
+    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.getCharacter()))
+    .runAsync();
+
+  if (!action.success) {
+    if (action.error instanceof NotFoundError) {
+      return { success: false, errors: { traitId: ["Not found"] } };
+    } else {
       return { success: false, errors: { traitId: ["Invalid"] } };
     }
   }
 
-  // Save the character
-  const result = await dataSource.get(DataSets.Characters).update(builder.getCharacter());
-  return { success: true, ...(await createState(result)) };
+  return { success: true, ...(await createState(action.value)) };
 }

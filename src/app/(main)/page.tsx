@@ -1,6 +1,7 @@
 import { start, succeed } from "chain-of-actions";
 import { DataSets } from "data";
 import { getAuthenticatedUser, getDataSource } from "logic/server";
+import { serverError } from "navigation";
 import { ViewBuilder } from "view/server";
 import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";
@@ -19,7 +20,7 @@ export default async function Page() {
     .runAsync();
 
   if (!characters.success) {
-    throw new Error("Failed to load characters", characters.error);
+    return serverError(characters.error);
   }
 
   return <PageAuthenticated characters={characters.value} />;

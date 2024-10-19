@@ -38,4 +38,4 @@ export const RaceViewSchema = RaceSchema.omit({ category: true }).extend({
   category: z.enum(["core", "legacy", "other"]).transform((v) => labels[v]),
 });
 
-export type RaceView = z.infer<typeof RaceSchema>;
+export type RaceView = z.infer<typeof RaceViewSchema>;

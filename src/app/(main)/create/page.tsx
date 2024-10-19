@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Result, start, succeed } from "chain-of-actions";
 import { DataSets } from "data";
 import { getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
+import { serverError } from "navigation";
 import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
@@ -21,8 +22,7 @@ export default async function Page() {
     .runAsync();
 
   if (!context.success) {
-    // 500
-    throw new Error("Failed to load context", context.error);
+    return serverError(context.error);
   }
 
   const data = await Promise.all([
@@ -41,8 +41,7 @@ export default async function Page() {
   ]);
 
   if (data.some((d) => !d.success)) {
-    // 500
-    throw new Error("Failed to load data");
+    return serverError(data.find((d) => !d.success)!.error);
   }
 
   return <PageContent races={getData(data[0])} themes={getData(data[1])} classes={getData(data[2])} />;

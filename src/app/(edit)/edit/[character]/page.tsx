@@ -1,45 +1,25 @@
+import { start, succeed } from "chain-of-actions";
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { NotFoundError, ParsingError, UnauthorizedError } from "logic";
-import {
-  check,
-  getAuthenticatedUser,
-  getDataSource,
-  getViewBuilder,
-  hasValidInput,
-  redirectToSignIn,
-} from "logic/server";
-import { retrieveCharacter } from "./helpers-server";
-import { PageContent } from "./PageContent";
-import { start, succeed } from "chain-of-actions";
+import { NotFoundError, UnauthorizedError } from "logic";
+import { check } from "logic/server";
 import { IdSchema } from "model";
+import { serverError, unauthorized } from "navigation";
+import { prepareContext, retrieveCharacter } from "./helpers-server";
+import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
   title: "Création",
 };
 
 export default async function Page({ params }: Readonly<{ params: { character: string } }>) {
-  const context = await start()
-    .onSuccess(getAuthenticatedUser)
-    .onError(() => redirectToSignIn(`/edit/${params.character}`))
-    .addData(() => hasValidInput(IdSchema, params.character))
-    .addData(getDataSource)
-    .addData(getViewBuilder)
-    .runAsync();
-
+  const context = await prepareContext(`/edit/${params.character}`, IdSchema, params.character);
   if (!context.success) {
-    if (context.error instanceof ParsingError) {
-      // 400
-      throw new Error("Invalid input");
-    }
-
-    // 500
-    throw new Error("Failed to load context", context.error);
+    return serverError(context.error);
   }
 
   const data = await start(undefined, context.value)
-    .onSuccess((_, { data }) => retrieveCharacter(data))
-    .onSuccess((character) => succeed({ character }))
+    .onSuccess((_, { input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
     .addData(async ({ character }, { viewBuilder }) =>
       succeed({ view: await viewBuilder.createCharacterDetailed(character) })
     )
@@ -50,11 +30,9 @@ export default async function Page({ params }: Readonly<{ params: { character: s
     if (data.error instanceof NotFoundError) {
       return notFound();
     } else if (data.error instanceof UnauthorizedError) {
-      // 401
-      throw new Error("Unauthorized");
+      return unauthorized();
     } else {
-      // 500
-      throw new Error("Failed to load data", data.error);
+      return serverError(data.error);
     }
   }
 

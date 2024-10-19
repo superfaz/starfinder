@@ -12,5 +12,5 @@ export function createRace(data: Race[] | Race): RaceView[] | RaceView {
     return data.map((d) => createRace(d));
   }
 
-  return RaceViewSchema.parse(data);
+  return RaceViewSchema.parse(data as unknown);
 }

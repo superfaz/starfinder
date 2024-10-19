@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
-import { isSecure } from "app/helpers-server";
+import { IdSchema } from "model";
+import { serverError } from "navigation";
+import { prepareContext } from "../helpers-server";
 import { SpellsSelection } from "./SpellsSelection";
 
 export const metadata: Metadata = {
@@ -8,14 +10,15 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ params }: Readonly<{ params: { character: string } }>) {
-  const characterId = params.character;
-  const returnTo = `/edit/${characterId}/spells`;
+  const context = await prepareContext(`/edit/${params.character}/spells`, IdSchema, params.character);
 
-  if (await isSecure(returnTo)) {
-    return (
-      <Col lg={12}>
-        <SpellsSelection />
-      </Col>
-    );
+  if (!context.success) {
+    return serverError(context.error);
   }
+
+  return (
+    <Col lg={12}>
+      <SpellsSelection />
+    </Col>
+  );
 }

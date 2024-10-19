@@ -1,4 +1,5 @@
 import { beforeAll, vi } from "vitest";
+import { succeed } from "chain-of-actions";
 import type {
   IDataSource,
   IDescriptor,
@@ -33,25 +34,29 @@ beforeAll(async () => {
         get<T extends IModel>(descriptor: IDescriptor<T>): IStaticDataSet<T> | IDynamicDataSet<T> {
           if (descriptor.name === "classes-details") {
             return {
-              find: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
-              getAll: async () => [descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)],
+              find: async () =>
+                succeed([descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)]),
+              getAll: async () =>
+                succeed([descriptor.schema.parse((await import(`./mocks/class-operative.json`)).default)]),
               getOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
               findOne: async (id) => (await import(`./mocks/class-${id}.json`)).default,
             };
           }
           if (descriptor.name === "themes-details") {
             return {
-              find: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
-              getAll: async () => [descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)],
+              find: async () =>
+                succeed([descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)]),
+              getAll: async () =>
+                succeed([descriptor.schema.parse((await import(`./mocks/themes-details.json`)).default)]),
               getOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
               findOne: async () => (await import(`./mocks/${descriptor.name}.json`)).default,
             };
           } else {
             return {
               find: async () =>
-                descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
+                succeed(descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default)),
               getAll: async () =>
-                descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default),
+                succeed(descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default)),
               getOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
               findOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
             };

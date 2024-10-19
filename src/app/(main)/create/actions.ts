@@ -1,11 +1,11 @@
 "use server";
 
-import { fail, Result, start, succeed } from "chain-of-actions";
+import { fail, PromisedResult, Result, start, succeed } from "chain-of-actions";
 import { z } from "zod";
 import { type ActionResult } from "app/helpers-server";
 import { DataSets } from "data";
-import { ParsingError } from "logic";
-import { CharacterBuilder, createCharacter, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
+import { DataSourceError, NotFoundError, ParsingError } from "logic";
+import { CharacterBuilder, createBuilder, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
 import { IdSchema } from "model";
 
 const CreateDataSchema = z.object({
@@ -33,17 +33,20 @@ function parsingError<Data, Err extends Error>(
 
 function tryUpdate<Err extends Error>(
   field: keyof CreateData,
-  updator: (builder: CharacterBuilder, value: string) => Promise<boolean>
+  updator: (builder: CharacterBuilder, value: string) => PromisedResult<undefined, DataSourceError | NotFoundError>
 ) {
   return async (
     previous: Result<undefined, Err>,
-    { builder, data }: { builder: CharacterBuilder; data: CreateData }
+    { builder, input }: { builder: CharacterBuilder; input: CreateData }
   ) => {
-    if (data[field] && !(await updator(builder, data[field]))) {
-      return fail(parsingError({ [field]: ["Invalid"] }, previous));
-    } else {
-      return previous;
+    if (input[field]) {
+      const result = await updator(builder, input[field]);
+      if (!result.success) {
+        return fail(parsingError({ [field]: ["Invalid"] }, previous));
+      }
     }
+
+    return previous;
   };
 }
 
@@ -52,7 +55,7 @@ export async function create(data: CreateData): Promise<ActionResult<CreateData,
     .addData(() => hasValidInput(CreateDataSchema, data))
     .addData(() => getAuthenticatedUser())
     .addData(() => getDataSource())
-    .addData(({ user, dataSource }) => succeed({ builder: createCharacter(dataSource, user.id) }))
+    .addData(({ user, dataSource }) => createBuilder(dataSource, user.id))
     .runAsync();
 
   if (!context.success) {

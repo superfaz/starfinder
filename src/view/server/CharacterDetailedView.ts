@@ -6,16 +6,22 @@ import type { ViewBuilder } from "./ViewBuilder";
 import "server-only";
 
 export async function createCharacterDetailed(this: ViewBuilder, character: Character): Promise<CharacterDetailedView> {
+  const avatar = await this.dataSource.get(DataSets.Avatar).findOne(character.avatar);
   const race = await this.dataSource.get(DataSets.Races).findOne(character.race);
   const theme = await this.dataSource.get(DataSets.Themes).findOne(character.theme);
   const klass = await this.dataSource.get(DataSets.Class).findOne(character.class);
+
+  if (!avatar.success || !race.success || !theme.success || !klass.success) {
+    throw new Error("Failed to load character details");
+  }
+
   return {
     id: character.id,
     name: character.name,
-    avatar: (await this.dataSource.get(DataSets.Avatar).findOne(character.avatar))?.image,
-    race: race ? this.createEntry(race) : undefined,
-    theme: theme ? this.createEntry(theme) : undefined,
-    class: klass ? this.createEntry(klass) : undefined,
+    avatar: avatar.value?.image,
+    race: race.value ? this.createEntry(race.value) : undefined,
+    theme: theme.value ? this.createEntry(theme.value) : undefined,
+    class: klass.value ? this.createEntry(klass.value) : undefined,
     level: character.level,
   };
 }

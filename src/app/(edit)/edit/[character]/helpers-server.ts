@@ -1,30 +1,45 @@
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import { fail, PromisedResult, start, succeed } from "chain-of-actions";
-import { DataSets } from "data";
-import { DataSourceError, NotFoundError, NotSingleError, ParsingError, UnauthorizedError } from "logic";
-import { createCharacter, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
-import { type Character, IdSchema } from "model";
+import { ZodType, ZodTypeDef } from "zod";
+import { DataSets, IDataSource } from "data";
+import { DataSourceError, NotFoundError, NotSingleError } from "logic";
+import { getAuthenticatedUser, getDataSource, getViewBuilder, hasValidInput, redirectToSignIn } from "logic/server";
+import { type Character } from "model";
+import { badRequest } from "navigation";
+import { ViewBuilder } from "view/server";
+
+interface IContext<Input> {
+  input: Input;
+  user: KindeUser<Record<string, unknown>>;
+  dataSource: IDataSource;
+  viewBuilder: ViewBuilder;
+}
+
+export function prepareContext<T, D extends ZodTypeDef, I>(
+  redirect: string,
+  schema: ZodType<T, D, I>,
+  input: T
+): PromisedResult<IContext<T>, never> {
+  return start({})
+    .addData(() => hasValidInput(schema, input))
+    .onError(badRequest)
+    .addData(getAuthenticatedUser)
+    .onError(() => redirectToSignIn(redirect))
+    .addData(getDataSource)
+    .addData(getViewBuilder)
+    .runAsync();
+}
 
 export async function retrieveCharacter(
-  id: string
-): PromisedResult<Character, DataSourceError | ParsingError | UnauthorizedError | NotFoundError | NotSingleError> {
-  const context = await start({})
-    .addData(() => hasValidInput(IdSchema, id))
-    .addData(() => getAuthenticatedUser())
-    .addData(() => getDataSource())
-    .addData(({ user, dataSource }) => succeed({ builder: createCharacter(dataSource, user.id) }))
-    .runAsync();
-
-  if (!context.success) {
-    return context;
-  }
-
-  // Validate the request
-  const result = start(undefined, context.value)
-    .onSuccess((_, { data, dataSource, user }) =>
-      dataSource.get(DataSets.Characters).find({ id: data, userId: user.id })
-    )
+  id: string,
+  dataSource: IDataSource,
+  user: KindeUser<Record<string, unknown>>
+): PromisedResult<{ character: Character }, DataSourceError | NotFoundError | NotSingleError> {
+  const result = start(undefined, { id, dataSource, user })
+    .onSuccess((_, { id, dataSource, user }) => dataSource.get(DataSets.Characters).find({ id, userId: user.id }))
     .onSuccess((characters) => (characters.length === 0 ? fail(new NotFoundError()) : succeed(characters)))
     .onSuccess((characters) => (characters.length > 1 ? fail(new NotSingleError()) : succeed(characters[0])))
+    .onSuccess((character) => succeed({ character }))
     .runAsync();
 
   return result;
