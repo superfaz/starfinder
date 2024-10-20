@@ -13,10 +13,19 @@ export default async function Page() {
     return <PageContent />;
   }
 
-  const characters = await start(user.value)
-    .addData(() => getDataSource())
-    .addData(({ dataSource }) => succeed(new ViewBuilder(dataSource)))
-    .onSuccess(({ dataSource, user }) => dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3))
+  const context = await start(user.value)
+    .addData(getDataSource)
+    .addData(({ dataSource }) => succeed({ viewBuilder: new ViewBuilder(dataSource) }))
+    .runAsync();
+  if (!context.success) {
+    return serverError(context.error);
+  }
+
+  const characters = await start(undefined, context.value)
+    .onSuccess((_, { dataSource, user }) =>
+      dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3)
+    )
+    .onSuccess(async (characters, { viewBuilder }) => succeed(await viewBuilder.createCharacter(characters)))
     .runAsync();
 
   if (!characters.success) {
