@@ -5,7 +5,7 @@ import { NotFoundError, UnauthorizedError } from "logic";
 import { check } from "logic/server";
 import { IdSchema } from "model";
 import { serverError, unauthorized } from "navigation";
-import { prepareContext, retrieveCharacter } from "./helpers-server";
+import { preparePageContext, retrieveCharacter } from "./helpers-server";
 import { PageContent } from "./PageContent";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ params }: Readonly<{ params: { character: string } }>) {
-  const context = await prepareContext(`/edit/${params.character}`, IdSchema, params.character);
+  const context = await preparePageContext(`/edit/${params.character}`, IdSchema, params.character);
   if (!context.success) {
     return serverError(context.error);
   }

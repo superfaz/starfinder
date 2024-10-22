@@ -1,4 +1,4 @@
-import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 import { fail, PromisedResult, start, succeed } from "chain-of-actions";
 import { ZodType, ZodTypeDef } from "zod";
 import { DataSets, IDataSource } from "data";
@@ -15,7 +15,7 @@ interface IContext<Input> {
   viewBuilder: ViewBuilder;
 }
 
-export function prepareContext<T, D extends ZodTypeDef, I>(
+export function preparePageContext<T, D extends ZodTypeDef, I>(
   redirect: string,
   schema: ZodType<T, D, I>,
   input: T

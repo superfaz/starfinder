@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Col from "react-bootstrap/Col";
 import { IdSchema } from "model";
 import { serverError } from "navigation";
-import { prepareContext } from "../helpers-server";
+import { preparePageContext } from "../helpers-server";
 import { SpellsSelection } from "./SpellsSelection";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ params }: Readonly<{ params: { character: string } }>) {
-  const context = await prepareContext(`/edit/${params.character}/spells`, IdSchema, params.character);
+  const context = await preparePageContext(`/edit/${params.character}/spells`, IdSchema, params.character);
 
   if (!context.success) {
     return serverError(context.error);

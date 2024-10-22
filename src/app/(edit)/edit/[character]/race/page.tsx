@@ -1,30 +1,20 @@
+import { start } from "chain-of-actions";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DataSets, IDataSource } from "data";
-import { prepareContext, retrieveCharacter } from "../helpers-server";
+import { NotFoundError } from "logic";
+import { retrieveRaces } from "logic/server";
+import { IdSchema } from "model";
+import { serverError } from "navigation";
+import { preparePageContext, retrieveCharacter } from "../helpers-server";
 import { createState } from "./actions";
 import { PageContent } from "./PageContent";
-import { DataSourceError, NotFoundError } from "logic";
-import { IdSchema, Race } from "model";
-import { serverError } from "navigation";
-import { PromisedResult, start, succeed } from "chain-of-actions";
-import { fail } from "assert";
 
 export const metadata: Metadata = {
   title: "Sélection de la race",
 };
 
-async function getRaces(dataSource: IDataSource): PromisedResult<{ races: Race[] }, DataSourceError> {
-  const races = await dataSource.get(DataSets.Races).getAll();
-  if (races.success) {
-    return succeed({ races: races.value });
-  } else {
-    return fail(races.error);
-  }
-}
-
 export default async function Page({ params }: Readonly<{ params: { character: string } }>) {
-  const context = await prepareContext(`/edit/${params.character}/race`, IdSchema, params.character);
+  const context = await preparePageContext(`/edit/${params.character}/race`, IdSchema, params.character);
   if (!context.success) {
     return serverError(context.error);
   }
@@ -37,7 +27,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
       }
       return serverError(error);
     })
-    .addData((_, { dataSource }) => getRaces(dataSource))
+    .addData((_, context) => retrieveRaces(context))
     .onError(serverError)
     .runAsync();
 

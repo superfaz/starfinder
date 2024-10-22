@@ -2,7 +2,7 @@ import { z } from "zod";
 import { IdSchema } from "model";
 import { serverError } from "navigation";
 import { PageContent } from "./PageContent";
-import { prepareContext } from "../../helpers-server";
+import { preparePageContext } from "../../helpers-server";
 
 const InputSchema = z
   .object({
@@ -12,7 +12,7 @@ const InputSchema = z
   .strict();
 
 export default async function Page({ params }: Readonly<{ params: { character: string; id: string } }>) {
-  const context = await prepareContext(`/edit/${params.character}/equipment/${params.id}`, InputSchema, params);
+  const context = await preparePageContext(`/edit/${params.character}/equipment/${params.id}`, InputSchema, params);
   if (!context.success) {
     return serverError(context.error);
   }
