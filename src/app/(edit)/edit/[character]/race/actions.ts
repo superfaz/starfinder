@@ -15,7 +15,7 @@ import {
 import { NotFoundError, ParsingError } from "logic";
 import { Character, IdSchema } from "model";
 import { RaceFeature } from "view";
-import { retrieveCharacter } from "../helpers-server";
+import { prepareActionContext, retrieveCharacter } from "../helpers-server";
 
 export interface UpdateState {
   race?: string;
@@ -50,13 +50,7 @@ const UpdateRaceInputSchema = z.object({
 export type UpdateRaceInput = z.infer<typeof UpdateRaceInputSchema>;
 
 export async function updateRace(data: UpdateRaceInput): Promise<ActionResult<UpdateRaceInput, UpdateState>> {
-  const context = await start()
-    .onSuccess(getAuthenticatedUser)
-    .addData(() => hasValidInput(UpdateRaceInputSchema, data))
-    .addData(getDataSource)
-    .addData(({ dataSource, user }) => retrieveCharacter(data.characterId, dataSource, user))
-    .addData(({ dataSource, character }) => createBuilder(dataSource, character))
-    .runAsync();
+  const context = await prepareActionContext(UpdateRaceInputSchema, data);
 
   if (!context.success) {
     if (context.error instanceof ParsingError) {
@@ -75,6 +69,38 @@ export async function updateRace(data: UpdateRaceInput): Promise<ActionResult<Up
 
   if (!action.success) {
     return { success: false, errors: { raceId: ["Invalid"] } };
+  }
+
+  return { success: true, ...(await createState(action.value)) };
+}
+
+const UpdateVariantInputSchema = z.object({
+  characterId: IdSchema,
+  variantId: IdSchema,
+});
+
+export type UpdateVariantInput = z.infer<typeof UpdateVariantInputSchema>;
+
+export async function updateVariant(data: UpdateVariantInput): Promise<ActionResult<UpdateVariantInput, UpdateState>> {
+  const context = await prepareActionContext(UpdateVariantInputSchema, data);
+
+  if (!context.success) {
+    if (context.error instanceof ParsingError) {
+      return { success: false, errors: context.error.errors };
+    } else if (context.error instanceof NotFoundError) {
+      return { success: false, errors: { variantId: ["Not found"] } };
+    } else {
+      throw context.error;
+    }
+  }
+
+  const action = await start(undefined, context.value)
+    .onSuccess((_, { input, builder }) => builder.updateRaceVariant(input.variantId))
+    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.getCharacter()))
+    .runAsync();
+
+  if (!action.success) {
+    return { success: false, errors: { variantId: ["Invalid"] } };
   }
 
   return { success: true, ...(await createState(action.value)) };

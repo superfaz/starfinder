@@ -9,7 +9,7 @@ import { useStaticData } from "logic/StaticContext";
 import { IdSchema, Race } from "model";
 import { Card } from "ui";
 import { useCharacterPresenter } from "../helpers-client";
-import { updateRace, UpdateRaceInput, UpdateState } from "./actions";
+import { updateRace, UpdateRaceInput, UpdateState, updateVariant } from "./actions";
 import FormSelectVariant from "./FormSelectVariant";
 import FormSelectVariantBonus from "./FormSelectVariantBonus";
 import { ActionErrors } from "app/helpers-server";
@@ -39,9 +39,14 @@ export function RaceSelection({
     }
   }
 
-  function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    dispatch(mutators.updateRaceVariant(id));
+  async function handleVariantChange(e: ChangeEvent<HTMLSelectElement>): Promise<void> {
+    const variantId = e.target.value;
+    const result = await updateVariant({ characterId, variantId });
+    if (result.success) {
+      setState(result);
+    } else {
+      setErrors(result.errors);
+    }
   }
 
   function handleSelectableBonusChange(e: ChangeEvent<HTMLSelectElement>): void {

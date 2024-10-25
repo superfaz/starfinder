@@ -126,9 +126,7 @@ export class CharacterBuilder {
       return fail(race.error);
     }
 
-    const avatars = await start()
-      .onSuccess(() => this.dataSource.get(DataSets.Avatar).getAll())
-      .runAsync();
+    const avatars = await this.dataSource.get(DataSets.Avatar).getAll();
 
     if (!avatars.success) {
       return fail(avatars.error);
@@ -150,6 +148,53 @@ export class CharacterBuilder {
     const abilityScores = await this.computeMinimalAbilityScores(result);
     result.abilityScores = abilityScores.success ? abilityScores.value : {};
     result.avatar = avatars.value.filter((avatar) => avatar.tags.includes(raceId))[0].id;
+
+    this.character = result;
+    return succeed(undefined);
+  }
+
+  /**
+   * Updates the race variant associated with a character.
+   *
+   * Ensure that the options and ability scores are reset.
+   *
+   * @param variantId - the identifier of its new race variant
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+   */
+  async updateRaceVariant(variantId: string): PromisedResult<undefined, DataSourceError | NotFoundError> {
+    if (this.character.raceVariant === variantId) {
+      // No change
+      return succeed(undefined);
+    }
+
+    const variant = await start()
+      .onSuccess(() => this.dataSource.get(DataSets.Races).findOne(this.character.race))
+      .onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race)))
+      .onSuccess((race) => succeed(race.variants.find((v) => v.id === variantId)))
+      .onSuccess((variant) => (variant === undefined ? fail(new NotFoundError()) : succeed(variant)))
+      .runAsync();
+
+    if (!variant.success) {
+      return fail(variant.error);
+    }
+
+    const result: Character = {
+      ...this.character,
+      raceVariant: variantId,
+      raceOptions: undefined,
+    };
+
+    // Special case - prepare the associated options
+    if (Object.keys(variant.value.abilityScores).length === 0) {
+      const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
+      if (!abilityScores.success) {
+        return fail(abilityScores.error);
+      }
+      result.raceOptions = { selectableBonus: abilityScores.value[0].id };
+    }
+
+    const abilityScores = await this.computeMinimalAbilityScores(result);
+    result.abilityScores = abilityScores.success ? abilityScores.value : {};
 
     this.character = result;
     return succeed(undefined);
