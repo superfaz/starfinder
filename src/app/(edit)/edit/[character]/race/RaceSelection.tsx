@@ -3,31 +3,28 @@
 import { useParams } from "next/navigation";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Stack from "react-bootstrap/Stack";
-import { mutators, useAppDispatch } from "logic";
 import { FormSelectRace } from "app/components/FormSelectRace";
+import { ActionErrors } from "app/helpers-server";
 import { useStaticData } from "logic/StaticContext";
 import { IdSchema, Race } from "model";
 import { Card } from "ui";
-import { useCharacterPresenter } from "../helpers-client";
-import { updateRace, UpdateRaceInput, UpdateState, updateVariant } from "./actions";
+import { updateRace, UpdateRaceInput, updateSelectableBonus, UpdateState, updateVariant } from "./actions";
 import FormSelectVariant from "./FormSelectVariant";
 import FormSelectVariantBonus from "./FormSelectVariantBonus";
-import { ActionErrors } from "app/helpers-server";
 
 export function RaceSelection({
   races,
   state,
   setState,
 }: Readonly<{ races: Race[]; state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>): JSX.Element {
-  const dispatch = useAppDispatch();
   const avatars = useStaticData().avatars;
   const { character } = useParams();
-  const presenter = useCharacterPresenter();
   const [errors, setErrors] = useState<ActionErrors<UpdateRaceInput>>({});
 
   const characterId = IdSchema.parse(character);
   const selectedRace = races.find((r) => r.id === state.race);
-  const selectedVariant = presenter.getRaceVariant();
+  const selectedVariant = selectedRace?.variants.find((v) => v.id === state.variant);
+  const raceSelectableBonus = state.selectableBonus;
 
   async function handleRaceChange(e: ChangeEvent<HTMLSelectElement>): Promise<void> {
     const raceId = e.target.value;
@@ -49,9 +46,14 @@ export function RaceSelection({
     }
   }
 
-  function handleSelectableBonusChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    dispatch(mutators.updateSelectableBonus(id));
+  async function handleSelectableBonusChange(e: ChangeEvent<HTMLSelectElement>): Promise<void> {
+    const abilityScoreId = e.target.value;
+    const result = await updateSelectableBonus({ characterId, abilityScoreId });
+    if (result.success) {
+      setState(result);
+    } else {
+      setErrors(result.errors);
+    }
   }
 
   return (
@@ -71,10 +73,7 @@ export function RaceSelection({
           onChange={handleVariantChange}
         >
           {selectedVariant && Object.keys(selectedVariant.abilityScores).length === 0 && (
-            <FormSelectVariantBonus
-              value={presenter.getRaceSelectableBonus() ?? ""}
-              onChange={handleSelectableBonusChange}
-            />
+            <FormSelectVariantBonus value={raceSelectableBonus ?? ""} onChange={handleSelectableBonusChange} />
           )}
         </FormSelectVariant>
       )}

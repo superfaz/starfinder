@@ -1,13 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Race } from "model";
 import { UpdateState } from "./actions";
 import { RaceAlternateTraits } from "./RaceAlternateTraits";
-import { RaceTraits } from "./RaceTraits";
 import { RaceSelection } from "./RaceSelection";
-import { useState } from "react";
+import { RaceTraits } from "./RaceTraits";
 
 export function PageContent({ races, initial }: Readonly<{ races: Race[]; initial: UpdateState }>) {
   const [state, setState] = useState(initial);

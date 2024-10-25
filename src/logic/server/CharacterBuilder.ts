@@ -141,9 +141,14 @@ export class CharacterBuilder {
     };
 
     // Special case - prepare the associated options
-    /*    if (Object.keys(race.value.variants[0].abilityScores).length === 0) {
+    if (Object.keys(race.value.variants[0].abilityScores).length === 0) {
+      const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
+      if (!abilityScores.success) {
+        return fail(abilityScores.error);
+      }
+
       result.raceOptions = { selectableBonus: abilityScores.value[0].id };
-    }*/
+    }
 
     const abilityScores = await this.computeMinimalAbilityScores(result);
     result.abilityScores = abilityScores.success ? abilityScores.value : {};
@@ -185,6 +190,7 @@ export class CharacterBuilder {
     };
 
     // Special case - prepare the associated options
+    console.log(variant.value.name, variant.value.abilityScores);
     if (Object.keys(variant.value.abilityScores).length === 0) {
       const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
       if (!abilityScores.success) {
@@ -192,6 +198,29 @@ export class CharacterBuilder {
       }
       result.raceOptions = { selectableBonus: abilityScores.value[0].id };
     }
+
+    const abilityScores = await this.computeMinimalAbilityScores(result);
+    result.abilityScores = abilityScores.success ? abilityScores.value : {};
+
+    this.character = result;
+    return succeed(undefined);
+  }
+
+  /**
+   * Updates the ability score selected as a bonus for race variant letting the user choose its bonus.
+   *
+   * Ensure that the ability scores are reset.
+   *
+   * @param data - the data set
+   * @param character - the character to update
+   * @param abilityScoreId - the identifier of the selected ability score
+   * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+   */
+  async updateRaceSelectableBonus(abilityScoreId: string): PromisedResult<undefined, DataSourceError | NotFoundError> {
+    const result: Character = {
+      ...this.character,
+      raceOptions: { selectableBonus: abilityScoreId },
+    };
 
     const abilityScores = await this.computeMinimalAbilityScores(result);
     result.abilityScores = abilityScores.success ? abilityScores.value : {};
