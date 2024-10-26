@@ -73,7 +73,7 @@ export async function create(data: CreateData): Promise<ActionResult<CreateData,
     .add(tryUpdate("name", (b, v) => b.updateName(v)))
     .add(tryUpdate("description", (b, v) => b.updateDescription(v)))
     .onSuccess(async (_, { builder, dataSource }) => {
-      return dataSource.get(DataSets.Characters).create(builder.getCharacter());
+      return dataSource.get(DataSets.Characters).create(builder.character);
     })
     .onSuccess(async (character) => {
       return succeed({ id: character.id });

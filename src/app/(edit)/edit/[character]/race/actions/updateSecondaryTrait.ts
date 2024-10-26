@@ -43,7 +43,7 @@ export async function updateSecondaryTrait(
     .onSuccess((trait, { builder, input }) =>
       input.enable ? builder.enableSecondaryTrait(trait) : builder.disableSecondaryTrait(trait)
     )
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.getCharacter()))
+    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {
