@@ -15,8 +15,8 @@ export class ViewBuilder {
     return this._dataSource;
   }
 
-  public createCharacter = createCharacter;
-  public createCharacterDetailed = createCharacterDetailed;
-  public createEntry = createEntry;
-  public createRaceEntry = createRaceEntry;
+  public createCharacter = createCharacter.bind(this);
+  public createCharacterDetailed = createCharacterDetailed.bind(this);
+  public createEntry = createEntry.bind(this);
+  public createRaceEntry = createRaceEntry.bind(this);
 }
