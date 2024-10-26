@@ -1,15 +1,24 @@
-import { useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import Form from "react-bootstrap/Form";
-import Typeahead from "ui/Typeahead";
 import { findOrError } from "app/helpers";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { AbilityScoreId, AbilityScoreIds, Profession, simpleHash } from "model";
-import { CharacterProps } from "../Props";
+import { ActionErrors } from "app/helpers-server";
+import { useStaticData } from "logic/StaticContext";
+import { AbilityScoreId, AbilityScoreIds, IdSchema } from "model";
+import Typeahead from "ui/Typeahead";
+import { updateIconProfession, UpdateIconProfessionInput, UpdateState } from "./actions";
+import { useParams } from "next/navigation";
 
-export default function ThemeIconEditor({ presenter }: CharacterProps) {
-  const profession = presenter.getIconProfession();
-  const dispatch = useAppDispatch();
-  const abilityScores = useAppSelector((state) => state.data.abilityScores);
+export default function ThemeIconEditor({
+  state,
+  setState,
+}: Readonly<{
+  state: UpdateState;
+  setState: Dispatch<SetStateAction<UpdateState>>;
+}>) {
+  const profession = state.iconProfession;
+  const abilityScores = useStaticData().abilityScores;
+  const { character } = useParams();
+  const [, setErrors] = useState<ActionErrors<UpdateIconProfessionInput>>({});
   const [abilityScore, setAbilityScore] = useState<AbilityScoreId>(profession?.abilityScore ?? AbilityScoreIds.cha);
   const optionsForAbilityScores = useMemo(() => {
     return [AbilityScoreIds.cha, AbilityScoreIds.int, AbilityScoreIds.wis]
@@ -17,29 +26,16 @@ export default function ThemeIconEditor({ presenter }: CharacterProps) {
       .sort((a, b) => a.name.localeCompare(b.name));
   }, [abilityScores]);
 
+  const characterId = IdSchema.parse(character);
   const professionName = profession?.name ?? "";
-  const professions = presenter.getAllProfessions();
+  const professions = state.iconAllProfessions;
 
-  function handleProfessionChange(name: string): void {
-    if (name === professionName) {
-      return;
-    }
-
-    if (profession) {
-      dispatch(mutators.removeProfessionSkill(profession.id));
-    }
-
-    if (name === "") {
-      dispatch(mutators.updateIconProfession(undefined));
+  async function handleProfessionChange(name: string): Promise<void> {
+    const result = await updateIconProfession({ characterId: characterId, abilityScoreId: abilityScore, name });
+    if (result.success) {
+      setState(result);
     } else {
-      const newProfession: Profession = professions.find((p) => p.name === name) ?? {
-        id: "prof-" + simpleHash(name),
-        abilityScore: abilityScore,
-        name,
-      };
-
-      dispatch(mutators.addProfessionSkill(newProfession));
-      dispatch(mutators.updateIconProfession(newProfession.id));
+      setErrors(result.errors);
     }
   }
 

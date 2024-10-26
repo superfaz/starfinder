@@ -23,6 +23,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     dataSource.get(DataSets.Sizes).getAll(),
     dataSource.get(DataSets.Book).getAll(),
     dataSource.get(DataSets.WeaponTypes).getAll(),
+    dataSource.get(DataSets.Skills).getAll(),
   ]);
 
   if (loadData.some((d) => !d.success)) {
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     sizes: loadData[4].success ? loadData[4].value : [],
     books: loadData[5].success ? loadData[5].value : [],
     weaponTypes: loadData[6].success ? loadData[6].value : [],
+    skills: loadData[7].success ? loadData[7].value : [],
   };
 
   return (

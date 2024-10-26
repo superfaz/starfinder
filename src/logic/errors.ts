@@ -28,3 +28,7 @@ export class NotSingleError extends Error {
 export class InvalidError extends Error {
   private _tag = "InvalidError";
 }
+
+export class ThemeNotSetError extends Error {
+  private _tag = "ThemeNotSetError";
+}

@@ -6,11 +6,10 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "ui";
 import { type Feature } from "view";
 import FeatureComponent from "../FeatureComponent";
-import { useCharacterPresenter } from "../helpers-client";
+import { UpdateState } from "./actions";
 
-export function ThemeTraits() {
-  const presenter = useCharacterPresenter();
-  const features: Feature[] = presenter.getThemeFeatures();
+export function ThemeTraits({ state }: Readonly<{ state: UpdateState }>) {
+  const features: Feature[] = state.features;
   if (features.length === 0) {
     return null;
   }

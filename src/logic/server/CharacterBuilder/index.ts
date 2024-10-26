@@ -6,11 +6,17 @@ import { DataSourceError, NotFoundError } from "logic/errors";
 import { Character, EmptyCharacter, IdSchema } from "model";
 import { computeMinimalAbilityScores } from "./computeMinimalAbilityScores";
 import { updateRace, updateRaceSelectableBonus, updateRaceVariant } from "./updateRace";
+import { updateClass } from "./updateClass";
+import {
+  updateIconProfession,
+  updateScholarSkill,
+  updateScholarSpecialization,
+  updateTheme,
+  updateThemelessAbilityScore,
+} from "./updateTheme";
+import { disableSecondaryTrait, enableSecondaryTrait } from "./updateSecondaryTrait";
 
 import "server-only";
-import { updateTheme } from "./updateTheme";
-import { updateClass } from "./updateClass";
-import { disableSecondaryTrait, enableSecondaryTrait } from "./updateSecondaryTrait";
 
 export class CharacterBuilder {
   public readonly dataSource: IDataSource;
@@ -73,6 +79,10 @@ export class CharacterBuilder {
   updateRaceSelectableBonus = updateRaceSelectableBonus.bind(this);
 
   updateTheme = updateTheme.bind(this);
+  updateIconProfession = updateIconProfession.bind(this);
+  updateScholarSkill = updateScholarSkill.bind(this);
+  updateScholarSpecialization = updateScholarSpecialization.bind(this);
+  updateThemelessAbilityScore = updateThemelessAbilityScore.bind(this);
 }
 
 export async function createBuilder(

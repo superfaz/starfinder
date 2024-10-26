@@ -1,11 +1,18 @@
 import { findOrError } from "app/helpers";
-import { fail } from "assert";
-import { PromisedResult, succeed } from "chain-of-actions";
+import { PromisedResult, succeed, fail } from "chain-of-actions";
 import { DataSets, IDataSource } from "data";
 import { DataSourceError } from "logic/errors";
 import { Templater } from "logic/Templater";
-import type { Character, Class, Race } from "model";
-import type { RaceFeature } from "view";
+import {
+  AbilityScoreIdSchema,
+  type AbilityScoreId,
+  type Character,
+  type Class,
+  type Profession,
+  type Race,
+  type Theme,
+} from "model";
+import type { RaceFeature, ThemeFeature } from "view";
 
 export class CharacterPresenter {
   private readonly dataSource: IDataSource;
@@ -107,12 +114,62 @@ export class CharacterPresenter {
     return succeed(this.cachedSecondaryRaceTraits);
   }
 
+  async getTheme(): PromisedResult<Theme | undefined, DataSourceError> {
+    if (!this.character.theme) {
+      return succeed(undefined);
+    }
+
+    return await this.dataSource.get(DataSets.Themes).findOne(this.character.theme);
+  }
+
+  async getThemeFeatures(): PromisedResult<ThemeFeature[], DataSourceError> {
+    const theme = await this.getTheme();
+    if (!theme.success) {
+      return fail(theme.error);
+    } else if (theme.value === undefined) {
+      return succeed([]);
+    }
+
+    const templater = await this.createTemplater();
+    return succeed(theme.value.features.map((f) => templater.convertThemeFeature(f)));
+  }
+
+  async getIconProfession(): PromisedResult<Profession | undefined> {
+    if (!this.character.themeOptions?.iconProfession) {
+      return succeed(undefined);
+    }
+
+    const result = this.character.professionSkills.find((p) => p.id === this.character.themeOptions?.iconProfession);
+    return succeed(result);
+  }
+
+  async getScholarSkill(): PromisedResult<string | undefined> {
+    return succeed(this.character.themeOptions?.scholarSkill);
+  }
+
+  async getScholarSpecialization(): PromisedResult<string | undefined> {
+    return succeed(this.character.themeOptions?.scholarSpecialization);
+  }
+
+  async getThemelessAbilityScore(): PromisedResult<AbilityScoreId | undefined> {
+    return succeed(AbilityScoreIdSchema.optional().parse(this.character.themeOptions?.themelessAbility));
+  }
+
   async getClass(): PromisedResult<Class | undefined, DataSourceError> {
     if (!this.character.class) {
       return succeed(undefined);
     }
 
     return await this.dataSource.get(DataSets.Class).findOne(this.character.class);
+  }
+
+  async getAllProfessions(): PromisedResult<Profession[], DataSourceError> {
+    const professions = await this.dataSource.get(DataSets.Profession).getAll();
+    if (!professions.success) {
+      return fail(professions.error);
+    }
+
+    return succeed([...professions.value, ...this.character.professionSkills]);
   }
 }
 

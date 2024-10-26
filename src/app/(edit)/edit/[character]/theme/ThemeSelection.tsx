@@ -1,14 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ChangeEvent } from "react";
+import { useParams } from "next/navigation";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import { Badge } from "ui";
+import { ActionErrors } from "app/helpers-server";
 import { displayBonus, findOrError } from "app/helpers";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { useCharacterPresenter } from "../helpers-client";
+import { useStaticData } from "logic/StaticContext";
+import { IdSchema, Theme } from "model";
+import { Badge } from "ui";
 import { ReferenceComponent } from "../ReferenceComponent";
+import { UpdateState, updateTheme, UpdateThemeInput } from "./actions";
 import ThemelessLoading from "./ThemelessLoading";
 import ThemeScholarLoading from "./ThemeScholarLoading";
 
@@ -18,36 +21,33 @@ const LazyThemeScholarEditor = dynamic(() => import("./ThemeScholarEditor"), {
   loading: () => <ThemeScholarLoading />,
 });
 
-export function ThemeSelection({ mode = "full" }: Readonly<{ mode?: "light" | "full" }>) {
-  const abilityScores = useAppSelector((state) => state.data.abilityScores);
-  const themes = useAppSelector((state) => state.data.themes);
-  const dispatch = useAppDispatch();
-  const presenter = useCharacterPresenter();
+export function ThemeSelection({
+  themes,
+  state,
+  setState,
+}: Readonly<{ themes: Theme[]; state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>) {
+  const abilityScores = useStaticData().abilityScores;
+  const { character } = useParams();
+  const [errors, setErrors] = useState<ActionErrors<UpdateThemeInput>>({});
 
-  if (presenter.getRace() === null) {
-    if (mode === "full") {
-      return null;
+  const characterId = IdSchema.parse(character);
+  const selectedTheme = themes.find((r) => r.id === state.theme);
+
+  async function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): Promise<void> {
+    const themeId = e.target.value;
+    const result = await updateTheme({ characterId, themeId });
+    if (result.success) {
+      setState(result);
     } else {
-      return (
-        <Form.FloatingLabel controlId="theme" label="Thème" className="mb-3">
-          <Form.Select disabled />
-        </Form.FloatingLabel>
-      );
+      setErrors(result.errors);
     }
-  }
-
-  const selectedTheme = presenter.getTheme();
-
-  function handleThemeChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    dispatch(mutators.updateTheme(id));
   }
 
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
-      {mode === "full" && <h2>Thème</h2>}
+      <h2>Thème</h2>
       <Form.FloatingLabel controlId="theme" label="Thème">
-        <Form.Select value={selectedTheme?.id ?? ""} onChange={handleThemeChange}>
+        <Form.Select value={selectedTheme?.id ?? ""} onChange={handleThemeChange} isInvalid={!!errors.themeId}>
           {selectedTheme === null && <option value=""></option>}
           {themes.map((theme) => (
             <option key={theme.id} value={theme.id}>
@@ -56,7 +56,7 @@ export function ThemeSelection({ mode = "full" }: Readonly<{ mode?: "light" | "f
           ))}
         </Form.Select>
       </Form.FloatingLabel>
-      {selectedTheme && mode === "full" && !presenter.isThemeless() && (
+      {selectedTheme && state.theme !== "themeless" && (
         <Stack direction="horizontal" className="right">
           {Object.entries(selectedTheme.abilityScores).map(
             ([key, value]) =>
@@ -76,9 +76,9 @@ export function ThemeSelection({ mode = "full" }: Readonly<{ mode?: "light" | "f
         </>
       )}
 
-      {mode === "full" && presenter.isThemeless() && <LazyThemelessEditor presenter={presenter} />}
-      {mode === "full" && presenter.isIcon() && <LazyThemeIconEditor presenter={presenter} />}
-      {mode === "full" && presenter.isScholar() && <LazyThemeScholarEditor presenter={presenter} />}
+      {state.theme === "icon" && <LazyThemeIconEditor state={state} setState={setState} />}
+      {state.theme === "scholar" && <LazyThemeScholarEditor state={state} setState={setState} />}
+      {state.theme === "themeless" && <LazyThemelessEditor state={state} setState={setState} />}
     </Stack>
   );
 }

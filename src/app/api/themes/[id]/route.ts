@@ -4,5 +4,10 @@ import { NextRequest } from "next/server";
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   const dataSource = new DataSource();
   const dataset = dataSource.get(DataSets.ThemeDetails);
-  return Response.json(await dataset.getOne(params.id));
+  const result = await dataset.getOne(params.id);
+  if (!result.success) {
+    throw result.error;
+  }
+
+  return Response.json(result.value);
 }

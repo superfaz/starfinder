@@ -1,5 +1,5 @@
-import { AbilityScore, ArmorType, Avatar, Book, DamageType, Size, WeaponType } from "model";
 import { createContext, useContext } from "react";
+import type { AbilityScore, ArmorType, Avatar, Book, DamageType, Size, SkillDefinition, WeaponType } from "model";
 
 export interface IStaticData {
   abilityScores: AbilityScore[];
@@ -8,6 +8,7 @@ export interface IStaticData {
   books: Book[];
   damageTypes: DamageType[];
   sizes: Size[];
+  skills: SkillDefinition[];
   weaponTypes: WeaponType[];
 }
 
@@ -18,6 +19,7 @@ const EmptyContext: IStaticData = {
   books: [],
   damageTypes: [],
   sizes: [],
+  skills: [],
   weaponTypes: [],
 };
 
