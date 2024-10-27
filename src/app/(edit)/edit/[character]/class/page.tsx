@@ -1,8 +1,13 @@
+import { start } from "chain-of-actions";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { NotFoundError } from "logic";
+import { retrieveClasses } from "logic/server";
 import { IdSchema } from "model";
 import { serverError } from "navigation";
+import { preparePageContext, retrieveCharacter } from "../helpers-server";
+import { createState } from "./actions";
 import { PageContent } from "./PageContent";
-import { preparePageContext } from "../helpers-server";
 
 export const metadata: Metadata = {
   title: "Sélection de la classe",
@@ -14,5 +19,22 @@ export default async function Page({ params }: Readonly<{ params: { character: s
     return serverError(context.error);
   }
 
-  return <PageContent />;
+  const result = await start(undefined, context.value)
+    .onSuccess((_, { input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
+    .onError((error) => {
+      if (error instanceof NotFoundError) {
+        return notFound();
+      }
+      return serverError(error);
+    })
+    .addData((_, context) => retrieveClasses(context))
+    .onError(serverError)
+    .runAsync();
+
+  if (!result.success) {
+    return serverError(result.error);
+  }
+
+  const initial = await createState(result.value.character);
+  return <PageContent classes={result.value.classes} initial={initial} />;
 }

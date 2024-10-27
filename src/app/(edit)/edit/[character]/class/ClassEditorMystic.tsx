@@ -1,28 +1,40 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, useAppDispatch } from "logic";
+import { ActionErrors } from "app/helpers-server";
 import type { ClassMystic } from "model";
-import { useClassDetails } from "../helpers-client";
-import { CharacterProps } from "../Props";
+import { useCharacterId } from "../helpers-client";
+import { updateMysticConnection, UpdateMysticConnectionInput, UpdateState } from "./actions";
 
-export default function MysticEditor({ presenter }: CharacterProps) {
-  const classDetails = useClassDetails<ClassMystic>("mystic");
-  const dispatch = useAppDispatch();
-
+export default function MysticEditor({
+  state,
+  setState,
+}: Readonly<{ state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>) {
+  const characterId = useCharacterId();
+  const classDetails = state.details as ClassMystic | undefined;
+  const [errors, setErrors] = useState<ActionErrors<UpdateMysticConnectionInput>>({});
   if (!classDetails) {
-    return <p>Loading...</p>;
+    return null;
   }
 
-  const selectedConnection = classDetails.connections.find((s) => s.id === presenter.getMysticConnection());
+  const selectedConnection = classDetails.connections.find((s) => s.id === state.mysticConnection);
 
-  const handleConnectionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(mutators.updateMysticConnection(event.target.value));
-  };
+  async function handleConnectionChange(event: ChangeEvent<HTMLSelectElement>) {
+    const result = await updateMysticConnection({ characterId, connectionId: event.target.value });
+    if (result.success) {
+      setState(result);
+    } else {
+      setErrors(result.errors);
+    }
+  }
 
   return (
     <>
       <Form.FloatingLabel controlId="mysticConnection" label="Connection mystique">
-        <Form.Select value={presenter.getMysticConnection() ?? ""} onChange={handleConnectionChange}>
+        <Form.Select
+          value={state.mysticConnection ?? ""}
+          onChange={handleConnectionChange}
+          isInvalid={!!errors.connectionId}
+        >
           {classDetails.connections.map((connection) => (
             <option key={connection.id} value={connection.id}>
               {connection.name}

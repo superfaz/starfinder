@@ -1,37 +1,67 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
 import type { ClassSolarian } from "model";
-import { useClassDetails } from "../helpers-client";
-import { CharacterProps } from "../Props";
+import {
+  updateSolarianColor,
+  UpdateSolarianColorInput,
+  updateSolarianDamageType,
+  UpdateSolarianDamageTypeInput,
+  updateSolarianManifestation,
+  UpdateSolarianManifestationInput,
+  UpdateState,
+} from "./actions";
+import { useStaticData } from "logic/StaticContext";
+import { useCharacterId } from "../helpers-client";
+import { ActionErrors } from "app/helpers-server";
 
-export default function SolarianEditor({ presenter }: CharacterProps) {
-  const damageTypes = useAppSelector((state) => state.data.damageTypes).filter((d) => d.category === "kinetic");
-  const classDetails = useClassDetails<ClassSolarian>("solarian");
-  const dispatch = useAppDispatch();
+export default function SolarianEditor({
+  state,
+  setState,
+}: Readonly<{ state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>) {
+  const characterId = useCharacterId();
+  const damageTypes = useStaticData().damageTypes.filter((d) => d.category === "kinetic");
+  const classDetails = state.details as ClassSolarian | undefined;
+  const [colorErrors, setColorErrors] = useState<ActionErrors<UpdateSolarianColorInput>>({});
+  const [damageTypeErrors, setDamageTypeErrors] = useState<ActionErrors<UpdateSolarianDamageTypeInput>>({});
+  const [manifestationErrors, setManifestationErrors] = useState<ActionErrors<UpdateSolarianManifestationInput>>({});
 
   if (!classDetails) {
-    return <p>Loading...</p>;
+    return null;
   }
 
-  const selectedManifestation = classDetails.manifestations.find((s) => s.id === presenter.getSolarianManifestation());
+  const selectedManifestation = classDetails.manifestations.find((s) => s.id === state.solarianManifestation);
 
-  const handleColorChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(mutators.updateSolarianColor(event.target.value));
-  };
+  async function handleColorChange(event: ChangeEvent<HTMLSelectElement>) {
+    const result = await updateSolarianColor({ characterId, colorId: event.target.value });
+    if (result.success) {
+      setState(result);
+    } else {
+      setColorErrors(result.errors);
+    }
+  }
 
-  const handleManifestationChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(mutators.updateSolarianManifestation(event.target.value));
-  };
+  async function handleDamageTypeChange(event: ChangeEvent<HTMLSelectElement>) {
+    const result = await updateSolarianDamageType({ characterId, damageTypeId: event.target.value });
+    if (result.success) {
+      setState(result);
+    } else {
+      setDamageTypeErrors(result.errors);
+    }
+  }
 
-  const handleDamageTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(mutators.updateSolarianDamageType(event.target.value));
-  };
+  async function handleManifestationChange(event: ChangeEvent<HTMLSelectElement>) {
+    const result = await updateSolarianManifestation({ characterId, manifestationId: event.target.value });
+    if (result.success) {
+      setState(result);
+    } else {
+      setManifestationErrors(result.errors);
+    }
+  }
 
   return (
     <>
       <Form.FloatingLabel controlId="solarianColor" label="Couleur de la manifestation solaire">
-        <Form.Select value={presenter.getSolarianColor() ?? ""} onChange={handleColorChange}>
+        <Form.Select value={state.solarianColor ?? ""} onChange={handleColorChange} isInvalid={!!colorErrors.colorId}>
           {classDetails.colors.map((color) => (
             <option key={color.id} value={color.id}>
               {color.name}
@@ -41,7 +71,11 @@ export default function SolarianEditor({ presenter }: CharacterProps) {
       </Form.FloatingLabel>
 
       <Form.FloatingLabel controlId="solarianManifestation" label="Forme de la manifestation solaire">
-        <Form.Select value={presenter.getSolarianManifestation() ?? ""} onChange={handleManifestationChange}>
+        <Form.Select
+          value={state.solarianManifestation ?? ""}
+          onChange={handleManifestationChange}
+          isInvalid={!!manifestationErrors.manifestationId}
+        >
           {classDetails.manifestations.map((manifestation) => (
             <option key={manifestation.id} value={manifestation.id}>
               {manifestation.name}
@@ -53,7 +87,11 @@ export default function SolarianEditor({ presenter }: CharacterProps) {
 
       {selectedManifestation?.id === "weapon" && (
         <Form.FloatingLabel controlId="solarianDamageType" label="Type de dégâts">
-          <Form.Select value={presenter.getSolarianDamageType() ?? ""} onChange={handleDamageTypeChange}>
+          <Form.Select
+            value={state.solarianDamageType ?? ""}
+            onChange={handleDamageTypeChange}
+            isInvalid={!!damageTypeErrors.damageTypeId}
+          >
             {damageTypes.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.name}

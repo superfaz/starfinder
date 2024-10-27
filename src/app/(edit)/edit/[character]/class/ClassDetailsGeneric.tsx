@@ -2,19 +2,10 @@ import { ReactNode } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Badge } from "ui";
+import { ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
-import { useClassDetails } from "../helpers-client";
-import { CharacterProps } from "../Props";
-import ClassDetailsLoading from "./ClassDetailsLoading";
 
-export default function ClassDetailsGeneric({ presenter, classId }: CharacterProps & { classId: string }): ReactNode {
-  const classDetails = useClassDetails(classId);
-
-  if (!classDetails) {
-    return <ClassDetailsLoading />;
-  }
-
-  const features = presenter.getClassFeatures();
+export default function ClassDetailsGeneric({ features }: Readonly<{ features: ClassFeature[] }>): ReactNode {
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)

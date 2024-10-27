@@ -6,7 +6,18 @@ import { DataSourceError, NotFoundError } from "logic/errors";
 import { Character, EmptyCharacter, IdSchema } from "model";
 import { computeMinimalAbilityScores } from "./computeMinimalAbilityScores";
 import { updateRace, updateRaceSelectableBonus, updateRaceVariant } from "./updateRace";
-import { updateClass } from "./updateClass";
+import {
+  updateClass,
+  updateEnvoySkill,
+  updateMechanicStyle,
+  updateMysticConnection,
+  updateOperativeSpecialization,
+  updateSolarianColor,
+  updateSolarianDamageType,
+  updateSolarianManifestation,
+  updateSoldierAbilityScore,
+  updateSoldierPrimaryStyle,
+} from "./updateClass";
 import {
   updateIconProfession,
   updateScholarSkill,
@@ -72,8 +83,6 @@ export class CharacterBuilder {
   enableSecondaryTrait = enableSecondaryTrait.bind(this);
   disableSecondaryTrait = disableSecondaryTrait.bind(this);
 
-  updateClass = updateClass.bind(this);
-
   updateRace = updateRace.bind(this);
   updateRaceVariant = updateRaceVariant.bind(this);
   updateRaceSelectableBonus = updateRaceSelectableBonus.bind(this);
@@ -83,6 +92,17 @@ export class CharacterBuilder {
   updateScholarSkill = updateScholarSkill.bind(this);
   updateScholarSpecialization = updateScholarSpecialization.bind(this);
   updateThemelessAbilityScore = updateThemelessAbilityScore.bind(this);
+
+  updateClass = updateClass.bind(this);
+  updateEnvoySkill = updateEnvoySkill.bind(this);
+  updateMechanicStyle = updateMechanicStyle.bind(this);
+  updateMysticConnection = updateMysticConnection.bind(this);
+  updateOperativeSpecialization = updateOperativeSpecialization.bind(this);
+  updateSolarianColor = updateSolarianColor.bind(this);
+  updateSolarianManifestation = updateSolarianManifestation.bind(this);
+  updateSolarianDamageType = updateSolarianDamageType.bind(this);
+  updateSoldierAbilityScore = updateSoldierAbilityScore.bind(this);
+  updateSoldierPrimaryStyle = updateSoldierPrimaryStyle.bind(this);
 }
 
 export async function createBuilder(

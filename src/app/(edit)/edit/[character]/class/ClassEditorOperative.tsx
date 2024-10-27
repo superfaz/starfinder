@@ -1,30 +1,40 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { mutators, useAppDispatch } from "logic";
+import { ActionErrors } from "app/helpers-server";
 import type { ClassOperative } from "model";
-import { useClassDetails } from "../helpers-client";
-import { CharacterProps } from "../Props";
+import { useCharacterId } from "../helpers-client";
+import { updateOperativeSpecialization, UpdateOperativeSpecializationInput, UpdateState } from "./actions";
 
-export default function OperativeEditor({ presenter }: CharacterProps) {
-  const classDetails = useClassDetails<ClassOperative>("operative");
-  const dispatch = useAppDispatch();
-
+export default function OperativeEditor({
+  state,
+  setState,
+}: Readonly<{ state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>) {
+  const characterId = useCharacterId();
+  const classDetails = state.details as ClassOperative | undefined;
+  const [errors, setErrors] = useState<ActionErrors<UpdateOperativeSpecializationInput>>({});
   if (!classDetails) {
-    return <p>Loading...</p>;
+    return null;
   }
 
-  const selectedSpecialization = classDetails.specializations.find(
-    (s) => s.id === presenter.getOperativeSpecialization()
-  );
+  const selectedSpecialization = classDetails.specializations.find((s) => s.id === state.operativeSpecialization);
 
-  const handleSpecializationChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(mutators.updateOperativeSpecialization(event.target.value));
-  };
+  async function handleSpecializationChange(event: ChangeEvent<HTMLSelectElement>) {
+    const result = await updateOperativeSpecialization({ characterId, specializationId: event.target.value });
+    if (result.success) {
+      setState(result);
+    } else {
+      setErrors(result.errors);
+    }
+  }
 
   return (
     <>
       <Form.FloatingLabel controlId="operativeSpecialization" label="Spécialisation">
-        <Form.Select value={presenter.getOperativeSpecialization() ?? ""} onChange={handleSpecializationChange}>
+        <Form.Select
+          value={state.operativeSpecialization ?? ""}
+          onChange={handleSpecializationChange}
+          isInvalid={!!errors.specializationId}
+        >
           {classDetails.specializations.map((specialization) => (
             <option key={specialization.id} value={specialization.id}>
               {specialization.name}

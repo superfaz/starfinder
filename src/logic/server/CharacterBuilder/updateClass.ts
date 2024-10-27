@@ -70,3 +70,172 @@ export async function updateClass(
   this.character = result;
   return succeed(undefined);
 }
+
+/**
+ * Updates the skill selected as a class skill for an envoy character.
+ *
+ * @param character - the character to update
+ * @param skillId - the identifier of the selected skill
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateEnvoySkill(this: CharacterBuilder, skillId: string): PromisedResult<undefined> {
+  this.character = { ...this.character, classOptions: { ...this.character.classOptions, envoySkill: skillId } };
+
+  return succeed(undefined);
+}
+
+/**
+ * Updates the style selected for a mechanic character.
+ *
+ * @param character - the character to update
+ * @param style - the selected style
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateMechanicStyle(this: CharacterBuilder, style: string): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      mechanicStyle: style,
+    },
+  };
+  return succeed(undefined);
+}
+
+/**
+ * Updates the connection selected for a mystic character.
+ *
+ * @param character - the character to update
+ * @param connection - the selected connection
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateMysticConnection(this: CharacterBuilder, connection: string): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      mysticConnection: connection,
+    },
+  };
+  return succeed(undefined);
+}
+
+/**
+ * Updates the specialization selected for an operative character.
+ *
+ * @param character - the character to update
+ * @param specialization - the selected operative specialization
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateOperativeSpecialization(
+  this: CharacterBuilder,
+  specialization: string
+): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      operativeSpecialization: specialization,
+    },
+  };
+  return succeed(undefined);
+}
+
+/**
+ * Updates the manifestation color selected for a solarian character.
+ *
+ * @param character - the character to update
+ * @param colorId - the identifier of the selected color
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateSolarianColor(this: CharacterBuilder, colorId: string): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      solarianColor: colorId,
+    },
+  };
+  return succeed(undefined);
+}
+
+/**
+ * Updates the manifestation type selected for a solarian character.
+ *
+ * @param character - the character to update
+ * @param manifestationId - the identifier of the selected manifestation
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateSolarianManifestation(
+  this: CharacterBuilder,
+  manifestationId: string
+): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      solarianManifestation: manifestationId,
+    },
+  };
+  return succeed(undefined);
+}
+
+/**
+ * Updates the damage type selected for a solarian weapon.
+ *
+ * @param character - the character to update
+ * @param damageTypeId - the identifier of the selected damage type
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateSolarianDamageType(
+  this: CharacterBuilder,
+  damageTypeId: string
+): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      solarianDamageType: damageTypeId,
+    },
+  };
+  return succeed(undefined);
+}
+
+/**
+ * Updates the primary ability score selected for a soldier character.
+ *
+ * @param character - the character to update
+ * @param abilityScoreId - the identifier of the selected ability score
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateSoldierAbilityScore(
+  this: CharacterBuilder,
+  abilityScoreId: string
+): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      soldierAbilityScore: abilityScoreId,
+    },
+  };
+  return succeed(undefined);
+}
+
+/**
+ * Updates the primary fightying style selected for a soldier character.
+ *
+ * @param character - the character to update
+ * @param styleId - the identifier of the selected style
+ * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
+ */
+export async function updateSoldierPrimaryStyle(this: CharacterBuilder, styleId: string): PromisedResult<undefined> {
+  this.character = {
+    ...this.character,
+    classOptions: {
+      ...this.character.classOptions,
+      soldierPrimaryStyle: styleId,
+    },
+  };
+  return succeed(undefined);
+}

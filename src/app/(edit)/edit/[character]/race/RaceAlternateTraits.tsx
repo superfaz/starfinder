@@ -49,7 +49,7 @@ export function RaceAlternateTraits({
       })}
       {traits.length === 0 && (
         <Alert variant="info" className="d-flex align-items-center">
-          <i className="bi bi-info-circle flex-shrink-0 me-3 display-5"></i>
+          <i className="bi bi-info-circle-fill flex-shrink-0 me-3"></i>
           <div>
             <i>Sélectionnez une race pour afficher ses potentiels traits alternatifs.</i>
           </div>

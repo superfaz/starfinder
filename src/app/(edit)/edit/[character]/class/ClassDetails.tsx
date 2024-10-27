@@ -1,8 +1,7 @@
-"use client";
-
 import dynamic from "next/dynamic";
+import Alert from "react-bootstrap/Alert";
 import Stack from "react-bootstrap/Stack";
-import { useCharacterPresenter } from "../helpers-client";
+import { UpdateState } from "./actions";
 import ClassDetailsLoading from "./ClassDetailsLoading";
 
 const LazyClassDetailsGeneric = dynamic(() => import("./ClassDetailsGeneric"), {
@@ -12,41 +11,36 @@ const LazyClassDetailsSolarian = dynamic(() => import("./ClassDetailsSolarian"),
   loading: () => <ClassDetailsLoading />,
 });
 
-function LazyClassDetails(): JSX.Element | null {
-  const presenter = useCharacterPresenter();
-  const selectedClass = presenter.getClass();
-
-  if (!selectedClass) {
-    return null;
-  }
-
-  switch (selectedClass.id) {
+function LazyClassDetails({ state }: Readonly<{ state: UpdateState }>) {
+  switch (state.class?.id) {
     case "envoy":
     case "operative":
     case "mechanic":
     case "mystic":
     case "soldier":
     case "technomancer":
-      return <LazyClassDetailsGeneric presenter={presenter} classId={selectedClass.id} />;
+      return <LazyClassDetailsGeneric features={state.features} />;
 
     case "solarian":
-      return <LazyClassDetailsSolarian presenter={presenter} classId={selectedClass.id} />;
+      return <LazyClassDetailsSolarian features={state.features} />;
 
     default:
-      return null;
+      return (
+        <Alert variant="info" className="d-flex align-items-center">
+          <i className="bi bi-info-circle-fill flex-shrink-0 me-3"></i>
+          <div>
+            <i>Sélectionnez une classe pour afficher ses abilités.</i>
+          </div>
+        </Alert>
+      );
   }
 }
 
-export function ClassDetails() {
-  const presenter = useCharacterPresenter();
-  if (presenter.getTheme() === null) {
-    return null;
-  }
-
+export function ClassDetails({ state }: Readonly<{ state: UpdateState }>) {
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
       <h2>Abilités de classe</h2>
-      <LazyClassDetails />
+      <LazyClassDetails state={state} />
     </Stack>
   );
 }

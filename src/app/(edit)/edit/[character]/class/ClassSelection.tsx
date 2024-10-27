@@ -1,15 +1,21 @@
-"use client";
-
 import dynamic from "next/dynamic";
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { findOrError } from "app/helpers";
-import { mutators, useAppDispatch, useAppSelector } from "logic";
-import { AbilityScoreIds, ofType } from "model";
+import { ActionErrors } from "app/helpers-server";
+import { useStaticData } from "logic/StaticContext";
+import { AbilityScoreIds, IdSchema, INamedModel, ofType } from "model";
 import { Badge } from "ui";
-import { useCharacterPresenter } from "../helpers-client";
 import { ReferenceComponent } from "../ReferenceComponent";
+import {
+  updateClass,
+  UpdateClassInput,
+  updateSoldierAbilityScore,
+  UpdateSoldierAbilityScoreInput,
+  UpdateState,
+} from "./actions";
+import { useParams } from "next/navigation";
 
 const LazyEditorEnvoy = dynamic(() => import("./ClassEditorEnvoy"));
 const LazyEditorMechanic = dynamic(() => import("./ClassEditorMechanic"));
@@ -18,9 +24,11 @@ const LazyEditorOperative = dynamic(() => import("./ClassEditorOperative"));
 const LazyEditorSolarian = dynamic(() => import("./ClassEditorSolarian"));
 const LazyEditorSoldier = dynamic(() => import("./ClassEditorSoldier"));
 
-export function LazyClassEditor(): JSX.Element | null {
-  const presenter = useCharacterPresenter();
-  const selectedClass = presenter.getClass();
+export function LazyClassEditor({
+  state,
+  setState,
+}: Readonly<{ state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>): JSX.Element | null {
+  const selectedClass = state.class;
 
   if (!selectedClass) {
     return null;
@@ -28,89 +36,98 @@ export function LazyClassEditor(): JSX.Element | null {
 
   switch (selectedClass.id) {
     case "envoy":
-      return <LazyEditorEnvoy presenter={presenter} />;
+      return <LazyEditorEnvoy state={state} setState={setState} />;
 
     case "mechanic":
-      return <LazyEditorMechanic presenter={presenter} />;
+      return <LazyEditorMechanic state={state} setState={setState} />;
 
     case "mystic":
-      return <LazyEditorMystic presenter={presenter} />;
+      return <LazyEditorMystic state={state} setState={setState} />;
 
     case "operative":
-      return <LazyEditorOperative presenter={presenter} />;
+      return <LazyEditorOperative state={state} setState={setState} />;
 
     case "solarian":
-      return <LazyEditorSolarian presenter={presenter} />;
+      return <LazyEditorSolarian state={state} setState={setState} />;
 
     case "soldier":
-      return <LazyEditorSoldier presenter={presenter} />;
+      return <LazyEditorSoldier state={state} setState={setState} />;
 
     default:
       return null;
   }
 }
 
-export function ClassSelection({ mode = "full" }: Readonly<{ mode?: "light" | "full" }>) {
-  const data = useAppSelector((state) => state.data);
-  const presenter = useCharacterPresenter();
-  const dispatch = useAppDispatch();
+export function ClassSelection({
+  classes,
+  state,
+  setState,
+}: Readonly<{
+  classes: INamedModel[];
+  state: UpdateState;
+  setState: Dispatch<SetStateAction<UpdateState>>;
+}>): JSX.Element | null {
+  const data = useStaticData();
+  const { character } = useParams();
+  const [errors, setErrors] = useState<ActionErrors<UpdateClassInput>>({});
+  const [soldierErrors, setSoldierErrors] = useState<ActionErrors<UpdateSoldierAbilityScoreInput>>({});
 
-  if (presenter.getTheme() === null) {
-    if (mode === "full") {
-      return null;
+  const characterId = IdSchema.parse(character);
+
+  async function handleClassChange(e: ChangeEvent<HTMLSelectElement>): Promise<void> {
+    const classId = e.target.value;
+    const result = await updateClass({ characterId, classId });
+    if (result.success) {
+      setState(result);
     } else {
-      return (
-        <Form.FloatingLabel controlId="class" label="Classe" className="mb-3">
-          <Form.Select disabled />
-        </Form.FloatingLabel>
-      );
+      setErrors(result.errors);
     }
   }
 
-  const selectedClass = presenter.getClass();
-
-  function handleClassChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    dispatch(mutators.updateClass(id));
-  }
-
-  function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const id = e.target.value;
-    dispatch(mutators.updateSoldierAbilityScore(id));
+  async function handleSoldierAbilityScoreChange(e: ChangeEvent<HTMLSelectElement>): Promise<void> {
+    const abilityScoreId = e.target.value;
+    const result = await updateSoldierAbilityScore({ characterId, abilityScoreId });
+    if (result.success) {
+      setState(result);
+    } else {
+      setSoldierErrors(result.errors);
+    }
   }
 
   return (
     <Stack direction="vertical" gap={2} className="mb-3">
-      {mode === "full" && <h2>Classe</h2>}
+      <h2>Classe</h2>
       <Form.FloatingLabel controlId="class" label="Classe">
-        <Form.Select value={selectedClass?.id ?? ""} onChange={handleClassChange}>
-          {selectedClass === null && <option value=""></option>}
-          {data.classes.map((classType) => (
+        <Form.Select value={state.class?.id ?? ""} onChange={handleClassChange} isInvalid={!!errors.classId}>
+          {!state.class && <option value=""></option>}
+          {classes.map((classType) => (
             <option key={classType.id} value={classType.id}>
               {classType.name}
             </option>
           ))}
         </Form.Select>
       </Form.FloatingLabel>
-      {selectedClass && (
+      {state.class && (
         <>
-          {mode === "full" && (
-            <Stack direction="horizontal" className="right">
-              {!presenter.isSoldier() && (
-                <Badge bg="primary">{findOrError(data.abilityScores, selectedClass.primaryAbilityScore).code}</Badge>
-              )}
-              <Badge bg="primary">EN +{selectedClass.staminaPoints}</Badge>
-              <Badge bg="primary">PV +{selectedClass.hitPoints}</Badge>
-            </Stack>
-          )}
-          <div className="text-muted">{selectedClass.description}</div>
-          <ReferenceComponent reference={selectedClass.reference} />
+          <Stack direction="horizontal" className="right">
+            {state.class.id !== "soldier" && (
+              <Badge bg="primary">{findOrError(data.abilityScores, state.class.primaryAbilityScore).code}</Badge>
+            )}
+            <Badge bg="primary">EN +{state.class.staminaPoints}</Badge>
+            <Badge bg="primary">PV +{state.class.hitPoints}</Badge>
+          </Stack>
+          <div className="text-muted">{state.class.description}</div>
+          <ReferenceComponent reference={state.class.reference} />
         </>
       )}
-      {mode === "full" && presenter.isSoldier() && (
+      {state.class?.id === "soldier" && (
         <>
           <Form.FloatingLabel controlId="soldierAbilityScore" label="Caractérisque de classe" className="mt-3">
-            <Form.Select value={presenter.getSoldierAbilityScore() ?? ""} onChange={handleSoldierAbilityScoreChange}>
+            <Form.Select
+              value={state.soldierAbilityScore ?? ""}
+              onChange={handleSoldierAbilityScoreChange}
+              isInvalid={!!soldierErrors.abilityScoreId}
+            >
               {[AbilityScoreIds.str, AbilityScoreIds.dex].map((id) => (
                 <option key={id} value={id}>
                   {findOrError(data.abilityScores, id).name}
@@ -119,29 +136,29 @@ export function ClassSelection({ mode = "full" }: Readonly<{ mode?: "light" | "f
             </Form.Select>
           </Form.FloatingLabel>
           <Stack direction="horizontal" className="right">
-            <Badge bg="primary">{findOrError(data.abilityScores, presenter.getSoldierAbilityScore()).code}</Badge>
+            <Badge bg="primary">{findOrError(data.abilityScores, state.soldierAbilityScore).code}</Badge>
           </Stack>
         </>
       )}
-      {mode === "full" && selectedClass && (
+      {state.class && (
         <>
           <hr />
           <div>
-            <Badge bg="primary">Rang de compétence</Badge>+{selectedClass.skillRank}
+            <Badge bg="primary">Rang de compétence</Badge>+{state.class.skillRank}
           </div>
           <div>
             <Badge bg="primary">Armures</Badge>
-            {selectedClass.armors.map((a) => findOrError(data.armorTypes, a).name).join(", ")}
+            {state.class.armors.map((a) => findOrError(data.armorTypes, a).name).join(", ")}
           </div>
           <div>
             <Badge bg="primary">Armes</Badge>
-            {selectedClass.modifiers
+            {state.class.modifiers
               .filter(ofType("weaponProficiency"))
               .map((m) => findOrError(data.weaponTypes, m.target).name)
               .join(", ")}
           </div>
           <hr />
-          <LazyClassEditor />
+          <LazyClassEditor state={state} setState={setState} />
         </>
       )}
     </Stack>

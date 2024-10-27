@@ -1,6 +1,12 @@
+import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { CharacterPresenter, DronePresenter, retrieveClassDetails, useAppDispatch, useAppSelector } from "logic";
-import type { ClassMechanic, IModel } from "model";
+import { IdSchema, type ClassMechanic, type IModel } from "model";
+
+export function useCharacterId(): string {
+  const { character } = useParams();
+  return IdSchema.parse(character);
+}
 
 export function useCharacterPresenter() {
   const data = useAppSelector((state) => state.data);
@@ -9,6 +15,9 @@ export function useCharacterPresenter() {
   return useMemo(() => new CharacterPresenter(data, classesDetails, character), [data, classesDetails, character]);
 }
 
+/**
+ * @deprecated use `state.details` instead
+ */
 export function useClassDetails<T extends IModel>(classId: string): T | undefined {
   const classDetails = useAppSelector((state) => state.classesDetails[classId]) as T | undefined;
   const dispatch = useAppDispatch();

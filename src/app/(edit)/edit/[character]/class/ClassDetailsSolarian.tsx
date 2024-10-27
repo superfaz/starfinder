@@ -4,9 +4,6 @@ import Stack from "react-bootstrap/Stack";
 import { Badge } from "ui";
 import { type ClassFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
-import { useClassDetails } from "../helpers-client";
-import { CharacterProps } from "../Props";
-import ClassDetailsLoading from "./ClassDetailsLoading";
 
 function Level1({ features }: Readonly<{ features: ClassFeature[] }>) {
   const specials = features.filter((f) => f.id.startsWith("solarian-"));
@@ -68,14 +65,7 @@ function LevelN({
   );
 }
 
-export default function ClassDetailsGeneric({ presenter, classId }: Readonly<CharacterProps & { classId: string }>) {
-  const classDetails = useClassDetails(classId);
-
-  if (!classDetails) {
-    return <ClassDetailsLoading />;
-  }
-
-  const features = presenter.getClassFeatures();
+export default function ClassDetailsGeneric({ features }: Readonly<{ features: ClassFeature[] }>) {
   const levels = features
     .map((f) => f.level)
     .filter((v, i, a) => a.indexOf(v) === i)

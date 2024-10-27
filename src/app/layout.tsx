@@ -27,7 +27,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   ]);
 
   if (loadData.some((d) => !d.success)) {
-    throw new Error("Failed to load data");
+    const errors = loadData.filter((d) => !d.success).map((d) => d.error);
+    throw errors[0];
   }
 
   const data: IStaticData = {
