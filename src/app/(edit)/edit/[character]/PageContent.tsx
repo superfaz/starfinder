@@ -40,11 +40,7 @@ function Block({
         )}
         {alert && (
           <Card.Body className="d-flex flex-row align-items-center text-warning-emphasis bg-warning-subtle">
-            <i
-              className="bi display-5 bi-exclamation-diamond flex-shrink-0 me-2"
-              role="img"
-              aria-label="Attention:"
-            ></i>
+            <i className="bi bi-exclamation-diamond-fill flex-shrink-0 me-2" role="img" aria-label="Attention:"></i>
             <div>{alert}</div>
           </Card.Body>
         )}
