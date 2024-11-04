@@ -1,4 +1,4 @@
-import { convert, PromisedResult, start, succeed } from "chain-of-actions";
+import { convert, fail, PromisedResult, start, succeed } from "chain-of-actions";
 import { Db, type Document, type Filter, MongoClient, type Sort } from "mongodb";
 import { unstable_cache } from "next/cache";
 import type { IModel } from "model";
@@ -13,7 +13,6 @@ import {
 } from "./interfaces";
 
 import "server-only";
-import { fail } from "assert";
 
 async function findCore<T extends IModel>(
   database: Db,
