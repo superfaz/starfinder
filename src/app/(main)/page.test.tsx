@@ -25,7 +25,7 @@ describe("PageContent", () => {
     expect(link.attributes.getNamedItem("href")).toBeDefined();
 
     const attribute = link.attributes.getNamedItem("href") as Attr;
-    expect(attribute.value).toEqual("/edit");
+    expect(attribute.value).toEqual("/create");
   });
 });
 
@@ -54,7 +54,7 @@ describe("PageAuthenticated - new user", () => {
     expect(link.attributes.getNamedItem("href")).toBeDefined();
 
     const attribute = link.attributes.getNamedItem("href") as Attr;
-    expect(attribute.value).toEqual("/edit");
+    expect(attribute.value).toEqual("/create");
   });
 });
 
@@ -84,6 +84,6 @@ describe("PageAuthenticated - existing user", () => {
     expect(link.attributes.getNamedItem("href")).toBeDefined();
 
     const attribute = link.attributes.getNamedItem("href") as Attr;
-    expect(attribute.value).toEqual("/edit");
+    expect(attribute.value).toEqual("/create");
   });
 });

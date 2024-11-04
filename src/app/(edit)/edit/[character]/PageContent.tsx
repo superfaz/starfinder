@@ -57,7 +57,7 @@ function Block({
   );
 }
 
-export async function PageContent({
+export function PageContent({
   character,
   alerts,
 }: Readonly<{ character: CharacterDetailedView; alerts: IAdvisorResult }>) {
