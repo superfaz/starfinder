@@ -10,7 +10,7 @@ import type {
   KindePermission,
   KindePermissions,
   KindeState,
-} from "@kinde-oss/kinde-auth-nextjs/dist/types.js";
+} from "@kinde-oss/kinde-auth-nextjs/types";
 import { useCallback, useEffect, useState } from "react";
 
 const flagDataTypeMap: Record<KindeFlagTypeCode, KindeFlagTypeValue> = {

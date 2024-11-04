@@ -3,6 +3,8 @@ import { createCharacterDetailed } from "./CharacterDetailedView";
 import { createCharacter } from "./CharacterView";
 import { createEntry } from "./EntryView";
 import { createRaceEntry } from "./RaceView";
+import { Character } from "model";
+import { CharacterView } from "view/interfaces";
 
 export class ViewBuilder {
   private _dataSource: IDataSource;
@@ -15,7 +17,16 @@ export class ViewBuilder {
     return this._dataSource;
   }
 
-  public createCharacter = createCharacter.bind(this);
+  public createCharacter(characters: Character[]): Promise<CharacterView[]>;
+  public createCharacter(characters: Character): Promise<CharacterView>;
+  public createCharacter(characters: Character | Character[]): Promise<CharacterView | CharacterView[]> {
+    if (Array.isArray(characters)) {
+      return Promise.all(characters.map((c) => createCharacter.bind(this)(c)));
+    }
+
+    return createCharacter.bind(this)(characters);
+  }
+
   public createCharacterDetailed = createCharacterDetailed.bind(this);
   public createEntry = createEntry.bind(this);
   public createRaceEntry = createRaceEntry.bind(this);

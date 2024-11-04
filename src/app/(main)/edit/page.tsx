@@ -5,6 +5,7 @@ import { UnauthorizedError } from "logic";
 import { getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
 import { serverError, unauthorized } from "navigation";
 import { PageContent } from "./PageContent";
+import { Character } from "model";
 
 export const metadata: Metadata = {
   title: "Personnages",
@@ -24,7 +25,9 @@ export default async function Page() {
 
   const characters = await start(undefined, context.value)
     .onSuccess((_, { user, dataSource }) => dataSource.get(DataSets.Characters).find({ userId: user.id }))
-    .onSuccess(async (characters, { viewBuilder }) => succeed(await viewBuilder.createCharacter(characters)))
+    .onSuccess(async (characters, { viewBuilder }) =>
+      succeed(await viewBuilder.createCharacter(characters as Character[]))
+    )
     .runAsync();
 
   if (!characters.success) {
