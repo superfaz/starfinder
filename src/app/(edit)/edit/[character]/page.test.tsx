@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import { DataSource } from "data";
 import { ViewBuilder } from "view/server";
 import { createCharacter, renderWithData } from "./helpers-test";
