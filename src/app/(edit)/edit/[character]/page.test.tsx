@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { cleanup, screen } from "@testing-library/react";
+import { cleanup, screen, within } from "@testing-library/react";
 import { DataSource } from "data";
 import { ViewBuilder } from "view/server";
 import { createCharacter, renderWithData } from "./helpers-test";
@@ -28,7 +28,20 @@ describe("Page", () => {
     await renderWithData(<PageContent character={view} alerts={{}} />, character);
   });
 
-  test("Page is live", async () => {
-    expect(screen.getByRole("heading", { level: 2, name: "Introduction" })).toBeDefined();
+  test("is live", async () => {
+    expect(screen.getByRole("heading", { level: 3, name: "Race" })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 3, name: "Thème" })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 3, name: "Classe" })).toBeDefined();
+  });
+
+  const entries = [
+    { code: "race", title: "Race", value: "Androïdes" },
+    { code: "theme", title: "Thème", value: "Chasseur de primes" },
+    { code: "class", title: "Classe", value: "Agent" },
+  ];
+  test.each(entries)("displays the detailed data - $code", async (entry) => {
+    const block = within(screen.getByTestId(entry.code));
+    expect(await block.findByRole("heading", { level: 3, name: entry.title })).toBeDefined();
+    expect(await block.findByText(entry.value)).toBeDefined();
   });
 });

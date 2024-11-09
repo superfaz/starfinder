@@ -58,7 +58,13 @@ beforeAll(async () => {
               getAll: async () =>
                 succeed(descriptor.schema.array().parse((await import(`./mocks/${descriptor.name}.json`)).default)),
               getOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
-              findOne: async (id) => (await import(`./mocks/${descriptor.name}-${id}.json`)).default,
+              findOne: async (id) =>
+                succeed(
+                  descriptor.schema
+                    .array()
+                    .parse((await import(`./mocks/${descriptor.name}.json`)).default)
+                    .find((item) => item.id === id)
+                ),
             };
           }
         }
