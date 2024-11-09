@@ -108,13 +108,6 @@ export function PageContent({
             />
           </Stack>
         </Col>
-        <Col md={6} lg={4} className="d-none offset-md-3 offset-lg-8 mt-2">
-          <Stack direction="vertical" gap={2}>
-            <Button variant="primary" className="my-5" disabled={loading} onClick={handleSave}>
-              Démarrer la création détaillée
-            </Button>
-          </Stack>
-        </Col>
       </Row>
       <Container fluid className="fixed-bottom py-2 bg-darkblue">
         <Row>

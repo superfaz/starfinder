@@ -22,7 +22,6 @@ describe("Page", () => {
       .updateRace("androids")
       .updateTheme("bounty-hunter")
       .updateClass("operative").character;
-    console.error(character);
     const viewBuilder = new ViewBuilder(new DataSource());
     const view = await viewBuilder.createCharacterDetailed(character);
 

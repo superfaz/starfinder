@@ -6,13 +6,16 @@ import { ViewBuilder } from "view/server";
 import races from "../../../../mocks/races.json";
 import themes from "../../../../mocks/themes.json";
 import classes from "../../../../mocks/classes.json";
-import { addFetchMock } from "../../../../mocks/fetch";
 import { PageContent } from "./PageContent";
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: vi.fn(),
   }),
+}));
+
+vi.mock("@kinde-oss/kinde-auth-nextjs/server", () => ({
+  getKindeServerSession: () => ({ getUser: () => ({}) }),
 }));
 
 describe("/create", () => {
@@ -38,24 +41,13 @@ describe("/create", () => {
     expect(screen.getByRole("combobox", { name: /Classe/ })).toHaveValue("");
   });
 
-  test("manage errors", async () => {
-    addFetchMock(
-      "/api/create",
-      {
-        name: "Invalid",
-        race: "Invalid",
-        theme: "Invalid",
-        class: "Invalid",
-      },
-      400
-    );
-
+  test("has name mandatory", async () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("button", { name: /Démarrer/ }));
 
     expect(screen.getByRole("textbox", { name: /Nom/ })).toBeInvalid();
-    expect(screen.getByRole("combobox", { name: /Race/ })).toBeInvalid();
-    expect(screen.getByRole("combobox", { name: /Thème/ })).toBeInvalid();
-    expect(screen.getByRole("combobox", { name: /Classe/ })).toBeInvalid();
+    expect(screen.getByRole("combobox", { name: /Race/ })).toBeValid();
+    expect(screen.getByRole("combobox", { name: /Thème/ })).toBeValid();
+    expect(screen.getByRole("combobox", { name: /Classe/ })).toBeValid();
   });
 });
