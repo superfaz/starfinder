@@ -15,5 +15,10 @@
     "KINDE_POST_LOGOUT_REDIRECT_URL": "https://${localEnv:CODESPACE_NAME}-3000.app.github.dev",
     "KINDE_POST_LOGIN_REDIRECT_URL": "https://${localEnv:CODESPACE_NAME}-3000.app.github.dev"
   },
-  "postCreateCommand": "pnpm install"
+  "postCreateCommand": "pnpm install",
+  "portsAttributes": {
+    "51204": {
+      "label": "vitest-ui"
+    }
+  }
 }
