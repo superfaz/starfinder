@@ -1,16 +1,18 @@
-{
-  "id": "scholar",
-  "values": {
-    "life": ["Bio-ingénierie", "Biologie", "Botanique", "Ecologie", "Génétique", "Xéno-biologie", "Zoologie"],
-    "phys": [
-      "Astronomie",
-      "Chimie",
-      "Climatologie",
-      "Géographie",
-      "Géologie",
-      "Météorologie",
-      "Océanographie",
-      "Physique"
-    ]
+[
+  {
+    "id": "scholar",
+    "values": {
+      "life": ["Bio-ingénierie", "Biologie", "Botanique", "Ecologie", "Génétique", "Xéno-biologie", "Zoologie"],
+      "phys": [
+        "Astronomie",
+        "Chimie",
+        "Climatologie",
+        "Géographie",
+        "Géologie",
+        "Météorologie",
+        "Océanographie",
+        "Physique"
+      ]
+    }
   }
-}
+]

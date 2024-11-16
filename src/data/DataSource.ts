@@ -204,8 +204,11 @@ export class DataSource implements IDataSource {
   private readonly databasePrefix: string;
 
   constructor() {
-    if (!process.env.STARFINDER_MONGO_URI || !process.env.STARFINDER_MONGO_DATABASE) {
-      throw new Error("Missing Mongo configuration");
+    if (!process.env.STARFINDER_MONGO_URI ) {
+      throw new Error("Missing Mongo configuration STARFINDER_MONGO_URI");
+    }
+    if (!process.env.STARFINDER_MONGO_DATABASE) {
+      throw new Error("Missing Mongo configuration STARFINDER_MONGO_DATABASE");
     }
 
     this.client = new MongoClient(process.env.STARFINDER_MONGO_URI);

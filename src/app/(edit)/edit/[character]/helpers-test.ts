@@ -53,10 +53,6 @@ import skills from "../../../../../mocks/skills.json";
 import weaponCategories from "../../../../../mocks/weapon-categories.json";
 import weaponSpecialProperties from "../../../../../mocks/weapon-special-properties.json";
 import weaponTypes from "../../../../../mocks/weapon-types.json";
-import envoyClassDetails from "../../../../../mocks/class-envoy.json";
-import operativeClassDetails from "../../../../../mocks/class-operative.json";
-import soldierClassDetails from "../../../../../mocks/class-soldier.json";
-import mysticClassDetails from "../../../../../mocks/class-mystic.json";
 
 const data: IClientDataSet = {
   abilityScores: AbilityScoreSchema.array().parse(abilityScores),
@@ -83,12 +79,7 @@ const data: IClientDataSet = {
   weaponTypes: WeaponTypeSchema.array().parse(weaponTypes),
 };
 
-const classesDetails: Record<string, IModel> = {
-  envoy: envoyClassDetails,
-  operative: operativeClassDetails,
-  soldier: soldierClassDetails,
-  mystic: mysticClassDetails,
-};
+const classesDetails: Record<string, IModel> = {};
 
 export function createCharacter() {
   return updators(data, { ...EmptyCharacter, id: uuidv4(), userId: "client", updatedAt: new Date().toISOString() });
