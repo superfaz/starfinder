@@ -8,21 +8,26 @@ import { PageContent } from "./PageContent";
 import { createState } from "./actions";
 
 vi.mock("next/navigation", () => ({
-  useParams: () => ({ character: 1 }),
+  useParams: () => ({ character: "testuser1" }),
   usePathname: () => "",
 }));
 
 vi.mock("@kinde-oss/kinde-auth-nextjs/server", () => ({
-  isAuthenticated: () => true,
-  getUser: () => ({ id: "test_user_1" }),
+  getKindeServerSession: () => ({
+    isAuthenticated: () => true,
+    getUser: () => ({ id: "testuser1" }),
+  }),
 }));
 
 describe("/edit/[character]/race", () => {
   beforeAll(async () => {
     cleanup();
     const character = createCharacter().updateName("Test").character;
-    const initial = await createState({ ...character, userId: "test_user_1" });
-    await renderWithData(<PageContent races={races.map((r: unknown) => RaceSchema.parse(r))} initial={initial} />);
+    const initial = await createState({ ...character, userId: "testuser1" });
+    await renderWithData(
+      <PageContent races={races.map((r: unknown) => RaceSchema.parse(r))} initial={initial} />,
+      character
+    );
   });
 
   test("displays RaceSelection", async () => {

@@ -9,6 +9,10 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "",
 }));
 
+vi.mock("@kinde-oss/kinde-auth-nextjs/server", () => ({
+  getKindeServerSession: () => ({}),
+}));
+
 describe("/edit/class", () => {
   beforeAll(async () => {
     cleanup();
