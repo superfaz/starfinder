@@ -6,24 +6,28 @@ import { RaceSchema } from "model";
 import { createCharacter, renderWithData } from "../helpers-test";
 import { PageContent } from "./PageContent";
 import { createState } from "./actions";
+import { DataSets, DataSource } from "data";
 
 vi.mock("next/navigation", () => ({
-  useParams: () => ({ character: "testuser1" }),
+  useParams: () => ({ character: "test-character1" }),
   usePathname: () => "",
 }));
 
 vi.mock("@kinde-oss/kinde-auth-nextjs/server", () => ({
   getKindeServerSession: () => ({
     isAuthenticated: () => true,
-    getUser: () => ({ id: "testuser1" }),
+    getUser: () => ({ id: "test-user1" }),
   }),
 }));
 
 describe("/edit/[character]/race", () => {
   beforeAll(async () => {
     cleanup();
-    const character = createCharacter().updateName("Test").character;
-    const initial = await createState({ ...character, userId: "testuser1" });
+    const character = createCharacter("test-character1").updateName("Test").character;
+    const initial = await createState({ ...character, userId: "test-user1" });
+    const dataSource = new DataSource();
+    dataSource.get(DataSets.Characters).create(character);
+
     await renderWithData(
       <PageContent races={races.map((r: unknown) => RaceSchema.parse(r))} initial={initial} />,
       character

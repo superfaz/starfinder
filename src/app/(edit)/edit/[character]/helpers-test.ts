@@ -81,8 +81,13 @@ const data: IClientDataSet = {
 
 const classesDetails: Record<string, IModel> = {};
 
-export function createCharacter() {
-  return updators(data, { ...EmptyCharacter, id: uuidv4(), userId: "client", updatedAt: new Date().toISOString() });
+export function createCharacter(id?: string) {
+  return updators(data, {
+    ...EmptyCharacter,
+    id: id ?? uuidv4(),
+    userId: "client",
+    updatedAt: new Date().toISOString(),
+  });
 }
 
 export type Updator = ReturnType<typeof createCharacter>;
