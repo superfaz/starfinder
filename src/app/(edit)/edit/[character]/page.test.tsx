@@ -14,6 +14,10 @@ vi.mock("@kinde-oss/kinde-auth-nextjs/server", () => ({
   getKindeServerSession: () => ({}),
 }));
 
+vi.mock("next/cache", () => ({
+  unstable_cache: (f: unknown) => f,
+}));
+
 describe("Page", () => {
   beforeAll(async () => {
     cleanup();

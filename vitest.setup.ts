@@ -25,7 +25,7 @@ beforeAll(async () => {
   // Prepare mock data
   const client = new MongoClient(process.env.STARFINDER_MONGO_URI!);
   await client.connect();
-  await client.db(process.env.STARFINDER_MONGO_DATABASE).dropDatabase();
+  await client.db(process.env.STARFINDER_MONGO_DATABASE + "-fr").dropDatabase();
 
   // Loop all files from mocks to load them into mongodb
   const mockFolder = path.resolve(__dirname, "./mocks");
@@ -34,7 +34,7 @@ beforeAll(async () => {
     if (path.extname(file) === ".json") {
       const data = await import(path.resolve(mockFolder, file));
       const collection = path.basename(file, ".json");
-      await client.db(process.env.STARFINDER_MONGO_DATABASE).collection(collection).insertMany(data.default);
+      await client.db(process.env.STARFINDER_MONGO_DATABASE + "-fr").collection(collection).insertMany(data.default);
     }
   }
 });
