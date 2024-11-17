@@ -20,7 +20,7 @@ export default async function Page({ params }: Readonly<{ params: { character: s
     return serverError(context.error);
   }
 
-  const result = await start(undefined, context.value)
+  const result = await start(context.value)
     .onSuccess((_, { input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
     .onError((error) => {
       if (error instanceof NotFoundError) {
@@ -31,10 +31,6 @@ export default async function Page({ params }: Readonly<{ params: { character: s
     .addData((_, context) => retrieveThemes(context))
     .onError(serverError)
     .runAsync();
-
-  if (!result.success) {
-    return serverError(result.error);
-  }
 
   const initial = await createState(result.value.character);
 

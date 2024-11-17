@@ -19,11 +19,7 @@ export default async function Page() {
     .addData(getViewBuilder)
     .runAsync();
 
-  if (!context.success) {
-    return serverError(context.error);
-  }
-
-  const characters = await start(undefined, context.value)
+  const characters = await start(context.value)
     .onSuccess((_, { user, dataSource }) => dataSource.get(DataSets.Characters).find({ userId: user.id }))
     .onSuccess(async (characters, { viewBuilder }) =>
       succeed(await viewBuilder.createCharacter(characters as Character[]))

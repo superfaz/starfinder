@@ -40,7 +40,7 @@ export async function retrieveCharacter(
   dataSource: IDataSource,
   user: KindeUser<Record<string, unknown>>
 ): PromisedResult<{ character: Character }, DataSourceError | NotFoundError | NotSingleError> {
-  const result = start(undefined, { id, dataSource, user })
+  const result = start({ id, dataSource, user })
     .onSuccess((_, { id, dataSource, user }) => dataSource.get(DataSets.Characters).find({ id, userId: user.id }))
     .onSuccess((characters) => (characters.length === 0 ? fail(new NotFoundError()) : succeed(characters)))
     .onSuccess((characters) => (characters.length > 1 ? fail(new NotSingleError()) : succeed(characters[0])))
@@ -72,8 +72,8 @@ export function prepareActionContext<T extends ICharacterData, D extends ZodType
   IActionContext<T>,
   DataSourceError | NotFoundError | NotSingleError | ParsingError | UnauthorizedError
 > {
-  return start({})
-    .addData(() => hasValidInput(schema, input))
+  return start()
+    .onSuccess(() => hasValidInput(schema, input))
     .addData(getAuthenticatedUser)
     .addData(getDataSource)
     .addData(({ input, dataSource, user }) => retrieveCharacter(input.characterId, dataSource, user))

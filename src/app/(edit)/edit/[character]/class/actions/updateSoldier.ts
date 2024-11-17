@@ -31,7 +31,7 @@ export async function updateSoldierAbilityScore(
     }
   }
 
-  const action = await start(undefined, context.value)
+  const action = await start(context.value)
     .onSuccess((_, { input, builder }) => builder.updateSoldierAbilityScore(input.abilityScoreId))
     .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
@@ -65,7 +65,7 @@ export async function updateSoldierPrimaryStyle(
     }
   }
 
-  const action = await start(undefined, context.value)
+  const action = await start(context.value)
     .onSuccess((_, { input, builder }) => builder.updateSoldierPrimaryStyle(input.styleId))
     .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();

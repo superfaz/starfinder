@@ -1,4 +1,4 @@
-import { start } from "chain-of-actions";
+import { start, succeed } from "chain-of-actions";
 import {
   retrieveAbilityScores,
   retrieveAlignments,
@@ -27,7 +27,8 @@ import { IDataSource } from "./interfaces";
 import { IClientDataSet } from "./IClientDataSet";
 
 export async function convert(dataSource: IDataSource): Promise<IClientDataSet> {
-  const action = await start({}, { dataSource })
+  const action = await start({ dataSource })
+    .onSuccess(() => succeed({}))
     .addData((_, context) => retrieveAbilityScores(context))
     .addData((_, context) => retrieveAlignments(context))
     .addData((_, context) => retrieveArmorTypes(context))

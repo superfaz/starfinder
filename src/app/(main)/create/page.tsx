@@ -21,20 +21,16 @@ export default async function Page() {
     .addData(getViewBuilder)
     .runAsync();
 
-  if (!context.success) {
-    return serverError(context.error);
-  }
-
   const data = await Promise.all([
-    start(undefined, context.value)
+    start(context.value)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Races).getAll())
       .onSuccess((races, { viewBuilder }) => succeed(viewBuilder.createRaceEntry(races)))
       .runAsync(),
-    start(undefined, context.value)
+    start(context.value)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Themes).getAll())
       .onSuccess((themes, { viewBuilder }) => succeed(viewBuilder.createEntry(themes)))
       .runAsync(),
-    start(undefined, context.value)
+    start(context.value)
       .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Class).getAll())
       .onSuccess((classes, { viewBuilder }) => succeed(viewBuilder.createEntry(classes)))
       .runAsync(),

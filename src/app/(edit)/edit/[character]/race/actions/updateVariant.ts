@@ -29,7 +29,7 @@ export async function updateVariant(data: UpdateVariantInput): Promise<ActionRes
     }
   }
 
-  const action = await start(undefined, context.value)
+  const action = await start(context.value)
     .onSuccess((_, { input, builder }) => builder.updateRaceVariant(input.variantId))
     .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();

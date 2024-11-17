@@ -51,8 +51,8 @@ function tryUpdate<Err extends Error>(
 }
 
 export async function create(data: CreateData): Promise<ActionResult<CreateData, { id: string }>> {
-  const context = await start({})
-    .addData(() => hasValidInput(CreateDataSchema, data))
+  const context = await start()
+    .onSuccess(() => hasValidInput(CreateDataSchema, data))
     .addData(() => getAuthenticatedUser())
     .addData(() => getDataSource())
     .addData(({ user, dataSource }) => createBuilder(dataSource, user.id))
@@ -66,7 +66,7 @@ export async function create(data: CreateData): Promise<ActionResult<CreateData,
     }
   }
 
-  const action = await start(undefined, context.value)
+  const action = await start(context.value)
     .add(tryUpdate("race", (b, v) => b.updateRace(v)))
     .add(tryUpdate("theme", (b, v) => b.updateTheme(v)))
     .add(tryUpdate("class", (b, v) => b.updateClass(v)))

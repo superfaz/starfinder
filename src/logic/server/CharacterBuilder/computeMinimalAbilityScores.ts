@@ -14,8 +14,8 @@ export async function computeMinimalAbilityScores(
   this: CharacterBuilder,
   character: Character
 ): PromisedResult<Record<string, number>, DataSourceError> {
-  const selectedVariant = await start(character.race)
-    .onSuccess((raceId) => this.dataSource.get(DataSets.Races).findOne(raceId))
+  const selectedVariant = await start()
+    .onSuccess(() => this.dataSource.get(DataSets.Races).findOne(character.race))
     .onSuccess((selectedRace) => succeed(selectedRace?.variants.find((v) => v.id === character.raceVariant)))
     .runAsync();
   if (!selectedVariant.success) {

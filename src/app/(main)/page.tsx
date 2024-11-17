@@ -13,15 +13,13 @@ export default async function Page() {
     return <PageContent />;
   }
 
-  const context = await start(user.value)
+  const context = await start()
+    .onSuccess(() => succeed(user.value))
     .addData(getDataSource)
     .addData(({ dataSource }) => succeed({ viewBuilder: new ViewBuilder(dataSource) }))
     .runAsync();
-  if (!context.success) {
-    return serverError(context.error);
-  }
 
-  const characters = await start(undefined, context.value)
+  const characters = await start(context.value)
     .onSuccess((_, { dataSource, user }) =>
       dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3)
     )

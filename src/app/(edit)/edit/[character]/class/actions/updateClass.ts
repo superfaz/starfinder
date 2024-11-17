@@ -29,7 +29,7 @@ export async function updateClass(data: UpdateClassInput): Promise<ActionResult<
     }
   }
 
-  const action = await start(undefined, context.value)
+  const action = await start(context.value)
     .onSuccess((_, { input, builder }) => builder.updateClass(input.classId))
     .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();

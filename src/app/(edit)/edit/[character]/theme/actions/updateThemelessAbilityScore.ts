@@ -31,7 +31,7 @@ export async function updateThemelessAbilityScore(
     }
   }
 
-  const action = await start(undefined, context.value)
+  const action = await start(context.value)
     .onSuccess((_, { input, builder }) => builder.updateThemelessAbilityScore(input.abilityScoreId))
     .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();

@@ -36,7 +36,7 @@ export async function updateSecondaryTrait(
     }
   }
 
-  const action = await start(undefined, context.value)
+  const action = await start(context.value)
     .onSuccess(async (_, { presenter }) => presenter.getSecondaryRaceTraits())
     .onSuccess((traits, { input }) => succeed(traits.find((t) => t.id === input.traitId)))
     .onSuccess((trait) => (trait !== undefined ? succeed(trait) : fail(new NotFoundError())))
