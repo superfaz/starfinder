@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<Size> = {
   schema: SizeSchema,
 };
 
-export const sizes = {
+export const sizeService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "sizes") as PromisedResult<{ sizes: Size[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "size") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { sizeId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.sizeId }, descriptor, "size") as PromisedResult<
       { size: Size },
       DataSourceError | NotFoundError
     >,

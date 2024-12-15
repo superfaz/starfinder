@@ -1,12 +1,28 @@
 "use server";
 
-import { addData, fail, onSuccess, PromisedResult, Result, start, succeed } from "chain-of-actions";
+import {
+  addData,
+  addDataGrouped,
+  fail,
+  onSuccess,
+  onSuccessGrouped,
+  PromisedResult,
+  Result,
+  start,
+  succeed,
+} from "chain-of-actions";
 import { z } from "zod";
 import { type ActionResult } from "app/helpers-server";
-import { DataSets } from "data";
 import { DataSourceError, NotFoundError, ParsingError } from "logic";
-import { CharacterBuilder, createBuilder, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
-import { IdSchema } from "model";
+import {
+  CharacterBuilder,
+  characterService,
+  createBuilder,
+  getAuthenticatedUser,
+  getDataSource,
+  hasValidInput,
+} from "logic/server";
+import { Character, IdSchema } from "model";
 
 const CreateDataSchema = z.object({
   race: z.preprocess((v) => v || undefined, IdSchema.optional()),
@@ -57,10 +73,11 @@ function tryUpdate<Err extends Error>(
 
 export async function create(data: CreateData): Promise<ActionResult<CreateData, { id: string }>> {
   const context = await start()
+    .withContext({})
     .add(onSuccess(() => hasValidInput(CreateDataSchema, data)))
     .add(addData(getAuthenticatedUser))
     .add(addData(getDataSource))
-    .add(addData(({ user, dataSource }) => createBuilder(dataSource, user.id)))
+    .add(addDataGrouped(({ user, dataSource }) => createBuilder(dataSource, user.id)))
     .runAsync();
 
   if (!context.success) {
@@ -78,13 +95,10 @@ export async function create(data: CreateData): Promise<ActionResult<CreateData,
     .add(tryUpdate("class", (b, v) => b.updateClass(v)))
     .add(tryUpdate("name", (b, v) => b.updateName(v)))
     .add(tryUpdate("description", (b, v) => b.updateDescription(v)))
+    .add(onSuccess((_, { builder }) => succeed({ character: builder.character })))
+    .add(onSuccessGrouped(characterService.create))
     .add(
-      onSuccess(async ({ builder, dataSource }) => {
-        return dataSource.get(DataSets.Characters).create(builder.character);
-      })
-    )
-    .add(
-      onSuccess(async ({ character }) => {
+      onSuccess(async (character: Character) => {
         return succeed({ id: character.id });
       })
     )

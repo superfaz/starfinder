@@ -11,16 +11,16 @@ const descriptor: IStaticDescriptor<WeaponSpecialProperty> = {
   schema: WeaponSpecialPropertySchema,
 };
 
-export const weaponSpecialProperties = {
+export const weaponSpecialPropertyService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "weaponSpecialProperties") as PromisedResult<
       { weaponSpecialProperties: WeaponSpecialProperty[] },
       DataSourceError
     >,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
+  retrieveOne: (params: IRetrieveAllParams & { weaponSpecialPropertyId: string }) =>
     retrieveOne(
-      { dataSource: params.dataSource, id: params.classId },
+      { dataSource: params.dataSource, id: params.weaponSpecialPropertyId },
       descriptor,
       "weaponSpecialProperty"
     ) as PromisedResult<{ weaponSpecialProperty: WeaponSpecialProperty }, DataSourceError | NotFoundError>,

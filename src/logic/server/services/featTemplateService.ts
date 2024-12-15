@@ -11,7 +11,7 @@ const descriptor: IStaticDescriptor<FeatTemplate> = {
   schema: FeatTemplateSchema,
 };
 
-export const feats = {
+export const featTemplateService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "feats") as PromisedResult<{ feats: FeatTemplate[] }, DataSourceError>,
 

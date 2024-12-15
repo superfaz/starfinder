@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 import { addData, onError, onSuccess, onSuccessGrouped, Result, start, succeed } from "chain-of-actions";
 import {
-  classes,
+  classService,
   getAuthenticatedUser,
   getDataSource,
   getViewBuilder,
-  races,
+  raceService,
   redirectToSignIn,
-  themes,
+  themeService,
 } from "logic/server";
 import { serverError } from "navigation";
 import { PageContent } from "./PageContent";
@@ -31,17 +31,17 @@ export default async function Page() {
   const data = await Promise.all([
     start()
       .withContext(context.value)
-      .add(onSuccessGrouped(races.retrieveAll))
+      .add(onSuccessGrouped(raceService.retrieveAll))
       .add(onSuccessGrouped(({ races, viewBuilder }) => succeed(viewBuilder.createRaceEntry(races))))
       .runAsync(),
     start()
       .withContext(context.value)
-      .add(onSuccessGrouped(themes.retrieveAll))
+      .add(onSuccessGrouped(themeService.retrieveAll))
       .add(onSuccessGrouped(({ themes, viewBuilder }) => succeed(viewBuilder.createEntry(themes))))
       .runAsync(),
     start()
       .withContext(context.value)
-      .add(onSuccessGrouped(classes.retrieveAll))
+      .add(onSuccessGrouped(classService.retrieveAll))
       .add(onSuccessGrouped(({ classes, viewBuilder }) => succeed(viewBuilder.createEntry(classes))))
       .runAsync(),
   ]);

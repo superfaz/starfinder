@@ -10,12 +10,12 @@ const descriptor: IStaticDescriptor<INamedModel> = {
   name: "languages",
   schema: INamedModelSchema,
 };
-export const languages = {
+export const languageService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "languages") as PromisedResult<{ languages: INamedModel[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "language") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { languageId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.languageId }, descriptor, "language") as PromisedResult<
       { language: INamedModel },
       DataSourceError | NotFoundError
     >,

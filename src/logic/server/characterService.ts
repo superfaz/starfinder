@@ -1,8 +1,7 @@
 import { PromisedResult, succeed } from "chain-of-actions";
 import { IDataSource, IDynamicDescriptor } from "data";
-import { DataSourceError, NotFoundError } from "logic/errors";
+import { DataSourceError } from "logic/errors";
 import { Character, CharacterSchema } from "model";
-import { IRetrieveAllParams, retrieveAll, retrieveOne } from "./_services";
 
 const descriptor: IDynamicDescriptor<Character> = {
   mode: "dynamic",
@@ -11,21 +10,12 @@ const descriptor: IDynamicDescriptor<Character> = {
   schema: CharacterSchema,
 };
 
-export const characters = {
-  retrieveAll: (params: IRetrieveAllParams) =>
-    retrieveAll(params, descriptor, "characters") as PromisedResult<{ characters: Character[] }, DataSourceError>,
-
-  retrieveAllForUser: (params: IRetrieveAllParams & { user: { id: string } }) =>
+export const characterService = {
+  retrieveAllForUser: (params: { dataSource: IDataSource; user: { id: string } }) =>
     params.dataSource.get(descriptor).find({ userId: params.user.id }),
 
-  retrieveOne: (params: IRetrieveAllParams & { id: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.id }, descriptor, "character") as PromisedResult<
-      { character: Character },
-      DataSourceError | NotFoundError
-    >,
-
-  retrieveOneForUser: (params: IRetrieveAllParams & { id: string; user: { id: string } }) =>
-    params.dataSource.get(descriptor).find({ id: params.id, userId: params.user.id }),
+  retrieveOneForUser: (params: { dataSource: IDataSource; characterId: string; user: { id: string } }) =>
+    params.dataSource.get(descriptor).find({ id: params.characterId, userId: params.user.id }),
 
   retrieveLast3Characters: async ({
     dataSource,
@@ -42,15 +32,18 @@ export const characters = {
     }
   },
 
+  create: async ({ dataSource, character }: { dataSource: IDataSource; character: Character }) =>
+    dataSource.get(descriptor).create(character),
+
   delete: async ({
     dataSource,
     user,
-    id,
+    characterId,
   }: {
     dataSource: IDataSource;
     user: { id: string };
-    id: string;
+    characterId: string;
   }): PromisedResult<undefined, DataSourceError> => {
-    return dataSource.get(descriptor).delete({ id, userId: user.id });
+    return dataSource.get(descriptor).delete({ id: characterId, userId: user.id });
   },
 };

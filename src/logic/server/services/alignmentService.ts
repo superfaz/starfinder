@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<Alignment> = {
   schema: AlignmentSchema,
 };
 
-export const alignments = {
+export const alignmentService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "alignments") as PromisedResult<{ alignments: Alignment[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "alignment") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { alignmentId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.alignmentId }, descriptor, "alignment") as PromisedResult<
       { alignment: Alignment },
       DataSourceError | NotFoundError
     >,

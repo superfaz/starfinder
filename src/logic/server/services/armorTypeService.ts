@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<ArmorType> = {
   schema: ArmorTypeSchema,
 };
 
-export const armorTypes = {
+export const armorTypeService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "armorTypes") as PromisedResult<{ armorTypes: ArmorType[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "armorType") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { armorTypeId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.armorTypeId }, descriptor, "armorType") as PromisedResult<
       { armorType: ArmorType },
       DataSourceError | NotFoundError
     >,

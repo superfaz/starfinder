@@ -11,16 +11,17 @@ const descriptor: IStaticDescriptor<AbilityScore> = {
   schema: AbilityScoreSchema,
 };
 
-export const abilityScores = {
+export const abilityScoreService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "abilityScores") as PromisedResult<
       { abilityScores: AbilityScore[] },
       DataSourceError
     >,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "abilityScore") as PromisedResult<
-      { abilityScore: AbilityScore },
-      DataSourceError | NotFoundError
-    >,
+  retrieveOne: (params: IRetrieveAllParams & { abilityScoreId: string }) =>
+    retrieveOne(
+      { dataSource: params.dataSource, id: params.abilityScoreId },
+      descriptor,
+      "abilityScore"
+    ) as PromisedResult<{ abilityScore: AbilityScore }, DataSourceError | NotFoundError>,
 };

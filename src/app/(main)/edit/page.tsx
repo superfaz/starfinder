@@ -1,13 +1,7 @@
 import { Metadata } from "next";
 import { addData, onError, onSuccess, onSuccessGrouped, start, succeed } from "chain-of-actions";
 import { UnauthorizedError } from "logic";
-import {
-  characters as characterService,
-  getAuthenticatedUser,
-  getDataSource,
-  getViewBuilder,
-  redirectToSignIn,
-} from "logic/server";
+import { characterService, getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
 import { serverError, unauthorized } from "navigation";
 import { PageContent } from "./PageContent";
 import { Character } from "model";

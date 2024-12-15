@@ -11,16 +11,16 @@ const descriptor: IStaticDescriptor<CriticalHitEffect> = {
   schema: CriticalHitEffectSchema,
 };
 
-export const criticalHitEffects = {
+export const criticalHitEffectService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "criticalHitEffects") as PromisedResult<
       { criticalHitEffects: CriticalHitEffect[] },
       DataSourceError
     >,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
+  retrieveOne: (params: IRetrieveAllParams & { criticalHitEffectId: string }) =>
     retrieveOne(
-      { dataSource: params.dataSource, id: params.classId },
+      { dataSource: params.dataSource, id: params.criticalHitEffectId },
       descriptor,
       "criticalHitEffect"
     ) as PromisedResult<{ criticalHitEffect: CriticalHitEffect }, DataSourceError | NotFoundError>,

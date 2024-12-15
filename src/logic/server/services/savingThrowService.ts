@@ -11,13 +11,14 @@ const descriptor: IStaticDescriptor<SavingThrow> = {
   schema: SavingThrowSchema,
 };
 
-export const savingThrows = {
+export const savingThrowService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "savingThrows") as PromisedResult<{ savingThrows: SavingThrow[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "savingThrow") as PromisedResult<
-      { savingThrow: SavingThrow },
-      DataSourceError | NotFoundError
-    >,
+  retrieveOne: (params: IRetrieveAllParams & { savingThrowId: string }) =>
+    retrieveOne(
+      { dataSource: params.dataSource, id: params.savingThrowId },
+      descriptor,
+      "savingThrow"
+    ) as PromisedResult<{ savingThrow: SavingThrow }, DataSourceError | NotFoundError>,
 };

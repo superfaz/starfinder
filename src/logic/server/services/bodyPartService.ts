@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<BodyPart> = {
   schema: BodyPartSchema,
 };
 
-export const bodyParts = {
+export const bodyPartService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "bodyParts") as PromisedResult<{ bodyParts: BodyPart[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "bodyPart") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { bodyPartId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.bodyPartId }, descriptor, "bodyPart") as PromisedResult<
       { bodyPart: BodyPart },
       DataSourceError | NotFoundError
     >,

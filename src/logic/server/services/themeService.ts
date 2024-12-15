@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<Theme> = {
   schema: ThemeSchema,
 };
 
-export const themes = {
+export const themeService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "themes") as PromisedResult<{ themes: Theme[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "theme") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { themeId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.themeId }, descriptor, "theme") as PromisedResult<
       { theme: Theme },
       DataSourceError | NotFoundError
     >,

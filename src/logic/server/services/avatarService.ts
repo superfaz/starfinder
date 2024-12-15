@@ -6,12 +6,12 @@ import { IRetrieveAllParams, retrieveAll, retrieveOne } from "./_services";
 
 const descriptor: IStaticDescriptor<Avatar> = { mode: "static", type: "simple", name: "avatars", schema: AvatarSchema };
 
-export const avatars = {
+export const avatarService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "avatars") as PromisedResult<{ avatars: Avatar[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "avatar") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { avatarId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.avatarId }, descriptor, "avatar") as PromisedResult<
       { avatar: Avatar },
       DataSourceError | NotFoundError
     >,

@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<Deity> = {
   schema: DeitySchema,
 };
 
-export const deities = {
+export const deityService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "deities") as PromisedResult<{ deities: Deity[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "deity") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { deityId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.deityId }, descriptor, "deity") as PromisedResult<
       { deity: Deity },
       DataSourceError | NotFoundError
     >,

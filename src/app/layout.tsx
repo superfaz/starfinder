@@ -5,7 +5,16 @@ import { IStaticData } from "logic/StaticContext";
 import { LayoutClient } from "./LayoutClient";
 
 import "./site.scss";
-import { abilityScores, armorTypes, avatars, books, damageTypes, sizes, skills, weaponTypes } from "logic/server";
+import {
+  abilityScoreService,
+  armorTypeService,
+  avatarService,
+  bookService,
+  damageTypeService,
+  sizeService,
+  skillService,
+  weaponTypeService,
+} from "logic/server";
 
 export const dynamic = "force-dynamic";
 
@@ -17,14 +26,14 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const dataSource = new DataSource();
 
   const loadData = await Promise.all([
-    abilityScores.retrieveAll({ dataSource }),
-    armorTypes.retrieveAll({ dataSource }),
-    avatars.retrieveAll({ dataSource }),
-    damageTypes.retrieveAll({ dataSource }),
-    sizes.retrieveAll({ dataSource }),
-    books.retrieveAll({ dataSource }),
-    weaponTypes.retrieveAll({ dataSource }),
-    skills.retrieveAll({ dataSource }),
+    abilityScoreService.retrieveAll({ dataSource }),
+    armorTypeService.retrieveAll({ dataSource }),
+    avatarService.retrieveAll({ dataSource }),
+    damageTypeService.retrieveAll({ dataSource }),
+    sizeService.retrieveAll({ dataSource }),
+    bookService.retrieveAll({ dataSource }),
+    weaponTypeService.retrieveAll({ dataSource }),
+    skillService.retrieveAll({ dataSource }),
   ]);
 
   if (loadData.some((d) => !d.success)) {

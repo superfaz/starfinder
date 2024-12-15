@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<World> = {
   schema: WorldSchema,
 };
 
-export const worlds = {
+export const worldService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "worlds") as PromisedResult<{ worlds: World[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "world") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { worldId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.worldId }, descriptor, "world") as PromisedResult<
       { world: World },
       DataSourceError | NotFoundError
     >,

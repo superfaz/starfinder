@@ -7,17 +7,17 @@ import { IRetrieveAllParams, retrieveAll, retrieveOne } from "./_services";
 const descriptor: IStaticDescriptor<IModel> = {
   mode: "static",
   type: "simple",
-  name: "themes-details",
+  name: "classes-details",
   schema: IModelSchema,
 };
 
-export const themeDetails = {
+export const classDetailService = {
   retrieveAll: (params: IRetrieveAllParams) =>
-    retrieveAll(params, descriptor, "themeDetails") as PromisedResult<{ themeDetails: IModel[] }, DataSourceError>,
+    retrieveAll(params, descriptor, "classDetails") as PromisedResult<{ classDetails: IModel[] }, DataSourceError>,
 
   retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "themeDetail") as PromisedResult<
-      { themeDetail: IModel },
+    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "classDetail") as PromisedResult<
+      { classDetail: IModel },
       DataSourceError | NotFoundError
     >,
 };

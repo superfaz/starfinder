@@ -11,16 +11,17 @@ const descriptor: IStaticDescriptor<BonusCategory> = {
   schema: BonusCategorySchema,
 };
 
-export const bonusCategories = {
+export const bonusCategoryService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "bonusCategories") as PromisedResult<
       { bonusCategories: BonusCategory[] },
       DataSourceError
     >,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "bonusCategory") as PromisedResult<
-      { bonusCategory: BonusCategory },
-      DataSourceError | NotFoundError
-    >,
+  retrieveOne: (params: IRetrieveAllParams & { bonusCategoryId: string }) =>
+    retrieveOne(
+      { dataSource: params.dataSource, id: params.bonusCategoryId },
+      descriptor,
+      "bonusCategory"
+    ) as PromisedResult<{ bonusCategory: BonusCategory }, DataSourceError | NotFoundError>,
 };

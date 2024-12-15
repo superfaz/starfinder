@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<SkillDefinition> = {
   schema: SkillDefinitionSchema,
 };
 
-export const skills = {
+export const skillService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "skills") as PromisedResult<{ skills: SkillDefinition[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "skill") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { skillId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.skillId }, descriptor, "skill") as PromisedResult<
       { skill: SkillDefinition },
       DataSourceError | NotFoundError
     >,

@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<Profession> = {
   schema: ProfessionSchema,
 };
 
-export const professions = {
+export const professionService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "professions") as PromisedResult<{ professions: Profession[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "profession") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { professionId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.professionId }, descriptor, "profession") as PromisedResult<
       { profession: Profession },
       DataSourceError | NotFoundError
     >,

@@ -11,16 +11,16 @@ const descriptor: IStaticDescriptor<EquipmentMaterial> = {
   schema: EquipmentMaterialSchema,
 };
 
-export const equipmentMaterials = {
+export const equipmentMaterialService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "equipmentMaterials") as PromisedResult<
       { equipmentMaterials: EquipmentMaterial[] },
       DataSourceError
     >,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
+  retrieveOne: (params: IRetrieveAllParams & { equipmentMaterialId: string }) =>
     retrieveOne(
-      { dataSource: params.dataSource, id: params.classId },
+      { dataSource: params.dataSource, id: params.equipmentMaterialId },
       descriptor,
       "equipmentMaterial"
     ) as PromisedResult<{ equipmentMaterial: EquipmentMaterial }, DataSourceError | NotFoundError>,

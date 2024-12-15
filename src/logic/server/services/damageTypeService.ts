@@ -11,12 +11,12 @@ const descriptor: IStaticDescriptor<DamageType> = {
   schema: DamageTypeSchema,
 };
 
-export const damageTypes = {
+export const damageTypeService = {
   retrieveAll: (params: IRetrieveAllParams) =>
     retrieveAll(params, descriptor, "damageTypes") as PromisedResult<{ damageTypes: DamageType[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { classId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.classId }, descriptor, "damageType") as PromisedResult<
+  retrieveOne: (params: IRetrieveAllParams & { damageTypeId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.damageTypeId }, descriptor, "damageType") as PromisedResult<
       { damageType: DamageType },
       DataSourceError | NotFoundError
     >,
