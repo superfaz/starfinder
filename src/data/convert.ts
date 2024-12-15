@@ -1,5 +1,6 @@
-import { start, succeed } from "chain-of-actions";
+import * as c from "chain-of-actions";
 import {
+  classes,
   retrieveAbilityScores,
   retrieveAlignments,
   retrieveArmorTypes,
@@ -7,7 +8,6 @@ import {
   retrieveBodyParts,
   retrieveBonusCategories,
   retrieveBooks,
-  retrieveClasses,
   retrieveCriticalHitEffects,
   retrieveDamageTypes,
   retrieveEquipmentMaterials,
@@ -27,30 +27,32 @@ import { IDataSource } from "./interfaces";
 import { IClientDataSet } from "./IClientDataSet";
 
 export async function convert(dataSource: IDataSource): Promise<IClientDataSet> {
-  const action = await start({ dataSource })
-    .onSuccess(() => succeed({}))
-    .addData((_, context) => retrieveAbilityScores(context))
-    .addData((_, context) => retrieveAlignments(context))
-    .addData((_, context) => retrieveArmorTypes(context))
-    .addData((_, context) => retrieveAvatars(context))
-    .addData((_, context) => retrieveBodyParts(context))
-    .addData((_, context) => retrieveBonusCategories(context))
-    .addData((_, context) => retrieveBooks(context))
-    .addData((_, context) => retrieveClasses(context))
-    .addData((_, context) => retrieveCriticalHitEffects(context))
-    .addData((_, context) => retrieveDamageTypes(context))
-    .addData((_, context) => retrieveEquipmentMaterials(context))
-    .addData((_, context) => retrieveFeats(context))
-    .addData((_, context) => retrieveProfessions(context))
-    .addData((_, context) => retrieveRaces(context))
-    .addData((_, context) => retrieveSavingThrows(context))
-    .addData((_, context) => retrieveSizes(context))
-    .addData((_, context) => retrieveSkills(context))
-    .addData((_, context) => retrieveSpells(context))
-    .addData((_, context) => retrieveThemes(context))
-    .addData((_, context) => retrieveWeaponCategories(context))
-    .addData((_, context) => retrieveWeaponSpecialProperties(context))
-    .addData((_, context) => retrieveWeaponTypes(context))
+  const action = await c
+    .start()
+    .withContext({ dataSource: dataSource })
+    .add(c.onSuccess(() => c.succeed({})))
+    .add(c.addDataGrouped(retrieveAbilityScores))
+    .add(c.addDataGrouped(retrieveAlignments))
+    .add(c.addDataGrouped(retrieveArmorTypes))
+    .add(c.addDataGrouped(retrieveAvatars))
+    .add(c.addDataGrouped(retrieveBodyParts))
+    .add(c.addDataGrouped(retrieveBonusCategories))
+    .add(c.addDataGrouped(retrieveBooks))
+    .add(c.addDataGrouped(classes.retrieveAll))
+    .add(c.addDataGrouped(retrieveCriticalHitEffects))
+    .add(c.addDataGrouped(retrieveDamageTypes))
+    .add(c.addDataGrouped(retrieveEquipmentMaterials))
+    .add(c.addDataGrouped(retrieveFeats))
+    .add(c.addDataGrouped(retrieveProfessions))
+    .add(c.addDataGrouped(retrieveRaces))
+    .add(c.addDataGrouped(retrieveSavingThrows))
+    .add(c.addDataGrouped(retrieveSizes))
+    .add(c.addDataGrouped(retrieveSkills))
+    .add(c.addDataGrouped(retrieveSpells))
+    .add(c.addDataGrouped(retrieveThemes))
+    .add(c.addDataGrouped(retrieveWeaponCategories))
+    .add(c.addDataGrouped(retrieveWeaponSpecialProperties))
+    .add(c.addDataGrouped(retrieveWeaponTypes))
     .runAsync();
 
   if (!action.success) {

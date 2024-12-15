@@ -8,23 +8,23 @@ export async function GET(_: NextRequest, { params }: { params: { weaponType: st
   const weaponType: EquipmentWeaponId = EquipmentWeaponIdSchema.parse(params.weaponType);
   switch (weaponType) {
     case EquipmentWeaponIds.basic:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponBasic).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsBasic).getAll());
     case EquipmentWeaponIds.advanced:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponAdvanced).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsAdvanced).getAll());
     case EquipmentWeaponIds.small:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponSmall).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsSmall).getAll());
     case EquipmentWeaponIds.long:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponLong).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsLong).getAll());
     case EquipmentWeaponIds.heavy:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponHeavy).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsHeavy).getAll());
     case EquipmentWeaponIds.sniper:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponSniper).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsSniper).getAll());
     case EquipmentWeaponIds.grenade:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponGrenade).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsGrenade).getAll());
     case EquipmentWeaponIds.solarian:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponSolarian).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsSolarian).getAll());
     case EquipmentWeaponIds.ammunition:
-      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponAmmunition).getAll());
+      return NextResponse.json(await dataSource.get(DataSets.EquipmentWeaponsAmmunition).getAll());
     default:
       return NextResponse.error();
   }

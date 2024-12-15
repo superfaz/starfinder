@@ -5,5 +5,5 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   const dataSource: IDataSource = new DataSource();
-  return NextResponse.json(await dataSource.get(DataSets.EquipmentArmorUpgrade).getAll());
+  return NextResponse.json(await dataSource.get(DataSets.EquipmentArmorsUpgrade).getAll());
 }

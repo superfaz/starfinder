@@ -1,4 +1,4 @@
-import { convert, fail, PromisedResult, start, succeed } from "chain-of-actions";
+import { convert, fail, onSuccess, PromisedResult, start, succeed } from "chain-of-actions";
 import { Db, type Document, type Filter, MongoClient, type Sort } from "mongodb";
 import { unstable_cache } from "next/cache";
 import type { IModel } from "model";
@@ -47,13 +47,15 @@ async function findCore<T extends IModel>(
   }
 
   return start()
-    .onSuccess(() =>
-      convert({
-        try: () => preparedQuery.toArray(),
-        catch: (e: unknown) => new DataSourceError(`Failed to get ${descriptor.name}`, { cause: e }),
-      })
+    .add(
+      onSuccess(() =>
+        convert({
+          try: () => preparedQuery.toArray(),
+          catch: (e: unknown) => new DataSourceError(`Failed to get ${descriptor.name}`, { cause: e }),
+        })
+      )
     )
-    .onSuccess((results) => succeed(descriptor.schema.array().parse(results)))
+    .add(onSuccess((results) => succeed(descriptor.schema.array().parse(results))))
     .runAsync();
 }
 
@@ -68,19 +70,23 @@ async function findOneCore<T extends IModel>(
 ): PromisedResult<T | undefined, DataSourceError> {
   const isT = (obj: unknown): obj is T => descriptor.schema.safeParse(obj).success;
   return start()
-    .onSuccess(() =>
-      convert({
-        try: () => database.collection(descriptor.name).findOne({ id }),
-        catch: (e) => new DataSourceError("", { cause: e }),
+    .add(
+      onSuccess(() =>
+        convert({
+          try: () => database.collection(descriptor.name).findOne({ id }),
+          catch: (e) => new DataSourceError("", { cause: e }),
+        })
+      )
+    )
+    .add(
+      onSuccess((result) => {
+        if (result && !isT(result)) {
+          return fail(new DataSourceError(`Failed to parse ${descriptor.name}/${id}`));
+        } else {
+          return succeed(result === null ? undefined : result);
+        }
       })
     )
-    .onSuccess((result) => {
-      if (result && !isT(result)) {
-        return fail(new DataSourceError(`Failed to parse ${descriptor.name}/${id}`));
-      } else {
-        return succeed(result === null ? undefined : result);
-      }
-    })
     .runAsync();
 }
 
@@ -90,9 +96,11 @@ function getOneCore<T extends IModel>(
   id: string
 ): PromisedResult<T, DataSourceError> {
   return start()
-    .onSuccess(() => findOneCore(database, descriptor, id))
-    .onSuccess((result) =>
-      result ? succeed(result) : fail(new DataSourceError(`Failed to get ${descriptor.name}/${id}`))
+    .add(onSuccess(() => findOneCore(database, descriptor, id)))
+    .add(
+      onSuccess((result) =>
+        result ? succeed(result) : fail(new DataSourceError(`Failed to get ${descriptor.name}/${id}`))
+      )
     )
     .runAsync();
 }
@@ -140,19 +148,23 @@ class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDyna
     }
 
     return start()
-      .onSuccess(() =>
-        convert({
-          try: () => this.database.collection(this.descriptor.name).insertOne(protect.data),
-          catch: (e) => new DataSourceError(`Failed to create ${this.descriptor.name}`, { cause: e }),
+      .add(
+        onSuccess(() =>
+          convert({
+            try: () => this.database.collection(this.descriptor.name).insertOne(protect.data),
+            catch: (e) => new DataSourceError(`Failed to create ${this.descriptor.name}`, { cause: e }),
+          })
+        )
+      )
+      .add(
+        onSuccess((result) => {
+          if (!result.acknowledged) {
+            return fail(new DataSourceError(`Failed to create ${this.descriptor.name}`));
+          }
+
+          return succeed(protect.data);
         })
       )
-      .onSuccess((result) => {
-        if (!result.acknowledged) {
-          return fail(new DataSourceError(`Failed to create ${this.descriptor.name}`));
-        }
-
-        return succeed(protect.data);
-      })
       .runAsync();
   }
 
@@ -163,38 +175,46 @@ class DynamicDataSet<T extends IModel> extends StaticDataSet<T> implements IDyna
     }
 
     return start()
-      .onSuccess(() =>
-        convert({
-          try: () => this.database.collection(this.descriptor.name).replaceOne({ id: data.id }, protect.data),
-          catch: (e) => new DataSourceError(`Failed to update ${this.descriptor.name}/${data.id}`, { cause: e }),
+      .add(
+        onSuccess(() =>
+          convert({
+            try: () => this.database.collection(this.descriptor.name).replaceOne({ id: data.id }, protect.data),
+            catch: (e) => new DataSourceError(`Failed to update ${this.descriptor.name}/${data.id}`, { cause: e }),
+          })
+        )
+      )
+      .add(
+        onSuccess((result) => {
+          if (!result.acknowledged) {
+            return fail(new DataSourceError(`Failed to update ${this.descriptor.name}/${data.id}`));
+          }
+          return succeed(protect.data);
         })
       )
-      .onSuccess((result) => {
-        if (!result.acknowledged) {
-          return fail(new DataSourceError(`Failed to update ${this.descriptor.name}/${data.id}`));
-        }
-        return succeed(protect.data);
-      })
       .runAsync();
   }
 
-  delete(idOrQuery: string | Filter<T>): PromisedResult<void, DataSourceError> {
+  delete(idOrQuery: string | Filter<T>): PromisedResult<undefined, DataSourceError> {
     return start()
-      .onSuccess(() =>
-        convert({
-          try: () =>
-            this.database
-              .collection(this.descriptor.name)
-              .deleteOne(typeof idOrQuery === "string" ? { id: idOrQuery } : (idOrQuery as Filter<Document>)),
-          catch: (e) => new DataSourceError(`Failed to delete ${this.descriptor.name}/${idOrQuery}`, { cause: e }),
+      .add(
+        onSuccess(() =>
+          convert({
+            try: () =>
+              this.database
+                .collection(this.descriptor.name)
+                .deleteOne(typeof idOrQuery === "string" ? { id: idOrQuery } : (idOrQuery as Filter<Document>)),
+            catch: (e) => new DataSourceError(`Failed to delete ${this.descriptor.name}/${idOrQuery}`, { cause: e }),
+          })
+        )
+      )
+      .add(
+        onSuccess((result) => {
+          if (!result.acknowledged) {
+            return fail(new DataSourceError(`Failed to delete ${this.descriptor.name}/${idOrQuery}`));
+          }
+          return succeed();
         })
       )
-      .onSuccess((result) => {
-        if (!result.acknowledged) {
-          return fail(new DataSourceError(`Failed to delete ${this.descriptor.name}/${idOrQuery}`));
-        }
-        return succeed(undefined);
-      })
       .runAsync();
   }
 }
@@ -204,7 +224,7 @@ export class DataSource implements IDataSource {
   private readonly databasePrefix: string;
 
   constructor() {
-    if (!process.env.STARFINDER_MONGO_URI ) {
+    if (!process.env.STARFINDER_MONGO_URI) {
       throw new Error("Missing Mongo configuration STARFINDER_MONGO_URI");
     }
     if (!process.env.STARFINDER_MONGO_DATABASE) {

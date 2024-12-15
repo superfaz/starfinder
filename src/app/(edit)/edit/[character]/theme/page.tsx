@@ -21,14 +21,14 @@ export default async function Page({ params }: Readonly<{ params: { character: s
   }
 
   const result = await start(context.value)
-    .onSuccess((_, { input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
+    .onSuccess(({ input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
     .onError((error) => {
       if (error instanceof NotFoundError) {
         return notFound();
       }
       return serverError(error);
     })
-    .addData((_, context) => retrieveThemes(context))
+    .addData(retrieveThemes)
     .onError(serverError)
     .runAsync();
 

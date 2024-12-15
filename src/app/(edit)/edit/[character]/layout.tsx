@@ -35,7 +35,7 @@ export default async function Layout({
   children,
   params,
 }: Readonly<{ children: ReactNode; params: { character: string } }>) {
-  const context = await start().onSuccess(getDataSource).addData(getAuthenticatedUser).runAsync();
+  const context = await start({}).onSuccess(getDataSource).addData(getAuthenticatedUser).runAsync();
 
   if (!context.success) {
     return serverError(context.error);

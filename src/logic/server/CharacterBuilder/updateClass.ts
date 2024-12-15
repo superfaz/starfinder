@@ -1,4 +1,4 @@
-import { fail, PromisedResult, start, succeed } from "chain-of-actions";
+import { fail, onSuccess, PromisedResult, start, succeed } from "chain-of-actions";
 import { DataSets } from "data";
 import { DataSourceError, NotFoundError } from "logic/errors";
 import { AbilityScoreIds, Character } from "model";
@@ -18,12 +18,12 @@ export async function updateClass(
 ): PromisedResult<undefined, DataSourceError | NotFoundError> {
   if (this.character.class === classId) {
     // No change
-    return succeed(undefined);
+    return succeed();
   }
 
   const klass = await start()
-    .onSuccess(() => this.dataSource.get(DataSets.Class).findOne(classId))
-    .onSuccess((klass) => (klass === undefined ? fail(new NotFoundError()) : succeed(klass)))
+    .add(onSuccess(() => this.dataSource.get(DataSets.Classes).findOne(classId)))
+    .add(onSuccess((klass) => (klass === undefined ? fail(new NotFoundError()) : succeed(klass))))
     .runAsync();
 
   if (!klass.success) {
@@ -68,7 +68,7 @@ export async function updateClass(
   const abilityScores = await this.computeMinimalAbilityScores(result);
   result.abilityScores = abilityScores.success ? abilityScores.value : {};
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -81,7 +81,7 @@ export async function updateClass(
 export async function updateEnvoySkill(this: CharacterBuilder, skillId: string): PromisedResult<undefined> {
   this.character = { ...this.character, classOptions: { ...this.character.classOptions, envoySkill: skillId } };
 
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -99,7 +99,7 @@ export async function updateMechanicStyle(this: CharacterBuilder, style: string)
       mechanicStyle: style,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -117,7 +117,7 @@ export async function updateMysticConnection(this: CharacterBuilder, connection:
       mysticConnection: connection,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -138,7 +138,7 @@ export async function updateOperativeSpecialization(
       operativeSpecialization: specialization,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -156,7 +156,7 @@ export async function updateSolarianColor(this: CharacterBuilder, colorId: strin
       solarianColor: colorId,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -177,7 +177,7 @@ export async function updateSolarianManifestation(
       solarianManifestation: manifestationId,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -198,7 +198,7 @@ export async function updateSolarianDamageType(
       solarianDamageType: damageTypeId,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -219,7 +219,7 @@ export async function updateSoldierAbilityScore(
       soldierAbilityScore: abilityScoreId,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -237,5 +237,5 @@ export async function updateSoldierPrimaryStyle(this: CharacterBuilder, styleId:
       soldierPrimaryStyle: styleId,
     },
   };
-  return succeed(undefined);
+  return succeed();
 }

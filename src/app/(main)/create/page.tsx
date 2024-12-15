@@ -1,7 +1,14 @@
 import { Metadata } from "next";
-import { Result, start, succeed } from "chain-of-actions";
-import { DataSets } from "data";
-import { getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
+import { addData, onError, onSuccess, onSuccessGrouped, Result, start, succeed } from "chain-of-actions";
+import {
+  classes,
+  getAuthenticatedUser,
+  getDataSource,
+  getViewBuilder,
+  races,
+  redirectToSignIn,
+  themes,
+} from "logic/server";
 import { serverError } from "navigation";
 import { PageContent } from "./PageContent";
 
@@ -15,24 +22,27 @@ function getData<T, E extends Error>(result: Result<T[], E>) {
 
 export default async function Page() {
   const context = await start()
-    .onSuccess(getAuthenticatedUser)
-    .onError(() => redirectToSignIn(`/create`))
-    .addData(getDataSource)
-    .addData(getViewBuilder)
+    .add(onSuccess(getAuthenticatedUser))
+    .add(onError(() => redirectToSignIn(`/create`)))
+    .add(addData(getDataSource))
+    .add(addData(getViewBuilder))
     .runAsync();
 
   const data = await Promise.all([
-    start(context.value)
-      .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Races).getAll())
-      .onSuccess((races, { viewBuilder }) => succeed(viewBuilder.createRaceEntry(races)))
+    start()
+      .withContext(context.value)
+      .add(onSuccessGrouped(races.retrieveAll))
+      .add(onSuccessGrouped(({ races, viewBuilder }) => succeed(viewBuilder.createRaceEntry(races))))
       .runAsync(),
-    start(context.value)
-      .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Themes).getAll())
-      .onSuccess((themes, { viewBuilder }) => succeed(viewBuilder.createEntry(themes)))
+    start()
+      .withContext(context.value)
+      .add(onSuccessGrouped(themes.retrieveAll))
+      .add(onSuccessGrouped(({ themes, viewBuilder }) => succeed(viewBuilder.createEntry(themes))))
       .runAsync(),
-    start(context.value)
-      .onSuccess((_, { dataSource }) => dataSource.get(DataSets.Class).getAll())
-      .onSuccess((classes, { viewBuilder }) => succeed(viewBuilder.createEntry(classes)))
+    start()
+      .withContext(context.value)
+      .add(onSuccessGrouped(classes.retrieveAll))
+      .add(onSuccessGrouped(({ classes, viewBuilder }) => succeed(viewBuilder.createEntry(classes))))
       .runAsync(),
   ]);
 

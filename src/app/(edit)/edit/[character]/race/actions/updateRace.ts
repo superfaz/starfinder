@@ -30,8 +30,8 @@ export async function updateRace(data: UpdateRaceInput): Promise<ActionResult<Up
   }
 
   const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateRace(input.raceId))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ input, builder }) => builder.updateRace(input.raceId))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {

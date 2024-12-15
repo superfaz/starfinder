@@ -24,8 +24,8 @@ export async function createState(character: Character): Promise<UpdateState> {
     race: character.race,
     variant: character.raceVariant,
     selectableBonus: character.raceOptions?.selectableBonus,
-    primaryTraits: primaryTraits.success ? primaryTraits.value : [],
-    secondaryTraits: secondaryTraits.success ? secondaryTraits.value : [],
+    primaryTraits: primaryTraits.success ? primaryTraits.value.primaryTraits : [],
+    secondaryTraits: secondaryTraits.success ? secondaryTraits.value.secondaryTraits : [],
     selectedTraits: character.traits,
   };
 }

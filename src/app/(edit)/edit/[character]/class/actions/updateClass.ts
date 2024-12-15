@@ -1,6 +1,6 @@
 "use server";
 
-import { start } from "chain-of-actions";
+import { onSuccess, onSuccessGrouped, start } from "chain-of-actions";
 import { z } from "zod";
 import { ActionResult } from "app/helpers-server";
 import { DataSets } from "data";
@@ -29,9 +29,10 @@ export async function updateClass(data: UpdateClassInput): Promise<ActionResult<
     }
   }
 
-  const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateClass(input.classId))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+  const action = await start()
+    .withContext(context.value)
+    .add(onSuccessGrouped(({ input, builder }) => builder.updateClass(input.classId)))
+    .add(onSuccessGrouped(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character)))
     .runAsync();
 
   if (!action.success) {

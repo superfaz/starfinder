@@ -1,8 +1,13 @@
 import { Metadata } from "next";
-import { start, succeed } from "chain-of-actions";
-import { DataSets } from "data";
+import { addData, onError, onSuccess, onSuccessGrouped, start, succeed } from "chain-of-actions";
 import { UnauthorizedError } from "logic";
-import { getAuthenticatedUser, getDataSource, getViewBuilder, redirectToSignIn } from "logic/server";
+import {
+  characters as characterService,
+  getAuthenticatedUser,
+  getDataSource,
+  getViewBuilder,
+  redirectToSignIn,
+} from "logic/server";
 import { serverError, unauthorized } from "navigation";
 import { PageContent } from "./PageContent";
 import { Character } from "model";
@@ -13,16 +18,19 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const context = await start()
-    .onSuccess(getAuthenticatedUser)
-    .onError(() => redirectToSignIn(`/edit`))
-    .addData(getDataSource)
-    .addData(getViewBuilder)
+    .add(onSuccess(getAuthenticatedUser))
+    .add(onError(() => redirectToSignIn(`/edit`)))
+    .add(addData(getDataSource))
+    .add(addData(getViewBuilder))
     .runAsync();
 
-  const characters = await start(context.value)
-    .onSuccess((_, { user, dataSource }) => dataSource.get(DataSets.Characters).find({ userId: user.id }))
-    .onSuccess(async (characters, { viewBuilder }) =>
-      succeed(await viewBuilder.createCharacter(characters as Character[]))
+  const characters = await start()
+    .withContext(context.value)
+    .add(onSuccessGrouped(characterService.retrieveAllForUser))
+    .add(
+      onSuccess(async (characters, { viewBuilder }) =>
+        succeed(await viewBuilder.createCharacter(characters as Character[]))
+      )
     )
     .runAsync();
 

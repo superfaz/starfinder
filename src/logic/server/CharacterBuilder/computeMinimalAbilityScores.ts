@@ -1,4 +1,4 @@
-import { fail, PromisedResult, start, succeed } from "chain-of-actions";
+import { fail, onSuccess, PromisedResult, start, succeed } from "chain-of-actions";
 import { DataSets } from "data";
 import { DataSourceError } from "logic/errors";
 import { Character } from "model";
@@ -15,8 +15,8 @@ export async function computeMinimalAbilityScores(
   character: Character
 ): PromisedResult<Record<string, number>, DataSourceError> {
   const selectedVariant = await start()
-    .onSuccess(() => this.dataSource.get(DataSets.Races).findOne(character.race))
-    .onSuccess((selectedRace) => succeed(selectedRace?.variants.find((v) => v.id === character.raceVariant)))
+    .add(onSuccess(() => this.dataSource.get(DataSets.Races).findOne(character.race)))
+    .add(onSuccess((selectedRace) => succeed(selectedRace?.variants.find((v) => v.id === character.raceVariant))))
     .runAsync();
   if (!selectedVariant.success) {
     return fail(selectedVariant.error);
@@ -27,7 +27,7 @@ export async function computeMinimalAbilityScores(
     return fail(selectedTheme.error);
   }
 
-  const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
+  const abilityScores = await this.dataSource.get(DataSets.AbilityScores).getAll();
   if (!abilityScores.success) {
     return fail(abilityScores.error);
   }

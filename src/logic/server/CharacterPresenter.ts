@@ -1,5 +1,5 @@
-import { findOrError } from "app/helpers";
 import { PromisedResult, succeed, fail } from "chain-of-actions";
+import { findOrError } from "app/helpers";
 import { DataSets, IDataSource } from "data";
 import { DataSourceError } from "logic/errors";
 import { Templater } from "logic/Templater";
@@ -95,18 +95,18 @@ export class CharacterPresenter {
 
   async getRace(): PromisedResult<Race | undefined, DataSourceError> {
     if (!this.character.race) {
-      return succeed(undefined);
+      return succeed();
     }
 
     return await this.dataSource.get(DataSets.Races).findOne(this.character.race);
   }
 
-  async getPrimaryRaceTraits(): PromisedResult<RaceFeature[], DataSourceError> {
+  async getPrimaryRaceTraits(): PromisedResult<{ primaryTraits: RaceFeature[] }, DataSourceError> {
     const race = await this.getRace();
     if (!race.success) {
       return fail(race.error);
     } else if (race.value === undefined) {
-      return succeed([]);
+      return succeed({ primaryTraits: [] });
     }
 
     const templater = await this.createTemplater();
@@ -114,15 +114,15 @@ export class CharacterPresenter {
       this.cachedPrimaryRaceTraits = race.value.traits.map((t) => templater.convertRaceFeature(t));
     }
 
-    return succeed(this.cachedPrimaryRaceTraits);
+    return succeed({ primaryTraits: this.cachedPrimaryRaceTraits });
   }
 
-  async getSecondaryRaceTraits(): PromisedResult<RaceFeature[], DataSourceError> {
+  async getSecondaryRaceTraits(): PromisedResult<{ secondaryTraits: RaceFeature[] }, DataSourceError> {
     const race = await this.getRace();
     if (!race.success) {
       return fail(race.error);
     } else if (race.value === undefined) {
-      return succeed([]);
+      return succeed({ secondaryTraits: [] });
     }
 
     const templater = await this.createTemplater();
@@ -136,18 +136,21 @@ export class CharacterPresenter {
       for (const trait of traits) {
         const source = findOrError(race.value.secondaryTraits, trait.id);
         trait.replace =
-          source.replace?.map((r) => ({ id: r, name: primaryTraits.value.find((p) => p.id === r)?.name ?? r })) ?? [];
+          source.replace?.map((r) => ({
+            id: r,
+            name: primaryTraits.value.primaryTraits.find((p) => p.id === r)?.name ?? r,
+          })) ?? [];
       }
 
       this.cachedSecondaryRaceTraits = traits;
     }
 
-    return succeed(this.cachedSecondaryRaceTraits);
+    return succeed({ secondaryTraits: this.cachedSecondaryRaceTraits });
   }
 
   async getTheme(): PromisedResult<Theme | undefined, DataSourceError> {
     if (!this.character.theme) {
-      return succeed(undefined);
+      return succeed();
     }
 
     return await this.dataSource.get(DataSets.Themes).findOne(this.character.theme);
@@ -167,7 +170,7 @@ export class CharacterPresenter {
 
   async getIconProfession(): PromisedResult<Profession | undefined> {
     if (!this.character.themeOptions?.iconProfession) {
-      return succeed(undefined);
+      return succeed();
     }
 
     const result = this.character.professionSkills.find((p) => p.id === this.character.themeOptions?.iconProfession);
@@ -188,10 +191,10 @@ export class CharacterPresenter {
 
   async getClass(): PromisedResult<Class | undefined, DataSourceError> {
     if (!this.character.class) {
-      return succeed(undefined);
+      return succeed();
     }
 
-    return await this.dataSource.get(DataSets.Class).findOne(this.character.class);
+    return await this.dataSource.get(DataSets.Classes).findOne(this.character.class);
   }
 
   async getClassDetails(): PromisedResult<IModel | undefined, DataSourceError> {
@@ -199,7 +202,7 @@ export class CharacterPresenter {
     if (!selectedClass.success) {
       return fail(selectedClass.error);
     } else if (selectedClass.value === undefined) {
-      return succeed(undefined);
+      return succeed();
     }
 
     return await this.dataSource.get(DataSets.ClassDetails).getOne(selectedClass.value.id);
@@ -367,7 +370,7 @@ export class CharacterPresenter {
   }
 
   async getAllProfessions(): PromisedResult<Profession[], DataSourceError> {
-    const professions = await this.dataSource.get(DataSets.Profession).getAll();
+    const professions = await this.dataSource.get(DataSets.Professions).getAll();
     if (!professions.success) {
       return fail(professions.error);
     }

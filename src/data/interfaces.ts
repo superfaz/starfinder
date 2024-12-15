@@ -4,7 +4,7 @@ import type { Schema } from "zod";
 import { DataSourceError } from "logic";
 import type { IModel } from "model";
 
-interface IBaseDescriptor<T extends IModel> {
+export interface IBaseDescriptor<T extends IModel> {
   type: "simple" | "named" | "ordered";
   name: string;
   schema: Schema<T>;
@@ -30,7 +30,7 @@ export interface IStaticDataSet<T extends IModel> {
 export interface IDynamicDataSet<T extends IModel> extends IStaticDataSet<T> {
   create(data: T): PromisedResult<T, DataSourceError>;
   update(data: T): PromisedResult<T, DataSourceError>;
-  delete(idOrQuery: string | Filter<T>): PromisedResult<void, DataSourceError>;
+  delete(idOrQuery: string | Filter<T>): PromisedResult<undefined, DataSourceError>;
 }
 
 export interface IDataSource {

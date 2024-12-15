@@ -1,6 +1,6 @@
 "use server";
 
-import { fail, PromisedResult, Result, start, succeed } from "chain-of-actions";
+import { addData, fail, onSuccess, PromisedResult, Result, start, succeed } from "chain-of-actions";
 import { z } from "zod";
 import { type ActionResult } from "app/helpers-server";
 import { DataSets } from "data";
@@ -34,7 +34,10 @@ function parsingError<Data, Err extends Error>(
 function tryUpdate<Err extends Error>(
   field: keyof CreateData,
   updator: (builder: CharacterBuilder, value: string) => PromisedResult<undefined, DataSourceError | NotFoundError>
-) {
+): (
+  previous: Result<undefined, Err>,
+  { builder, input }: { builder: CharacterBuilder; input: CreateData }
+) => PromisedResult<undefined, Err | ParsingError> {
   return async (
     previous: Result<undefined, Err>,
     { builder, input }: { builder: CharacterBuilder; input: CreateData }
@@ -43,6 +46,8 @@ function tryUpdate<Err extends Error>(
       const result = await updator(builder, input[field]);
       if (!result.success) {
         return fail(parsingError({ [field]: ["Invalid"] }, previous));
+      } else {
+        return succeed();
       }
     }
 
@@ -52,10 +57,10 @@ function tryUpdate<Err extends Error>(
 
 export async function create(data: CreateData): Promise<ActionResult<CreateData, { id: string }>> {
   const context = await start()
-    .onSuccess(() => hasValidInput(CreateDataSchema, data))
-    .addData(() => getAuthenticatedUser())
-    .addData(() => getDataSource())
-    .addData(({ user, dataSource }) => createBuilder(dataSource, user.id))
+    .add(onSuccess(() => hasValidInput(CreateDataSchema, data)))
+    .add(addData(getAuthenticatedUser))
+    .add(addData(getDataSource))
+    .add(addData(({ user, dataSource }) => createBuilder(dataSource, user.id)))
     .runAsync();
 
   if (!context.success) {
@@ -66,18 +71,23 @@ export async function create(data: CreateData): Promise<ActionResult<CreateData,
     }
   }
 
-  const action = await start(context.value)
+  const action = await start()
+    .withContext(context.value)
     .add(tryUpdate("race", (b, v) => b.updateRace(v)))
     .add(tryUpdate("theme", (b, v) => b.updateTheme(v)))
     .add(tryUpdate("class", (b, v) => b.updateClass(v)))
     .add(tryUpdate("name", (b, v) => b.updateName(v)))
     .add(tryUpdate("description", (b, v) => b.updateDescription(v)))
-    .onSuccess(async (_, { builder, dataSource }) => {
-      return dataSource.get(DataSets.Characters).create(builder.character);
-    })
-    .onSuccess(async (character) => {
-      return succeed({ id: character.id });
-    })
+    .add(
+      onSuccess(async ({ builder, dataSource }) => {
+        return dataSource.get(DataSets.Characters).create(builder.character);
+      })
+    )
+    .add(
+      onSuccess(async ({ character }) => {
+        return succeed({ id: character.id });
+      })
+    )
     .runAsync();
 
   if (!action.success) {

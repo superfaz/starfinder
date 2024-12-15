@@ -1,4 +1,4 @@
-import { fail, PromisedResult, start, succeed } from "chain-of-actions";
+import { fail, onSuccess, PromisedResult, start, succeed } from "chain-of-actions";
 import { DataSourceError, NotFoundError } from "logic/errors";
 import { DataSets } from "data";
 import { Character } from "model";
@@ -18,19 +18,19 @@ export async function updateRace(
 ): PromisedResult<undefined, DataSourceError | NotFoundError> {
   if (this.character.race === raceId) {
     // No change
-    return succeed(undefined);
+    return succeed();
   }
 
   const race = await start()
-    .onSuccess(() => this.dataSource.get(DataSets.Races).findOne(raceId))
-    .onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race)))
+    .add(onSuccess(() => this.dataSource.get(DataSets.Races).findOne(raceId)))
+    .add(onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race))))
     .runAsync();
 
   if (!race.success) {
     return fail(race.error);
   }
 
-  const avatars = await this.dataSource.get(DataSets.Avatar).getAll();
+  const avatars = await this.dataSource.get(DataSets.Avatars).getAll();
 
   if (!avatars.success) {
     return fail(avatars.error);
@@ -46,7 +46,7 @@ export async function updateRace(
 
   // Special case - prepare the associated options
   if (Object.keys(race.value.variants[0].abilityScores).length === 0) {
-    const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
+    const abilityScores = await this.dataSource.get(DataSets.AbilityScores).getAll();
     if (!abilityScores.success) {
       return fail(abilityScores.error);
     }
@@ -59,7 +59,7 @@ export async function updateRace(
   result.avatar = avatars.value.filter((avatar) => avatar.tags.includes(raceId))[0].id;
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -76,14 +76,14 @@ export async function updateRaceVariant(
 ): PromisedResult<undefined, DataSourceError | NotFoundError> {
   if (this.character.raceVariant === variantId) {
     // No change
-    return succeed(undefined);
+    return succeed();
   }
 
   const variant = await start()
-    .onSuccess(() => this.dataSource.get(DataSets.Races).findOne(this.character.race))
-    .onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race)))
-    .onSuccess((race) => succeed(race.variants.find((v) => v.id === variantId)))
-    .onSuccess((variant) => (variant === undefined ? fail(new NotFoundError()) : succeed(variant)))
+    .add(onSuccess(() => this.dataSource.get(DataSets.Races).findOne(this.character.race)))
+    .add(onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race))))
+    .add(onSuccess((race) => succeed(race.variants.find((v) => v.id === variantId))))
+    .add(onSuccess((variant) => (variant === undefined ? fail(new NotFoundError()) : succeed(variant))))
     .runAsync();
 
   if (!variant.success) {
@@ -99,7 +99,7 @@ export async function updateRaceVariant(
   // Special case - prepare the associated options
   console.log(variant.value.name, variant.value.abilityScores);
   if (Object.keys(variant.value.abilityScores).length === 0) {
-    const abilityScores = await this.dataSource.get(DataSets.AbilityScore).getAll();
+    const abilityScores = await this.dataSource.get(DataSets.AbilityScores).getAll();
     if (!abilityScores.success) {
       return fail(abilityScores.error);
     }
@@ -110,7 +110,7 @@ export async function updateRaceVariant(
   result.abilityScores = abilityScores.success ? abilityScores.value : {};
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -136,5 +136,5 @@ export async function updateRaceSelectableBonus(
   result.abilityScores = abilityScores.success ? abilityScores.value : {};
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }

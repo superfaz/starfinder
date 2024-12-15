@@ -30,8 +30,8 @@ export async function updateTheme(data: UpdateThemeInput): Promise<ActionResult<
   }
 
   const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateTheme(input.themeId))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ input, builder }) => builder.updateTheme(input.themeId))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {

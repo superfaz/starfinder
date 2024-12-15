@@ -19,8 +19,8 @@ export default async function Page({ params }: Readonly<{ params: { character: s
   }
 
   const data = await start(context.value)
-    .onSuccess((_, { input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
-    .addData(async ({ character }, { viewBuilder }) =>
+    .onSuccess(({ input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
+    .addData(async ({ character, viewBuilder }) =>
       succeed({ view: await viewBuilder.createCharacterDetailed(character) })
     )
     .addData(({ character }) => succeed({ alerts: check(character) }))

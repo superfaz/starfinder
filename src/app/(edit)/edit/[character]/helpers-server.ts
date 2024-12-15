@@ -1,10 +1,11 @@
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
-import { fail, PromisedResult, start, succeed } from "chain-of-actions";
+import { addData, fail, onError, onSuccess, onSuccessGrouped, PromisedResult, start, succeed } from "chain-of-actions";
 import { ZodType, ZodTypeDef } from "zod";
 import { DataSets, IDataSource } from "data";
 import { DataSourceError, NotFoundError, NotSingleError, ParsingError, UnauthorizedError } from "logic";
 import {
   CharacterBuilder,
+  characters,
   createBuilder,
   getAuthenticatedUser,
   getDataSource,
@@ -40,11 +41,12 @@ export async function retrieveCharacter(
   dataSource: IDataSource,
   user: KindeUser<Record<string, unknown>>
 ): PromisedResult<{ character: Character }, DataSourceError | NotFoundError | NotSingleError> {
-  const result = start({ id, dataSource, user })
-    .onSuccess((_, { id, dataSource, user }) => dataSource.get(DataSets.Characters).find({ id, userId: user.id }))
-    .onSuccess((characters) => (characters.length === 0 ? fail(new NotFoundError()) : succeed(characters)))
-    .onSuccess((characters) => (characters.length > 1 ? fail(new NotSingleError()) : succeed(characters[0])))
-    .onSuccess((character) => succeed({ character }))
+  const result = start()
+    .withContext({ id, dataSource, user })
+    .add(onSuccessGrouped(characters.retrieveOneForUser))
+    .add(onSuccess((characters) => (characters.length === 0 ? fail(new NotFoundError()) : succeed(characters))))
+    .add(onSuccess((characters) => (characters.length > 1 ? fail(new NotSingleError()) : succeed(characters[0]))))
+    .add(onSuccess((character) => succeed({ character })))
     .runAsync();
 
   return result;
@@ -55,13 +57,13 @@ export function preparePageContext<T, D extends ZodTypeDef, I>(
   schema: ZodType<T, D, I>,
   input: T
 ): PromisedResult<IPageContext<T>, never> {
-  return start({})
-    .addData(() => hasValidInput(schema, input))
-    .onError(badRequest)
-    .addData(getAuthenticatedUser)
-    .onError(() => redirectToSignIn(redirect))
-    .addData(getDataSource)
-    .addData(getViewBuilder)
+  return start()
+    .add(onSuccess(() => hasValidInput(schema, input)))
+    .add(onError(badRequest))
+    .add(addData(getAuthenticatedUser))
+    .add(onError(() => redirectToSignIn(redirect)))
+    .add(addData(getDataSource))
+    .add(addData(getViewBuilder))
     .runAsync();
 }
 
@@ -73,10 +75,10 @@ export function prepareActionContext<T extends ICharacterData, D extends ZodType
   DataSourceError | NotFoundError | NotSingleError | ParsingError | UnauthorizedError
 > {
   return start()
-    .onSuccess(() => hasValidInput(schema, input))
-    .addData(getAuthenticatedUser)
-    .addData(getDataSource)
-    .addData(({ input, dataSource, user }) => retrieveCharacter(input.characterId, dataSource, user))
-    .addData(({ dataSource, character }) => createBuilder(dataSource, character))
+    .add(onSuccess(() => hasValidInput(schema, input)))
+    .add(addData(getAuthenticatedUser))
+    .add(addData(getDataSource))
+    .add(addData(({ input, dataSource, user }) => retrieveCharacter(input.characterId, dataSource, user)))
+    .add(addData(({ dataSource, character }) => createBuilder(dataSource, character)))
     .runAsync();
 }

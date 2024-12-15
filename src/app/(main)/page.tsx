@@ -1,34 +1,34 @@
-import { start, succeed } from "chain-of-actions";
-import { DataSets } from "data";
-import { getAuthenticatedUser, getDataSource } from "logic/server";
+import { addData, onSuccess, onSuccessGrouped, start, succeed } from "chain-of-actions";
+import { characters, getAuthenticatedUser, getDataSource, getViewBuilder } from "logic/server";
 import { serverError } from "navigation";
-import { ViewBuilder } from "view/server";
-import { PageContent } from "./PageContent";
 import { PageAuthenticated } from "./PageAuthenticated";
+import { PageContent } from "./PageContent";
 
 export default async function Page() {
   const user = await getAuthenticatedUser();
 
   if (!user.success) {
+    // Display anonymous content
     return <PageContent />;
   }
 
   const context = await start()
-    .onSuccess(() => succeed(user.value))
-    .addData(getDataSource)
-    .addData(({ dataSource }) => succeed({ viewBuilder: new ViewBuilder(dataSource) }))
+    .add(onSuccess(() => succeed(user.value)))
+    .add(addData(getDataSource))
+    .add(addData(getViewBuilder))
     .runAsync();
 
-  const characters = await start(context.value)
-    .onSuccess((_, { dataSource, user }) =>
-      dataSource.get(DataSets.Characters).find({ userId: user.id }, "updateOn", 3)
+  const values = await start()
+    .withContext(context.value)
+    .add(onSuccessGrouped(characters.retrieveLast3Characters))
+    .add(
+      onSuccessGrouped(async ({ characters, viewBuilder }) => succeed(await viewBuilder.createCharacter(characters)))
     )
-    .onSuccess(async (characters, { viewBuilder }) => succeed(await viewBuilder.createCharacter(characters)))
     .runAsync();
 
-  if (!characters.success) {
-    return serverError(characters.error);
+  if (!values.success) {
+    return serverError(values.error);
   }
 
-  return <PageAuthenticated characters={characters.value} />;
+  return <PageAuthenticated characters={values.value} />;
 }

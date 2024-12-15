@@ -32,8 +32,8 @@ export async function updateEnvoySkill(
   }
 
   const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateEnvoySkill(input.skillId))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ input, builder }) => builder.updateEnvoySkill(input.skillId))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {

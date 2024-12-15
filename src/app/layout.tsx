@@ -1,10 +1,11 @@
 import React from "react";
 import { Metadata } from "next";
-import { DataSets, DataSource } from "data";
+import { DataSource } from "data";
 import { IStaticData } from "logic/StaticContext";
 import { LayoutClient } from "./LayoutClient";
 
 import "./site.scss";
+import { abilityScores, armorTypes, avatars, books, damageTypes, sizes, skills, weaponTypes } from "logic/server";
 
 export const dynamic = "force-dynamic";
 
@@ -16,14 +17,14 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const dataSource = new DataSource();
 
   const loadData = await Promise.all([
-    dataSource.get(DataSets.AbilityScore).getAll(),
-    dataSource.get(DataSets.ArmorType).getAll(),
-    dataSource.get(DataSets.Avatar).getAll(),
-    dataSource.get(DataSets.DamageTypes).getAll(),
-    dataSource.get(DataSets.Sizes).getAll(),
-    dataSource.get(DataSets.Book).getAll(),
-    dataSource.get(DataSets.WeaponTypes).getAll(),
-    dataSource.get(DataSets.Skills).getAll(),
+    abilityScores.retrieveAll({ dataSource }),
+    armorTypes.retrieveAll({ dataSource }),
+    avatars.retrieveAll({ dataSource }),
+    damageTypes.retrieveAll({ dataSource }),
+    sizes.retrieveAll({ dataSource }),
+    books.retrieveAll({ dataSource }),
+    weaponTypes.retrieveAll({ dataSource }),
+    skills.retrieveAll({ dataSource }),
   ]);
 
   if (loadData.some((d) => !d.success)) {
@@ -32,14 +33,14 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   }
 
   const data: IStaticData = {
-    abilityScores: loadData[0].success ? loadData[0].value : [],
-    armorTypes: loadData[1].success ? loadData[1].value : [],
-    avatars: loadData[2].success ? loadData[2].value : [],
-    damageTypes: loadData[3].success ? loadData[3].value : [],
-    sizes: loadData[4].success ? loadData[4].value : [],
-    books: loadData[5].success ? loadData[5].value : [],
-    weaponTypes: loadData[6].success ? loadData[6].value : [],
-    skills: loadData[7].success ? loadData[7].value : [],
+    abilityScores: loadData[0].success ? loadData[0].value.abilityScores : [],
+    armorTypes: loadData[1].success ? loadData[1].value.armorTypes : [],
+    avatars: loadData[2].success ? loadData[2].value.avatars : [],
+    damageTypes: loadData[3].success ? loadData[3].value.damageTypes : [],
+    sizes: loadData[4].success ? loadData[4].value.sizes : [],
+    books: loadData[5].success ? loadData[5].value.books : [],
+    weaponTypes: loadData[6].success ? loadData[6].value.weaponTypes : [],
+    skills: loadData[7].success ? loadData[7].value.skills : [],
   };
 
   return (

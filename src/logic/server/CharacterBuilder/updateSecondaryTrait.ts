@@ -23,7 +23,7 @@ export async function enableSecondaryTrait(
   }
 
   this.character = { ...this.character, traits: [...traits, trait.id] };
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -47,5 +47,5 @@ export async function disableSecondaryTrait(
     ...this.character,
     traits: [...this.character.traits.filter((t) => t !== trait.id), ...trait.replace.map((r) => r.id)],
   };
-  return succeed(undefined);
+  return succeed();
 }

@@ -39,7 +39,7 @@ export class CharacterBuilder {
     this.character = character;
   }
 
-  update(field: string, value: unknown): PromisedResult<undefined, DataSourceError | NotFoundError> {
+  async update(field: string, value: unknown): PromisedResult<undefined, DataSourceError | NotFoundError> {
     switch (field) {
       case "race":
         return this.updateRace(IdSchema.parse(value));
@@ -64,7 +64,7 @@ export class CharacterBuilder {
    */
   async updateName(name: string): PromisedResult<undefined> {
     this.character = { ...this.character, name };
-    return succeed(undefined);
+    return succeed();
   }
 
   /**
@@ -75,7 +75,7 @@ export class CharacterBuilder {
    */
   async updateDescription(description: string): PromisedResult<undefined> {
     this.character = { ...this.character, description };
-    return succeed(undefined);
+    return succeed();
   }
 
   computeMinimalAbilityScores = computeMinimalAbilityScores.bind(this);

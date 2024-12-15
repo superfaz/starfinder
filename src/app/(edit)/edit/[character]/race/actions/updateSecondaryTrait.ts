@@ -21,7 +21,7 @@ export type UpdateTraitInput = z.infer<typeof UpdateTraitInputSchema>;
 export async function updateSecondaryTrait(
   data: UpdateTraitInput
 ): Promise<ActionResult<UpdateTraitInput, UpdateState>> {
-  const context = await start()
+  const context = await start({})
     .onSuccess(() => prepareActionContext(UpdateTraitInputSchema, data))
     .addData(createCharacterPresenter)
     .runAsync();
@@ -37,13 +37,13 @@ export async function updateSecondaryTrait(
   }
 
   const action = await start(context.value)
-    .onSuccess(async (_, { presenter }) => presenter.getSecondaryRaceTraits())
-    .onSuccess((traits, { input }) => succeed(traits.find((t) => t.id === input.traitId)))
-    .onSuccess((trait) => (trait !== undefined ? succeed(trait) : fail(new NotFoundError())))
-    .onSuccess((trait, { builder, input }) =>
+    .onSuccess(async ({ presenter }) => presenter.getSecondaryRaceTraits())
+    .onSuccess(({ secondaryTraits, input }) => succeed({ trait: secondaryTraits.find((t) => t.id === input.traitId) }))
+    .onSuccess(({ trait }) => (trait !== undefined ? succeed({ trait: trait }) : fail(new NotFoundError())))
+    .onSuccess(({ trait, builder, input }) =>
       input.enable ? builder.enableSecondaryTrait(trait) : builder.disableSecondaryTrait(trait)
     )
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {

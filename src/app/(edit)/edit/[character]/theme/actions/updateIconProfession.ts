@@ -33,8 +33,8 @@ export async function updateIconProfession(
   }
 
   const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateIconProfession(input.abilityScoreId, input.name))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ input, builder }) => builder.updateIconProfession(input.abilityScoreId, input.name))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {

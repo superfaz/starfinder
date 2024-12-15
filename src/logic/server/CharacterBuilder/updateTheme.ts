@@ -1,4 +1,4 @@
-import { fail, PromisedResult, start, succeed } from "chain-of-actions";
+import { fail, onSuccess, PromisedResult, start, succeed } from "chain-of-actions";
 import { DataSets } from "data";
 import { DataSourceError, NotFoundError, ThemeNotSetError } from "logic/errors";
 import { AbilityScoreId, AbilityScoreIds, Character, simpleHash } from "model";
@@ -18,12 +18,12 @@ export async function updateTheme(
 ): PromisedResult<undefined, DataSourceError | NotFoundError> {
   if (this.character.theme === themeId) {
     // No change
-    return succeed(undefined);
+    return succeed();
   }
 
   const theme = await start()
-    .onSuccess(() => this.dataSource.get(DataSets.Themes).findOne(themeId))
-    .onSuccess((theme) => (theme === undefined ? fail(new NotFoundError()) : succeed(theme)))
+    .add(onSuccess(() => this.dataSource.get(DataSets.Themes).findOne(themeId)))
+    .add(onSuccess((theme) => (theme === undefined ? fail(new NotFoundError()) : succeed(theme))))
     .runAsync();
 
   if (!theme.success) {
@@ -52,7 +52,7 @@ export async function updateTheme(
   result.abilityScores = abilityScores.success ? abilityScores.value : {};
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }
 
 export async function updateIconProfession(
@@ -71,7 +71,7 @@ export async function updateIconProfession(
     );
     if (profession?.name === name && profession.abilityScore === abilityScoreId) {
       // No change
-      return succeed(undefined);
+      return succeed();
     }
 
     // Remove the current profession
@@ -83,13 +83,13 @@ export async function updateIconProfession(
     }
   }
 
-  // The name is empty, remove the theme options
+  // The name is , remove the theme options
   if (name === "") {
     this.character = {
       ...this.character,
       themeOptions: undefined,
     };
-    return succeed(undefined);
+    return succeed();
   }
 
   const id = "prof-" + simpleHash(name);
@@ -110,7 +110,7 @@ export async function updateIconProfession(
   });
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -134,7 +134,7 @@ export async function updateScholarSkill(this: CharacterBuilder, skillId: string
   };
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -157,7 +157,7 @@ export async function updateScholarSpecialization(
   };
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }
 
 /**
@@ -184,5 +184,5 @@ export async function updateThemelessAbilityScore(
   result.abilityScores = abilityScores.success ? abilityScores.value : {};
 
   this.character = result;
-  return succeed(undefined);
+  return succeed();
 }

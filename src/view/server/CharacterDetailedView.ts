@@ -6,10 +6,10 @@ import type { ViewBuilder } from "./ViewBuilder";
 import "server-only";
 
 export async function createCharacterDetailed(this: ViewBuilder, character: Character): Promise<CharacterDetailedView> {
-  const avatar = await this.dataSource.get(DataSets.Avatar).findOne(character.avatar);
+  const avatar = await this.dataSource.get(DataSets.Avatars).findOne(character.avatar);
   const race = await this.dataSource.get(DataSets.Races).findOne(character.race);
   const theme = await this.dataSource.get(DataSets.Themes).findOne(character.theme);
-  const klass = await this.dataSource.get(DataSets.Class).findOne(character.class);
+  const klass = await this.dataSource.get(DataSets.Classes).findOne(character.class);
 
   if (!avatar.success || !race.success || !theme.success || !klass.success) {
     throw new Error("Failed to load character details");

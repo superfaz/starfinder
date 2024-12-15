@@ -7,7 +7,7 @@ export async function GET(_: NextRequest, { params }: { params: { type: string }
 
   const type: EquipmentOtherId = EquipmentOtherIdSchema.parse(params.type);
   if (type === EquipmentOtherIds.augmentation) {
-    return NextResponse.json(await dataSource.get(DataSets.EquipmentOtherAugmentation).getAll());
+    return NextResponse.json(await dataSource.get(DataSets.EquipmentOtherAugmentations).getAll());
   } else {
     return NextResponse.error();
   }

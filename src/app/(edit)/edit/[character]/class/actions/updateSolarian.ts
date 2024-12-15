@@ -32,8 +32,8 @@ export async function updateSolarianColor(
   }
 
   const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateSolarianColor(input.colorId))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ input, builder }) => builder.updateSolarianColor(input.colorId))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {
@@ -66,8 +66,8 @@ export async function updateSolarianDamageType(
   }
 
   const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateSolarianDamageType(input.damageTypeId))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ input, builder }) => builder.updateSolarianDamageType(input.damageTypeId))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {
@@ -100,8 +100,8 @@ export async function updateSolarianManifestation(
   }
 
   const action = await start(context.value)
-    .onSuccess((_, { input, builder }) => builder.updateSolarianDamageType(input.manifestationId))
-    .onSuccess((_, { dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
+    .onSuccess(({ input, builder }) => builder.updateSolarianDamageType(input.manifestationId))
+    .onSuccess(({ dataSource, builder }) => dataSource.get(DataSets.Characters).update(builder.character))
     .runAsync();
 
   if (!action.success) {

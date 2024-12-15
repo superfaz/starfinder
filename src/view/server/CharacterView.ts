@@ -6,10 +6,10 @@ import type { ViewBuilder } from "./ViewBuilder";
 import "server-only";
 
 export async function createCharacter(this: ViewBuilder, character: Character): Promise<CharacterView> {
-  const avatar = await this.dataSource.get(DataSets.Avatar).findOne(character.avatar);
+  const avatar = await this.dataSource.get(DataSets.Avatars).findOne(character.avatar);
   const race = await this.dataSource.get(DataSets.Races).findOne(character.race);
   const theme = await this.dataSource.get(DataSets.Themes).findOne(character.theme);
-  const klass = await this.dataSource.get(DataSets.Class).findOne(character.class);
+  const klass = await this.dataSource.get(DataSets.Classes).findOne(character.class);
 
   if (!avatar.success) throw avatar.error;
   if (!race.success) throw race.error;
