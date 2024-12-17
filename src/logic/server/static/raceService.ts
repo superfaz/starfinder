@@ -20,4 +20,7 @@ export const raceService = {
       { race: Race },
       DataSourceError | NotFoundError
     >,
+
+  findOne: (params: IRetrieveAllParams & { raceId: string }) =>
+    params.dataSource.get(descriptor).findOne(params.raceId),
 };

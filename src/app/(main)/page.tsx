@@ -1,5 +1,5 @@
 import { addData, onSuccess, onSuccessGrouped, start, succeed } from "chain-of-actions";
-import { characters, getAuthenticatedUser, getDataSource, getViewBuilder } from "logic/server";
+import { characterService, getAuthenticatedUser, getDataSource, getViewBuilder } from "logic/server";
 import { serverError } from "navigation";
 import { PageAuthenticated } from "./PageAuthenticated";
 import { PageContent } from "./PageContent";
@@ -20,7 +20,7 @@ export default async function Page() {
 
   const values = await start()
     .withContext(context.value)
-    .add(onSuccessGrouped(characters.retrieveLast3Characters))
+    .add(onSuccessGrouped(characterService.retrieveLast3Characters))
     .add(
       onSuccessGrouped(async ({ characters, viewBuilder }) => succeed(await viewBuilder.createCharacter(characters)))
     )

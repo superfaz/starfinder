@@ -15,4 +15,7 @@ export const avatarService = {
       { avatar: Avatar },
       DataSourceError | NotFoundError
     >,
+
+  findOne: (params: IRetrieveAllParams & { avatarId: string }) =>
+    params.dataSource.get(descriptor).findOne(params.avatarId),
 };

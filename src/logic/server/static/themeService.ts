@@ -20,4 +20,7 @@ export const themeService = {
       { theme: Theme },
       DataSourceError | NotFoundError
     >,
+
+  findOne: (params: IRetrieveAllParams & { themeId: string }) =>
+    params.dataSource.get(descriptor).findOne(params.themeId),
 };

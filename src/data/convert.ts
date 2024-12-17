@@ -1,27 +1,27 @@
 import * as c from "chain-of-actions";
 import {
-  classes,
-  retrieveAbilityScores,
-  retrieveAlignments,
-  retrieveArmorTypes,
-  retrieveAvatars,
-  retrieveBodyParts,
-  retrieveBonusCategories,
-  retrieveBooks,
-  retrieveCriticalHitEffects,
-  retrieveDamageTypes,
-  retrieveEquipmentMaterials,
-  retrieveFeats,
-  retrieveProfessions,
-  retrieveRaces,
-  retrieveSavingThrows,
-  retrieveSizes,
-  retrieveSkills,
-  retrieveSpells,
-  retrieveThemes,
-  retrieveWeaponCategories,
-  retrieveWeaponSpecialProperties,
-  retrieveWeaponTypes,
+  abilityScoreService,
+  alignmentService,
+  armorTypeService,
+  avatarService,
+  bodyPartService,
+  bonusCategoryService,
+  bookService,
+  classService,
+  criticalHitEffectService,
+  damageTypeService,
+  equipmentMaterialService,
+  featTemplateService,
+  professionService,
+  raceService,
+  savingThrowService,
+  sizeService,
+  skillService,
+  spellService,
+  themeService,
+  weaponCategoryService,
+  weaponSpecialPropertyService,
+  weaponTypeService,
 } from "logic/server";
 import { IDataSource } from "./interfaces";
 import { IClientDataSet } from "./IClientDataSet";
@@ -31,28 +31,28 @@ export async function convert(dataSource: IDataSource): Promise<IClientDataSet> 
     .start()
     .withContext({ dataSource: dataSource })
     .add(c.onSuccess(() => c.succeed({})))
-    .add(c.addDataGrouped(retrieveAbilityScores))
-    .add(c.addDataGrouped(retrieveAlignments))
-    .add(c.addDataGrouped(retrieveArmorTypes))
-    .add(c.addDataGrouped(retrieveAvatars))
-    .add(c.addDataGrouped(retrieveBodyParts))
-    .add(c.addDataGrouped(retrieveBonusCategories))
-    .add(c.addDataGrouped(retrieveBooks))
-    .add(c.addDataGrouped(classes.retrieveAll))
-    .add(c.addDataGrouped(retrieveCriticalHitEffects))
-    .add(c.addDataGrouped(retrieveDamageTypes))
-    .add(c.addDataGrouped(retrieveEquipmentMaterials))
-    .add(c.addDataGrouped(retrieveFeats))
-    .add(c.addDataGrouped(retrieveProfessions))
-    .add(c.addDataGrouped(retrieveRaces))
-    .add(c.addDataGrouped(retrieveSavingThrows))
-    .add(c.addDataGrouped(retrieveSizes))
-    .add(c.addDataGrouped(retrieveSkills))
-    .add(c.addDataGrouped(retrieveSpells))
-    .add(c.addDataGrouped(retrieveThemes))
-    .add(c.addDataGrouped(retrieveWeaponCategories))
-    .add(c.addDataGrouped(retrieveWeaponSpecialProperties))
-    .add(c.addDataGrouped(retrieveWeaponTypes))
+    .add(c.addDataGrouped(abilityScoreService.retrieveAll))
+    .add(c.addDataGrouped(alignmentService.retrieveAll))
+    .add(c.addDataGrouped(armorTypeService.retrieveAll))
+    .add(c.addDataGrouped(avatarService.retrieveAll))
+    .add(c.addDataGrouped(bodyPartService.retrieveAll))
+    .add(c.addDataGrouped(bonusCategoryService.retrieveAll))
+    .add(c.addDataGrouped(bookService.retrieveAll))
+    .add(c.addDataGrouped(classService.retrieveAll))
+    .add(c.addDataGrouped(criticalHitEffectService.retrieveAll))
+    .add(c.addDataGrouped(damageTypeService.retrieveAll))
+    .add(c.addDataGrouped(equipmentMaterialService.retrieveAll))
+    .add(c.addDataGrouped(featTemplateService.retrieveAll))
+    .add(c.addDataGrouped(professionService.retrieveAll))
+    .add(c.addDataGrouped(raceService.retrieveAll))
+    .add(c.addDataGrouped(savingThrowService.retrieveAll))
+    .add(c.addDataGrouped(sizeService.retrieveAll))
+    .add(c.addDataGrouped(skillService.retrieveAll))
+    .add(c.addDataGrouped(spellService.retrieveAll))
+    .add(c.addDataGrouped(themeService.retrieveAll))
+    .add(c.addDataGrouped(weaponCategoryService.retrieveAll))
+    .add(c.addDataGrouped(weaponSpecialPropertyService.retrieveAll))
+    .add(c.addDataGrouped(weaponTypeService.retrieveAll))
     .runAsync();
 
   if (!action.success) {

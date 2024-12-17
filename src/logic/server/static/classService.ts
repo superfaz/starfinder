@@ -20,4 +20,7 @@ export const classService = {
       { class: Class },
       DataSourceError | NotFoundError
     >,
+
+  findOne: (params: IRetrieveAllParams & { classId: string }) =>
+    params.dataSource.get(descriptor).findOne(params.classId),
 };
