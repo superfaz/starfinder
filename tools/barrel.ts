@@ -25,7 +25,7 @@ async function generateBarrelFile(basePath: string): Promise<void> {
   }
 }
 
-const bases = ["src/logic/server", "src/logic/server/services"];
+const bases = ["src/logic/server", "src/logic/server/static"];
 for (const base of bases) {
   await generateBarrelFile(base);
 }

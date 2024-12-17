@@ -5,4 +5,4 @@ export * from "./CharacterBuilder";
 export * from "./CharacterPresenter";
 export * from "./characterService";
 export * from "./extras";
-export * from "./services";
+export * from "./static";
