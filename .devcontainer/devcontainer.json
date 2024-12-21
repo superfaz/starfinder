@@ -11,7 +11,10 @@
     }
   },
   "containerEnv": {
-    "STARFINDER_MONGO_URI": "mongodb://root:example@host.docker.internal:27017/"
+    "STARFINDER_MONGO_URI": "mongodb://root:example@host.docker.internal:27017/",
+    "KINDE_SITE_URL": "https://${CODESPACE_NAME}-3000.app.github.dev",
+    "KINDE_POST_LOGOUT_REDIRECT_URL": "https://${CODESPACE_NAME}-3000.app.github.dev",
+    "KINDE_POST_LOGIN_REDIRECT_URL": "https://${CODESPACE_NAME}-3000.app.github.dev"
   },
   "secrets": {
     "KINDLE_ISSUER_URL": {
