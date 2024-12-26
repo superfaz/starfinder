@@ -1,13 +1,13 @@
-import { Node, PromisedResult, addData, addDataGrouped, onSuccessGrouped, start, succeed } from "chain-of-actions";
-import { z } from "zod";
-import { IPageContext, characterService, preparePageContext, raceService } from "logic/server";
-import { Character, IdSchema } from "model";
-import { createState } from "./state";
-import { DataSourceError, NotFoundError, NotSingleError, UnauthorizedError } from "logic";
+import { addDataGrouped, onSuccessGrouped, start, succeed } from "chain-of-actions";
 import { notFound } from "next/navigation";
-import { badRequest, serverError, unauthorized } from "navigation";
+import { z } from "zod";
+import { DataSourceError, NotFoundError, NotSingleError } from "logic";
+import { characterService, preparePageContext, raceService } from "logic/server";
+import { IdSchema } from "model";
+import { badRequest, serverError } from "navigation";
+import { ViewBuilder } from "view/server";
 import { PageContent } from "./PageContent";
-import { log } from "app/helpers-server";
+import { createState } from "./state";
 
 const InputSchema = z
   .object({
@@ -26,9 +26,9 @@ export default async function Page({ params }: Readonly<{ params: Input }>) {
     .withContext(context.value)
     .add(onSuccessGrouped(({ input }: { input: Input }) => succeed(input)))
     .add(addDataGrouped(raceService.retrieveAll))
-    .add(addDataGrouped(({ viewBuilder, races }) => viewBuilder.createRaceEntries(races)))
+    .add(addDataGrouped(ViewBuilder.createRaceEntries))
     .add(addDataGrouped(characterService.retrieveOneForUser))
-    .add(addData(({ character }, { dataSource }) => createState({ dataSource, character })))
+    .add(addDataGrouped(({ character, dataSource }) => createState({ dataSource, character })))
     .runAsync();
 
   if (!action.success) {

@@ -15,8 +15,8 @@ export type ParsingError = {
   errors: Record<string, string[] | undefined>;
 };
 
-export function isParsingError(error: any): error is ParsingError {
-  return error._tag === "ParsingError";
+export function isParsingError(error: unknown): error is ParsingError {
+  return !!error && typeof error === "object" && "_tag" in error && error._tag === "ParsingError";
 }
 
 export function createParsingError(errors: Record<string, string[] | undefined>): ParsingError {

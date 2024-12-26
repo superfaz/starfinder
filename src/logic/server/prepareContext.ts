@@ -1,4 +1,4 @@
-import { addData, onError, onSuccess, PromisedResult, start, SuccessResult } from "chain-of-actions";
+import { addData, onError, onSuccess, start, SuccessResult } from "chain-of-actions";
 import { ZodType, ZodTypeDef } from "zod";
 import { IDataSource } from "data";
 import { badRequest } from "navigation";

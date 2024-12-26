@@ -1,5 +1,4 @@
 import {
-  addData,
   addDataGrouped,
   fail,
   onSuccess,
@@ -10,7 +9,7 @@ import {
   succeed,
 } from "chain-of-actions";
 import { DataSourceError, NotFoundError } from "logic/errors";
-import { DataSets, IDataSource } from "data";
+import { IDataSource } from "data";
 import { Character } from "model";
 import { CharacterBuilder } from ".";
 import { avatarService, raceService } from "..";

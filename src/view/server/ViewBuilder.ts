@@ -18,6 +18,7 @@ export class ViewBuilder {
   }
 
   static createRace = createRace;
+  static createRaceEntries = createRaceEntries;
 
   public createCharacter(characters: Character[]): Promise<CharacterView[]>;
   public createCharacter(characters: Character): Promise<CharacterView>;
@@ -31,5 +32,4 @@ export class ViewBuilder {
 
   public createCharacterDetailed = createCharacterDetailed.bind(this);
   public createEntry = createEntry.bind(this);
-  public createRaceEntries = createRaceEntries.bind(this);
 }

@@ -1,14 +1,15 @@
 "use client";
 
 import clsx from "clsx";
+import Image from "next/image";
+import { ReadonlyURLSearchParams, useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Stack } from "react-bootstrap";
-import { ReadonlyURLSearchParams, useParams, useRouter, useSearchParams } from "next/navigation";
 import { ReferenceComponent } from "app/components/ReferenceComponent";
 import { groupBy } from "app/helpers";
 import { RaceEntry } from "view/interfaces";
-import { State } from "./state";
 import { updateRace, updateVariant } from "./actions";
+import { State } from "./state";
 
 type Step = "A" | "B" | "C";
 
@@ -34,8 +35,8 @@ function SelectButton({
       </div>
       <div className="flex-grow-1 text-start">{title}</div>
       <div className="sf-picture">
-        {imagePath && <img src={imagePath} alt={title} />}
-        {!imagePath && <img src="/race-unknown-mini.png" />}
+        {imagePath && <Image src={imagePath} alt="" />}
+        {!imagePath && <Image src="/race-unknown-mini.png" alt="" />}
       </div>
       <div className="sf-bg-plain"></div>
     </Button>
@@ -72,7 +73,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
     if (searchParams.get("step") !== step) {
       router.push("?step=" + step);
     }
-  }, [searchParams, step]);
+  }, [searchParams, router, step]);
 
   function setStep(step: Step) {
     router.push("?step=" + step);
