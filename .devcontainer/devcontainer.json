@@ -12,9 +12,9 @@
   },
   "containerEnv": {
     "STARFINDER_MONGO_URI": "mongodb://root:example@host.docker.internal:27017/",
-    "KINDE_SITE_URL": "http://127.0.0.1:3000",
-    "KINDE_POST_LOGOUT_REDIRECT_URL": "http://127.0.0.1:3000",
-    "KINDE_POST_LOGIN_REDIRECT_URL": "http://127.0.0.1:3000"
+    "KINDE_SITE_URL": "https://legendary-space-invention-r4xr4v6jq56f5x9g-3000.app.github.dev/",
+    "KINDE_POST_LOGOUT_REDIRECT_URL": "https://legendary-space-invention-r4xr4v6jq56f5x9g-3000.app.github.dev/",
+    "KINDE_POST_LOGIN_REDIRECT_URL": "https://legendary-space-invention-r4xr4v6jq56f5x9g-3000.app.github.dev/"
   },
   "secrets": {
     "KINDLE_ISSUER_URL": {
