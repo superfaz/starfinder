@@ -33,6 +33,7 @@ export default async function Page({ params }: Readonly<{ params: Input }>) {
 
   if (!action.success) {
     if (action.error instanceof NotFoundError) {
+      console.error(action.error.message);
       return notFound();
     } else if (action.error instanceof NotSingleError) {
       return badRequest();

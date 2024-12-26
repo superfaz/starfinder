@@ -1,12 +1,10 @@
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
-import { addData, fail, onError, onSuccess, onSuccessGrouped, PromisedResult, start, succeed } from "chain-of-actions";
+import { addData, onError, onSuccess, onSuccessGrouped, PromisedResult, start, succeed } from "chain-of-actions";
 import { ZodType, ZodTypeDef } from "zod";
 import { IDataSource } from "data";
 import { DataSourceError, NotFoundError, NotSingleError, ParsingError, UnauthorizedError } from "logic";
 import {
-  CharacterBuilder,
   characterService,
-  createBuilder,
   getAuthenticatedUser,
   getDataSource,
   getViewBuilder,
@@ -15,13 +13,11 @@ import {
 } from "logic/server";
 import { type Character } from "model";
 import { badRequest } from "navigation";
-import { ViewBuilder } from "view/server";
 
 interface IPageContext<Input> {
   input: Input;
   user: KindeUser<Record<string, unknown>>;
   dataSource: IDataSource;
-  viewBuilder: ViewBuilder;
 }
 
 interface ICharacterData {
@@ -33,7 +29,6 @@ interface IActionContext<Input> {
   user: KindeUser<Record<string, unknown>>;
   dataSource: IDataSource;
   character: Character;
-  builder: CharacterBuilder;
 }
 
 export async function retrieveCharacter(
@@ -44,13 +39,6 @@ export async function retrieveCharacter(
   const result = start()
     .withContext({ id, dataSource, user })
     .add(onSuccessGrouped(characterService.retrieveOneForUser))
-    .add(
-      onSuccess((characters) =>
-        characters.length === 0 ? fail(new NotFoundError("characters", id)) : succeed(characters)
-      )
-    )
-    .add(onSuccess((characters) => (characters.length > 1 ? fail(new NotSingleError()) : succeed(characters[0]))))
-    .add(onSuccess((character) => succeed({ character })))
     .runAsync();
 
   return result;
@@ -75,14 +63,14 @@ export function prepareActionContext<T extends ICharacterData, D extends ZodType
   schema: ZodType<T, D, I>,
   input: T
 ): PromisedResult<
-  IActionContext<T>,
+  IActionContext<T> & T,
   DataSourceError | NotFoundError | NotSingleError | ParsingError | UnauthorizedError
 > {
   return start()
     .add(onSuccess(() => hasValidInput(schema, input)))
+    .add(addData(({ input }: { input: T }) => succeed(input)))
     .add(addData(getAuthenticatedUser))
     .add(addData(getDataSource))
-    .add(addData(({ input, dataSource, user }) => retrieveCharacter(input.characterId, dataSource, user)))
-    .add(addData(({ dataSource, character }) => createBuilder(dataSource, character)))
+    .add(addData(characterService.retrieveOneForUser))
     .runAsync();
 }
