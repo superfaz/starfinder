@@ -16,7 +16,7 @@ export async function createState(context: {
   dataSource: IDataSource;
   character: Character;
 }): PromisedResult<{ state: State }, DataSourceError | NotFoundError> {
-  if (context.character.race === undefined) {
+  if (!context.character.race) {
     return succeed({ state: {} });
   }
 

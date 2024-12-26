@@ -35,8 +35,8 @@ function SelectButton({
       </div>
       <div className="flex-grow-1 text-start">{title}</div>
       <div className="sf-picture">
-        {imagePath && <Image src={imagePath} alt="" />}
-        {!imagePath && <Image src="/race-unknown-mini.png" alt="" />}
+        {imagePath && <Image src={imagePath} alt="" width={120} height={40} />}
+        {!imagePath && <Image src="/race-unknown-mini.png" alt="" width={120} height={40} />}
       </div>
       <div className="sf-bg-plain"></div>
     </Button>
@@ -99,39 +99,31 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
     }
   }
 
-  switch (step) {
-    case "A": {
-      const groups = groupBy(races, (i) => i.category);
-      return (
-        <Stack direction="vertical" gap={2}>
-          <h2>Sélectionnez une race</h2>
-          {Object.entries(groups).map(([key, races]) => (
-            <div key={key}>
-              <div className="mt-2 text-muted">{key}</div>
-              <Stack direction="vertical" gap={2}>
-                {races.map((race) => (
-                  <SelectButton
-                    key={race.id}
-                    title={race.name}
-                    imagePath={undefined}
-                    selected={race.id === state.race?.id}
-                    onClick={() => handleRaceSelection(race.id)}
-                  />
-                ))}
-              </Stack>
-            </div>
-          ))}
-        </Stack>
-      );
-    }
-    case "B":
-      if (state.race === undefined) {
-        throw new Error();
-      }
-
-      return (
-        <Stack direction="vertical" gap={2}>
-          <h2>Sélectionnez une race</h2>
+  const groups = groupBy(races, (i) => i.category);
+  return (
+    <Stack direction="vertical" gap={2}>
+      <small className="text-muted">Etape 1 / 5</small>
+      <h1>Origine</h1>
+      <h2>Sélectionnez une race</h2>
+      {step === "A" &&
+        Object.entries(groups).map(([key, races]) => (
+          <div key={key}>
+            <div className="mt-2 text-muted">{key}</div>
+            <Stack direction="vertical" gap={2}>
+              {races.map((race) => (
+                <SelectButton
+                  key={race.id}
+                  title={race.name}
+                  imagePath={undefined}
+                  selected={race.id === state.race?.id}
+                  onClick={() => handleRaceSelection(race.id)}
+                />
+              ))}
+            </Stack>
+          </div>
+        ))}
+      {step !== "A" && state.race !== undefined && (
+        <>
           <SelectButton
             key={state.race.id}
             title={state.race.name}
@@ -143,47 +135,31 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
           <ReferenceComponent reference={state.race.reference} />
 
           <h2>Sélectionnez une variante</h2>
-          {state.race.variants.map((variant) => (
-            <SelectButton
-              key={variant.id}
-              title={variant.name}
-              imagePath={undefined}
-              selected={variant.id === state.variant?.id}
-              onClick={() => handleVariantSelection(variant.id)}
-            />
-          ))}
-        </Stack>
-      );
-
-    case "C":
-      if (state.race === undefined || state.variant === undefined) {
-        throw new Error();
-      }
-
-      return (
-        <Stack direction="vertical" gap={2}>
-          <h2>Sélectionnez une race</h2>
-          <SelectButton
-            key={state.race.id}
-            title={state.race.name}
-            imagePath={undefined}
-            variant="selected"
-            onClick={() => setStep("A")}
-          />
-          <div className="text-muted small">{state.race.description}</div>
-          <ReferenceComponent reference={state.race.reference} />
-
-          <h2>Sélectionnez une variante</h2>
-          <SelectButton
-            key={state.variant.id}
-            title={state.variant.name}
-            imagePath={undefined}
-            variant="selected"
-            onClick={() => setStep("B")}
-          />
-          <div className="text-muted small">{state.variant.description}</div>
-          <ReferenceComponent reference={state.variant.reference} />
-        </Stack>
-      );
-  }
+          {step === "B" &&
+            state.race.variants.map((variant) => (
+              <SelectButton
+                key={variant.id}
+                title={variant.name}
+                imagePath={undefined}
+                selected={variant.id === state.variant?.id}
+                onClick={() => handleVariantSelection(variant.id)}
+              />
+            ))}
+          {step !== "B" && state.variant !== undefined && (
+            <>
+              <SelectButton
+                key={state.variant.id}
+                title={state.variant.name}
+                imagePath={undefined}
+                variant="selected"
+                onClick={() => setStep("B")}
+              />
+              <div className="text-muted small">{state.variant.description}</div>
+              <ReferenceComponent reference={state.variant.reference} />
+            </>
+          )}
+        </>
+      )}
+    </Stack>
+  );
 }
