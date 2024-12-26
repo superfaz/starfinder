@@ -10,15 +10,27 @@ export class UnauthorizedError extends Error {
   private _tag = "UnauthorizedError";
 }
 
-export class ParsingError extends Error {
-  private _tag = "ParsingError";
-  constructor(readonly errors: Record<string, string[] | undefined>) {
-    super();
-  }
+export type ParsingError = {
+  _tag: "ParsingError";
+  errors: Record<string, string[] | undefined>;
+};
+
+export function isParsingError(error: any): error is ParsingError {
+  return error._tag === "ParsingError";
+}
+
+export function createParsingError(errors: Record<string, string[] | undefined>): ParsingError {
+  return { _tag: "ParsingError", errors };
 }
 
 export class NotFoundError extends Error {
   private _tag = "NotFoundError";
+  constructor(
+    public readonly type: string,
+    public readonly id: string
+  ) {
+    super(`Not found: ${type} with id ${id}`);
+  }
 }
 
 export class NotSingleError extends Error {

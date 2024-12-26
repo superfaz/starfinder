@@ -4,7 +4,7 @@ import { convert, fail, onSuccess, PromisedResult, start, succeed } from "chain-
 import { redirect } from "next/navigation";
 import { ZodError, ZodType, ZodTypeDef } from "zod";
 import { DataSource, IDataSource } from "data";
-import { ParsingError, UnauthorizedError } from "logic/errors";
+import { createParsingError, ParsingError, UnauthorizedError } from "logic/errors";
 import { ViewBuilder } from "view/server";
 
 export function parse<T, D extends ZodTypeDef, I>(
@@ -15,7 +15,7 @@ export function parse<T, D extends ZodTypeDef, I>(
     try: async () => schema.parse(data),
     catch: (error) => {
       if (error instanceof ZodError) {
-        return new ParsingError(error.flatten().fieldErrors);
+        return createParsingError(error.flatten().fieldErrors);
       } else {
         throw error;
       }

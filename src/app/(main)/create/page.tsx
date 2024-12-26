@@ -1,54 +1,26 @@
-import { Metadata } from "next";
-import { addData, onError, onSuccess, onSuccessGrouped, Result, start, succeed } from "chain-of-actions";
-import {
-  classService,
-  getAuthenticatedUser,
-  getDataSource,
-  getViewBuilder,
-  raceService,
-  redirectToSignIn,
-  themeService,
-} from "logic/server";
+import { addDataGrouped, onSuccessGrouped, start, succeed } from "chain-of-actions";
+import { redirect } from "next/navigation";
+import { characterService, createEmptyBuilder, prepareContext } from "logic/server";
+import { DataSourceError } from "logic";
 import { serverError } from "navigation";
-import { PageContent } from "./PageContent";
-
-export const metadata: Metadata = {
-  title: "Création",
-};
-
-function getData<T, E extends Error>(result: Result<T[], E>) {
-  return result.success ? result.value : [];
-}
 
 export default async function Page() {
-  const context = await start()
-    .add(onSuccess(getAuthenticatedUser))
-    .add(onError(() => redirectToSignIn(`/create`)))
-    .add(addData(getDataSource))
-    .add(addData(getViewBuilder))
+  const context = await prepareContext("/create");
+
+  const action = await start()
+    .withContext(context.value)
+    .add(onSuccessGrouped(createEmptyBuilder))
+    .add(onSuccessGrouped(({ builder }) => succeed({ character: builder.character })))
+    .add(onSuccessGrouped(characterService.create))
     .runAsync();
 
-  const data = await Promise.all([
-    start()
-      .withContext(context.value)
-      .add(onSuccessGrouped(raceService.retrieveAll))
-      .add(onSuccessGrouped(({ races, viewBuilder }) => succeed(viewBuilder.createRaceEntry(races))))
-      .runAsync(),
-    start()
-      .withContext(context.value)
-      .add(onSuccessGrouped(themeService.retrieveAll))
-      .add(onSuccessGrouped(({ themes, viewBuilder }) => succeed(viewBuilder.createEntry(themes))))
-      .runAsync(),
-    start()
-      .withContext(context.value)
-      .add(onSuccessGrouped(classService.retrieveAll))
-      .add(onSuccessGrouped(({ classes, viewBuilder }) => succeed(viewBuilder.createEntry(classes))))
-      .runAsync(),
-  ]);
-
-  if (data.some((d) => !d.success)) {
-    return serverError(data.find((d) => !d.success)!.error);
+  if (!action.success) {
+    if (action.error instanceof DataSourceError) {
+      return serverError(action.error);
+    } else {
+      return serverError();
+    }
   }
 
-  return <PageContent races={getData(data[0])} themes={getData(data[1])} classes={getData(data[2])} />;
+  redirect("/create/" + action.value.id);
 }

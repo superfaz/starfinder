@@ -2,7 +2,7 @@ import { DataSource, IDataSource } from "data";
 import { createCharacterDetailed } from "./CharacterDetailedView";
 import { createCharacter } from "./CharacterView";
 import { createEntry } from "./EntryView";
-import { createRaceEntry } from "./RaceView";
+import { createRace, createRaceEntries } from "./RaceView";
 import { Character } from "model";
 import { CharacterView } from "view/interfaces";
 
@@ -17,6 +17,8 @@ export class ViewBuilder {
     return this._dataSource;
   }
 
+  static createRace = createRace;
+
   public createCharacter(characters: Character[]): Promise<CharacterView[]>;
   public createCharacter(characters: Character): Promise<CharacterView>;
   public createCharacter(characters: Character | Character[]): Promise<CharacterView | CharacterView[]> {
@@ -29,5 +31,5 @@ export class ViewBuilder {
 
   public createCharacterDetailed = createCharacterDetailed.bind(this);
   public createEntry = createEntry.bind(this);
-  public createRaceEntry = createRaceEntry.bind(this);
+  public createRaceEntries = createRaceEntries.bind(this);
 }

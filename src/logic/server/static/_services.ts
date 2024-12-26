@@ -27,7 +27,9 @@ export function retrieveOne<T extends IModel>(
   return start()
     .withContext(params)
     .add(onSuccess((_, { dataSource, id }) => dataSource.get(descriptor).findOne(id)))
-    .add(onSuccess((value) => (value === undefined ? fail(new NotFoundError()) : succeed(value))))
+    .add(
+      onSuccess((value) => (value === undefined ? fail(new NotFoundError(descriptor.name, params.id)) : succeed(value)))
+    )
     .add(onSuccess((value) => succeed({ [code]: value })))
     .runAsync();
 }

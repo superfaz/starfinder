@@ -1,8 +1,13 @@
 import { useStaticData } from "logic/StaticContext";
 import type { Reference } from "model";
 
-export function ReferenceComponent({ reference }: Readonly<{ reference: Reference }>) {
+export function ReferenceComponent({ reference }: Readonly<{ reference?: Reference }>) {
   const books = useStaticData().books;
+
+  if (!reference) {
+    return null;
+  }
+
   const book = books.find((book) => book.id === reference.book);
 
   if (!book) {

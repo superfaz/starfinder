@@ -5,6 +5,10 @@ class TechnicalError extends Error {
   }
 }
 
-export function serverError(error: Error): never {
-  throw new TechnicalError(error);
+export function serverError(error?: Error): never {
+  if (error) {
+    throw new TechnicalError(error);
+  } else {
+    throw new TechnicalError(new Error("An unexpected error occurs"));
+  }
 }

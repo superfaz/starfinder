@@ -1,11 +1,11 @@
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 import { addData, fail, onError, onSuccess, onSuccessGrouped, PromisedResult, start, succeed } from "chain-of-actions";
 import { ZodType, ZodTypeDef } from "zod";
-import { DataSets, IDataSource } from "data";
+import { IDataSource } from "data";
 import { DataSourceError, NotFoundError, NotSingleError, ParsingError, UnauthorizedError } from "logic";
 import {
   CharacterBuilder,
-  characters,
+  characterService,
   createBuilder,
   getAuthenticatedUser,
   getDataSource,
@@ -43,8 +43,12 @@ export async function retrieveCharacter(
 ): PromisedResult<{ character: Character }, DataSourceError | NotFoundError | NotSingleError> {
   const result = start()
     .withContext({ id, dataSource, user })
-    .add(onSuccessGrouped(characters.retrieveOneForUser))
-    .add(onSuccess((characters) => (characters.length === 0 ? fail(new NotFoundError()) : succeed(characters))))
+    .add(onSuccessGrouped(characterService.retrieveOneForUser))
+    .add(
+      onSuccess((characters) =>
+        characters.length === 0 ? fail(new NotFoundError("characters", id)) : succeed(characters)
+      )
+    )
     .add(onSuccess((characters) => (characters.length > 1 ? fail(new NotSingleError()) : succeed(characters[0]))))
     .add(onSuccess((character) => succeed({ character })))
     .runAsync();

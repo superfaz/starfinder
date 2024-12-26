@@ -1,8 +1,19 @@
-import { fail, onSuccess, PromisedResult, start, succeed } from "chain-of-actions";
+import {
+  addData,
+  addDataGrouped,
+  fail,
+  onSuccess,
+  onSuccessGrouped,
+  passThrough,
+  PromisedResult,
+  start,
+  succeed,
+} from "chain-of-actions";
 import { DataSourceError, NotFoundError } from "logic/errors";
-import { DataSets } from "data";
+import { DataSets, IDataSource } from "data";
 import { Character } from "model";
 import { CharacterBuilder } from ".";
+import { avatarService, raceService } from "..";
 
 /**
  * Updates the race associated with a character.
@@ -12,54 +23,36 @@ import { CharacterBuilder } from ".";
  * @param raceId - the identifier of its new race
  * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
  */
-export async function updateRace(
-  this: CharacterBuilder,
-  raceId: string
-): PromisedResult<undefined, DataSourceError | NotFoundError> {
-  if (this.character.race === raceId) {
+export async function updateRace(params: {
+  dataSource: IDataSource;
+  character: Character;
+  raceId: string;
+}): PromisedResult<{ character: Character }, DataSourceError | NotFoundError> {
+  if (params.character.race === params.raceId) {
     // No change
-    return succeed();
+    return succeed({ character: params.character });
   }
 
-  const race = await start()
-    .add(onSuccess(() => this.dataSource.get(DataSets.Races).findOne(raceId)))
-    .add(onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race))))
+  const action = await start()
+    .withContext(params)
+    .add(onSuccessGrouped(raceService.retrieveOne))
+    .add(addDataGrouped(avatarService.retrieveAll))
     .runAsync();
 
-  if (!race.success) {
-    return fail(race.error);
-  }
-
-  const avatars = await this.dataSource.get(DataSets.Avatars).getAll();
-
-  if (!avatars.success) {
-    return fail(avatars.error);
+  if (!action.success) {
+    return fail(action.error);
   }
 
   const result: Character = {
-    ...this.character,
-    race: race.value.id,
-    raceVariant: race.value.variants[0].id,
+    ...params.character,
+    race: action.value.race.id,
+    raceVariant: action.value.race.variants[0].id,
     raceOptions: undefined,
-    traits: race.value.traits.map((t) => t.id),
+    traits: action.value.race.traits.map((t) => t.id),
+    avatar: action.value.avatars.filter((avatar) => avatar.tags.includes(params.raceId))[0].id,
   };
 
-  // Special case - prepare the associated options
-  if (Object.keys(race.value.variants[0].abilityScores).length === 0) {
-    const abilityScores = await this.dataSource.get(DataSets.AbilityScores).getAll();
-    if (!abilityScores.success) {
-      return fail(abilityScores.error);
-    }
-
-    result.raceOptions = { selectableBonus: abilityScores.value[0].id };
-  }
-
-  const abilityScores = await this.computeMinimalAbilityScores(result);
-  result.abilityScores = abilityScores.success ? abilityScores.value : {};
-  result.avatar = avatars.value.filter((avatar) => avatar.tags.includes(raceId))[0].id;
-
-  this.character = result;
-  return succeed();
+  return succeed({ character: result });
 }
 
 /**
@@ -70,20 +63,26 @@ export async function updateRace(
  * @param variantId - the identifier of its new race variant
  * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
  */
-export async function updateRaceVariant(
-  this: CharacterBuilder,
-  variantId: string
-): PromisedResult<undefined, DataSourceError | NotFoundError> {
-  if (this.character.raceVariant === variantId) {
+export async function updateRaceVariant(params: {
+  dataSource: IDataSource;
+  character: Character;
+  variantId: string;
+}): PromisedResult<{ character: Character }, DataSourceError | NotFoundError> {
+  if (params.character.raceVariant === params.variantId) {
     // No change
-    return succeed();
+    return succeed({ character: params.character });
   }
 
   const variant = await start()
-    .add(onSuccess(() => this.dataSource.get(DataSets.Races).findOne(this.character.race)))
-    .add(onSuccess((race) => (race === undefined ? fail(new NotFoundError()) : succeed(race))))
-    .add(onSuccess((race) => succeed(race.variants.find((v) => v.id === variantId))))
-    .add(onSuccess((variant) => (variant === undefined ? fail(new NotFoundError()) : succeed(variant))))
+    .withContext(params)
+    .add(onSuccessGrouped(({ character }: { character: Character }) => succeed({ raceId: character.race })))
+    .add(onSuccessGrouped(raceService.retrieveOne))
+    .add(onSuccess(({ race }, { variantId }) => succeed(race.variants.find((v) => v.id === variantId))))
+    .add(
+      passThrough((variant) =>
+        variant === undefined ? fail(new NotFoundError("variants", params.variantId)) : succeed()
+      )
+    )
     .runAsync();
 
   if (!variant.success) {
@@ -91,26 +90,12 @@ export async function updateRaceVariant(
   }
 
   const result: Character = {
-    ...this.character,
-    raceVariant: variantId,
+    ...params.character,
+    raceVariant: params.variantId,
     raceOptions: undefined,
   };
 
-  // Special case - prepare the associated options
-  console.log(variant.value.name, variant.value.abilityScores);
-  if (Object.keys(variant.value.abilityScores).length === 0) {
-    const abilityScores = await this.dataSource.get(DataSets.AbilityScores).getAll();
-    if (!abilityScores.success) {
-      return fail(abilityScores.error);
-    }
-    result.raceOptions = { selectableBonus: abilityScores.value[0].id };
-  }
-
-  const abilityScores = await this.computeMinimalAbilityScores(result);
-  result.abilityScores = abilityScores.success ? abilityScores.value : {};
-
-  this.character = result;
-  return succeed();
+  return succeed({ character: result });
 }
 
 /**

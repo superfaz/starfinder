@@ -1,7 +1,7 @@
-import { PromisedResult } from "chain-of-actions";
+import { PromisedResult, fail, succeed } from "chain-of-actions";
 import { IStaticDescriptor } from "data";
 import { DataSourceError, NotFoundError } from "logic/errors";
-import { Race, RaceSchema } from "model";
+import { Race, RaceSchema, Variant } from "model";
 import { IRetrieveAllParams, retrieveAll, retrieveOne } from "./_services";
 
 const descriptor: IStaticDescriptor<Race> = {
@@ -23,4 +23,15 @@ export const raceService = {
 
   findOne: (params: IRetrieveAllParams & { raceId: string }) =>
     params.dataSource.get(descriptor).findOne(params.raceId),
+
+  retrieveVariant: ({
+    race,
+    variantId,
+  }: {
+    race: Race;
+    variantId: string;
+  }): PromisedResult<{ variant: Variant }, NotFoundError> => {
+    const variant = race.variants.find((variant) => variant.id === variantId);
+    return variant === undefined ? fail(new NotFoundError("variants", variantId)) : succeed({ variant });
+  },
 };

@@ -41,8 +41,6 @@ export class CharacterBuilder {
 
   async update(field: string, value: unknown): PromisedResult<undefined, DataSourceError | NotFoundError> {
     switch (field) {
-      case "race":
-        return this.updateRace(IdSchema.parse(value));
       case "theme":
         return this.updateTheme(IdSchema.parse(value));
       case "class":
@@ -83,8 +81,9 @@ export class CharacterBuilder {
   enableSecondaryTrait = enableSecondaryTrait.bind(this);
   disableSecondaryTrait = disableSecondaryTrait.bind(this);
 
-  updateRace = updateRace.bind(this);
-  updateRaceVariant = updateRaceVariant.bind(this);
+  static updateRace = updateRace;
+  static updateRaceVariant = updateRaceVariant;
+
   updateRaceSelectableBonus = updateRaceSelectableBonus.bind(this);
 
   updateTheme = updateTheme.bind(this);
@@ -105,33 +104,34 @@ export class CharacterBuilder {
   updateSoldierPrimaryStyle = updateSoldierPrimaryStyle.bind(this);
 }
 
-export async function createBuilder(
-  dataSource: IDataSource,
-  userId: string
-): PromisedResult<{ builder: CharacterBuilder }>;
-export async function createBuilder(
-  dataSource: IDataSource,
-  character: Character
-): PromisedResult<{ builder: CharacterBuilder }>;
-export async function createBuilder(
-  dataSource: IDataSource,
-  characterOrUserId: Character | string
-): PromisedResult<{ builder: CharacterBuilder }> {
-  if (typeof characterOrUserId === "string") {
-    return succeed({
-      builder: new CharacterBuilder(dataSource, {
-        ...EmptyCharacter,
-        id: uuidv4(),
-        userId: characterOrUserId,
-        updatedAt: new Date().toISOString(),
-      }),
-    });
-  } else {
-    return succeed({
-      builder: new CharacterBuilder(dataSource, {
-        ...characterOrUserId,
-        updatedAt: new Date().toISOString(),
-      }),
-    });
-  }
+export async function createEmptyBuilder({
+  dataSource,
+  user,
+}: {
+  dataSource: IDataSource;
+  user: { id: string };
+}): PromisedResult<{ builder: CharacterBuilder }> {
+  return succeed({
+    builder: new CharacterBuilder(dataSource, {
+      ...EmptyCharacter,
+      id: uuidv4(),
+      userId: user.id,
+      updatedAt: new Date().toISOString(),
+    }),
+  });
+}
+
+export async function createInitializedBuilder({
+  dataSource,
+  character,
+}: {
+  dataSource: IDataSource;
+  character: Character;
+}): PromisedResult<{ builder: CharacterBuilder }> {
+  return succeed({
+    builder: new CharacterBuilder(dataSource, {
+      ...character,
+      updatedAt: new Date().toISOString(),
+    }),
+  });
 }

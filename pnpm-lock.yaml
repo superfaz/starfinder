@@ -36,8 +36,8 @@ importers:
         specifier: ^1.11.3
         version: 1.11.3
       chain-of-actions:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.2.1
+        version: 1.2.1
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -2692,8 +2692,8 @@ packages:
     resolution: {integrity: sha512-aGtmf24DW6MLHHG5gCx4zaI3uBq3KRtxeVs0DjFH6Z0rDNbsvTxFASFvdj79pxjxZ8/5u3PIiN3IwEIQkiiuPw==}
     engines: {node: '>=12'}
 
-  chain-of-actions@1.2.0:
-    resolution: {integrity: sha512-Eqci9tKYF4AU68yrhtmHCMZJsmj0qymLyklVUAqK0FW2VyVoShRudpw4CJh9wszM317o4lkTp5irJehYwOqTEA==}
+  chain-of-actions@1.2.1:
+    resolution: {integrity: sha512-lX5eRpgBrmb2U5VXjigfq03CloMKn6zlUPl/DCtJhfVMxeW4+3ALx0dYEPC/9plI2Iw0PNui3Y2vpdTT4+qLbg==}
 
   chalk@3.0.0:
     resolution: {integrity: sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==}
@@ -8005,7 +8005,7 @@ snapshots:
       loupe: 3.1.2
       pathval: 2.0.0
 
-  chain-of-actions@1.2.0:
+  chain-of-actions@1.2.1:
     dependencies:
       typescript: 5.7.2
 

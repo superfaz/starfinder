@@ -15,6 +15,8 @@ $container-max-widths: (
   lg: calc(390px * 4),
 );
 
+// $enable-rounded: false;
+
 @import "bootstrap/scss/bootstrap.scss";
 
 $sf-red: #cc381b;
@@ -162,14 +164,6 @@ h6 {
 
 .header {
   font-family: var(--fz-font-title);
-}
-
-/**
- * Customize text positioning.
- */
-h1,
-.h1 {
-  padding-top: 1em;
 }
 
 /**
@@ -353,5 +347,55 @@ input[type="number"] {
         white-space: nowrap;
       }
     }
+  }
+}
+
+.sf-select {
+  @extend .d-flex;
+  @extend .align-items-stretch;
+  @extend .p-0;
+  overflow: hidden;
+  color: var(--bs-body-color);
+
+  > *:not(.sf-picture) {
+    @extend .py-2;
+    @extend .px-3;
+  }
+
+  .sf-picture {
+    @extend .ps-2;
+    @extend .skew;
+    margin-right: -1.4em;
+
+    > img {
+      @extend .un-skew;
+    }
+  }
+
+  &.btn-outline-primary {
+    &.selected,
+    .sf-picture,
+    .sf-bg-plain {
+      @extend .bg-primary;
+    }
+  }
+
+  &.btn-outline-success {
+    &.selected,
+    .sf-picture,
+    .sf-bg-plain {
+      @extend .bg-success;
+    }
+  }
+
+  .sf-icon {
+    margin-left: -3em;
+    transition: margin-left 0.15s ease-in-out;
+  }
+
+  &:hover .sf-icon,
+  &:focus .sf-icon,
+  &.selected .sf-icon {
+    margin-left: inherit;
   }
 }

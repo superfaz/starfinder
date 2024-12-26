@@ -1,4 +1,4 @@
-import { start, succeed } from "chain-of-actions";
+import { addDataGrouped, onSuccessGrouped, start, succeed } from "chain-of-actions";
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NotFoundError, UnauthorizedError } from "logic";
@@ -18,12 +18,15 @@ export default async function Page({ params }: Readonly<{ params: { character: s
     return serverError(context.error);
   }
 
-  const data = await start(context.value)
-    .onSuccess(({ input, dataSource, user }) => retrieveCharacter(input, dataSource, user))
-    .addData(async ({ character, viewBuilder }) =>
-      succeed({ view: await viewBuilder.createCharacterDetailed(character) })
+  const data = await start()
+    .withContext(context.value)
+    .add(onSuccessGrouped(({ input, dataSource, user }) => retrieveCharacter(input, dataSource, user)))
+    .add(
+      addDataGrouped(async ({ character, viewBuilder }) =>
+        succeed({ view: await viewBuilder.createCharacterDetailed(character) })
+      )
     )
-    .addData(({ character }) => succeed({ alerts: check(character) }))
+    .add(addDataGrouped(({ character }) => succeed({ alerts: check(character) })))
     .runAsync();
 
   if (!data.success) {
