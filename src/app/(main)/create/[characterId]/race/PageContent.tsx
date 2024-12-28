@@ -2,16 +2,20 @@
 
 import clsx from "clsx";
 import Image from "next/image";
+import Link from "next/link";
 import { ReadonlyURLSearchParams, useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { Button, Stack } from "react-bootstrap";
+import { Alert, Button, Stack } from "react-bootstrap";
 import { ReferenceComponent } from "app/components/ReferenceComponent";
-import { groupBy } from "app/helpers";
+import { displayBonus, findOrError, groupBy } from "app/helpers";
+import { useStaticData } from "logic/StaticContext";
+import { Variant } from "model";
+import { Badge } from "ui";
 import { RaceEntry } from "view/interfaces";
-import { updateRace, updateVariant } from "./actions";
+import { updateRace, updateSelectableBonus, updateVariant } from "./actions";
 import { State } from "./state";
 
-type Step = "A" | "B" | "C";
+type Step = "A" | "B" | "C" | "D" | "E";
 
 function SelectButton({
   title,
@@ -43,12 +47,18 @@ function SelectButton({
   );
 }
 
+function requireBonusSelection(variant?: Variant): boolean {
+  return !!variant && Object.keys(variant.abilityScores).length === 0;
+}
+
 function computeStep(searchParams: ReadonlyURLSearchParams, state: State): Step {
   const paramStep = searchParams.get("step");
   switch (paramStep) {
     case "A":
     case "B":
     case "C":
+    case "D":
+    case "E":
       return paramStep;
 
     default:
@@ -56,8 +66,10 @@ function computeStep(searchParams: ReadonlyURLSearchParams, state: State): Step 
         return "A";
       } else if (!state.variant) {
         return "B";
-      } else {
+      } else if (requireBonusSelection(state.variant) && !state.selectableBonus) {
         return "C";
+      } else {
+        return "D";
       }
   }
 }
@@ -65,9 +77,11 @@ function computeStep(searchParams: ReadonlyURLSearchParams, state: State): Step 
 export function PageContent({ races, initialState }: { races: RaceEntry[]; initialState: State }) {
   const { characterId }: { characterId: string } = useParams();
   const [state, setState] = useState(initialState);
+  const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
   const searchParams = useSearchParams();
   const step = useMemo(() => computeStep(searchParams, state), [searchParams, state]);
   const router = useRouter();
+  const abilityScores = useStaticData().abilityScores;
 
   useEffect(() => {
     if (searchParams.get("step") !== step) {
@@ -82,7 +96,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
   async function handleRaceSelection(raceId: string) {
     const result = await updateRace({ characterId, raceId });
     if (!result.success) {
-      console.error(result.error);
+      setErrors(result.error.errors);
     } else {
       setStep("B");
       setState(result.value);
@@ -92,9 +106,19 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
   async function handleVariantSelection(variantId: string) {
     const result = await updateVariant({ characterId, variantId });
     if (!result.success) {
-      console.error(result.error);
+      setErrors(result.error.errors);
     } else {
-      setStep("C");
+      setStep(requireBonusSelection(result.value.variant) ? "C" : "D");
+      setState(result.value);
+    }
+  }
+
+  async function handleBonusSelection(abilityScoreId: string) {
+    const result = await updateSelectableBonus({ characterId, abilityScoreId });
+    if (!result.success) {
+      setErrors(result.error.errors);
+    } else {
+      setStep("D");
       setState(result.value);
     }
   }
@@ -102,9 +126,12 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
   const groups = groupBy(races, (i) => i.category);
   return (
     <Stack direction="vertical" gap={2}>
-      <small className="text-muted">Etape 1 / 5</small>
-      <h1>Origine</h1>
-      <h2>Sélectionnez une race</h2>
+      <div>
+        <Badge bg="primary">Etape 1 / 5</Badge>
+        <h1>Définition de la race</h1>
+      </div>
+      <label>Sélectionnez une race</label>
+      {errors.raceId && <Alert variant="warning">La race sélectionnée n&apos;est pas valide.</Alert>}
       {step === "A" &&
         Object.entries(groups).map(([key, races]) => (
           <div key={key}>
@@ -124,17 +151,12 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
         ))}
       {step !== "A" && state.race !== undefined && (
         <>
-          <SelectButton
-            key={state.race.id}
-            title={state.race.name}
-            imagePath={undefined}
-            variant="selected"
-            onClick={() => setStep("A")}
-          />
+          <SelectButton title={state.race.name} imagePath={undefined} variant="selected" onClick={() => setStep("A")} />
           <div className="text-muted small">{state.race.description}</div>
           <ReferenceComponent reference={state.race.reference} />
 
-          <h2>Sélectionnez une variante</h2>
+          <label>Sélectionnez une variante</label>
+          {errors.variantId && <Alert variant="warning">La variante sélectionnée n&apos;est pas valide.</Alert>}
           {step === "B" &&
             state.race.variants.map((variant) => (
               <SelectButton
@@ -148,17 +170,85 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
           {step !== "B" && state.variant !== undefined && (
             <>
               <SelectButton
-                key={state.variant.id}
                 title={state.variant.name}
                 imagePath={undefined}
                 variant="selected"
                 onClick={() => setStep("B")}
               />
+              {!requireBonusSelection(state.variant) && (
+                <Stack direction="horizontal" className="right">
+                  {Object.entries(state.variant.abilityScores).map(
+                    ([key, value]) =>
+                      value && (
+                        <Badge key={key} bg={value > 0 ? "primary" : "secondary"}>
+                          {findOrError(abilityScores, key).code} {displayBonus(value)}
+                        </Badge>
+                      )
+                  )}
+                </Stack>
+              )}
               <div className="text-muted small">{state.variant.description}</div>
               <ReferenceComponent reference={state.variant.reference} />
+
+              {requireBonusSelection(state.variant) && (
+                <>
+                  <label>Choix de la caractéristique</label>
+                  {errors.selectableBonusId && (
+                    <Alert variant="warning">La caractéristique sélectionnée n&apos;est pas valide.</Alert>
+                  )}
+
+                  {step === "C" &&
+                    abilityScores.map((abilityScore) => (
+                      <SelectButton
+                        key={abilityScore.id}
+                        title={abilityScore.name}
+                        imagePath={undefined}
+                        selected={abilityScore.id === state.selectableBonus?.id}
+                        onClick={() => handleBonusSelection(abilityScore.id)}
+                      />
+                    ))}
+                  {step !== "C" && state.selectableBonus !== undefined && (
+                    <>
+                      <SelectButton
+                        title={state.selectableBonus.name}
+                        imagePath={undefined}
+                        variant="selected"
+                        onClick={() => setStep("C")}
+                      />
+                      <Stack direction="horizontal" className="right">
+                        <Badge bg="primary">
+                          {state.selectableBonus.code} {displayBonus(2)}
+                        </Badge>
+                      </Stack>
+                    </>
+                  )}
+                </>
+              )}
             </>
           )}
         </>
+      )}
+      {step === "D" && (
+        <Button variant="outline-secondary" className="ms-5 mt-3" onClick={() => setStep("E")}>
+          (Optionnel) Choisir des traits alternatifs
+        </Button>
+      )}
+      {step === "E" && (
+        <>
+          <label>Traits de base</label>
+          {state.race?.traits.map((trait) => (
+            <SelectButton key={trait.id} title={trait.name} imagePath={undefined} selected={false} onClick={() => {}} />
+          ))}
+          <label>Traits alternatifs</label>
+          {state.race?.secondaryTraits.map((trait) => (
+            <SelectButton key={trait.id} title={trait.name} imagePath={undefined} selected={false} onClick={() => {}} />
+          ))}
+        </>
+      )}
+      {(step === "D" || step == "E") && (
+        <Link className="ms-5 btn btn-primary" href="./theme">
+          Etape suivante : Définir le thème <i className="bi bi-chevron-right"></i>
+        </Link>
       )}
     </Stack>
   );

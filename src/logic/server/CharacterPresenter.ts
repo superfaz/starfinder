@@ -101,53 +101,6 @@ export class CharacterPresenter {
     return await this.dataSource.get(DataSets.Races).findOne(this.character.race);
   }
 
-  async getPrimaryRaceTraits(): PromisedResult<{ primaryTraits: RaceFeature[] }, DataSourceError> {
-    const race = await this.getRace();
-    if (!race.success) {
-      return fail(race.error);
-    } else if (race.value === undefined) {
-      return succeed({ primaryTraits: [] });
-    }
-
-    const templater = await this.createTemplater();
-    if (!this.cachedPrimaryRaceTraits) {
-      this.cachedPrimaryRaceTraits = race.value.traits.map((t) => templater.convertRaceFeature(t));
-    }
-
-    return succeed({ primaryTraits: this.cachedPrimaryRaceTraits });
-  }
-
-  async getSecondaryRaceTraits(): PromisedResult<{ secondaryTraits: RaceFeature[] }, DataSourceError> {
-    const race = await this.getRace();
-    if (!race.success) {
-      return fail(race.error);
-    } else if (race.value === undefined) {
-      return succeed({ secondaryTraits: [] });
-    }
-
-    const templater = await this.createTemplater();
-    if (!this.cachedSecondaryRaceTraits) {
-      const primaryTraits = await this.getPrimaryRaceTraits();
-      if (!primaryTraits.success) {
-        return fail(primaryTraits.error);
-      }
-
-      const traits = race.value.secondaryTraits.map((t) => templater.convertRaceFeature(t));
-      for (const trait of traits) {
-        const source = findOrError(race.value.secondaryTraits, trait.id);
-        trait.replace =
-          source.replace?.map((r) => ({
-            id: r,
-            name: primaryTraits.value.primaryTraits.find((p) => p.id === r)?.name ?? r,
-          })) ?? [];
-      }
-
-      this.cachedSecondaryRaceTraits = traits;
-    }
-
-    return succeed({ secondaryTraits: this.cachedSecondaryRaceTraits });
-  }
-
   async getTheme(): PromisedResult<Theme | undefined, DataSourceError> {
     if (!this.character.theme) {
       return succeed();

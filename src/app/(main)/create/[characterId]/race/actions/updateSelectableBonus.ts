@@ -1,29 +1,32 @@
 "use server";
 
+import { fail, onError, onSuccessGrouped, PromisedResult, start, succeed } from "chain-of-actions";
 import { z } from "zod";
-import { PromisedResult, fail, onError, onSuccessGrouped, start, succeed } from "chain-of-actions";
-import { ParsingError, createParsingError, isParsingError } from "logic";
+import { createParsingError, isParsingError, ParsingError } from "logic";
 import { CharacterBuilder, characterService } from "logic/server";
-import { IdSchema } from "model";
+import { AbilityScoreIdSchema, IdSchema } from "model";
 import { prepareActionContext } from "../../context";
 import { createState, State } from "../state";
 
-const UpdateRaceInputSchema = z.object({
+const UpdateSelectableBonusInputSchema = z.object({
   characterId: IdSchema,
-  raceId: IdSchema,
+  abilityScoreId: AbilityScoreIdSchema,
 });
 
-export type UpdateRaceInput = z.infer<typeof UpdateRaceInputSchema>;
+export type UpdateSelectableBonusInput = z.infer<typeof UpdateSelectableBonusInputSchema>;
 
-export async function updateRace(data: UpdateRaceInput): PromisedResult<State, ParsingError> {
-  const context = await prepareActionContext(UpdateRaceInputSchema, data);
+export async function updateSelectableBonus(data: {
+  characterId: string;
+  abilityScoreId: string;
+}): PromisedResult<State, ParsingError> {
+  const context = await prepareActionContext(UpdateSelectableBonusInputSchema, data);
   if (!context.success) {
     return fail(context.error);
   }
 
   const action = await start()
     .withContext(context.value)
-    .add(onSuccessGrouped(CharacterBuilder.updateRace))
+    .add(onSuccessGrouped(CharacterBuilder.updateRaceSelectableBonus))
     .add(onSuccessGrouped(characterService.update))
     .add(
       onError((error) => {

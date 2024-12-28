@@ -6,6 +6,8 @@ import { ZodError, ZodType, ZodTypeDef } from "zod";
 import { DataSource, IDataSource } from "data";
 import { createParsingError, ParsingError, UnauthorizedError } from "logic/errors";
 import { ViewBuilder } from "view/server";
+import { Templater } from "logic/Templater";
+import { Character } from "model";
 
 export function parse<T, D extends ZodTypeDef, I>(
   schema: ZodType<T, D, I>,
@@ -64,4 +66,30 @@ export function getViewBuilder({
   dataSource: IDataSource;
 }): PromisedResult<{ viewBuilder: ViewBuilder }> {
   return succeed({ viewBuilder: new ViewBuilder(dataSource) });
+}
+
+export function createTemplater({ character }: { character?: Character }): PromisedResult<{ templater: Templater }> {
+  let context: Record<string, string | number> = {
+    shirrenObsessionSkill: "any",
+    lashuntaStudentSkill1: "any",
+    lashuntaStudentSkill2: "any",
+    halforcProfession: "any",
+    iconProfession: "any",
+    themelessSkill: "any",
+  };
+
+  if (character) {
+    context = {
+      ...context,
+      level: character.level,
+      race: character.race,
+      theme: character.theme,
+      class: character.class,
+      ...character.raceOptions,
+      ...character.themeOptions,
+      ...character.classOptions,
+    };
+  }
+
+  return succeed({ templater: new Templater(context) });
 }

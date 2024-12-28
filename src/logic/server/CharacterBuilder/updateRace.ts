@@ -11,7 +11,6 @@ import {
 import { DataSourceError, NotFoundError } from "logic/errors";
 import { IDataSource } from "data";
 import { Character } from "model";
-import { CharacterBuilder } from ".";
 import { avatarService, raceService } from "..";
 
 /**
@@ -107,18 +106,15 @@ export async function updateRaceVariant(params: {
  * @param abilityScoreId - the identifier of the selected ability score
  * @returns A promise that resolved to `undefined` in case of success, or an error otherwise.
  */
-export async function updateRaceSelectableBonus(
-  this: CharacterBuilder,
-  abilityScoreId: string
-): PromisedResult<undefined, DataSourceError | NotFoundError> {
+export async function updateRaceSelectableBonus(params: {
+  dataSource: IDataSource;
+  character: Character;
+  abilityScoreId: string;
+}): PromisedResult<{ character: Character }, DataSourceError | NotFoundError> {
   const result: Character = {
-    ...this.character,
-    raceOptions: { selectableBonus: abilityScoreId },
+    ...params.character,
+    raceOptions: { selectableBonus: params.abilityScoreId },
   };
 
-  const abilityScores = await this.computeMinimalAbilityScores(result);
-  result.abilityScores = abilityScores.success ? abilityScores.value : {};
-
-  this.character = result;
-  return succeed();
+  return succeed({ character: result });
 }

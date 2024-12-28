@@ -83,8 +83,7 @@ export class CharacterBuilder {
 
   static updateRace = updateRace;
   static updateRaceVariant = updateRaceVariant;
-
-  updateRaceSelectableBonus = updateRaceSelectableBonus.bind(this);
+  static updateRaceSelectableBonus = updateRaceSelectableBonus;
 
   updateTheme = updateTheme.bind(this);
   updateIconProfession = updateIconProfession.bind(this);

@@ -1,14 +1,15 @@
 import { PromisedResult, addData, addDataGrouped, onSuccessGrouped, start, succeed } from "chain-of-actions";
 import { IDataSource } from "data";
 import { DataSourceError, NotFoundError } from "logic";
-import { raceService } from "logic/server";
-import { Character, Variant } from "model";
+import { abilityScoreService, createTemplater, raceService } from "logic/server";
+import { AbilityScore, Character, Variant } from "model";
 import { RaceView } from "view";
 import { ViewBuilder } from "view/server";
 
 export interface State {
   race?: RaceView;
   variant?: Variant;
+  selectableBonus?: AbilityScore;
   options?: unknown;
 }
 
@@ -20,29 +21,49 @@ export async function createState(context: {
     return succeed({ state: {} });
   }
 
-  const race = start()
+  let action = start()
     .withContext(context)
-    .add(onSuccessGrouped(({ character }: { character: Character }) => succeed({ raceId: character.race })))
+    .add(
+      onSuccessGrouped(({ character }: { character: Character }) =>
+        succeed({
+          raceId: character.race,
+          variantId: character.raceVariant,
+          selectableBonusId: character.raceOptions?.selectableBonus,
+        })
+      )
+    )
+    .add(addDataGrouped(createTemplater))
     .add(addDataGrouped(raceService.retrieveOne))
-    .add(addData(ViewBuilder.createRace));
+    .add(addData(ViewBuilder.createRace))
+    .add(
+      addData(() =>
+        succeed({ variant: undefined as Variant | undefined, selectableBonus: undefined as AbilityScore | undefined })
+      )
+    );
 
-  if (context.character.raceVariant === undefined) {
-    return race
-      .add(
-        onSuccessGrouped(({ raceView, character }) =>
-          succeed({ state: { race: raceView, options: character.raceOptions } })
-        )
-      )
-      .runAsync();
-  } else {
-    return race
-      .add(addDataGrouped(({ character }) => succeed({ variantId: character.raceVariant })))
-      .add(addDataGrouped(raceService.retrieveVariant))
-      .add(
-        onSuccessGrouped(({ raceView, variant, character }) =>
-          succeed({ state: { race: raceView, variant: variant, options: character.raceOptions } })
-        )
-      )
-      .runAsync();
+  if (context.character.raceVariant !== undefined) {
+    action = action.add(addDataGrouped(raceService.retrieveVariant));
   }
+
+  if (context.character.raceOptions?.selectableBonus !== undefined) {
+    action = action
+      .add(addDataGrouped(({ selectableBonusId }) => succeed({ abilityScoreId: selectableBonusId! })))
+      .add(addDataGrouped(abilityScoreService.retrieveOne))
+      .add(addDataGrouped(({ abilityScore }) => succeed({ selectableBonus: abilityScore })));
+  }
+
+  return action
+    .add(
+      onSuccessGrouped(({ raceView, variant, character, selectableBonus }) =>
+        succeed({
+          state: {
+            race: raceView,
+            variant: variant,
+            selectableBonus: selectableBonus,
+            options: character.raceOptions,
+          },
+        })
+      )
+    )
+    .runAsync();
 }

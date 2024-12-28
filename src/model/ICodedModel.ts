@@ -1,9 +1,8 @@
 import { z } from "zod";
-import { IModelSchema } from "./IModel";
+import { INamedModelSchema } from "./INamedModel";
 
-export const ICodedModelSchema = IModelSchema.extend({
+export const ICodedModelSchema = INamedModelSchema.extend({
   code: z.string(),
-  name: z.string(),
 });
 
 export type ICodedModel = z.infer<typeof ICodedModelSchema>;
