@@ -350,6 +350,11 @@ input[type="number"] {
   }
 }
 
+.btn-outline-primary,
+.btn-outline-success {
+  --bs-btn-color: var(--bs-body-color);
+}
+
 .sf-select {
   @extend .d-flex;
   @extend .align-items-stretch;
@@ -373,6 +378,8 @@ input[type="number"] {
   }
 
   &.btn-outline-primary {
+    --bs-btn-color: var(--bs-body-color);
+
     &.selected,
     .sf-picture,
     .sf-bg-plain {
@@ -381,6 +388,8 @@ input[type="number"] {
   }
 
   &.btn-outline-success {
+    --bs-btn-color: var(--bs-body-color);
+
     &.selected,
     .sf-picture,
     .sf-bg-plain {

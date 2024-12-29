@@ -1,11 +1,8 @@
 import { z } from "zod";
 import { AbilityScoreIdSchema } from "./AbilityScore";
-import { INamedModelSchema } from "./INamedModel";
-import { DescriptionSchema, ReferenceSchema } from "./helper";
+import { IEntrySchema } from "./IEntry";
 
-export const VariantSchema = INamedModelSchema.extend({
-  description: z.optional(DescriptionSchema),
-  reference: z.optional(ReferenceSchema),
+export const VariantSchema = IEntrySchema.extend({
   abilityScores: z.record(AbilityScoreIdSchema, z.number()),
 });
 
