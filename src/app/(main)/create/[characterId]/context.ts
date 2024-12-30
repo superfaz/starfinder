@@ -18,7 +18,7 @@ export interface ICharacterActionContext {
 export function prepareActionContext<T extends ICharacterActionParams, D extends ZodTypeDef, I>(
   schema: ZodType<T, D, I>,
   data: unknown
-): PromisedResult<ICharacterActionContext, ParsingError> {
+): PromisedResult<ICharacterActionContext & T, ParsingError> {
   return start()
     .add(onSuccess(() => hasValidInput(schema, data)))
     .add(onSuccess(({ input }) => succeed(input)))

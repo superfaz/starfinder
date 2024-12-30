@@ -1,7 +1,7 @@
 import { PromisedResult, fail, succeed } from "chain-of-actions";
 import { IStaticDescriptor } from "data";
 import { DataSourceError, NotFoundError } from "logic/errors";
-import { Race, RaceSchema, Variant } from "model";
+import { FeatureTemplate, Race, RaceSchema, Variant } from "model";
 import { IRetrieveAllParams, retrieveAll, retrieveOne } from "./_services";
 
 const descriptor: IStaticDescriptor<Race> = {
@@ -33,5 +33,16 @@ export const raceService = {
   }): PromisedResult<{ variant: Variant }, NotFoundError> => {
     const variant = race.variants.find((variant) => variant.id === variantId);
     return variant === undefined ? fail(new NotFoundError("variants", variantId)) : succeed({ variant });
+  },
+
+  retrieveSecondaryTrait: ({
+    race,
+    traitId,
+  }: {
+    race: Race;
+    traitId: string;
+  }): PromisedResult<{ trait: FeatureTemplate }, NotFoundError> => {
+    const trait = race.secondaryTraits.find((trait) => trait.id === traitId);
+    return trait === undefined ? fail(new NotFoundError("traits", traitId)) : succeed({ trait });
   },
 };

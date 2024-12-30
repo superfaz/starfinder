@@ -78,12 +78,11 @@ export class CharacterBuilder {
 
   computeMinimalAbilityScores = computeMinimalAbilityScores.bind(this);
 
-  enableSecondaryTrait = enableSecondaryTrait.bind(this);
-  disableSecondaryTrait = disableSecondaryTrait.bind(this);
-
   static updateRace = updateRace;
   static updateRaceVariant = updateRaceVariant;
   static updateRaceSelectableBonus = updateRaceSelectableBonus;
+  static enableSecondaryTrait = enableSecondaryTrait;
+  static disableSecondaryTrait = disableSecondaryTrait;
 
   updateTheme = updateTheme.bind(this);
   updateIconProfession = updateIconProfession.bind(this);

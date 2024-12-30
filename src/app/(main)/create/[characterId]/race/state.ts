@@ -11,6 +11,7 @@ export interface State {
   variant?: Variant;
   selectableBonus?: AbilityScore;
   options?: unknown;
+  selectedTraits: string[];
 }
 
 export async function createState(context: {
@@ -18,7 +19,7 @@ export async function createState(context: {
   character: Character;
 }): PromisedResult<{ state: State }, DataSourceError | NotFoundError> {
   if (!context.character.race) {
-    return succeed({ state: {} });
+    return succeed({ state: { selectedTraits: [] } });
   }
 
   let action = start()
@@ -61,6 +62,7 @@ export async function createState(context: {
             variant: variant,
             selectableBonus: selectableBonus,
             options: character.raceOptions,
+            selectedTraits: character.traits,
           },
         })
       )

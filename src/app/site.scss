@@ -403,8 +403,12 @@ input[type="number"] {
   }
 
   &:hover .sf-icon,
-  &:focus .sf-icon,
-  &.selected .sf-icon {
+  &.selected .sf-icon,
+  &.edit .sf-icon {
     margin-left: inherit;
+  }
+
+  &.edit:not(:hover) .sf-icon .bi-pencil-square::before {
+    content: "\f633";
   }
 }

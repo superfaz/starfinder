@@ -25,7 +25,12 @@ async function generateBarrelFile(basePath: string): Promise<void> {
   }
 }
 
-const bases = ["src/logic/server", "src/logic/server/static", "src/ui"];
+const bases = [
+  "src/logic/server",
+  "src/logic/server/static",
+  "src/ui",
+  "src/app/(main)/create/[characterId]/race/actions",
+];
 for (const base of bases) {
   await generateBarrelFile(base);
 }

@@ -12,6 +12,9 @@ import { Badge, EntryButton, EntryListComponent } from "ui";
 import { RaceEntry } from "view/interfaces";
 import { updateRace, updateSelectableBonus, updateVariant } from "./actions";
 import { State } from "./state";
+import { updateSecondaryTrait } from "./actions/updateSecondaryTrait";
+import clsx from "clsx";
+import { RaceFeature } from "view";
 
 type Step = "A" | "B" | "C" | "D" | "E";
 
@@ -62,6 +65,14 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
     router.push("?step=" + step);
   }
 
+  function isSelected(traitId: string) {
+    return state.selectedTraits.includes(traitId);
+  }
+
+  function isSelectable(trait: RaceFeature) {
+    return trait.replace.every((t) => state.selectedTraits.includes(t.id));
+  }
+
   async function handleRaceSelection(raceId: string) {
     const result = await updateRace({ characterId, raceId });
     if (!result.success) {
@@ -92,6 +103,16 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
     }
   }
 
+  async function handleTraitSelection(traitId: string) {
+    const enable = !isSelected(traitId);
+    const result = await updateSecondaryTrait({ characterId, traitId, enable });
+    if (!result.success) {
+      setErrors(result.error.errors);
+    } else {
+      setState(result.value);
+    }
+  }
+
   const groups = groupBy(races, (i) => i.category);
   return (
     <main className="vstack gap-2">
@@ -110,7 +131,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
                 <EntryListComponent
                   key={race.id}
                   entry={race}
-                  selectedId={state.race?.id}
+                  variant={race.id === state.race?.id ? "selected" : "standard"}
                   onClick={() => handleRaceSelection(race.id)}
                   hasInfo={!!race.description}
                   infoId={infoId}
@@ -119,6 +140,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
                   <>
                     <div className="small text-muted">{race.description}</div>
                     <ReferenceComponent reference={race.reference} />
+                    <Button>Sélectionner</Button>
                   </>
                 </EntryListComponent>
               ))}
@@ -128,8 +150,8 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
           <>
             <EntryButton
               title={state.race.name}
-              imagePath={undefined}
-              variant="selected"
+              imagePath="/race-unknown-mini.png"
+              variant="edit"
               onClick={() => setStep("A")}
             />
             <div className="text-muted small">{state.race.description}</div>
@@ -147,7 +169,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
               <EntryListComponent
                 key={variant.id}
                 entry={variant}
-                selectedId={state.variant?.id}
+                variant={variant.id === state.variant?.id ? "selected" : "standard"}
                 onClick={() => handleVariantSelection(variant.id)}
                 hasInfo={!!variant.description}
                 infoId={infoId}
@@ -173,8 +195,8 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
             <>
               <EntryButton
                 title={state.variant.name}
-                imagePath={undefined}
-                variant="selected"
+                imagePath="/race-unknown-mini.png"
+                variant="edit"
                 onClick={() => setStep("B")}
               />
               {!requireBonusSelection(state.variant) && (
@@ -209,7 +231,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
                 key={abilityScore.id}
                 title={abilityScore.name}
                 imagePath={undefined}
-                selected={abilityScore.id === state.selectableBonus?.id}
+                variant={abilityScore.id === state.selectableBonus?.id ? "selected" : "standard"}
                 onClick={() => handleBonusSelection(abilityScore.id)}
               />
             ))}
@@ -231,40 +253,79 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
         </section>
       )}
 
+      {step === "D" && state.race && (
+        <>
+          <section className="vstack gap-2 mb-3">
+            <label>Traits raciaux</label>
+            {state.race.traits
+              .filter((t) => isSelected(t.id))
+              .map((trait) => (
+                <Stack key={trait.id} direction="horizontal" gap={2}>
+                  <div className="p-2 border rounded border-secondary flex-grow-1">{trait.name}</div>
+                  <Button variant="link" className="py-2" onClick={() => setInfoId(trait.id)}>
+                    <i className="bi bi-info-circle"></i>
+                  </Button>
+                </Stack>
+              ))}
+            {state.race.secondaryTraits
+              .filter((t) => isSelected(t.id))
+              .map((trait) => (
+                <Stack key={trait.id} direction="horizontal" gap={2}>
+                  <div className="p-2 border rounded border-secondary flex-grow-1">{trait.name}</div>
+                  <Button variant="link" className="py-2" onClick={() => setInfoId(trait.id)}>
+                    <i className="bi bi-info-circle"></i>
+                  </Button>
+                </Stack>
+              ))}
+          </section>
+          <Button variant="outline-secondary" className="ms-5 mt-3" onClick={() => setStep("E")}>
+            (Optionnel) Choisir des traits alternatifs
+          </Button>
+        </>
+      )}
+
       {step === "E" && (
         <section className="vstack gap-2 mb-3">
-          <label>Sélectionniez vos traits raciaux</label>
+          <label>Sélectionnez les traits raciaux</label>
           <div className="mt-2 text-muted">Traits de base</div>
           {state.race?.traits.map((trait) => (
-            <EntryListComponent
-              key={trait.id}
-              entry={trait}
-              selectedId={""}
-              onClick={() => {}}
-              hasInfo={!!trait.description}
-              infoId={infoId}
-              setInfoId={setInfoId}
-            ></EntryListComponent>
+            <Stack key={trait.id} direction="horizontal" gap={2}>
+              {isSelected(trait.id) && (
+                <div className="p-2 rounded bg-success">
+                  <i className="bi bi-check-lg"></i>
+                </div>
+              )}
+              {!isSelected(trait.id) && (
+                <div className="p-2 rounded bg-danger">
+                  <i className="bi bi-x-lg"></i>
+                </div>
+              )}
+              <div
+                className={clsx("p-2 border rounded border-secondary flex-grow-1", {
+                  "text-secondary": !isSelected(trait.id),
+                })}
+              >
+                {trait.name}
+              </div>
+              <Button variant="link" className="py-2">
+                <i className="bi bi-info-circle"></i>
+              </Button>
+            </Stack>
           ))}
           <div className="mt-2 text-muted">Traits alternatifs</div>
           {state.race?.secondaryTraits.map((trait) => (
             <EntryListComponent
               key={trait.id}
               entry={trait}
-              selectedId={""}
-              onClick={() => {}}
-              hasInfo={!!trait.description}
+              hasInfo={true}
+              selected={isSelected(trait.id)}
+              disabled={!isSelected(trait.id) && !isSelectable(trait)}
               infoId={infoId}
               setInfoId={setInfoId}
+              onClick={() => handleTraitSelection(trait.id)}
             ></EntryListComponent>
           ))}
         </section>
-      )}
-
-      {step === "D" && (
-        <Button variant="outline-secondary" className="ms-5 mt-3" onClick={() => setStep("E")}>
-          (Optionnel) Choisir des traits alternatifs
-        </Button>
       )}
 
       {step >= "D" && (
