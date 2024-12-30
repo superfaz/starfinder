@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "tyriar.luna-paint"
+    "esbenp.prettier-vscode"
   ]
 }
