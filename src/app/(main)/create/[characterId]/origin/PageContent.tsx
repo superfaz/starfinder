@@ -9,7 +9,7 @@ import { displayBonus, findOrError, groupBy } from "app/helpers";
 import { useStaticData } from "logic/StaticContext";
 import { Variant } from "model";
 import { Badge, EntryButton, EntryListComponent } from "ui";
-import { RaceEntry } from "view/interfaces";
+import { OriginEntry } from "view/interfaces";
 import { updateOrigin, updateSelectableBonus, updateVariant } from "./actions";
 import { State } from "./state";
 import { updateSecondaryTrait } from "./actions/updateSecondaryTrait";
@@ -45,7 +45,7 @@ function computeStep(searchParams: ReadonlyURLSearchParams, state: State): Step 
   }
 }
 
-export function PageContent({ origins, initialState }: { origins: RaceEntry[]; initialState: State }) {
+export function PageContent({ origins, initialState }: { origins: OriginEntry[]; initialState: State }) {
   const { characterId }: { characterId: string } = useParams();
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
