@@ -8,16 +8,16 @@ const BaseFeatureSchema = INamedModelSchema.extend({
   category: z.optional(FeatureCategorySchema),
 });
 
-export const RaceFeatureSchema = BaseFeatureSchema.extend({
-  source: z.literal("race"),
+export const OriginFeatureSchema = BaseFeatureSchema.extend({
+  source: z.literal("origin"),
 
   /**
-   * The IDs and names of the replaced racial traits - for secondary racial traits.
+   * The IDs and names of the replaced origin traits - for secondary origin traits.
    */
   replace: z.array(INamedModelSchema),
 }).strict();
 
-export type RaceFeature = z.infer<typeof RaceFeatureSchema>;
+export type OriginFeature = z.infer<typeof OriginFeatureSchema>;
 
 export const ThemeFeatureSchema = BaseFeatureSchema.extend({
   source: z.literal("theme"),
@@ -46,7 +46,7 @@ export type DroneFeature = z.infer<typeof DroneFeatureSchema>;
  * Represents a racial trait as well as a thematic or a class feature that can be applied to a character.
  */
 export const FeatureSchema = z.discriminatedUnion("source", [
-  RaceFeatureSchema,
+  OriginFeatureSchema,
   ThemeFeatureSchema,
   ClassFeatureSchema,
 ]);

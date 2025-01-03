@@ -47,18 +47,18 @@ const mainSlice = createSlice({
     },
 
     updateLashuntaStudentSkill1(state, action: PayloadAction<string>) {
-      if (state.character.raceOptions === undefined) {
-        state.character.raceOptions = { lashuntaStudentSkill1: action.payload };
+      if (state.character.originOptions === undefined) {
+        state.character.originOptions = { lashuntaStudentSkill1: action.payload };
       } else {
-        state.character.raceOptions.lashuntaStudentSkill1 = action.payload;
+        state.character.originOptions.lashuntaStudentSkill1 = action.payload;
       }
     },
 
     updateLashuntaStudentSkill2(state, action: PayloadAction<string>) {
-      if (state.character.raceOptions === undefined) {
-        state.character.raceOptions = { lashuntaStudentSkill2: action.payload };
+      if (state.character.originOptions === undefined) {
+        state.character.originOptions = { lashuntaStudentSkill2: action.payload };
       } else {
-        state.character.raceOptions.lashuntaStudentSkill2 = action.payload;
+        state.character.originOptions.lashuntaStudentSkill2 = action.payload;
       }
     },
 
@@ -67,10 +67,10 @@ const mainSlice = createSlice({
     },
 
     updateHalforcProfession(state, action: PayloadAction<string>) {
-      if (state.character.raceOptions === undefined) {
-        state.character.raceOptions = { halforcProfession: action.payload };
+      if (state.character.originOptions === undefined) {
+        state.character.originOptions = { halforcProfession: action.payload };
       } else {
-        state.character.raceOptions.halforcProfession = action.payload;
+        state.character.originOptions.halforcProfession = action.payload;
       }
     },
 
@@ -405,22 +405,22 @@ export default mainSlice.reducer;
 function updateRaceImpl(data: IClientDataSet, character: Character, raceId: string): Character {
   const race = findOrError(data.races, raceId);
 
-  if (character.race === raceId) {
+  if (character.origin === raceId) {
     // No change
     return character;
   }
 
   const result: Character = {
     ...character,
-    race: race.id,
-    raceVariant: race.variants[0].id,
-    raceOptions: undefined,
+    origin: race.id,
+    variant: race.variants[0].id,
+    originOptions: undefined,
     traits: race.traits.map((t) => t.id),
   };
 
   // Special case - prepare the associated options
   if (Object.keys(race.variants[0].abilityScores).length === 0) {
-    result.raceOptions = { selectableBonus: data.abilityScores[0].id };
+    result.originOptions = { selectableBonus: data.abilityScores[0].id };
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -441,22 +441,22 @@ function updateRaceImpl(data: IClientDataSet, character: Character, raceId: stri
  * @returns The updated character
  */
 function updateRaceVariantImpl(data: IClientDataSet, character: Character, variantId: string): Character {
-  if (character.raceVariant === variantId) {
+  if (character.variant === variantId) {
     // No change
     return character;
   }
 
-  const race = findOrError(data.races, character.race);
+  const race = findOrError(data.races, character.origin);
   const variant = findOrError(race.variants, variantId);
   const result: Character = {
     ...character,
-    raceVariant: variantId,
-    raceOptions: undefined,
+    variant: variantId,
+    originOptions: undefined,
   };
 
   // Special case - prepare the associated options
   if (Object.keys(variant.abilityScores).length === 0) {
-    result.raceOptions = { selectableBonus: data.abilityScores[0].id };
+    result.originOptions = { selectableBonus: data.abilityScores[0].id };
   }
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -476,7 +476,7 @@ function updateRaceVariantImpl(data: IClientDataSet, character: Character, varia
 function updateSelectableBonusImpl(data: IClientDataSet, character: Character, abilityScoreId: string): Character {
   const result: Character = {
     ...character,
-    raceOptions: { selectableBonus: abilityScoreId },
+    originOptions: { selectableBonus: abilityScoreId },
   };
 
   result.abilityScores = computeMinimalAbilityScores(data, result);
@@ -498,7 +498,7 @@ function updateShirrenObsessionSkillImpl(
 ): Character {
   return {
     ...character,
-    raceOptions: { shirrenObsessionSkill },
+    originOptions: { shirrenObsessionSkill },
   };
 }
 
@@ -924,14 +924,14 @@ class Updators {
   }
 
   enableSecondaryTrait(traitId: string) {
-    const race = findOrError(this.data.races, this._character.race);
+    const race = findOrError(this.data.races, this._character.origin);
     const trait = findOrError(race.secondaryTraits, traitId);
     this._character = enableSecondaryTraitImpl(this._character, { id: trait.id, replace: trait.replace ?? [] });
     return this;
   }
 
   disableSecondaryTrait(traitId: string) {
-    const race = findOrError(this.data.races, this._character.race);
+    const race = findOrError(this.data.races, this._character.origin);
     const trait = findOrError(race.secondaryTraits, traitId);
     this._character = disableSecondaryTraitImpl(this._character, { id: trait.id, replace: trait.replace ?? [] });
     return this;

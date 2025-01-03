@@ -9,29 +9,33 @@ import {
   succeed,
 } from "chain-of-actions";
 import { NotFoundError, Templater } from "logic";
-import { type Race } from "model";
-import { RaceFeature } from "view/Feature";
+import { type Origin } from "model";
+import { OriginFeature } from "view/Feature";
 import { type RaceEntry, RaceEntrySchema, RaceView, RaceViewSchema } from "../interfaces";
 
-export function createRaceEntries({ races }: { races: Race[] }): PromisedResult<{ raceEntries: RaceEntry[] }> {
-  return succeed({ raceEntries: races.map((d) => RaceEntrySchema.parse(d)) });
+export function createOriginEntries({
+  origins,
+}: {
+  origins: Origin[];
+}): PromisedResult<{ originEntries: RaceEntry[] }> {
+  return succeed({ originEntries: origins.map((d) => RaceEntrySchema.parse(d)) });
 }
 
-export function createRace({
-  race,
+export function createOrigin({
+  origin,
   templater,
 }: {
-  race: Race;
+  origin: Origin;
   templater: Templater;
-}): PromisedResult<{ raceView: RaceView }, NotFoundError> {
+}): PromisedResult<{ originView: RaceView }, NotFoundError> {
   return start()
-    .withContext({ race, templater })
+    .withContext({ origin, templater })
     .add(onSuccessGrouped(retrievePrimaryRaceTraits))
     .add(addDataGrouped(retrieveSecondaryRaceTraits))
     .add(
       onSuccessGrouped(({ primaryTraits, secondaryTraits }) =>
         succeed({
-          raceView: RaceViewSchema.parse({ ...race, traits: primaryTraits, secondaryTraits }),
+          originView: RaceViewSchema.parse({ ...origin, traits: primaryTraits, secondaryTraits }),
         })
       )
     )
@@ -39,34 +43,34 @@ export function createRace({
 }
 
 function retrievePrimaryRaceTraits({
-  race,
+  origin,
   templater,
 }: {
-  race: Race;
+  origin: Origin;
   templater: Templater;
-}): PromisedResult<{ primaryTraits: RaceFeature[] }> {
-  return succeed({ primaryTraits: race.traits.map((t) => templater.convertRaceFeature(t)) });
+}): PromisedResult<{ primaryTraits: OriginFeature[] }> {
+  return succeed({ primaryTraits: origin.traits.map((t) => templater.convertOriginFeature(t)) });
 }
 
 function retrieveSecondaryRaceTraits({
-  race,
+  origin,
   templater,
 }: {
-  race: Race;
+  origin: Origin;
   templater: Templater;
-}): PromisedResult<{ secondaryTraits: RaceFeature[] }, NotFoundError> {
+}): PromisedResult<{ secondaryTraits: OriginFeature[] }, NotFoundError> {
   return start()
-    .withContext({ race, templater })
+    .withContext({ origin, templater })
     .add(onSuccessGrouped(retrievePrimaryRaceTraits))
     .add(
-      addDataGrouped(({ race, templater }) =>
-        succeed({ secondaryTraits: race.secondaryTraits.map((t) => templater.convertRaceFeature(t)) })
+      addDataGrouped(({ origin, templater }) =>
+        succeed({ secondaryTraits: origin.secondaryTraits.map((t) => templater.convertOriginFeature(t)) })
       )
     )
     .add(
-      passThroughGrouped(({ race, primaryTraits, secondaryTraits }) => {
+      passThroughGrouped(({ origin, primaryTraits, secondaryTraits }) => {
         for (const trait of secondaryTraits) {
-          const source = race.secondaryTraits.find((t) => t.id === trait.id);
+          const source = origin.secondaryTraits.find((t) => t.id === trait.id);
           if (source === undefined) {
             return fail(new NotFoundError("traits", trait.id));
           }

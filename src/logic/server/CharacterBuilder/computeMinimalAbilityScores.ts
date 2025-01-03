@@ -15,8 +15,8 @@ export async function computeMinimalAbilityScores(
   character: Character
 ): PromisedResult<Record<string, number>, DataSourceError> {
   const selectedVariant = await start()
-    .add(onSuccess(() => this.dataSource.get(DataSets.Races).findOne(character.race)))
-    .add(onSuccess((selectedRace) => succeed(selectedRace?.variants.find((v) => v.id === character.raceVariant))))
+    .add(onSuccess(() => this.dataSource.get(DataSets.Races).findOne(character.origin)))
+    .add(onSuccess((selectedRace) => succeed(selectedRace?.variants.find((v) => v.id === character.variant))))
     .runAsync();
   if (!selectedVariant.success) {
     return fail(selectedVariant.error);
@@ -44,7 +44,7 @@ export async function computeMinimalAbilityScores(
       score += selectedTheme.value.abilityScores[abilityScore.id] ?? 0;
     }
 
-    if (character.raceOptions !== undefined && abilityScore.id === character.raceOptions.selectableBonus) {
+    if (character.originOptions !== undefined && abilityScore.id === character.originOptions.selectableBonus) {
       // Variant with selectable bonus
       score += 2;
     }

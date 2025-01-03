@@ -1,4 +1,4 @@
-import { avatarService, classService, raceService, themeService } from "logic/server";
+import { avatarService, classService, originService, themeService } from "logic/server";
 import type { Character } from "model";
 import { CharacterView } from "../interfaces";
 import type { ViewBuilder } from "./ViewBuilder";
@@ -8,7 +8,7 @@ import "server-only";
 export async function createCharacter(this: ViewBuilder, character: Character): Promise<CharacterView> {
   const data = await Promise.all([
     avatarService.findOne({ dataSource: this.dataSource, avatarId: character.avatar }),
-    raceService.findOne({ dataSource: this.dataSource, raceId: character.race }),
+    originService.findOne({ dataSource: this.dataSource, originId: character.origin }),
     themeService.findOne({ dataSource: this.dataSource, themeId: character.theme }),
     classService.findOne({ dataSource: this.dataSource, classId: character.class }),
   ]);

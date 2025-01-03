@@ -12,7 +12,7 @@ import type {
   EquipmentMaterial,
   FeatTemplate,
   Profession,
-  Race,
+  Origin,
   SavingThrow,
   Size,
   SkillDefinition,
@@ -37,7 +37,7 @@ export interface IClientDataSet {
   equipmentMaterials: EquipmentMaterial[];
   feats: FeatTemplate[];
   professions: Profession[];
-  races: Race[];
+  races: Origin[];
   savingThrows: SavingThrow[];
   sizes: Size[];
   skills: SkillDefinition[];

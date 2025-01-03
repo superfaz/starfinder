@@ -82,10 +82,10 @@ export function createTemplater({ character }: { character?: Character }): Promi
     context = {
       ...context,
       level: character.level,
-      race: character.race,
+      race: character.origin,
       theme: character.theme,
       class: character.class,
-      ...character.raceOptions,
+      ...character.originOptions,
       ...character.themeOptions,
       ...character.classOptions,
     };

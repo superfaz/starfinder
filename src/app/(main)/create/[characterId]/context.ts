@@ -1,9 +1,9 @@
 import { PromisedResult, addData, fail, onError, onSuccess, start, succeed } from "chain-of-actions";
+import { ZodType, ZodTypeDef } from "zod";
 import { IDataSource } from "data";
 import { NotFoundError, ParsingError, createParsingError, isParsingError } from "logic";
 import { characterService, getAuthenticatedUser, getDataSource, hasValidInput } from "logic/server";
 import { Character } from "model";
-import { ZodType, ZodTypeDef } from "zod";
 
 interface ICharacterActionParams {
   characterId: string;

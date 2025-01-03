@@ -10,11 +10,11 @@ import { useStaticData } from "logic/StaticContext";
 import { Variant } from "model";
 import { Badge, EntryButton, EntryListComponent } from "ui";
 import { RaceEntry } from "view/interfaces";
-import { updateRace, updateSelectableBonus, updateVariant } from "./actions";
+import { updateOrigin, updateSelectableBonus, updateVariant } from "./actions";
 import { State } from "./state";
 import { updateSecondaryTrait } from "./actions/updateSecondaryTrait";
 import clsx from "clsx";
-import { RaceFeature } from "view";
+import { OriginFeature } from "view";
 
 type Step = "A" | "B" | "C" | "D" | "E";
 
@@ -33,7 +33,7 @@ function computeStep(searchParams: ReadonlyURLSearchParams, state: State): Step 
       return paramStep;
 
     default:
-      if (!state.race) {
+      if (!state.origin) {
         return "A";
       } else if (!state.variant) {
         return "B";
@@ -45,7 +45,7 @@ function computeStep(searchParams: ReadonlyURLSearchParams, state: State): Step 
   }
 }
 
-export function PageContent({ races, initialState }: { races: RaceEntry[]; initialState: State }) {
+export function PageContent({ origins, initialState }: { origins: RaceEntry[]; initialState: State }) {
   const { characterId }: { characterId: string } = useParams();
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
@@ -69,12 +69,12 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
     return state.selectedTraits.includes(traitId);
   }
 
-  function isSelectable(trait: RaceFeature) {
+  function isSelectable(trait: OriginFeature) {
     return trait.replace.every((t) => state.selectedTraits.includes(t.id));
   }
 
-  async function handleRaceSelection(raceId: string) {
-    const result = await updateRace({ characterId, raceId });
+  async function handleOriginSelection(originId: string) {
+    const result = await updateOrigin({ characterId, originId });
     if (!result.success) {
       setErrors(result.error.errors);
     } else {
@@ -113,59 +113,59 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
     }
   }
 
-  const groups = groupBy(races, (i) => i.category);
+  const groups = groupBy(origins, (i) => i.category);
   return (
     <main className="vstack gap-2">
       <div>
         <Badge bg="primary">Etape 1 / 5</Badge>
-        <h1>Définition de la race</h1>
+        <h1>Définition de l&apos;espèce</h1>
       </div>
       <section className="vstack gap-2 mb-3">
-        <label>Sélectionnez une race</label>
-        {errors.raceId && <Alert variant="warning">La race sélectionnée n&apos;est pas valide.</Alert>}
+        <label>Sélectionnez une espèce</label>
+        {errors.originId && <Alert variant="warning">L&apqs;espèce sélectionnée n&apos;est pas valide.</Alert>}
         {step === "A" &&
-          Object.entries(groups).map(([groupName, races]) => (
+          Object.entries(groups).map(([groupName, origins]) => (
             <Fragment key={groupName}>
               <div className="mt-2 text-muted">{groupName}</div>
-              {races.map((race) => (
+              {origins.map((origin) => (
                 <EntryListComponent
-                  key={race.id}
-                  entry={race}
-                  variant={race.id === state.race?.id ? "selected" : "standard"}
-                  onClick={() => handleRaceSelection(race.id)}
-                  hasInfo={!!race.description}
+                  key={origin.id}
+                  entry={origin}
+                  variant={origin.id === state.origin?.id ? "selected" : "standard"}
+                  onClick={() => handleOriginSelection(origin.id)}
+                  hasInfo={!!origin.description}
                   infoId={infoId}
                   setInfoId={setInfoId}
                 >
                   <>
-                    <div className="small text-muted">{race.description}</div>
-                    <ReferenceComponent reference={race.reference} />
+                    <div className="small text-muted">{origin.description}</div>
+                    <ReferenceComponent reference={origin.reference} />
                     <Button>Sélectionner</Button>
                   </>
                 </EntryListComponent>
               ))}
             </Fragment>
           ))}
-        {step > "A" && state.race !== undefined && (
+        {step > "A" && state.origin !== undefined && (
           <>
             <EntryButton
-              title={state.race.name}
-              imagePath="/race-unknown-mini.png"
+              title={state.origin.name}
+              imagePath="/origin-unknown-mini.png"
               variant="edit"
               onClick={() => setStep("A")}
             />
-            <div className="text-muted small">{state.race.description}</div>
-            <ReferenceComponent reference={state.race.reference} />
+            <div className="text-muted small">{state.origin.description}</div>
+            <ReferenceComponent reference={state.origin.reference} />
           </>
         )}
       </section>
 
-      {step > "A" && state.race !== undefined && (
+      {step > "A" && state.origin !== undefined && (
         <section className="vstack gap-2 mb-3">
           <label>Sélectionnez une variante</label>
           {errors.variantId && <Alert variant="warning">La variante sélectionnée n&apos;est pas valide.</Alert>}
           {step === "B" &&
-            state.race.variants.map((variant) => (
+            state.origin.variants.map((variant) => (
               <EntryListComponent
                 key={variant.id}
                 entry={variant}
@@ -195,7 +195,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
             <>
               <EntryButton
                 title={state.variant.name}
-                imagePath="/race-unknown-mini.png"
+                imagePath="/origin-unknown-mini.png"
                 variant="edit"
                 onClick={() => setStep("B")}
               />
@@ -253,11 +253,11 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
         </section>
       )}
 
-      {step === "D" && state.race && (
+      {step === "D" && state.origin && (
         <>
           <section className="vstack gap-2 mb-3">
-            <label>Traits raciaux</label>
-            {state.race.traits
+            <label>Traits d&apos;espèce</label>
+            {state.origin.traits
               .filter((t) => isSelected(t.id))
               .map((trait) => (
                 <Stack key={trait.id} direction="horizontal" gap={2}>
@@ -267,7 +267,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
                   </Button>
                 </Stack>
               ))}
-            {state.race.secondaryTraits
+            {state.origin.secondaryTraits
               .filter((t) => isSelected(t.id))
               .map((trait) => (
                 <Stack key={trait.id} direction="horizontal" gap={2}>
@@ -286,9 +286,9 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
 
       {step === "E" && (
         <section className="vstack gap-2 mb-3">
-          <label>Sélectionnez les traits raciaux</label>
+          <label>Sélectionnez les traits d&apos;espèce</label>
           <div className="mt-2 text-muted">Traits de base</div>
-          {state.race?.traits.map((trait) => (
+          {state.origin?.traits.map((trait) => (
             <Stack key={trait.id} direction="horizontal" gap={2}>
               {isSelected(trait.id) && (
                 <div className="p-2 rounded bg-success">
@@ -313,7 +313,7 @@ export function PageContent({ races, initialState }: { races: RaceEntry[]; initi
             </Stack>
           ))}
           <div className="mt-2 text-muted">Traits alternatifs</div>
-          {state.race?.secondaryTraits.map((trait) => (
+          {state.origin?.secondaryTraits.map((trait) => (
             <EntryListComponent
               key={trait.id}
               entry={trait}

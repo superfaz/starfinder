@@ -1,24 +1,24 @@
 import { PromisedResult, addData, addDataGrouped, onSuccessGrouped, start, succeed } from "chain-of-actions";
 import { IDataSource } from "data";
 import { DataSourceError, NotFoundError } from "logic";
-import { abilityScoreService, createTemplater, raceService } from "logic/server";
+import { abilityScoreService, createTemplater, originService } from "logic/server";
 import { AbilityScore, Character, Variant } from "model";
 import { RaceView } from "view";
 import { ViewBuilder } from "view/server";
 
 export interface State {
-  race?: RaceView;
+  origin?: RaceView;
   variant?: Variant;
   selectableBonus?: AbilityScore;
-  options?: unknown;
   selectedTraits: string[];
+  options?: unknown;
 }
 
 export async function createState(context: {
   dataSource: IDataSource;
   character: Character;
 }): PromisedResult<{ state: State }, DataSourceError | NotFoundError> {
-  if (!context.character.race) {
+  if (!context.character.origin) {
     return succeed({ state: { selectedTraits: [] } });
   }
 
@@ -27,26 +27,26 @@ export async function createState(context: {
     .add(
       onSuccessGrouped(({ character }: { character: Character }) =>
         succeed({
-          raceId: character.race,
-          variantId: character.raceVariant,
-          selectableBonusId: character.raceOptions?.selectableBonus,
+          originId: character.origin,
+          variantId: character.variant,
+          selectableBonusId: character.originOptions?.selectableBonus,
         })
       )
     )
     .add(addDataGrouped(createTemplater))
-    .add(addDataGrouped(raceService.retrieveOne))
-    .add(addData(ViewBuilder.createRace))
+    .add(addDataGrouped(originService.retrieveOne))
+    .add(addData(ViewBuilder.createOrigin))
     .add(
       addData(() =>
         succeed({ variant: undefined as Variant | undefined, selectableBonus: undefined as AbilityScore | undefined })
       )
     );
 
-  if (context.character.raceVariant !== undefined) {
-    action = action.add(addDataGrouped(raceService.retrieveVariant));
+  if (context.character.variant !== undefined) {
+    action = action.add(addDataGrouped(originService.retrieveVariant));
   }
 
-  if (context.character.raceOptions?.selectableBonus !== undefined) {
+  if (context.character.originOptions?.selectableBonus !== undefined) {
     action = action
       .add(addDataGrouped(({ selectableBonusId }) => succeed({ abilityScoreId: selectableBonusId! })))
       .add(addDataGrouped(abilityScoreService.retrieveOne))
@@ -55,14 +55,14 @@ export async function createState(context: {
 
   return action
     .add(
-      onSuccessGrouped(({ raceView, variant, character, selectableBonus }) =>
+      onSuccessGrouped(({ originView, variant, character, selectableBonus }) =>
         succeed({
           state: {
-            race: raceView,
+            origin: originView,
             variant: variant,
             selectableBonus: selectableBonus,
-            options: character.raceOptions,
             selectedTraits: character.traits,
+            options: character.originOptions,
           },
         })
       )

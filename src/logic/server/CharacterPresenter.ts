@@ -18,10 +18,10 @@ import {
   type Character,
   type Class,
   type Profession,
-  type Race,
+  type Origin,
   type Theme,
 } from "model";
-import type { ClassFeature, RaceFeature, ThemeFeature } from "view";
+import type { ClassFeature, OriginFeature, ThemeFeature } from "view";
 
 function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
@@ -49,8 +49,8 @@ export class CharacterPresenter {
   private readonly dataSource: IDataSource;
   private readonly character: Character;
 
-  private cachedPrimaryRaceTraits: RaceFeature[] | null = null;
-  private cachedSecondaryRaceTraits: RaceFeature[] | null = null;
+  private cachedPrimaryRaceTraits: OriginFeature[] | null = null;
+  private cachedSecondaryRaceTraits: OriginFeature[] | null = null;
 
   constructor(dataSource: IDataSource, character: Character) {
     this.dataSource = dataSource;
@@ -70,10 +70,10 @@ export class CharacterPresenter {
       iconProfession: "any",
       themelessSkill: "any",
       level: this.character.level,
-      race: this.character.race,
+      race: this.character.origin,
       theme: this.character.theme,
       class: this.character.class,
-      ...this.character.raceOptions,
+      ...this.character.originOptions,
       ...this.character.themeOptions,
       ...this.character.classOptions,
       ...context,
@@ -93,12 +93,12 @@ export class CharacterPresenter {
     return templater;
   }
 
-  async getRace(): PromisedResult<Race | undefined, DataSourceError> {
-    if (!this.character.race) {
+  async getRace(): PromisedResult<Origin | undefined, DataSourceError> {
+    if (!this.character.origin) {
       return succeed();
     }
 
-    return await this.dataSource.get(DataSets.Races).findOne(this.character.race);
+    return await this.dataSource.get(DataSets.Races).findOne(this.character.origin);
   }
 
   async getTheme(): PromisedResult<Theme | undefined, DataSourceError> {

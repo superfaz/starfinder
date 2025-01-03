@@ -31,7 +31,7 @@ export async function updateSelectableBonus(data: {
     .add(
       onError((error) => {
         console.error(error);
-        return fail(createParsingError({ raceId: ["Invalid"] }));
+        return fail(createParsingError({ originId: ["Invalid"] }));
       })
     )
     .add(onSuccessGrouped(createState))

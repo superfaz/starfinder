@@ -2,7 +2,7 @@
 
 import { PromisedResult, fail, onError, onSuccessGrouped, start, succeed } from "chain-of-actions";
 import { z } from "zod";
-import { DataSourceError, ParsingError, createParsingError } from "logic";
+import { ParsingError, createParsingError, isParsingError } from "logic";
 import { CharacterBuilder, characterService } from "logic/server";
 import { IdSchema } from "model";
 import { prepareActionContext } from "../../context";
@@ -34,10 +34,10 @@ export async function updateVariant(data: UpdateVariantInput): PromisedResult<St
     .add(onSuccessGrouped(createState))
     .add(
       onError((error) => {
-        if (error instanceof DataSourceError) {
-          throw error;
-        } else {
+        if (isParsingError(error)) {
           return fail(error);
+        } else {
+          throw error;
         }
       })
     )

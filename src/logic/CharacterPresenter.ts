@@ -22,7 +22,7 @@ import type {
   OtherEquipmentDescriptor,
   Prerequisite,
   Profession,
-  Race,
+  Origin,
   SavingThrow,
   SavingThrowId,
   Size,
@@ -43,7 +43,7 @@ import {
   ofCategory,
   ofType,
 } from "model";
-import type { ClassFeature, Feat, Feature, ModifierWithSource, RaceFeature, ThemeFeature } from "view";
+import type { ClassFeature, Feat, Feature, ModifierWithSource, OriginFeature, ThemeFeature } from "view";
 import {
   getMechanicFeatureTemplates,
   getMysticFeatureTemplates,
@@ -69,8 +69,8 @@ import {
  * @returns The minimal ability scores for the specified character
  */
 export function computeMinimalAbilityScores(data: IClientDataSet, character: Character): Record<string, number> {
-  const selectedRace = data.races.find((r) => r.id === character.race);
-  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.raceVariant);
+  const selectedRace = data.races.find((r) => r.id === character.origin);
+  const selectedVariant = selectedRace?.variants.find((v) => v.id === character.variant);
   const selectedTheme = data.themes.find((r) => r.id === character.theme);
 
   const scores: Record<string, number> = {};
@@ -85,7 +85,7 @@ export function computeMinimalAbilityScores(data: IClientDataSet, character: Cha
       score += selectedTheme.abilityScores[abilityScore.id] ?? 0;
     }
 
-    if (character.raceOptions !== undefined && abilityScore.id === character.raceOptions.selectableBonus) {
+    if (character.originOptions !== undefined && abilityScore.id === character.originOptions.selectableBonus) {
       // Variant with selectable bonus
       score += 2;
     }
@@ -143,11 +143,11 @@ export class CharacterPresenter implements ICharacterPresenter {
   private classesDetails: Record<string, IModel>;
   private character: Readonly<Character>;
 
-  private cachedRace: Race | null = null;
+  private cachedRace: Origin | null = null;
   private cachedRaceVariant: Variant | null = null;
-  private cachedPrimaryRaceTraits: RaceFeature[] | null = null;
-  private cachedSecondaryRaceTraits: RaceFeature[] | null = null;
-  private cachedSelectedRaceTraits: RaceFeature[] | null = null;
+  private cachedPrimaryRaceTraits: OriginFeature[] | null = null;
+  private cachedSecondaryRaceTraits: OriginFeature[] | null = null;
+  private cachedSelectedRaceTraits: OriginFeature[] | null = null;
   private cachedTheme: Theme | null = null;
   private cachedClass: Class | null = null;
   private cachedMinimalAbilityScores: Record<string, number> | null = null;
@@ -175,10 +175,10 @@ export class CharacterPresenter implements ICharacterPresenter {
       iconProfession: "any",
       themelessSkill: "any",
       level: this.character.level,
-      race: this.character.race,
+      race: this.character.origin,
       theme: this.character.theme,
       class: this.character.class,
-      ...this.character.raceOptions,
+      ...this.character.originOptions,
       ...this.character.themeOptions,
       ...this.character.classOptions,
       ...context,
@@ -202,50 +202,50 @@ export class CharacterPresenter implements ICharacterPresenter {
     return this.character;
   }
 
-  getRace(): Race | null {
-    if (!this.character.race) {
+  getRace(): Origin | null {
+    if (!this.character.origin) {
       return null;
     }
     if (!this.cachedRace) {
-      this.cachedRace = this.data.races.find((r) => r.id === this.character.race) ?? null;
+      this.cachedRace = this.data.races.find((r) => r.id === this.character.origin) ?? null;
     }
     return this.cachedRace;
   }
 
   getRaceVariant(): Variant | null {
     const race = this.getRace();
-    if (!race || !this.character.raceVariant) {
+    if (!race || !this.character.variant) {
       return null;
     }
 
     if (!this.cachedRaceVariant) {
-      this.cachedRaceVariant = race.variants.find((v) => v.id === this.character.raceVariant) ?? null;
+      this.cachedRaceVariant = race.variants.find((v) => v.id === this.character.variant) ?? null;
     }
 
     return this.cachedRaceVariant;
   }
 
   getRaceSelectableBonus(): string | null {
-    return this.character.raceOptions?.selectableBonus ?? null;
+    return this.character.originOptions?.selectableBonus ?? null;
   }
 
   getLashuntaStudentSkill1(): string | null {
-    return this.character.raceOptions?.lashuntaStudentSkill1 ?? null;
+    return this.character.originOptions?.lashuntaStudentSkill1 ?? null;
   }
 
   getLashuntaStudentSkill2(): string | null {
-    return this.character.raceOptions?.lashuntaStudentSkill2 ?? null;
+    return this.character.originOptions?.lashuntaStudentSkill2 ?? null;
   }
 
   getShirrenObsessionSkill(): string | null {
-    return this.character.raceOptions?.shirrenObsessionSkill ?? null;
+    return this.character.originOptions?.shirrenObsessionSkill ?? null;
   }
 
   getHalforcProfession(): string | null {
-    return this.character.raceOptions?.halforcProfession ?? null;
+    return this.character.originOptions?.halforcProfession ?? null;
   }
 
-  getPrimaryRaceTraits(): RaceFeature[] {
+  getPrimaryRaceTraits(): OriginFeature[] {
     const race = this.getRace();
     if (!race) {
       return [];
@@ -253,13 +253,13 @@ export class CharacterPresenter implements ICharacterPresenter {
 
     const templater = this.createTemplater();
     if (!this.cachedPrimaryRaceTraits) {
-      this.cachedPrimaryRaceTraits = race.traits.map((t) => templater.convertRaceFeature(t));
+      this.cachedPrimaryRaceTraits = race.traits.map((t) => templater.convertOriginFeature(t));
     }
 
     return this.cachedPrimaryRaceTraits;
   }
 
-  getSecondaryRaceTraits(): RaceFeature[] {
+  getSecondaryRaceTraits(): OriginFeature[] {
     const race = this.getRace();
     if (!race) {
       return [];
@@ -267,7 +267,7 @@ export class CharacterPresenter implements ICharacterPresenter {
 
     const templater = this.createTemplater();
     if (!this.cachedSecondaryRaceTraits) {
-      this.cachedSecondaryRaceTraits = race.secondaryTraits.map((t) => templater.convertRaceFeature(t));
+      this.cachedSecondaryRaceTraits = race.secondaryTraits.map((t) => templater.convertOriginFeature(t));
     }
 
     return this.cachedSecondaryRaceTraits;
@@ -283,7 +283,7 @@ export class CharacterPresenter implements ICharacterPresenter {
       const templater = this.createTemplater();
       this.cachedSelectedRaceTraits = [...race.traits, ...race.secondaryTraits]
         .filter((t) => this.character.traits.includes(t.id))
-        .map((t) => templater.convertRaceFeature(t));
+        .map((t) => templater.convertOriginFeature(t));
     }
 
     return this.cachedSelectedRaceTraits;

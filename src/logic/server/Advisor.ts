@@ -5,7 +5,7 @@ export class RaceAdvisor {
   constructor() {}
 
   check(character: Character): RaceAdvisorError | undefined {
-    if (character.race === undefined || character.race === "") {
+    if (character.origin === undefined || character.origin === "") {
       return RaceAdvisorError.RaceNotSelected;
     }
 

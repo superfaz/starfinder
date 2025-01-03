@@ -8,27 +8,27 @@ import { IdSchema } from "model";
 import { prepareActionContext } from "../../context";
 import { createState, State } from "../state";
 
-const UpdateRaceInputSchema = z.object({
+const UpdateOriginInputSchema = z.object({
   characterId: IdSchema,
-  raceId: IdSchema,
+  originId: IdSchema,
 });
 
-export type UpdateRaceInput = z.infer<typeof UpdateRaceInputSchema>;
+export type UpdateOriginInput = z.infer<typeof UpdateOriginInputSchema>;
 
-export async function updateRace(data: UpdateRaceInput): PromisedResult<State, ParsingError> {
-  const context = await prepareActionContext(UpdateRaceInputSchema, data);
+export async function updateOrigin(data: UpdateOriginInput): PromisedResult<State, ParsingError> {
+  const context = await prepareActionContext(UpdateOriginInputSchema, data);
   if (!context.success) {
     return fail(context.error);
   }
 
   const action = await start()
     .withContext(context.value)
-    .add(onSuccessGrouped(CharacterBuilder.updateRace))
+    .add(onSuccessGrouped(CharacterBuilder.updateOrigin))
     .add(onSuccessGrouped(characterService.update))
     .add(
       onError((error) => {
         console.error(error);
-        return fail(createParsingError({ raceId: ["Invalid"] }));
+        return fail(createParsingError({ originId: ["Invalid"] }));
       })
     )
     .add(onSuccessGrouped(createState))

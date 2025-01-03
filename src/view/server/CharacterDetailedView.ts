@@ -7,7 +7,7 @@ import "server-only";
 
 export async function createCharacterDetailed(this: ViewBuilder, character: Character): Promise<CharacterDetailedView> {
   const avatar = await this.dataSource.get(DataSets.Avatars).findOne(character.avatar);
-  const race = await this.dataSource.get(DataSets.Races).findOne(character.race);
+  const race = await this.dataSource.get(DataSets.Races).findOne(character.origin);
   const theme = await this.dataSource.get(DataSets.Themes).findOne(character.theme);
   const klass = await this.dataSource.get(DataSets.Classes).findOne(character.class);
 

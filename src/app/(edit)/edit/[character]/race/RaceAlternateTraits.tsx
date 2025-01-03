@@ -4,7 +4,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
-import { type RaceFeature } from "view";
+import { type OriginFeature } from "view";
 import FeatureComponent from "../FeatureComponent";
 import { updateSecondaryTrait, UpdateState } from "./actions";
 import { useParams } from "next/navigation";
@@ -19,7 +19,7 @@ export function RaceAlternateTraits({
 
   const traits = state.secondaryTraits;
 
-  async function handleTraitEnabled(trait: RaceFeature, e: ChangeEvent<HTMLInputElement>) {
+  async function handleTraitEnabled(trait: OriginFeature, e: ChangeEvent<HTMLInputElement>) {
     const result = await updateSecondaryTrait({ characterId, traitId: trait.id, enable: e.target.checked });
     if (result.success) {
       setState(result);

@@ -1,48 +1,48 @@
 import { PromisedResult, fail, succeed } from "chain-of-actions";
 import { IStaticDescriptor } from "data";
 import { DataSourceError, NotFoundError } from "logic/errors";
-import { FeatureTemplate, Race, RaceSchema, Variant } from "model";
+import { FeatureTemplate, Origin, OriginSchema, Variant } from "model";
 import { IRetrieveAllParams, retrieveAll, retrieveOne } from "./_services";
 
-const descriptor: IStaticDescriptor<Race> = {
+const descriptor: IStaticDescriptor<Origin> = {
   mode: "static",
   type: "named",
-  name: "races",
-  schema: RaceSchema,
+  name: "origins",
+  schema: OriginSchema,
 };
 
-export const raceService = {
+export const originService = {
   retrieveAll: (params: IRetrieveAllParams) =>
-    retrieveAll(params, descriptor, "races") as PromisedResult<{ races: Race[] }, DataSourceError>,
+    retrieveAll(params, descriptor, "origins") as PromisedResult<{ origins: Origin[] }, DataSourceError>,
 
-  retrieveOne: (params: IRetrieveAllParams & { raceId: string }) =>
-    retrieveOne({ dataSource: params.dataSource, id: params.raceId }, descriptor, "race") as PromisedResult<
-      { race: Race },
+  retrieveOne: (params: IRetrieveAllParams & { originId: string }) =>
+    retrieveOne({ dataSource: params.dataSource, id: params.originId }, descriptor, "origin") as PromisedResult<
+      { origin: Origin },
       DataSourceError | NotFoundError
     >,
 
-  findOne: (params: IRetrieveAllParams & { raceId: string }) =>
-    params.dataSource.get(descriptor).findOne(params.raceId),
+  findOne: (params: IRetrieveAllParams & { originId: string }) =>
+    params.dataSource.get(descriptor).findOne(params.originId),
 
   retrieveVariant: ({
-    race,
+    origin,
     variantId,
   }: {
-    race: Race;
+    origin: Origin;
     variantId: string;
   }): PromisedResult<{ variant: Variant }, NotFoundError> => {
-    const variant = race.variants.find((variant) => variant.id === variantId);
+    const variant = origin.variants.find((variant) => variant.id === variantId);
     return variant === undefined ? fail(new NotFoundError("variants", variantId)) : succeed({ variant });
   },
 
   retrieveSecondaryTrait: ({
-    race,
+    origin,
     traitId,
   }: {
-    race: Race;
+    origin: Origin;
     traitId: string;
   }): PromisedResult<{ trait: FeatureTemplate }, NotFoundError> => {
-    const trait = race.secondaryTraits.find((trait) => trait.id === traitId);
+    const trait = origin.secondaryTraits.find((trait) => trait.id === traitId);
     return trait === undefined ? fail(new NotFoundError("traits", traitId)) : succeed({ trait });
   },
 };

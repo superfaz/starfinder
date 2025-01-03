@@ -2,7 +2,7 @@ import { addDataGrouped, onSuccessGrouped, start, succeed } from "chain-of-actio
 import { notFound } from "next/navigation";
 import { z } from "zod";
 import { DataSourceError, NotFoundError, NotSingleError } from "logic";
-import { characterService, preparePageContext, raceService } from "logic/server";
+import { characterService, preparePageContext, originService } from "logic/server";
 import { IdSchema } from "model";
 import { badRequest, serverError } from "navigation";
 import { ViewBuilder } from "view/server";
@@ -19,13 +19,13 @@ const InputSchema = z
 type Input = z.infer<typeof InputSchema>;
 
 export default async function Page({ params }: Readonly<{ params: Input }>) {
-  const url = `/create/${params.characterId}/race`;
+  const url = `/create/${params.characterId}/origin`;
   const context = await preparePageContext(url, InputSchema, params);
 
   const action = await start()
     .withContext(context.value)
     .add(onSuccessGrouped(({ input }: { input: Input }) => succeed(input)))
-    .add(addDataGrouped(raceService.retrieveAll))
+    .add(addDataGrouped(originService.retrieveAll))
     .add(addDataGrouped(ViewBuilder.createRaceEntries))
     .add(addDataGrouped(characterService.retrieveOneForUser))
     .add(addDataGrouped(({ character, dataSource }) => createState({ dataSource, character })))
@@ -44,5 +44,5 @@ export default async function Page({ params }: Readonly<{ params: Input }>) {
     }
   }
 
-  return <PageContent races={action.value.raceEntries} initialState={action.value.state} />;
+  return <PageContent origins={action.value.originEntries} initialState={action.value.state} />;
 }

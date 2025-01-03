@@ -3,14 +3,14 @@
 import { DataSource } from "data";
 import { CharacterPresenter } from "logic/server";
 import { Character } from "model";
-import { RaceFeature } from "view";
+import { OriginFeature } from "view";
 
 export interface UpdateState {
   race?: string;
   variant?: string;
   selectableBonus?: string;
-  primaryTraits: RaceFeature[];
-  secondaryTraits: RaceFeature[];
+  primaryTraits: OriginFeature[];
+  secondaryTraits: OriginFeature[];
   selectedTraits: string[];
 }
 
@@ -21,9 +21,9 @@ export async function createState(character: Character): Promise<UpdateState> {
   const secondaryTraits = await presenter.getSecondaryRaceTraits();
 
   return {
-    race: character.race,
-    variant: character.raceVariant,
-    selectableBonus: character.raceOptions?.selectableBonus,
+    race: character.origin,
+    variant: character.variant,
+    selectableBonus: character.originOptions?.selectableBonus,
     primaryTraits: primaryTraits.success ? primaryTraits.value.primaryTraits : [],
     secondaryTraits: secondaryTraits.success ? secondaryTraits.value.secondaryTraits : [],
     selectedTraits: character.traits,

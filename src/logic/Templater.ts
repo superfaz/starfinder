@@ -7,7 +7,7 @@ import {
   EquipmentSchema,
 } from "model";
 import type { FeatTemplate, FeatureTemplate, INamedModel, ModifierTemplate, Prerequisite, Equipment } from "model";
-import type { ClassFeature, DroneFeature, Feat, RaceFeature, ThemeFeature } from "view";
+import type { ClassFeature, DroneFeature, Feat, OriginFeature, ThemeFeature } from "view";
 
 export function cleanEvolutions(
   evolutions: Record<string, Record<string, string | number | null | undefined> | null | undefined> | undefined
@@ -46,10 +46,10 @@ export class Templater {
     }
   }
 
-  convertRaceFeature(template: FeatureTemplate): RaceFeature {
+  convertOriginFeature(template: FeatureTemplate): OriginFeature {
     return {
       ...template,
-      source: "race",
+      source: "origin",
       name: this.applyForString(template.name) ?? "",
       description: template.description ? this.applyForString(template.description) : undefined,
       replace: [],
@@ -107,7 +107,7 @@ export class Templater {
       ...template,
       target: target?.id,
       name: this.applyForString(template.name),
-      description: this.applyForString(template.description),
+      description: template.description !== undefined ? this.applyForString(template.description) : undefined,
       modifiers: [],
       prerequisites: [],
     };

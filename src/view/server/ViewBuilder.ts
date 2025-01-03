@@ -2,7 +2,7 @@ import { DataSource, IDataSource } from "data";
 import { createCharacterDetailed } from "./CharacterDetailedView";
 import { createCharacter } from "./CharacterView";
 import { createEntry } from "./EntryView";
-import { createRace, createRaceEntries } from "./RaceView";
+import { createOrigin, createOriginEntries } from "./OriginView";
 import { Character } from "model";
 import { CharacterView } from "view/interfaces";
 
@@ -17,8 +17,8 @@ export class ViewBuilder {
     return this._dataSource;
   }
 
-  static createRace = createRace;
-  static createRaceEntries = createRaceEntries;
+  static createOrigin = createOrigin;
+  static createRaceEntries = createOriginEntries;
 
   public createCharacter(characters: Character[]): Promise<CharacterView[]>;
   public createCharacter(characters: Character): Promise<CharacterView>;

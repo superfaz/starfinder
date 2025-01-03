@@ -9,7 +9,7 @@ import {
   FeatTemplateSchema,
   IModelSchema,
   ProfessionSchema,
-  RaceSchema,
+  OriginSchema,
   SavingThrowSchema,
   SkillDefinitionSchema,
   ThemeSchema,
@@ -136,7 +136,7 @@ const datasets = [
   {
     file: "races.json",
     array: true,
-    schema: RaceSchema.strict(),
+    schema: OriginSchema.strict(),
   },
   {
     file: "saving-throws.json",

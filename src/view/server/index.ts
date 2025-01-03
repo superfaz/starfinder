@@ -1,6 +1,7 @@
-export * from "../interfaces";
+// This file is generated
+
 export * from "./CharacterDetailedView";
 export * from "./CharacterView";
 export * from "./EntryView";
-export * from "./RaceView";
+export * from "./OriginView";
 export * from "./ViewBuilder";

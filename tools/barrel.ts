@@ -26,11 +26,14 @@ async function generateBarrelFile(basePath: string): Promise<void> {
 }
 
 const bases = [
+  "src/app/(main)/create/[characterId]/origin/actions",
   "src/logic/server",
   "src/logic/server/static",
+  "src/model",
   "src/ui",
-  "src/app/(main)/create/[characterId]/race/actions",
+  "src/view/server",
 ];
+
 for (const base of bases) {
   await generateBarrelFile(base);
 }

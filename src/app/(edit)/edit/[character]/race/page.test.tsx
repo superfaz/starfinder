@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, test, vi } from "vitest";
 import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import races from "mocks/races.json";
-import { RaceSchema } from "model";
+import { OriginSchema } from "model";
 import { createCharacter, renderWithData } from "../helpers-test";
 import { PageContent } from "./PageContent";
 import { createState } from "./actions";
@@ -29,7 +29,7 @@ describe("/edit/[character]/race", () => {
     dataSource.get(DataSets.Characters).create(character);
 
     await renderWithData(
-      <PageContent races={races.map((r: unknown) => RaceSchema.parse(r))} initial={initial} />,
+      <PageContent races={races.map((r: unknown) => OriginSchema.parse(r))} initial={initial} />,
       character
     );
   });

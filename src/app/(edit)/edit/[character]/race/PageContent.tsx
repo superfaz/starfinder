@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Race } from "model";
+import { Origin } from "model";
 import { UpdateState } from "./actions";
 import { RaceAlternateTraits } from "./RaceAlternateTraits";
 import { RaceSelection } from "./RaceSelection";
 import { RaceTraits } from "./RaceTraits";
 
-export function PageContent({ races, initial }: Readonly<{ races: Race[]; initial: UpdateState }>) {
+export function PageContent({ races, initial }: Readonly<{ races: Origin[]; initial: UpdateState }>) {
   const [state, setState] = useState(initial);
 
   return (

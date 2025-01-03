@@ -11,7 +11,7 @@ import {
   type EquipmentWeaponMelee,
   type FeatTemplate,
   type Profession,
-  type Race,
+  type Origin,
   type SavingThrow,
   type SkillDefinition,
   type Spell,
@@ -41,7 +41,7 @@ export interface IDataSet {
   getEquipmentWeaponMelee(): Promise<EquipmentWeaponMelee[]>;
   getFeats(): Promise<FeatTemplate[]>;
   getProfessions(): Promise<Profession[]>;
-  getRaces(): Promise<Race[]>;
+  getRaces(): Promise<Origin[]>;
   getSavingThrows(): Promise<SavingThrow[]>;
   getSkills(): Promise<SkillDefinition[]>;
   getSpells(): Promise<Spell[]>;

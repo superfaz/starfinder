@@ -13,7 +13,7 @@ import {
   equipmentMaterialService,
   featTemplateService,
   professionService,
-  raceService,
+  originService,
   savingThrowService,
   sizeService,
   skillService,
@@ -44,7 +44,7 @@ export async function convert(dataSource: IDataSource): Promise<IClientDataSet> 
     .add(c.addDataGrouped(equipmentMaterialService.retrieveAll))
     .add(c.addDataGrouped(featTemplateService.retrieveAll))
     .add(c.addDataGrouped(professionService.retrieveAll))
-    .add(c.addDataGrouped(raceService.retrieveAll))
+    .add(c.addDataGrouped(originService.retrieveAll))
     .add(c.addDataGrouped(savingThrowService.retrieveAll))
     .add(c.addDataGrouped(sizeService.retrieveAll))
     .add(c.addDataGrouped(skillService.retrieveAll))

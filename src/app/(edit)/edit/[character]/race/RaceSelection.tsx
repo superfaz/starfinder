@@ -6,7 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import { FormSelectRace } from "app/components/FormSelectRace";
 import { ActionErrors } from "app/helpers-server";
 import { useStaticData } from "logic/StaticContext";
-import { IdSchema, Race } from "model";
+import { IdSchema, Origin } from "model";
 import { Card } from "ui";
 import { updateRace, UpdateRaceInput, updateSelectableBonus, UpdateState, updateVariant } from "./actions";
 import FormSelectVariant from "./FormSelectVariant";
@@ -16,7 +16,7 @@ export function RaceSelection({
   races,
   state,
   setState,
-}: Readonly<{ races: Race[]; state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>): JSX.Element {
+}: Readonly<{ races: Origin[]; state: UpdateState; setState: Dispatch<SetStateAction<UpdateState>> }>): JSX.Element {
   const avatars = useStaticData().avatars;
   const { character } = useParams();
   const [errors, setErrors] = useState<ActionErrors<UpdateRaceInput>>({});

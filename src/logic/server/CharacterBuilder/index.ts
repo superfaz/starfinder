@@ -5,7 +5,7 @@ import { IDataSource } from "data";
 import { DataSourceError, NotFoundError } from "logic/errors";
 import { Character, EmptyCharacter, IdSchema } from "model";
 import { computeMinimalAbilityScores } from "./computeMinimalAbilityScores";
-import { updateRace, updateRaceSelectableBonus, updateRaceVariant } from "./updateRace";
+import { updateOrigin, updateOriginSelectableBonus, updateOriginVariant } from "./updateOrigin";
 import {
   updateClass,
   updateEnvoySkill,
@@ -78,9 +78,9 @@ export class CharacterBuilder {
 
   computeMinimalAbilityScores = computeMinimalAbilityScores.bind(this);
 
-  static updateRace = updateRace;
-  static updateRaceVariant = updateRaceVariant;
-  static updateRaceSelectableBonus = updateRaceSelectableBonus;
+  static updateOrigin = updateOrigin;
+  static updateRaceVariant = updateOriginVariant;
+  static updateRaceSelectableBonus = updateOriginSelectableBonus;
   static enableSecondaryTrait = enableSecondaryTrait;
   static disableSecondaryTrait = disableSecondaryTrait;
 

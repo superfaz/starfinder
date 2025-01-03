@@ -5,17 +5,17 @@ import { VariantSchema } from "./Variant";
 import { IEntrySchema } from "./IEntry";
 import { IdSchema } from "./helper";
 
-export const RaceModifierSchema = z.discriminatedUnion("type", [
+export const OriginModifierSchema = z.discriminatedUnion("type", [
   BodyPartModifierSchema,
   HitPointsModifierSchema,
   SizeModifierSchema,
 ]);
 
-export type RaceModifier = z.infer<typeof RaceModifierSchema>;
+export type RaceModifier = z.infer<typeof OriginModifierSchema>;
 
-export const RaceSchema = IEntrySchema.extend({
+export const OriginSchema = IEntrySchema.extend({
   category: z.enum(["core", "legacy", "other"]),
-  modifiers: z.array(RaceModifierSchema),
+  modifiers: z.array(OriginModifierSchema),
   variants: z.array(VariantSchema),
   names: z.array(z.string()),
   language: z.optional(IdSchema),
@@ -23,8 +23,8 @@ export const RaceSchema = IEntrySchema.extend({
   secondaryTraits: z.array(FeatureTemplateSchema),
 });
 
-export type Race = z.infer<typeof RaceSchema>;
+export type Origin = z.infer<typeof OriginSchema>;
 
-export function isRace(obj: unknown): obj is Race {
-  return RaceSchema.safeParse(obj).success;
+export function isOrigin(obj: unknown): obj is Origin {
+  return OriginSchema.safeParse(obj).success;
 }

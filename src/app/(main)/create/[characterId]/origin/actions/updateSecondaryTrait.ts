@@ -3,7 +3,7 @@
 import { fail, onError, onSuccessGrouped, PromisedResult, start, succeed } from "chain-of-actions";
 import { z } from "zod";
 import { ParsingError } from "logic";
-import { CharacterBuilder, characterService, raceService } from "logic/server";
+import { CharacterBuilder, characterService, originService } from "logic/server";
 import { Character, IdSchema } from "model";
 import { prepareActionContext } from "../../context";
 import { createState, State } from "../state";
@@ -25,9 +25,9 @@ export async function updateSecondaryTrait(data: UpdateTraitInput): PromisedResu
 
   const action = await start()
     .withContext(context.value)
-    .add(onSuccessGrouped(({ character }: { character: Character }) => succeed({ raceId: character.race })))
-    .add(onSuccessGrouped(raceService.retrieveOne))
-    .add(onSuccessGrouped(raceService.retrieveSecondaryTrait))
+    .add(onSuccessGrouped(({ character }: { character: Character }) => succeed({ originId: character.origin })))
+    .add(onSuccessGrouped(originService.retrieveOne))
+    .add(onSuccessGrouped(originService.retrieveSecondaryTrait))
     .add(
       onSuccessGrouped(({ character, trait, enable }) =>
         enable

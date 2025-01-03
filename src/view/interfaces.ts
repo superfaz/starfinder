@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { type IEntry, IEntrySchema, RaceModifierSchema, RaceSchema } from "model";
-import { RaceFeatureSchema } from "./Feature";
+import { type IEntry, IEntrySchema, OriginModifierSchema, OriginSchema } from "model";
+import { OriginFeatureSchema } from "./Feature";
 
 export interface CharacterView {
   id: string;
@@ -30,15 +30,15 @@ const labels = {
 
 export const RaceEntrySchema = IEntrySchema.extend({
   category: z.enum(["core", "legacy", "other"]).transform((v) => labels[v]),
-  modifiers: z.array(RaceModifierSchema),
+  modifiers: z.array(OriginModifierSchema),
 });
 
 export type RaceEntry = z.infer<typeof RaceEntrySchema>;
 
-export const RaceViewSchema = RaceSchema.omit({ category: true }).extend({
+export const RaceViewSchema = OriginSchema.omit({ category: true }).extend({
   category: z.enum(["core", "legacy", "other"]).transform((v) => labels[v]),
-  traits: RaceFeatureSchema.array(),
-  secondaryTraits: RaceFeatureSchema.array(),
+  traits: OriginFeatureSchema.array(),
+  secondaryTraits: OriginFeatureSchema.array(),
 });
 
 export type RaceView = z.infer<typeof RaceViewSchema>;
