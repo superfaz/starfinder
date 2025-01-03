@@ -4,7 +4,7 @@ import { findOrError, groupBy } from "app/helpers";
 import { useStaticData } from "logic/StaticContext";
 import { ModifierTypes, type RaceModifier } from "model";
 import { Badge } from "ui";
-import { RaceEntry } from "view";
+import { OriginEntry } from "view";
 import { ReferenceComponent } from "./ReferenceComponent";
 
 function RaceModifiers({ modifiers }: Readonly<{ modifiers: RaceModifier[] }>) {
@@ -37,7 +37,7 @@ export function FormSelectRace({
   onChange,
   isInvalid,
 }: Readonly<{
-  races: RaceEntry[];
+  races: OriginEntry[];
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isInvalid?: boolean;

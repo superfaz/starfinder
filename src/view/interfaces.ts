@@ -28,17 +28,17 @@ const labels = {
   other: "Autre",
 };
 
-export const RaceEntrySchema = IEntrySchema.extend({
+export const OriginEntrySchema = IEntrySchema.extend({
   category: z.enum(["core", "legacy", "other"]).transform((v) => labels[v]),
   modifiers: z.array(OriginModifierSchema),
 });
 
-export type RaceEntry = z.infer<typeof RaceEntrySchema>;
+export type OriginEntry = z.infer<typeof OriginEntrySchema>;
 
-export const RaceViewSchema = OriginSchema.omit({ category: true }).extend({
+export const OriginViewSchema = OriginSchema.omit({ category: true }).extend({
   category: z.enum(["core", "legacy", "other"]).transform((v) => labels[v]),
   traits: OriginFeatureSchema.array(),
   secondaryTraits: OriginFeatureSchema.array(),
 });
 
-export type RaceView = z.infer<typeof RaceViewSchema>;
+export type OriginView = z.infer<typeof OriginViewSchema>;

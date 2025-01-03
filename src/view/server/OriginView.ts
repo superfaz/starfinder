@@ -11,14 +11,14 @@ import {
 import { NotFoundError, Templater } from "logic";
 import { type Origin } from "model";
 import { OriginFeature } from "view/Feature";
-import { type RaceEntry, RaceEntrySchema, RaceView, RaceViewSchema } from "../interfaces";
+import { type OriginEntry, OriginEntrySchema, OriginView, OriginViewSchema } from "../interfaces";
 
 export function createOriginEntries({
   origins,
 }: {
   origins: Origin[];
-}): PromisedResult<{ originEntries: RaceEntry[] }> {
-  return succeed({ originEntries: origins.map((d) => RaceEntrySchema.parse(d)) });
+}): PromisedResult<{ originEntries: OriginEntry[] }> {
+  return succeed({ originEntries: origins.map((d) => OriginEntrySchema.parse(d)) });
 }
 
 export function createOrigin({
@@ -27,7 +27,7 @@ export function createOrigin({
 }: {
   origin: Origin;
   templater: Templater;
-}): PromisedResult<{ originView: RaceView }, NotFoundError> {
+}): PromisedResult<{ originView: OriginView }, NotFoundError> {
   return start()
     .withContext({ origin, templater })
     .add(onSuccessGrouped(retrievePrimaryRaceTraits))
@@ -35,7 +35,7 @@ export function createOrigin({
     .add(
       onSuccessGrouped(({ primaryTraits, secondaryTraits }) =>
         succeed({
-          originView: RaceViewSchema.parse({ ...origin, traits: primaryTraits, secondaryTraits }),
+          originView: OriginViewSchema.parse({ ...origin, traits: primaryTraits, secondaryTraits }),
         })
       )
     )
