@@ -6,7 +6,8 @@ import { ParsingError, createParsingError, isParsingError } from "logic";
 import { CharacterBuilder, characterService } from "logic/server";
 import { IdSchema } from "model";
 import { prepareActionContext } from "../../context";
-import { createState, State } from "../state";
+import { State } from "../state";
+import { createState } from "./createState";
 
 const UpdateOriginInputSchema = z.object({
   characterId: IdSchema,

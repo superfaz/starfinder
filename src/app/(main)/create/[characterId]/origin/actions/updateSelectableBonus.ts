@@ -6,7 +6,8 @@ import { createParsingError, isParsingError, ParsingError } from "logic";
 import { CharacterBuilder, characterService } from "logic/server";
 import { AbilityScoreIdSchema, IdSchema } from "model";
 import { prepareActionContext } from "../../context";
-import { createState, State } from "../state";
+import { State } from "../state";
+import { createState } from "./createState";
 
 const UpdateSelectableBonusInputSchema = z.object({
   characterId: IdSchema,

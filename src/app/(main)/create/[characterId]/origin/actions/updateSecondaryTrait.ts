@@ -6,7 +6,8 @@ import { ParsingError } from "logic";
 import { CharacterBuilder, characterService, originService } from "logic/server";
 import { Character, IdSchema } from "model";
 import { prepareActionContext } from "../../context";
-import { createState, State } from "../state";
+import { State } from "../state";
+import { createState } from "./createState";
 
 const UpdateTraitInputSchema = z.object({
   characterId: IdSchema,
