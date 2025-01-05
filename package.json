@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "license": "MIT",
-  "packageManager": "pnpm@9.13.2+sha512.88c9c3864450350e65a33587ab801acf946d7c814ed1134da4a924f6df5a2120fd36b46aab68f7cd1d413149112d53c7db3a4136624cfd00ff1846a0c6cef48a",
+  "packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321",
   "scripts": {
     "all": "pnpm run lint && pnpm run build && pnpm run test run",
     "dev": "next dev",
@@ -14,7 +14,8 @@
     "lint": "next lint",
     "test": "vitest",
     "test:e2e": "cross-env NODE_ENV=test playwright test",
-    "test:e2e:service": "cross-env NODE_ENV=test playwright test --config=playwright.service.config.ts"
+    "test:e2e:service": "cross-env NODE_ENV=test playwright test --config=playwright.service.config.ts",
+    "knip": "cross-env PLAYWRIGHT_SERVICE_ACCESS_TOKEN=test PLAYWRIGHT_SERVICE_URL=test knip"
   },
   "dependencies": {
     "@edge-runtime/vm": "^4.0.4",
@@ -69,6 +70,7 @@
     "happy-dom": "^15.11.6",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^25.0.1",
+    "knip": "^5.41.1",
     "mongodb-memory-server": "^10.1.2",
     "prettier": "^3.3.3",
     "sass": "^1.81.0",
