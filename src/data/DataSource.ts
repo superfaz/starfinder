@@ -2,7 +2,7 @@ import { convert, fail, onSuccess, PromisedResult, start, succeed } from "chain-
 import { Db, type Document, type Filter, MongoClient, type Sort } from "mongodb";
 import { unstable_cache } from "next/cache";
 import type { IModel } from "model";
-import { DataSourceError } from "logic";
+import { createParsingError, DataSourceError, ParsingError } from "logic";
 import {
   IDataSource,
   IDescriptor,
@@ -20,7 +20,7 @@ async function findCore<T extends IModel>(
   query: Filter<T> | undefined,
   sort?: Sort,
   limit?: number
-): PromisedResult<T[], DataSourceError> {
+): PromisedResult<T[], DataSourceError | ParsingError> {
   if (sort === undefined) {
     switch (descriptor.type) {
       case "simple":
@@ -55,11 +55,25 @@ async function findCore<T extends IModel>(
         })
       )
     )
-    .add(onSuccess((results) => succeed(descriptor.schema.array().parse(results))))
+    .add(
+      onSuccess((results) => {
+        const parsed = descriptor.schema.array().safeParse(results);
+        if (parsed.success) {
+          return succeed(parsed.data);
+        } else {
+          console.error(parsed.error.errors);
+          console.log(results[0]);
+          return fail(createParsingError(parsed.error.flatten().fieldErrors));
+        }
+      })
+    )
     .runAsync();
 }
 
-function getAllCore<T extends IModel>(database: Db, descriptor: IDescriptor<T>): PromisedResult<T[], DataSourceError> {
+function getAllCore<T extends IModel>(
+  database: Db,
+  descriptor: IDescriptor<T>
+): PromisedResult<T[], DataSourceError | ParsingError> {
   return findCore(database, descriptor, undefined);
 }
 

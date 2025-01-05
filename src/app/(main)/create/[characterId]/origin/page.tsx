@@ -6,8 +6,8 @@ import { characterService, preparePageContext, originService } from "logic/serve
 import { IdSchema } from "model";
 import { badRequest, serverError } from "navigation";
 import { ViewBuilder } from "view/server";
+import { createState } from "./actions";
 import { PageContent } from "./PageContent";
-import { createState } from "./state";
 
 const InputSchema = z
   .object({

@@ -27,12 +27,12 @@ export async function updateSelectableBonus(data: {
 
   const action = await start()
     .withContext(context.value)
-    .add(onSuccessGrouped(CharacterBuilder.updateRaceSelectableBonus))
+    .add(onSuccessGrouped(CharacterBuilder.updateOriginSelectableBonus))
     .add(onSuccessGrouped(characterService.update))
     .add(
       onError((error) => {
         console.error(error);
-        return fail(createParsingError({ originId: ["Invalid"] }));
+        return fail(createParsingError({ abilityScoreId: ["Invalid"] }));
       })
     )
     .add(onSuccessGrouped(createState))

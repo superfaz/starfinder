@@ -170,7 +170,7 @@ function EquipmentModifierComponent({ modifier }: Readonly<{ modifier: Equipment
 
 export default function ModifierComponent({ modifier }: Readonly<{ modifier: Modifier }>) {
   const presenter = useCharacterPresenter();
-  const data = useAppSelector((state) => state.data);
+  const data = useStaticData();
 
   const element: ModifierComponentElement = {
     level: modifier.level && modifier.level > 1 ? modifier.level : undefined,

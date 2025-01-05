@@ -22,7 +22,7 @@ export async function createState(context: {
       onSuccessGrouped(({ character }: { character: Character }) =>
         succeed({
           originId: character.origin,
-          variantId: character.variant,
+          variantId: character.originVariant,
           selectableBonusId: character.originOptions?.selectableBonus,
         })
       )
@@ -36,7 +36,7 @@ export async function createState(context: {
       )
     );
 
-  if (context.character.variant !== undefined) {
+  if (context.character.originVariant !== undefined) {
     action = action.add(addDataGrouped(originService.retrieveVariant));
   }
 

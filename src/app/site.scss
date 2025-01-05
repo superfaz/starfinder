@@ -412,3 +412,45 @@ input[type="number"] {
     content: "\f633";
   }
 }
+
+.sf-edit {
+  text-decoration: none;
+
+  .form-control {
+    &:not(:placeholder-shown) ~ label::after {
+      background-color: transparent;
+    }
+    &:hover {
+      background-color: var(--bs-success);
+    }
+  }
+}
+
+.accordion-button {
+  --bs-accordion-btn-focus-box-shadow: none;
+  border: none !important;
+
+  &:not(.collapsed) {
+    box-shadow: none;
+    color: white;
+  }
+
+  &:not(.collapsed)::before {
+    transform: var(--bs-accordion-btn-icon-transform);
+  }
+
+  &::before {
+    width: var(--bs-accordion-btn-icon-width);
+    height: var(--bs-accordion-btn-icon-width);
+    font-family: "bootstrap-icons";
+    margin-right: 1.25em;
+    font-size: var(--bs-accordion-btn-icon-width);
+    content: "\f282";
+    transition: var(--bs-accordion-btn-icon-transition);
+  }
+
+  &::after {
+    background: none !important;
+    width: 0 !important;
+  }
+}

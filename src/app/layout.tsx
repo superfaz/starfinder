@@ -9,6 +9,8 @@ import {
   abilityScoreService,
   armorTypeService,
   avatarService,
+  bodyPartService,
+  bonusCategoryService,
   bookService,
   damageTypeService,
   sizeService,
@@ -34,6 +36,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     bookService.retrieveAll({ dataSource }),
     weaponTypeService.retrieveAll({ dataSource }),
     skillService.retrieveAll({ dataSource }),
+    bonusCategoryService.retrieveAll({ dataSource }),
+    bodyPartService.retrieveAll({ dataSource }),
   ]);
 
   if (loadData.some((d) => !d.success)) {
@@ -50,6 +54,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     books: loadData[5].success ? loadData[5].value.books : [],
     weaponTypes: loadData[6].success ? loadData[6].value.weaponTypes : [],
     skills: loadData[7].success ? loadData[7].value.skills : [],
+    bonusCategories: loadData[8].success ? loadData[8].value.bonusCategories : [],
+    bodyParts: loadData[9].success ? loadData[9].value.bodyParts : [],
   };
 
   return (

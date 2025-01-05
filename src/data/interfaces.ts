@@ -1,7 +1,7 @@
 import { PromisedResult } from "chain-of-actions";
 import type { Filter, Sort } from "mongodb";
 import type { Schema } from "zod";
-import { DataSourceError } from "logic";
+import { DataSourceError, ParsingError } from "logic";
 import type { IModel } from "model";
 
 export interface IBaseDescriptor<T extends IModel> {
@@ -21,10 +21,10 @@ export interface IDynamicDescriptor<T extends IModel> extends IBaseDescriptor<T>
 export type IDescriptor<T extends IModel> = IStaticDescriptor<T> | IDynamicDescriptor<T>;
 
 export interface IStaticDataSet<T extends IModel> {
-  getAll(): PromisedResult<T[], DataSourceError>;
+  getAll(): PromisedResult<T[], DataSourceError | ParsingError>;
   getOne(id: string): PromisedResult<T, DataSourceError>;
   findOne(id: string): PromisedResult<T | undefined, DataSourceError>;
-  find(query: Filter<T>, sort?: Sort, limit?: number): PromisedResult<T[], DataSourceError>;
+  find(query: Filter<T>, sort?: Sort, limit?: number): PromisedResult<T[], DataSourceError | ParsingError>;
 }
 
 export interface IDynamicDataSet<T extends IModel> extends IStaticDataSet<T> {

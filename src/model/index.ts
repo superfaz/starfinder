@@ -1,6 +1,5 @@
 // This file is generated
 
-export * from "./AbilityScore.test";
 export * from "./AbilityScore";
 export * from "./Alignment";
 export * from "./ArmorType";
@@ -34,7 +33,6 @@ export * from "./FeatTemplate";
 export * from "./FeatureTemplate";
 export * from "./ICodedModel";
 export * from "./IEntry";
-export * from "./IModel.test";
 export * from "./IModel";
 export * from "./INamedModel";
 export * from "./Modifier";

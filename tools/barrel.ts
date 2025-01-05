@@ -8,7 +8,7 @@ async function generateBarrelFile(basePath: string): Promise<void> {
 
   const files = await fs.readdir(basePath);
   for (const file of files) {
-    if (file === "index.ts") {
+    if (file === "index.ts" || file.endsWith(".test.ts")) {
       continue;
     }
 

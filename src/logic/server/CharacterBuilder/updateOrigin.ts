@@ -44,7 +44,7 @@ export async function updateOrigin(params: {
   const result: Character = {
     ...params.character,
     origin: action.value.origin.id,
-    variant: action.value.origin.variants[0].id,
+    originVariant: action.value.origin.variants[0].id,
     originOptions: undefined,
     traits: action.value.origin.traits.map((t) => t.id),
     avatar: action.value.avatars.filter((avatar) => avatar.tags.includes(params.originId))[0].id,
@@ -66,7 +66,7 @@ export async function updateOriginVariant(params: {
   character: Character;
   variantId: string;
 }): PromisedResult<{ character: Character }, DataSourceError | NotFoundError> {
-  if (params.character.variant === params.variantId) {
+  if (params.character.originVariant === params.variantId) {
     // No change
     return succeed({ character: params.character });
   }
@@ -89,7 +89,7 @@ export async function updateOriginVariant(params: {
 
   const result: Character = {
     ...params.character,
-    variant: params.variantId,
+    originVariant: params.variantId,
     originOptions: undefined,
   };
 

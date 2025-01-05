@@ -79,8 +79,8 @@ export class CharacterBuilder {
   computeMinimalAbilityScores = computeMinimalAbilityScores.bind(this);
 
   static updateOrigin = updateOrigin;
-  static updateRaceVariant = updateOriginVariant;
-  static updateRaceSelectableBonus = updateOriginSelectableBonus;
+  static updateOriginVariant = updateOriginVariant;
+  static updateOriginSelectableBonus = updateOriginSelectableBonus;
   static enableSecondaryTrait = enableSecondaryTrait;
   static disableSecondaryTrait = disableSecondaryTrait;
 

@@ -1,6 +1,6 @@
 import { fail, onSuccess, passThrough, PromisedResult, start, succeed } from "chain-of-actions";
 import { IDataSource, IDynamicDescriptor } from "data";
-import { DataSourceError, NotFoundError, NotSingleError } from "logic/errors";
+import { DataSourceError, NotFoundError, NotSingleError, ParsingError } from "logic/errors";
 import { Character, CharacterSchema } from "model";
 
 const descriptor: IDynamicDescriptor<Character> = {
@@ -49,7 +49,7 @@ export const characterService = {
   }: {
     dataSource: IDataSource;
     user: { id: string };
-  }): PromisedResult<{ characters: Character[] }, DataSourceError> => {
+  }): PromisedResult<{ characters: Character[] }, ParsingError | DataSourceError> => {
     const characters = await dataSource.get(descriptor).find({ userId: user.id }, "updateOn", 3);
     if (!characters.success) {
       return characters;

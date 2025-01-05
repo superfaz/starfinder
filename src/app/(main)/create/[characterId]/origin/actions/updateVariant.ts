@@ -24,7 +24,7 @@ export async function updateVariant(data: UpdateVariantInput): PromisedResult<St
 
   const action = await start()
     .withContext(context.value)
-    .add(onSuccessGrouped(CharacterBuilder.updateRaceVariant))
+    .add(onSuccessGrouped(CharacterBuilder.updateOriginVariant))
     .add(onSuccessGrouped(characterService.update))
     .add(
       onError((error) => {
