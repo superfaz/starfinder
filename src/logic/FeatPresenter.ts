@@ -3,7 +3,7 @@ import { type FeatTemplate, type INamedModel, hasLevel } from "model";
 import { CharacterPresenter } from "./CharacterPresenter";
 import { findOrError } from "app/helpers";
 
-export type FeatOptions = { id: string; name: string; available: boolean };
+type FeatOptions = { id: string; name: string; available: boolean };
 export type FeatTemplateExtended = FeatTemplate & { visible: boolean; available: boolean; options: FeatOptions[] };
 
 export class FeatPresenter {

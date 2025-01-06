@@ -7,7 +7,7 @@ import { IClientDataSet } from "data";
 import { mutators } from "./slice-create";
 import { Character, IModel } from "model";
 
-export type StoreProviderProps = Readonly<{
+type StoreProviderProps = Readonly<{
   data: IClientDataSet;
   character?: Character;
   classesDetails?: Record<string, IModel>;

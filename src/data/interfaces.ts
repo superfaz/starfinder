@@ -4,7 +4,7 @@ import type { Schema } from "zod";
 import { DataSourceError, ParsingError } from "logic";
 import type { IModel } from "model";
 
-export interface IBaseDescriptor<T extends IModel> {
+interface IBaseDescriptor<T extends IModel> {
   type: "simple" | "named" | "ordered";
   name: string;
   schema: Schema<T>;

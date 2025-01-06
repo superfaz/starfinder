@@ -9,7 +9,7 @@ interface ICharacterActionParams {
   characterId: string;
 }
 
-export interface ICharacterActionContext {
+interface ICharacterActionContext {
   user: { id: string };
   dataSource: IDataSource;
   character: Character;

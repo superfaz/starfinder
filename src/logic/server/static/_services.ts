@@ -17,7 +17,7 @@ export function retrieveAll<T extends IModel>(
     .runAsync();
 }
 
-export type IRetrieveOneParams = { dataSource: IDataSource; id: string };
+type IRetrieveOneParams = { dataSource: IDataSource; id: string };
 
 export function retrieveOne<T extends IModel>(
   params: IRetrieveOneParams,

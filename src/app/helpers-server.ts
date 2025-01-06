@@ -3,8 +3,8 @@ import { PromisedResult, Result } from "chain-of-actions";
 import { redirect } from "next/navigation";
 
 export type ActionErrors<Input> = { [P in keyof Input]?: string[] };
-export type ActionFailure<Input> = { success: false; errors: ActionErrors<Input> };
-export type ActionSuccess<Output> = { success: true } & Output;
+type ActionFailure<Input> = { success: false; errors: ActionErrors<Input> };
+type ActionSuccess<Output> = { success: true } & Output;
 export type ActionResult<Input, Output> = ActionSuccess<Output> | ActionFailure<Input>;
 
 export async function isSecure(returnTo: string): Promise<boolean> {

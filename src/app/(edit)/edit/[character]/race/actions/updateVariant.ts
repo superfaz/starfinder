@@ -14,7 +14,7 @@ const UpdateVariantInputSchema = z.object({
   variantId: IdSchema,
 });
 
-export type UpdateVariantInput = z.infer<typeof UpdateVariantInputSchema>;
+type UpdateVariantInput = z.infer<typeof UpdateVariantInputSchema>;
 
 export async function updateVariant(data: UpdateVariantInput): Promise<ActionResult<UpdateVariantInput, UpdateState>> {
   const context = await prepareActionContext(UpdateVariantInputSchema, data);

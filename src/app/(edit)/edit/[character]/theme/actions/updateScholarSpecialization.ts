@@ -14,7 +14,7 @@ const UpdateScholarSpecializationInputSchema = z.object({
   specialization: z.string(),
 });
 
-export type UpdateScholarSpecializationInput = z.infer<typeof UpdateScholarSpecializationInputSchema>;
+type UpdateScholarSpecializationInput = z.infer<typeof UpdateScholarSpecializationInputSchema>;
 
 export async function updateScholarSpecialization(
   data: UpdateScholarSpecializationInput

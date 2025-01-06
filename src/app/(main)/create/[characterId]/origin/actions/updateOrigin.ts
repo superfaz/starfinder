@@ -14,7 +14,7 @@ const UpdateOriginInputSchema = z.object({
   originId: IdSchema,
 });
 
-export type UpdateOriginInput = z.infer<typeof UpdateOriginInputSchema>;
+type UpdateOriginInput = z.infer<typeof UpdateOriginInputSchema>;
 
 export async function updateOrigin(data: UpdateOriginInput): PromisedResult<State, ParsingError> {
   const context = await prepareActionContext(UpdateOriginInputSchema, data);

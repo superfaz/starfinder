@@ -5,13 +5,13 @@ import { badRequest } from "navigation";
 import { ViewBuilder } from "view/server";
 import { getAuthenticatedUser, getDataSource, getViewBuilder, hasValidInput, redirectToSignIn } from "./extras";
 
-export interface IContext {
+interface IContext {
   user: { id: string };
   dataSource: IDataSource;
   viewBuilder: ViewBuilder;
 }
 
-export interface IPageContext<Input> extends IContext {
+interface IPageContext<Input> extends IContext {
   input: Input;
 }
 

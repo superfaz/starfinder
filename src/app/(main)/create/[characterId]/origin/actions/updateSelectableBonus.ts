@@ -14,12 +14,9 @@ const UpdateSelectableBonusInputSchema = z.object({
   abilityScoreId: AbilityScoreIdSchema,
 });
 
-export type UpdateSelectableBonusInput = z.infer<typeof UpdateSelectableBonusInputSchema>;
+type UpdateSelectableBonusInput = z.infer<typeof UpdateSelectableBonusInputSchema>;
 
-export async function updateSelectableBonus(data: {
-  characterId: string;
-  abilityScoreId: string;
-}): PromisedResult<State, ParsingError> {
+export async function updateSelectableBonus(data: UpdateSelectableBonusInput): PromisedResult<State, ParsingError> {
   const context = await prepareActionContext(UpdateSelectableBonusInputSchema, data);
   if (!context.success) {
     return fail(context.error);

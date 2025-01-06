@@ -13,7 +13,7 @@ import { IClientDataSet } from "data";
 import { computeAbilityScoreModifier } from "./CharacterPresenter";
 import { ICharacterPresenter } from "./ICharacterPresenter";
 
-export interface BonusModifier {
+interface BonusModifier {
   source: string;
   category: BonusCategoryId;
   value: number;

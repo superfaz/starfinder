@@ -25,25 +25,25 @@ export function isVariable(value: string): boolean {
   return VariableSchema.safeParse(value).success;
 }
 
-export type WithValue<T> = Extract<T, { value: number }>;
+type WithValue<T> = Extract<T, { value: number }>;
 
 export function hasValue<T>(obj: T): obj is WithValue<T> {
   return Object.prototype.hasOwnProperty.call(obj, "value");
 }
 
-export type WithTarget<T> = Extract<T, { target?: string }>;
+type WithTarget<T> = Extract<T, { target?: string }>;
 
 export function hasTarget<T>(obj: T): obj is WithTarget<T> {
   return Object.prototype.hasOwnProperty.call(obj, "target");
 }
 
-export type WithName<T> = Extract<T, { name?: string }>;
+type WithName<T> = Extract<T, { name?: string }>;
 
 export function hasName<T>(obj: T): obj is WithName<T> {
   return Object.prototype.hasOwnProperty.call(obj, "name");
 }
 
-export interface WithDescription {
+interface WithDescription {
   description: string;
 }
 
@@ -51,7 +51,7 @@ export function hasDescription(obj: object): obj is WithDescription {
   return Object.prototype.hasOwnProperty.call(obj, "description");
 }
 
-export interface WithCategory {
+interface WithCategory {
   category: BonusCategoryId;
 }
 
@@ -59,7 +59,7 @@ export function hasCategory(obj: object): obj is WithCategory {
   return Object.prototype.hasOwnProperty.call(obj, "category");
 }
 
-export type WithExtra<T> = Extract<T, { extra?: string }>;
+type WithExtra<T> = Extract<T, { extra?: string }>;
 
 export function hasExtra<T>(obj: T): obj is WithExtra<T> {
   return Object.prototype.hasOwnProperty.call(obj, "extra");

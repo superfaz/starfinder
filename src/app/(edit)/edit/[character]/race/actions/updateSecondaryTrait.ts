@@ -16,7 +16,7 @@ const UpdateTraitInputSchema = z.object({
   enable: z.boolean(),
 });
 
-export type UpdateTraitInput = z.infer<typeof UpdateTraitInputSchema>;
+type UpdateTraitInput = z.infer<typeof UpdateTraitInputSchema>;
 
 export async function updateSecondaryTrait(
   data: UpdateTraitInput
