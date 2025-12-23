@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Install cron
-sudo apt-get update
+sudo apt update
 sudo apt-get install cron
 sudo service cron start
 
