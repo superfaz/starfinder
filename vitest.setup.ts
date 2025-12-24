@@ -8,7 +8,7 @@ import { addFetchMock, mockFetch } from "./mocks/fetch";
 
 import "@testing-library/jest-dom/vitest";
 
-dotenv.config({ path: path.resolve(__dirname, "./.env.test") });
+dotenv.config({ path: ".env.test" });
 
 if (!process.env.STARFINDER_SHARED_SERVER) {
   const mongod = await MongoMemoryServer.create();

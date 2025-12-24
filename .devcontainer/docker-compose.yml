@@ -1,0 +1,14 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/javascript-node:24
+    volumes:
+      - ..:/workspaces/starfinder:cached
+    command: sleep infinity
+    environment:
+      - NODE_ENV=development
+    networks:
+      - starfinder
+
+networks:
+  starfinder:
+    name: starfinder

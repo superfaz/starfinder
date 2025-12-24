@@ -1,17 +1,21 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
+  "name": "Starfinder",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/workspaces/starfinder",
   "customizations": {
     "vscode": {
       "extensions": [
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
         "DavidAnson.vscode-markdownlint",
-        "GitHub.copilot"
+        "GitHub.copilot",
+        "vitest.explorer",
+        "ms-azuretools.vscode-containers"
       ]
     }
   },
   "containerEnv": {
-    "STARFINDER_MONGO_URI": "mongodb://root:example@host.docker.internal:27017/",
     "KINDE_SITE_URL": "https://legendary-space-invention-r4xr4v6jq56f5x9g-3000.app.github.dev/",
     "KINDE_POST_LOGOUT_REDIRECT_URL": "https://legendary-space-invention-r4xr4v6jq56f5x9g-3000.app.github.dev/",
     "KINDE_POST_LOGIN_REDIRECT_URL": "https://legendary-space-invention-r4xr4v6jq56f5x9g-3000.app.github.dev/"
@@ -27,6 +31,5 @@
       "description": "Kindle - Client Secret"
     }
   },
-  "onCreateCommand": "sh -f .devcontainer/on-create.sh",
   "postCreateCommand": "pnpm install"
 }
