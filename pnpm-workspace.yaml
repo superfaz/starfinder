@@ -1,5 +1,8 @@
 onlyBuiltDependencies:
+  - '@sentry/cli'
   - '@swc/core'
   - esbuild
   - mongodb-memory-server
   - msw
+  - sharp
+  - unrs-resolver
